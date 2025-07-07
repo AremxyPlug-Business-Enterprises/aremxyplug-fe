@@ -288,10 +288,12 @@ export const PostFunction = async(path, setLoading, body, functionAtSuccess, fun
       const response = await axios.post(url, body, {headers: {"Content-Type" :"application/json",
          Authorization : authToken || getToken
       }, withCredentials : true})
+      console.log("rep", response)
       if(response.status === 201 || 200){
     functionAtSuccess()
      if(functionAtSuccess) {
             setFetchedResponse(response.data.data);
+            console.log("resp", response)
          }
       }
 

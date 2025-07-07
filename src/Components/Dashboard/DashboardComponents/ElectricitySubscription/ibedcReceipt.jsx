@@ -34,6 +34,8 @@ export const IbedcReceipt = () => {
     ibedcOrderId,
     ibedcTransactionId,
     ibedcShowDescription,
+    ibedcFullName,
+    ibedcTransactionProduct,
     ibedcBillGenerate,
   } = useContext(ContextProvider);
   
@@ -52,6 +54,8 @@ export const IbedcReceipt = () => {
   const transaction_id = ibedcTransactionId?.length > 0 ? ibedcTransactionId : "";
   const description = ibedcShowDescription?.length > 0 ? ibedcShowDescription : "";
   const bill_generated = ibedcBillGenerate?.length > 0 ? ibedcBillGenerate : "";
+  const fullName = ibedcFullName?.length > 0 ? ibedcFullName : "";
+  const transaction_product = ibedcTransactionProduct?.length > 0 ? ibedcTransactionProduct : "";
 
 
   function handleClick() {
@@ -155,10 +159,10 @@ export const IbedcReceipt = () => {
                 hour12: true,
               })}
             </span>
-            <p className="text-[9px] text-[#27AE60] bg-[#D5F6E3] rounded-[11px] border-2 border-[#27AE60] py-[5px] px-[2px] text-center mx-[5px] lg:mx-[150px] md:mx-[100px] my-2 md:text-[14px] lg:text-[14px]">
+            <p className="text-[9px] text-[#27AE60] bg-[#D5F6E3] rounded-[11px] border-2 border-[#27AE60] py-[5px] lg:py-[10px] px-[2px] text-center mx-[5px] lg:mx-[100px] md:mx-[70px] my-2 md:text-[14px] lg:text-[14px]">
               You have successfully purchased{" "}
               <span className="text-[#000] font-extrabold text-[10px] md:text-[14px]">
-              Ibadan {networkProduct} Meter &#8358;{productAmount}.00{" "}
+              Ibadan {networkProduct} Meter &#8358;{Number(productAmount).toLocaleString()}.00{" "}
               </span>
               from your NGN wallet to{" "}
             </p>
@@ -180,34 +184,34 @@ export const IbedcReceipt = () => {
                 <p className="text-[#7C7C7C] font-[500]">Disco Type</p>
                 <span className="flex items-center gap-1 ">
                   <div><img className="w-[30px]" src={logo2} alt="" /></div>
-                  <div>{disco_type}</div>
+                  <div className="font-medium capitalize">{disco_type}</div>
                   </span>
               </div>
-              <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px] font-medium md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Meter Type</p>
                 <span>{networkProduct} </span>
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-medium lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Meter Number</p>
                 <span>{meterNo} </span>
               </div>
 
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-medium lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Verified Name</p>
-                <span>{verifiedName}</span>
+                <span className="font-medium">{verifiedName}</span>
               </div>
 
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-medium lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Phone Number</p>
-                <span>{phoneNo}</span>
+                <span className="font-medium">{phoneNo}</span>
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-medium lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Email</p>
-                <span>{productEmail}</span>
+                <span className="font-medium">{productEmail}</span>
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-medium lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Amount</p>
-                <span>&#8358;{productAmount}</span>
+                <span className="font-medium">&#8358;{Number(productAmount).toLocaleString()}</span>
               </div>
               
             </div>
@@ -220,14 +224,14 @@ export const IbedcReceipt = () => {
                   />
                 </div>
                 <div className="flex flex-col gap-3 pt-[10px]">
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-medium lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Customer Name</p>
-                <span>{verifiedName}</span>
+                <span className="font-medium">{verifiedName || fullName}</span>
               </div>
 
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-medium lg:text-[16px]">
                 <p className="text-[#7C7C7C] font-[500]">Wallet Type</p>
-                <span>Nigerian NGN Wallet </span>
+                <span className="font-medium">Nigerian NGN Wallet </span>
               </div>
              
               
@@ -249,31 +253,31 @@ export const IbedcReceipt = () => {
                     alt="/"
                   />
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-medium lg:text-[16px]">
                   <p className="text-[#0008]">Product</p>
-                  <span>Electricity Bills</span>
+                  <span className="font-medium">{transaction_product}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-medium lg:text-[16px]">
                   <p className="text-[#0008]">Description</p>
-                  <span>{description}</span>
+                  <span className="font-medium capitalize">{description}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-medium lg:text-[16px]">
                   <p className="text-[#0008]">Bill / Token Generated</p>
-                  <span>{bill_generated}</span>
+                  <span className="font-medium">{bill_generated}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-medium lg:text-[16px]">
                   <p className="text-[#0008]">Order Number</p>
-                  <span>{order_id}</span>
+                  <span className="font-medium">{order_id}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-medium lg:text-[16px]">
                   <p className="text-[#0008]">Transaction ID</p>
-                  <span>{transaction_id}</span>
+                  <span className="font-medium">{transaction_id}</span>
                 </div>
                 
               </div>
             </div>
             <div className="rounded-[8px] bg-[#E2F3FF] mx-4 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]">
-              <p className="text-[8px] text-center mx-auto w-[200px] md:text-[14px] md:w-[80%] lg:text-[16px]">
+              <p className={`text-[8px] text-center mx-auto w-[200px] md:text-[14px] md:w-[80%] lg:text-[16px] font-medium ${isDarkMode ? "text-white": "text-[#7C7C7C]"}`}>
                 Earn free points on every successful transactions, redeem your
                 earned points to real money, withdrawn to your bank account
                 instantly.

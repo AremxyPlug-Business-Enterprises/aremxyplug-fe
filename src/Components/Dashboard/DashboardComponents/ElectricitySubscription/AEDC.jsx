@@ -58,6 +58,8 @@ const AEDC = () => {
     setAedcOrderId,
     setAedcTransactionId,
     setAedcShowDescription,
+    setAedcFullName,
+    setAedcTransactionProduct,
     aedcFetchedResponse,
     setAedcFetchedResponse,
 
@@ -103,7 +105,7 @@ const AEDC = () => {
   const countryList = [
     {
       id: 1,
-      name: `NGN Wallet (${newBalance})`,
+      name: `NGN Wallet (₦${newBalance})`,
       code: "Nigerian NGN Wallet",
       flag: require("../ElectricitySubscription/Electricity-sub-images/nigeriaFlag.png"),
     },
@@ -307,6 +309,7 @@ const AEDC = () => {
   };
   const [successPopup, setSuccessPopup] = useState(false);
   const [failedPopup, setFailedPopup] = useState(false);
+  const [aedcCustomerName, setAedcCustomerName] = useState("");
 
   const [errorMessage, setErrorMessage] = useState(false);
   const [pinSuccess, setPinSuccess] = useState(false);
@@ -319,47 +322,64 @@ const AEDC = () => {
   const verifyMeterNumber = async (meterNumber) => {
     async function HandleMeterNumber() {
       const path = "bills/verify";
-      const body = {
-        disco_type: "abuja-electric",
-        meter_no: meterNumber,
-        meter_type: selectedAedcMeterType.toLowerCase(),
-      };
-      const SuccessHandler = () => {
-        setIsFailedMeterNumber(false);
-        function handleReceivedMeterData() {
-          if (aedcFetchedResponse.name) {
-            setAedcVerifiedName(aedcFetchedResponse.name);
-          } else {
-            setAedcVerifiedName("");
+      if (
+        meterNumber?.length === 13 &&
+        meterNumber !== "" &&
+        meterNumber !== null &&
+        meterNumber !== undefined
+      ) {
+        const body = {
+          disco_type: "abuja-electric",
+          meter_no: meterNumber,
+          meter_type: selectedAedcMeterType.toLowerCase(),
+        };
+        const SuccessHandler = () => {
+          setIsFailedMeterNumber(false);
+          function handleReceivedMeterData() {
+            if (aedcFetchedResponse?.data?.name) {
+              setAedcCustomerName(aedcFetchedResponse?.data?.name);
+              // console.log("meter number", aedcFetchedResponse?.data?.name);
+            } else {
+              setAedcCustomerName("");
+            }
           }
-        }
-        handleReceivedMeterData();
-      };
-      const FailedHandler = () => {
-        setIsFailedMeterNumber(true);
-      };
-
-      await PostFunction(
-        path,
-        setMeterNumberLoading,
-        body,
-        SuccessHandler,
-        FailedHandler,
-        setAedcFetchedResponse
-      );
+          handleReceivedMeterData();
+        };
+        const FailedHandler = () => {
+          setIsFailedMeterNumber(true);
+        };
+        await PostFunction(
+          path,
+          setMeterNumberLoading,
+          body,
+          SuccessHandler,
+          FailedHandler,
+          setAedcFetchedResponse
+        );
+      }
     }
     HandleMeterNumber();
     // handleReceivedMeterData();
-    passedMeterName = aedcFetchedResponse ? aedcFetchedResponse.name : "";
+    passedMeterName = aedcFetchedResponse
+      ? aedcFetchedResponse?.data?.name
+      : "";
+
+    console.log("passed meter", passedMeterName);
+  };
+
+  const handleAedcMeterNumber = async (e) => {
+    const inputValue = e.target.value;
+    setAedcMeterNumber(inputValue);
+    await verifyMeterNumber(inputValue);
   };
 
   const handleVerifiedName =
     aedcMeterNumber?.length === 13 &&
     isFailedMeterNumber === false &&
     verifyMeterNumber &&
-    aedcVerifiedName === ""
+    aedcCustomerName === ""
       ? passedMeterName
-      : aedcVerifiedName;
+      : aedcCustomerName;
 
   const verifyPin = async () => {
     async function ElectricityHandler() {
@@ -377,6 +397,7 @@ const AEDC = () => {
       // const parsedAmount = parseInt(amount, 10);
       const SuccessHandler = () => {
         setInputPinPopUp(false);
+        setAedcDiscoType(aedcFetchedResponse?.data?.disco_type);
         setSuccessPopup(true);
       };
       const FailedHandler = () => {
@@ -406,12 +427,17 @@ const AEDC = () => {
   function handleReceivedData() {
     setLoading(true);
     const receivedData = () => {
-      setAedcBillGenerate(aedcFetchedResponse.data.bill_generated);
-      setAedcOrderId(aedcFetchedResponse.data.order_id);
-      setAedcTransactionId(aedcFetchedResponse.data.transaction_id);
-      setAedcServiceID(aedcFetchedResponse.data.request_id);
-      setAedcShowDescription(aedcFetchedResponse.data.description);
-      setAedcDiscoType(aedcFetchedResponse.data.disco_type);
+      setAedcBillGenerate(aedcFetchedResponse?.data?.bill_generated);
+      setAedcOrderId(aedcFetchedResponse?.data?.order_id);
+      setAedcTransactionId(aedcFetchedResponse?.data?.transaction_id);
+      setAedcServiceID(aedcFetchedResponse?.data?.RequestID);
+      setAedcShowDescription(
+        aedcFetchedResponse?.data?.transaction_description
+      );
+      setAedcDiscoType(aedcFetchedResponse?.data?.disco_type);
+      setAedcVerifiedName(aedcFetchedResponse?.data?.verified_name);
+      setAedcFullName(aedcFetchedResponse?.data?.full_name);
+      setAedcTransactionProduct(aedcFetchedResponse?.data?.transaction_product);
     };
     receivedData();
     if (receivedData) {
@@ -597,7 +623,7 @@ const AEDC = () => {
                     border flex flex-col divide-y items-center text-[14px] md:text-[12px] lg:text-[16px] mt-20 lg:mt-20  rounded-[4px] md:rounded-[10px] absolute top-1 lg:top-[1rem] w-full z-[10]`}
                 >
                   {/*  lg:top-[87%] */}
-                  {productList.map((item) => (
+                  {productList?.map((item) => (
                     <div
                       key={item.name}
                       className={`pb-[18px] pt-[8px] md:py-[14px] font-bold cursor-pointer md:text-[12px] lg:text-[16px] w-full md:rounded-[0px] text-[12px] pl-[5px] 
@@ -629,17 +655,27 @@ const AEDC = () => {
                   type="text"
                   value={aedcMeterNumber}
                   maxLength={13}
-                  onChange={(e) => {
-                    const newValue = e.target.value;
-                    setAedcMeterNumber(newValue);
-                    // newValue.length === 13 && !errors.aedcMeterNumber
-                    //   ? verifyMeterNumber(newValue)
-                    //   : setAedcVerifiedName("");
-
-                    if (newValue?.length === 13 && !errors.aedcMeterNumber) {
-                      verifyMeterNumber(newValue);
+                  onInput={(e) => {
+                    const numericValue = e.target.value.replace(/\D/g, "");
+                    e.target.value = numericValue;
+                    if (numericValue?.length === 13) {
+                      e.target.style.border = "2px solid green";
+                    } else {
+                      e.target.style.border = "2px solid red";
                     }
+                    
+                    setIsFailedMeterNumber(false);
+                    setErrors((prev) => ({ ...prev, aedcMeterNumber: "" }));
                   }}
+                  onChange={handleAedcMeterNumber}
+                  // onChange={(e) => {
+                  //   const newValue = e.target.value;
+                  //   setAedcMeterNumber(newValue);
+                  //   if (newValue?.length === 13 && !errors.aedcMeterNumber) {
+                  //     verifyMeterNumber(newValue);
+                  //   }
+                  // }}
+
                   onClick={() => setShowProductList(false)}
                   // py-[10.33px] pl-[5.867px]
                   className={`py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full w-full  ${
@@ -682,12 +718,11 @@ const AEDC = () => {
                   }`}
                 />
                 {meterNumberLoading && (
-                <p className="left-4 absolute top-3.5 lg:top-4">
-                  <BalanceLoading />
-                </p>
-              )}
+                  <p className="left-4 absolute top-3.5 lg:top-4">
+                    <BalanceLoading />
+                  </p>
+                )}
               </div>
-              
             </div>
             <div className="flex flex-col gap-2 relative lg:gap-2.5">
               <div
@@ -707,6 +742,7 @@ const AEDC = () => {
                     } else if (e.target.value?.length < 10) {
                       e.target.style.border = "2px solid red";
                     }
+                    setErrors((prev) => ({ ...prev, aedcPhoneNumber: "" }));
                   }}
                   onBlur={(e) => {
                     isDarkMode
@@ -746,6 +782,9 @@ const AEDC = () => {
                   type="text"
                   value={aedcEmail}
                   onChange={handleEmail}
+                  onInput={()=>{
+                    setErrors((prev) => ({ ...prev, aedcEmail: "" }));
+                  }}
                   className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
                     isDarkMode
                       ? "text-white bg-black border border-white"
@@ -780,6 +819,9 @@ const AEDC = () => {
                   name="aedcamount"
                   value={aedcAmount}
                   onChange={handleAedcAmount}
+                  onInput={()=>{
+                    setAmountError("")
+                  }}
                   placeholder="Minimum of ₦1000"
                   className={`w-full py-[10.33px] pl-[5.867px] pr-1 md:py-3 md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] text-[12px] leading-[18px] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none
                  ${
@@ -869,7 +911,7 @@ const AEDC = () => {
                     styles.countryDropDown
                   } shadow-xl border w-full lg:w-full  flex flex-col divide-y absolute top-20`}
                 >
-                  {countryList.map((country) => (
+                  {countryList?.map((country) => (
                     <div
                       className={`py-[18px] md:py-[14px] font-normal px-2 flex items-center gap-[5px] text-[12px] md:text-[14px] lg:text-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] transition-all duration-300 hover:bg-slate-50
                        ${
@@ -908,7 +950,7 @@ const AEDC = () => {
             className={`text-[12px] mt-[30px] md:mt-[40px] bg-[#0008] md:w-fit lg:px-12 lg:text-[16px] lg:px md:py-1 md:rounded-md md:px-6 py-3 rounded-md font-semibold text-center text-white
               ${
                 !aedcMeterNumber ||
-                !aedcVerifiedName ||
+                !aedcCustomerName ||
                 !aedcPhoneNumber ||
                 !aedcEmail ||
                 !selectedAedcMeterType ||
@@ -919,7 +961,7 @@ const AEDC = () => {
               }`}
             disabled={
               !aedcMeterNumber ||
-              !aedcVerifiedName ||
+              !aedcCustomerName ||
               !aedcPhoneNumber ||
               !aedcEmail ||
               !selectedAedcMeterType ||
@@ -980,7 +1022,7 @@ const AEDC = () => {
                   isDarkMode ? "text-white" : "text-[#000]"
                 }`}
               >
-                {selectedAedcMeterType} Meter (&#8358;{aedcAmount}){" "}
+                {selectedAedcMeterType} Meter (&#8358;{Number(aedcAmount).toLocaleString()}){" "}
               </span>
               {/* Points to <br></br>
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]">
@@ -1005,7 +1047,7 @@ const AEDC = () => {
                   <div>Abuja-AEDC</div>
                 </span>
               </div>
-              <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
                   className={`font-medium ${
                     isDarkMode ? "text-white" : "text-[#7C7C7C] "
@@ -1015,7 +1057,7 @@ const AEDC = () => {
                 </p>
                 <span>{selectedAedcMeterType} </span>
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px]">
                 <p
                   className={`font-medium ${
                     isDarkMode ? "text-white" : "text-[#7C7C7C] "
@@ -1026,7 +1068,7 @@ const AEDC = () => {
                 <span>{aedcMeterNumber} </span>
               </div>
 
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px]">
                 <p
                   className={`font-medium ${
                     isDarkMode ? "text-white" : "text-[#7C7C7C] "
@@ -1034,7 +1076,7 @@ const AEDC = () => {
                 >
                   Verified Name
                 </p>
-                <span>{aedcVerifiedName}</span>
+                <span>{aedcCustomerName}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -1065,7 +1107,7 @@ const AEDC = () => {
                 >
                   Amount
                 </p>
-                <span>&#8358;{aedcAmount}</span>
+                <span>&#8358;{Number(aedcAmount).toLocaleString()}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -1106,7 +1148,7 @@ const AEDC = () => {
                         isDarkMode ? "text-white" : "text-[#000] "
                       }`}
                     >
-                      {`(${newBalance})`}
+                      {`(₦${newBalance})`}
                     </span>
                   </p>
                 </div>
@@ -1264,7 +1306,7 @@ const AEDC = () => {
               />
             </div>
             <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
-            <h2 className="text-[12px] my-[4%] text-center md:text-[20px] md:my-[3%] lg:text-[14px] lg:my-[2%]">
+            <h2 className="text-[12px] my-[4%] text-center md:text-[20px] font-semibold md:my-[3%] lg:text-[14px] lg:my-[2%]">
               Purchase Successful
             </h2>
             <img
@@ -1291,7 +1333,7 @@ const AEDC = () => {
                   isDarkMode ? "text-white" : "text-[#000]"
                 }`}
               >
-                (&#8358;{aedcAmount}){" "}
+                (&#8358;{Number(aedcAmount).toLocaleString()}){" "}
               </span>
               from your NGN Nigerian Wallet to
             </p>
@@ -1312,7 +1354,7 @@ const AEDC = () => {
                   <div>{aedcDiscoType}</div>
                 </span>
               </div>
-              <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px]">
                 <p
                   className={`font-medium ${
                     isDarkMode ? "text-white" : "text-[#7C7C7C] "
@@ -1322,7 +1364,7 @@ const AEDC = () => {
                 </p>
                 <span>{selectedAedcMeterType} </span>
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px]">
                 <p
                   className={`font-medium ${
                     isDarkMode ? "text-white" : "text-[#7C7C7C] "
@@ -1333,7 +1375,7 @@ const AEDC = () => {
                 <span>{aedcMeterNumber} </span>
               </div>
 
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px]">
                 <p
                   className={`font-medium ${
                     isDarkMode ? "text-white" : "text-[#7C7C7C] "
@@ -1344,7 +1386,7 @@ const AEDC = () => {
                 <span>{aedcVerifiedName}</span>
               </div>
 
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px]">
                 <p
                   className={`font-medium ${
                     isDarkMode ? "text-white" : "text-[#7C7C7C] "
@@ -1352,7 +1394,7 @@ const AEDC = () => {
                 >
                   Phone Number
                 </p>
-                <span>0{aedcPhoneNumber}</span>
+                <span>{aedcPhoneNumber}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -1372,9 +1414,9 @@ const AEDC = () => {
                 >
                   Amount
                 </p>
-                <span>&#8358;{aedcAmount}</span>
+                <span>&#8358;{Number(aedcAmount).toLocaleString()}</span>
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px]">
                 <p
                   className={`font-medium ${
                     isDarkMode ? "text-white" : "text-[#7C7C7C] "
@@ -1384,7 +1426,7 @@ const AEDC = () => {
                 </p>
                 <span>Nigerian NGN Wallet</span>
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px]">
                 <p
                   className={`font-medium ${
                     isDarkMode ? "text-white" : "text-[#7C7C7C] "
@@ -1401,7 +1443,7 @@ const AEDC = () => {
                 isDarkMode ? "bg-slate-800" : "bg-[#F2FAFF]"
               }`}
             >
-              <p className="text-[8px] text-center md:text-[14px] md:w-[80%] lg:text-[14px] font-medium">
+              <p className="text-[8px] text-center md:text-[14px] md:w-[97%] lg:w-[90%] md:mx-auto lg:text-[14px] font-medium">
                 The electricity bills / token purchase has been generated
                 successfully. Please kindly check receipt to confirm the bills /
                 token. You can contact us for any further assistance.

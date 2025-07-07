@@ -58,6 +58,8 @@ const PHED = () => {
     setPhedOrderId,
     setPhedTransactionId,
     setPhedShowDescription,
+    setPhedFullName,
+    setPhedTransactionProduct,
     phedFetchedResponse,
     setPhedFetchedResponse,
     newBalance,
@@ -302,6 +304,7 @@ const PHED = () => {
   };
   const [successPopup, setSuccessPopup] = useState(false);
   const [failedPopup, setFailedPopup] = useState(false);
+  const [phedCustomerName, setPhedCustomerName] = useState("");
 
   const [errorMessage, setErrorMessage] = useState(false);
   const [pinSuccess, setPinSuccess] = useState(false);
@@ -315,48 +318,63 @@ const PHED = () => {
   const verifyMeterNumber = async (meterNumber) => {
     async function HandleMeterNumber() {
       const path = "bills/verify";
-      const body = {
-        disco_type: "portharcourt-electric",
-        meter_no: meterNumber,
-        meter_type: selectedPhedMeterType.toLowerCase(),
-      };
-      // console.log("body", body);
-      const SuccessHandler = () => {
-        setIsFailedMeterNumber(false);
-        function handleReceivedMeterData() {
-          if (phedFetchedResponse.name) {
-            setPhedVerifiedName(phedFetchedResponse.name);
-          } else {
-            setPhedVerifiedName("");
+      if (
+        meterNumber?.length === 13 &&
+        meterNumber !== "" &&
+        meterNumber !== null &&
+        meterNumber !== undefined
+      ) {
+        const body = {
+          disco_type: "portharcourt-electric",
+          meter_no: meterNumber,
+          meter_type: selectedPhedMeterType.toLowerCase(),
+        };
+        // console.log("body", body);
+        const SuccessHandler = () => {
+          setIsFailedMeterNumber(false);
+          function handleReceivedMeterData() {
+            if (phedFetchedResponse?.data?.name) {
+              setPhedCustomerName(phedFetchedResponse?.data?.name);
+            } else {
+              setPhedCustomerName("");
+            }
           }
-        }
-        handleReceivedMeterData();
-      };
-      const FailedHandler = () => {
-        setIsFailedMeterNumber(true);
-      };
+          handleReceivedMeterData();
+        };
+        const FailedHandler = () => {
+          setIsFailedMeterNumber(true);
+        };
 
-      await PostFunction(
-        path,
-        setMeterNumberLoading,
-        body,
-        SuccessHandler,
-        FailedHandler,
-        setPhedFetchedResponse
-      );
+        await PostFunction(
+          path,
+          setMeterNumberLoading,
+          body,
+          SuccessHandler,
+          FailedHandler,
+          setPhedFetchedResponse
+        );
+      }
     }
     HandleMeterNumber();
     // handleReceivedMeterData();
-    passedMeterName = phedFetchedResponse ? phedFetchedResponse.name : "";
+    passedMeterName = phedFetchedResponse
+      ? phedFetchedResponse?.data?.name
+      : "";
+  };
+
+  const handlePhedMeterNumber = async (e) => {
+    const inputValue = e.target.value;
+    setPhedMeterNumber(inputValue);
+    await verifyMeterNumber(inputValue);
   };
 
   const handleVerifiedName =
     phedMeterNumber?.length === 13 &&
     isFailedMeterNumber === false &&
     verifyMeterNumber &&
-    phedVerifiedName === ""
+    phedCustomerName === ""
       ? passedMeterName
-      : phedVerifiedName;
+      : phedCustomerName;
 
   const verifyPin = async () => {
     async function ElectricityHandler() {
@@ -374,6 +392,7 @@ const PHED = () => {
       // const parsedAmount = parseInt(amount, 10);
       const SuccessHandler = () => {
         setInputPinPopUp(false);
+        setPhedDiscoType(phedFetchedResponse?.data?.disco_type);
         setSuccessPopup(true);
       };
       const FailedHandler = () => {
@@ -403,12 +422,15 @@ const PHED = () => {
   function handleReceivedData() {
     setLoading(true);
     const receivedData = () => {
-      setPhedBillGenerate(phedFetchedResponse.data.bill_generated);
-      setPhedOrderId(phedFetchedResponse.data.order_id);
-      setPhedTransactionId(phedFetchedResponse.data.transaction_id);
-      setPhedServiceID(phedFetchedResponse.data.request_id);
-      setPhedShowDescription(phedFetchedResponse.data.description);
-      setPhedDiscoType(phedFetchedResponse.data.disco_type);
+      setPhedBillGenerate(phedFetchedResponse?.data?.bill_generated);
+      setPhedOrderId(phedFetchedResponse?.data?.order_id);
+      setPhedTransactionId(phedFetchedResponse?.data?.transaction_id);
+      setPhedServiceID(phedFetchedResponse?.data?.RequestID);
+      setPhedShowDescription(phedFetchedResponse?.data?.transaction_description);
+      setPhedDiscoType(phedFetchedResponse?.data?.disco_type);
+      setPhedVerifiedName(phedFetchedResponse?.data?.verified_name);
+      setPhedFullName(phedFetchedResponse?.data?.full_name);
+      setPhedTransactionProduct(phedFetchedResponse?.data?.transaction_product);
     };
     receivedData();
     if (receivedData) {
@@ -587,7 +609,7 @@ const PHED = () => {
                   }
                   border flex flex-col divide-y items-center text-[14px] md:text-[12px] lg:text-[16px] mt-20 lg:mt-20  rounded-[4px] md:rounded-[10px] absolute top-1 lg:top-[1rem] w-full z-[10] `}
                 >
-                  {productList.map((item) => (
+                  {productList?.map((item) => (
                     <div
                       key={item.name}
                       className={`pb-[18px] pt-[8px] md:py-[14px] font-bold cursor-pointer md:text-[12px] lg:text-[16px] w-full transition-all duration-300 hover:bg-slate-50 md:rounded-[0px] lg:mt- text-[12px] pl-[5px]
@@ -622,14 +644,18 @@ const PHED = () => {
                   value={phedMeterNumber}
                   // onChange={handleMeterNumber}
                   maxLength={13}
-                  onChange={(e) => {
-                    const newValue = e.target.value;
-                    setPhedMeterNumber(newValue);
-                    if (newValue?.length === 13 && !errors.phedMeterNumber) {
-                      verifyMeterNumber(newValue);
+                   onInput={(e) => {
+                    const numericValue = e.target.value.replace(/\D/g, "");
+                    e.target.value = numericValue;
+                    if (numericValue?.length === 13) {
+                      e.target.style.border = "2px solid green";
+                    } else {
+                      e.target.style.border = "2px solid red";
                     }
-                    // newValue.length === 13 && !errors.phedMeterNumber ? verifyMeterNumber(newValue) : setPhedVerifiedName("");
+                    setIsFailedMeterNumber(false);
+                    setErrors((prev) => ({ ...prev, phedMeterNumber: "" }));
                   }}
+                  onChange={handlePhedMeterNumber}
                   onClick={() => setShowProductList(false)}
                   className={`py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full w-full  ${
                     isDarkMode
@@ -694,6 +720,7 @@ const PHED = () => {
                     } else if (e.target.value?.length < 10) {
                       e.target.style.border = "2px solid red";
                     }
+                    setErrors((prev) => ({ ...prev, phedPhoneNumber: "" }));
                   }}
                   onBlur={(e) => {
                     isDarkMode
@@ -727,6 +754,9 @@ const PHED = () => {
                   type="text"
                   value={phedEmail}
                   onChange={handleEmail}
+                  onInput={()=>{
+                    setErrors((prev) => ({ ...prev, phedEmail: "" }));
+                  }}
                   className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
                     isDarkMode
                       ? "text-white bg-black border border-white"
@@ -740,7 +770,7 @@ const PHED = () => {
                 </div>
               )}
             </div>
-            <div className="flex flex-col gap-2 lg:gap-2.5">
+            <div className="flex flex-col relative gap-2 lg:gap-2.5">
               <div
                 className={`text-[#7E7E7E] text-[14px] lg:text-[16px] md:font-semibold font-normal ${
                   isDarkMode ? "text-white" : ""
@@ -761,13 +791,16 @@ const PHED = () => {
                   name="ikedcamount"
                   value={phedAmount}
                   onChange={handlePhedAmount}
+                  onInput={()=>{
+                    setAmountError("")
+                  }}
                   placeholder="Minimum of ₦1000"
                   className={`w-full py-[10.33px] pl-[5.867px] pr-1 md:py-3 md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] text-[12px] leading-[18px] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none
                  ${isDarkMode ? "text-white bg-black " : "text-[#7E7E7E]"}`}
                 />
               </div>
               {amountError && (
-                <p className="text-[14px] text-red-500 italic lg:text-[14px]">
+                <p className="text-[14px] absolute left-0 -bottom-[1.3rem] text-red-500 italic lg:text-[14px]">
                   {amountError}
                 </p>
               )}
@@ -844,7 +877,7 @@ const PHED = () => {
                     styles.countryDropDown
                   } shadow-xl border w-full lg:w-full  flex flex-col divide-y absolute top-20`}
                 >
-                  {countryList.map((country) => (
+                  {countryList?.map((country) => (
                     <div
                       className={`py-[18px] md:py-[14px] font-normal px-2 flex items-center gap-[5px] text-[12px] md:text-[14px] lg:text-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] transition-all duration-300 hover:bg-slate-50
                        ${
@@ -885,7 +918,7 @@ const PHED = () => {
             className={`text-[12px] mt-[30px] md:mt-[40px] bg-[#0008] md:w-fit lg:px-12 lg:text-[16px] lg:px md:py-1 md:rounded-md md:px-6 py-3 rounded-md font-semibold text-center text-white
             ${
               !phedMeterNumber ||
-              !phedVerifiedName ||
+              !phedCustomerName ||
               !phedPhoneNumber ||
               !phedEmail ||
               !selectedPhedMeterType ||
@@ -896,7 +929,7 @@ const PHED = () => {
             }`}
             disabled={
               !phedMeterNumber ||
-              !phedVerifiedName ||
+              !phedCustomerName ||
               !phedPhoneNumber ||
               !phedEmail ||
               !selectedPhedMeterType ||
@@ -957,7 +990,7 @@ const PHED = () => {
                   isDarkMode ? "text-white" : "text-[#000]"
                 }`}
               >
-                {selectedPhedMeterType} Meter (&#8358;{phedAmount}){" "}
+                {selectedPhedMeterType} Meter (&#8358;{Number(phedAmount).toLocaleString()}){" "}
               </span>
               {/* Points to <br></br>
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]">
@@ -1011,7 +1044,7 @@ const PHED = () => {
                 >
                   Verified Name
                 </p>
-                <span>{phedVerifiedName}</span>
+                <span>{phedCustomerName}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px]">
@@ -1042,7 +1075,7 @@ const PHED = () => {
                 >
                   Amount
                 </p>
-                <span>&#8358;{phedAmount}</span>
+                <span>&#8358;{Number(phedAmount).toLocaleString()}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -1083,7 +1116,7 @@ const PHED = () => {
                         isDarkMode ? "text-white" : "text-[#000] "
                       }`}
                     >
-                      {`(${newBalance})`}
+                      {`(₦${newBalance})`}
                     </span>
                   </p>
                 </div>
@@ -1268,7 +1301,7 @@ const PHED = () => {
                   isDarkMode ? "text-white" : "text-[#000]"
                 }`}
               >
-                (&#8358;{phedAmount})
+                (&#8358;{Number(phedAmount).toLocaleString()})
               </span>
               From your NGN Nigerian Wallet to
             </p>
@@ -1349,7 +1382,7 @@ const PHED = () => {
                 >
                   Amount
                 </p>
-                <span>&#8358;{phedAmount}</span>
+                <span>&#8358;{Number(phedAmount).toLocaleString()}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -1378,7 +1411,7 @@ const PHED = () => {
                 isDarkMode ? "bg-slate-800" : "bg-[#F2FAFF]"
               }`}
             >
-              <p className="text-[8px] text-center md:text-[14px] md:w-[80%] lg:text-[14px] font-medium">
+              <p className="text-[8px] text-center md:text-[14px] md:w-[97%] lg:w-[90%] md:mx-auto lg:text-[14px] font-medium">
                 The electricity bills / token purchase has been generated
                 successfully. Please kindly check receipt to confirm the bills /
                 token. You can contact us for any further assistance.

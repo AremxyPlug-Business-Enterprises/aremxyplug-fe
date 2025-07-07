@@ -34,10 +34,29 @@ export const BedcReceiptFailed = () => {
     bedcOrderId,
     bedcTransactionId,
     bedcShowDescription,
+    bedcBillGenerate,
+    bedcFullName,
+    bedcTransactionProduct,
     bedcFetchedResponse,
   } = useContext(ContextProvider);
 
   const message = bedcFetchedResponse.data;
+
+  const networkProduct =
+    selectedBedcMeterType?.length > 0 ? selectedBedcMeterType : "";
+  const meterNo = bedcMeterNumber?.length > 0 ? bedcMeterNumber : "";
+  const verifiedName = bedcVerifiedName?.length > 0 ? bedcVerifiedName : "";
+  const fullName = bedcFullName?.length > 0 ? bedcFullName : "";
+  const phoneNo = bedcPhoneNumber?.length > 0 ? bedcPhoneNumber : "";
+  const productEmail = bedcEmail?.length > 0 ? bedcEmail : "";
+  const productAmount = bedcAmount?.length > 0 ? bedcAmount : "";
+  const disco_type = bedcDiscoType?.length > 0 ? bedcDiscoType : "";
+  const order_id = bedcOrderId === undefined ? "" : bedcOrderId;
+  const transaction_id = bedcTransactionId?.length > 0 ? bedcTransactionId : "";
+  const description =
+    bedcShowDescription?.length > 0 ? bedcShowDescription : "";
+  const transaction_product = bedcTransactionProduct?.length > 0 ? bedcTransactionProduct : "";
+  const bill_generated = bedcBillGenerate?.length > 0 ? bedcBillGenerate : "";
 
   function handleClick() {
     setSelectedBedcMeterType("");
@@ -142,7 +161,7 @@ export const BedcReceiptFailed = () => {
                 hour12: true,
               })}
             </span>
-            <p className="text-[9px] text-[#F95252] bg-[#FDCECE] rounded-[11px] border-2 border-[#F95252] py-[5px] px-[2px] text-center mx-[3px] lg:mx-[130px] md:mx-[80px] my-2 md:text-[14px] lg:text-[14px]">
+            <p className="text-[9px] text-[#F95252] bg-[#FDCECE] font-medium rounded-[11px] border-2 border-[#F95252] py-[5px] px-[2px] text-center mx-[3px] lg:mx-[130px] md:mx-[80px] my-2 md:text-[14px] lg:text-[14px]">
               {message}
             </p>
             <div className="flex flex-col gap-5">
@@ -169,7 +188,7 @@ export const BedcReceiptFailed = () => {
                       <div>
                         <img className="w-[30px]" src={logo2} alt="" />
                       </div>
-                      <div>{bedcDiscoType}</div>
+                      <div className="font-medium capitalize">{disco_type}</div>
                     </span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -180,7 +199,7 @@ export const BedcReceiptFailed = () => {
                     >
                       Meter Type
                     </p>
-                    <span>{selectedBedcMeterType} </span>
+                    <span>{networkProduct} </span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <p
@@ -190,7 +209,7 @@ export const BedcReceiptFailed = () => {
                     >
                       Meter Number
                     </p>
-                    <span>{bedcMeterNumber} </span>
+                    <span>{meterNo} </span>
                   </div>
 
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -201,7 +220,7 @@ export const BedcReceiptFailed = () => {
                     >
                       Verified Name
                     </p>
-                    <span>{bedcVerifiedName}</span>
+                    <span>{verifiedName}</span>
                   </div>
 
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -212,7 +231,7 @@ export const BedcReceiptFailed = () => {
                     >
                       Phone Number
                     </p>
-                    <span>{bedcPhoneNumber}</span>
+                    <span>{phoneNo}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <p
@@ -222,7 +241,7 @@ export const BedcReceiptFailed = () => {
                     >
                       Email
                     </p>
-                    <span>{bedcEmail}</span>
+                    <span>{productEmail}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <p
@@ -232,7 +251,7 @@ export const BedcReceiptFailed = () => {
                     >
                       Amount
                     </p>
-                    <span>&#8358;{bedcAmount}</span>
+                    <span>&#8358;{Number(productAmount).toLocaleString()}</span>
                   </div>
                 </div>
                 <div className="flex gap-[5px] items-center mt-[10px] md:mt-[30px] text-[10px] lg:text-[16px] font-extrabold">
@@ -252,7 +271,7 @@ export const BedcReceiptFailed = () => {
                     >
                       Customer Name
                     </p>
-                    <span>{bedcVerifiedName}</span>
+                    <span>{verifiedName || fullName}</span>
                   </div>
 
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -280,28 +299,30 @@ export const BedcReceiptFailed = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className={`${isDarkMode ? "text-white" : "text-[#0008]"}`}>Product</p>
-                  <span>Electricity Bills</span>
+                  {/* <span>Electricity Bills</span> */}
+                  <span>{transaction_product}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className={`${isDarkMode ? "text-white" : "text-[#0008]"}`}>Description</p>
-                  <span>{bedcShowDescription}</span>
+                  <span>{description}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className={`${isDarkMode ? "text-white" : "text-[#0008]"}`}>Bill / Token Generated</p>
-                  <span>Instantly</span>
+                  {/* <span>Instantly</span> */}
+                  {bill_generated}
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className={`${isDarkMode ? "text-white" : "text-[#0008]"}`}>Order Number</p>
-                  <span>{bedcOrderId}</span>
+                  <span>{Number(order_id)}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className={`${isDarkMode ? "text-white" : "text-[#0008]"}`}>Transaction ID</p>
-                  <span>{bedcTransactionId}</span>
+                  <span>{transaction_id}</span>
                 </div>
               </div>
             </div>
             <div className={`rounded-[8px] bg-[#E2F3FF] mx-4 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px] ${isDarkMode ? "bg-slate-800" : "bg-[#E2F3FF]"}`}>
-              <p className="text-[8px] text-center mx-auto w-[200px] md:text-[14px] md:w-[80%] lg:text-[16px]">
+              <p className={`text-[8px] text-center mx-auto w-[200px] md:text-[14px] md:w-[80%] lg:text-[16px] font-medium ${isDarkMode ? "text-white": "text-[#7C7C7C]"}`}>
                 Earn free points on every successful transactions, redeem your
                 earned points to real money, withdrawn to your bank account
                 instantly.
@@ -322,7 +343,7 @@ export const BedcReceiptFailed = () => {
               onClick={() => {
                 handleSaveAsPDFClick();
               }}
-              className={` border w-[111px]  flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] md:w-[8.5rem] rounded-[6px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%] ${isDarkMode ? "bg-black border-white" : "bg-[#ffffff] border-[#0003]"}`}
+              className={` border w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] md:w-[8.5rem] rounded-[6px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%] ${isDarkMode ? "bg-black border-white" : "bg-[#ffffff] border-[#0003]"}`}
             >
               Save as PDF
             </button>

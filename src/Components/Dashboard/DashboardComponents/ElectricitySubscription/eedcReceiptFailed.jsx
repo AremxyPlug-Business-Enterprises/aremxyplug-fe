@@ -34,10 +34,29 @@ export const EedcReceiptFailed = () => {
     eedcOrderId,
     eedcTransactionId,
     eedcShowDescription,
+    eedcBillGenerate,
+    eedcFullName,
+    eedcTransactionProduct,
     eedcFetchedResponse,
   } = useContext(ContextProvider);
 
   const message = eedcFetchedResponse.data;
+
+  const networkProduct =
+    selectedEedcMeterType?.length > 0 ? selectedEedcMeterType : "";
+  const meterNo = eedcMeterNumber?.length > 0 ? eedcMeterNumber : "";
+  const verifiedName = eedcVerifiedName?.length > 0 ? eedcVerifiedName : "";
+  const fullName = eedcFullName?.length > 0 ? eedcFullName : "";
+  const phoneNo = eedcPhoneNumber?.length > 0 ? eedcPhoneNumber : "";
+  const productEmail = eedcEmail?.length > 0 ? eedcEmail : "";
+  const productAmount = eedcAmount?.length > 0 ? eedcAmount : "";
+  const disco_type = eedcDiscoType?.length > 0 ? eedcDiscoType : "";
+  const order_id = eedcOrderId === undefined ? "" : eedcOrderId;
+  const transaction_id = eedcTransactionId?.length > 0 ? eedcTransactionId : "";
+  const description =
+    eedcShowDescription?.length > 0 ? eedcShowDescription : "";
+  const transaction_product = eedcTransactionProduct?.length > 0 ? eedcTransactionProduct : "";
+  const bill_generated = eedcBillGenerate?.length > 0 ? eedcBillGenerate : "";
 
   function handleClick() {
     setSelectedEedcMeterType("");
@@ -142,7 +161,7 @@ export const EedcReceiptFailed = () => {
                 hour12: true,
               })}
             </span>
-            <p className="text-[9px] text-[#F95252] bg-[#FDCECE] rounded-[11px] border-2 border-[#F95252] py-[5px] px-[2px] text-center mx-[3px] lg:mx-[130px] md:mx-[80px] my-2 md:text-[14px] lg:text-[14px]">
+            <p className="text-[9px] text-[#F95252] bg-[#FDCECE] font-medium rounded-[11px] border-2 border-[#F95252] py-[5px] px-[2px] text-center mx-[3px] lg:mx-[130px] md:mx-[80px] my-2 md:text-[14px] lg:text-[14px]">
               {message}
             </p>
             <div className="flex flex-col gap-5">
@@ -169,7 +188,7 @@ export const EedcReceiptFailed = () => {
                       <div>
                         <img className="w-[30px]" src={logo2} alt="" />
                       </div>
-                      <div>{eedcDiscoType}</div>
+                      <div className="font-medium capitalize">{disco_type}</div>
                     </span>
                   </div>
                   <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -180,7 +199,7 @@ export const EedcReceiptFailed = () => {
                     >
                       Meter Type
                     </p>
-                    <span>{selectedEedcMeterType} </span>
+                    <span className="font-medium">{networkProduct} </span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <p
@@ -190,7 +209,7 @@ export const EedcReceiptFailed = () => {
                     >
                       Meter Number
                     </p>
-                    <span>{eedcMeterNumber} </span>
+                    <span className="font-medium">{meterNo} </span>
                   </div>
 
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -201,7 +220,7 @@ export const EedcReceiptFailed = () => {
                     >
                       Verified Name
                     </p>
-                    <span>{eedcVerifiedName}</span>
+                    <span className="font-medium">{verifiedName}</span>
                   </div>
 
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -212,7 +231,7 @@ export const EedcReceiptFailed = () => {
                     >
                       Phone Number
                     </p>
-                    <span>{eedcPhoneNumber}</span>
+                    <span className="font-medium">{phoneNo}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <p
@@ -222,7 +241,7 @@ export const EedcReceiptFailed = () => {
                     >
                       Email
                     </p>
-                    <span>{eedcEmail}</span>
+                    <span className="font-medium">{productEmail}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <p
@@ -232,7 +251,7 @@ export const EedcReceiptFailed = () => {
                     >
                       Amount
                     </p>
-                    <span>&#8358;{eedcAmount}</span>
+                    <span className="font-medium">&#8358;{Number(productAmount).toLocaleString()}</span>
                   </div>
                 </div>
                 <div className="flex gap-[5px] items-center mt-[10px] md:mt-[30px] text-[10px] lg:text-[16px] font-extrabold">
@@ -252,7 +271,7 @@ export const EedcReceiptFailed = () => {
                     >
                       Customer Name
                     </p>
-                    <span>{eedcVerifiedName}</span>
+                    <span className="font-medium">{eedcVerifiedName || fullName}</span>
                   </div>
 
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -263,7 +282,7 @@ export const EedcReceiptFailed = () => {
                     >
                       Wallet Type
                     </p>
-                    <span>Nigerian NGN Wallet </span>
+                    <span className="font-medium">Nigerian NGN Wallet </span>
                   </div>
                 </div>
               </div>
@@ -278,30 +297,30 @@ export const EedcReceiptFailed = () => {
                     alt="/"
                   />
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-medium lg:text-[16px]">
                   <p className={`${isDarkMode ? "text-white" : "text-[#0008]"}`}>Product</p>
-                  <span>Electricity Bills</span>
+                  <span>{transaction_product}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-medium lg:text-[16px]">
                   <p className={`${isDarkMode ? "text-white" : "text-[#0008]"}`}>Description</p>
-                  <span>{eedcShowDescription}</span>
+                  <span className="capitalize">{description}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-medium lg:text-[16px]">
                   <p className={`${isDarkMode ? "text-white" : "text-[#0008]"}`}>Bill / Token Generated</p>
-                  <span>Instantly</span>
+                  <span>{bill_generated}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-medium lg:text-[16px]">
                   <p className={`${isDarkMode ? "text-white" : "text-[#0008]"}`}>Order Number</p>
-                  <span>{eedcOrderId}</span>
+                  <span>{Number(order_id)}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-medium lg:text-[16px]">
                   <p className={`${isDarkMode ? "text-white" : "text-[#0008]"}`}>Transaction ID</p>
-                  <span>{eedcTransactionId}</span>
+                  <span>{transaction_id}</span>
                 </div>
               </div>
             </div>
             <div className={`rounded-[8px] bg-[#E2F3FF] mx-4 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px] ${isDarkMode ? "bg-slate-800" : "bg-[#E2F3FF]"}`}>
-              <p className="text-[8px] text-center mx-auto w-[200px] md:text-[14px] md:w-[80%] lg:text-[16px]">
+              <p className={`text-[8px] text-center mx-auto w-[200px] md:text-[14px] md:w-[80%] lg:text-[16px] font-medium ${isDarkMode ? "text-white": "text-[#7C7C7C]"}`}>
                 Earn free points on every successful transactions, redeem your
                 earned points to real money, withdrawn to your bank account
                 instantly.

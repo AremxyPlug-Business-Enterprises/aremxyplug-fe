@@ -58,6 +58,8 @@ const JED = () => {
     setJedOrderId,
     setJedTransactionId,
     setJedShowDescription,
+    setJedFullName,
+    setJedTransactionProduct,
     jedFetchedResponse,
     setJedFetchedResponse,
     newBalance,
@@ -302,6 +304,7 @@ const JED = () => {
   };
   const [successPopup, setSuccessPopup] = useState(false);
   const [failedPopup, setFailedPopup] = useState(false);
+  const [jedCustomerName, setJedCustomerName] = useState("");
 
   const [errorMessage, setErrorMessage] = useState(false);
   const [pinSuccess, setPinSuccess] = useState(false);
@@ -316,47 +319,62 @@ const JED = () => {
   const verifyMeterNumber = async (meterNumber) => {
     async function HandleMeterNumber() {
       const path = "bills/verify";
-      const body = {
-        disco_type: "jos-electric",
-        meter_no: meterNumber,
-        meter_type: selectedJedMeterType.toLowerCase(),
-      };
-      const SuccessHandler = () => {
-        setIsFailedMeterNumber(false);
-        function handleReceivedMeterData() {
-          if (jedFetchedResponse.name) {
-            setJedVerifiedName(jedFetchedResponse.name);
-          } else {
-            setJedVerifiedName("");
+      if (
+        meterNumber?.length === 13 &&
+        meterNumber !== "" &&
+        meterNumber !== null &&
+        meterNumber !== undefined
+      ) {
+        const body = {
+          disco_type: "jos-electric",
+          meter_no: meterNumber,
+          meter_type: selectedJedMeterType.toLowerCase(),
+        };
+        const SuccessHandler = () => {
+          setIsFailedMeterNumber(false);
+          function handleReceivedMeterData() {
+            if (jedFetchedResponse?.data?.name) {
+              setJedCustomerName(jedFetchedResponse?.data?.name);
+            } else {
+              setJedCustomerName("");
+            }
           }
-        }
-        handleReceivedMeterData();
-      };
-      const FailedHandler = () => {
-        setIsFailedMeterNumber(true);
-      };
+          handleReceivedMeterData();
+        };
+        const FailedHandler = () => {
+          setIsFailedMeterNumber(true);
+        };
 
-      await PostFunction(
-        path,
-        setMeterNumberLoading,
-        body,
-        SuccessHandler,
-        FailedHandler,
-        setJedFetchedResponse
-      );
+        await PostFunction(
+          path,
+          setMeterNumberLoading,
+          body,
+          SuccessHandler,
+          FailedHandler,
+          setJedFetchedResponse
+        );
+      }
     }
     HandleMeterNumber();
     // handleReceivedMeterData();
-    passedMeterName = jedFetchedResponse ? jedFetchedResponse.name : "";
+    passedMeterName = jedFetchedResponse
+      ? jedFetchedResponse?.data?.name
+      : "";
+  };
+
+  const handleJedMeterNumber = async (e) => {
+    const inputValue = e.target.value;
+    setJedMeterNumber(inputValue);
+    await verifyMeterNumber(inputValue);
   };
 
   const handleVerifiedName =
     jedMeterNumber?.length === 13 &&
     isFailedMeterNumber === false &&
     verifyMeterNumber &&
-    jedVerifiedName === ""
+    jedCustomerName === ""
       ? passedMeterName
-      : jedVerifiedName;
+      : jedCustomerName;
 
   const verifyPin = async () => {
     async function ElectricityHandler() {
@@ -374,6 +392,7 @@ const JED = () => {
       // const parsedAmount = parseInt(amount, 10);
       const SuccessHandler = () => {
         setInputPinPopUp(false);
+        setJedDiscoType(jedFetchedResponse?.data?.disco_type);
         setSuccessPopup(true);
       };
       const FailedHandler = () => {
@@ -403,12 +422,15 @@ const JED = () => {
   function handleReceivedData() {
     setLoading(true);
     const receivedData = () => {
-      setJedBillGenerate(jedFetchedResponse.data.bill_generated);
-      setJedOrderId(jedFetchedResponse.data.order_id);
-      setJedTransactionId(jedFetchedResponse.data.transaction_id);
-      setJedServiceID(jedFetchedResponse.data.request_id);
-      setJedShowDescription(jedFetchedResponse.data.description);
-      setJedDiscoType(jedFetchedResponse.data.disco_type);
+      setJedBillGenerate(jedFetchedResponse?.data?.bill_generated);
+      setJedOrderId(jedFetchedResponse?.data?.order_id);
+      setJedTransactionId(jedFetchedResponse?.data?.transaction_id);
+      setJedServiceID(jedFetchedResponse?.data?.RequestID);
+      setJedShowDescription(jedFetchedResponse?.data?.transaction_description);
+      setJedDiscoType(jedFetchedResponse?.data?.disco_type);
+      setJedVerifiedName(jedFetchedResponse?.data?.verified_name);
+      setJedFullName(jedFetchedResponse?.data?.full_name);
+      setJedTransactionProduct(jedFetchedResponse?.data?.transaction_product);
     };
     receivedData();
     if (receivedData) {
@@ -586,7 +608,7 @@ const JED = () => {
                 }
                 border flex flex-col divide-y items-center text-[14px] md:text-[12px] lg:text-[16px] mt-20 lg:mt-20 shadow-md rounded-[4px] md:rounded-[10px] absolute top-1 lg:top-[1rem] w-full z-[10]`}
                 >
-                  {productList.map((item) => (
+                  {productList?.map((item) => (
                     <div
                       key={item.name}
                       className={`pb-[18px] pt-[8px] md:py-[14px] font-bold cursor-pointer md:text-[12px] lg:text-[16px] w-full  md:rounded-[0px] lg:mt- text-[12px] pl-[5px] transition-all duration-300 hover:bg-slate-50
@@ -618,14 +640,18 @@ const JED = () => {
                   type="text"
                   value={jedMeterNumber}
                   maxLength={13}
-                  onChange={(e) => {
-                    const newValue = e.target.value;
-                    setJedMeterNumber(newValue);
-                    if (newValue?.length === 13 && !errors.jedMeterNumber) {
-                      verifyMeterNumber(newValue);
+                  onInput={(e) => {
+                    const numericValue = e.target.value.replace(/\D/g, "");
+                    e.target.value = numericValue;
+                    if (numericValue?.length === 13) {
+                      e.target.style.border = "2px solid green";
+                    } else {
+                      e.target.style.border = "2px solid red";
                     }
-                    // newValue.length === 13 && !errors.jedMeterNumber ? verifyMeterNumber(newValue) : setJedVerifiedName("");
+                    setIsFailedMeterNumber(false);
+                    setErrors((prev) => ({ ...prev, jedMeterNumber: "" }));
                   }}
+                  onChange={handleJedMeterNumber}
                   onClick={() => setShowProductList(false)}
                   className={`py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full w-full  ${
                     isDarkMode
@@ -694,6 +720,7 @@ const JED = () => {
                     } else if (e.target.value?.length < 10) {
                       e.target.style.border = "2px solid red";
                     }
+                    setErrors((prev) => ({ ...prev, jedPhoneNumber: "" }));
                   }}
                   onBlur={(e) => {
                     isDarkMode
@@ -729,6 +756,9 @@ const JED = () => {
                   type="text"
                   value={jedEmail}
                   onChange={handleEmail}
+                  onInput={()=>{
+                    setErrors((prev) => ({ ...prev, jedEmail: "" }));
+                  }}
                   className={`w-full py-[10.33px] pl-[5.867px] pr-1 md:py-3 md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none  ${
                     isDarkMode
                       ? "text-white bg-black border border-white"
@@ -745,7 +775,7 @@ const JED = () => {
                 </div>
               )}
             </div>
-            <div className="flex flex-col mt-[10px] gap-2 lg:gap-2.5">
+            <div className="flex flex-col relative mt-[10px] gap-2 lg:gap-2.5">
               <div
                 className={`text-[#7E7E7E] text-[14px] lg:text-[16px] md:font-semibold font-normal ${
                   isDarkMode ? "text-white" : ""
@@ -766,13 +796,16 @@ const JED = () => {
                   name="ikedcamount"
                   value={jedAmount}
                   onChange={handleJedAmount}
+                  onInput={()=>{
+                    setAmountError("")
+                  }}
                   placeholder="Minimum of ₦1000"
                   className={`w-full py-[10.33px] pl-[5.867px] pr-1 md:py-3 md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] text-[12px] leading-[18px] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none
                  ${isDarkMode ? "text-white bg-black " : "text-[#7E7E7E]"}`}
                 />
               </div>
               {amountError && (
-                <p className="text-[14px] text-red-500 italic lg:text-[14px]">
+                <p className="text-[14px] absolute left-0 -bottom-[1.3rem] text-red-500 italic lg:text-[14px]">
                   {amountError}
                 </p>
               )}
@@ -849,7 +882,7 @@ const JED = () => {
                     styles.countryDropDown
                   } shadow-xl border w-full lg:w-full  flex flex-col divide-y absolute top-20`}
                 >
-                  {countryList.map((country) => (
+                  {countryList?.map((country) => (
                     <div
                       className={`py-[18px] md:py-[14px] font-normal px-2 flex items-center gap-[5px] text-[12px] md:text-[14px] lg:text-[16px] transition-all duration-300 hover:bg-slate-50, shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
                       ${
@@ -888,7 +921,7 @@ const JED = () => {
             className={`text-[12px] mt-[30px] md:mt-[40px] bg-[#0008] md:w-fit lg:px-12 lg:text-[16px] lg:px md:py-1 md:rounded-md md:px-6 py-3 rounded-md font-semibold text-center text-white
             ${
               !jedMeterNumber ||
-              !jedVerifiedName ||
+              !jedCustomerName ||
               !jedPhoneNumber ||
               !jedEmail ||
               !selectedJedMeterType ||
@@ -899,7 +932,7 @@ const JED = () => {
             }`}
             disabled={
               !jedMeterNumber ||
-              !jedVerifiedName ||
+              !jedCustomerName ||
               !jedPhoneNumber ||
               !jedEmail ||
               !selectedJedMeterType ||
@@ -960,7 +993,7 @@ const JED = () => {
                   isDarkMode ? "text-white" : "text-[#000]"
                 }`}
               >
-                {selectedJedMeterType} Meter (&#8358;{jedAmount}){" "}
+                {selectedJedMeterType} Meter (&#8358;{Number(jedAmount).toLocaleString()}){" "}
               </span>
               {/* Points to <br></br>
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]">
@@ -1014,7 +1047,7 @@ const JED = () => {
                 >
                   Verified Name
                 </p>
-                <span>{jedVerifiedName}</span>
+                <span>{jedCustomerName}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px]">
@@ -1045,7 +1078,7 @@ const JED = () => {
                 >
                   Amount
                 </p>
-                <span>&#8358;{jedAmount}</span>
+                <span>&#8358;{Number(jedAmount).toLocaleString()}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px]">
                 <p
@@ -1086,7 +1119,7 @@ const JED = () => {
                         isDarkMode ? "text-white" : "text-[#000] "
                       }`}
                     >
-                      {`(${newBalance})`}
+                      {`(₦${newBalance})`}
                     </span>
                   </p>
                 </div>
@@ -1271,7 +1304,7 @@ const JED = () => {
                   isDarkMode ? "text-white" : "text-[#000]"
                 }`}
               >
-                (&#8358;{jedAmount})
+                (&#8358;{Number(jedAmount).toLocaleString()})
               </span>
               From your NGN Nigerian Wallet to
             </p>
@@ -1352,7 +1385,7 @@ const JED = () => {
                 >
                   Amount
                 </p>
-                <span>&#8358;{jedAmount}</span>
+                <span>&#8358;{Number(jedAmount).toLocaleString()}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p
@@ -1381,7 +1414,7 @@ const JED = () => {
                 isDarkMode ? "bg-slate-800" : "bg-[#F2FAFF]"
               }`}
             >
-              <p className="text-[8px] text-center md:text-[14px] md:w-[80%] lg:text-[14px] font-medium">
+              <p className="text-[8px] text-center md:text-[14px] md:w-[97%] lg:w-[90%] md:mx-auto lg:text-[14px] font-medium">
                 The electricity bills / token purchase has been generated
                 successfully. Please kindly check receipt to confirm the bills /
                 token. You can contact us for any further assistance.

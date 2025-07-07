@@ -34,7 +34,9 @@ export const BedcReceipt = () => {
     bedcOrderId,
     bedcTransactionId,
     bedcShowDescription,
+    bedcTransactionProduct,
     bedcBillGenerate,
+    bedcFullName,
   } = useContext(ContextProvider);
 
   const navigate = useNavigate();
@@ -45,6 +47,7 @@ export const BedcReceipt = () => {
     selectedBedcMeterType?.length > 0 ? selectedBedcMeterType : "";
   const meterNo = bedcMeterNumber?.length > 0 ? bedcMeterNumber : "";
   const verifiedName = bedcVerifiedName?.length > 0 ? bedcVerifiedName : "";
+  const fullName = bedcFullName?.length > 0 ? bedcFullName : "";
   const phoneNo = bedcPhoneNumber?.length > 0 ? bedcPhoneNumber : "";
   const productEmail = bedcEmail?.length > 0 ? bedcEmail : "";
   const productAmount = bedcAmount?.length > 0 ? bedcAmount : "";
@@ -54,6 +57,7 @@ export const BedcReceipt = () => {
   const description =
     bedcShowDescription?.length > 0 ? bedcShowDescription : "";
   const bill_generated = bedcBillGenerate?.length > 0 ? bedcBillGenerate : "";
+  const transaction_product = bedcTransactionProduct?.length > 0 ? bedcTransactionProduct : "";
 
   function handleClick() {
     setSelectedBedcMeterType("");
@@ -152,11 +156,11 @@ export const BedcReceipt = () => {
                 hour12: true,
               })}
             </span>
-            <p className={`text-[9px] text-[#27AE60] bg-[#D5F6E3] rounded-[11px] border-2 border-[#27AE60] py-[5px] px-[2px] text-center mx-[5px] lg:mx-[150px] md:mx-[100px] my-2 md:text-[14px] lg:text-[14px] `}>
+            <p className={`text-[9px] text-[#27AE60] bg-[#D5F6E3] rounded-[11px] border-2 border-[#27AE60] py-[5px] lg:py-[10px] px-[2px] text-center mx-[5px] lg:mx-[100px] md:mx-[70px] my-2 md:text-[14px] lg:text-[14px] `}>
               {/* ${isDarkMode ? "bg-black":""} */}
               You have successfully purchased{" "}
               <span className={`font-extrabold text-[10px] md:text-[14px] ${isDarkMode ? "text-white": "text-[#000]"}`}>
-                Benin {networkProduct} Meter &#8358;{productAmount}.00{" "}
+                Benin {networkProduct} Meter &#8358;{Number(productAmount).toLocaleString()}.00{" "}
               </span>
               from your NGN wallet to{" "}
             </p>
@@ -178,34 +182,34 @@ export const BedcReceipt = () => {
                       <div>
                         <img className="w-[30px]" src={logo2} alt="" />
                       </div>
-                      <div>{disco_type}</div>
+                      <div className="font-medium capitalize">{disco_type}</div>
                     </span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <p className={`font-medium ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Meter Type</p>
-                    <span>{networkProduct} </span>
+                    <span className="font-medium">{networkProduct} </span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <p className={`font-medium ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Meter Number</p>
-                    <span>{meterNo} </span>
+                    <span className="font-medium">{meterNo} </span>
                   </div>
 
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <p className={`font-medium ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Verified Name</p>
-                    <span>{verifiedName}</span>
+                    <span className="font-medium">{verifiedName}</span>
                   </div>
 
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <p className={`font-medium ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Phone Number</p>
-                    <span>0{phoneNo}</span>
+                    <span className="font-medium">0{phoneNo}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <p className={`font-medium ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Email</p>
-                    <span>{productEmail}</span>
+                    <span className="font-medium">{productEmail}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <p className={`font-medium ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Amount</p>
-                    <span>&#8358;{productAmount}</span>
+                    <span className="font-medium">&#8358;{Number(productAmount).toLocaleString()}</span>
                   </div>
                 </div>
                 <div className="flex gap-[5px] items-center mt-[10px] md:mt-[30px] text-[10px] lg:text-[16px] font-extrabold">
@@ -219,12 +223,12 @@ export const BedcReceipt = () => {
                 <div className="flex flex-col gap-3 pt-[10px]">
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <p className={`font-medium ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Customer Name</p>
-                    <span>{verifiedName}</span>
+                    <span className="font-medium">{verifiedName || fullName}</span>
                   </div>
 
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                     <p className={`font-medium ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Wallet Type</p>
-                    <span>Nigerian NGN Wallet </span>
+                    <span className="font-medium">Nigerian NGN Wallet </span>
                   </div>
                 </div>
               </div>
@@ -239,23 +243,24 @@ export const BedcReceipt = () => {
                     alt="/"
                   />
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-medium lg:text-[16px]">
                   <p className={`${isDarkMode ? "text-white" : "text-[#0008]"}`}>Product</p>
-                  <span>Electricity Bills</span>
+                  {/* <span>Electricity Bills</span> */}
+                  <span>{transaction_product}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-medium lg:text-[16px]">
                   <p className={`${isDarkMode ? "text-white" : "text-[#0008]"}`}>Description</p>
-                  <span>{description}</span>
+                  <span className="capitalize">{description}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-medium lg:text-[16px]">
                   <p className={`${isDarkMode ? "text-white" : "text-[#0008]"}`}>Bill / Token Generated</p>
                   <span>{bill_generated}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-medium lg:text-[16px]">
                   <p className={`${isDarkMode ? "text-white" : "text-[#0008]"}`}>Order Number</p>
                   <span>{order_id}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-medium  lg:text-[16px]">
                   <p className={`${isDarkMode ? "text-white" : "text-[#0008]"}`}>Transaction ID</p>
                   <span>{transaction_id}</span>
                 </div>
@@ -264,7 +269,7 @@ export const BedcReceipt = () => {
             <div className={`rounded-[8px] bg-[#E2F3FF] mx-4 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px] ${
                 isDarkMode ? "bg-slate-800" : "bg-[#E2F3FF]"
               }`}>
-              <p className="text-[8px] text-center mx-auto w-[200px] md:text-[14px] md:w-[80%] lg:text-[16px]">
+              <p className={`text-[8px] text-center mx-auto w-[200px] md:text-[14px] md:w-[80%] lg:text-[16px] font-medium ${isDarkMode ? "text-white": "text-[#7C7C7C]"}`}>
                 Earn free points on every successful transactions, redeem your
                 earned points to real money, withdrawn to your bank account
                 instantly.

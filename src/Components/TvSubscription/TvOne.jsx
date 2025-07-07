@@ -648,7 +648,7 @@ const GoTv = () => {
                                   .classList.remove("DropIt");
                                 console.log(e);
                               }}
-                              className={`pb-[20px] pt-[20px] md:pb-[14px] md:pt-[14px] font-weight-bold text-[14px]  leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500]  
+                              className={`pb-[20px] pt-[20px] md:pb-[14px] md:pt-[14px] font-weight-bold text-[14px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500]  
          md:text-[13.227px] md:leading-[17.195px] 
          shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] 
          lg:text-[16px] lg:leading-[20.8px] cursor-pointer ${
