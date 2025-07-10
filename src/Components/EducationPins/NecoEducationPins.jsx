@@ -100,7 +100,6 @@ export default function NecoEducationPins() {
     const SuccessHandler = () => {
       setNecoEduResponse((response) => {
         const amount = response?.data?.data?.data?.Amount;
-        console.log("amount", amount);
         if (amount) {
           setNecoQuantityAmount(amount);
         } else {
@@ -112,7 +111,7 @@ export default function NecoEducationPins() {
 
     const FailedHandler = (ErrorType) => {
       if (ErrorType === "Server error") {
-        alert("Unable to get WAEC PINS. Please try again later");
+        alert("Unable to get NECO PINS. Please try again later");
       } else if (ErrorType === "unauthorised") {
         return setSessionModal(true);
       }
@@ -290,8 +289,12 @@ export default function NecoEducationPins() {
   }
 
   const [balanceStatus, setBalanceStatus] = useState("");
-  let balanceStringToNum = Number(newBalance);
-  let educationAmountToNumber = Number(necoEducationAmount);
+  let balanceStringToNum = Number(newBalance || updateBalance);
+
+  // let educationAmountToNumber = Number(necoEducationAmount);
+  let educationAmountToNumber = String(
+    necoEducationAmount.replace(/[₦,]/g, "")
+  );
   let CheckSufficiency = educationAmountToNumber > balanceStringToNum;
   useEffect(() => {
     const HandleBalanceStatus = () => {
@@ -311,12 +314,11 @@ export default function NecoEducationPins() {
 
   const waecTransactionSuccessClose = () => {
     setTransactSuccessPopUp(false);
-    
   };
   // const necoReceipt = () => {
   //   setTransactSuccessPopUp(false);
   // };
-  const necoEduPinSuccess = (e) => {
+  const necoEduPinSuccess = () => {
     setTransactSuccessPopUp(true);
     setNecoEducationConfirm(false);
     setInputPin("");
@@ -326,19 +328,19 @@ export default function NecoEducationPins() {
     setNecoFailedTransaction(true);
     setInputPin("");
   };
- 
+
   const [pinSuccess, setPinSuccess] = useState(false);
   const [pinFailed, setPinFailed] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
 
   const handleNecoSubmitPost = async () => {
     async function EduPinHandler() {
-      // const id = 1;
       const path = `edu`;
       const body = {
         exam_type: necoExamType.toLowerCase(),
         phone_no: necoEducationPinPhone,
-        amount: String(necoEducationAmount),
+        // amount: String(parseInt(Number(necoEducationAmount), 10)),
+         amount: String(necoEducationAmount.replace(/[₦,]/g, "")),
         email: necoEducationPinEmail,
         quantity: parseInt(necoQuantityResult.split(" (")[0].slice(0, 1)),
       };
@@ -376,9 +378,7 @@ export default function NecoEducationPins() {
       setNecoPinsGenerated(necoEduResponse?.data?.pins_generated);
       setNecoOrderId(necoEduResponse?.data?.order_id);
       setNecoTransactionId(necoEduResponse?.data?.transaction_id);
-      setNecoShowDescription(
-        necoEduResponse?.data?.transaction_description
-      );
+      setNecoShowDescription(necoEduResponse?.data?.transaction_description);
       setNecoFullName(necoEduResponse?.data?.full_name);
       setNecoTransactionProduct(necoEduResponse?.data?.transaction_product);
     };
@@ -400,7 +400,7 @@ export default function NecoEducationPins() {
         <div className="">
           {/* Hero-section */}
           <HeroComponent />
-          <div className="flex lg:gap-[8px] items-center gap-[4.694px] md:gap-[5.868px] mb-[20px] lg:mb-[50px] md:mb-[30px]">
+          <div className="flex lg:gap-[8px] items-center md:gap-[5.868px] gap-[4.694px] mb-[20px] lg:mb-[50px] md:mb-[30px]">
             <h2
               className={`font-semibold text-sm leading-[12px] md:text-xs md:leading-[11.267px] lg:text-base lg:leading-[20.2px] ${
                 isDarkMode ? "text-white" : "text-[#7E7E7E]"
@@ -410,7 +410,7 @@ export default function NecoEducationPins() {
             </h2>
 
             <img
-              className="h-[12px] w-[12px] md:h-[14.083px] md-w-[14.083px] lg:h-[24px] lg:w-[24px] self-center"
+              className="h-3 w-3 md:h-[14.083px] md-w-[14.083px] lg:h-6 lg:w-6 self-center"
               src={NecoImg}
               alt=""
             />
@@ -429,10 +429,10 @@ export default function NecoEducationPins() {
             />
           </div>
           {/* Input for Request of examination pins  */}
-          <form action="">
+          <div action="">
             <div className=" flex flex-col gap-5 md:gap-0">
               {/* container for the first two input */}
-              <div className=" w-full flex flex-col md:flex-row gap-5 md:gap-3 lg:gap-[22px] md:my-2 lg:my-4">
+              <div className="  w-full flex flex-col md:flex-row gap-5 md:gap-3 lg:gap-[22px] md:my-2 lg:my-4">
                 {/* First Step Confirm exam type */}
                 <div className="relative flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
                   {/* header */}
@@ -448,7 +448,6 @@ export default function NecoEducationPins() {
                     // className="w-full relative"
                     onClick={(e) => {
                       necoExamDropDown();
-                      console.log(e.target.value);
                       setNecoQuantityActive(false);
                       setNecoMethodActive(false);
                     }}
@@ -534,7 +533,6 @@ export default function NecoEducationPins() {
                     }`}
                     onClick={(e) => {
                       necoQuantityDropDown();
-                      console.log(e.target.value);
                       setNecoExamActive(false);
                       setNecoMethodActive(false);
                     }}
@@ -754,7 +752,6 @@ export default function NecoEducationPins() {
                     // className="w-full relative"
                     onClick={(e) => {
                       necoMethodDropDown();
-                      console.log(e.target.value);
                       setNecoExamActive(false);
                       setNecoQuantityActive(false);
                     }}
@@ -797,7 +794,9 @@ export default function NecoEducationPins() {
                             onClick={() => {
                               if (methodOption.method === "NGN Wallet") {
                                 setNecoPaymentResult(
-                                  `${methodOption.method} ${methodOption.balance}`
+                                  newBalance === "" || newBalance === null
+                                    ? `${methodOption.method} ₦${methodOption.balance}`
+                                    : `${methodOption.method} ₦${newBalance}`
                                 );
                                 setNecoWalletBalance(methodOption.balance);
                                 setNecoImageState(methodOption.flag);
@@ -893,7 +892,8 @@ export default function NecoEducationPins() {
                     >
                       You are about to purchase{" "}
                       <span className="font-semibold">{necoExamType} </span> PIN
-                      (₦{necoEducationAmount}) from your {necoPaymentResult.split(" (")[0]} to
+                      (₦{necoEducationAmount}) from your{" "}
+                      {necoPaymentResult.split(" ₦")[0]} to
                     </h2>
 
                     <div className="flex flex-col gap-[15px] px-[20px] mt-[50px] md:gap-[25px]">
@@ -983,7 +983,7 @@ export default function NecoEducationPins() {
                             className="text-[10px] leading-[12px]  md:text-xs 
                         md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium"
                           >
-                            {necoPaymentResult.split(" (")[0]}
+                            {necoPaymentResult.split(" ₦")[0]}
                           </h2>
                         </div>
                       </div>
@@ -1023,7 +1023,7 @@ export default function NecoEducationPins() {
                           </div>
                           <p className="text-[10px] md:text-sm  lg:text-base font-medium">
                             Available Balance{" "}
-                            <span className="text-[#00000063]">
+                            <span className="text-black font-medium">
                               {necoWalletBalance}
                             </span>
                           </p>
@@ -1041,7 +1041,9 @@ export default function NecoEducationPins() {
                       <div className="flex items-center justify-center mb-[60px]">
                         <button
                           className={`w-full md:w-fit text-white rounded-md px-[28px] text-[10px] md:text-xs leading-[15px] lg:text-base lg:leading-[24px] py-[15px] md:py-[10px] font-extrabold   ${
-                            CheckSufficiency ? "bg-gray-400" : "bg-primary"
+                            CheckSufficiency
+                              ? "bg-gray-400 cursor-not-allowed"
+                              : "bg-primary"
                           }`}
                           onClick={() => {
                             confirmButton();
@@ -1205,9 +1207,9 @@ export default function NecoEducationPins() {
                         className="text-[#000] font-semibold text-[10.9px] md:text-[14.9px]
                     lg:text-[16.9px]"
                       >
-                        {necoExamType} PIN{" "}
+                        {necoExamType}{" "}(₦{necoEducationAmount}){" "}
                       </span>
-                      from your {necoPaymentResult.split(" (")[0]} to{" "}
+                      from your {necoPaymentResult.split(" ₦")[0]} to{" "}
                     </p>
 
                     <div className="flex items-center justify-between">
@@ -1246,7 +1248,7 @@ export default function NecoEducationPins() {
                           className="text-[10px] leading-[12px]  md:text-xs md:leading-[11.92px] 
                       lg:text-base lg:leading-[24px] font-medium"
                         >
-                          {necoQuantityResult}
+                          {necoQuantityResult.split(" (")[0]}
                         </h2>
                       </div>
                     </div>
@@ -1308,7 +1310,7 @@ export default function NecoEducationPins() {
                           className="text-[10px] leading-[12px] md:text-xs 
                       md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium"
                         >
-                          {necoPaymentResult.split(" (")[0]}
+                          {necoPaymentResult.split(" ₦")[0]}
                         </h2>
                       </div>
                     </div>
@@ -1433,7 +1435,7 @@ export default function NecoEducationPins() {
                 Proceed
               </button>
             </div>
-          </form>
+          </div>
         </div>
 
         {/*==================== NECO TRANSACTION FAILED POP UP=========== */}
