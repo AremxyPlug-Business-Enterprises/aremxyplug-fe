@@ -78,9 +78,9 @@ const { isDarkMode, newBalance, setNewBalance } = useContext(ContextProvider);
 
    let balanceStringToNum = Number(newBalance);
 
-              let mtnDataAmount = Number(selectedAmountMtn.replace(/\D/g, ""));
+              let mtnDataAmount = Number(selectedAmountMtn?.replace(/\D/g, ""));
               const updateBalance = passDataBalance?.data ?  passDataBalance?.data?.data?.data?.balance : "";
-              const cleanUpBalanceToNumericOnly = Number(updateBalance.replace(/\D/g, ""));
+              const cleanUpBalanceToNumericOnly = Number(updateBalance?.replace(/\D/g, ""));
              let CheckSufficiency =  mtnDataAmount > (newBalance === "" || newBalance === null ? cleanUpBalanceToNumericOnly : balanceStringToNum);
            
 useEffect(() => {
@@ -110,18 +110,18 @@ useEffect(() => {
          if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
            const setAuthorisedToken = localStorage.setItem("authorisedLogin", newToken);
            if(setAuthorisedToken){
-            await inputPinHandler()
+           await fetchProducts()
            }
             }else{
     const setGetToken = localStorage.setItem("getToken", newToken);
       if(setGetToken){
-        await inputPinHandler();
+        await fetchProducts();
       }
       }
         }else{
           return setSessionModal(true)
         }
-          }else if(error && error.response.status === 500){
+          }else if(error && error?.response?.status === 500){
              alert("Service for mtn is currently not available, Try again later.")
           }
       } finally {

@@ -303,6 +303,7 @@ export default function NabtebEducationPins() {
     nabtebEducationAmount.replace(/[₦,]/g, "")
   );
   let CheckSufficiency = educationAmountToNumber > balanceStringToNum;
+  console.log(CheckSufficiency);
   useEffect(() => {
     const HandleBalanceStatus = () => {
       if (CheckSufficiency) {
