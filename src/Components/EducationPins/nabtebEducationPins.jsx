@@ -1501,6 +1501,10 @@ export default function NabtebEducationPins() {
           <Loader />
         </Modal>
       )}
+      {sessionModal && (
+        <HandleUserSession/>
+      )}
+      
       {/* {sessionModal && <HandleUserSession />} */}
     </DashBoardLayout>
   );
