@@ -48,7 +48,7 @@ export default function NabtebReceipt() {
 
   const currentNabtebChanges = () => {
     setNabtebQuantityResult("");
-    setNabtebExamType("");
+    setNabtebExamType("NABTEB");
     setNabtebEducationPinPhone("");
     setNabtebEducationPinEmail("");
     setNabtebPaymentResult("");
@@ -107,7 +107,7 @@ export default function NabtebReceipt() {
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
-                onClick={(e) => {
+                onClick={() => {
                   currentNabtebChanges();
                 }}
               />
@@ -116,7 +116,7 @@ export default function NabtebReceipt() {
           <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
           <div ref={contentRef}>
             {" "}
-            <h3 className="font-extrabold text-[12px] my-[2%] text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
+            <h3 className="font-extrabold text-[12px] my-[2%] text-center md:text-[20px] md:my-[3%] lg:text-base lg:my-[2%]">
               Transaction Receipt
             </h3>
             <div className="w-full flex justify-center ">
@@ -128,13 +128,13 @@ export default function NabtebReceipt() {
             </div>
             <h3
               className="font-extrabold text-[12px] mt-[2%] text-center 
-            md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]"
+            md:text-[20px] md:my-[3%] lg:text-base lg:my-[2%]"
             >
               Purchase Successful on
             </h3>
             <span
-              className="text-[11px] md:text-[14px] lg:text-[16px] text-[#0008]  
-            flex justify-center items-center font-[600]"
+              className="text-[11px] md:text-[14px] lg:text-base text-black  
+            flex justify-center items-center font-semibold"
             >
               {date.toLocaleDateString(undefined, {
                 year: "numeric",
@@ -151,100 +151,120 @@ export default function NabtebReceipt() {
                 className="text-[10px] p-[5.729px] border-[0.573px] rounded-[6.302px] md:p-[5.868px] md:border-[0.578px] 
              md:rounded-[6.455px]  lg:border-[1px] lg:rounded-[11px] border-[#27AE60] leading-[15px] md:leading-[20px]
            text-[#27AE60] bg-[#D5F6E3] lg:p-[10px] text-center my-2 md:text-[14px] 
-          lg:text-[16px]  lg:leading-[24px] font-medium md:mb-7"
+          lg:text-base  lg:leading-[24px] font-medium md:mb-7"
               >
                 You have successfully purchased{" "}
                 <span className="font-extrabold text-[10.9px] md:text-[14.9px] lg:text-[16.9px]">
-                  {nabtebExamType}{" "}
+                  {nabtebExamType} (₦{nabtebEducationAmount}){" "}
                 </span>
-                from your {nabtebPaymentResult.split(" (")[0]} to{" "}
+                from your {nabtebPaymentResult.split(" ₦")[0]} to{" "}
               </p>
             </div>
             <div className="flex flex-col  gap-7  md:gap-10">
               {/* ========================Recipient Info================== */}
               <div className="flex flex-col gap-[3px] w-[90%] mx-auto md:gap-[7px] lg:gap-[8px]">
-                <div className="flex gap-[5px] items-center text-[10px] lg:text-[16px] font-[600]">
+                <div className="flex gap-[5px] items-center text-[10px] lg:text-base font-semibold">
                   <p>Recipient Info</p>
                   <img
-                    className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
+                    className="w-[13px] h-[13px] lg:w-5 lg:h-5"
                     src="./Images/dashboardImages/arrowright.png"
                     alt="/"
                   />
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px] font-medium">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-base font-medium">
                   <p
                     className={` ${
-                      isDarkMode ? "text-white" : "text-[#0008] "
+                      isDarkMode ? "text-white" : "text-[#7C7C7C] "
                     }`}
                   >
                     Exam Type
                   </p>
-                  <span>{nabtebExamType}</span>
+                  <span
+                    className={` ${isDarkMode ? "text-white" : "text-black "}`}
+                  >
+                    {nabtebExamType}
+                  </span>
                 </div>
                 <div
                   className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between 
-                 lg:text-[16px] font-medium"
+                 lg:text-base font-medium"
                 >
                   <p
                     className={` ${
-                      isDarkMode ? "text-white" : "text-[#0008] "
+                      isDarkMode ? "text-white" : "text-[#7C7C7C] "
                     }`}
                   >
                     Quantity
                   </p>
-                  <span>{nabtebQuantityResult.split(" (")[0]}</span>
+                  <span
+                    className={` ${isDarkMode ? "text-white" : "text-black "}`}
+                  >
+                    {nabtebQuantityResult.split(" (")[0]}
+                  </span>
                 </div>
-                {/* <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                {/* <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-base">
                   <p className={` ${
-                      isDarkMode ? "text-white" : "text-[#0008] "
+                      isDarkMode ? "text-white" : "text-[#7C7C7C] "
                     }`}>Plan</p>
                   <span>{selectedOption}</span>
                 </div> */}
 
                 <div
                   className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
-                justify-between  lg:text-[16px] font-medium"
+                justify-between  lg:text-base font-medium"
                 >
                   <p
                     className={` ${
-                      isDarkMode ? "text-white" : "text-[#0008] "
+                      isDarkMode ? "text-white" : "text-[#7C7C7C] "
                     }`}
                   >
                     Phone Number
                   </p>
-                  <span>{nabtebEducationPinPhone}</span>
+                  <span
+                    className={` ${isDarkMode ? "text-white" : "text-black "}`}
+                  >
+                    {nabtebEducationPinPhone}
+                  </span>
                 </div>
                 <div
                   className="flex text-[10px] md:text-[14px] w-[90%] 
-                mx-auto justify-between  lg:text-[16px] font-medium"
+                mx-auto justify-between  lg:text-base font-medium"
                 >
                   <p
                     className={` ${
-                      isDarkMode ? "text-white" : "text-[#0008] "
+                      isDarkMode ? "text-white" : "text-[#7C7C7C] "
                     }`}
                   >
                     Email
                   </p>
-                  <span>{nabtebEducationPinEmail}</span>
+                  <span
+                    className={` ${isDarkMode ? "text-white" : "text-black "}`}
+                  >
+                    {nabtebEducationPinEmail}
+                  </span>
                 </div>
                 <div
                   className="flex text-[10px] md:text-[14px] w-[90%] 
-                mx-auto justify-between  lg:text-[16px] font-medium"
+                mx-auto justify-between  lg:text-base font-medium"
                 >
                   <p
                     className={` ${
-                      isDarkMode ? "text-white" : "text-[#0008] "
+                      isDarkMode ? "text-white" : "text-[#7C7C7C] "
                     }`}
                   >
                     Amount
                   </p>
-                  <span>{nabtebEducationAmount}</span>
+                  <span
+                    className={` ${isDarkMode ? "text-white" : "text-black "}`}
+                  >
+                    ₦{nabtebEducationAmount}
+                  </span>
                 </div>
               </div>
 
               {/* ===================Sender Info====================== */}
               <div className="flex flex-col gap-[3px] w-[90%] mx-auto md:gap-[7px] lg:gap-[8px]">
-                <div className="flex gap-[5px] items-center text-[10px] lg:text-[16px] font-[600]">
+                <div className="flex gap-[5px] items-center text-[10px] lg:text-base font-semibold">
                   <p>Sender Info</p>
                   <img
                     className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
@@ -254,115 +274,148 @@ export default function NabtebReceipt() {
                 </div>
                 <div
                   className="flex text-[10px] md:text-[14px] w-[90%] 
-                mx-auto justify-between  lg:text-[16px] font-medium"
+                mx-auto justify-between  lg:text-base font-medium"
                 >
                   <p
                     className={` ${
-                      isDarkMode ? "text-white" : "text-[#0008] "
+                      isDarkMode ? "text-white" : "text-[#7C7C7C] "
                     }`}
                   >
                     Customer Name
                   </p>
-                  <span>{fullName}</span>
+                  <span
+                    className={` ${isDarkMode ? "text-white" : "text-black "}`}
+                  >
+                    {fullName}
+                  </span>
                 </div>
                 <div
                   className="flex text-[10px] md:text-[14px] w-[90%] mx-auto \
-                justify-between  lg:text-[16px] font-medium"
+                justify-between  lg:text-base font-medium"
                 >
                   <p
                     className={` ${
-                      isDarkMode ? "text-white" : "text-[#0008] "
+                      isDarkMode ? "text-white" : "text-[#7C7C7C] "
                     }`}
                   >
                     Wallet Type
                   </p>
-                  {nabtebPaymentResult.split(" (")[0]}
+                  <span
+                    className={` ${isDarkMode ? "text-white" : "text-black "}`}
+                  >
+                    {nabtebPaymentResult.split(" ₦")[0]}
+                  </span>
                 </div>
               </div>
 
               {/* ===================Transaction Info==================== */}
               <div className="flex flex-col gap-[3px] w-[90%] mx-auto md:gap-[7px] lg:gap-[8px]">
-                <div className="flex gap-[5px] items-center text-[10px] lg:text-[16px] font-[600]">
+                <div className="flex gap-[5px] items-center text-[10px] lg:text-base font-semibold">
                   <p>Transaction Info</p>
                   <img
-                    className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
+                    className="w-[13px] h-[13px] lg:w-[20px] lg:h-[20px]"
                     src="./Images/dashboardImages/arrowright.png"
                     alt="/"
                   />
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px] font-medium">
-                  <p className="text-[#0008]">Product</p>
-                  <span>{transaction_product}</span>
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-base font-medium">
+                  <p
+                    className={` ${
+                      isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                    }`}
+                  >
+                    Product
+                  </p>
+                  <span
+                    className={` ${isDarkMode ? "text-white" : "text-black "}`}
+                  >
+                    {transaction_product}
+                  </span>
                 </div>
                 <div
                   className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  
-                lg:text-[16px] font-medium"
+                lg:text-base font-medium"
                 >
                   <p
                     className={` ${
-                      isDarkMode ? "text-white" : "text-[#0008] "
+                      isDarkMode ? "text-white" : "text-[#7C7C7C] "
                     }`}
                   >
                     Description
                   </p>
-                  <span>{description}</span>
+                  <span
+                    className={` ${isDarkMode ? "text-white" : "text-black "}`}
+                  >
+                    {description}
+                  </span>
                 </div>
                 <div
                   className="flex text-[10px] md:text-[14px] w-[90%] 
-                mx-auto justify-between  lg:text-[16px] font-medium"
+                mx-auto justify-between  lg:text-base font-medium"
                 >
                   <p
                     className={` ${
-                      isDarkMode ? "text-white" : "text-[#0008] "
+                      isDarkMode ? "text-white" : "text-[#7C7C7C] "
                     }`}
                   >
                     {" "}
                     NABTEB PIN Generated
                   </p>
-                  <span>{pins_generated[0]}</span>
+                  <span
+                    className={` ${isDarkMode ? "text-white" : "text-black "}`}
+                  >
+                    {pins_generated[0]}
+                  </span>
                 </div>
                 <div
                   className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
-                justify-between lg:text-[16px] font-medium"
+                justify-between lg:text-base font-medium"
                 >
                   <p
                     className={` ${
-                      isDarkMode ? "text-white" : "text-[#0008] "
+                      isDarkMode ? "text-white" : "text-[#7C7C7C] "
                     }`}
                   >
                     Order Number
                   </p>
-                  <span>{order_id}</span>
+                  <span
+                    className={` ${isDarkMode ? "text-white" : "text-black "}`}
+                  >
+                    {order_id}
+                  </span>
                 </div>
                 <div
                   className="flex text-[10px] md:text-[14px] w-[90%] 
-                mx-auto justify-between  lg:text-[16px] font-medium"
+                mx-auto justify-between  lg:text-base font-medium"
                 >
                   <p
                     className={` ${
-                      isDarkMode ? "text-white" : "text-[#0008] "
+                      isDarkMode ? "text-white" : "text-[#7C7C7C] "
                     }`}
                   >
                     Transaction ID
                   </p>
-                  <span>{transaction_id}</span>
+                  <span
+                    className={` ${isDarkMode ? "text-white" : "text-black "}`}
+                  >
+                    {transaction_id}
+                  </span>
                 </div>
               </div>
             </div>
             <div
-              className={`rounded-[8px] md:mt-7 mx-4 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px] ${
-              isDarkMode ? "text-white bg-black" : "text-[#7C7C7C] bg-[#E2F3FF]"
-            }`}
+              className={`rounded-[8px] bg-[#E2F3FF] mx-4 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px] ${
+                isDarkMode ? "bg-slate-800" : "bg-[#E2F3FF]"
+              }`}
             >
               <p
-                className="text-[8px] text-[#7E7E7E] text-center mx-auto w-[200px] md:text-[14px] 
-              md:w-[80%] lg:text-[16px] font-medium"
+                className={`text-[8px] text-center mx-auto w-[200px] md:text-[14px] md:w-[80%] lg:text-[16px] font-medium ${
+                  isDarkMode ? "text-white" : "text-[#7C7C7C]"
+                }`}
               >
-                <span className="md:block">
-                  Earn free points on every successful transactions, redeem your
-                  earned points{" "}
-                </span>
-                to real money, withdrawn to your bank account instantly.
+                Earn free points on every successful transactions, redeem your
+                earned points to real money, withdrawn to your bank account
+                instantly.
               </p>
             </div>
           </div>
@@ -377,8 +430,7 @@ export default function NabtebReceipt() {
               }}
               className={`bg-[#04177f] w-[111px] 
               cursor-pointer text-[12px] 
-            font-extrabold h-[40px] text-white rounded-[6px]
-             md:w-[150px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+            font-extrabold h-[40px] text-white rounded-[6px] md:w-[150px] md:rounded-[8px] md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%] `}
             >
               Share Receipt
             </button>
@@ -386,10 +438,9 @@ export default function NabtebReceipt() {
               onClick={() => {
                 nabtebSaveAsPDFClick();
               }}
-              className={`bg-[#ffffff] border-[1px] w-[111px] 
-            border-[#0003]  cursor-pointer text-[12px] font-extrabold h-[40px] 
-            rounded-[6px] md:w-[150px] md:rounded-[8px] md:text-[16px] 
-            lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+              className={`bg-[#ffffff] border-[1px] w-[111px] border-[#0003] cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[150px] md:rounded-[8px] md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%] ${
+                isDarkMode ? "text-black" : "text-white "
+              }`}
             >
               Save as PDF
             </button>
@@ -403,12 +454,12 @@ export default function NabtebReceipt() {
           } flex gap-[15px] justify-center items-center lg:mb-[%]`}
         >
           <div className="flex gap-2 justify-center items-center mb-[50px] md:mt-[200pz] mt-[100px] lg:mt-[100px]">
-            <h2 className="text-[8px] leading-[12px] lg:text-[16px]">
+            <h2 className="text-[8px] leading-[12px] lg:text-base">
               You need help?
             </h2>
             <Link
               to={`/ContactUs`}
-              className="text-[8px] leading-[12px] text-white bg-primary px-2 py-1 rounded-full lg:text-[16px] lg:px-[10px] lg:py-[10px]"
+              className="text-[8px] leading-[12px] text-white bg-primary px-2 py-1 rounded-full lg:text-base lg:px-[10px] lg:py-[10px]"
             >
               Contact Us
             </Link>

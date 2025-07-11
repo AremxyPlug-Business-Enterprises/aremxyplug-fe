@@ -47,7 +47,7 @@ export default function WaecReceipt() {
 
   const currentChanges = () => {
     setQuantityResult("");
-    setExamType("");
+    setExamType("WAEC");
     setEducationPinPhone("");
     setEducationPinEmail("");
     setPaymentResult("");
@@ -152,9 +152,9 @@ export default function WaecReceipt() {
               >
                 You have successfully purchased{" "}
                 <span className=" font-extrabold text-[10.9px] md:text-[14.9px] lg:text-[16.9px]">
-                  {examType}{" "}
+                  {examType}{" "}(₦{educationAmount}){" "}
                 </span>
-                from your {paymentResult.split(" (")[0]} to{" "}
+                from your {paymentResult.split(" ₦")[0]} to{" "}
               </p>
             </div>
             <div className="flex flex-col gap-7  md:gap-10">
@@ -176,25 +176,25 @@ export default function WaecReceipt() {
                 >
                   <p
                     className={` ${
-                      isDarkMode ? "text-white" : "text-[#0008] "
+                      isDarkMode ? "text-white" : "text-[#7C7C7C] "
                     }`}
                   >
                     Exam Type
                   </p>
-                  <span>WAEC</span>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{examType}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-medium lg:text-[16px]">
                   <p
                     className={` ${
-                      isDarkMode ? "text-white" : "text-[#0008] "
+                      isDarkMode ? "text-white" : "text-[#7C7C7C] "
                     }`}
                   >
                     Quantity
                   </p>
-                  <span>{quantityResult.split(" (")[0]}</span>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{quantityResult.split(" (")[0]}</span>
                 </div>
                 {/* <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Plan</p>
+                  <p className="text-black">Plan</p>
                   <span>{selectedOption}</span>
                 </div> */}
 
@@ -203,33 +203,33 @@ export default function WaecReceipt() {
                 justify-between lg:text-[16px] font-medium"
                 >
                   <p
-                    className={` ${isDarkMode ? "text-white" : "text-[#0008]"}`}
+                    className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C] "}`}
                   >
                     Phone Number
                   </p>
-                  <span>{educationPinPhone}</span>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{educationPinPhone}</span>
                 </div>
                 <div
                   className="flex text-[10px] md:text-[14px] w-[90%]
                  mx-auto justify-between font-medium lg:text-[16px]"
                 >
                   <p
-                    className={` ${isDarkMode ? "text-white" : "text-[#0008]"}`}
+                    className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C] "}`}
                   >
                     Email
                   </p>
-                  <span>{educationPinEmail}</span>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{educationPinEmail}</span>
                 </div>
                 <div
                   className="flex text-[10px] md:text-[14px] w-[90%]
                  mx-auto justify-between font-medium lg:text-[16px]"
                 >
                   <p
-                    className={` ${isDarkMode ? "text-white" : "text-[#0008]"}`}
+                    className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C] "}`}
                   >
                     Amount
                   </p>
-                  <span>{educationAmount}</span>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>₦{educationAmount}</span>
                 </div>
               </div>
 
@@ -251,7 +251,7 @@ export default function WaecReceipt() {
                   >
                     Customer Name
                   </p>
-                  <span>{fullName}</span>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{fullName}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px] font-medium">
                   <p
@@ -261,7 +261,10 @@ export default function WaecReceipt() {
                   >
                     Wallet Type
                   </p>
-                  {paymentResult.split(" (")[0]}
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>
+
+                  {paymentResult.split(" ₦")[0]}
+                  </span>
                 </div>
               </div>
 
@@ -286,7 +289,7 @@ export default function WaecReceipt() {
                   >
                     Product
                   </p>
-                  <span>{transaction_product}</span>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{transaction_product}</span>
                 </div>
                 <div
                   className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
@@ -299,7 +302,7 @@ export default function WaecReceipt() {
                   >
                     Description
                   </p>
-                  <span>{description}</span>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{description}</span>
                 </div>
                 <div
                   className="flex text-[10px] md:text-[14px] w-[90%] 
@@ -312,7 +315,7 @@ export default function WaecReceipt() {
                   >
                     WAEC PIN Generated
                   </p>
-                  <span>{pins_generated[0]}</span>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{pins_generated[0]}</span>
                 </div>
                 <div
                   className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
@@ -325,7 +328,7 @@ export default function WaecReceipt() {
                   >
                     Order Number
                   </p>
-                  <span>{order_id}</span>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{order_id}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px] font-medium">
                   <p
@@ -335,20 +338,14 @@ export default function WaecReceipt() {
                   >
                     Transaction ID
                   </p>
-                  <span>{transaction_id}</span>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{transaction_id}</span>
                 </div>
               </div>
             </div>
-            <div
-              className={`rounded-[8px] md:mt-7 mx-4 h-[45px] my-5 
-            flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px] ${
-              isDarkMode ? "text-white bg-black" : "text-[#7C7C7C] bg-[#E2F3FF]"
-            }`}
-            >
-              <p
-                className="text-[8px] text-center mx-auto w-[200px]
-               md:text-[14px] md:w-[80%] lg:text-[16px]"
-              >
+            <div className={`rounded-[8px] bg-[#E2F3FF] mx-4 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px] ${
+                isDarkMode ? "bg-slate-800" : "bg-[#E2F3FF]"
+              }`}>
+              <p className={`text-[8px] text-center mx-auto w-[200px] md:text-[14px] md:w-[80%] lg:text-[16px] font-medium ${isDarkMode ? "text-white": "text-[#7C7C7C]"}`}>
                 Earn free points on every successful transactions, redeem your
                 earned points to real money, withdrawn to your bank account
                 instantly.

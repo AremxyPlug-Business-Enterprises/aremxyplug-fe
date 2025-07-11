@@ -46,7 +46,7 @@ export default function NecoReceipt() {
 
   const currentNecoChanges = () => {
     setNecoQuantityResult("");
-    setNecoExamType("");
+    setNecoExamType("NECO");
     setNecoEducationPinPhone("");
     setNecoEducationPinEmail("");
     setNecoPaymentResult("");
@@ -156,9 +156,9 @@ export default function NecoReceipt() {
                   className=" font-extrabold text-[10.9px] md:text-[14.9px] lg:text-[16.9px]   
             "
                 >
-                  {necoExamType}{" "}
+                  {necoExamType} (₦{necoEducationAmount}){" "}
                 </span>
-                from your {necoPaymentResult.split(" (")[0]} to{" "}
+                from your {necoPaymentResult.split(" ₦")[0]} to{" "}
               </p>
             </div>
             <div className="flex flex-col gap-7  md:gap-10">
@@ -181,43 +181,73 @@ export default function NecoReceipt() {
               w-[90%] mx-auto justify-between  
               lg:text-[16px] font-medium"
                 >
-                  <p className={` ${
+                  <p
+                    className={` ${
                       isDarkMode ? "text-white" : "text-[#7C7C7C] "
-                    }`}>Exam Type</p>
-                  <span>NECO</span>
+                    }`}
+                  >
+                    Exam Type
+                  </p>
+                  <span
+                    className={` ${isDarkMode ? "text-white" : "text-black"}`}
+                  >
+                    {necoExamType}
+                  </span>
                 </div>
-                <div
-                  className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px] font-medium"
-                >
-                  <p className={` ${
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px] font-medium">
+                  <p
+                    className={` ${
                       isDarkMode ? "text-white" : "text-[#7C7C7C] "
-                    }`}>Quantity</p>
-                  <span>{necoQuantityResult.split(" (")[0]}</span>
+                    }`}
+                  >
+                    Quantity
+                  </p>
+                  <span
+                    className={` ${isDarkMode ? "text-white" : "text-black"}`}
+                  >
+                    {necoQuantityResult.split(" (")[0]}
+                  </span>
                 </div>
                 {/* <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C]">Plan</p>
+                <p className={` ${
+                      isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                    }`}>Plan</p>
                 <span>{selectedOption}</span>
               </div> */}
 
-                <div
-                  className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px] font-medium"
-                >
-                  <p className="text-[#7C7C7C]">Phone Number</p>
-                  <span>{necoEducationPinPhone}</span>
-                </div>
-                <div
-                  className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px] font-medium"
-                >
-                  <p className="text-[#7C7C7C]">Email</p>
-                  <span>{necoEducationPinEmail}</span>
-                </div>
-                <div
-                  className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px] font-medium"
-                >
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px] font-medium">
                   <p className={` ${
                       isDarkMode ? "text-white" : "text-[#7C7C7C] "
-                    }`}>Amount</p>
-                  <span>{necoEducationAmount}</span>
+                    }`}>Phone Number</p>
+                  <span
+                    className={` ${isDarkMode ? "text-white" : "text-black"}`}
+                  >
+                    {necoEducationPinPhone}
+                  </span>
+                </div>
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px] font-medium">
+                  <p className={` ${
+                      isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                    }`}>Email</p>
+                  <span
+                    className={` ${isDarkMode ? "text-white" : "text-black"}`}
+                  >
+                    {necoEducationPinEmail}
+                  </span>
+                </div>
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px] font-medium">
+                  <p
+                    className={` ${
+                      isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                    }`}
+                  >
+                    Amount
+                  </p>
+                  <span
+                    className={` ${isDarkMode ? "text-white" : "text-black"}`}
+                  >
+                    ₦{necoEducationAmount}
+                  </span>
                 </div>
               </div>
 
@@ -235,18 +265,32 @@ export default function NecoReceipt() {
                   className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  
               lg:text-[16px] font-medium"
                 >
-                  <p className={` ${
+                  <p
+                    className={` ${
                       isDarkMode ? "text-white" : "text-[#7C7C7C] "
-                    }`}>Customer Name</p>
-                  <span>{fullName}</span>
+                    }`}
+                  >
+                    Customer Name
+                  </p>
+                  <span
+                    className={` ${isDarkMode ? "text-white" : "text-black"}`}
+                  >
+                    {fullName}
+                  </span>
                 </div>
-                <div
-                  className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px] font-medium"
-                >
-                  <p className={` ${
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px] font-medium">
+                  <p
+                    className={` ${
                       isDarkMode ? "text-white" : "text-[#7C7C7C] "
-                    }`}>Wallet Type</p>
-                  {necoPaymentResult.split(" (")[0]}
+                    }`}
+                  >
+                    Wallet Type
+                  </p>
+                  <span
+                    className={` ${isDarkMode ? "text-white" : "text-black"}`}
+                  >
+                    {necoPaymentResult.split(" ₦")[0]}
+                  </span>
                 </div>
               </div>
 
@@ -263,54 +307,64 @@ export default function NecoReceipt() {
                     alt="/"
                   />
                 </div>
-                <div
-                  className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px] font-medium"
-                >
-                  <p className={` ${
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px] font-medium">
+                  <p
+                    className={` ${
                       isDarkMode ? "text-white" : "text-[#7C7C7C] "
-                    }`}>Product</p>
-                  <span>{transaction_product}</span>
+                    }`}
+                  >
+                    Product
+                  </p>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{transaction_product}</span>
                 </div>
-                <div
-                  className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px] font-medium"
-                >
-                  <p className={` ${
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px] font-medium">
+                  <p
+                    className={` ${
                       isDarkMode ? "text-white" : "text-[#7C7C7C] "
-                    }`}>Description</p>
-                  <span>{description}</span>
+                    }`}
+                  >
+                    Description
+                  </p>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{description}</span>
                 </div>
-                <div
-                  className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px] font-medium"
-                >
-                  <p className={` ${
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px] font-medium">
+                  <p
+                    className={` ${
                       isDarkMode ? "text-white" : "text-[#7C7C7C] "
-                    }`}>NECO PIN Generated</p>
-                  <span>{pins_generated[0]}</span>
+                    }`}
+                  >
+                    NECO PIN Generated
+                  </p>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{pins_generated[0]}</span>
                 </div>
-                <div
-                  className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px] font-medium"
-                >
-                  <p className={` ${
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px] font-medium">
+                  <p
+                    className={` ${
                       isDarkMode ? "text-white" : "text-[#7C7C7C] "
-                    }`}>Order Number</p>
-                  <span>{order_id}</span>
+                    }`}
+                  >
+                    Order Number
+                  </p>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{order_id}</span>
                 </div>
                 <div
                   className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  
               lg:text-[16px] font-medium"
                 >
-                  <p className="text-[#7C7C7C] ">Transaction ID</p>
-                  <span>{transaction_id}</span>
+                  <p className={` ${
+                      isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                    }`}>Transaction ID</p>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{transaction_id}</span>
                 </div>
               </div>
             </div>
-            <div className="rounded-[8px] text-[#7C7C7C] bg-[#E2F3FF] mx-4 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]">
-              <p className="text-[8px] text-center mx-auto w-[200px] md:text-[14px] md:w-[80%] lg:text-[16px]">
-                <span className="md:block">
-                  Earn free points on every successful transactions, redeem your
-                  earned points{" "}
-                </span>
-                to real money, withdrawn to your bank account instantly.
+            <div className={`rounded-[8px] bg-[#E2F3FF] mx-4 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px] ${
+                isDarkMode ? "bg-slate-800" : "bg-[#E2F3FF]"
+              }`}>
+              <p className={`text-[8px] text-center mx-auto w-[200px] md:text-[14px] md:w-[80%] lg:text-[16px] font-medium ${isDarkMode ? "text-white": "text-[#7C7C7C]"}`}>
+                Earn free points on every successful transactions, redeem your
+                earned points to real money, withdrawn to your bank account
+                instantly.
               </p>
             </div>
           </div>
