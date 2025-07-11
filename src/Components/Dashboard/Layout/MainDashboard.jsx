@@ -156,7 +156,7 @@ if((clickedoption === "NGN")){
        const response = await axios.post(url,body,{ headers : {"Content-Type" : "application/json",
          Authorization : authToken || getToken},
       })
-        if(response.status === 200 || 201){
+        if(response.status === 200 || response.status === 201){
            alert("Virtual Account Created")
            localStorage.setItem("AccCreated","true")
            AuthUsed = authToken || getToken;
@@ -171,16 +171,41 @@ if((clickedoption === "NGN")){
       }catch(error){
         if(error && error.response === undefined){
           alert("Your internet connection is quite unstable.")
-        }
-        if( error.response && error.response.status === 400){
+        } else if( error.response && error.response.status === 400){
           alert("Virtual Account Creation failed")
           setDashLoading(false);
         }else if(error.response.status === 404){
        alert("Check your Network connection")
        setDashLoading(false)
         }else if(error.response.status === 401){
-       alert("Your session has timed out.")
-       setDashLoading(false)
+      if(error?.response?.headers.get("x-new-auth-token") || error?.response?.headers["x-new-auth-token"]){
+             setDashLoading(true)
+         const newToken = error?.response?.headers.get("x-new-auth-token") ||error?.response?.headers["x-new-auth-token"];
+        
+         if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
+             console.log(newToken)
+          const EmailToken =  localStorage.setItem("authorisedLogin", newToken);
+          if(EmailToken){
+           GenerateVirtualAccount();
+             if(GenerateVirtualAccount){
+               setDashLoading(false)
+            }
+          }
+           }else{
+      localStorage.setItem("getToken", newToken);
+       const getToken =  localStorage.setItem("authorisedLogin", newToken);
+          if(getToken){
+             GenerateVirtualAccount();
+            if(GenerateVirtualAccount){
+               setDashLoading(false)
+            }
+          }
+        }
+      }else{
+      setDashLoading(false)
+          return sessionModal(true)
+      }
+      
         }else if(error.response &&error.response.status === 500){
           alert("SERVER ERROR");
           setDashLoading(false);
@@ -195,16 +220,17 @@ if((clickedoption === "NGN")){
       }}
       }
 
-      //Code to gget the balance
+      //Code to get the balance
       const GenerateAccountBalance = async()=>{
         const authToken = localStorage.getItem("authorisedLogin")
         const getToken = localStorage.getItem("getToken")
+        if(!navigator.onLine) return setBalanceValue(false);
         if((authToken || getToken) && navigator.onLine){
         try{
           setBalanceLoading(true)
          const url = "https://aremxyplug.onrender.com/api/v1/balance"
          const response = await axios.get(url,{ headers : {"Content-Type" : "application/json",
-           Authorization : authToken || getToken},
+           Authorization : authToken || getToken},withCredentials :true
         })
            if(response){
             console.log(response)
@@ -229,12 +255,17 @@ if((clickedoption === "NGN")){
          if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
              console.log(newToken)
           const EmailToken =  localStorage.setItem("authorisedLogin", newToken);
-          if(EmailToken?.length > 1){
+          
+          if(EmailToken){
             return GenerateAccountBalance();
           }
            }else{
       localStorage.setItem("getToken", newToken);
-      alert("Get Token is set");
+       const getToken =  localStorage.setItem("authorisedLogin", newToken);
+       console.log(getToken);
+          if(getToken){
+            return GenerateAccountBalance();
+          }
       }}else{
         return setSessionModal(true);
       }
@@ -313,7 +344,7 @@ return (
         <div
           className={`${
             toggleSideBar ? "lg:w-[73.5%] lg:float-right" : ""
-          } w-[] mx-[5%] mt-[8%] lg:mt-[3%] h-[150%] mb-[5%] `}
+          } w-[] mx-[5%] mt-[8%] lg:mt-[3%] h-[150%] mb-[5%]  `}
         >
           {/* ==============HERO SECTION========== */}
           <Swiper
@@ -326,37 +357,42 @@ return (
               clickable: true,
             }}
             modules={[Pagination, Autoplay]}
-            className="mySwiper"
+            className=""
             speed="2000"
             loop="true"
           >
             <SwiperSlide>
               {" "}
-              <div className="w-full h-[90px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] bg-[#FFC589] flex px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px] ">
-                <div className="py-[13px] lg:py-[40px]">
-                  <h2 className="text-[9px] md:text-[13.75px] font-bold mb-3 lg:text-[24px] lg:mb-4">
+              <div className="w-[99%] min-h-[120px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] bg-[#FFC589] flex 
+              px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px] ">
+                <div className="py-[20px] lg:py-[40px]">
+                  <h2 className="text-[11px] leading-[14px] md:text-[13.75px] font-bold mb-3 lg:text-[24px] lg:mb-4">
                     Welcome TO AREMXYPLUG!
                   </h2>
-                  <h2 className="text-[7px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px] mb-3">
+                  <h2 className="text-[10px] leading-[13px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px] mb-3">
                     The most Reliable Platform for Telecom, Payments, and
                     Digital Services.
                   </h2>
                 </div>
-
+     <div className="w-[91px] h-[66px] lg:w-[288px] lg:h-[200px]">
                 <img
-                  className="w-[91px] h-[66px] lg:w-[288px] lg:h-[200px]"
+                  className="h-full"
                   src="./Images/dashboardImages/hero1image.png"
                   alt=""
                 />
+                </div>
               </div>
             </SwiperSlide>
             <SwiperSlide>
-              <div className="w-full h-[90px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] bg-[#BAC5F4] flex px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px]">
-                <div className="py-[13px] lg:py-[40px]">
-                  <h2 className="text-[9px] md:text-[13.75px] font-bold mb-3 lg:text-[24px] lg:mb-4">
+              <div className="w-[99%] min-h-[120px] md:h-[112.29px] lg:h-[196px] rounded-[7px]
+                 md:rounded-[11.5px] bg-[#BAC5F4] flex px-[16px] lg:px-[50px] justify-between
+                  items-center lg:rounded-[20px]">
+                <div className="py-[20px] lg:py-[40px]">
+                  <h2 className="text-[11px] leading-[14px] md:text-[13.75px] 
+                  font-bold mb-3 lg:text-[24px] lg:mb-4">
                     SPEND GLOBALLY WITH AREMXYPLUG!
                   </h2>
-                  <h2 className="text-[7px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px] mb-3">
+                  <h2 className="text-[10px] leading-[13px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px] mb-3">
                     Send, Receive, and Store Money Securely without any Hassle.
                   </h2>
                 </div>
@@ -370,12 +406,15 @@ return (
               </div>
             </SwiperSlide>
             <SwiperSlide>
-              <div className="w-full h-[90px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] bg-[#3FBDF1] flex px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px]">
-                <div className="py-[13px] lg:py-[40px]">
-                  <h2 className="text-[9px] md:text-[13.75px] font-bold mb-3 lg:text-[24px] lg:mb-4">
+              <div className="w-[99%] min-h-[120px] md:h-[112.29px] lg:h-[196px] rounded-[7px]
+               md:rounded-[11.5px] bg-[rgb(63,189,241)] flex px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px]">
+                <div className="py-[14px] lg:py-[40px]">
+                  <h2 className="text-[11px] leading-[14px]  md:text-[13.75px]
+                   font-bold mb-3 lg:text-[24px] lg:mb-4">
                     OUR PLATFORM IS PROTECTED AND SECURED.
                   </h2>
-                  <h2 className="text-[7px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px] mb-3">
+                  <h2 className="text-[10px] leading-[13px] md:text-[11.46px] 
+                  lg:text-[20px] lg:leading-[26px] mb-3">
                     We use Industry-Standard Security Protocols and Advanced
                     Encryption to Protect your Data.
                   </h2>
@@ -394,7 +433,7 @@ return (
 
           {/* ==========AVAILABLE BALANCE=========== */}
         
-          <div className={` flex flex-col md:flex-row gap-5 mt-[10%] md:mt-4
+          <div className={` flex flex-col md:flex-row gap-5 mt-[5%] md:mt-4
             lg:mt-12 lg:rounded-[16.32px]  w-full`}>
              
             <div
@@ -617,7 +656,7 @@ return (
                 <div className="h-full w-full">
          {Data.ConfirmAcc === "true" ? (
           <div className="h-full gap-[15px] jsutify-between w-full flex flex-col">
-              <Link to="/virtual-account" className="w-full h-[15%">
+              <Link to="/virtual-account" className="w-full h-[15%]">
                 {" "}
                 <button
                   className={`text-[10px] md:text-[11px] mb-[15px] md:mt-[0px] lg:text-[12px] font-[600]  ${
@@ -683,16 +722,16 @@ return (
                     toggleSideBar ? "lg:text-[10px] lg:mt-[1%]" : ""
                   } flex text-[10px] gap-[20px]  md:text-[15px]`}
                 >
-                  <h2 className="font-semibold w-1/2 text-[10px]  md:text-[11px] lg:text-[12px]">Bank Name</h2>
-               <p className="text-[10px] text-right w-1/2 md:text-[11px] lg:text-[12px] font-[400]">{bankNameState ? bankNameState : Data.aremxyBankName ?Data.aremxyBankName : "" }</p> 
+                  <h2 className="font-semibold w-1/2 text-[11px] leading-[16px]  md:text-[11px] lg:text-[12px]">Bank Name</h2>
+               <p className="text-[11px] leading-[16px] font-[400] text-right w-1/2 md:text-[11px] lg:text-[12px] ">{bankNameState ? bankNameState : Data.aremxyBankName ?Data.aremxyBankName : "" }</p> 
                 </div>
                 <div
                   className={`${styles.virtualaccounttxt} ${
                     toggleSideBar ? "lg:text-[10px]" : ""
                   }  flex text-[10px] gap-[20px] md:text-[15px] `}
                 >
-                  <h2 className="font-semibold w-1/2 text-[10px]  md:text-[11px] lg:text-[12px]">Account Name</h2>
-                  <p className="text-[10px] w-1/2 md:text-[11px] text-right lg:text-[12px] font-[400]">{accountNameState ? accountNameState :Data.aremxyAccountName ? Data.aremxyAccountName.slice(11) : ""}</p>
+                  <h2 className="font-semibold w-1/2 text-[11px] leading-[18px]  md:text-[11px] lg:text-[12px]">Account Name</h2>
+                  <p className="text-[11px] leading-[16px] font-[400] w-1/2 md:text-[11px] text-right lg:text-[12px] ">{accountNameState ? accountNameState :Data.aremxyAccountName ? Data.aremxyAccountName.slice(11) : ""}</p>
                 </div>
                
                 <div
@@ -700,9 +739,9 @@ return (
                     toggleSideBar ? "lg:text-[10px]" : ""
                   }  flex text-[10px] gap-[20px] md:text-[15px] `}
                 >
-                  <h2 className="font-semibold w-1/2 text-[10px] md:text-[11px] lg:text-[12px]">Account Number</h2>
+                  <h2 className="font-semibold w-1/2 text-[11px] leading-[16px]  md:text-[11px] lg:text-[12px]">Account Number</h2>
                   <div className="flex justify-end items-center w-1/2 gap-[10px]">
-                    <p className="text-[10px]  md:text-[11px] lg:text-[12px] font-[400]" >{accountNumberState ? accountNumberState : Data.aremxyAccountNumber ? `${Data.aremxyAccountNumber}` : ""}</p>
+                    <p className="text-[11px] leading-[16px] md:text-[11px] lg:text-[12px] font-[400]" >{accountNumberState ? accountNumberState : Data.aremxyAccountNumber ? `${Data.aremxyAccountNumber}` : ""}</p>
                     <div
                       onClick={handleCopyClick}
                       className="text-[#92abfec3] text-[13px] font-extrabold lg:text-[16px]"

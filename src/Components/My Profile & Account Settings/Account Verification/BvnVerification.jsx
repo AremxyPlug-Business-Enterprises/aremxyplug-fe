@@ -38,7 +38,7 @@ export default function BvnVerification(Data) {
     useContext(ContextProvider);
   const {idAddress, setIdAddress} = useContext(ContextProvider);
   const { dropDownGender, setDropDownGender } = useContext(ContextProvider);
-  const { isDarkMode } = useContext(ContextProvider);
+  const { isDarkMode,verificationResponse, verificationReason } = useContext(ContextProvider);
   const [loading, setLoading] = useState(false);
   const [genderResult, setGenderResult] = useState("");
   // const genderInfo = ["Male", "Female", "Others.."];
@@ -169,13 +169,15 @@ export default function BvnVerification(Data) {
   };
 
   //To GetLocalStorage Data
-  const BvnNumberRef = useRef()
+ 
   const ValueRef = useRef();
 
   Data = GetLocalStorage();
   useEffect(() => {
     ValueRef.current = Data;
-    BvnNumberRef.current = bvnNumber
+    if(verificationResponse?.data?.data){
+      setBvnNumber(verificationResponse?.data?.data?.bvn)
+    }
      // eslint-disable-next-line
   }, [Data]);
 
@@ -368,6 +370,7 @@ export default function BvnVerification(Data) {
                     onChange={(e) => {
                       setBvnDateOfBirth(e.target.value);
                     }}
+                    
                     className={`w-[100%]
                       md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px]  lg:pr-[16px] pr-[9px] h-[100%] rounded-[10px]
                   py-[10.33px] pl-[5.867px] lg:py-[15.5px] text-sm leading-[18px] focus:outline-none lg:text-[16px] lg:leading-[20.8px] ${
@@ -377,6 +380,7 @@ export default function BvnVerification(Data) {
                     id="dob"
                     name="dob"
                     readOnly={Data.ConfirmId === "true" || Data.ConfirmBvn === "true"}
+                      disabled={Data.ConfirmId === "true" || Data.ConfirmBvn === "true"}
                   />
                   </div>
                 </div>
@@ -470,7 +474,7 @@ export default function BvnVerification(Data) {
                       const numbersOnly = e.target.value.replace(/\D/g, "");
                       e.target.value = numbersOnly;
                     }}
-                    value={ bvnNumber && bvnNumber.length > 1 && bvnStatus === "Verified" ?  `${bvnNumber.slice(0,4)}*******` : bvnNumber}
+                    value={  bvnNumber?.length > 1 || bvnStatus === "Verified" ?  `${bvnNumber?.slice(0,4)}*******` : bvnNumber}
                     onChange={(e) => {
                       setBvnNumber(e.target.value);
                     }}
@@ -480,6 +484,12 @@ export default function BvnVerification(Data) {
                     maxLength={11}
                     required
                   />
+                   {(verificationReason?.length > 1 && bvnNumber?.length < 1) &&(
+  <p  className="text-[12px] font-[600] leading-[12px] text-red-500
+  capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+  {verificationReason}
+  </p>
+                   )}
                 </div>
               </div>
 

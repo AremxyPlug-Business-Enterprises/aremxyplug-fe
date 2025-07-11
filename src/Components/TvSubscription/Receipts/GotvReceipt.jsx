@@ -305,7 +305,9 @@ export const GotvReceipt = (Data) => {
               onClick={() => {
                 handleSaveAsPDFClick();
               }}
-              className={`bg-[#ffffff] border-[1px] w-[111px] border-[#0003] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+              className={`bg-[#ffffff]   border-[1px] w-[111px] border-[#0003] flex justify-center items-center 
+                mx-auto cursor-pointer text-[12px] font-extrabold  ${isDarkMode ? " bg-black border-1 border-white" : " bg-[#ffffff]"}
+                h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
             >
               Save as PDF
             </button>

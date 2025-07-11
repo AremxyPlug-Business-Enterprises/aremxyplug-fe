@@ -115,7 +115,7 @@ const ConfirmStarTimesPopup = ({userVerifiedName}) => {
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
                     <span className="text-[#0008]">Amount</span>
-                    <span>{starTimesAmount}</span>
+                    <span>{`₦${starTimesAmount}`}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
                     <span className="text-[#0008]">Payment Method</span>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { DashBoardLayout } from "../../Layout/DashBoardLayout";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { ContextProvider } from "../../../Context";
 import "../DataTopUpPage/DataTopUp.css";
 import Transaction from "./TransactionPageImages/Transaction.svg";
@@ -11,6 +11,9 @@ import { Calender } from "../Calender";
 import Search1 from "./TransactionPageImages/Search.svg";
 import Search2 from "./TransactionPageImages/Search2.svg";
 import "../DataTopUpPage/DataTopUp.css";
+import { GetFunction,HandleUserSession } from "../../../ApiCollection.jsx/ApiBuck";
+import { Loader } from "../../../Loader/Loader";
+
 
 const TransactionPage = () => {
   const { isDarkMode, toggleSideBar } = useContext(ContextProvider);
@@ -28,6 +31,9 @@ const TransactionPage = () => {
   const [activeCategory, setActiveCategory] = useState("");
 
   const [activeTab, setActiveTab] = useState("");
+  const [transactionResponse, setTransactionResponse] = useState({});
+  const [loading,setLoading] = useState(false);
+  const [sessionModal,setSessionModal] = useState(false)
 
   const handleTabClick = (tab) => {
     setActiveTab((prevTab) => (prevTab === tab ? null : tab));
@@ -49,6 +55,34 @@ const TransactionPage = () => {
     return;
   };
 
+
+  //Funcntio to help get the transaction details
+  //  which include necessary query parameters for search
+    const GetTransactionInformation = async()=> {
+      const path ="transactions"
+      const SuccessHandler =()=>{
+console.log("Successful")
+}
+      const FailedHandler = async(ErrorType)=> {
+    if(ErrorType === "unauthorised"){
+      await GetFunction(path, setLoading, SuccessHandler, (ErrorType)=> {
+        if(ErrorType === "unauthorised"){
+       setSessionModal(true)
+        }
+      }, setTransactionResponse)
+    }
+      }   
+      await GetFunction(path, 
+        setLoading, 
+        SuccessHandler,
+         FailedHandler,
+          setTransactionResponse)
+      }
+
+  useEffect(()=> {
+   GetTransactionInformation()
+   //eslint-disable-next-line
+}, [])
   const [transactions] = useState([
     {
       orderNo: "0000000",
@@ -1475,6 +1509,12 @@ const TransactionPage = () => {
           </div>
         </section>
       </div>
+      {loading && (
+        <Loader/>
+      )}
+      {sessionModal && (
+        <HandleUserSession/>
+      )}
     </DashBoardLayout>
   );
 };

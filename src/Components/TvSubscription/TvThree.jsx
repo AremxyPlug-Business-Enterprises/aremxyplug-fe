@@ -81,7 +81,7 @@ const StarTimes = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [failedPopup, setFailedPopup] = useState(false);
       const [successConfig, setSuccessConfig] = useState("")
-           const [failedConfig, setFailedConfig] = useState("");
+          
              const [starTimesVerifyResponse, setStarTimesVerifyResponse] = useState({});
                 const [starTimesLoading, setStarTimesLoading] = useState(false);
                 const [stateInvalidDecoderNumber, setStateInvalidDecoderNumber] = useState(false);
@@ -378,11 +378,26 @@ const VerifyPinHandler = async () => {
         setInputPin("")
       //  handleReceivedData()
       }
-      const FailedHandler = () =>{
-       setFailedPopup(true);
+      const FailedHandler = async(ErrorType) =>{
+        if(ErrorType === "unauthorised"){
+        await PostFunction(
+        Path,
+        setIsLoading,
+        requestData,
+        successHandler,
+        (ErrorType)=> {
+         if(ErrorType === "unauthorised"){
+       return setSessionModal(true)
+        }
+      },
+  setStarTimesSubscriptionResponse
+      );
+    }else{
+        setFailedPopup(true);
        setInputPinStarTimes(false);
        setInputPin("")
       }
+    }
       
       await PostFunction(
         Path,
@@ -393,6 +408,22 @@ const VerifyPinHandler = async () => {
        setStarTimesSubscriptionResponse
       );
     };
+    const setFailedConfig= async(ErrorType)=> {
+    if(ErrorType === "unauthorised"){
+      await VerifyTransPin(
+      inputPin,
+      setSuccessConfig,
+      (ErrorType)=> {
+      if(ErrorType === "unauthorised"){
+        setSessionModal(true)
+        } 
+       },
+        setIsLoading,
+      setErrorMessage,
+      StarTimesHandler,
+     );
+    }
+    }
   
     await VerifyTransPin(
       inputPin,
@@ -464,20 +495,11 @@ const VerifyPinHandler = async () => {
     setFlagResult("");
     setStarTimesWalletBalance("");
     setFailedPopup(false);
-  navigate("/StarTimes");
+  //navigate("/StarTimes");
   }
 
    const ReceiptButton = ()=> {
-      setStarTimesEmail("")
-   setStarTimesMobileNumber("")
-   setStarTimesSmartCard("");
-   setStarTimesAmount("");
-   setSelectedOptionStarTimes("");
-   setPackageStarTimes("");
-   setStarTimesDecoderType("")
-    setFlagResult("");
-    setStarTimesWalletBalance("");
-    setFailedPopup(false);
+      setFailedPopup(false);
      handleReceivedData();
   }
 
@@ -488,19 +510,19 @@ const VerifyPinHandler = async () => {
         <div className={style.AirtimeTops}>
           <div className={style.airtimeTop}>
             <div>
-            <div id='tvBackground' className="h-[90px] lg:h-[196px] md:h-[112.29px] rounded-[6.6px] md:rounded-[11.46px] lg:rounded-[20px] mx-auto  flex gap-6 justify-between px-[16.51px] md:px-[28.65px] lg:px-[50px]">
-          <div className="py-[9.57px] md:py-[16.61px] align-middle self-center flex flex-col gap-1.5 w-[70%]">
-            <p className="text-[9px] lg:text-[24px] md:text-[13.75px] font-semibold">
-              SUBSCRIBE YOUR TV CHANNELS WITH AREMXYPLUG.
-            </p>
-            <p className="text-[8px] lg:text-[20px] md:text-[11.46px]">
-              Never miss a beat! Subscribe your tv channels on our platform to watch and stream your favorite movies without any hassle.
-            </p>
-          </div>
-          <div className="flex w-[23%] h-[97%] pt-2 shrink-0">
-            <img src="./Images/TvSubscription/tv.svg" alt="" className="" />
-          </div>
-        </div>
+            <div id='tvBackground' className="min-h-[90px] py-[15px] lg:h-[196px] md:h-[112.29px] rounded-[6.6px] md:rounded-[11.46px] lg:rounded-[20px] mx-auto  flex gap-6 justify-between px-[16.51px] md:px-[28.65px] lg:px-[50px]">
+                            <div className="py-[9.57px] md:py-[16.61px] align-middle self-center flex flex-col gap-1.5 w-[70%]">
+                                <p className="text-[11px] leading-[13px] lg:leading-[30px] lg:text-[24px] md:text-[13.75px] font-semibold">
+                                    SUBSCRIBE YOUR TV CHANNELS WITH AREMXYPLUG.
+                                    </p>
+                                <p className="text-[10px] leading-[13px] lg:leading-[25px] lg:text-[20px] md:text-[11.46px]">
+                                Never miss a beat! Subscribe your tv channels on our platform to watch and stream your favorite movies without any hassle.
+                                </p>
+                            </div>
+                            <div className="flex w-[23%] h-[97%] pt-2 shrink-0">
+                                <img src="./Images/TvSubscription/tv.svg" alt="" className="" />
+                            </div>
+                        </div>
 
         <div className=" mx-auto flex gap-1.5 py-[25.29px] lg:py-[37px] md:py-[28.64px]">
           <div className="flex text-[#7E7E7E] text-[13px] lg:text-[18px] md:text-[13px] font-semibold">

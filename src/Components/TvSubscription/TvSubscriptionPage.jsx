@@ -34,7 +34,6 @@ const GetFunctionHandler = async(GlobalTvSubscription,tvPage, TvSubscriptionValu
     //   alert("Hello")
     const AuthRetrieval = async()=> {
          setLoading(true);
-        alert("Auth retrieval running")
      if(GlobalTvSubscription === 0){
     await GetFunction(`products/tvsub/gotv`, setLoading, SuccessHandler,(ErrorType)=> {
         if(ErrorType){
@@ -64,11 +63,11 @@ const GetFunctionHandler = async(GlobalTvSubscription,tvPage, TvSubscriptionValu
     if(DetectAuthorisation === "unauthorised"){
    return  AuthRetrieval();
      }else if(DetectAuthorisation === "Server error"){
-     console.log("Running server error")
+    console.log("Server error")
      }else if(DetectAuthorisation === "User error"){
        console.log("Running on 404")
      }else if(DetectAuthorisation === undefined){
-     alert("Error connection issue")
+     alert("Error connection issue");
      }else{
         alert("Check your internet connection.")
      }
@@ -163,12 +162,12 @@ return(
                 <div className={style.airtimeTop}>
                   
                     <div>
-                        <div id='tvBackground' className="h-[90px] lg:h-[196px] md:h-[112.29px] rounded-[6.6px] md:rounded-[11.46px] lg:rounded-[20px] mx-auto  flex gap-6 justify-between px-[16.51px] md:px-[28.65px] lg:px-[50px]">
+                        <div id='tvBackground' className="min-h-[90px] py-[15px] lg:h-[196px] md:h-[112.29px] rounded-[6.6px] md:rounded-[11.46px] lg:rounded-[20px] mx-auto  flex gap-6 justify-between px-[16.51px] md:px-[28.65px] lg:px-[50px]">
                             <div className="py-[9.57px] md:py-[16.61px] align-middle self-center flex flex-col gap-1.5 w-[70%]">
-                                <p className="text-[9px] lg:text-[24px] md:text-[13.75px] font-semibold">
+                                <p className="text-[11px] leading-[13px] lg:leading-[30px] lg:text-[24px] md:text-[13.75px] font-semibold">
                                     SUBSCRIBE YOUR TV CHANNELS WITH AREMXYPLUG.
                                     </p>
-                                <p className="text-[7.5px] lg:text-[20px] md:text-[11.46px]">
+                                <p className="text-[10px] leading-[13px] lg:leading-[25px] lg:text-[20px] md:text-[11.46px]">
                                 Never miss a beat! Subscribe your tv channels on our platform to watch and stream your favorite movies without any hassle.
                                 </p>
                             </div>

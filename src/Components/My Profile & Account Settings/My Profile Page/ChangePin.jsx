@@ -15,8 +15,8 @@ import ChangePassword from "./ChangePassword";
 import Success from "../ProfileImages/success.gif";
 import axios from "axios";
 import { Loader } from "../../Loader/Loader";
-import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
-import { PostFunction } from "../../ApiCollection.jsx/ApiBuck";
+import { GetLocalStorage, RemoveLocalStorage } from "../../LocalStorage/LocalStorage";
+import { PostFunction, HandleUserSession } from "../../ApiCollection.jsx/ApiBuck";
 import { PutFunction } from "../../ApiCollection.jsx/ApiBuck";
 
 const ChangePin = (Data) => {
@@ -43,7 +43,7 @@ const {email} = customerDetail;
   const [confirmPin, setConfirmPin] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [update, setUpdate] = useState("");
-
+  const [sessionModal, setSessionModal] = useState(false)
  
 
   const [resetPin, setResetPin] = useState("");
@@ -131,8 +131,7 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
       setErrorMessage("");
       document.getElementById("confirmPinInput").style.backgroundColor = "";
       await ChangeUserPin()
-      
-    }
+   }
   };
 
 // Funcytion to help set user Email
@@ -140,7 +139,7 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
     const SuccessHandler = ()=> {
       alert("An Otp has been sent to you")
        setResetPinUpdate(true);
-       setCountdown(60)
+       setCountdown(60);
     }
     const FailedHandler = ()=> {
       alert("The Otp failed to sent");
@@ -176,9 +175,7 @@ await PostFunction(path, setLoading, body, SuccessHandler, FailedHandler,setRese
    setResetPinUpdate(false)
    setVerify(true);
    setInputPin("");
-   
- 
-    }
+  }
     const FailedHandler = ()=> {
       setErrorVerifyOtp(true);
       setInputPin("")
@@ -188,7 +185,12 @@ await PostFunction(path, setLoading, body, SuccessHandler, FailedHandler,setRese
       otp : inputPin
     }
 console.log(verifyResponse);
-await PostFunction(path, setLoading, body, SuccessHandler, FailedHandler, setVerifyResponse);
+await PostFunction(path, 
+  setLoading, 
+  body,
+   SuccessHandler, 
+   FailedHandler, 
+   setVerifyResponse);
   }
 
 
@@ -199,9 +201,21 @@ await PostFunction(path, setLoading, body, SuccessHandler, FailedHandler, setVer
     setErrorCreateNewPin("")
 
     }
-    const FailedHandler = ()=> {
-      alert("Error");
-  setErrorCreateNewPin("Request to reset pin failed")
+    const FailedHandler = async(ErrorType)=> {
+       setErrorCreateNewPin("Request to reset pin failed");
+       if(ErrorType === "unauthorised"){
+        await PutFunction(path, 
+          setLoading,
+           body, 
+           SuccessHandler, 
+        (ErrorType)=> {
+          if(ErrorType === "unauthorised"){
+            RemoveLocalStorage();
+           setSessionModal(true);
+          }
+          })
+       }
+
 }
     let path = "pin/reset"
     const body = {
@@ -895,7 +909,7 @@ await PutFunction(path, setLoading, body, SuccessHandler, FailedHandler);
               <Modal className="">
                 <div
                   className={` ${
-                    toggleSideBar ? "absolute w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] md:ml-[20%] h-auto lg:h-[405px] shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)] top-[0%]" : " absolute w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] h-[250px] lg:h-[405px]  shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)]"
+                    toggleSideBar ? "absolute overflow-scroll w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] md:ml-[20%] h-auto  lg:h-[405px] shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)] top-[0%]" : " absolute w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] h-[250px] lg:h-[405px]  shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)]"
                   } flex flex-col justify-between items-center pb-[10px] md:pb-[30px] lg:pb-[30px] md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px] ${isDarkMode ? "bg-stone-950 border-white border": "bg-white"}`}
                 >
                   <div className="absolute z-0 right-0" style={{ zIndex: 0 }}>
@@ -978,6 +992,9 @@ await PutFunction(path, setLoading, body, SuccessHandler, FailedHandler);
         <Modal>
           <Loader/>
         </Modal>
+      )}
+      {sessionModal && (
+        <HandleUserSession/>
       )}
     </div>
   );
