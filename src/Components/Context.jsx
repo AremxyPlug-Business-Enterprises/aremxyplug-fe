@@ -1220,6 +1220,13 @@ export const Context = ({ children }) => {
   const [jambQuantityAmount, setJambQuantityAmount] = useState("");
   const [jambWalletBalance, setJambWalletBalance] = useState("");
 
+  const [jambPinsGenerated, setJambPinsGenerated] = useState([]);
+  const [jambOrderId, setJambOrderId] = useState("");
+  const [jambTransactionId, setJambTransactionId] = useState("");
+  const [jambShowDescription, setJambShowDescription] = useState("");
+  const [jambFullName, setJambFullName] = useState("");
+  const [jambTransactionProduct, setJambTransactionProduct] = useState("");
+
   // ============== NABTEB PINS =============
   const [nabtebQuantityResult, setNabtebQuantityResult] = useState("");
   const [nabtebQuantityActive, setNabtebQuantityActive] = useState(false);
@@ -2372,6 +2379,19 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
     setJambQuantityAmount,
     jambWalletBalance,
     setJambWalletBalance,
+
+    jambPinsGenerated,
+    setJambPinsGenerated,
+    jambOrderId,
+    setJambOrderId,
+    jambTransactionId,
+    setJambTransactionId,
+    jambShowDescription,
+    setJambShowDescription,
+    jambFullName,
+    setJambFullName,
+    jambTransactionProduct,
+    setJambTransactionProduct,
 
     //========= NABTEB PINS =======
     nabtebQuantityResult,
