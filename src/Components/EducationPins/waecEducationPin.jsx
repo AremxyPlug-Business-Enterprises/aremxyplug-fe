@@ -369,7 +369,7 @@ export default function WaecEducationPin() {
   }
 
   const [balanceStatus, setBalanceStatus] = useState("");
-  let balanceStringToNum = Number(newBalance);
+  let balanceStringToNum = Number(newBalance || updateBalance);
   let educationAmountToNumber =  String(educationAmount.replace(/[₦,]/g, ""))
   let CheckSufficiency = educationAmountToNumber > balanceStringToNum;
   useEffect(() => {
@@ -446,35 +446,7 @@ export default function WaecEducationPin() {
     );
   };
 
-  // GET RESPONSE SUCCESSFUL
-  // const requestEducationPin = async (e) => {
-  //   try {
-  //     const EducationResponse = await axios.get(
-  //       "https://aremxyplug.onrender.com/api/v1/edu"
-  //     );
-  //     return EducationResponse.data;
-  //   } catch (error) {
-  //     console.error("There was error fetching the Education Pins", error);
-  //     return null;
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   const acceptData = async () => {
-  //     try {
-  //       const dataCollected = await requestEducationPin();
-  //       if (dataCollected) {
-  //         setEduResponse(dataCollected);
-  //       }
-  //     } catch (error) {
-  //       console.error("There was an error trying to get the token:", error);
-  //     }
-  //   };
-
-  //   acceptData();
-  //   // eslint-disable-next-line
-  // }, []);
-
+  
   function handleReceivedData() {
     setIsLoading(true);
     const receivedData = () => {
@@ -815,7 +787,7 @@ export default function WaecEducationPin() {
                         ? "bg-black text-white border-white"
                         : "border-[#9C9C9C] text-[#7C7C7C]"
                     }`}
-                    maxLength={7}
+                    // maxLength={7}
                     // value={isAmountLoading ? "" : educationAmount}
                     value={educationAmount ? `₦${educationAmount}` : "₦"}
                     // onChange={(e) => {
@@ -904,7 +876,7 @@ export default function WaecEducationPin() {
                                 setMethodActive(true);
                               }
                             }}
-                            className={`flex gap-2.5 lg:py-[15px] py-[10px] pl-[10px] transition-colors duration-300 items-center shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] 
+                            className={`flex gap-2.5 lg:py-[15px] py-[10px] pl-[10px] pb-[20px] pt-[20px] md:py-2 transition-colors duration-300 items-center shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] 
                             ${
                               methodOption.id !== 1 && !isDarkMode
                                 ? "bg-gray-300 cursor-not-allowed"

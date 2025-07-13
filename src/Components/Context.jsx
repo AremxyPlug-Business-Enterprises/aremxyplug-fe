@@ -1176,7 +1176,7 @@ export const Context = ({ children }) => {
   const [examActive, setExamActive] = useState(false);
   const [educationPinPhone, setEducationPinPhone] = useState("");
   const [educationPinEmail, setEducationPinEmail] = useState("");
-  const [educationAmount, setEducationAmount] = useState("₦");
+  const [educationAmount, setEducationAmount] = useState("");
   const [quantityAmount, setQuantityAmount] = useState("");
   const [walletBalance, setWalletBalance] = useState("");
 
@@ -1196,7 +1196,7 @@ export const Context = ({ children }) => {
   const [necoExamActive, setNecoExamActive] = useState(false);
   const [necoEducationPinPhone, setNecoEducationPinPhone] = useState("");
   const [necoEducationPinEmail, setNecoEducationPinEmail] = useState("");
-  const [necoEducationAmount, setNecoEducationAmount] = useState("₦");
+  const [necoEducationAmount, setNecoEducationAmount] = useState("");
   const [necoQuantityAmount, setNecoQuantityAmount] = useState("");
   const [necoWalletBalance, setNecoWalletBalance] = useState("");
 
@@ -1216,7 +1216,7 @@ export const Context = ({ children }) => {
   const [jambExamActive, setJambExamActive] = useState(false);
   const [jambEducationPinPhone, setJambEducationPinPhone] = useState("");
   const [jambEducationPinEmail, setJambEducationPinEmail] = useState("");
-  const [jambEducationAmount, setJambEducationAmount] = useState("₦");
+  const [jambEducationAmount, setJambEducationAmount] = useState("");
   const [jambQuantityAmount, setJambQuantityAmount] = useState("");
   const [jambWalletBalance, setJambWalletBalance] = useState("");
 
@@ -1236,7 +1236,7 @@ export const Context = ({ children }) => {
   const [nabtebExamActive, setNabtebExamActive] = useState(false);
   const [nabtebEducationPinPhone, setNabtebEducationPinPhone] = useState("");
   const [nabtebEducationPinEmail, setNabtebEducationPinEmail] = useState("");
-  const [nabtebEducationAmount, setNabtebEducationAmount] = useState("₦");
+  const [nabtebEducationAmount, setNabtebEducationAmount] = useState("");
   const [nabtebQuantityAmount, setNabtebQuantityAmount] = useState("");
   const [nabtebWalletBalance, setNabtebWalletBalance] = useState("");
   const [newBalance, setNewBalance] = useState("");

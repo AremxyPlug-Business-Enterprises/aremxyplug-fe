@@ -39,7 +39,6 @@ export default function NecoReceipt() {
   const description =
     necoShowDescription?.length > 0 ? necoShowDescription : "";
   const pins_generated = necoPinsGenerated?.length > 0 ? necoPinsGenerated : "";
-  console.log("pins-gen", pins_generated);
   const fullName = necoFullName?.length > 0 ? necoFullName : "";
   const transaction_product =
     necoTransactionProduct?.length > 0 ? necoTransactionProduct : "";
@@ -50,7 +49,7 @@ export default function NecoReceipt() {
     setNecoEducationPinPhone("");
     setNecoEducationPinEmail("");
     setNecoPaymentResult("");
-    setNecoEducationAmount("₦");
+    setNecoEducationAmount("");
     setNecoWalletBalance("");
   };
 
@@ -246,7 +245,7 @@ export default function NecoReceipt() {
                   <span
                     className={` ${isDarkMode ? "text-white" : "text-black"}`}
                   >
-                    ₦{necoEducationAmount}
+                    ₦{necoEducationAmount}.00
                   </span>
                 </div>
               </div>
@@ -289,7 +288,7 @@ export default function NecoReceipt() {
                   <span
                     className={` ${isDarkMode ? "text-white" : "text-black"}`}
                   >
-                    {necoPaymentResult.split(" ₦")[0]}
+                    Nigerian {necoPaymentResult.split(" ₦")[0]}
                   </span>
                 </div>
               </div>
@@ -315,7 +314,7 @@ export default function NecoReceipt() {
                   >
                     Product
                   </p>
-                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{transaction_product}</span>
+                  <span className={`uppercase ${isDarkMode ? "text-white" : "text-black"}`}>{transaction_product}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px] font-medium">
                   <p

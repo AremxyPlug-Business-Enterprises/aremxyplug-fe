@@ -782,7 +782,7 @@ export default function JambEducationPin() {
                                 setJambMethodActive(true);
                               }
                             }}
-                            className={`flex gap-2.5 lg:py-[15px] py-[10px] pl-[10px] transition-colors duration-300 items-center shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] 
+                            className={`flex gap-2.5 lg:py-[15px] py-[10px] pl-[10px] pb-[20px] pt-[20px] md:py-2 transition-colors duration-300 items-center shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] 
                             ${
                               methodOption.id !== 1 && !isDarkMode
                                 ? "bg-gray-300 cursor-not-allowed"

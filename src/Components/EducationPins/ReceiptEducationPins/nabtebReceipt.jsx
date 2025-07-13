@@ -257,7 +257,7 @@ export default function NabtebReceipt() {
                   <span
                     className={` ${isDarkMode ? "text-white" : "text-black "}`}
                   >
-                    ₦{nabtebEducationAmount}
+                    ₦{nabtebEducationAmount}.00
                   </span>
                 </div>
               </div>
@@ -303,7 +303,7 @@ export default function NabtebReceipt() {
                   <span
                     className={` ${isDarkMode ? "text-white" : "text-black "}`}
                   >
-                    {nabtebPaymentResult.split(" ₦")[0]}
+                   Nigerian {nabtebPaymentResult.split(" ₦")[0]}
                   </span>
                 </div>
               </div>
@@ -327,7 +327,7 @@ export default function NabtebReceipt() {
                     Product
                   </p>
                   <span
-                    className={` ${isDarkMode ? "text-white" : "text-black "}`}
+                    className={`uppercase ${isDarkMode ? "text-white" : "text-black "}`}
                   >
                     {transaction_product}
                   </span>

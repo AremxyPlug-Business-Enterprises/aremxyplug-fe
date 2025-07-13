@@ -291,17 +291,16 @@ export default function NabtebEducationPins() {
     return handleFormattedAmount(amountCalculated);
   }
 
-
-
   const [balanceStatus, setBalanceStatus] = useState("");
   let balanceStringToNum = Number(newBalance || updateBalance);
   // let educationAmountToNumber = parseInt(
   //   nabtebEducationAmount.replace(/,/g, ""),
   //   10
   // );
-  let educationAmountToNumber = String(
-    nabtebEducationAmount.replace(/[₦,]/g, "")
-  );
+  // let educationAmountToNumber = String(
+  //   nabtebEducationAmount.replace(/[₦,]/g, "")
+  // );
+  let educationAmountToNumber = nabtebEducationAmount
   let CheckSufficiency = educationAmountToNumber > balanceStringToNum;
   useEffect(() => {
     const HandleBalanceStatus = () => {
@@ -340,6 +339,7 @@ export default function NabtebEducationPins() {
 
   const handleNabtebSubmitPost = async () => {
     async function EduPinHandler() {
+      alert("Edu pin handler called");
       const path = `edu`;
       const body = {
         exam_type: nabtebExamType.toLowerCase(),
@@ -354,9 +354,8 @@ export default function NabtebEducationPins() {
       const SuccessHandler = (response) => {
         nabtebEduPinSuccess();
         setEducationPinStatus(true);
-        setNabtebOrderId(nabtebEduResponse?.data?.order_id);
+        setNabtebOrderId(response?.data?.data?.data?.order_id);
         console.log("response", response);
-
       };
       const FailedHandler = () => {
         nabtebEduPinFailed();
@@ -380,6 +379,8 @@ export default function NabtebEducationPins() {
       EduPinHandler
     );
   };
+
+  // console.log("amount", nabtebEducationAmount)
 
   function handleReceivedData() {
     setIsLoading(true);
@@ -407,7 +408,7 @@ export default function NabtebEducationPins() {
     setNabtebFailedTransaction(false);
     setIsLoading(false);
   }
-// console.log("fetchedPurchaseResponse", fetchedPurchaseResponse)
+  // console.log("fetchedPurchaseResponse", fetchedPurchaseResponse)
   return (
     <DashBoardLayout>
       <div className="flex flex-col h-[115%] lg:h-[120%] justify-between ">
@@ -547,9 +548,9 @@ export default function NabtebEducationPins() {
                     <input
                       value={nabtebQuantityResult}
                       type="text"
-                      onChange={(e) => {
-                        nabtebQuantityResult(e.target.value);
-                      }}
+                      // onChange={(e) => {
+                      //   nabtebQuantityResult(e.target.value);
+                      // }}
                       className={`w-full h-full bg-transparent capitalize focus:outline-none
                       ${
                         isDarkMode
@@ -588,15 +589,14 @@ export default function NabtebEducationPins() {
                                   : option.quantity
                               );
                               setNabtebQuantityActive(false);
-                              // setNabtebEducationAmount(option.Amount);
                               document
                                 .querySelector(".imgdrop")
                                 .classList.remove("DropIt");
                               setNabtebEducationAmount(
                                 nabtebQuantityAmount > 0
-                                  ? handleFormattedAmount(
+                                  ? 
                                       Number(nabtebQuantityAmount) * option.id
-                                    )
+                                    
                                   : ""
                               );
                             }}
@@ -724,15 +724,16 @@ export default function NabtebEducationPins() {
                   </label>
                   {/* input */}
                   <input
-                    value={
-                      nabtebEducationAmount ? `₦${nabtebEducationAmount}` : "₦"
-                    }
-                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[13px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer focus:outline-0 outline-0 border lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center  
+                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px]  sm:p-3 text-sm flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[13px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer focus:outline-0 outline-0 border lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center  
                     ${
                       isDarkMode
                         ? "bg-black text-white border-white"
                         : "border-[#9C9C9C] text-[#7C7C7C]"
                     }`}
+                    // value={isAmountLoading ? "" : educationAmount}
+                    
+                    value={nabtebEducationAmount ? `${nabtebEducationAmount.toString().includes("₦")? `${nabtebEducationAmount.toLocaleString()}`: `₦${nabtebEducationAmount.toLocaleString()}`}` : ""}
+                    readOnly
                   />
                   {/* {isAmountLoading && (
                     <p className="left-4 absolute top-7 md:top-9 lg:top-12">
@@ -815,7 +816,7 @@ export default function NabtebEducationPins() {
                                 setNabtebMethodActive(true);
                               }
                             }}
-                            className={`flex gap-2.5 lg:py-[15px] py-[10px] pl-[10px] transition-colors duration-300 items-center shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
+                            className={`flex gap-2.5 lg:py-[15px] py-[10px] pl-[10px] pb-[20px] pt-[20px] md:py-2 transition-colors duration-300 items-center shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
                               ${
                                 methodOption.id !== 1 && !isDarkMode
                                   ? "bg-gray-300 cursor-not-allowed"
@@ -878,10 +879,10 @@ export default function NabtebEducationPins() {
                     </h2>
                     <h2 className="lg:text-base  md:text-[12px] md:leading-[20px] md:px-[30px] lg:leading-[24px] text-[10px] leading-[15px] text-center mt-[26px] mx-[10px] mb-[20px] font-semibold">
                       You are about to purchase{" "}
-                      <span className="font-semibold lg:text-[16.9px] md:leading-[14.9px] text-[10.9px]">
+                      <span className="font-semibold lg:text-[16.9px] md:leading-[14.9px] text-[10.9px] md:text-xs">
                         {nabtebExamType}
                       </span>{" "}
-                      PIN (₦{nabtebEducationAmount}) from your{" "}
+                      PIN (₦{nabtebEducationAmount.toLocaleString()}) from your{" "}
                       {nabtebPaymentResult.split(" ₦")[0]} to
                     </h2>
 
@@ -949,7 +950,7 @@ export default function NabtebEducationPins() {
                         </h2>
                         <div className="flex gap-1">
                           <h2 className="text-[10px] leading-[12px] md:text-[12px] md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
-                            ₦{nabtebEducationAmount}
+                            {nabtebEducationAmount ? `₦${nabtebEducationAmount.toLocaleString()}` : ""}
                           </h2>
                         </div>
                       </div>
@@ -960,7 +961,7 @@ export default function NabtebEducationPins() {
                         </h2>
                         <div className="flex gap-1">
                           <h2 className="text-[10px] leading-[12px] md:text-[12px] md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
-                           Nigerian {nabtebPaymentResult.split(" ₦")[0]}
+                            Nigerian {nabtebPaymentResult.split(" ₦")[0]}
                           </h2>
                         </div>
                       </div>
@@ -1187,7 +1188,7 @@ export default function NabtebEducationPins() {
                       You have successfully purchased{" "}
                       <span className="text-[#000] font-semibold text-[10.9px] md:text-[14.9px] lg:text-[16.9px]">
                         {/* NABTEB PIN (₦100){" "} */}
-                        {nabtebExamType}{" "}(₦{nabtebEducationAmount}){" "}
+                        {nabtebExamType} (₦{nabtebEducationAmount}){" "}
                       </span>
                       from your {nabtebPaymentResult.split(" ₦")[0]} to{" "}
                     </p>

@@ -40,7 +40,6 @@ export default function WaecReceipt() {
   const description =
     waecShowDescription?.length > 0 ? waecShowDescription : "";
   const pins_generated = waecPinsGenerated?.length > 0 ? waecPinsGenerated : "";
-  console.log("pins-gen", pins_generated);
   const fullName = waecFullName?.length > 0 ? waecFullName : "";
   const transaction_product =
     waecTransactionProduct?.length > 0 ? waecTransactionProduct : "";
@@ -229,7 +228,7 @@ export default function WaecReceipt() {
                   >
                     Amount
                   </p>
-                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>₦{educationAmount}</span>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>₦{educationAmount}.00</span>
                 </div>
               </div>
 
@@ -263,7 +262,7 @@ export default function WaecReceipt() {
                   </p>
                   <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>
 
-                  {paymentResult.split(" ₦")[0]}
+                  Nigerian {paymentResult.split(" ₦")[0]}
                   </span>
                 </div>
               </div>
@@ -289,11 +288,10 @@ export default function WaecReceipt() {
                   >
                     Product
                   </p>
-                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{transaction_product}</span>
+                  <span className={`uppercase ${isDarkMode ? "text-white" : "text-black"}`}>{transaction_product}</span>
                 </div>
                 <div
-                  className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
-                justify-between  lg:text-[16px] font-medium"
+                  className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px] font-medium"
                 >
                   <p
                     className={`${

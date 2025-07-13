@@ -71,7 +71,7 @@ export default function NecoEducationPins() {
     newBalance,
     setNewBalance,
 
-    necoEduResponse,
+    
     setNecoPinsGenerated,
     necoOrderId,
     setNecoOrderId,
@@ -332,6 +332,7 @@ export default function NecoEducationPins() {
   const [pinSuccess, setPinSuccess] = useState(false);
   const [pinFailed, setPinFailed] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
+  const [fetchedPurchaseResponse, setFetchedPurchaseResponse] = useState({});
 
   const handleNecoSubmitPost = async () => {
     async function EduPinHandler() {
@@ -344,10 +345,11 @@ export default function NecoEducationPins() {
         email: necoEducationPinEmail,
         quantity: parseInt(necoQuantityResult.split(" (")[0].slice(0, 1)),
       };
-      const SuccessHandler = () => {
+      const SuccessHandler = (response) => {
         necoEduPinSuccess();
         setEducationPinStatus(true);
-        setNecoOrderId(necoEduResponse?.data?.order_id);
+        setNecoOrderId(response?.data?.data?.data?.order_id);
+        console.log("response", response);
       };
       const FailedHandler = () => {
         necoEduPinFailed();
@@ -359,7 +361,8 @@ export default function NecoEducationPins() {
         body,
         SuccessHandler,
         FailedHandler,
-        setNecoEduResponse
+        // setNecoEduResponse
+        setFetchedPurchaseResponse
       );
     }
     await VerifyTransPin(
@@ -375,12 +378,12 @@ export default function NecoEducationPins() {
   function handleReceivedData() {
     setIsLoading(true);
     const receivedData = () => {
-      setNecoPinsGenerated(necoEduResponse?.data?.pins_generated);
-      setNecoOrderId(necoEduResponse?.data?.order_id);
-      setNecoTransactionId(necoEduResponse?.data?.transaction_id);
-      setNecoShowDescription(necoEduResponse?.data?.transaction_description);
-      setNecoFullName(necoEduResponse?.data?.full_name);
-      setNecoTransactionProduct(necoEduResponse?.data?.transaction_product);
+      setNecoPinsGenerated(fetchedPurchaseResponse?.data?.pins_generated);
+      setNecoOrderId(fetchedPurchaseResponse?.data?.order_id);
+      setNecoTransactionId(fetchedPurchaseResponse?.data?.transaction_id);
+      setNecoShowDescription(fetchedPurchaseResponse?.data?.transaction_description);
+      setNecoFullName(fetchedPurchaseResponse?.data?.full_name);
+      setNecoTransactionProduct(fetchedPurchaseResponse?.data?.transaction_product);
     };
     receivedData();
     if (receivedData) {
@@ -393,6 +396,9 @@ export default function NecoEducationPins() {
     setNecoFailedTransaction(false);
     setIsLoading(false);
   }
+
+
+  
 
   return (
     <DashBoardLayout>
@@ -808,7 +814,7 @@ export default function NecoEducationPins() {
                                 setNecoMethodActive(true);
                               }
                             }}
-                            className={`flex gap-2.5 lg:py-[15px] py-[10px] pl-[10px] transition-colors duration-300 items-center shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] 
+                            className={`flex gap-2.5 lg:py-[15px] py-[10px] pl-[10px] pb-[20px] pt-[20px] md:py-2 transition-colors duration-300 items-center shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] 
                             ${
                               methodOption.id !== 1 && !isDarkMode
                                 ? "bg-gray-300 cursor-not-allowed"
