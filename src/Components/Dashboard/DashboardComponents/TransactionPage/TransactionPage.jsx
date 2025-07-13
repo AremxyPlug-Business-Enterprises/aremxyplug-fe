@@ -489,7 +489,7 @@ console.log("Successful")
   ]);
 
   const getBackgroundColor = (status) => {
-    if (status === "Successful") {
+    if (status === "delivered" || status === "Successful") {
       return "#97E8B9";
     } else if (status === "Failed") {
       return "#FB9393";
@@ -517,7 +517,7 @@ console.log("Successful")
     }
     return transaction.status === selectedStatus;
   });
-
+console.log(transactionResponse?.data?.data?.data?.transactions)
   return (
     <DashBoardLayout>
       <div
@@ -1240,11 +1240,11 @@ console.log("Successful")
               className=" h-full md:hidden flex flex-col mt-9  w-full px-[20px] pb-[5px] border-x-[1.2px] border-b-[1.2px]
  border-gray-500 border-opacity-[25%] my-[50px] shadow-md"
             >
-              {filteredTransactions.map((transaction, index) => (
+              {transactionResponse?.data?.data?.data?.transactions?.map((transaction, index) => (
                 <div key={index}>
                   <Link
                     to={`/${
-                      transaction.status === "Successful"
+                      transaction.status === "delivered"
                         ? "SuccessfullReceipt"
                         : transaction.status === "Failed"
                         ? "FailedReceipt"
@@ -1265,10 +1265,10 @@ console.log("Successful")
                     >
                       <div className="flex flex-col gap-[7.648px]">
                         <h2 className="font-medium text-neutral-500 text-[9.167px] leading-[11.167px]">
-                          Order No : {transaction.orderNo}
+                          Order No : {transaction?.order_id}
                         </h2>
                         <h2 className="font-medium text-black text-[9.167px] leading-[11.167px]">
-                          Product : {transaction.product}
+                          Product : {transaction?.product}
                         </h2>
                         <p className="font-medium text-neutral-500 text-[9.167px] leading-[11.167px]">
                           Description : {transaction.description}
@@ -1280,19 +1280,19 @@ console.log("Successful")
 
                         <div className="hidden">
                           <p className="font-medium text-neutral-500  text-[9.167px] leading-[11.167px]">
-                            Network : {transaction.network}
+                            Network : {transaction?.network}
                           </p>
 
                           <p className="font-medium text-neutral-500  text-[9.167px] leading-[11.167px]">
-                            recipientname : {transaction.recipientname}
+                            recipientname : {transaction?.recipientname}
                           </p>
 
                           <p className="font-medium text-neutral-500  text-[9.167px] leading-[11.167px]">
-                            phonenumber : {transaction.phonenumber}
+                            phonenumber : {transaction?.phonenumber}
                           </p>
 
                           <p className="font-medium text-neutral-500  text-[9.167px] leading-[11.167px]">
-                            wallet : {transaction.wallet}
+                            wallet : {transaction?.wallet}
                           </p>
                         </div>
                       </div>
@@ -1306,13 +1306,13 @@ console.log("Successful")
                             <span
                               style={{
                                 backgroundColor: getBackgroundColor(
-                                  transaction.status
+                                  transaction?.status
                                 ),
                               }}
                               className="font-medium text-white self-end text-[9.167px] leading-[11.167px] cursor-pointer
-                  py-[2.122px] px-[4.245px]  rounded-sm "
+                  py-[2.122px] px-[4.245px]  rounded-sm"
                             >
-                              {transaction.status}
+                              {transaction?.status}
                             </span>
                           </div>
                         </div>
@@ -1321,8 +1321,8 @@ console.log("Successful")
                           <div>
                             <p className="font-medium text-[10px] text-neutral-500 leading-[13px]">
                               <span className="block">Date & Time:</span>
-                              <span className="block">May 21st, 2023,</span>
-                              <span className="block">07:21:00pm</span>
+                              <span className="block"> {transaction?.created_at?.slice(0,10)} </span>
+                              <span className="block">{ transaction?.created_at?.slice(14,19)}</span>
                             </p>
                           </div>
                           <div className="w-[13.41px] mt-7 h-[12.06px]">
@@ -1389,11 +1389,11 @@ console.log("Successful")
               <div>Status</div>
             </div>
 
-            {filteredTransactions.map((transaction, index) => (
+            {transactionResponse?.data?.data?.data?.transactions?.map((transaction, index) => (
               <div key={index}>
                 <Link
                   to={`/${
-                    transaction.status === "Successful"
+                    transaction.status === "delivered"
                       ? "SuccessfullReceipt"
                       : transaction.status === "Failed"
                       ? "FailedReceipt"
@@ -1419,28 +1419,28 @@ console.log("Successful")
                         toggleSideBar ? "md:w-[16.5%]" : "md:w-[17%]"
                       }`}
                     >
-                      {transaction.product}
+                      {transaction?.product}
                     </div>
                     <div
                       className={`md:text-[#7C7C7C] ${
                         toggleSideBar ? "md:w-[18.5%]" : "md:w-[18.5%]"
                       }`}
                     >
-                      {transaction.description}
+                      {transaction?.description}
                     </div>
                     <div
                       className={`md:text-[#7C7C7C]  ${
                         toggleSideBar ? "md:w-[16%]" : "md:w-[16%]"
                       }`}
                     >
-                      {transaction.orderNo}
+                      {transaction?.order_id}
                     </div>
                     <div
                       className={`md:text-[#7C7C7C]  ${
                         toggleSideBar ? "md:w-[16%]" : "md:w-[17%]"
                       }`}
                     >
-                      {transaction.amount}
+                      {transaction?.amount}
                     </div>
 
                     <div
@@ -1448,9 +1448,9 @@ console.log("Successful")
                         toggleSideBar ? "md:w-[16.5%] " : "md:w-[16.5%]"
                       }`}
                     >
-                      <span>May 21st, 2023,</span>
+                      <span>{transaction?.created_at?.slice(0,10)}</span>
                       <br />
-                      <span>07:21:00pm</span>
+                      <span>{ transaction?.created_at?.slice(14,19)}</span>
                     </div>
 
                     <div
@@ -1484,10 +1484,7 @@ console.log("Successful")
               </div>
             ))}
 
-            <div className="md:text-center md:border-[1px] md:mt-[50px] md:mx-[43%] md:shadow-md hidden md:block">
-              <p className="md:text-[#707070] md:text-[10px]">---The End---</p>
-            </div>
-
+         
             <div
               className={`transaction2 md:flex md:justify-center md:pb-[30px]`}
             >

@@ -303,6 +303,7 @@ export default function NabtebEducationPins() {
     nabtebEducationAmount.replace(/[₦,]/g, "")
   );
   let CheckSufficiency = educationAmountToNumber > balanceStringToNum;
+  console.log(CheckSufficiency);
   useEffect(() => {
     const HandleBalanceStatus = () => {
       if (CheckSufficiency) {
@@ -1500,6 +1501,10 @@ export default function NabtebEducationPins() {
           <Loader />
         </Modal>
       )}
+      {sessionModal && (
+        <HandleUserSession/>
+      )}
+      
       {/* {sessionModal && <HandleUserSession />} */}
     </DashBoardLayout>
   );

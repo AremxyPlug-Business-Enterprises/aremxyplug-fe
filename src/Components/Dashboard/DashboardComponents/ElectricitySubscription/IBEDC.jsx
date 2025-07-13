@@ -18,6 +18,7 @@ import { Link, useNavigate } from "react-router-dom";
 import {
   PostFunction,
   VerifyTransPin,
+  HandleUserSession
 } from "../../../ApiCollection.jsx/ApiBuck";
 import { BalanceLoading, Loader } from "../../../Loader/Loader";
 
@@ -205,6 +206,7 @@ const IBEDC = () => {
   const [errors, setErrors] = useState({});
   const [proceed, setProceed] = useState(false);
   const [amountError, setAmountError] = useState("");
+  const [sessionModal, setSessionModal] = useState(false)
 
   const handleProceed = (e) => {
     // e.preventDefault();
@@ -344,8 +346,23 @@ const IBEDC = () => {
           }
           handleReceivedMeterData();
         };
-        const FailedHandler = () => {
+        const FailedHandler = async(ErrorType) => {
+          if(ErrorType === "Bad request"){
           setIsFailedMeterNumber(true);
+          }else if(ErrorType === "unauthorised"){
+              await PostFunction(
+          path,
+          setMeterNumberLoading,
+          body,
+          SuccessHandler,
+          (ErrorType)=> {
+            if(ErrorType === "unauthorised"){
+          setSessionModal(true)
+            }
+          },
+          setIbedcFetchedResponse
+        );
+          }
         };
 
         await PostFunction(
@@ -398,10 +415,22 @@ const IBEDC = () => {
         setIbedcDiscoType(ibedcFetchedResponse?.data?.disco_type);
         setSuccessPopup(true);
       };
-      const FailedHandler = () => {
+      const FailedHandler = async(ErrorType) => {
+        if(ErrorType === "Bad request"){
         setInputPinPopUp(false);
         setFailedPopup(true);
-      };
+        }else if(ErrorType === "unauthorised"){
+       await PostFunction(
+        path, 
+        setLoading, 
+        data,
+         SuccessHandler, 
+         (ErrorType)=> {
+        if(ErrorType === "unauthorised"){
+          return setSessionModal(true)
+        }
+       }, setIbedcFetchedResponse)
+      }      };
 
       await PostFunction(
         path,
@@ -412,6 +441,26 @@ const IBEDC = () => {
         setIbedcFetchedResponse
       );
     }
+     //Kindly uncomment the code below after implementing the errorMessage
+    //rather than the pinfailed and pinSucess state
+    //Kindly also remove the setPinFailed state as there
+    //is no longer any use for it
+    // const setPinFailed= async(ErrorType)=> {
+    //   if(ErrorType==="unauthorised"){
+    //       await VerifyTransPin(
+    //   inputPin,
+    //   setPinSuccess,
+    //  (ErrorType)=> {
+    //   if(ErrorType === "unauthorised"){
+    //  setSessionModal(true)
+    //   }
+    //  },
+    //   setLoading,
+    //   setErrorMessage,
+    //   ElectricityHandler
+    // );
+    //   }
+    // }
     await VerifyTransPin(
       inputPin,
       setPinSuccess,
@@ -1600,6 +1649,9 @@ const IBEDC = () => {
             </div>
           </div>
         </Modal>
+      )}
+      {sessionModal && (
+      <HandleUserSession/>
       )}
     </DashBoardLayout>
   );
