@@ -154,7 +154,7 @@ export const CheckVirtualAcc = async(authToken, customerDetail, setLoading,
       Authorization : authToken
       }, withCredentials : true})
     
-        if (response.status === 201 || 200 ) {
+        if (response.status === 201 || response.status === 200 ) {
              const virtualAccCreated = response?.data?.data?.acc_details;
             setVirtualAccCreated(virtualAccCreated);
             if(TwoStep === true){
@@ -355,7 +355,7 @@ export const PostFunction = async (
   const authToken = localStorage.getItem("authorisedLogin");
   const getToken = localStorage.getItem("getToken");
   if (!navigator.onLine) return alert("Check your internet connection");
-  if ((authToken || getToken) && navigator.onLine) {
+  if ((authToken || getToken) && navigator.onLine){
     try {
       setLoading(true);
       const url = `https://aremxyplug.onrender.com/api/v1/${path}`;
