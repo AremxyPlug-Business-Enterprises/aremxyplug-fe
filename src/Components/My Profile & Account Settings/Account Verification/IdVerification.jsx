@@ -32,6 +32,8 @@ export default function IdVerification(Data) {
     idStatus,
     isDarkMode,
     setIdStatus,
+    verificationResponse,
+    verificationReason
   } = useContext(ContextProvider);
   const { dropDownGender, setDropDownGender, idButtonState, setIdButtonState } =
     useContext(ContextProvider);
@@ -215,15 +217,19 @@ export default function IdVerification(Data) {
     }
   };
   // UseEffect to retain the current data object of getLocalStorage data()
-  const IdNumberRef = useRef();
+ 
   const VerifyRef = useRef();
   Data = GetLocalStorage();
   useEffect(() => {
     VerifyRef.current = Data;
-    IdNumberRef.current = idNumber;
+   if(verificationResponse?.data?.data){
+    setIdNumber(verificationResponse?.data?.data?.nin)
+  }
     // eslint-disable-next-line
   }, [Data]);
   console.log(Data);
+
+  
 
   return (
     <div className="flex flex-col ">
@@ -432,6 +438,7 @@ export default function IdVerification(Data) {
                     id="dob"
                     name="dob"
                     readOnly={Data.ConfirmId === "true" || Data.ConfirmBvn === "true"}
+                    disabled={Data.ConfirmId === "true" || Data.ConfirmBvn === "true"}
                   />
                   </div>
                 </div>
@@ -596,7 +603,7 @@ export default function IdVerification(Data) {
       const numbersOnly = e.target.value.replace(/\D/g, '');
       e.target.value = numbersOnly;
     })}
-    value={idNumber && idNumber.length > 1 && idStatus === "Verified" ? `${idNumber.slice(0,4)}*******` : idNumber}
+    value={ idNumber?.length > 1 || idStatus === "Verified" ? `${idNumber.slice(0,4)}*******` : idNumber}
     
     onChange={(e) => {
       setIdNumber(e.target.value);
@@ -608,7 +615,13 @@ export default function IdVerification(Data) {
        focus:outline-none  ${isDarkMode ? "bg-black" : "bg-white"}`}
     placeholder=''
     type="text" inputMode='numeric' maxLength={11} onInvalid={validId}  required/>
-   
+    {(verificationReason?.length > 1 && idNumber?.length < 1) && (
+  <p  className="text-[12px] font-[600] leading-[12px] text-red-500
+  capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+  {verificationReason}
+  </p>
+
+    )}
     </div>
       </div>
       {/* UPLOAD IMAGES OFOR ID VERIFICATION */}

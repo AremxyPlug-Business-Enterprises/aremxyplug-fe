@@ -21,7 +21,8 @@ export const InputDstvPopup = ({VerifyPinHandler}) => {
       toggleSideBar,
       toggleVisibility,
       isVisible,
-      authenticationOpen
+      authenticationOpen,
+     // isDarkMode,
     //  setDstvSuccessful,
    } = useContext(ContextProvider)
 
@@ -51,7 +52,9 @@ await  VerifyPinHandler()
             (
             <Modal>
          
-        <div className={`${styles.inputPin} ${
+        <div className={`${styles.inputPin}
+      
+         ${
               toggleSideBar ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]" : "lg:w-[40%]"
             } md:w-[55%] w-[90%]`}
             >

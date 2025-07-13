@@ -93,38 +93,39 @@ export const InActionVirtualAccountState = (
   }
 };
 
-// A reusable component to handle user session management.
-export const HandleUserSession = () => {
-  return (
-    <div className="w-full h-full justify-center items-center flex">
-      <Modal>
-        <div className="w-full flex  justify-center items-center">
-          <div
-            className="flex flex-col justify-center items-center py-[20px] px-[12px] gap-[20px] w-[80%] md:w-[60%] lg:w-[30%] md:h-[300px] bg-white rounded-[10px]
-             lg:rounded-[20px]"
-          >
-            <div className="flex flex-col  gap-[20px]">
-              <h2
-                className="text-[14px] text-center font-[600] leading-[18px]
-               text-black lg:text-[16px] lg:leading-[22px]"
-              >
-                Your Session has expired.
-              </h2>
-              <p
-                className="text-[14px] text-center font-[400] leading-[18px]
-               text-black lg:text-[16px] lg:leading-[22px] "
-              >
-                User Sessions are used for safe and secure transactions, kindly
-                repeat the login process to continue using the platform.
-              </p>
-            </div>
 
-            <button
-              onClick={() => {
-                RemoveLocalStorage();
-                return window.location.replace("/Login");
-              }}
-              className="bg-red-700  cursor-pointer mt-[5%] mx-auto w-full py-[12px] flex justify-center items-center text-[#ffffff] 
+  // A reusable component to handle user session management.
+  export const HandleUserSession = ()=> {
+   const isDarkMode = localStorage.getItem("darkModeEnabled")
+  return (
+   
+   <div className={`w-full h-full justify-center items-center
+   flex`}>
+    <Modal>
+              <div className={`w-full flex  justify-center items-center 
+             `}>
+            <div className = {`flex flex-col justify-center items-center
+             py-[20px] px-[12px] gap-[20px] w-[80%] md:w-[60%] lg:w-[30%] md:h-[300px]  rounded-[10px]
+             lg:rounded-[20px]   ${isDarkMode === "true" ? "bg-black border border-white rounded-[10px]" 
+               : "bg-white"}`}>
+               <div className ="flex flex-col  gap-[20px]">
+               <h2 className={`text-[14px] text-center font-[600] leading-[18px]
+               text-black lg:text-[16px] lg:leading-[22px] ${isDarkMode === "true" ? "text-white" : "text-black"}`}>
+                  Your Session has expired.
+                  </h2>
+              <p className ={`text-[14px] text-center font-[400] leading-[18px]
+               text-black lg:text-[16px] lg:leading-[22px] ${isDarkMode === "true" ? "text-white" : "text-black"}`}>
+            User Sessions are used to ensure safe and secure transactions, kindly repeat the login
+            process to continue using the platform.
+               </p>
+               </div>
+             
+              <button onClick ={()=> {
+                    RemoveLocalStorage();
+                    return window.location.replace("/Login");
+                }}
+                 className="bg-red-700  cursor-pointer mt-[5%] mx-auto w-full py-[12px] flex justify-center items-center text-[#ffffff] 
+
                   text-[10px] font-[500] lg:font-[600] rounded-md md:w-[95px] md:h-[26px]
                    md:p-[2%] lg:w-[113px] lg:h-[38px] lg:text-[13px]"
             >
@@ -139,68 +140,50 @@ export const HandleUserSession = () => {
 
 //Function to help check user virtual bank account details and set in the main dashboard \
 // as necessary
-export const CheckVirtualAcc = async (
-  authToken,
-  customerDetail,
-  setLoading,
-  setVirtualAccCreated,
-  setBankNameState,
-  setAccountNameState,
-  setAccountNumberState,
-  TwoStep,
-  setTwoStepVerificationSuccess,
-  confirmVirtualState
-) => {
-  if (!navigator.onLine) return alert("Check your internet Connection");
-  if (authToken && navigator.onLine) {
-    const url = "https://aremxyplug.onrender.com/api/v1/virtualacc";
-    // console.log(data)
-    try {
-      setLoading(true);
-      const response = await axios.get(url, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: authToken,
-        },
-      });
 
-      if (response.status === 201 || 200) {
-        const virtualAccCreated = response.data.data.acc_details;
-        setVirtualAccCreated(virtualAccCreated);
-        if (TwoStep === true) {
-          console.log(TwoStep);
-          if (virtualAccCreated) {
-            SignInVirtualAccountState(
-              customerDetail,
-              virtualAccCreated,
-              setBankNameState,
-              setAccountNameState,
-              setAccountNumberState
-            );
-            // alert("Sign in virtual running")
-            if (SignInVirtualAccountState) {
-              localStorage.setItem("UserStatus", true);
-              await confirmVirtualState();
-            }
-            //  console.log(response)
-          }
-        } else {
-          InActionVirtualAccountState(
-            virtualAccCreated,
-            setBankNameState,
-            setAccountNameState,
-            setAccountNumberState
-          );
-          //  alert("Action running")
-          //alert("InAction Virtual is running")
-        }
-      }
-    } catch (error) {
-      if (error.status === 400) {
-        alert(
-          "We had an error trying to get your details, click okay to repeat the login process"
-        );
-      } else if (error.status === 401) {
+export const CheckVirtualAcc = async(authToken, customerDetail, setLoading,
+    setVirtualAccCreated, setBankNameState, setAccountNameState, setAccountNumberState,TwoStep,setTwoStepVerificationSuccess,
+    confirmVirtualState) => {
+     if(!navigator.onLine) return alert("Check your internet Connection")
+  if (authToken && navigator.onLine ) {
+    const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc';
+     // console.log(data)
+     try{
+    setLoading(true);
+          const response = await axios.get(url, {headers : {"Content-Type" : "application/json",
+      Authorization : authToken
+      }, withCredentials : true})
+    
+        if (response.status === 201 || response.status === 200 ) {
+             const virtualAccCreated = response?.data?.data?.acc_details;
+            setVirtualAccCreated(virtualAccCreated);
+            if(TwoStep === true){
+               console.log(TwoStep)
+              if(virtualAccCreated){
+              SignInVirtualAccountState(customerDetail, virtualAccCreated
+                ,setBankNameState, setAccountNameState, setAccountNumberState);
+                // alert("Sign in virtual running")
+                if(SignInVirtualAccountState){
+                  localStorage.setItem("UserStatus",true)
+                  await confirmVirtualState();
+                  }
+               //  console.log(response)
+                }}else{
+            InActionVirtualAccountState(virtualAccCreated,setBankNameState, 
+               setAccountNameState, setAccountNumberState);
+             //  alert("Action running")
+            //alert("InAction Virtual is running")
+               
+            
+         }
+          
+         }
+        }catch(error){
+         if(error.status === 400){
+        alert("We had an error trying to get your details, click okay to repeat the login process");
+         }
+      else if(error.status === 401){
+
         // console.log(error.response.headers.hasAuthorization);
         console.log(error.response.headers);
         console.log(error.response.headers.get("x-new-auth-token"));
@@ -292,29 +275,29 @@ export const VerifyTransPin = async (
     try {
       setLoading(true);
       const body = {
-        pin: otp,
-      };
-      const url = "https://aremxyplug.onrender.com/api/v1/pin/verify";
-      const response = await axios.post(url, body, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: authToken || getToken,
-        },
-        withCredentials: true,
-      });
-      if (response.status === 201 || 200) {
-        setSuccess(true);
-        setErrorMessage(false);
-        await asyncFuncAtSuccess();
+         pin : otp
       }
-    } catch (error) {
-      if (error && error.response === undefined) {
-        alert("Kindly check your internet connection");
-      } else if (error && error.response.status === 400) {
-        setFailed(true);
-        setErrorMessage(true);
-      } else if (error && error.response.status === 401) {
-        console.log(error.response.headers);
+      const url = "https://aremxyplug.onrender.com/api/v1/pin/verify"
+      const response = await axios.post(url, body, {headers: {"Content-Type" :"application/json",
+         Authorization : authToken || getToken
+      },withCredentials : true
+   })
+      if(response.status === 201 || response.status ===  200){
+     setSuccess(true);
+       setErrorMessage(false);
+     await asyncFuncAtSuccess()
+      }
+      
+   }catch(error){
+        if(error && error.response === undefined){
+     alert("Kindly check your internet connection")
+      } else if(error && error.response.status === 400){
+         setFailed("Bad request")
+         setErrorMessage(true)
+      }else if(error && error.response.status === 401){
+         
+         console.log(error.response.headers);
+
         console.log(error.response.headers.get("x-new-auth-token"));
 
         if (
@@ -332,24 +315,33 @@ export const VerifyTransPin = async (
           ) {
             console.log(newToken);
             localStorage.setItem("authorisedLogin", newToken);
-          } else {
-            localStorage.setItem("getToken", newToken);
-          }
-        }
-        console.log(error.response);
-      } else if (error && error.response.status === 500) {
-        setFailed(true);
-        setErrorMessage(true);
-      } else {
-        alert("Check your internet connection and try again");
-      }
-    } finally {
-      if (asyncFuncAtSuccess) {
-        setLoading(false);
-      }
+            setFailed("unauthorised")
+           }else{
+      localStorage.setItem("getToken", newToken);
+      setFailed("unauthorised");
+    } }else{
+      setFailed("unauthorised")
     }
+       console.log(error.response);
+         
+      }else if(error && error.response.status === 500){
+   setFailed("Server error")
+   setErrorMessage(true);
+      }else if(error && error.response.status === 404){
+   setFailed("User error");
+   setErrorMessage(true);
+      }else {
+   alert("Check your internet connection and try again")
+      }
+   }finally{
+      if(asyncFuncAtSuccess){
+      setLoading(false);
+
+      }
+   
   }
 };
+}
 
 //A general post function
 export const PostFunction = async (
@@ -363,7 +355,7 @@ export const PostFunction = async (
   const authToken = localStorage.getItem("authorisedLogin");
   const getToken = localStorage.getItem("getToken");
   if (!navigator.onLine) return alert("Check your internet connection");
-  if ((authToken || getToken) && navigator.onLine) {
+  if ((authToken || getToken) && navigator.onLine){
     try {
       setLoading(true);
       const url = `https://aremxyplug.onrender.com/api/v1/${path}`;
@@ -382,25 +374,28 @@ export const PostFunction = async (
 
         }
       }
-    } catch (error) {
-      if (error && error.response === undefined) {
-        alert("Kindly check your internet connection");
-      } else if (error && error.response.status === 400) {
-        functionAtFailed("Bad request");
-        if (functionAtFailed) {
-          setFetchedResponse(error.response.data.data);
-          console.log(error.response.data.data);
-          alert("Invalid request");
-        }
-      } else if (error && error.response.status === 404) {
-        functionAtFailed("User error");
-        alert("Check your internet connection");
-        if (functionAtFailed) {
-          setFetchedResponse(error.response.data.data);
-          console.log(error.response.data.data);
-        }
-      } else if (error && error.response.status === 401) {
-        functionAtFailed("unauthorised");
+   }catch(error){
+        if(error && error.response === undefined){
+     alert("Kindly check your internet connection")
+      functionAtFailed("Network error")
+      }  else  if(error && error.response.status === 400){
+       functionAtFailed("Bad request");
+          if(functionAtFailed) {
+            setFetchedResponse(error?.response?.data?.data)
+              console.log(error?.response?.data?.data)
+            alert("Invalid request")
+         }
+        
+    }else if(error && error.response.status === 404){
+         functionAtFailed("User error")
+         alert("Check your internet connection");
+           if(functionAtFailed) {
+            setFetchedResponse(error?.response?.data?.data)
+              console.log(error?.response?.data?.data)
+         }
+      }else if(error && error.response.status === 401){
+     
+
         console.log(error.response.headers);
         console.log(error.response.headers.get("x-new-auth-token"));
 
@@ -419,23 +414,27 @@ export const PostFunction = async (
           ) {
             console.log(newToken);
             localStorage.setItem("authorisedLogin", newToken);
-            if (functionAtFailed) {
-              setFetchedResponse(error?.response?.data?.data);
-            }
-          } else {
-            localStorage.setItem("getToken", newToken);
-            if (functionAtFailed) {
-              setFetchedResponse(error.response.data.data);
-            }
-          }
-        }
+
+            functionAtFailed("unauthorised")
+             if(functionAtFailed) {
+            setFetchedResponse(error?.response?.data?.data)
+           }
+   }else{
+      localStorage.setItem("getToken", newToken);
+      functionAtFailed("unauthorised")
+    if(functionAtFailed) {
+            setFetchedResponse(error?.response?.data.data)
+           }
+   }
+        }else{
+         functionAtFailed("unauthorised")
+ }
         console.log(error.response);
       } else if (error && error.response.status === 500) {
         functionAtFailed("Server error");
         alert("Server error: Try some other time");
         if (functionAtFailed) {
-          setFetchedResponse(error.response.data.data);
-          console.log(error.response.data.data);
+          setFetchedResponse(error?.response?.data?.data);
         }
       } else if (error && error.response.status === undefined) {
         alert("Check your internet Connection");
@@ -446,69 +445,61 @@ export const PostFunction = async (
       setLoading(false);
     }
   }
+
 };
 
-// A general Function to get useful data from the backend
-export const GetFunction = async (
-  path,
-  setLoading,
-  functionAtSuccess,
-  functionAtFailed,
-  setFetchedResponse
-) => {
-  const authToken = localStorage.getItem("authorisedLogin");
-  const getToken = localStorage.getItem("getToken");
-  if (!navigator.onLine) return alert("Check your internet connection");
-  if ((authToken || getToken) && navigator.onLine) {
-    try {
-      setLoading(true);
-      const url = `https://aremxyplug.onrender.com/api/v1/${path}`;
-      const response = await axios.get(url, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: authToken || getToken,
-        },
-        withCredentials: true,
-      });
-      if (response.status === 201 || 200) {
-        functionAtSuccess();
-        if (functionAtSuccess) {
-          setFetchedResponse(response);
-        }
-      }
-    } catch (error) {
-      if (error && error.response === undefined) {
-        alert("Kindly check your internet connection");
-      } else if (error && error.response.status === 400) {
-        functionAtFailed("Bad request");
-        alert("Invalid request");
-      } else if (error && error.response.status === 401) {
-        functionAtFailed("unauthorised");
-        setFetchedResponse(error.response);
 
-        //  console.log(error.response);
+// A general Function to get useful data from the backend
+
+export const GetFunction = async(path, setLoading, functionAtSuccess,functionAtFailed,setFetchedResponse)=> {
+   const authToken = localStorage.getItem("authorisedLogin");
+   const getToken = localStorage.getItem("getToken");
+   if(!navigator.onLine) return alert("Check your internet connection");
+   if((authToken || getToken) && navigator.onLine){
+      try{
+         setLoading(true);
+    const url = `https://aremxyplug.onrender.com/api/v1/${path}`
+      const response = await axios.get(url, {headers: {"Content-Type" :"application/json",
+         Authorization : authToken || getToken
+      }, withCredentials : true})
+    if(response.status === 201 || 200){
+     functionAtSuccess(response);
+     if(functionAtSuccess){
+     setFetchedResponse(response);
+     }
+      }
+   }catch(error){
+      if(error && error.response === undefined){
+     alert("Kindly check your internet connection")
+     functionAtFailed("Network error")
+      } else if(error && error.response.status === 400){
+         functionAtFailed("Bad request")
+       alert("Invalid request")
+      }
+      else if(error && error.response.status === 401){
+         setFetchedResponse(error?.response);
+ //  console.log(error.response);
         console.log(error.response.headers);
         console.log(error.response.headers.get("x-new-auth-token"));
         //  console.log(error.response.headers.hasAuthorization());
         // console.log(error.response.headers.hasAuthorization);
-        if (
-          error.response.headers["x-new-auth-token"] ||
-          error.response.headers.get("x-new-auth-token")
-        ) {
-          setLoading(true);
-          const newToken =
-            error.response.headers.get("x-new-auth-token") ||
-            error.response.headers["x-new-auth-token"];
+        if(error?.response?.headers["x-new-auth-token"] || error?.response?.headers.get("x-new-auth-token")){
 
-          if (
-            newToken !== "" &&
-            localStorage.getItem("authorisedLogin") === "true"
-          ) {
-            console.log(newToken);
+         setLoading(true);
+         const newToken = error?.response?.headers.get("x-new-auth-token") ||error?.response?.headers["x-new-auth-token"];
+        
+         if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
+             console.log(newToken)
             localStorage.setItem("authorisedLogin", newToken);
-          } else {
-            localStorage.setItem("getToken", newToken);
-          }
+            functionAtFailed("unauthorised");
+          
+   }else{
+      localStorage.setItem("getToken", newToken);
+        functionAtFailed("unauthorised");
+     }
+        }else{
+         functionAtFailed("unauthorised");
+
         }
         console.log(error.response);
       } else if (error && error.response.status === 404) {
@@ -551,18 +542,15 @@ export const PutFunction = async (
       if (response.status === 201 || 200) {
         functionAtSuccess();
       }
-    } catch (error) {
-      if (error && error.response === undefined) {
-        alert("Check your internet connection");
-      } else if (error && error.response.status === 400) {
-        functionAtFailed("Bad request");
-        alert("Invalid request");
-      } else if (error && error.response.status === 401) {
-        //   setFetchedResponse(error.response);
-
-        //  console.log(error.response);
-        console.log(error.response.headers);
-        console.log(error.response.headers.get("x-new-auth-token"));
+   }catch(error){
+      if(error && error.response === undefined){
+         alert("Check your internet connection");
+          functionAtFailed("Network error")
+      }else if(error && error.response.status === 400){
+         functionAtFailed("Bad request");
+       alert("Invalid request");
+      }else if(error && error.response.status === 401){
+     
         //  console.log(error.response.headers.hasAuthorization());
         // console.log(error.response.headers.hasAuthorization);
         if (
@@ -580,22 +568,24 @@ export const PutFunction = async (
           ) {
             console.log(newToken);
             localStorage.setItem("authorisedLogin", newToken);
-            functionAtFailed();
-          } else {
-            localStorage.setItem("getToken", newToken);
-            functionAtFailed("unauthorised");
-          }
+             functionAtFailed("unauthorised");
+   }else{
+      localStorage.setItem("getToken", newToken);
+     functionAtFailed("unauthorised");
+   
+}
         }
-      } else if (error && error.response.status === 404) {
-        functionAtFailed("User error");
-        alert("Check your internet connection");
-      } else if (error && error.response.status === 500) {
-        functionAtFailed("Server error");
-        alert("Server error: Try some other time");
-      } else if (error && error.response === undefined) {
-        alert("Check your internet Connection");
-      } else {
-        alert("Check your internet connection");
+         }else if(error && error.response.status === 404){
+         functionAtFailed("User error")
+         alert("Check your internet connection")
+      }else if(error && error.response.status === 500){
+        functionAtFailed("Server error")
+   alert("Server error: Try some other time")
+      }else if(error && error.response === undefined){
+                alert("Check your internet Connection");
+          }else {
+         alert("Check your internet connection")
+
       }
     } finally {
       setLoading(false);

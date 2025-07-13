@@ -77,7 +77,6 @@ const GoTv = () => {
     newBalance,
     setNewBalance,
   } = useContext(ContextProvider);
-  const [failedConfig, setFailedConfig] = useState(false);
   const [successConfig, setSuccessConfig] = useState(false);
   const [passDataBalance, setPassDataBalance] = useState({});
   const [gotvData, setGotvData] = useState([]);
@@ -89,6 +88,7 @@ const GoTv = () => {
   const [failedPopup, setFailedPopup] = useState(false);
   const [gotvLoading, setGotvLoading] = useState(false);
   const [gotvVerifyResponse, setGotvVerifyResponse] = useState({});
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -111,7 +111,7 @@ const GoTv = () => {
       navigate(path);
     };
     const FailedHandler = async (ErrorType) => {
-      alert("Error");
+      //alert("Error");
       if(ErrorType === "unauthorised"){
         
        await GetFunction(
@@ -192,7 +192,7 @@ const GoTv = () => {
       : gotvData;
   useEffect(() => {
     if (fetchedGotvPlans.status === 200 || fetchedGotvPlans.status === 201) {
-      setGotvData(fetchedGotvPlans.data.data.data);
+      setGotvData(fetchedGotvPlans?.data?.data?.data);
     } else if (fetchedGotvPlans.status === undefined) {
       const RetrieveGotvPlans = async () => {
         const SuccessHandler = () => {
@@ -440,10 +440,26 @@ const GoTv = () => {
         setInputPinGotv(false);
         setInputPin("");
       };
-      const FailedHandler = () => {
-        setFailedPopup(true);
+      const FailedHandler = async(ErrorType) => {
+        if(ErrorType === "unauthorised"){
+               await PostFunction(
+        Path,
+        setIsLoading,
+        DataJson,
+        successHandler,
+        (ErrorType)=> {
+          if(ErrorType === "unauthorised"){
+        return setSessionModal(true);
+          }
+        },
+        setTvSubscriptionResponse
+      );
+  
+        }else {
+          setFailedPopup(true);
         setInputPinGotv(false);
         setInputPin("");
+        }
       };
 
       await PostFunction(
@@ -456,6 +472,23 @@ const GoTv = () => {
       );
     };
 
+
+    const setFailedConfig=async(ErrorType)=> {
+      if(ErrorType === "unauthorised"){
+        await VerifyTransPin(
+            inputPin,
+            setSuccessConfig,
+             (ErrorType)=> {
+              if(ErrorType === "unauthorised"){
+                return setSessionModal(true)
+              }
+             },
+            setIsLoading,
+            setErrorMessage,
+          GotvHandler,
+         );
+        }
+    }
     await VerifyTransPin(
       inputPin,
       setSuccessConfig,
@@ -474,7 +507,7 @@ const GoTv = () => {
   const VerifyUserAccount = async (UserTvSubscription) => {
     setGotvVerifyResponse({});
     
-    if ( UserTvSubscription?.length === 10 &&
+    if (UserTvSubscription?.length === 10 &&
       UserTvSubscription !== "" &&
       UserTvSubscription !== null &&
       UserTvSubscription !== undefined
@@ -497,7 +530,7 @@ const GoTv = () => {
        SuccessHandler,
        (ErrorType)=> {
         if(ErrorType === "unauthorised"){
-        return setSessionModal(true)
+        return setSessionModal(true);
         }
         },
         setGotvVerifyResponse
@@ -524,19 +557,9 @@ const GoTv = () => {
   };
 
   const ReceiptButton = () => {
-    setTvEmail("");
-    setMobileNumber("");
-    setSmartCard("");
-    setTvAmount("");
-    setSelectedOptionGOTV("");
-    setPackageGotv("");
-    setDecoderType("");
-    setFlagResult("");
-    setTvWalletBalance("");
     setFailedPopup(false);
     handleReceivedData();
-   
-  };
+    };
   const ExitTheDoneButton = () => {
     setTvEmail("");
     setMobileNumber("");
@@ -548,7 +571,7 @@ const GoTv = () => {
     setFlagResult("");
     setTvWalletBalance("");
     setFailedPopup(false);
-    navigate("/GoTv");
+  //  navigate("/GoTv");
   };
 
   return (
@@ -559,13 +582,14 @@ const GoTv = () => {
             <div>
               <div
                 id="tvBackground"
-                className="h-[90px] lg:h-[196px] md:h-[112.29px] rounded-[6.6px] md:rounded-[11.46px] lg:rounded-[20px] mx-auto  flex gap-6 justify-between px-[16.51px] md:px-[28.65px] lg:px-[50px]"
+                className="min-h-[90px] py-[15px] lg:h-[196px] md:h-[112.29px] rounded-[6.6px] md:rounded-[11.46px] lg:rounded-[20px] mx-auto  flex gap-6 justify-between
+                 px-[16.51px] md:px-[28.65px] lg:px-[50px]"
               >
                 <div className="py-[9.57px] md:py-[16.61px] align-middle self-center flex flex-col gap-1.5 w-[70%]">
-                  <p className="text-[9px] lg:text-[24px] md:text-[13.75px] font-semibold">
+                  <p className="text-[11px] leading-[14px]  lg:leading-[30px] lg:text-[24px] md:text-[13.75px] font-semibold">
                     SUBSCRIBE YOUR TV CHANNELS WITH AREMXYPLUG.
                   </p>
-                  <p className="text-[8px] lg:text-[20px] md:text-[11.46px]">
+                  <p className="text-[10px] leading-[13px] lg:text-[20px] lg:leading-[25px] md:text-[11.46px]">
                     Never miss a beat! Subscribe your tv channels on our
                     platform to watch and stream your favorite movies without
                     any hassle.

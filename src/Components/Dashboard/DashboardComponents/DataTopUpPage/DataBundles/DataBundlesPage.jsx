@@ -120,28 +120,35 @@ const DataBundlesPage = () => {
           }`}
         >
           <div
-            id="DataBundle"
-            className="w-full h-[90px] gap-[5px] md:h-[112.29px] lg:h-[196px] md:rounded-[11.5px] rounded-[7px] md:mt-[-1px] px-[10px] lg:gap-[50px] pt-[10px] lg:px-[30px] lg:rounded-[20px] lg:py-[20px] pb-[16px] flex justify-between items-center lg:ml-[-20px] lg:w-[102%] 2xl:w-full 2xl:ml-0"
-          >
-            <div className="w-[100%] pt-[19px] lg:pt-[20px] pl-[8.5px] md:pl-[9px]">
-              <p className="text-[10px] mb-2 font-bold uppercase w-[100%] md:text-[16px] md:w-[70%] lg:w-[70%] lg:text-[20px] 2xl:w-[80%] 2xl:text-[24px] lg:mb-4">
-                DATA BUNDLES, AFFORDABLE AND AUTOMATED.
-              </p>
-              <p className="text-[7px] font-[400] leading-[12px] mb-3 md:text-[10px] md:leading-[12.2px] w-[90%] md:w-[75%] lg:w-[75%] 2xl:w-[85%] 2xl:mt-[5px] lg:mt-[20px] lg:text-[16px] lg:leading-[26px] 2xl:text-[20px] lg:mb-[20px]">
-                Top up your mobile sim with our automated data bundles directly
-                from network providers, enjoy discounts without any hassle or
-                hidden fee.
-              </p>
-            </div>
-
-            <div className="w-[91px] h-[66px] lg:w-[199px] lg:h-[199px] lg:mt-[40px]">
-              <img
-                src={DataBundle}
-                alt=""
-                className="w-[55.482px] h-full md:w-[98px] md:h-[px] lg:w-[166.447px] lg:h-[150px]"
-              />
-            </div>
-          </div>
+                    id="DataBundle"
+                    className="w-full min-h-[90px] gap-[5px] md:h-[112.29px] lg:h-[196px]
+                     md:rounded-[11.5px] rounded-[7px]
+                     md:mt-[-1px] px-[10px] lg:gap-[50px] 
+                      lg:px-[30px] lg:rounded-[20px] lg:py-[20px] 
+                       flex justify-between items-center lg:ml-[-20px] 
+                       lg:w-[102%] 2xl:w-full 2xl:ml-0"
+                  >
+                    <div className="w-[100%] pt-[19px]
+                     lg:pt-[20px] pl-[8.5px] md:pl-[9px]">
+                      <p className="text-[11px] mb-2 font-bold uppercase 
+                      w-[100%] md:text-[16px] md:w-[70%] lg:w-[70%] lg:text-[20px] 2xl:w-[80%] 2xl:text-[24px] lg:mb-4">
+                        DATA BUNDLES, AFFORDABLE AND AUTOMATED.
+                      </p>
+                      <p className="text-[10px] font-[400] leading-[13.4px] mb-4 md:text-[10px] md:leading-[12.2px] w-[90%] md:w-[75%] lg:w-[75%] 2xl:w-[85%] 2xl:mt-[5px] lg:mt-[20px] lg:text-[16px] lg:leading-[26px] 2xl:text-[20px] lg:mb-[20px]">
+                        Top up your mobile sim with our automated data bundles directly
+                        from network providers, enjoy discounts without any hassle or
+                        hidden fee.
+                      </p>
+                    </div>
+        
+                    <div className="w-[91px] h-[66px] lg:w-[199px] lg:h-[199px] lg:mt-[40px]">
+                      <img
+                        src={DataBundle}
+                        alt=""
+                        className="w-[55.482px] h-full md:w-[98px] md:h-[px] lg:w-[166.447px] lg:h-[150px]"
+                      />
+                    </div>
+                  </div>
 
           {/* =========================Select/Add Recipient===================== */}
           <div className="flex gap-[10%] md:gap-[8%] lg:gap-[7%] mt-[40px] lg:mt-[60px]">

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { DashBoardLayout } from "../../Layout/DashBoardLayout";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { ContextProvider } from "../../../Context";
 import "../DataTopUpPage/DataTopUp.css";
 import Transaction from "./TransactionPageImages/Transaction.svg";
@@ -11,6 +11,9 @@ import { Calender } from "../Calender";
 import Search1 from "./TransactionPageImages/Search.svg";
 import Search2 from "./TransactionPageImages/Search2.svg";
 import "../DataTopUpPage/DataTopUp.css";
+import { GetFunction,HandleUserSession } from "../../../ApiCollection.jsx/ApiBuck";
+import { Loader } from "../../../Loader/Loader";
+
 
 const TransactionPage = () => {
   const { isDarkMode, toggleSideBar } = useContext(ContextProvider);
@@ -28,6 +31,9 @@ const TransactionPage = () => {
   const [activeCategory, setActiveCategory] = useState("");
 
   const [activeTab, setActiveTab] = useState("");
+  const [transactionResponse, setTransactionResponse] = useState({});
+  const [loading,setLoading] = useState(false);
+  const [sessionModal,setSessionModal] = useState(false)
 
   const handleTabClick = (tab) => {
     setActiveTab((prevTab) => (prevTab === tab ? null : tab));
@@ -49,6 +55,34 @@ const TransactionPage = () => {
     return;
   };
 
+
+  //Funcntio to help get the transaction details
+  //  which include necessary query parameters for search
+    const GetTransactionInformation = async()=> {
+      const path ="transactions"
+      const SuccessHandler =()=>{
+console.log("Successful")
+}
+      const FailedHandler = async(ErrorType)=> {
+    if(ErrorType === "unauthorised"){
+      await GetFunction(path, setLoading, SuccessHandler, (ErrorType)=> {
+        if(ErrorType === "unauthorised"){
+       setSessionModal(true)
+        }
+      }, setTransactionResponse)
+    }
+      }   
+      await GetFunction(path, 
+        setLoading, 
+        SuccessHandler,
+         FailedHandler,
+          setTransactionResponse)
+      }
+
+  useEffect(()=> {
+   GetTransactionInformation()
+   //eslint-disable-next-line
+}, [])
   const [transactions] = useState([
     {
       orderNo: "0000000",
@@ -455,7 +489,7 @@ const TransactionPage = () => {
   ]);
 
   const getBackgroundColor = (status) => {
-    if (status === "Successful") {
+    if (status === "delivered" || status === "Successful") {
       return "#97E8B9";
     } else if (status === "Failed") {
       return "#FB9393";
@@ -483,7 +517,7 @@ const TransactionPage = () => {
     }
     return transaction.status === selectedStatus;
   });
-
+console.log(transactionResponse?.data?.data?.data?.transactions)
   return (
     <DashBoardLayout>
       <div
@@ -1206,11 +1240,11 @@ const TransactionPage = () => {
               className=" h-full md:hidden flex flex-col mt-9  w-full px-[20px] pb-[5px] border-x-[1.2px] border-b-[1.2px]
  border-gray-500 border-opacity-[25%] my-[50px] shadow-md"
             >
-              {filteredTransactions.map((transaction, index) => (
+              {transactionResponse?.data?.data?.data?.transactions?.map((transaction, index) => (
                 <div key={index}>
                   <Link
                     to={`/${
-                      transaction.status === "Successful"
+                      transaction.status === "delivered"
                         ? "SuccessfullReceipt"
                         : transaction.status === "Failed"
                         ? "FailedReceipt"
@@ -1231,10 +1265,10 @@ const TransactionPage = () => {
                     >
                       <div className="flex flex-col gap-[7.648px]">
                         <h2 className="font-medium text-neutral-500 text-[9.167px] leading-[11.167px]">
-                          Order No : {transaction.orderNo}
+                          Order No : {transaction?.order_id}
                         </h2>
                         <h2 className="font-medium text-black text-[9.167px] leading-[11.167px]">
-                          Product : {transaction.product}
+                          Product : {transaction?.product}
                         </h2>
                         <p className="font-medium text-neutral-500 text-[9.167px] leading-[11.167px]">
                           Description : {transaction.description}
@@ -1246,19 +1280,19 @@ const TransactionPage = () => {
 
                         <div className="hidden">
                           <p className="font-medium text-neutral-500  text-[9.167px] leading-[11.167px]">
-                            Network : {transaction.network}
+                            Network : {transaction?.network}
                           </p>
 
                           <p className="font-medium text-neutral-500  text-[9.167px] leading-[11.167px]">
-                            recipientname : {transaction.recipientname}
+                            recipientname : {transaction?.recipientname}
                           </p>
 
                           <p className="font-medium text-neutral-500  text-[9.167px] leading-[11.167px]">
-                            phonenumber : {transaction.phonenumber}
+                            phonenumber : {transaction?.phonenumber}
                           </p>
 
                           <p className="font-medium text-neutral-500  text-[9.167px] leading-[11.167px]">
-                            wallet : {transaction.wallet}
+                            wallet : {transaction?.wallet}
                           </p>
                         </div>
                       </div>
@@ -1272,13 +1306,13 @@ const TransactionPage = () => {
                             <span
                               style={{
                                 backgroundColor: getBackgroundColor(
-                                  transaction.status
+                                  transaction?.status
                                 ),
                               }}
                               className="font-medium text-white self-end text-[9.167px] leading-[11.167px] cursor-pointer
-                  py-[2.122px] px-[4.245px]  rounded-sm "
+                  py-[2.122px] px-[4.245px]  rounded-sm"
                             >
-                              {transaction.status}
+                              {transaction?.status}
                             </span>
                           </div>
                         </div>
@@ -1287,8 +1321,8 @@ const TransactionPage = () => {
                           <div>
                             <p className="font-medium text-[10px] text-neutral-500 leading-[13px]">
                               <span className="block">Date & Time:</span>
-                              <span className="block">May 21st, 2023,</span>
-                              <span className="block">07:21:00pm</span>
+                              <span className="block"> {transaction?.created_at?.slice(0,10)} </span>
+                              <span className="block">{ transaction?.created_at?.slice(14,19)}</span>
                             </p>
                           </div>
                           <div className="w-[13.41px] mt-7 h-[12.06px]">
@@ -1355,11 +1389,11 @@ const TransactionPage = () => {
               <div>Status</div>
             </div>
 
-            {filteredTransactions.map((transaction, index) => (
+            {transactionResponse?.data?.data?.data?.transactions?.map((transaction, index) => (
               <div key={index}>
                 <Link
                   to={`/${
-                    transaction.status === "Successful"
+                    transaction.status === "delivered"
                       ? "SuccessfullReceipt"
                       : transaction.status === "Failed"
                       ? "FailedReceipt"
@@ -1385,28 +1419,28 @@ const TransactionPage = () => {
                         toggleSideBar ? "md:w-[16.5%]" : "md:w-[17%]"
                       }`}
                     >
-                      {transaction.product}
+                      {transaction?.product}
                     </div>
                     <div
                       className={`md:text-[#7C7C7C] ${
                         toggleSideBar ? "md:w-[18.5%]" : "md:w-[18.5%]"
                       }`}
                     >
-                      {transaction.description}
+                      {transaction?.description}
                     </div>
                     <div
                       className={`md:text-[#7C7C7C]  ${
                         toggleSideBar ? "md:w-[16%]" : "md:w-[16%]"
                       }`}
                     >
-                      {transaction.orderNo}
+                      {transaction?.order_id}
                     </div>
                     <div
                       className={`md:text-[#7C7C7C]  ${
                         toggleSideBar ? "md:w-[16%]" : "md:w-[17%]"
                       }`}
                     >
-                      {transaction.amount}
+                      {transaction?.amount}
                     </div>
 
                     <div
@@ -1414,9 +1448,9 @@ const TransactionPage = () => {
                         toggleSideBar ? "md:w-[16.5%] " : "md:w-[16.5%]"
                       }`}
                     >
-                      <span>May 21st, 2023,</span>
+                      <span>{transaction?.created_at?.slice(0,10)}</span>
                       <br />
-                      <span>07:21:00pm</span>
+                      <span>{ transaction?.created_at?.slice(14,19)}</span>
                     </div>
 
                     <div
@@ -1450,10 +1484,7 @@ const TransactionPage = () => {
               </div>
             ))}
 
-            <div className="md:text-center md:border-[1px] md:mt-[50px] md:mx-[43%] md:shadow-md hidden md:block">
-              <p className="md:text-[#707070] md:text-[10px]">---The End---</p>
-            </div>
-
+         
             <div
               className={`transaction2 md:flex md:justify-center md:pb-[30px]`}
             >
@@ -1475,6 +1506,12 @@ const TransactionPage = () => {
           </div>
         </section>
       </div>
+      {loading && (
+        <Loader/>
+      )}
+      {sessionModal && (
+        <HandleUserSession/>
+      )}
     </DashBoardLayout>
   );
 };

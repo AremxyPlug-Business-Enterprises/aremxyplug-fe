@@ -1276,7 +1276,8 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
    const [idStatus, setIdStatus] = useState('Not Verified');
    const [bvnCountry, setBvnCountry] = useState("");
    const [ bvnCountryImage, setBvnCountryImage] = useState(null);
-
+  const [verificationReason, setVerificationReason] = useState("");
+  const [verificationResponse, setVerificationResponse] = useState({})
   
   //========== BUSINESS KYC =============
   const [businessPopUp, setBusinessPopUp] = useState(false);
@@ -2479,6 +2480,10 @@ bvnButtonState,
   setBvnCountry,
   bvnCountryImage,
   setBvnCountryImage,
+  verificationReason,
+   setVerificationReason,
+   verificationResponse,
+   setVerificationResponse,
 
     //========== Business PopUp =======
     businessPopUp,

@@ -12,27 +12,27 @@ import arrowDown from "../Referrals/referralImage/arrow-down.svg";
 import { Link } from "react-router-dom/dist/react-router-dom.development";
 import { useState, useEffect, useRef } from "react";
 import "../../App.css";
-import {GetFunction} from "../../Components/ApiCollection.jsx/ApiBuck"
+import {GetFunction, HandleUserSession} from "../../Components/ApiCollection.jsx/ApiBuck"
 import { Loader } from "../Loader/Loader";
 import { Modal } from "../Screens/Modal/Modal";
-// import { Modal } from "../Screens/Modal/Modal";
+
 
 
 export default function Referral() {
   
-  // const [copyTextOne, setCopyTextOne] = useState('');
-  // const [copyTextTwo, setCopyTextTwo] = useState('');
+  //  const [copyTextOne, setCopyTextOne] = useState('');
+  //  const [copyTextTwo, setCopyTextTwo] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  // const [error, setError] = useState(null);
-  const referral= useRef({});
-  const [referralResponds, setReferralResponds] = useState({})
-  referral.current = referralResponds
+  const [sessionModal, setSessionModal] = useState(false);
 
-const referralLink = referral.current?.data?.data?.referral_link;
-const referralCode =  referral.current?.data?.data?.referral_code;
+  const [referralResponds, setReferralResponds] = useState({});
  
-  const handleCopyClick = (e) => {
-     if(e.target.id === 'copy-btn1' ){
+const referralLink =localStorage.getItem("ReferralLink", referralResponds?.data?.data?.referral_link)
+
+const referralCode =  localStorage.getItem("ReferralCode",referralResponds?.data?.data?.referral_code)
+ 
+  const handleCopyClick = (ButtonHandler) => {
+     if(ButtonHandler === "CopyLink" ){
     navigator.clipboard
     .writeText(referralLink)
     .then(() => {
@@ -41,7 +41,7 @@ const referralCode =  referral.current?.data?.data?.referral_code;
     .catch((err) => {
       console.error("Error copying text: ", err);
     });
-  }else if(e.target.id === 'copy-btn2'){
+  }else if(ButtonHandler === "CopyCode"){
     navigator.clipboard
     .writeText(referralCode)
     .then(() => {
@@ -58,38 +58,51 @@ const referralCode =  referral.current?.data?.data?.referral_code;
 
  const handleReferralGenerate = async () => {
   
-  const Path = "extra/referral"; 
-  
-   const successHandler = () => {
+  const Path = "extra/referral";  
+   const successHandler = (response) => {
      console.log('successfully fetched');
-     //console.log("Referral Response:", referralResponds);
-    
-     
- };
+    localStorage.setItem("ReferralLink", response?.data?.data?.referral_link)
 
-  const FailedHandler = async() => {
-   console.log("Failed to generate referral");
-   await GetFunction(Path, setIsLoading, successHandler, FailedHandler, setReferralResponds);
-    
+ localStorage.setItem("ReferralCode", response?.data?.data?.referral_code)
+  
+     //console.log("Referral Response:", referralResponds);
+    };
+     
+  const FailedHandler = async(ErrorType) => {
+   if(ErrorType === "unauthorised"){
+   await GetFunction(Path,
+     setIsLoading, 
+     successHandler, 
+     (ErrorType)=> {
+     if(ErrorType === "unauthorised"){
+      setSessionModal(true)
+     }
+     }, setReferralResponds);
+   }
  };
    
-  await GetFunction(Path, setIsLoading, successHandler, FailedHandler, setReferralResponds);
+  await GetFunction(Path,
+     setIsLoading,
+      successHandler,
+       FailedHandler, setReferralResponds);
 };
- useEffect(() => {
-  if((referralLink === "" || referralLink ===  undefined) || (referralCode === ""|| referralCode === undefined))
- handleReferralGenerate();
-//eslint-disable-next-line
- }, []);   
+  useEffect(() => {
+  if(( !referralLink || referralLink === undefined) || (  !referralCode || referralCode === undefined)){
+handleReferralGenerate();
+  }
+ //eslint-disable-next-line
+  }, []);   
+ 
    
-  console.log(referral.current?.data?.data?.referral_link)
+
   ;
   return (
     <DashBoardLayout>
       <div className="">
         {/* RECTANGLE1 // CONTENT ONE CONTAINER */}
 <div
-         className="rectangle1 flex justify-between items-center gap-[18.34px] h-[88.53px] w-[100%]  
-   pt-[2.665px] pr-[20px] pb-[2.668px] pl-[16.664px] lg:mb-[60px] mb-[30px] rounded-[6.667px] 
+         className="rectangle1 flex justify-between items-center py-[20px] gap-[18.34px] min-h-[90px] w-[100%]  
+    pr-[20px]  pl-[16.664px] lg:mb-[60px] mb-[30px] rounded-[6.667px] 
    md:pt-[5.581px] md:pb-[4.586px] md:pr-[34.371px] md:pl-[28.646px] md:gap-[31.514px] md:h-[112.29px]
    md:rounded-[11.458px] lg:py-[8px] lg:pl-[60px] lg:pr-[50px] lg:gap-[55px] lg:h-[196px]
       lg:rounded-[20px] "
@@ -99,7 +112,7 @@ const referralCode =  referral.current?.data?.data?.referral_code;
           justify-center">
             {/* header */}
             <h2
-              className="font-[600] leading-[12px] text-[8px] text-[#000] 
+              className="font-[600] leading-[12px] text-[11px] text-[#000] 
      md:text-[13.75px] md:leading-[21px]
       lg:text-[24px] lg:leading-[36px] "
             >
@@ -109,7 +122,7 @@ const referralCode =  referral.current?.data?.data?.referral_code;
             </h2>
             {/* sub-text */}
             <p
-              className="font-[400] text-[7px] leading-[9.1px] 
+              className="font-[400] text-[10px] leading-[13px] 
       md:text-[9.167px]  md:leading-[11.917px]
       lg:text-[16px] lg:leading-[20.8px] "
             >
@@ -137,14 +150,14 @@ const referralCode =  referral.current?.data?.data?.referral_code;
           {/* INPUT_ONE */}
           <div className="flex flex-col gap-[5.667px] md:gap-[8px] lg:gap-[10px]">
             <h2
-              className="font-[600] text-[8px] leading-[12px] 
+              className="font-[600] text-[12px] leading-[16px] 
   md:text-[9.167px] md:leading-[14px]
   lg:text-[16px] lg:leading-[24px]"
             >
               Your Referral Link is:
             </h2>
             <div
-              className="flex  h-[23px] items-center
+              className="flex  h-[40px] items-center
           w-[100%] md:h-[30.94px]  
     lg:h-[54px] "
             >
@@ -152,22 +165,22 @@ const referralCode =  referral.current?.data?.data?.referral_code;
 
               <input value={referralLink}
             readOnly
-               className="copy-content1 font-[600]  text-[#7C7C7C] text-[7px] leading-[11px]
-               lg:text-[16px] lg:leading-[24px] 
-                md:text-[9.167px] md:leading-[14px] flex items-center  w-[75%] h-[100%]  border-l-[1px] border-y-[1px] 
+               className="copy-content1 font-[600] w-[75%]  text-[#7C7C7C] text-[12px] leading-[16px]
+               lg:text-[16px] lg:leading-[24px] rounded-l-[10px] overflow-x-scroll pr-[20px]
+                md:text-[9.167px] md:leading-[14px] flex items-center   h-[100%]  border-l-[1px] border-y-[1px] 
           border-[#7C7C7C] pl-[5px]  lg:pl-[18px]  md:pl-[13px]
-         lg:rounded-s-[22px] rounded-s-[9.333px] md:rounded-s-[12.607px] overflow-x-scroll md:overflow-auto focus:outline-none"/>
+         lg:rounded-l-[22px]  md:rounded-l-[12.607px] md:overflow-auto focus:outline-none"/>
              
               
               {/* COPY LINK */}
               <div 
               id='copy-btn1'
               onClick={(e)=> {
-                handleCopyClick(e)
+                handleCopyClick("CopyLink")
               }}
                 className=" copy-btn1 flex justify-center 
        gap-[10px] w-[25%] h-[100%] bg-[#04177F] items-center 
-       rounded-e-[9.333px] lg:rounded-e-[22px] md:rounded-e-[12.607px]"
+       rounded-e-[10px] lg:rounded-e-[22px] md:rounded-e-[12.607px]"
               >
                 <img
                   src={copyRefer}
@@ -175,7 +188,7 @@ const referralCode =  referral.current?.data?.data?.referral_code;
                   alt="copy"
                 />
                 <p
-                  className="copy-btn1  font-[500] text-[7px] leading-[11px] text-white 
+                  className="copy-btn1  font-[500] text-[10px] leading-[14px] text-white 
        lg:text-[16px] lg:leading-[24px] md:text-[9.147px] md:leading-[14px] cursor-pointer"
                 >
                   Copy link
@@ -186,25 +199,25 @@ const referralCode =  referral.current?.data?.data?.referral_code;
           {/* INPUT_TWO */}
           <div className="flex flex-col gap-[5.667px] md:gap-[8px] lg:gap-[10px]">
             <h2
-              className="font-[600] text-[8px] leading-[12px]
- md:text-[9.167px] md:leading-[14px]
+              className="font-[600] text-[12px] leading-[16px]
+
 lg:text-[16px] lg:leading-[24px]"
             >
               Your Referral code is:
             </h2>
             <div
-              className="flex  h-[23px] items-center
+              className="flex  h-[40px]  items-center
               w-[100%] md:h-[30.94px]  
         lg:h-[54px] "
             >
               {/* THE REFER LINK 2*/}
         <input value={referralCode}
        readOnly
-          className="copy-content2 font-[600]  text-[#7C7C7C] text-[7px] leading-[11px]
-       lg:text-[16px] lg:leading-[24px] 
+          className="copy-content2 font-[600]  text-[#7C7C7C] text-[12px] leading-[16px]
+       lg:text-[16px] lg:leading-[24px] rounded-l-[10px]
         md:text-[9.167px] md:leading-[14px]  md:overflow-auto overflow-x-scroll  w-[75%] h-[100%]  border-l-[1px] border-y-[1px] 
           border-[#7C7C7C] pl-[5px] lg:pl-[18px] md:pl-[13px]
-         lg:rounded-s-[22px] rounded-s-[9.333px] md:rounded-s-[12.607px] focus:outline-none"/>
+         lg:rounded-l-[22px]  md:rounded-l-[12.607px] focus:outline-none"/>
             
                 
               
@@ -212,12 +225,12 @@ lg:text-[16px] lg:leading-[24px]"
              <div
              id='copy-btn2'
              onClick={(e)=> {
-              handleCopyClick(e)
+              handleCopyClick("CopyCode")
              
              }}
                 className=" flex justify-center 
        gap-[10px] w-[25%] h-[100%] bg-[#04177F] items-center
-        rounded-e-[9.333px] lg:rounded-e-[22px] md:rounded-e-[12.607px]"
+        rounded-e-[10px] lg:rounded-e-[22px] md:rounded-e-[12.607px]"
               >
                 <img
                   src={copyRefer}
@@ -225,7 +238,7 @@ lg:text-[16px] lg:leading-[24px]"
                   alt="copy"
                 />
                 <p
-                  className="  font-[500] text-[7px] leading-[11px] text-white 
+                  className="  font-[500] text-[10px] leading-[14px] text-white 
        md:text-[9.147px] md:leading-[14px]
        lg:text-[16px] lg:leading-[24px] cursor-pointer"
                 >
@@ -241,9 +254,9 @@ lg:text-[16px] lg:leading-[24px]"
             {/* CHECK POINT BALANCE BUTTON */}
 
             <Link to ="/point-balance"
-             className="md:self-center text-center font-[600] leading-[10.4px] text-[8px] 
+             className="md:self-center text-center font-[600] leading-[16.4px] text-[12px] 
     shadow-[2.29167px]
-     text-white rounded-[5.729px]  py-[10px] bg-[#04177F]  lg:px-[104px] lg:py-[15px]
+     text-white rounded-[5.729px]  py-[16px] bg-[#04177F]  lg:px-[104px] lg:py-[15px]
      md:pt-[9.394px] md:pr-[59.579px] md:pb-[8.824px] md:pl-[59.888px]
        lg:text-[16px] lg:leading-[24px] lg:rounded-[10px] 
      "
@@ -255,7 +268,7 @@ lg:text-[16px] lg:leading-[24px]"
             {/*  */}
             <div className="flex flex-col gap-[18.333px] ">
               <p
-                className="text-[8px] text-center text-[#7C7C7C] py-[5.729px] font-[600] leading-[12px] 
+                className="text-[12px] text-center text-[#7C7C7C] py-[5.729px] font-[600] leading-[16px] 
    border-b-[2px] border-b-[#CED9FF]
     md:text-[11.458px] md:leading-[17px] lg:text-[20px] lg:leading-[30px]"
               >
@@ -1127,6 +1140,9 @@ lg:text-[24px] lg:leading-[30px]"
                   
                              </Modal>
                         ) }  
+                        {sessionModal && (
+                          <HandleUserSession/>
+                        )}
       </div>
 
     </DashBoardLayout>
