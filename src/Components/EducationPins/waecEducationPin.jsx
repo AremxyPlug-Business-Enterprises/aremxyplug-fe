@@ -29,7 +29,7 @@ import "../Dashboard/DashboardComponents/DataTopUpPage/DataTopUp.css";
 import eduFailed from "./imagesEducation/WaecFailedTransaction.svg";
 import {
   GetFunction,
-  // HandleUserSession,
+  HandleUserSession,
   PostFunction,
   VerifyTransPin,
 } from "../ApiCollection.jsx/ApiBuck";
@@ -1594,7 +1594,9 @@ export default function WaecEducationPin() {
                 <Link
                   to="/WaecFailedReceipt"
                   onClick={handleFailedData}
-                  className={`bg-[#ffffff] border w-[111px] border-[#0003] flex justify-center items-center text-center cursor-pointer text-xs font-extrabold h-[40px] rounded-[6px] md:w-[150px] md:rounded-[8px] md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                  className={`bg-[#ffffff] border w-[111px] border-[#0003] flex justify-center items-center text-center cursor-pointer text-xs font-extrabold h-[40px] rounded-[6px] md:w-[150px] md:rounded-[8px] md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%] ${
+                       isDarkMode ? "text-black" : "text-black"
+                     }`}
                 >
                   Receipt
                 </Link>
@@ -1621,7 +1623,7 @@ export default function WaecEducationPin() {
           <Loader />
         </Modal>
       )}
-      {/* {sessionModal && <HandleUserSession />} */}
+      {sessionModal && <HandleUserSession />}
     </DashBoardLayout>
   );
 }

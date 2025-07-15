@@ -1469,7 +1469,9 @@ export default function JambEducationPin() {
                   <Link
                     // to="/NabtebFailedReceipt"
                     onClick={handleFailedData}
-                    className={`bg-[#ffffff] border-[1px] w-[111px] border-[#0003] flex justify-center items-center text-center cursor-not-allowed text-xs font-extrabold h-[40px] rounded-[6px] md:w-[150px] md:rounded-[8px] md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                    className={`bg-[#ffffff] border-[1px] w-[111px] border-[#0003] flex justify-center items-center text-center cursor-not-allowed text-xs font-extrabold h-[40px] rounded-[6px] md:w-[150px] md:rounded-[8px] md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%] ${
+                       isDarkMode ? "text-black" : "text-black"
+                     }`}
                   >
                     Receipt
                   </Link>
