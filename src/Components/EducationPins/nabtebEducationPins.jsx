@@ -32,14 +32,18 @@ import {
   VerifyTransPin,
 } from "../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../Loader/Loader";
-import {
-  handleFormattedAmount,
-  validateNigerianNumberByNetwork,
-} from "./waecEducationPin";
+import { validateNigerianNumberByNetwork } from "./waecEducationPin";
 
 export default function NabtebEducationPins() {
   const {
     isDarkMode,
+    // FUNCTION OTP FOR THE POPPINS
+    toggleSideBar,
+    inputPin,
+    setInputPin,
+    toggleVisibility,
+    isVisible,
+
     nabtebQuantityResult,
     setNabtebQuantityResult,
     nabtebQuantityActive,
@@ -69,7 +73,7 @@ export default function NabtebEducationPins() {
     newBalance,
     setNewBalance,
 
-    nabtebEduResponse,
+    // nabtebEduResponse,
     setNabtebPinsGenerated,
     nabtebOrderId,
     setNabtebOrderId,
@@ -93,19 +97,70 @@ export default function NabtebEducationPins() {
   const [sessionModal, setSessionModal] = useState(false);
   const [passDataBalance, setPassDataBalance] = useState({});
 
+  const nabtebOptions = [
+    {
+      quantity: "1 Piece Of Result Checker",
+      Amount:
+        nabtebQuantityAmount !== undefined ||
+        nabtebQuantityAmount !== null ||
+        nabtebQuantityAmount !== ""
+          ? nabtebQuantityAmount * 1
+          : "",
+      id: 1,
+    },
+    {
+      quantity: "2 Piece Of Result Checker",
+      Amount:
+        nabtebQuantityAmount !== undefined ||
+        nabtebQuantityAmount !== null ||
+        nabtebQuantityAmount !== ""
+          ? nabtebQuantityAmount * 2
+          : "",
+      id: 2,
+    },
+    {
+      quantity: "3 Piece Of Result Checker",
+      Amount:
+        nabtebQuantityAmount !== undefined ||
+        nabtebQuantityAmount !== null ||
+        nabtebQuantityAmount !== ""
+          ? nabtebQuantityAmount * 3
+          : "",
+      id: 3,
+    },
+    {
+      quantity: "4 Piece Of Result Checker",
+      Amount:
+        nabtebQuantityAmount !== undefined ||
+        nabtebQuantityAmount !== null ||
+        nabtebQuantityAmount !== ""
+          ? nabtebQuantityAmount * 4
+          : "",
+      id: 4,
+    },
+    {
+      quantity: "5 Piece Of Result Checker",
+      Amount:
+        nabtebQuantityAmount !== undefined ||
+        nabtebQuantityAmount !== null ||
+        nabtebQuantityAmount !== ""
+          ? nabtebQuantityAmount * 5
+          : "",
+      id: 5,
+    },
+  ];
+
   const getAmount = async function handleGetAmount() {
     const id = 3;
     const path = `products/edu/${id}`;
-    const SuccessHandler = () => {
-      setNabtebEduResponse((response) => {
-        const amount = response?.data?.data?.data?.Amount;
-        if (amount) {
-          setNabtebQuantityAmount(amount);
-        } else {
-          setNabtebQuantityAmount("");
-        }
-        return response;
-      });
+    const SuccessHandler = (response) => {
+      const amount = response?.data?.data?.data?.Amount;
+
+      if (amount !== undefined && amount !== null && amount !== "") {
+        setNabtebQuantityAmount(Number(amount));
+      } else {
+        setNabtebQuantityAmount("");
+      }
     };
 
     const FailedHandler = (ErrorType) => {
@@ -154,7 +209,6 @@ export default function NabtebEducationPins() {
   // get the amount and balance on entering the page
   useEffect(() => {
     getAmount();
-    GetBalance();
     if (newBalance === "" || newBalance === null || newBalance === undefined) {
       GetBalance();
       if (GetBalance) {
@@ -191,13 +245,6 @@ export default function NabtebEducationPins() {
     }
     setNabtebMethodActive(false);
   }
-  const nabtebOptions = [
-    { quantity: "1 Piece Of Result Checker", Amount: "₦1000", id: 1 },
-    { quantity: "2 Piece Of Result Checker", Amount: "₦2000", id: 2 },
-    { quantity: "3 Piece Of Result Checker", Amount: "₦3000", id: 3 },
-    { quantity: "4 Piece Of Result Checker", Amount: "₦4000", id: 4 },
-    { quantity: "5 Piece Of Result Checker", Amount: "₦5000", id: 5 },
-  ];
 
   // WALLET
 
@@ -242,9 +289,6 @@ export default function NabtebEducationPins() {
     setNabtebQuantityActive(false);
     setNabtebMethodActive(false);
   }
-  // FUNCTION OTP FOR THE POPPINS
-  const { toggleSideBar, inputPin, setInputPin, toggleVisibility, isVisible } =
-    useContext(ContextProvider);
 
   const nabtebProceed = () => {
     const { error } = schema.validate({
@@ -285,11 +329,11 @@ export default function NabtebEducationPins() {
       .messages({ "string.pattern.base": "Invalid email " }),
   });
 
-  function handleCalculatedAmount(quantity) {
-    const amountCalculated =
-      nabtebQuantityAmount > 0 ? Number(nabtebQuantityAmount) * quantity : "";
-    return handleFormattedAmount(amountCalculated);
-  }
+  // function handleCalculatedAmount(amountCalculated) {
+  //   const amountCalculated =
+  //     nabtebQuantityAmount > 0 ? Number(nabtebQuantityAmount) * quantity : "";
+  //   return handleFormattedAmount(amountCalculated);
+  // }
 
   const [balanceStatus, setBalanceStatus] = useState("");
   let balanceStringToNum = Number(newBalance || updateBalance);
@@ -300,9 +344,8 @@ export default function NabtebEducationPins() {
   // let educationAmountToNumber = String(
   //   nabtebEducationAmount.replace(/[₦,]/g, "")
   // );
-  let educationAmountToNumber = nabtebEducationAmount
+  let educationAmountToNumber = Number(nabtebEducationAmount);
   let CheckSufficiency = educationAmountToNumber > balanceStringToNum;
-  console.log(CheckSufficiency);
   useEffect(() => {
     const HandleBalanceStatus = () => {
       if (CheckSufficiency) {
@@ -321,16 +364,18 @@ export default function NabtebEducationPins() {
 
   const nabtebTransactionSuccessClose = () => {
     setTransactSuccessPopUp(false);
+    setInputPin("");
+    handleResetFields();
   };
 
   const nabtebEduPinSuccess = (e) => {
     setTransactSuccessPopUp(true);
     setNabtebEducationConfirm(false);
-    setInputPin(e.target.value);
   };
   const nabtebEduPinFailed = () => {
     setNabtebEducationConfirm(false);
     setNabtebFailedTransaction(true);
+    // setTransactSuccessPopUp(false);
   };
 
   const [pinSuccess, setPinSuccess] = useState(false);
@@ -340,7 +385,6 @@ export default function NabtebEducationPins() {
 
   const handleNabtebSubmitPost = async () => {
     async function EduPinHandler() {
-      alert("Edu pin handler called");
       const path = `edu`;
       const body = {
         exam_type: nabtebExamType.toLowerCase(),
@@ -348,7 +392,8 @@ export default function NabtebEducationPins() {
         // amount: String(
         //   parseInt(nabtebEducationAmount.replace(/[₦,]/g, ""), 10)
         // ),
-        amount: String(nabtebEducationAmount.replace(/[₦,]/g, "")),
+        // amount: String(nabtebEducationAmount.replace(/[₦,]/g, "")),
+        amount: String(nabtebEducationAmount),
         email: nabtebEducationPinEmail,
         quantity: parseInt(nabtebQuantityResult.split(" (")[0].slice(0, 1)),
       };
@@ -356,7 +401,6 @@ export default function NabtebEducationPins() {
         nabtebEduPinSuccess();
         setEducationPinStatus(true);
         setNabtebOrderId(response?.data?.data?.data?.order_id);
-        console.log("response", response);
       };
       const FailedHandler = () => {
         nabtebEduPinFailed();
@@ -381,35 +425,35 @@ export default function NabtebEducationPins() {
     );
   };
 
-  // console.log("amount", nabtebEducationAmount)
-
   function handleReceivedData() {
     setIsLoading(true);
     const receivedData = () => {
-      setNabtebPinsGenerated(nabtebEduResponse?.data?.pins_generated);
-      setNabtebOrderId(nabtebEduResponse?.data?.data?.order_id);
-      setNabtebTransactionId(nabtebEduResponse?.data?.transaction_id);
+      setNabtebPinsGenerated(fetchedPurchaseResponse?.data?.pins_generated);
+      setNabtebOrderId(fetchedPurchaseResponse?.data?.order_id);
+      setNabtebTransactionId(fetchedPurchaseResponse?.data?.transaction_id);
       setNabtebShowDescription(
-        nabtebEduResponse?.data?.transaction_description
+        fetchedPurchaseResponse?.data?.transaction_description
       );
-      setNabtebFullName(nabtebEduResponse?.data?.full_name);
-      setNabtebTransactionProduct(nabtebEduResponse?.data?.transaction_product);
+      setNabtebFullName(fetchedPurchaseResponse?.data?.full_name);
+      setNabtebTransactionProduct(
+        fetchedPurchaseResponse?.data?.transaction_product
+      );
     };
     receivedData();
     if (receivedData) {
       setTransactSuccessPopUp(false);
       setIsLoading(false);
+      setInputPin("");
     }
   }
-  // console.log("nabtebEduResponse", nabtebEduResponse);
-  // console.log("transactionId", nabtebEduResponse?.data?.transaction_id);
-  // console.log("transactionIds", nabtebEduResponse?.transaction_id);
+
   function handleFailedData() {
     setIsLoading(true);
     setNabtebFailedTransaction(false);
     setIsLoading(false);
+    setInputPin("");
   }
-  // console.log("fetchedPurchaseResponse", fetchedPurchaseResponse)
+
   return (
     <DashBoardLayout>
       <div className="flex flex-col h-[115%] lg:h-[120%] justify-between ">
@@ -418,7 +462,7 @@ export default function NabtebEducationPins() {
           <HeroComponent />
           <div className="flex lg:gap-[8px] items-center md:gap-[5.868px] gap-[4.694px] mb-[20px] lg:mb-[50px] md:mb-[30px]">
             <h2
-              className={`font-semibold text-sm leading-[12px] md:text-xs md:leading-[11.267px] lg:text-base lg:leading-[20.2px] ${
+              className={`font-semibold text-sm leading-3 md:text-xs md:leading-[11.267px] lg:text-base lg:leading-[20.2px] ${
                 isDarkMode ? "text-white" : "text-[#7E7E7E]"
               } `}
             >
@@ -432,7 +476,7 @@ export default function NabtebEducationPins() {
             />
 
             <h2
-              className={`font-semibold text-sm leading-[12px] md:text-xs md:leading-[11.267px] lg:text-base  lg:leading-[20.2px] ${
+              className={`font-semibold text-sm leading-3 md:text-xs md:leading-[11.267px] lg:text-base  lg:leading-[20.2px] ${
                 isDarkMode ? "text-white" : "text-[#7E7E7E]"
               }`}
             >
@@ -465,7 +509,7 @@ export default function NabtebEducationPins() {
                     // className="relative w-full "
                     className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px]  sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-normal leading-[10.4px] md:text-[11px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
                       isDarkMode
-                        ? "bg-black text-white border border-white"
+                        ? "bg-black text-white hover:bg-gray-800 border border-white"
                         : "hover:bg-[#EDEAEA]"
                     }`}
                   >
@@ -538,12 +582,20 @@ export default function NabtebEducationPins() {
                   </label>
                   {/* input */}
                   <div
-                    onClick={nabtebQuantityDropDown}
+                    onClick={() => {
+                      if (nabtebQuantityAmount) {
+                        nabtebQuantityDropDown();
+                      }
+                    }}
                     // className=" relative w-full"
-                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] sm:p-3 sm:text-lg  flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-normal leading-[10.4px] md:text-[11px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] items-center cursor-pointer outline-0 w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] self-center  ${
+                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] sm:p-3 sm:text-lg  flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-normal leading-[10.4px] md:text-[11px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] items-center outline-0 w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] self-center  ${
                       isDarkMode
-                        ? "bg-black text-white border border-white"
+                        ? "bg-black hover:bg-gray-800 text-white border border-white"
                         : "hover:bg-[#EDEAEA] border-[0.24px] lg:border-[0.4px] border-[#9C9C9C] text-[#7C7C7C]"
+                    } ${
+                      !nabtebQuantityAmount
+                        ? "cursor-not-allowed"
+                        : "cursor-pointer"
                     }`}
                   >
                     <input
@@ -557,19 +609,28 @@ export default function NabtebEducationPins() {
                         isDarkMode
                           ? "bg-black text-white "
                           : " text-[#7C7C7C] hover:bg-[#EDEAEA] "
+                      } ${
+                        !nabtebQuantityAmount
+                          ? "cursor-not-allowed "
+                          : "cursor-pointer"
                       }`}
                       readOnly
                     />
 
                     <img
-                      className="lg:w-6 lg:h-6 w-4 h-4 cursor-pointer imgdrop"
+                      className="lg:w-6 lg:h-6 w-4 h-4 imgdrop"
                       src={arrowDown}
                       alt=""
+                      style={{
+                        cursor: !nabtebQuantityAmount
+                          ? "not-allowed"
+                          : "pointer",
+                      }}
                     />
                   </div>
                   {/* drop down */}
 
-                  {nabtebQuantityActive && (
+                  {nabtebQuantityActive && nabtebQuantityAmount && (
                     <div
                       className={`absolute lg:top-[90px] md:top-[60px] top-[74px] z-[1] flex flex-col w-full divide-y rounded
                       ${
@@ -583,25 +644,17 @@ export default function NabtebEducationPins() {
                           <h2
                             onClick={() => {
                               setNabtebQuantityResult(
-                                nabtebQuantityAmount > 0
-                                  ? `${
-                                      option.quantity
-                                    } (₦${handleCalculatedAmount(option.id)})`
-                                  : option.quantity
+                                `${
+                                  option.quantity
+                                } (₦${option?.Amount?.toLocaleString()})`
                               );
                               setNabtebQuantityActive(false);
                               document
                                 .querySelector(".imgdrop")
                                 .classList.remove("DropIt");
-                              setNabtebEducationAmount(
-                                nabtebQuantityAmount > 0
-                                  ? 
-                                      Number(nabtebQuantityAmount) * option.id
-                                    
-                                  : ""
-                              );
+                              setNabtebEducationAmount(option?.Amount);
                             }}
-                            className={`py-5 md:py-[14px]  text-[13.5px] leading-[10.4px] pl-[10px] font-medium md:text-[13.227px] md:leading-[17.195px] w-full shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] lg:text-base lg:leading-[20.8px] cursor-pointer transition-colors duration-300    
+                            className={`py-5 md:py-[14px] text-[13.5px] leading-[10.4px] pl-[10px] font-medium md:text-[13.227px] md:leading-[17.195px] w-full shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] lg:text-base lg:leading-[20.8px] cursor-pointer transition-colors duration-300    
                             ${
                               isDarkMode
                                 ? "bg-black text-white hover:bg-gray-800 "
@@ -609,11 +662,14 @@ export default function NabtebEducationPins() {
                             }`}
                             key={option.id}
                           >
-                            {nabtebQuantityAmount > 0
+                            {/* {nabtebQuantityAmount > 0
                               ? `${option.quantity} (₦${handleCalculatedAmount(
                                   option.id
                                 )})`
-                              : option.quantity}
+                              : option.quantity} */}
+                            {`${
+                              option.quantity
+                            } ₦${option?.Amount?.toLocaleString()}`}
                           </h2>
                         );
                       })}
@@ -643,7 +699,7 @@ export default function NabtebEducationPins() {
                         e.target.style.border = "2px solid red";
                       }
                     }}
-                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-5 md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-normal leading-[10.4px] md:text-[11px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer focus:outline-0 outline-0 border lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px]  self-center
+                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-5 md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-normal leading-[10.4px] md:text-[11px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center focus:outline-0 outline-0 border lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px]  self-center
                     ${
                       isDarkMode
                         ? "bg-black text-white border-white"
@@ -683,7 +739,7 @@ export default function NabtebEducationPins() {
                   </label>
 
                   <input
-                    className={`EmailPins mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[13px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer focus:outline-0 outline-0 border lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center  
+                    className={`EmailPins mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[13px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center focus:outline-0 outline-0 border lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center  
                     ${
                       isDarkMode
                         ? "bg-black text-white border-white"
@@ -731,21 +787,22 @@ export default function NabtebEducationPins() {
                         ? "bg-black text-white border-white"
                         : "border-[#9C9C9C] text-[#7C7C7C]"
                     }`}
-                    // value={isAmountLoading ? "" : educationAmount}
-                    
-                    value={nabtebEducationAmount ? `${nabtebEducationAmount.toString().includes("₦")? `${nabtebEducationAmount.toLocaleString()}`: `₦${nabtebEducationAmount.toLocaleString()}`}` : ""}
+                    // value={
+                    //   nabtebEducationAmount
+                    //     ? `${
+                    //         nabtebEducationAmount.toString().includes("₦")
+                    //           ? `${nabtebEducationAmount.toLocaleString()}`
+                    //           : `₦${nabtebEducationAmount.toLocaleString()}`
+                    //       }`
+                    //     : ""
+                    // }
+                    value={
+                      nabtebEducationAmount
+                        ? `₦${nabtebEducationAmount.toLocaleString()}`
+                        : "₦"
+                    }
                     readOnly
                   />
-                  {/* {isAmountLoading && (
-                    <p className="left-4 absolute top-7 md:top-9 lg:top-12">
-                      <BalanceLoading />
-                    </p>
-                  )}
-                  {isFailedAmount && (
-                    <div className="text-xs text-red-500 italic lg:text-sm absolute left-0 -bottom-4 ">
-                      Unable to get Amount. Try Again
-                    </div>
-                  )} */}
                 </div>
 
                 {/*================== PAYMENT METHOD ===============*/}
@@ -764,17 +821,15 @@ export default function NabtebEducationPins() {
                       nabtebMethodDropDown();
                     }}
                     // className="relative w-full"
-                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px]  sm:p-3 sm:text-lg flex items-center justify-between border lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] ${
+                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px]  sm:p-3 sm:text-lg flex items-center justify-between border lg:border-[0.4px] cursor-pointer w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] ${
                       isDarkMode
-                        ? "bg-black text-white border-white"
+                        ? "bg-black text-white hover:bg-gray-800 border-white"
                         : "border-[#9C9C9C] hover:bg-[#EDEAEA] "
                     }`}
                   >
                     <p
                       className={`font-medium text-[13px] leading-[10.4px] md:text-xs md:leading-[12.206px] lg:text-base  lg:leading-[20.8px] cursor-pointer
-                      ${
-                        isDarkMode ? "bg-black text-white" : " text-[#7C7C7C] "
-                      }`}
+                      ${isDarkMode ? " text-white" : " text-[#7C7C7C] "}`}
                       readOnly
                     >
                       {nabtebPaymentResult}
@@ -804,8 +859,8 @@ export default function NabtebEducationPins() {
                               if (methodOption.method === "NGN Wallet") {
                                 setNabtebPaymentResult(
                                   newBalance === "" || newBalance === null
-                                    ? `${methodOption.method} ₦${methodOption.balance}`
-                                    : `${methodOption.method} ₦${newBalance}`
+                                    ? `${methodOption.method} ${methodOption.balance}`
+                                    : `${methodOption.method} ${newBalance}`
                                 );
                                 setNabtebWalletBalance(methodOption.balance);
                                 setNabtebImageState(methodOption.flag);
@@ -858,40 +913,36 @@ export default function NabtebEducationPins() {
                     isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
                   } ${
                     toggleSideBar ? "confirm01" : "confirm"
-                  } grow pt-[10px] pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative 
-              md:rounded-[11.5px] md:mx-auto md:my-auto md:overflow-auto`}
+                  } grow pt-[10px] pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:overflow-auto`}
                 >
-                  <div
-                    className="w-full flex justify-end border-b-[6px] items-center
-               border-primary px-[12px] h-[35px] md:h-[45px] lg:h-[60px] lg:border-b-[10px]"
-                  >
+                  <div className="w-full flex justify-end border-b-[6px] items-center border-primary px-[12px] h-[35px] md:h-[45px] lg:h-[60px] lg:border-b-[10px]">
                     <img
                       src={closeIcon}
                       alt=""
                       onClick={() => setNabtebEducationProceed(false)}
-                      className="w-[18px] h-[18px]  md:w-[25px] cursor-pointer
-                   md:h-[25px] lg:w-[35px] lg:h-[35px]"
+                      className="w-[18px] h-[18px]  md:w-[25px] cursor-pointer md:h-[25px] lg:w-[35px] lg:h-[35px]"
                     />
                   </div>
 
                   <div>
-                    <h2 className="lg:text-base lg:leading-[24px] text-center mb-1 text-[10px] md:text-[13px] font-semibold mt-[20px] leading-[12px]">
+                    <h2 className="lg:text-base lg:leading-6 text-center mb-1 text-[10px] md:text-[13px] font-semibold mt-[20px] leading-3">
                       Confirm Transaction
                     </h2>
-                    <h2 className="lg:text-base  md:text-[12px] md:leading-[20px] md:px-[30px] lg:leading-[24px] text-[10px] leading-[15px] text-center mt-[26px] mx-[10px] mb-[20px] font-semibold">
+                    <h2 className="lg:text-base  md:text-xs md:leading-[20px] md:px-[30px] lg:leading-6 text-[10px] leading-[15px] text-center mt-[26px] mx-[10px] mb-[20px] font-semibold">
                       You are about to purchase{" "}
                       <span className="font-semibold lg:text-[16.9px] md:leading-[14.9px] text-[10.9px] md:text-xs">
                         {nabtebExamType}
                       </span>{" "}
                       PIN (₦{nabtebEducationAmount.toLocaleString()}) from your{" "}
-                      {nabtebPaymentResult.split(" ₦")[0]} to
+                      {nabtebPaymentResult.split(" (")[0]} to
                     </h2>
 
                     <div className="flex flex-col gap-[15px] px-[20px] mt-[50px] md:gap-[25px]">
                       <div className="flex items-center justify-between font-medium">
                         <h2
-                          className="text-[#7C7C7C] text-[10px] leading-[12px]
-                     md:text-[12px] md:leading-[11.92px] lg:text-base lg:leading-[24px]"
+                          className={`text-[10px] leading-3 md:text-xs md:leading-[11.92px] lg:text-base lg:leading-6 font-medium ${
+                            isDarkMode ? "text-white" : "text-[#7C7C7C]"
+                          }`}
                         >
                           Exam Type
                         </h2>
@@ -903,29 +954,35 @@ export default function NabtebEducationPins() {
                               className="w-full h-full object-cover md:h-[15px]"
                             />
                           </div>
-                          <h2 className="text-[10px] leading-[12px] md:text-[12px] md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
+                          <h2 className="text-[10px] leading-3 md:text-xs md:leading-[11.92px] lg:text-base lg:leading-6 font-medium">
                             {nabtebExamType}
                           </h2>
                         </div>
                       </div>
 
                       <div className="flex items-center justify-between">
-                        <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] md:text-[12px] md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
+                        <h2
+                          className={`text-[10px] leading-3 md:text-xs md:leading-[11.92px] lg:text-base lg:leading-6 font-medium ${
+                            isDarkMode ? "text-white" : "text-[#7C7C7C]"
+                          }`}
+                        >
                           Quantity
                         </h2>
                         <div className="flex gap-1">
-                          <h2 className="text-[10px] leading-[12px] capitalize md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
+                          <h2 className="text-[10px] leading-3 capitalize md:text-xs md:leading-[11.92px] lg:text-base lg:leading-6 font-medium">
                             {nabtebQuantityResult.split(" (")[0]}
                           </h2>
                         </div>
                       </div>
 
                       <div className="flex items-center justify-between">
-                        <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] font-medium md:text-[12px] md:leading-[11.92px] lg:text-base lg:leading-[24px]">
+                        <h2 className={`text-[10px] leading-3 md:text-xs md:leading-[11.92px] lg:text-base lg:leading-6 font-medium ${
+                            isDarkMode ? "text-white" : "text-[#7C7C7C]"
+                          }`}>
                           Phone Number
                         </h2>
                         <div className="flex gap-1">
-                          <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
+                          <h2 className="text-[10px] leading-3 capitalize md:text-xs md:leading-[11.92px] lg:text-base lg:leading-6 font-medium">
                             {nabtebEducationPinPhone}
                           </h2>
                         </div>
@@ -933,49 +990,61 @@ export default function NabtebEducationPins() {
 
                       <div className="flex items-center justify-between">
                         <h2
-                          className="text-[#7C7C7C] text-[10px] leading-[12px] 
-                    md:text-[12px] md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium"
+                          className={`text-[10px] leading-3 md:text-xs md:leading-[11.92px] lg:text-base lg:leading-6 font-medium ${
+                            isDarkMode ? "text-white" : "text-[#7C7C7C]"
+                          }`}
                         >
                           Email
                         </h2>
                         <div className="flex gap-1">
-                          <h2 className="text-[10px] leading-[12px] md:text-[12px] md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
+                          <h2 className="text-[10px] leading-3 md:text-xs md:leading-[11.92px] lg:text-base lg:leading-6 font-medium">
                             {nabtebEducationPinEmail}
                           </h2>
                         </div>
                       </div>
 
                       <div className="flex items-center justify-between">
-                        <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] md:text-[12px] md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
+                        <h2
+                          className={`text-[10px] leading-3 md:text-xs md:leading-[11.92px] lg:text-base lg:leading-6 font-medium ${
+                            isDarkMode ? "text-white" : "text-[#7C7C7C]"
+                          }`}
+                        >
                           Amount
                         </h2>
                         <div className="flex gap-1">
-                          <h2 className="text-[10px] leading-[12px] md:text-[12px] md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
-                            {nabtebEducationAmount ? `₦${nabtebEducationAmount.toLocaleString()}` : ""}
-                          </h2>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center justify-between">
-                        <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] md:text-[12px] md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
-                          Payment Method
-                        </h2>
-                        <div className="flex gap-1">
-                          <h2 className="text-[10px] leading-[12px] md:text-[12px] md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
-                            Nigerian {nabtebPaymentResult.split(" ₦")[0]}
+                          <h2 className="text-[10px] leading-3 md:text-xs md:leading-[11.92px] lg:text-base lg:leading-6 font-medium">
+                            {nabtebEducationAmount
+                              ? `₦${nabtebEducationAmount.toLocaleString()}`
+                              : ""}
                           </h2>
                         </div>
                       </div>
 
                       <div className="flex items-center justify-between">
                         <h2
-                          className="text-[#7C7C7C] text-[10px] leading-[12px]
-                     md:text-[12px] md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium"
+                          className={`text-[10px] leading-3 md:text-xs md:leading-[11.92px] lg:text-base lg:leading-6 font-medium ${
+                            isDarkMode ? "text-white" : "text-[#7C7C7C]"
+                          }`}
+                        >
+                          Payment Method
+                        </h2>
+                        <div className="flex gap-1">
+                          <h2 className="text-[10px] leading-3 md:text-xs md:leading-[11.92px] lg:text-base lg:leading-6 font-medium">
+                            Nigerian {nabtebPaymentResult.split(" (")[0]}
+                          </h2>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-between">
+                        <h2
+                          className={`text-[10px] leading-3 md:text-xs md:leading-[11.92px] lg:text-base lg:leading-6 font-medium ${
+                            isDarkMode ? "text-white" : "text-[#7C7C7C]"
+                          }`}
                         >
                           Transaction Fee
                         </h2>
                         <div className="flex gap-1">
-                          <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
+                          <h2 className="text-[10px] leading-3 capitalize md:text-xs md:leading-[11.92px] lg:text-base lg:leading-6 font-medium">
                             ₦0.00
                           </h2>
                         </div>
@@ -983,11 +1052,15 @@ export default function NabtebEducationPins() {
 
                       {/* POINTS EARNED */}
                       <div className="flex items-center justify-between">
-                        <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] md:text-[12px] md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
+                        <h2
+                          className={`text-[10px] leading-3 md:text-xs md:leading-[11.92px] lg:text-base lg:leading-6 font-medium ${
+                            isDarkMode ? "text-white" : "text-[#7C7C7C]"
+                          }`}
+                        >
                           Points Earned
                         </h2>
                         <div className="flex gap-1">
-                          <h2 className="text-[10px] text-[#2ED173] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
+                          <h2 className="text-[10px] text-[#2ED173] leading-3 capitalize md:text-xs md:leading-[11.92px] lg:text-base lg:leading-6 font-medium">
                             +2.00
                           </h2>
                         </div>
@@ -1003,9 +1076,13 @@ export default function NabtebEducationPins() {
                               alt="/"
                             />
                           </div>
-                          <p className="text-[10px] md:text-sm  lg:text-base font-semibold">
+                          <p className="text-[10px] md:text-sm text-black lg:text-base font-semibold">
                             Available Balance{" "}
-                            <span className="text-black font-medium">
+                            <span
+                              className={`font-medium ${
+                                isDarkMode ? "text-black" : "text-black"
+                              }`}
+                            >
                               {nabtebWalletBalance}
                             </span>
                           </p>
@@ -1022,7 +1099,7 @@ export default function NabtebEducationPins() {
 
                       <div className="flex items-center justify-center mb-[60px] ">
                         <button
-                          className={`w-full md:w-fit text-white rounded-md px-[28px] text-[10px] md:text-xs leading-[15px] lg:text-base lg:leading-[24px] py-[15px] md:py-[10px] font-extrabold   ${
+                          className={`w-full md:w-fit text-white rounded-md px-[28px] text-[10px] md:text-xs leading-[15px] lg:text-base lg:leading-6 py-[15px] md:py-[10px] font-extrabold   ${
                             CheckSufficiency
                               ? "bg-gray-400 cursor-not-allowed"
                               : "bg-primary"
@@ -1045,11 +1122,16 @@ export default function NabtebEducationPins() {
             {nabtebEducationConfirm && (
               <Modal>
                 <div
-                  className={`confirm2 ${styles.inputPin} ${
+                  className={`${
+                    isDarkMode
+                      ? "bg-black absolute pt-4 h-[250px] shrink-0 rounded-lg shadow border border-white md:h-[350px] w-[481.25px] md:bottom-auto md:top-auto lg:h-[450px] lg:rounded-[20px] "
+                      : styles.inputPin
+                  }
+                  ${
                     toggleSideBar
-                      ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
+                      ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]"
                       : "lg:w-[40%]"
-                  } md:w-[55%] w-[90%] md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
+                  } md:w-[55%] w-[90%] `}
                 >
                   <img
                     onClick={() => setNabtebEducationConfirm(false)}
@@ -1091,12 +1173,12 @@ export default function NabtebEducationPins() {
                           />
 
                           {pinSuccess && (
-                            <p className="text-[12px] text-green-500 text-center font-medium">
+                            <p className="text-xs text-green-500 text-center font-medium">
                               Pin matches
                             </p>
                           )}
                           {pinFailed && errorMessage && (
-                            <p className="text-[12px] text-center text-red-600 font-medium">
+                            <p className="text-xs text-center text-red-600 font-medium">
                               Incorrect Pin
                             </p>
                           )}
@@ -1113,7 +1195,7 @@ export default function NabtebEducationPins() {
                         {isVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
                       </div>
                     </div>
-                    <p className="text-[8px] md:text-[12px] text-[#04177f]">
+                    <p className="text-[8px] md:text-xs text-[#04177f]">
                       Forgot Pin ?
                     </p>
                   </div>
@@ -1128,7 +1210,9 @@ export default function NabtebEducationPins() {
                     } my-[5%] w-[225px] flex justify-center items-center 
                 mx-auto cursor-pointer text-[10px] font-extrabold h-[40px]
                  text-white rounded-[6px] md:w-[150px] md:rounded-[8px] 
-                 md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                 md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%] ${
+                   isDarkMode ? "border border-white" : ""
+                 }`}
                   >
                     Purchase
                   </button>
@@ -1140,7 +1224,9 @@ export default function NabtebEducationPins() {
               <Modal>
                 {/* <TransactFailedPopUp/> */}
                 <div
-                  className={`confirm ${styles.successfulTwo} ${
+                  className={`confirm ${
+                    isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
+                  } ${styles.successfulTwo} ${
                     toggleSideBar
                       ? "md:w-[45%] md:ml-[20%] lg:ml-[20%] lg:w-[40%]"
                       : "lg:w-[40%]"
@@ -1150,6 +1236,8 @@ export default function NabtebEducationPins() {
                     <img
                       onClick={() => {
                         setTransactSuccessPopUp(false);
+                        setInputPin("");
+                        handleResetFields();
                         window.location.reload();
                       }}
                       className="w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[42px]"
@@ -1160,19 +1248,17 @@ export default function NabtebEducationPins() {
                     <img
                       onClick={() => {
                         setTransactSuccessPopUp(false);
+                        setInputPin("");
+                        handleResetFields();
                         window.location.reload();
                       }}
-                      className=" w-[18px] h-[18px] md:w-[35px] cursor-pointer
-                  md:h-[35px] lg:w-[29px] lg:h-[29px]"
+                      className=" w-[18px] h-[18px] md:w-[35px] cursor-pointer md:h-[35px] lg:w-[29px] lg:h-[29px]"
                       src="/Images/transferImages/close-circle.png"
                       alt=""
                     />
                   </div>
                   <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
-                  <h2
-                    className="text-[12px] my-[4%] text-center md:text-[20px] md:my-[3%] lg:text-sm
-               lg:my-[2%] font-semibold"
-                  >
+                  <h2 className="text-xs my-[4%] text-center md:text-[20px] md:my-[3%] lg:text-sm lg:my-[2%] font-semibold">
                     Purchase Successful
                   </h2>
                   <img
@@ -1182,41 +1268,33 @@ export default function NabtebEducationPins() {
                   />
 
                   <div className="flex flex-col gap-[15px] md:gap-[20px] lg:gap-[30px] px-[20px]">
-                    <p
-                      className="text-[10px] font-medium text-[#000] text-center mb-2 
-                md:text-sm lg:text-base leading-[15px] md:leading-[20px] lg:leading-[16px]"
-                    >
+                    <p className="text-[10px] font-medium text-center mb-2 md:text-sm lg:text-base leading-[15px] md:leading-[20px] lg:leading-[16px]">
                       You have successfully purchased{" "}
-                      <span className="text-[#000] font-semibold text-[10.9px] md:text-[14.9px] lg:text-[16.9px]">
+                      <span className=" font-semibold text-[10.9px] md:text-[14.9px] lg:text-[16.9px]">
                         {/* NABTEB PIN (₦100){" "} */}
-                        {nabtebExamType} (₦{nabtebEducationAmount}){" "}
+                        {nabtebExamType} (₦
+                        {nabtebEducationAmount.toLocaleString()}){" "}
                       </span>
-                      from your {nabtebPaymentResult.split(" ₦")[0]} to{" "}
+                      from your {nabtebPaymentResult.split(" (")[0]} to{" "}
                     </p>
 
                     <div className="flex items-center justify-between">
                       <h2
-                        className="text-[#7C7C7C] text-[10px] leading-[12.1px] md:text-[12px] 
-                  md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium"
+                        className={`text-[10px] leading-3 md:text-xs md:leading-[11.92px] lg:text-base lg:leading-6 font-medium ${
+                          isDarkMode ? "text-white" : "text-[#7C7C7C]"
+                        }`}
                       >
                         Exam Type
                       </h2>
                       <div className="flex gap-1">
-                        <div
-                          className="rounded-full w-[12.02px] h-[12.02px] flex items-center 
-                    justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] 
-                    md:h-[12.02px] lg:h-[25px]"
-                        >
+                        <div className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]">
                           <img
                             src={NabtebImg}
                             alt=""
                             className="w-full h-full object-cover"
                           />
                         </div>
-                        <h2
-                          className="text-[10px] leading-[12px] md:text-[12px] md:leading-[11.92px] 
-                    lg:text-base lg:leading-[24px] font-medium"
-                        >
+                        <h2 className="text-[10px] leading-3 md:text-xs md:leading-[11.92px] lg:text-base lg:leading-6 font-medium">
                           {nabtebExamType}
                         </h2>
                       </div>
@@ -1224,27 +1302,29 @@ export default function NabtebEducationPins() {
 
                     <div className="flex items-center justify-between">
                       <h2
-                        className="text-[#7C7C7C] text-[10px] leading-[12px] 
-                  md:text-[12px] md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium"
+                        className={`text-[10px] leading-3 md:text-xs md:leading-[11.92px] lg:text-base lg:leading-6 font-medium ${
+                          isDarkMode ? "text-white" : "text-[#7C7C7C]"
+                        }`}
                       >
                         Quantity
                       </h2>
                       <div className="flex gap-1">
-                        <h2 className="text-[10px] leading-[12px] md:text-xs md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
+                        <h2 className="text-[10px] leading-3 md:text-xs md:leading-[11.92px] lg:text-base lg:leading-6 font-medium">
                           {nabtebQuantityResult.split(" (")[0]}
                         </h2>
                       </div>
                     </div>
 
                     <div className="flex items-center justify-between">
-                      <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] md:text-[12px] md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium">
+                      <h2
+                        className={`text-[10px] leading-3 md:text-xs md:leading-[11.92px] lg:text-base lg:leading-6 font-medium ${
+                          isDarkMode ? "text-white" : "text-[#7C7C7C]"
+                        }`}
+                      >
                         Phone Number
                       </h2>
                       <div className="flex gap-1">
-                        <h2
-                          className="text-[10px] leading-[12px] capitalize md:text-[12px] 
-                    md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium"
-                        >
+                        <h2 className="text-[10px] leading-3 capitalize md:text-xs md:leading-[11.92px] lg:text-base lg:leading-6 font-medium">
                           {nabtebEducationPinPhone}
                         </h2>
                       </div>
@@ -1252,16 +1332,14 @@ export default function NabtebEducationPins() {
 
                     <div className="flex items-center justify-between">
                       <h2
-                        className="text-[#7C7C7C] text-[10px] leading-[12px]  
-                  md:text-[12px] md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium"
+                        className={`text-[10px] leading-3 md:text-xs md:leading-[11.92px] lg:text-base lg:leading-6 font-medium ${
+                          isDarkMode ? "text-white" : "text-[#7C7C7C]"
+                        }`}
                       >
                         Email
                       </h2>
                       <div className="flex gap-1">
-                        <h2
-                          className="text-[10px] leading-[12px]  md:text-[12px] md:leading-[11.92px]
-                     lg:text-base lg:leading-[24px] font-medium"
-                        >
+                        <h2 className="text-[10px] leading-3 md:text-xs md:leading-[11.92px] lg:text-base lg:leading-6 font-medium">
                           {nabtebEducationPinEmail}
                         </h2>
                       </div>
@@ -1269,68 +1347,52 @@ export default function NabtebEducationPins() {
 
                     <div className="flex items-center justify-between">
                       <h2
-                        className="text-[#7C7C7C] text-[10px] leading-[12px] 
-                  md:text-[12px] md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium"
+                        className={`text-[10px] leading-3 md:text-xs md:leading-[11.92px] lg:text-base lg:leading-6 font-medium ${
+                          isDarkMode ? "text-white" : "text-[#7C7C7C]"
+                        }`}
                       >
                         Payment Method
                       </h2>
                       <div className="flex gap-1">
-                        <h2
-                          className="text-[10px] leading-[12px]  md:text-[12px] md:leading-[11.92px] 
-                    lg:text-base lg:leading-[24px] font-medium"
-                        >
-                          {nabtebPaymentResult.split(" ₦")[0]}
+                        <h2 className="text-[10px] leading-3  md:text-xs md:leading-[11.92px] lg:text-base lg:leading-6 font-medium">
+                          {nabtebPaymentResult.split(" (")[0]}
                         </h2>
                       </div>
                     </div>
 
                     <div className="flex items-center justify-between">
                       <h2
-                        className="text-[#7C7C7C] text-[10px] leading-[12px]
-                   md:text-[12px] md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium"
+                        className={`text-[10px] leading-3 md:text-xs md:leading-[11.92px] lg:text-base lg:leading-6 font-medium ${
+                          isDarkMode ? "text-white" : "text-[#7C7C7C]"
+                        }`}
                       >
                         Order Number
                       </h2>
                       <div className="flex gap-1">
-                        <h2
-                          className="text-[10px] leading-[12px]  md:text-[12px] 
-                    md:leading-[11.92px] lg:text-base lg:leading-[24px] font-medium"
-                        >
+                        <h2 className="text-[10px] leading-3  md:text-xs md:leading-[11.92px] lg:text-base lg:leading-6 font-medium">
                           {nabtebOrderId}
                         </h2>
                       </div>
                     </div>
                   </div>
 
-                  <div className="bg-[#F2FAFF] mx-5 h-[45px] my-5 flex p-[10.193px] items-center justify-center  md:rounded-[15px] lg:rounded-[16.308px] lg:h-[75px]">
-                    <p className="text-[9px] text-[#7C7C7C] text-center  md:text-[11px] lg:text-[14.231px] lg:leading-[20px]">
-                      <span className="md:block">
+                  <div className={`bg-[#F2FAFF] mx-5 h-[45px] my-5 flex p-[10.193px] items-center justify-center md:mx-[20px] md:rounded-[15px] lg:rounded-[16.308px] md:h-[65px] lg:h-[75px] ${
+                isDarkMode ? "bg-slate-800" : "bg-[#F2FAFF]"
+              }`}>
+                    <p className={`text-[9px] text-center mx-auto w-[90%] md:w-[90%] md:text-[11px] lg:text-[14.231px] font-medium ${isDarkMode ? "text-white": "text-[#7C7C7C]"}`}>
                         The e-pins purchase has been generated successfully.
-                        Please kindly check
-                      </span>
-                      <span className="md:block">
-                        {" "}
-                        receipt to confirm the pin / token. You can contact us
-                        for any further{" "}
-                      </span>{" "}
-                      assistance.
+                        Please kindly check receipt to confirm the pin / token. You can contact us
+                        for any further assistance.
                     </p>
                   </div>
-                  <div
-                    className="flex  justify-center  w-full 
-              items-center gap-[15px] md:gap-[20px] mt-[50px]  lg:gap-[20px] 
-              lg:my-[5%] md:mt-[20px] mb-[20px]"
-                  >
+                  <div className="flex  justify-center  w-full items-center gap-[15px] md:gap-[20px] mt-[50px]  lg:gap-[20px] lg:my-[5%] md:mt-[20px] mb-[20px]">
                     <Link
                       to="/NabtebEducationPin"
                       onClick={() => {
                         nabtebTransactionSuccessClose();
                         window.location.reload();
                       }}
-                      className={`bg-[#04177f] w-[111px] flex justify-center 
-                    items-center  cursor-pointer text-center text-[12px] font-extrabold h-[40px]
-                     text-white rounded-[6px] md:w-[150px] md:rounded-[8px] 
-                     md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                      className={`bg-[#04177f] w-[111px] flex justify-center items-center cursor-pointer text-center text-xs font-extrabold h-[40px] text-white rounded-[6px] md:w-[150px] md:rounded-[8px] md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
                     >
                       Done
                     </Link>
@@ -1339,9 +1401,11 @@ export default function NabtebEducationPins() {
                       to="/NabtebReceipt"
                       onClick={handleReceivedData}
                       className={`bg-[#ffffff] border-[1px] w-[111px] border-[#0003] 
-                     flex justify-center items-center text-center  cursor-pointer text-[12px] 
+                     flex justify-center items-center text-center  cursor-pointer text-xs 
                      font-extrabold h-[40px] rounded-[6px] md:w-[150px] md:rounded-[8px] 
-                     md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                     md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%] ${
+                       isDarkMode ? "text-black" : "text-black"
+                     }`}
                     >
                       Receipt
                     </Link>
@@ -1369,7 +1433,7 @@ export default function NabtebEducationPins() {
                 className={`font-extrabold h-[43px] w-full py-[3.534px] px-[5.301px]  md:mb-[0px] rounded-[4.241px]
             md:w-[95.649px] text-white md:py-[5.868px] md:px-[8.802px]  md:h-auto
            md:text-[9.389px] md:leading-[14px] md:rounded-[7.042px]
-           lg:text-base lg:leading-[24px] lg:py-[10px] lg:px-[15px] lg:w-[163px] lg:rounded-[12px] ${
+           lg:text-base lg:leading-6 lg:py-[10px] lg:px-[15px] lg:w-[163px] lg:rounded-[12px] ${
              !nabtebExamType ||
              !nabtebQuantityResult ||
              !nabtebEducationPinPhone ||
@@ -1423,17 +1487,17 @@ export default function NabtebEducationPins() {
                   alt=""
                   onClick={() => {
                     setNabtebFailedTransaction(false);
+                    setInputPin("");
                     window.location.reload();
                   }}
-                  className="w-[18px] h-[18px]  md:w-[25px] cursor-pointer
-               md:h-[25px] lg:w-[35px] lg:h-[35px]"
+                  className="w-[18px] h-[18px]  md:w-[25px] cursor-pointer md:h-[25px] lg:w-[35px] lg:h-[35px]"
                 />
               </div>
 
               <div className="flex flex-col justify-between items-center h-full">
                 <h2
-                  className="lg:text-base lg:leading-[24px] text-center mb-1
-                text-[12px] md:text-[13px] md:leading-[20px] font-semibold mt-[20px] leading-[16px]"
+                  className="lg:text-base lg:leading-6 text-center mb-1
+                text-xs md:text-[13px] md:leading-[20px] font-semibold mt-[20px] leading-[16px]"
                 >
                   Purchase Failed
                 </h2>
@@ -1445,7 +1509,7 @@ export default function NabtebEducationPins() {
 
                 <p
                   className="text-center text-[#F95252]  lg:text-base lg:leading-[20.8px] font-semibold
-                text-[12px] md:text-[13px] md:leading-[20px] leading-[16px]"
+                text-xs md:text-[13px] md:leading-[20px] leading-[16px]"
                 >
                   An unexpected error has occurred, please try again.
                 </p>
@@ -1457,12 +1521,11 @@ export default function NabtebEducationPins() {
                     to="/NabtebEducationPin"
                     onClick={() => {
                       setNabtebFailedTransaction(false);
+                      setInputPin("");
                       window.location.reload();
                     }}
-                    className={`bg-[#04177f] w-[111px] flex justify-center 
-                    items-center  cursor-pointer text-center text-[12px] font-extrabold h-[40px]
-                     text-white rounded-[6px] md:w-[150px] md:rounded-[8px] 
-                     md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%]  `}
+                    className={`bg-[#04177f] w-[111px] flex justify-center items-center cursor-pointer text-center text-xs font-extrabold h-[40px]
+                     text-white rounded-[6px] md:w-[150px] md:rounded-[8px] md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%]  `}
                   >
                     Done
                   </Link>
@@ -1470,7 +1533,7 @@ export default function NabtebEducationPins() {
                   <Link
                     to="/NabtebFailedReceipt"
                     onClick={handleFailedData}
-                    className={`bg-[#ffffff] border-[1px] w-[111px] border-[#0003] flex justify-center items-center text-center cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[150px] md:rounded-[8px] md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                    className={`bg-[#ffffff] border-[1px] w-[111px] border-[#0003] flex justify-center items-center text-center cursor-pointer text-xs font-extrabold h-[40px] rounded-[6px] md:w-[150px] md:rounded-[8px] md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
                   >
                     Receipt
                   </Link>
@@ -1482,7 +1545,7 @@ export default function NabtebEducationPins() {
 
         <div className="flex gap-[8.729px]  md:gap-[14.896px] justify-center px-[8.594px] mb-[50px]">
           <p
-            className="font-medium text-[11px] md:text-[12px]
+            className="font-medium text-[11px] md:text-xs
               leading-[10.4px] lg:text-base lg:leading-[15.6px] md:leading-[12.938px] self-center"
           >
             You need help?
@@ -1502,11 +1565,7 @@ export default function NabtebEducationPins() {
           <Loader />
         </Modal>
       )}
-      {sessionModal && (
-        <HandleUserSession/>
-      )}
-      
-      {/* {sessionModal && <HandleUserSession />} */}
+      {sessionModal && <HandleUserSession />}
     </DashBoardLayout>
   );
 }

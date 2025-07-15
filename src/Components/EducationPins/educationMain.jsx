@@ -21,7 +21,8 @@ export default function EducationMain() {
           {/* hero section */}
           <HeroComponent />
           <div className="flex mb-5 gap-2 items-center md:gap-4 md:mb-8">
-            <h2 className=" lg:text-[20px] text-[#7C7C7C] text-[8px] lg:text-xl md:text-[11.46px] font-medium"
+            <h2 className={`lg:text-[20px] text-[8px] lg:text-xl md:text-[11.46px] font-medium ${
+              isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}
             // font-semibold text-[16.1px] md:text-[18px]
             >
               Select Exam Type
