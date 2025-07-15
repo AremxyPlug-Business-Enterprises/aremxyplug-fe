@@ -23,7 +23,7 @@ function Login() {
     // eslint-disable-next-line
   }, []);
   return (
-    <div className="relative h-[150vh] grid grid-cols-1">
+    <div className="relative h-[170vh] grid grid-cols-1">
       {/* --------------------------------BLUE AND WHITE BACKGROUND STARTS HERE-------------------------------- */}
       <div className="bg-[#04177F] "></div>
       <div className="bg-[#fff] "></div>

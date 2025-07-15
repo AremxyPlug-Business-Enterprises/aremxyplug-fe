@@ -4,8 +4,6 @@ import { useContext, useState, useEffect } from "react";
 import { ContextProvider } from "../../Context";
 import { Modal } from "../../Screens/Modal/Modal";
 import arrowRight from "../../../Components/EducationPins/imagesEducation/educationArrowRight.svg";
-import styles from '../../AirTimePage/AirtimeVtu.module.css';
-import { Link } from "react-router-dom";
 
 const ConfirmGotvPopup = ({passDataBalance, userVerifiedName}) => {
 
@@ -62,7 +60,7 @@ const ConfirmGotvPopup = ({passDataBalance, userVerifiedName}) => {
     <>
       {confirmGotvPopup &&
         (
-          <Modal >
+          <Modal>
        <div className={`w-full flex justify-center h-full 
              py-[30px] px-[10px] lg:items-center
               items-end`}>
@@ -75,8 +73,8 @@ const ConfirmGotvPopup = ({passDataBalance, userVerifiedName}) => {
             >
               <div className="flex justify-end pr-2 mt-1 mb-3 md:mt-2 md:mb-2 lg:mb-0 lg:mt-1">
               <img onClick={() => { setConfirmGotvPopup(false);}}
-                  className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[26px]
-                   lg:h-[26px]"
+                  className={`w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[26px]
+                   lg:h-[26px]`}
                   src="/Images/transferImages/close-circle.png"
                   alt=""
                 />
@@ -95,50 +93,50 @@ const ConfirmGotvPopup = ({passDataBalance, userVerifiedName}) => {
                 <div className="flex flex-col gap-3 mt-5 md:mt-6 lg:mt-7">
 
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className="text-[#0008]">Decoder Type</span>
-                    <span>GOtv</span>
+                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>Decoder Type</span>
+                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>GOtv</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className="text-[#0008]">Package</span>
-                    <span>{selectedOptionGOTV}</span>
+                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>Package</span>
+                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>{selectedOptionGOTV}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className="text-[#0008]">Smartcard / IUC Number</span>
-                    <span>{smartCard}</span>
+                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>Smartcard / IUC Number</span>
+                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>{smartCard}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className="text-[#0008]">Card Name</span>
-                    <span>{userVerifiedName}</span>
+                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>Card Name</span>
+                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>{userVerifiedName}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className="text-[#0008]">Phone Number</span>
-                    <span>{mobileNumber}</span>
+                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>Phone Number</span>
+                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>{mobileNumber}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className="text-[#0008]">Email</span>
-                    <span>{tvEmail}</span>
+                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>Email</span>
+                    <span className= {`${isDarkMode ? "text-white" : "text-black"}`}>{tvEmail}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className="text-[#0008]">Amount</span>
-                    <span> {`₦${tvAmount}`}</span>
+                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>Amount</span>
+                    <span className= {`${isDarkMode ? "text-white" : "text-black"}`}> {`₦${tvAmount}`}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className="text-[#0008]">Payment Method</span>
-                    <span>{flagResult}</span>
+                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>Payment Method</span>
+                    <span className= {`${isDarkMode ? "text-white" : "text-black"}`}>{flagResult}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className="text-[#0008]">Transaction Fee</span>
-                    <span>₦0.00</span>
+                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>Transaction Fee</span>
+                    <span className= {`${isDarkMode ? "text-white" : "text-black"}`}>₦0.00</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className="text-[#0008]">Points Earned</span>
+                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>Points Earned</span>
                     <span className="text-[#2ED173]">+2.00</span>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-[#F6F7F7] w-[95%] h-auto my-5 lg:my-8 flex py-[7px] 
-                     justify-between items-center px-[4%] mx-auto rounded-[10px]">
+              <div className={` w-[95%] h-auto my-5 lg:my-8 flex py-[7px] 
+                     justify-between items-center px-[4%] mx-auto rounded-[10px] ${isDarkMode ? "bg-black border-[1px] border-white" : "bg-[#F6F7F7]"} `}>
                              <div className="flex flex-col gap-2  ">
                                <div className="flex gap-[10px] justify-center items-center">
                                  <img
@@ -146,17 +144,17 @@ const ConfirmGotvPopup = ({passDataBalance, userVerifiedName}) => {
                                    src={methodImage}
                                    alt="/"
                                  />
-                                 <div className="flex gap-[10px] items-center">
+                                 <div className={`flex gap-[10px] items-center `}>
                                      <p className="text-[12px] md:text-[14px] leading-[20px] lg:leading-[22px]  lg:text-[16px] font-[500]">
                                  Available Balance {"  "} 
                                   </p>
-                                  <span className="text-black ">
+                                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>
                                    {`(${updateBalance})`}
                                  </span>
                                  </div>
                                </div>
-                             <span className="text-gray-500 text-[14px] font-[400] leading-[20px]
-                                  lg:text-[16px] lg:leading-[22px] text-left">
+                             <span className={`text-gray-500 text-[14px] font-[400] leading-[20px]
+                                  lg:text-[16px] lg:leading-[22px] text-left ${isDarkMode ? "text-white" : "text-gray-500"}`}>
                                     {balanceStatus}
                                     </span>
                              </div>
@@ -170,7 +168,7 @@ const ConfirmGotvPopup = ({passDataBalance, userVerifiedName}) => {
               <button
               disabled ={CheckSufficiency}
                 onClick={handleInputGotv}
-                className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto 
+                className={`bg-[#04177f] my-[5%] w-[95%] flex justify-center items-center mx-auto 
                   cursor-pointer text-[14px] font-extrabold
                    h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] lg:rounded-[12px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:my-[2%]
                    ${CheckSufficiency ? "bg-gray-400" : "bg-primary"}`}

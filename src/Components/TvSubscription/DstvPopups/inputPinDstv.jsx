@@ -52,11 +52,9 @@ await  VerifyPinHandler()
             (
             <Modal>
          
-        <div className={`${styles.inputPin}
-      
-         ${
-              toggleSideBar ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]" : "lg:w-[40%]"
-            } md:w-[55%] w-[90%]`}
+        <div className={`flex flex-col   mb-[50px] py-[2px] h-auto ${styles.inputPin} ${
+                      toggleSideBar ? "md:w-[45%] lg:w-[40%] lg:ml-[20%] " : "lg:w-[40%]"
+                    } md:w-[55%] w-[90%]`}
             >
             <div className=" pr-3 lg:pr-5 flex justify-end">
             <img  onClick={cancelInputDstv}
