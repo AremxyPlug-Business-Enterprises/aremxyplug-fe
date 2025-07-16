@@ -21,9 +21,11 @@ export default function EducationMain() {
           {/* hero section */}
           <HeroComponent />
           <div className="flex mb-5 gap-2 items-center md:gap-4 md:mb-8">
-            <h2 className={`lg:text-[20px] text-[8px] lg:text-xl md:text-[11.46px] font-medium ${
-              isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}
-            // font-semibold text-[16.1px] md:text-[18px]
+            <h2
+              className={`lg:text-[20px] text-[8px] lg:text-xl md:text-[11.46px] font-medium ${
+                isDarkMode ? "text-white" : "text-[#7C7C7C]"
+              }`}
+              // font-semibold text-[16.1px] md:text-[18px]
             >
               Select Exam Type
             </h2>
@@ -64,7 +66,7 @@ export default function EducationMain() {
                 <img className="md:w-1/2 w-[42%]" src={Waec} alt="Waec logo" />
                 {/* text */}
                 <h2
-                  className="w-1/2 font-[600] text-[13px] leading-[12.675px] 
+                  className="w-1/2 font-semibold text-[13px] leading-[12.675px] 
          md:text-[10.563px] md:leading-[12.675px] 
          lg:text-[18px] lg:leading-[21.6px] self-center"
                 >
@@ -76,30 +78,18 @@ export default function EducationMain() {
             <Link
               to="/NecoEducationPin"
               className={`${"md:w-1/4 md:h-[100%] h-auto w-[45%]"}
-         ${
-           isDarkMode
-             ? "!bg-black !text-white !border !border-white rounded-[7px]"
-             : "bg-white border-none border-[7px]"
-         }
-       `}
+                          ${
+                            isDarkMode
+                              ? "!bg-black !text-white !border !border-white rounded-[7px]"
+                              : "bg-white border-none border-[7px]"
+                          }`}
             >
-              <div
-                className="flex h-[100%] p-[5.868px] gap-[3.35px] md:p-[5.868px] md:gap-[2.347px] rounded-[2.934px]
-       border-[0.587px] border-[solid] border-[black] border-opacity-[30%]
-      shadow-[0px_0.58686px_0.34722px_0px_rgba(0,0,0,0.25)]
-       lg:shadow-[0px_1px_4px_0px_rgba(0,0,0,0.25)] 
-       lg:border-[1px]  lg:border-[solid]
-       lg:border-[black] lg:border-opacity-[30%]
-         lg:p-[10px] lg:rounded-[5px] 
-       lg:gap-[6px]  cursor-pointer"
-              >
+              <div className="flex h-[100%] p-[5.868px] gap-[3.35px] md:p-[5.868px] md:gap-[2.347px] rounded-[2.934px] border-[0.587px] border-[black] border-opacity-[30%] shadow-[0px_0.58686px_0.34722px_0px_rgba(0,0,0,0.25)] lg:shadow-[0px_1px_4px_0px_rgba(0,0,0,0.25)] lg:border-[1px] lg:border-[black] lg:border-opacity-[30%] lg:p-[10px] lg:rounded-[5px] lg:gap-[6px]  cursor-pointer">
                 {/* Neco Logo */}
                 <img className="md:w-1/2 w-[42%]" src={Neco} alt="Waec logo" />
                 {/* text */}
                 <h2
-                  className="w-1/2 font-[600] text-[13px] leading-[12.675px]
-          md:text-[10.563px] md:leading-[12.675px]
-         lg:text-[18px] lg:leading-[21.6px] self-center"
+                  className="w-1/2 font-semibold text-[13px] leading-[12.675px] md:text-[10.563px] md:leading-[12.675px] lg:text-[18px] lg:leading-[21.6px] self-center"
                 >
                   NECO
                 </h2>
@@ -134,7 +124,7 @@ export default function EducationMain() {
                 />
                 {/* text */}
                 <h2
-                  className="w-1/2 font-[600] text-[13px] leading-[12.675px]
+                  className="w-1/2 font-semibold text-[13px] leading-[12.675px]
           md:text-[10.563px] md:leading-[12.675px]
          lg:text-[18px] lg:leading-[21.6px] self-center"
                 >
@@ -172,7 +162,7 @@ export default function EducationMain() {
                 />
                 {/* text */}
                 <h2
-                  className="w-1/2 font-[600] text-[13px] leading-[12.675px]
+                  className="w-1/2 font-semibold text-[13px] leading-[12.675px]
          md:text-[10.563px] md:leading-[12.675px]
          lg:text-[18px] lg:leading-[21.6px] self-center"
                 >

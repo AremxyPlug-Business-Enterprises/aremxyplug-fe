@@ -525,8 +525,8 @@ export default function NecoEducationPins() {
                     >
                       {necoExams?.map((exam) => {
                         return (
-                          <a
-                            href={exam.path}
+                          <Link
+                            to={exam.path}
                             onClick={(e) => {
                               setNecoExamType(exam.examType);
                               setNecoExamActive(false);
@@ -543,7 +543,7 @@ export default function NecoEducationPins() {
                             key={exam.id}
                           >
                             <h2>{exam.examType} </h2>
-                          </a>
+                          </Link>
                         );
                       })}
                     </div>
@@ -833,10 +833,7 @@ export default function NecoEducationPins() {
                           <div
                             onClick={() => {
                               if (methodOption.method === "NGN Wallet") {
-                                setNecoPaymentResult(
-                                  newBalance === "" || newBalance === null
-                                    ? `${methodOption.method} ${methodOption.balance}`
-                                    : `${methodOption.method} ${newBalance}`
+                                setNecoPaymentResult( `${methodOption.method} ${methodOption.balance}`
                                 );
                                 setNecoWalletBalance(methodOption.balance);
                                 setNecoImageState(methodOption.flag);
