@@ -545,8 +545,8 @@ export default function NabtebEducationPins() {
                     >
                       {nabtebExams?.map((exam) => {
                         return (
-                          <a
-                            href={exam.path}
+                          <Link
+                            to={exam.path}
                             onClick={() => {
                               setNabtebExamType(exam.examType);
                               setNabtebExamActive(false);
@@ -563,7 +563,7 @@ export default function NabtebEducationPins() {
                             key={exam.id}
                           >
                             <h2>{exam.examType} </h2>
-                          </a>
+                          </Link>
                         );
                       })}
                     </div>
@@ -857,10 +857,7 @@ export default function NabtebEducationPins() {
                           <div
                             onClick={() => {
                               if (methodOption.method === "NGN Wallet") {
-                                setNabtebPaymentResult(
-                                  newBalance === "" || newBalance === null
-                                    ? `${methodOption.method} ${methodOption.balance}`
-                                    : `${methodOption.method} ${newBalance}`
+                                setNabtebPaymentResult(`${methodOption.method} ${methodOption.balance}`
                                 );
                                 setNabtebWalletBalance(methodOption.balance);
                                 setNabtebImageState(methodOption.flag);
