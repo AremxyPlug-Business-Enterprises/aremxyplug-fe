@@ -41,7 +41,6 @@ export default function NabtebReceipt() {
     nabtebShowDescription?.length > 0 ? nabtebShowDescription : "";
   const pins_generated =
     nabtebPinsGenerated?.length > 0 ? nabtebPinsGenerated : "";
-  console.log("pins-gen", pins_generated);
   const fullName = nabtebFullName?.length > 0 ? nabtebFullName : "";
   const transaction_product =
     nabtebTransactionProduct?.length > 0 ? nabtebTransactionProduct : "";
@@ -52,7 +51,7 @@ export default function NabtebReceipt() {
     setNabtebEducationPinPhone("");
     setNabtebEducationPinEmail("");
     setNabtebPaymentResult("");
-    setNabtebEducationAmount("₦");
+    setNabtebEducationAmount("");
     setNabtebWalletBalance("");
   };
 
@@ -133,8 +132,7 @@ export default function NabtebReceipt() {
               Purchase Successful on
             </h3>
             <span
-              className="text-[11px] md:text-[14px] lg:text-base text-black  
-            flex justify-center items-center font-semibold"
+              className={`text-[11px] md:text-sm lg:text-[16px] font-semibold flex justify-center items-center ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}
             >
               {date.toLocaleDateString(undefined, {
                 year: "numeric",
@@ -155,9 +153,9 @@ export default function NabtebReceipt() {
               >
                 You have successfully purchased{" "}
                 <span className="font-extrabold text-[10.9px] md:text-[14.9px] lg:text-[16.9px]">
-                  {nabtebExamType} (₦{nabtebEducationAmount}){" "}
+                  {nabtebExamType} (₦{nabtebEducationAmount.toLocaleString()}){" "}
                 </span>
-                from your {nabtebPaymentResult.split(" ₦")[0]} to{" "}
+                from your {nabtebPaymentResult.split(" (")[0]} to{" "}
               </p>
             </div>
             <div className="flex flex-col  gap-7  md:gap-10">
@@ -257,7 +255,7 @@ export default function NabtebReceipt() {
                   <span
                     className={` ${isDarkMode ? "text-white" : "text-black "}`}
                   >
-                    ₦{nabtebEducationAmount}
+                    ₦{nabtebEducationAmount.toLocaleString()}.00
                   </span>
                 </div>
               </div>
@@ -303,7 +301,7 @@ export default function NabtebReceipt() {
                   <span
                     className={` ${isDarkMode ? "text-white" : "text-black "}`}
                   >
-                    {nabtebPaymentResult.split(" ₦")[0]}
+                   Nigerian {nabtebPaymentResult.split(" (")[0]}
                   </span>
                 </div>
               </div>
@@ -327,7 +325,7 @@ export default function NabtebReceipt() {
                     Product
                   </p>
                   <span
-                    className={` ${isDarkMode ? "text-white" : "text-black "}`}
+                    className={`uppercase ${isDarkMode ? "text-white" : "text-black "}`}
                   >
                     {transaction_product}
                   </span>
@@ -438,9 +436,7 @@ export default function NabtebReceipt() {
               onClick={() => {
                 nabtebSaveAsPDFClick();
               }}
-              className={`bg-[#ffffff] border-[1px] w-[111px] border-[#0003] cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[150px] md:rounded-[8px] md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%] ${
-                isDarkMode ? "text-black" : "text-white "
-              }`}
+              className={`bg-[#ffffff] border-[1px] w-[111px] border-[#0003] cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[150px] md:rounded-[8px] md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%] ${isDarkMode ? "text-black" : "text-black"}`}
             >
               Save as PDF
             </button>

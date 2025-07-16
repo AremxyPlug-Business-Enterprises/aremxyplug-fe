@@ -972,7 +972,7 @@ const GoTv = () => {
                           });
                               }}
                               className={`flex gap-[10px] lg:py-[15px] 
-                                py-[10px] pl-[10px]  pb-[20px] pt-[20px] md:pb-0 md:pt-0
+                                py-[10px] pl-[10px] pb-[20px] pt-[20px] md:pb-0 md:pt-0
                               border-b-[1px] border-b-gray-400
         cursor-pointer  items-center  ${methodOption.id  !== 1 && !isDarkMode  ? "bg-gray-300 cursor-not-allowed" : 
             methodOption.id !== 1 && isDarkMode ? "bg-black" : methodOption.id === 1 && !isDarkMode ? "bg-white" : "bg-black" }
