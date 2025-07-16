@@ -1072,7 +1072,7 @@ const GoTv = () => {
       {failedPopup && (
         <Modal>
           <div className={`w-[90%] md:w-[70%] lg:w-[40%] mx-auto  rounded-lg overflow-hidden
-            ${isDarkMode ? "bg-black": "bg-white"}`}>
+            ${isDarkMode ? "bg-black border-[1px] rounded-[7px] border-white": "bg-white"}`}>
             <div className="flex justify-between items-center p-4 ">
               <img
                 onClick={() => setFailedPopup(false)}

@@ -1,4 +1,3 @@
-import React from "react";
 import "../../TvSubscription/TvSubscription.css";
 import { useContext, useState, useEffect } from "react";
 import { ContextProvider } from "../../Context";
@@ -40,8 +39,8 @@ const ConfirmGotvPopup = ({passDataBalance, userVerifiedName}) => {
   
      const balanceStringToNum = Number(newBalance);
               let GotvNumericAmount = Number(tvAmount);
-           const updateBalance = passDataBalance?.data && (passDataBalance.status === 200 || passDataBalance.status === 201) && newBalance === ""  ?  passDataBalance?.data?.data?.data?.balance : newBalance;
-              const cleanUpBalanceToNumericOnly = Number(updateBalance.replace(/\D/g, ""));
+           const updateBalance = passDataBalance?.data && (passDataBalance?.status === 200 || passDataBalance?.status === 201) && newBalance === ""  ?  passDataBalance?.data?.data?.data?.balance : newBalance;
+              const cleanUpBalanceToNumericOnly = Number(updateBalance?.replace(/\D/g, ""));
              let CheckSufficiency =  GotvNumericAmount > (newBalance === "" || newBalance === null ? cleanUpBalanceToNumericOnly : balanceStringToNum);
     useEffect(()=> {
       const HandleBalanceStatus = ()=> {
@@ -83,9 +82,11 @@ const ConfirmGotvPopup = ({passDataBalance, userVerifiedName}) => {
               <div className="mx-auto">
                 <div className="text-[12px] my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
                   Confirm Transaction</div>
-                <div className="text-[8px] text-[#0008] text-center mb-2 md:text-[12px] lg:text-[14px] mx-2">
+                <div className={`text-[8px] text-[#0008] text-center mb-2 md:text-[12px]
+                 lg:text-[14px] mx-2  ${isDarkMode ? "text-white" : "text-black"}`}>
                   You are about to purchase&nbsp;
-                  <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]">{valueWithoutTilde}</span>&nbsp;
+                  <span className={`font-extrabold text-[10px] md:text-[16px]
+                     lg:text-[12px] ${isDarkMode ? "text-white" : "text-black"}`}>{valueWithoutTilde}</span>&nbsp;
                 from your {" "}
                 {flagResult} {" "} to
                 </div>
@@ -153,8 +154,8 @@ const ConfirmGotvPopup = ({passDataBalance, userVerifiedName}) => {
                                  </span>
                                  </div>
                                </div>
-                             <span className={`text-gray-500 text-[14px] font-[400] leading-[20px]
-                                  lg:text-[16px] lg:leading-[22px] text-left ${isDarkMode ? "text-white" : "text-gray-500"}`}>
+                             <span className={`text-gray-500 text-[14px] font-bold leading-[20px]
+                                  lg:text-[16px] lg:leading-[22px] text-left `}>
                                     {balanceStatus}
                                     </span>
                              </div>

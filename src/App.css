@@ -282,4 +282,6 @@ border-radius : 10px;
   .deleteRecipientSuccess::-webkit-scrollbar-thumb{
     background-color: transparent;
   }
-  
+  body{
+    background-color: #04177f;
+  }

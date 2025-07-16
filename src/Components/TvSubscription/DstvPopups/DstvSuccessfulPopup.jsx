@@ -53,8 +53,7 @@ import styles from "../../AirTimePage/AirtimeVtu.module.css";
        {dstvSuccessful &&
             (
             <Modal>
-           
-       <div className={`${styles.successfulTwo} ${
+           <div className={`${styles.successfulTwo} ${
               toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
             } md:w-[45%] w-[90%] overflow-auto`}>
         <div className="flex justify-between items-center 

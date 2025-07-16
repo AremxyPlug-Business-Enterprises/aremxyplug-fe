@@ -167,7 +167,6 @@ export const CheckVirtualAcc = async(authToken, customerDetail, setLoading,
                   localStorage.setItem("UserStatus",true)
                   await confirmVirtualState();
                   }
-               //  console.log(response)
                 }}else{
             InActionVirtualAccountState(virtualAccCreated,setBankNameState, 
                setAccountNameState, setAccountNumberState);

@@ -344,7 +344,7 @@ return (
         <div
           className={`${
             toggleSideBar ? "lg:w-[73.5%] lg:float-right" : ""
-          } w-[] mx-[5%] mt-[8%] lg:mt-[3%] h-[150%] mb-[5%]  `}
+          } w-[] mx-[5%] mt-[8%] lg:mt-[3%] h-[150%] mb-[5%]`}
         >
           {/* ==============HERO SECTION========== */}
           <Swiper

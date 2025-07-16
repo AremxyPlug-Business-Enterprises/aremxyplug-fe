@@ -23,7 +23,8 @@ const ConfirmStarTimesPopup = ({userVerifiedName}) => {
     //starTimesWalletBalance,
     flagResult,
     starTimesAmount,
-    newBalance
+    newBalance,
+    isDarkMode
   } = useContext(ContextProvider)
 
 
@@ -62,14 +63,17 @@ const ConfirmStarTimesPopup = ({userVerifiedName}) => {
     <>
       {confirmStarTimesPopup &&
         (
-          <Modal >
-
-            <div
-              className={`${styles.transferMoneyPop} ${
-                toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-                } w-[90%] md:w-[60%] overflow-auto`}
-            >
-              <div className="flex justify-end pr-2 mt-1 mb-3 md:mt-2 md:mb-2 lg:mb-0 lg:mt-1">
+          <Modal>
+           <div className={`w-full flex justify-center h-full 
+             py-[30px] px-[20px] lg:items-center
+              items-end`}>
+             <div 
+            className={` bvnQuery lg:rounded-[12px] rounded-[10px] 
+              h-[520px] ${ toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+              } w-[100%] md:w-[60%] overflow-auto  ${isDarkMode ? "bg-black text-white border rounded-[10px] border-white": "bg-white text-black"} `}
+          >
+              <div className="flex justify-end pr-2 mt-1 mb-3
+               md:mt-2 md:mb-2 lg:mb-0 lg:mt-1">
               <img onClick={() => { setConfirmStarTimesPopup(false); }}
                   className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[26px] lg:h-[26px]"
                   src="/Images/transferImages/close-circle.png"
@@ -80,53 +84,56 @@ const ConfirmStarTimesPopup = ({userVerifiedName}) => {
               <div className="mx-auto">
                 <div className="text-[12px] my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
                   Confirm Transaction</div>
-              <div className="text-[8px] text-[#0008] text-center mb-2 md:text-[12px] lg:text-[14px] mx-2">
+              <div className={`text-[8px] text-[#0008] text-center
+               mb-2 md:text-[12px] lg:text-[14px] mx-2 ${isDarkMode ? "text-white" : "text-black"}`}>
                   You are about to purchase&nbsp;
-                  <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]">{valueWithoutTilde}</span>&nbsp;
+                  <span className={`${isDarkMode ? "text-white" : "text-black"} font-extrabold text-[10px] 
+                  md:text-[16px] lg:text-[12px]`}>{valueWithoutTilde}</span>&nbsp;
                 from your {" "}
                 {flagResult} {" "} to
                 </div>
 
-                <div className="flex flex-col gap-3 mt-5 md:mt-6 lg:mt-7">
+                <div className="flex flex-col gap-3
+                 mt-5 md:mt-6 lg:mt-7">
 
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className="text-[#0008]">Decoder Type</span>
-                    <span>StarTimes</span>
+                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>Decoder Type</span>
+                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>StarTimes</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className="text-[#0008]">Package</span>
-                    <span>{selectedOptionStarTimes}</span>
+                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>Package</span>
+                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>{selectedOptionStarTimes}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className="text-[#0008]">Smartcard / IUC Number</span>
-                    <span>{starTimesSmartCard}</span>
+                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>Smartcard / IUC Number</span>
+                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>{starTimesSmartCard}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className="text-[#0008]">Card Name</span>
+                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>Card Name</span>
                     <span>{userVerifiedName}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className="text-[#0008]">Phone Number</span>
-                    <span>{starTimesMobileNumber}</span>
+                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>Phone Number</span>
+                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>{starTimesMobileNumber}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className="text-[#0008]">Email</span>
-                    <span>{starTimesEmail}</span>
+                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>Email</span>
+                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>{starTimesEmail}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className="text-[#0008]">Amount</span>
-                    <span>{`₦${starTimesAmount}`}</span>
+                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>Amount</span>
+                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>{`₦${starTimesAmount}`}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className="text-[#0008]">Payment Method</span>
-                    <span>{flagResult}</span>
+                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>Payment Method</span>
+                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>{flagResult}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className="text-[#0008]">Transaction Fee</span>
-                    <span>₦0.00</span>
+                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>Transaction Fee</span>
+                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>₦0.00</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className="text-[#0008]">Points Earned</span>
+                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>Points Earned</span>
                     <span className="text-[#2ED173]">+2.00</span>
                   </div>
                 </div>
@@ -134,8 +141,9 @@ const ConfirmStarTimesPopup = ({userVerifiedName}) => {
 
              
              
-                           <div className="bg-[#F6F7F7] w-[95%] h-auto my-5 lg:my-8 flex py-[7px] 
-                                  justify-between items-center px-[4%] mx-auto rounded-[10px]">
+                           <div className={`bg-[#F6F7F7] w-[95%] h-auto my-5 lg:my-8 
+                           flex py-[7px]  justify-between items-center px-[4%] mx-auto rounded-[10px] 
+         ${isDarkMode ? "bg-black border rounded-[10px]  border-white" : "bg-[#F6F7F7] "}`}>
                                           <div className="flex flex-col gap-2  ">
                                             <div className="flex gap-[10px] justify-center items-center">
                                               <img
@@ -147,12 +155,12 @@ const ConfirmStarTimesPopup = ({userVerifiedName}) => {
                                                   <p className="text-[12px] md:text-[14px] leading-[20px] lg:leading-[22px]  lg:text-[16px] font-[500]">
                                               Available Balance {"  "} 
                                                </p>
-                                               <span className="text-black">
+                                               <span className={`${isDarkMode ? "text-white" : "text-black"}`}>
                                                 {`(${newBalance})`}
                                               </span>
                                               </div>
                                             </div>
-                                          <span className="text-gray-500 text-[14px] font-[400] leading-[20px]
+                                          <span className="text-gray-500 text-[14px] font-bold leading-[20px]
                                                lg:text-[16px] lg:leading-[22px] text-left">
                                                  {balanceStatus}
                                                  </span>
@@ -167,12 +175,13 @@ const ConfirmStarTimesPopup = ({userVerifiedName}) => {
               <button
                 onClick={handleInputStarTimes}
                 disabled ={starTimesAmountToNumber > balanceStringToNum}
-                className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px]
+                className={`bg-[#04177f] my-[5%] w-[90%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px]
                    text-white rounded-[6px] md:w-[25%] md:rounded-[8px] lg:rounded-[12px]
                     md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:my-[2%] ${starTimesAmountToNumber > balanceStringToNum ? "bg-gray-400" : "bg-primary"}`}
               >
                 Confirmed
               </button>
+            </div>
             </div>
           </Modal>
         )}

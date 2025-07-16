@@ -869,7 +869,8 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
                 </div>
                   {/* Error message starts here */}
                   {verificationPinError === true ? (
-                    <p className="text-center text-red-500 md:font-[500] font-[400] lg:text-[16px] text-[9.167px] mt-[3px] lg:mt-[15px]">
+                    <p className="text-center text-red-500 md:font-[500] 
+                    font-[500] lg:text-[16px] text-[12px] leading-[16px] lg:leading-[20px]">
                      Incorrect otp provided
                     </p>
                   ) : (
@@ -952,7 +953,7 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
               </p>
             </div>
             <div>
-              <div className="flex flex-col justify-center gap-[35px] w-[100%]">
+              <div className="flex flex-col justify-center gap-[20px] w-[100%]">
                 <div className="flex justify-center">
                   <OtpInput
                     value={otp3}
@@ -975,7 +976,9 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
                   </div>
                   {/* Error message starts here */}
                   {verificationPinError === true ? (
-                    <p className="text-center text-red-500 md:font-[500] font-[400] lg:text-[16px] text-[9.167px] mt-[3px] lg:mt-[15px]">
+                    <p className="text-center text-[12px] leading-[16px] lg:leading-[20px]
+                     text-red-500 md:font-[500] font-[500] 
+                    lg:text-[16px]  ">
                      Incorrect otp provided
                     </p>
                   ) : (
