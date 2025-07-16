@@ -48,11 +48,11 @@ export const NabtebFailedReceipt = () => {
 
   const resetNabtebInputs = () => {
     setNabtebQuantityResult("");
-    setNabtebExamType("");
+    setNabtebExamType("NABTEB");
     setNabtebEducationPinPhone("");
     setNabtebEducationPinEmail("");
     setNabtebPaymentResult("");
-    setNabtebEducationAmount("₦");
+    setNabtebEducationAmount("");
     setNabtebWalletBalance("");
   };
 
@@ -129,8 +129,9 @@ export const NabtebFailedReceipt = () => {
               Purchase Failed on
             </h3>
             <span
-              className="text-[11px] md:text-sm lg:text-base text-[#0008]  
-            flex justify-center items-center font-semibold"
+              className={`text-[11px] md:text-sm lg:text-[16px] font-semibold flex justify-center items-center ${
+                isDarkMode ? "text-white" : "text-[#7C7C7C]"
+              }`}
             >
               {date.toLocaleDateString(undefined, {
                 year: "numeric",
@@ -166,44 +167,84 @@ export const NabtebFailedReceipt = () => {
                   className="flex text-[10px] md:text-sm w-[90%] 
                 mx-auto justify-between  lg:text-base font-medium"
                 >
-                  <p className={` ${
-                      isDarkMode ? "text-white" : "text-[#0008] "
-                    }`}>Exam Type</p>
-                  <span>{nabtebExamType}</span>
+                  <p
+                    className={` ${
+                      isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                    }`}
+                  >
+                    Exam Type
+                  </p>
+                  <span
+                    className={` ${isDarkMode ? "text-white" : "text-black"}`}
+                  >
+                    {nabtebExamType}
+                  </span>
                 </div>
                 <div
                   className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between 
                  lg:text-base font-medium"
                 >
-                  <p className={` ${
-                      isDarkMode ? "text-white" : "text-[#0008] "
-                    }`}>Quantity</p>
-                  <span>{nabtebQuantityResult.split(" (")[0]}</span>
+                  <p
+                    className={` ${
+                      isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                    }`}
+                  >
+                    Quantity
+                  </p>
+                  <span
+                    className={` ${isDarkMode ? "text-white" : "text-black"}`}
+                  >
+                    {nabtebQuantityResult.split(" (")[0]}
+                  </span>
                 </div>
 
                 <div className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between  lg:text-base font-medium">
-                  <p className={` ${
-                      isDarkMode ? "text-white" : "text-[#0008] "
-                    }`}>Phone Number</p>
-                  <span>{nabtebEducationPinPhone}</span>
+                  <p
+                    className={` ${
+                      isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                    }`}
+                  >
+                    Phone Number
+                  </p>
+                  <span
+                    className={` ${isDarkMode ? "text-white" : "text-black"}`}
+                  >
+                    {nabtebEducationPinPhone}
+                  </span>
                 </div>
                 <div
                   className="flex text-[10px] md:text-sm w-[90%] 
                 mx-auto justify-between  lg:text-base font-medium"
                 >
-                  <p className={` ${
-                      isDarkMode ? "text-white" : "text-[#0008] "
-                    }`}>Email</p>
-                  <span>{nabtebEducationPinEmail}</span>
+                  <p
+                    className={` ${
+                      isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                    }`}
+                  >
+                    Email
+                  </p>
+                  <span
+                    className={` ${isDarkMode ? "text-white" : "text-black"}`}
+                  >
+                    {nabtebEducationPinEmail}
+                  </span>
                 </div>
                 <div
                   className="flex text-[10px] md:text-sm w-[90%] 
                 mx-auto justify-between  lg:text-base font-medium"
                 >
-                  <p className={` ${
-                      isDarkMode ? "text-white" : "text-[#0008] "
-                    }`}>Amount</p>
-                  <span>{nabtebEducationAmount}</span>
+                  <p
+                    className={` ${
+                      isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                    }`}
+                  >
+                    Amount
+                  </p>
+                  <span
+                    className={` ${isDarkMode ? "text-white" : "text-black"}`}
+                  >
+                    ₦{nabtebEducationAmount.toLocaleString()}.00
+                  </span>
                 </div>
               </div>
 
@@ -221,19 +262,35 @@ export const NabtebFailedReceipt = () => {
                   className="flex text-[10px] md:text-sm w-[90%] 
                 mx-auto justify-between  lg:text-base font-medium"
                 >
-                  <p className={` ${
-                      isDarkMode ? "text-white" : "text-[#0008] "
-                    }`}>Customer Name</p>
-                  <span>{fullName}</span>
+                  <p
+                    className={` ${
+                      isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                    }`}
+                  >
+                    Customer Name
+                  </p>
+                  <span
+                    className={` ${isDarkMode ? "text-white" : "text-black"}`}
+                  >
+                    {fullName}
+                  </span>
                 </div>
                 <div
                   className="flex text-[10px] md:text-sm w-[90%] mx-auto \
                 justify-between  lg:text-base font-medium"
                 >
-                  <p className={` ${
-                      isDarkMode ? "text-white" : "text-[#0008] "
-                    }`}>Wallet Type</p>
-                  {nabtebPaymentResult.split(" (")[0]}
+                  <p
+                    className={` ${
+                      isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                    }`}
+                  >
+                    Wallet Type
+                  </p>
+                  <span
+                    className={` ${isDarkMode ? "text-white" : "text-black"}`}
+                  >
+                    Nigerian {nabtebPaymentResult.split(" (")[0]}
+                  </span>
                 </div>
               </div>
 
@@ -251,62 +308,101 @@ export const NabtebFailedReceipt = () => {
                   className="flex text-[10px] md:text-sm w-[90%] 
                 mx-auto justify-between  lg:text-base font-medium"
                 >
-                  <p className={` ${
-                      isDarkMode ? "text-white" : "text-[#0008] "
-                    }`}>Product</p>
-                  <span>{transaction_product}</span>
+                  <p
+                    className={` ${
+                      isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                    }`}
+                  >
+                    Product
+                  </p>
+                  <span
+                    className={` ${isDarkMode ? "text-white" : "text-black"}`}
+                  >
+                    {transaction_product}
+                  </span>
                 </div>
                 <div
                   className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between  
                 lg:text-base font-medium"
                 >
-                  <p className={` ${
-                      isDarkMode ? "text-white" : "text-[#0008] "
-                    }`}>Description</p>
-                  <span>{description}</span>
+                  <p
+                    className={` ${
+                      isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                    }`}
+                  >
+                    Description
+                  </p>
+                  <span
+                    className={` ${isDarkMode ? "text-white" : "text-black"}`}
+                  >
+                    {description}
+                  </span>
                 </div>
                 <div
                   className="flex text-[10px] md:text-sm w-[90%] 
                 mx-auto justify-between  lg:text-base font-medium"
                 >
-                  <p className={` ${
-                      isDarkMode ? "text-white" : "text-[#0008] "
-                    }`}> NABTEB PIN Generated</p>
-                  <span>{pins_generated}</span>
+                  <p
+                    className={` ${
+                      isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                    }`}
+                  >
+                    {" "}
+                    NABTEB PIN Generated
+                  </p>
+                  <span
+                    className={` ${isDarkMode ? "text-white" : "text-black"}`}
+                  >
+                    {pins_generated}
+                  </span>
                 </div>
                 <div
                   className="flex text-[10px] md:text-sm w-[90%] mx-auto 
                 justify-between  lg:text-base font-medium"
                 >
-                  <p className={` ${
-                      isDarkMode ? "text-white" : "text-[#0008] "
-                    }`}>Order Number</p>
-                  <span>{order_id}</span>
+                  <p
+                    className={` ${
+                      isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                    }`}
+                  >
+                    Order Number
+                  </p>
+                  <span
+                    className={` ${isDarkMode ? "text-white" : "text-black"}`}
+                  >
+                    {order_id}
+                  </span>
                 </div>
                 <div
                   className="flex text-[10px] md:text-sm w-[90%] 
                 mx-auto justify-between  lg:text-base font-medium"
                 >
-                  <p className={` ${
-                      isDarkMode ? "text-white" : "text-[#0008] "
-                    }`}>Transaction ID</p>
-                  <span>{transaction_id}</span>
+                  <p
+                    className={` ${
+                      isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                    }`}
+                  >
+                    Transaction ID
+                  </p>
+                  <span
+                    className={` ${isDarkMode ? "text-white" : "text-black"}`}
+                  >
+                    {transaction_id}
+                  </span>
                 </div>
               </div>
             </div>
             <div
-              className="rounded-[8px] bg-[#E2F3FF] mx-4 h-[45px] my-5 
-            flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]"
+              className={`rounded-[8px] bg-[#E2F3FF] mx-4 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px] ${
+                isDarkMode ? "bg-slate-800" : "bg-[#E2F3FF]"
+              }`}
             >
               <p
-                className="text-[8px] text-[#7E7E7E] text-center mx-auto w-[200px] md:text-sm 
-              md:w-[80%] lg:text-base font-medium"
+                className={`text-[8px] text-center mx-auto w-[200px] md:text-sm md:w-[80%] lg:text-base font-medium ${
+                  isDarkMode ? "text-white" : "text-[#7C7C7C]"
+                }`}
               >
-                <span className="md:block">
-                  Earn free points on every successful transactions, redeem your
-                  earned points{" "}
-                </span>
-                to real money, withdrawn to your bank account instantly.
+                  Earn free points on every successful transactions, redeem your earned points to real money, withdrawn to your bank account instantly.
               </p>
             </div>
           </div>
@@ -331,9 +427,10 @@ export const NabtebFailedReceipt = () => {
                 nabtebFailedPdf();
               }}
               className={`bg-[#ffffff] border-[1px] w-[111px] 
-            border-[#0003]  cursor-pointer text-[12px] font-extrabold h-[40px] 
-            rounded-[6px] md:w-[150px] md:rounded-[8px] md:text-base 
-            lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+            border-[#0003]  cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[150px] md:rounded-[8px] md:text-base 
+            lg:w-[163px] lg:h-[38px] lg:my-[2%] ${
+              isDarkMode ? "text-black" : "text-black"
+            }`}
             >
               Save as PDF
             </button>

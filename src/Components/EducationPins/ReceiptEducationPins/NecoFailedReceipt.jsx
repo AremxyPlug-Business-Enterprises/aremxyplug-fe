@@ -35,11 +35,11 @@ export const NecoFailedReceipt = () => {
   //  Function for Resetting inputs
   const resetInputs = () => {
     setNecoQuantityResult("");
-    setNecoExamType("");
+    setNecoExamType("NECO");
     setNecoEducationPinPhone("");
     setNecoEducationPinEmail("");
     setNecoPaymentResult("");
-    setNecoEducationAmount("₦");
+    setNecoEducationAmount("");
     setNecoWalletBalance("");
   };
 
@@ -129,8 +129,7 @@ export const NecoFailedReceipt = () => {
               Purchase Failed on
             </h3>
             <span
-              className="text-[11px] text-[#0008] md:text-[14px] 
-          flex justify-center items-center font-semibold"
+              className={`text-[11px] md:text-sm lg:text-[16px] font-semibold flex justify-center items-center ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}
             >
               {date.toLocaleDateString(undefined, {
                 year: "numeric",
@@ -173,37 +172,40 @@ export const NecoFailedReceipt = () => {
               w-[90%] mx-auto justify-between  
               lg:text-[16px] font-medium"
                 >
-                  <p className="text-[#7C7C7C]">Exam Type</p>
+                  <p className={` ${
+                      isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                    }`}>Exam Type</p>
                   <span className={` ${
-                      isDarkMode ? "text-white" : "text-[#0008] "
+                      isDarkMode ? "text-white" : "text-black "
                     }`}>{necoExamType}</span>
                 </div>
                 <div
                   className="flex text-[10px] md:text-[14px] w-[90%] 
               mx-auto justify-between  lg:text-[16px] font-medium"
                 >
-                  <p className="text-[#7C7C7C]">Quantity.split(" (")[0])</p>
+                  <p className={` ${
+                      isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                    }`}>Quantity</p>
                   <span
                     className={` ${
-                      isDarkMode ? "text-white" : "text-[#0008] "
+                      isDarkMode ? "text-white" : "text-black "
                     }`}
                   >
-                    {necoQuantityResult}
+                    {necoQuantityResult.split(" (")[0]}
                   </span>
                 </div>
-                {/* <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#7C7C7C]">Plan</p>
-                <span>{selectedOption}</span>
-              </div> */}
+                
 
                 <div
                   className="flex text-[10px] md:text-[14px] w-[90%] 
               mx-auto justify-between  lg:text-[16px] font-medium"
                 >
-                  <p className="text-[#7C7C7C]">Phone Number</p>
+                  <p className={` ${
+                      isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                    }`}>Phone Number</p>
                   <span
                     className={` ${
-                      isDarkMode ? "text-white" : "text-[#0008] "
+                      isDarkMode ? "text-white" : "text-black "
                     }`}
                   >
                     {necoEducationPinPhone}
@@ -213,10 +215,12 @@ export const NecoFailedReceipt = () => {
                   className="flex text-[10px] md:text-[14px] w-[90%] 
               mx-auto justify-between  lg:text-[16px] font-medium"
                 >
-                  <p className="text-[#7C7C7C]">Email</p>
+                  <p className={` ${
+                      isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                    }`}>Email</p>
                   <span
                     className={` ${
-                      isDarkMode ? "text-white" : "text-[#0008] "
+                      isDarkMode ? "text-white" : "text-black "
                     }`}
                   >
                     {necoEducationPinEmail}
@@ -226,13 +230,15 @@ export const NecoFailedReceipt = () => {
                   className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  
               lg:text-[16px] font-medium"
                 >
-                  <p className="text-[#7C7C7C]">Amount</p>
+                  <p className={` ${
+                      isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                    }`}>Amount</p>
                   <span
                     className={` ${
-                      isDarkMode ? "text-white" : "text-[#0008] "
+                      isDarkMode ? "text-white" : "text-black "
                     }`}
                   >
-                    {necoEducationAmount}
+                    ₦{necoEducationAmount.toLocaleString()}.00
                   </span>
                 </div>
               </div>
@@ -251,23 +257,27 @@ export const NecoFailedReceipt = () => {
                   className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  
               lg:text-[16px] font-medium"
                 >
-                  <p className="text-[#7C7C7C]">Customer Name</p>
+                  <p className={` ${
+                      isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                    }`}>Customer Name</p>
                   <span
                     className={` ${
-                      isDarkMode ? "text-white" : "text-[#0008] "
+                      isDarkMode ? "text-white" : "text-black "
                     }`}
                   >
                     {fullName}
                   </span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px] font-medium">
-                  <p className="text-[#7C7C7C]">Wallet Type</p>
+                  <p className={` ${
+                      isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                    }`}>Wallet Type</p>
                   <span
                     className={` ${
-                      isDarkMode ? "text-white" : "text-[#0008] "
+                      isDarkMode ? "text-white" : "text-black "
                     }`}
                   >
-                    {necoPaymentResult.split(" (")[0]}
+                    Nigerian {necoPaymentResult.split(" (")[0]}
                   </span>
                 </div>
               </div>
@@ -286,10 +296,12 @@ export const NecoFailedReceipt = () => {
                   />
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px] font-medium">
-                  <p className="text-[#7C7C7C]">Product</p>
+                  <p className={` ${
+                      isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                    }`}>Product</p>
                   <span
                     className={` ${
-                      isDarkMode ? "text-white" : "text-[#0008] "
+                      isDarkMode ? "text-white" : "text-black "
                     }`}
                   >
                     {transaction_product}
@@ -299,43 +311,50 @@ export const NecoFailedReceipt = () => {
                   className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
               justify-between  lg:text-[16px] font-medium"
                 >
-                  <p className="text-[#7C7C7C]">Description</p>
+                  <p className={` ${
+                      isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                    }`}>Description</p>
                   <span
                     className={` ${
-                      isDarkMode ? "text-white" : "text-[#0008] "
+                      isDarkMode ? "text-white" : "text-black "
                     }`}
                   >
                     {description}
                   </span>
                 </div>
                 <div
-                  className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
-              justify-between  lg:text-[16px] font-medium"
+                  className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px] font-medium"
                 >
-                  <p className="text-[#7C7C7C]">NECO PIN Generated</p>
+                  <p className={` ${
+                      isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                    }`}>NECO PIN Generated</p>
                   <span
                     className={` ${
-                      isDarkMode ? "text-white" : "text-[#0008] "
+                      isDarkMode ? "text-white" : "text-black "
                     }`}
                   >
                     {pins_generated}
                   </span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px] font-medium">
-                  <p className="text-[#7C7C7C]">Order Number</p>
+                  <p className={` ${
+                      isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                    }`}>Order Number</p>
                   <span
                     className={` ${
-                      isDarkMode ? "text-white" : "text-[#0008] "
+                      isDarkMode ? "text-white" : "text-black "
                     }`}
                   >
                     {order_id}
                   </span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px] font-medium">
-                  <p className="text-[#7C7C7C] ">Transaction ID</p>
+                  <p className={` ${
+                      isDarkMode ? "text-white" : "text-[#7C7C7C] "
+                    }`}>Transaction ID</p>
                   <span
                     className={` ${
-                      isDarkMode ? "text-white" : "text-[#0008] "
+                      isDarkMode ? "text-white" : "text-black "
                     }`}
                   >
                     {transaction_id}
@@ -343,13 +362,13 @@ export const NecoFailedReceipt = () => {
                 </div>
               </div>
             </div>
-            <div className="rounded-[8px] text-[#7C7C7C] bg-[#E2F3FF] mx-4 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]">
-              <p className="text-[8px] text-center mx-auto w-[200px] md:text-[14px] md:w-[80%] lg:text-[16px]">
-                <span className="md:block">
-                  Earn free points on every successful transactions, redeem your
-                  earned points{" "}
-                </span>
-                to real money, withdrawn to your bank account instantly.
+            <div className={`rounded-[8px] bg-[#E2F3FF] mx-4 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px] ${
+                isDarkMode ? "bg-slate-800" : "bg-[#E2F3FF]"
+              }`}>
+              <p className={`text-[8px] text-center mx-auto w-[200px] md:text-sm md:w-[80%] lg:text-base font-medium ${
+                  isDarkMode ? "text-white" : "text-[#7C7C7C]"
+                }`}>
+                  Earn free points on every successful transactions, redeem your earned points to real money, withdrawn to your bank account instantly.
               </p>
             </div>
           </div>
@@ -374,9 +393,8 @@ export const NecoFailedReceipt = () => {
                 FailedNecoPdf();
               }}
               className={`bg-[#ffffff] border-[1px] w-[111px] 
-            border-[#0003]  cursor-pointer text-[12px] font-extrabold h-[40px] 
-            rounded-[6px] md:w-[150px] md:rounded-[8px] md:text-[16px] 
-            lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+            border-[#0003]  cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[150px] md:rounded-[8px] md:text-[16px] 
+            lg:w-[163px] lg:h-[38px] lg:my-[2%] ${isDarkMode ? "text-black" : "text-black"}`}
             >
               Save as PDF
             </button>
