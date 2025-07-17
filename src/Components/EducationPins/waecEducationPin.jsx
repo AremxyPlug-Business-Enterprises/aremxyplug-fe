@@ -614,8 +614,8 @@ export default function WaecEducationPin() {
                     >
                       {Exams?.map((exam) => {
                         return (
-                          <a
-                            href={exam.path}
+                          <Link
+                            to={exam.path}
                             onClick={() => {
                               setExamType(exam.examType);
                               setExamActive(false);
@@ -632,7 +632,7 @@ export default function WaecEducationPin() {
                             key={exam.id}
                           >
                             <h2>{exam.examType} </h2>
-                          </a>
+                          </Link>
                         );
                       })}
                     </div>
@@ -911,9 +911,7 @@ export default function WaecEducationPin() {
                             onClick={() => {
                               if (methodOption.method === "NGN Wallet") {
                                 setPaymentResult(
-                                  newBalance === "" || newBalance === null
-                                    ? `${methodOption.method} ${methodOption.balance}`
-                                    : `${methodOption.method} ${newBalance}`
+                                  `${methodOption.method} ${methodOption.balance}`
                                 );
                                 setWalletBalance(methodOption.balance);
                                 setImageState(methodOption.flag);

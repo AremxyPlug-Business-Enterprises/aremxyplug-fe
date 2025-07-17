@@ -82,7 +82,7 @@ const GoTv = () => {
   const [gotvData, setGotvData] = useState([]);
   const [stateInvalidDecoderNumber, setStateInvalidDecoderNumber] =
     useState(false);
-    const [sessionModal, setSessionModal] = useState(false);
+  const [sessionModal, setSessionModal] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
   const [failedPopup, setFailedPopup] = useState(false);
@@ -112,20 +112,20 @@ const GoTv = () => {
     };
     const FailedHandler = async (ErrorType) => {
       //alert("Error");
-      if(ErrorType === "unauthorised"){
-        
-       await GetFunction(
-        TvPath,
-        setIsLoading,
-        SuccessHandler,
-       (ErrorType)=> {
-      if(ErrorType === "unauthorised"){
-      return setSessionModal(true);
+      if (ErrorType === "unauthorised") {
+        await GetFunction(
+          TvPath,
+          setIsLoading,
+          SuccessHandler,
+          (ErrorType) => {
+            if (ErrorType === "unauthorised") {
+              return setSessionModal(true);
+            }
+          },
+          fetchedResponse
+        );
       }
-       },
-        fetchedResponse
-      );
-} };
+    };
 
     const SubscriptionPresent = () => {
       if ((fetchedDstvPlans.status === 200 || 201) && id === 2) {
@@ -141,7 +141,8 @@ const GoTv = () => {
     let fetchedResponse;
     if (
       (fetchedDstvPlans.status !== 200 || fetchedDstvPlans.status !== 201) &&
-      id === 2) {
+      id === 2
+    ) {
       TvPath = `products/tvsub/dstv`;
       fetchedResponse = setFetchedDstvPlans;
       await GetFunction(
@@ -199,22 +200,20 @@ const GoTv = () => {
           console.log("Successfully fetched gotv plans");
         };
         const failedHandler = async (ErrorType) => {
-
-         // console.log("Couldn't fetch gotv plans");
-         if(ErrorType === "unauthorised"){
-          await GetFunction(
-            `products/tvsub/gotv`,
-            setIsLoading,
-            SuccessHandler,
-            (ErrorType)=> {
-             if(ErrorType === "unauthorised"){
-            return setSessionModal(true)
-              }
-            
-            },
-            setFetchedGotvPlans
-          );
-        }
+          // console.log("Couldn't fetch gotv plans");
+          if (ErrorType === "unauthorised") {
+            await GetFunction(
+              `products/tvsub/gotv`,
+              setIsLoading,
+              SuccessHandler,
+              (ErrorType) => {
+                if (ErrorType === "unauthorised") {
+                  return setSessionModal(true);
+                }
+              },
+              setFetchedGotvPlans
+            );
+          }
         };
 
         await GetFunction(
@@ -236,14 +235,14 @@ const GoTv = () => {
         //alert("Successful")
       };
       const FailedHandler = async (ErrorType) => {
-     if(ErrorType === "unauthorised"){
+        if (ErrorType === "unauthorised") {
           await GetFunction(
             `products/tvsub/gotv`,
             setIsLoading,
             SuccessHandler,
-            (ErrorType)=> {
-              if(ErrorType === "unauthorised"){
-             return setSessionModal(true)
+            (ErrorType) => {
+              if (ErrorType === "unauthorised") {
+                return setSessionModal(true);
               }
             },
             setFetchedGotvPlans
@@ -264,16 +263,15 @@ const GoTv = () => {
       GetBalance();
       if (GetBalance) {
         setNewBalance(
-          passDataBalance?.data?.data ? 
-          passDataBalance?.data?.data?.data?.balance : ""
+          passDataBalance?.data?.data
+            ? passDataBalance?.data?.data?.data?.balance
+            : ""
         );
       }
     }
 
     //eslint-disable-next-line
   }, []);
-
- 
 
   const handleTvEmail = (e) => {
     const inputValue = e.target.value;
@@ -339,8 +337,6 @@ const GoTv = () => {
   const handleGOTVMobileNumberChange = (e) => {
     const inputValue = e.target.value;
     setMobileNumber(inputValue);
-
-  
   };
 
   const { flagResult, setFlagResult } = useContext(ContextProvider);
@@ -440,25 +436,24 @@ const GoTv = () => {
         setInputPinGotv(false);
         setInputPin("");
       };
-      const FailedHandler = async(ErrorType) => {
-        if(ErrorType === "unauthorised"){
-               await PostFunction(
-        Path,
-        setIsLoading,
-        DataJson,
-        successHandler,
-        (ErrorType)=> {
-          if(ErrorType === "unauthorised"){
-        return setSessionModal(true);
-          }
-        },
-        setTvSubscriptionResponse
-      );
-  
-        }else {
+      const FailedHandler = async (ErrorType) => {
+        if (ErrorType === "unauthorised") {
+          await PostFunction(
+            Path,
+            setIsLoading,
+            DataJson,
+            successHandler,
+            (ErrorType) => {
+              if (ErrorType === "unauthorised") {
+                return setSessionModal(true);
+              }
+            },
+            setTvSubscriptionResponse
+          );
+        } else {
           setFailedPopup(true);
-        setInputPinGotv(false);
-        setInputPin("");
+          setInputPinGotv(false);
+          setInputPin("");
         }
       };
 
@@ -472,23 +467,22 @@ const GoTv = () => {
       );
     };
 
-
-    const setFailedConfig=async(ErrorType)=> {
-      if(ErrorType === "unauthorised"){
+    const setFailedConfig = async (ErrorType) => {
+      if (ErrorType === "unauthorised") {
         await VerifyTransPin(
-            inputPin,
-            setSuccessConfig,
-             (ErrorType)=> {
-              if(ErrorType === "unauthorised"){
-                return setSessionModal(true)
-              }
-             },
-            setIsLoading,
-            setErrorMessage,
-          GotvHandler,
-         );
-        }
-    }
+          inputPin,
+          setSuccessConfig,
+          (ErrorType) => {
+            if (ErrorType === "unauthorised") {
+              return setSessionModal(true);
+            }
+          },
+          setIsLoading,
+          setErrorMessage,
+          GotvHandler
+        );
+      }
+    };
     await VerifyTransPin(
       inputPin,
       setSuccessConfig,
@@ -506,8 +500,9 @@ const GoTv = () => {
   //Function to help Verify users account
   const VerifyUserAccount = async (UserTvSubscription) => {
     setGotvVerifyResponse({});
-    
-    if (UserTvSubscription?.length === 10 &&
+
+    if (
+      UserTvSubscription?.length === 10 &&
       UserTvSubscription !== "" &&
       UserTvSubscription !== null &&
       UserTvSubscription !== undefined
@@ -516,35 +511,34 @@ const GoTv = () => {
         decoder_type: decoderType.toLowerCase(),
         iuc_number: UserTvSubscription,
       };
-        const bodyToJson = JSON.stringify(body);
-      const SuccessHandler =   () => {
-          console.log("Succesfully verified tv subscription account.");
-          setSmartCard(UserTvSubscription);
-      }
-      const FailedHandler = async(ErrorType)=> {
-      if(ErrorType === "unauthorised"){
-           await PostFunction(
-        "bills/verify",
-        setGotvLoading,
-        bodyToJson,
-       SuccessHandler,
-       (ErrorType)=> {
-        if(ErrorType === "unauthorised"){
-        return setSessionModal(true);
+      const bodyToJson = JSON.stringify(body);
+      const SuccessHandler = () => {
+        console.log("Succesfully verified tv subscription account.");
+        setSmartCard(UserTvSubscription);
+      };
+      const FailedHandler = async (ErrorType) => {
+        if (ErrorType === "unauthorised") {
+          await PostFunction(
+            "bills/verify",
+            setGotvLoading,
+            bodyToJson,
+            SuccessHandler,
+            (ErrorType) => {
+              if (ErrorType === "unauthorised") {
+                return setSessionModal(true);
+              }
+            },
+            setGotvVerifyResponse
+          );
         }
-        },
-        setGotvVerifyResponse
-      );
-      }
-        
-      }
-    
+      };
+
       await PostFunction(
         "bills/verify",
         setGotvLoading,
         bodyToJson,
-       SuccessHandler,
-       FailedHandler,
+        SuccessHandler,
+        FailedHandler,
         setGotvVerifyResponse
       );
     }
@@ -559,7 +553,7 @@ const GoTv = () => {
   const ReceiptButton = () => {
     setFailedPopup(false);
     handleReceivedData();
-    };
+  };
   const ExitTheDoneButton = () => {
     setTvEmail("");
     setMobileNumber("");
@@ -571,7 +565,7 @@ const GoTv = () => {
     setFlagResult("");
     setTvWalletBalance("");
     setFailedPopup(false);
-  //  navigate("/GoTv");
+    //  navigate("/GoTv");
   };
 
   return (
@@ -944,40 +938,65 @@ const GoTv = () => {
                       <div
                         className={`absolute top-[102%] z-0 flex flex-col w-[100%]  
                           cursor-pointer border-[1px] border-gray-100 rounded-[3px]  ${
-                          isDarkMode
-                            ? "bg-black text-white border border-white"
-                            : "bg-white"
-                        }`}
+                            isDarkMode
+                              ? "bg-black text-white border border-white"
+                              : "bg-white"
+                          }`}
                       >
                         {methodOptions.map((methodOption) => {
                           return (
                             <div
                               onClick={(e) => {
                                 //onchange = { setMethodOptions }
-                                setFlagResult(methodOption.id === 1 ? methodOption.method : (flagResult === "NGN Wallet" && methodOption.id !== 1 ) ? "NGN Wallet" : "");
-                          setTvWalletBalance(methodOption.id === 1   ? 
-                            methodOption.balance : flagResult === "NGN Wallet" ?
-                            ( newBalance === "" || newBalance === null ? `(${updateBalance})` :
-                               `(${newBalance})`) : "");
-                          setMethodImage(methodOption.id === 1 ? methodOption.flag : methodImage);
+                                setFlagResult(
+                                  methodOption.id === 1
+                                    ? methodOption.method
+                                    : flagResult === "NGN Wallet" &&
+                                      methodOption.id !== 1
+                                    ? "NGN Wallet"
+                                    : ""
+                                );
+                                setTvWalletBalance(
+                                  methodOption.id === 1
+                                    ? methodOption.balance
+                                    : flagResult === "NGN Wallet"
+                                    ? newBalance === "" || newBalance === null
+                                      ? `(${updateBalance})`
+                                      : `(${newBalance})`
+                                    : ""
+                                );
+                                setMethodImage(
+                                  methodOption.id === 1
+                                    ? methodOption.flag
+                                    : methodImage
+                                );
                                 setMethodPayment(false);
-                               setMethodPayment(()=> {
-                            if(methodOption.id === 1){
-                            setMethodPayment(false)
-                             document.querySelector('.methodDrop').classList.remove('DropIt');
-                            }else{
-                              setMethodPayment(true);
-                                document.querySelector('.methodDrop').classList.add('DropIt');
-                            }
-                          });
+                                setMethodPayment(() => {
+                                  if (methodOption.id === 1) {
+                                    setMethodPayment(false);
+                                    document
+                                      .querySelector(".methodDrop")
+                                      .classList.remove("DropIt");
+                                  } else {
+                                    setMethodPayment(true);
+                                    document
+                                      .querySelector(".methodDrop")
+                                      .classList.add("DropIt");
+                                  }
+                                });
                               }}
                               className={`flex gap-[10px] lg:py-[15px] 
-                                py-[10px] pl-[10px] pb-[20px] pt-[20px] md:pb-0 md:pt-0
-                              border-b-[1px] border-b-gray-400
-        cursor-pointer  items-center  ${methodOption.id  !== 1 && !isDarkMode  ? "bg-gray-300 cursor-not-allowed" : 
-            methodOption.id !== 1 && isDarkMode ? "bg-black" : methodOption.id === 1 && !isDarkMode ? "bg-white" : "bg-black" }
-                  `}
-             key={methodOption.id}>
+                                py-[10px] pl-[10px] pb-[20px] pt-[20px] md:pb-0 md:pt-0 border-b-[1px] border-b-gray-400 cursor-pointer  items-center  ${
+                                  methodOption.id !== 1 && !isDarkMode
+                                    ? "bg-gray-300 cursor-not-allowed"
+                                    : methodOption.id !== 1 && isDarkMode
+                                    ? "bg-black"
+                                    : methodOption.id === 1 && !isDarkMode
+                                    ? "bg-white"
+                                    : "bg-black"
+                                } `}
+                              key={methodOption.id}
+                            >
                               <img
                                 className="md:h-[29.27px]  h-[14.27px]"
                                 src={methodOption.flag}
@@ -1107,9 +1126,7 @@ const GoTv = () => {
           <Loader />
         </Modal>
       )}
-      {sessionModal && (
-        <HandleUserSession/>
-      )}
+      {sessionModal && <HandleUserSession />}
     </div>
   );
 };

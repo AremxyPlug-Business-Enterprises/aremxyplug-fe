@@ -516,8 +516,8 @@ export default function JambEducationPin() {
                     >
                       {jambExams.map((exam) => {
                         return (
-                          <a
-                            href={exam.path}
+                          <Link
+                            to={exam.path}
                             onClick={() => {
                               setJambExamType(exam.examType);
                               setJambExamActive(false);
@@ -534,7 +534,7 @@ export default function JambEducationPin() {
                             key={exam.id}
                           >
                             <h2>{exam.examType} </h2>
-                          </a>
+                          </Link>
                         );
                       })}
                     </div>
@@ -797,9 +797,7 @@ export default function JambEducationPin() {
                             onClick={() => {
                               if (methodOption.method === "NGN Wallet") {
                                 setJambPaymentResult(
-                                  newBalance === "" || newBalance === null
-                                    ? `${methodOption.method} ${methodOption.balance}`
-                                    : `${methodOption.method} ${newBalance}`
+                                  `${methodOption.method} ${methodOption.balance}`
                                 );
                                 setJambWalletBalance(methodOption.balance);
                                 setJambImageState(methodOption.flag);
@@ -1470,8 +1468,8 @@ export default function JambEducationPin() {
                     // to="/NabtebFailedReceipt"
                     onClick={handleFailedData}
                     className={`bg-[#ffffff] border-[1px] w-[111px] border-[#0003] flex justify-center items-center text-center cursor-not-allowed text-xs font-extrabold h-[40px] rounded-[6px] md:w-[150px] md:rounded-[8px] md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%] ${
-                       isDarkMode ? "text-black" : "text-black"
-                     }`}
+                      isDarkMode ? "text-black" : "text-black"
+                    }`}
                   >
                     Receipt
                   </Link>
