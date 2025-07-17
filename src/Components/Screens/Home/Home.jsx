@@ -298,7 +298,7 @@ export const Home = () => {
         />
       </div> */}
 
-      <div className={styles.hero}>
+      <div className={`${styles.hero}`}>
       <div className=" w-[90%] pt-[40%] mx-auto md:pt-[10%] md:w-[] lg:pt-[25%]">
       <div className="text-justify w-[100%] text-[#04177F] text-[20px] font-extrabold md:text-[25px] md:font-bold lg:text-[45px] lg:font-extrabold lg:leading-[px]">
             The One-Stop Shop for Individuals and Businesses for Telecom,

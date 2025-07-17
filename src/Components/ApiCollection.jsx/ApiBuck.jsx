@@ -153,7 +153,6 @@ export const CheckVirtualAcc = async(authToken, customerDetail, setLoading,
           const response = await axios.get(url, {headers : {"Content-Type" : "application/json",
       Authorization : authToken
       }, withCredentials : true})
-    
         if (response.status === 201 || response.status === 200 ) {
              const virtualAccCreated = response?.data?.data?.acc_details;
             setVirtualAccCreated(virtualAccCreated);

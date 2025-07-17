@@ -209,7 +209,7 @@ const handleVerificationOTP = ()=> {
     setBvnButtonState("Verified");
     setBvnVerifyImage(VerificationSuccess);
     setBvnStatus("Verified")
-    setBvnNumber(response.data.data.bvn)
+    setBvnNumber(response?.data?.data?.bvn)
     localStorage.setItem("bvnVerification",true);
     localStorage.setItem("idVerification",false);
   }else if(bvn && nin){
@@ -219,8 +219,8 @@ const handleVerificationOTP = ()=> {
   setBvnButtonState("Virtual Account Created");
     setBvnVerifyImage(VerificationSuccess);
     setBvnStatus("Verified")
-    setBvnNumber(response.data.data.bvn)
-    setIdNumber(response.data.data.nin)
+    setBvnNumber(response?.data?.data?.bvn)
+    setIdNumber(response?.data?.data?.nin)
     localStorage.setItem("bvnVerification",true);
     localStorage.setItem("idVerification",true);
   }
@@ -233,7 +233,7 @@ const handleVerificationOTP = ()=> {
      // alert(`ERROR : ${error}`)
       console.log(error);
      // console.log(error.response.data.message);
-      if(error && error.response.data.message === "unverified"){
+      if(error && error?.response?.data?.message === "unverified"){
           setBvnNumber("");
           setIdNumber("");
         localStorage.setItem("idVerification",false);
@@ -246,7 +246,7 @@ const handleVerificationOTP = ()=> {
         setBvnButtonState("Verify");
         setIdButtonState("Verify");
       
-      }else if(error && error.response.data.message === "action_required"){
+      }else if(error && error?.response?.data?.message === "action_required"){
         localStorage.setItem("AccCreated", false);
         const bvnCheck = error?.response?.data?.data?.bvn;
         
@@ -259,7 +259,7 @@ const handleVerificationOTP = ()=> {
           setBvnStatus("Verified");
             setVerifyImage(VerificationSuccess)
           setIdStatus("Verified");
-           setBvnNumber( error?.response?.data?.bvn);
+           setBvnNumber(error?.response?.data?.bvn);
           localStorage.setItem("bvnVerification",true);
           localStorage.setItem("idVerification",true);
           // setIdButtonState("Verify");
@@ -273,7 +273,7 @@ const handleVerificationOTP = ()=> {
           setBvnStatus("Verified");
           setVerifyImage(VerificationSuccess)
           setIdStatus("Verified");
-          setIdNumber( error?.response?.data?.nin);
+          setIdNumber(error?.response?.data?.nin);
           localStorage.setItem("idVerification",true);
           localStorage.setItem("bvnVerification",true);
           // setBvnButtonState("Verify");

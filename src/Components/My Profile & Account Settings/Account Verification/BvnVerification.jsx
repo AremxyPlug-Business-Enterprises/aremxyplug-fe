@@ -211,7 +211,7 @@ export default function BvnVerification(Data) {
             >
               <img
                 src={ bvnVerifyImage ===  NotVerifiedImage
-                                   && (Data.ConfirmId === "true" && Data.ConfirmBvn === "true") ? bvnVerifiedSuccess
+                                   && (Data.ConfirmId === "true" || Data.ConfirmBvn === "true") ? bvnVerifiedSuccess
                                    :   bvnVerifyImage ===  NotVerifiedImage
                                    && (Data.ConfirmId === "false" && Data.ConfirmBvn === "false") ? NotVerifiedImage :   
                                    bvnVerifyImage ===  bvnVerifiedSuccess
@@ -474,7 +474,7 @@ export default function BvnVerification(Data) {
                       const numbersOnly = e.target.value.replace(/\D/g, "");
                       e.target.value = numbersOnly;
                     }}
-                    value={  bvnNumber?.length > 1 || bvnStatus === "Verified" ?  `${bvnNumber?.slice(0,4)}*******` : bvnNumber}
+                    value={   bvnStatus === "Verified" ?  `${bvnNumber?.slice(0,4)}*******` : bvnNumber}
                     onChange={(e) => {
                       setBvnNumber(e.target.value);
                     }}
@@ -504,7 +504,7 @@ export default function BvnVerification(Data) {
           Data.ConfirmBvn === "true"  ? "bg-slate-400" : "bg-[#04177F]"
          }`}
                 >
-                  {(bvnButtonState) && ( Data.ConfirmBvn === "true" || Data.ConfirmId === "true")  ? "Verified" : "Verify" }
+                  {(bvnButtonState) && (Data.ConfirmBvn === "true" || Data.ConfirmId === "true")  ? "Verified" : "Verify" }
                 </button>
                 {errorVerify && (
                   <h2

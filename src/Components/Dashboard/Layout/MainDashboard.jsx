@@ -302,27 +302,27 @@ if((clickedoption === "NGN")){
     setSelected("NGN"); 
     setSelected2("NGN");
    // HandleNetworkStatus()
-     let resetInActivityTimer;
-    const resetInactivityOnSession = ()=> {
-     clearTimeout(resetInActivityTimer);
-      resetInActivityTimer = setTimeout(()=> {
-     alert("Safety and security precautions: You have been logged out of your session due to inactivity.");
-     navigate("/Login", {replace : true});
-     RemoveLocalStorage();
-      }, 1200000)
-   }
-     resetInactivityOnSession();
-     const event = ["mousemove","mousedown", "keydown", "scroll", "touchstart"];
-     event.forEach(event=> {
-      window.addEventListener(event, resetInactivityOnSession)
-     })
+  //    let resetInActivityTimer;
+  //   const resetInactivityOnSession = ()=> {
+  //    clearTimeout(resetInActivityTimer);
+  //     resetInActivityTimer = setTimeout(()=> {
+  //    alert("Safety and security precautions: You have been logged out of your session due to inactivity.");
+  //    navigate("/Login", {replace : true});
+  //    RemoveLocalStorage();
+  //     }, 1200000)
+  //  }
+  //    resetInactivityOnSession();
+  //    const event = ["mousemove","mousedown", "keydown", "scroll", "touchstart"];
+  //    event.forEach(event=> {
+  //     window.addEventListener(event, resetInactivityOnSession)
+  //    })
     
      return () => {
       setHideNavbar(false);
-     if(resetInActivityTimer) return clearTimeout(resetInActivityTimer);
-     event.forEach(event => {
-      window.removeEventListener(event, resetInactivityOnSession)
-     })
+    //  if(resetInActivityTimer) return clearTimeout(resetInActivityTimer);
+    //  event.forEach(event => {
+    //   window.removeEventListener(event, resetInactivityOnSession)
+    //  })
        }
     //eslint-disable-next-line
    }, [])
