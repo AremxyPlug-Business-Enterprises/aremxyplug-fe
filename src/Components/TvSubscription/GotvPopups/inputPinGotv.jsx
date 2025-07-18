@@ -20,7 +20,8 @@ export const InputGotvPopup = ({VerifyPinHandler}) => {
       errorMessage,
       isVisible,
       setInputPinGotv,
-      authenticationOpen
+      authenticationOpen,
+      isDarkMode
      // setGotvSuccessful,
    } = useContext(ContextProvider)
 
@@ -46,10 +47,11 @@ export const InputGotvPopup = ({VerifyPinHandler}) => {
     {inputPinGotv &&
             (
             <Modal>
-         
-        <div className={`flex flex-col   mb-[50px] py-[2px] h-auto ${styles.inputPin} ${
+         <div className="flex items-end justify-center lg:items-center lg:justify-center 
+         h-[100%] w-[100%]  px-[10px] rounded-[10px]">
+        <div className={`bvnQuery flex flex-col justify-center mb-[50px] py-[2px] h-[250px] lg:h-auto overflow-scroll ${
               toggleSideBar ? "md:w-[45%] lg:w-[40%] lg:ml-[20%] " : "lg:w-[40%]"
-            } md:w-[55%] w-[90%]`}
+            } md:w-[55%] w-[90%] ${isDarkMode ? "text-white bg-black border-[1px] border-white rounded-[10px]" : "text-black bg-white"}`}
             >
             <div className=" pr-3 lg:pr-5 flex justify-end">
             <img  onClick={cancelInputGotv}
@@ -60,7 +62,7 @@ export const InputGotvPopup = ({VerifyPinHandler}) => {
             </div>
             <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
             <div className="flex flex-col">
-            <p className="font-extrabold text-[8px] md:text-[10px] lg:text-[16px] text-center my-[8%]
+            <p className="font-extrabold text-[8px] md:text-[10px] lg:text-[16px] text-center my-[8%] 
             ">Input PIN to complete transaction</p>
             <div className="flex flex-col items-center gap-[1px] font-extrabold mb-[7%]">
               <div className=" flex items-center ml-[5%] md:ml-[5%] gap-[10px]">
@@ -79,6 +81,8 @@ export const InputGotvPopup = ({VerifyPinHandler}) => {
                       borderRadius: 4,
                       height: '35px',
                       width: '35px',
+                      border : "1px",
+                      borderColor : "#04177f"
                     }
                 }
                     
@@ -118,12 +122,16 @@ export const InputGotvPopup = ({VerifyPinHandler}) => {
               onClick={handleGotvSuccessful}
               disabled={inputPin.length !== 4 ? true : false}
               className={`${
-                inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
+                inputPin.length !== 4 && !isDarkMode ? "bg-[#0008]" : 
+                 inputPin.length !== 4 && isDarkMode ? "bg-gray-300" : "bg-[#04177f]"
               } lg:my-[52px] w-[225px] md:w-[94px] lg:w-[163px] flex justify-center items-center
-               mx-auto cursor-pointer text-[12px] md:text-[10px] py-[10px] lg:text-[16px] font-extrabold h-[40px] lg:h-[38px] md:h-[22px] text-white rounded-[6px] md:rounded-[6.88px] lg:rounded-[12px]`}
+               mx-auto cursor-pointer text-[12px] md:text-[10px] py-[10px] lg:text-[16px] font-extrabold h-[40px] lg:h-[38px] md:h-[22px]
+                text-white rounded-[6px] md:rounded-[6.88px]  lg:rounded-[12px]
+               `}
             >
               Purchase
             </button>
+        </div>
         </div>
            </Modal>
           )} 

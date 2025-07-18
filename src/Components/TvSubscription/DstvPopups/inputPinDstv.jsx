@@ -22,6 +22,7 @@ export const InputDstvPopup = ({VerifyPinHandler}) => {
       toggleVisibility,
       isVisible,
       authenticationOpen,
+      isDarkMode,
      // isDarkMode,
     //  setDstvSuccessful,
    } = useContext(ContextProvider)
@@ -51,12 +52,11 @@ await  VerifyPinHandler()
     {inputPinDstv &&
             (
             <Modal>
-         
-        <div className={`${styles.inputPin}
-      
-         ${
-              toggleSideBar ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]" : "lg:w-[40%]"
-            } md:w-[55%] w-[90%]`}
+            <div className="flex items-end justify-center lg:items-center lg:justify-center 
+         h-[100%] w-[100%]  px-[10px] rounded-[10px]">
+        <div className={`bvnQuery flex flex-col justify-center mb-[50px] py-[2px] h-[250px] lg:h-auto overflow-scroll  ${
+                      toggleSideBar ? "md:w-[45%] lg:w-[40%] lg:ml-[20%] " : "lg:w-[40%]"
+                    } md:w-[55%] w-[90%]  ${isDarkMode ? "text-white bg-black border-[1px] border-white rounded-[10px]" : "text-black bg-white"}`}
             >
             <div className=" pr-3 lg:pr-5 flex justify-end">
             <img  onClick={cancelInputDstv}
@@ -114,7 +114,8 @@ await  VerifyPinHandler()
               </Link>
             </div>
             {errorMessage && (
-              <p className="font-[400] md:font-[500] text-center leading-[15px] text-red-400">
+              <p className="font-[400] text-[12px] lg:text-[16px] md:font-[500] 
+              text-center leading-[16px] lg:leading-[20px] text-red-400">
                  Incorrect Pin
               </p>
             ) 
@@ -125,8 +126,13 @@ await  VerifyPinHandler()
               onClick={handleDstvSuccessful}
               disabled={inputPin.length !== 4 ? true : false}
               className={`${
-                inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
-              } lg:my-[52px] w-[225px] md:w-[94px] lg:w-[163px] flex justify-center items-center mx-auto cursor-pointer text-[12px] md:text-[10px] lg:text-[16px] font-extrabold h-[40px] lg:h-[38px] md:h-[22px] text-white rounded-[6px] md:rounded-[6.88px] lg:rounded-[12px]`}
+                inputPin.length !== 4 && !isDarkMode ? "bg-[#0008]" : 
+                 inputPin.length !== 4 && isDarkMode ? "bg-gray-300" : "bg-[#04177f]"
+              } lg:my-[52px] w-[225px] md:w-[94px] lg:w-[163px] flex 
+              justify-center items-center mx-auto cursor-pointer text-[12px]
+               md:text-[10px] lg:text-[16px] font-extrabold h-[40px] 
+               lg:h-[38px] md:h-[22px] text-white rounded-[6px] md:rounded-[6.88px]
+                lg:rounded-[12px]`}
             >
               Purchase
             </button>
@@ -138,6 +144,7 @@ await  VerifyPinHandler()
 
             )} */}
             </div>
+        </div>
         </div>
            </Modal>
           )} 

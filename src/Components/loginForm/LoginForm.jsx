@@ -16,6 +16,7 @@ function LoginForm() {
 
   const { setOpenTranspin,
     // setOpenResetTranspin,
+    open2StepVerification,
       setOpen2StepVerification,
       openResetTranspin,
       twoStepVerificationSuccess,
@@ -73,12 +74,12 @@ function LoginForm() {
   // const navigate = useNavigate();
   
   useEffect(() => {
-   if(setOpen2StepVerification === false  &&
+   if(open2StepVerification === false  &&
       openResetTranspin === false&&
       twoStepVerificationSuccess === false &&
       openTranspinSuccessful === false &&
       open2StepOTP === false &&
-      openTranspin === false && localStorage.getItem("UserStatus") === true ){
+      openTranspin === false && localStorage.getItem("UserStatus") === "true" ){
          RemoveLocalStorage();
          window.location.reload()
       }
@@ -383,7 +384,7 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
           <div className=" lg:px-[20%]">
             <div className=" mb-[14px] md:mb-[18px] lg:mb-[20px]">
               <p className="text-[14.93px] leading-[20px] md:text-[14.58px]
-               lg:text-[20px] lg:leading-[24px] font-[600] w-[70%] mb-[7px] lg:mb-[10px] tracking-wider">
+               lg:text-[17px] lg:leading-[21px] font-[600] w-[70%] mb-[7px] lg:mb-[10px] tracking-wider">
                 <span
                   className={`${
                     usernameORemail === "username" ? "text-[#04177F]" : ""
@@ -435,10 +436,16 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
                     usernameORemail === "username" ? "username" : "email"
                   }
                   data-tooltip-content={
-                    usernameORemail === "username"
-                      ? "Click on Email  to switch to email input"
+                    usernameORemail  === "username"
+                      ? "Click on Email  to switch to email input" 
                       : "Click on Username to switch to username input"
                   }
+                  data-tooltip-hidden={open2StepVerification === true ||
+      openResetTranspin === true||
+      twoStepVerificationSuccess === true||
+      openTranspinSuccessful === true ||
+    open2StepOTP === true||
+      openTranspin === true }
                 />
 
                 <ReactTooltip
@@ -474,7 +481,7 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
             {/* Password starts here 268455*/}
             <div className="mb-[14px] md:mb-[18px] lg:mb-[20px]">
               <p className="text-[12.93px] md:text-[14.58px]
-               lg:text-[20px] font-[600] w-[30%] mb-[7px] lg:mb-[10px] 
+               lg:text-[17px] leading-[16px] lg:leading-[21px] font-[600] w-[30%] mb-[7px] lg:mb-[10px] 
                tracking-wider">
                 Password
               </p>

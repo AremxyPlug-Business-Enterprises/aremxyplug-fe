@@ -41,7 +41,7 @@ import styles from '../../AirTimePage/AirtimeVtu.module.css'
   //   }
   //   return '';
   // };
-const [balanceStatus,setBalanceStatus ] = useState("")
+const [balanceStatus,setBalanceStatus] = useState("")
    let balanceStringToNum = Number(newBalance);
    const updateBalance = (newBalance === "" && passDataBalance?.data?.data?.data?.balance) ? passDataBalance?.data?.data?.data?.balance : balanceStringToNum;
           let DstvAmountToNumber = Number(dstvAmount);
@@ -65,12 +65,11 @@ const [balanceStatus,setBalanceStatus ] = useState("")
        <>
        {confirmDstvPopup &&
             (
-            <Modal >
+            <Modal>
              <div className={`w-full flex justify-center h-full 
              py-[30px] px-[20px] lg:items-center
               items-end`}>
-            
-       <div 
+            <div 
             className={` bvnQuery lg:rounded-[12px] rounded-[10px] 
               h-[520px] ${ toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
               } w-[100%] md:w-[60%] overflow-auto  ${isDarkMode ? "bg-black text-white border rounded-[10px] border-white": "bg-white text-black"} `}
@@ -87,9 +86,9 @@ const [balanceStatus,setBalanceStatus ] = useState("")
             <div className="text-[12px] my-[5%] text-center md:my-[3%] md:text-[15px] 
             lg:my-[2%] lg:text-[16px]">
               Confirm Transaction</div>
-              <div className="text-[8px] text-[#0008] text-center mb-2 md:text-[12px] lg:text-[14px] mx-2">
+              <div className="text-[8px] = text-center mb-2 md:text-[12px] lg:text-[14px] mx-2">
                   You are about to purchase&nbsp;
-                  <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]">{valueWithoutTilde}</span>&nbsp;
+                  <span className="font-extrabold text-[10px] md:text-[16px] lg:text-[12px]">{valueWithoutTilde}</span>&nbsp;
                 from your {" "}
                 {flagResult} {" "} to
                 </div>
@@ -98,7 +97,7 @@ const [balanceStatus,setBalanceStatus ] = useState("")
 
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
                     <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>Decoder Type</span>
-                    <span>Dstv</span>
+                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>Dstv</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
                     <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>Package</span>
@@ -158,7 +157,7 @@ const [balanceStatus,setBalanceStatus ] = useState("")
                     </span>
                     </div>
                   </div>
-                <span className="text-gray-500 text-[14px] font-[400] leading-[20px]
+                <span className="text-gray-500 text-[14px] font-bold leading-[20px]
                      lg:text-[16px] lg:leading-[22px] text-left">
                        {balanceStatus}
                        </span>
@@ -174,7 +173,7 @@ const [balanceStatus,setBalanceStatus ] = useState("")
            <button
            disabled={CheckSufficiency}
             onClick={handleInputDstv}
-              className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer 
+              className={`bg-[#04177f] my-[5%] w-[90%] flex justify-center items-center mx-auto cursor-pointer 
                 text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] lg:rounded-[12px] md:text-[16px]
                  lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:my-[2%] ${CheckSufficiency ? "bg-gray-400" : "bg-primary"} `}
             >

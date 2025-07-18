@@ -986,7 +986,8 @@ const GoTv = () => {
                                 });
                               }}
                               className={`flex gap-[10px] lg:py-[15px] 
-                                py-[10px] pl-[10px] pb-[20px] pt-[20px] md:pb-0 md:pt-0 border-b-[1px] border-b-gray-400 cursor-pointer  items-center  ${
+                                 pl-[10px] pb-[20px] pt-[20px] md:pb-0 md:pt-0 border-b-[1px]
+                                 border-b-gray-400 cursor-pointer  items-center  ${
                                   methodOption.id !== 1 && !isDarkMode
                                     ? "bg-gray-300 cursor-not-allowed"
                                     : methodOption.id !== 1 && isDarkMode
@@ -1071,11 +1072,12 @@ const GoTv = () => {
       {/* Failed Transaction Popup */}
       {failedPopup && (
         <Modal>
-          <div className="w-[90%] md:w-[70%] lg:w-[40%] mx-auto bg-white rounded-lg overflow-hidden">
+          <div className={`w-[90%] md:w-[70%] lg:w-[40%] mx-auto  rounded-lg overflow-hidden
+            ${isDarkMode ? "bg-black border-[1px] rounded-[7px] border-white": "bg-white"}`}>
             <div className="flex justify-between items-center p-4 ">
               <img
                 onClick={() => setFailedPopup(false)}
-                className="w-6 h-6"
+                className={`w-6 h-6  `}
                 src="/Images/login/arpLogo.png"
                 alt="Logo"
               />
@@ -1092,7 +1094,7 @@ const GoTv = () => {
                 Transaction Failed
               </h2>
               <img
-                className="w-32 h-32 mx-auto my-6"
+                className={`w-32 h-32 mx-auto my-6  ${isDarkMode ? "bg-black rounded-full border-[0.1px] border-black": "bg-white"}`}
                 src="./Images/failed.png"
                 alt="Failed"
               />
