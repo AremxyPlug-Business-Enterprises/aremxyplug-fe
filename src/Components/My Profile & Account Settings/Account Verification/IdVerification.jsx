@@ -40,7 +40,6 @@ export default function IdVerification(Data) {
   const [idDropDown, setIdDropDown] = useState(false);
   const { idAddress, setIdAddress } = useContext(ContextProvider);
   // const {idState, setIdState} = useContext(ContextProvider);
-  const { idCity, setIdCity } = useContext(ContextProvider);
   const { idCountry, setIdCountry } = useContext(ContextProvider);
   // const {idLGA, setIdLGA} = useContext(ContextProvider);
   const { idNumber, setIdNumber } = useContext(ContextProvider);
@@ -163,7 +162,6 @@ export default function IdVerification(Data) {
       idDateOfBirth &&
       genderResult &&
       idAddress &&
-      idCity &&
       idCountry
     ) {
       setLoading(true);
@@ -598,12 +596,12 @@ export default function IdVerification(Data) {
    lg:text-[16px] lg:leading-[20.8px]">
      ID Number
     </h2>
-    <input readOnly={idStatus=== "Verified" ||  (Data.ConfirmId === "true" || Data.ConfirmBvn === "true")}
+    <input readOnly={ (Data.ConfirmId === "true" || Data.ConfirmBvn === "true")}
      onInput={( e => {
       const numbersOnly = e.target.value.replace(/\D/g, '');
       e.target.value = numbersOnly;
     })}
-    value={ idNumber?.length > 1 || idStatus === "Verified" ? `${idNumber.slice(0,4)}*******` : idNumber}
+    value={  idStatus === "Verified" ? `${idNumber.slice(0,4)}*******` : idNumber}
     
     onChange={(e) => {
       setIdNumber(e.target.value);
@@ -888,7 +886,6 @@ Confirming your identity ensures that the person accessing the account is indeed
                     setIdPopVerified(false);
                     setGenderResult(genderResult);
                     setIdAddress(idAddress);
-                    setIdCity(idCity);
                     setIdCountry("");
                     // setIdState('')
                     // setIdLGA('')

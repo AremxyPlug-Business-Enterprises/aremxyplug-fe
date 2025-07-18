@@ -145,7 +145,7 @@ export const DstvReceipt= (Data) => {
             <h3 className="font-extrabold text-[12px] my-[2%] text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
               Transaction Receipt
             </h3>
-            <div className="w-full flex justify-center ">
+            <div className="w-full flex justify-center">
               <img
                 className="absolute w-[250px] h-[450px] md:w-[70%] lg:w-[50%] lg:h-[550px]"
                 src="./Images/transferImages/receipt-background.png"

@@ -53,11 +53,11 @@ import styles from "../../AirTimePage/AirtimeVtu.module.css";
        {dstvSuccessful &&
             (
             <Modal>
-           
-       <div className={`${styles.successfulTwo} ${
+           <div className={`${styles.successfulTwo} ${
               toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
             } md:w-[45%] w-[90%] overflow-auto`}>
-        <div className="flex justify-between items-center mx-[3%] my-[2%] md:my-[1%]">
+        <div className="flex justify-between items-center 
+        mx-[3%] my-[2%] md:my-[1%]">
         <div>
               <img
                 onClick={()=>setDstvSuccessful(false)}
@@ -121,10 +121,7 @@ import styles from "../../AirTimePage/AirtimeVtu.module.css";
                     <span className="text-[#7C7C7C]">Payment Method</span>
                     <span>{flagResult}</span>
                 </div>
-                {/* <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[15px]">
-                    <span className="text-[#7C7C7C]">Order Number</span>
-                    <span>0124yend44</span>
-                </div> */}
+              
             </div>
         </div>
         <div className="bg-[#F2FAFF] mx-10 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]">
