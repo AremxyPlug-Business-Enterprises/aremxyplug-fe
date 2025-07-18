@@ -336,13 +336,8 @@ export const VerifyTransPin = async (
    }finally{
       if(asyncFuncAtSuccess){
       setLoading(false);
-
       }
-    } finally {
-      if (asyncFuncAtSuccess) {
-        setLoading(false);
-      }
-    }
+    } 
   }
 };
 
@@ -374,7 +369,7 @@ export const PostFunction = async (
         functionAtSuccess(response);
         if (functionAtSuccess) {
           setFetchedResponse(response?.data?.data);
-
+        }}
 
    }catch(error){
         if(error && error.response === undefined){
