@@ -11,11 +11,18 @@ import Joi from "joi";
 import axios from "axios";
 import { Loader } from "../Loader/Loader";
 import { Modal } from "../Screens/Modal/Modal";
+import { RemoveLocalStorage } from "../LocalStorage/LocalStorage";
 function LoginForm() {
 
   const { setOpenTranspin,
     // setOpenResetTranspin,
+    open2StepVerification,
       setOpen2StepVerification,
+      openResetTranspin,
+      twoStepVerificationSuccess,
+      openTranspinSuccessful,
+      open2StepOTP,
+      openTranspin ,
     //  setLoginAuthorisation,
     //  customerDetail,
       setCustomerDetail,
@@ -67,6 +74,15 @@ function LoginForm() {
   // const navigate = useNavigate();
   
   useEffect(() => {
+   if(open2StepVerification === false  &&
+      openResetTranspin === false&&
+      twoStepVerificationSuccess === false &&
+      openTranspinSuccessful === false &&
+      open2StepOTP === false &&
+      openTranspin === false && localStorage.getItem("UserStatus") === "true" ){
+         RemoveLocalStorage();
+         window.location.reload()
+      }
     const handleResize = () => {
       const width = window.innerWidth;
       let newSize = "";
@@ -345,7 +361,8 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
   
   return (
     <div
-      className="relative overflow-hidden w-[100%] xl:w-[85%] md:mx-[unset]   loginForm p-[25px] rounded-lg md:rounded-xl xl:rounded-3xl "
+      className="relative overflow-hidden  w-[100%] mb-[50%] xl:w-[85%] md:mx-[unset]  
+       loginForm p-[25px] rounded-lg md:rounded-xl xl:rounded-3xl "
       style={{
         zIndex: 950,
       }}
@@ -364,9 +381,10 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
       <div className="mt-[30px]">
         {/* Email starts here 268455*/}
         <form onSubmit={submitHandler}>
-          <div className="px-[15%] lg:px-[20%]">
+          <div className=" lg:px-[20%]">
             <div className=" mb-[14px] md:mb-[18px] lg:mb-[20px]">
-              <p className="text-[12.93px] md:text-[14.58px] lg:text-[20px] font-[600] w-[70%] mb-[7px] lg:mb-[10px] tracking-wider">
+              <p className="text-[14.93px] leading-[20px] md:text-[14.58px]
+               lg:text-[17px] lg:leading-[21px] font-[600] w-[70%] mb-[7px] lg:mb-[10px] tracking-wider">
                 <span
                   className={`${
                     usernameORemail === "username" ? "text-[#04177F]" : ""
@@ -389,7 +407,7 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
                 </span>
               </p>
               <div
-                className={`inputBoxShadow w-[100%] h-[39.75px] lg:h-[42px]
+                className={`inputBoxShadow w-[100%] h-[50.75px] lg:h-[42px]
                    rounded flex items-center lg:hover:border-[#b3b3b3] lg:duration-300 
             ${
               isFocused.includes(1)
@@ -400,7 +418,7 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
                 onBlur={() => handleBlur(1)}
               >
                 <input
-                  className="w-full h-full text-[12.93px] 
+                  className="w-full h-full text-[13.93px] lg:leading-[24px] leading-[18px] font-[500]
                   md:text-[14.58px] lg:text-[16px] px-[7.5px] md:px-[10px] rounded  text-[#403f3f] outline-none "
                   type="text"
                   value={usernameORemail === "username" ? username : email}
@@ -418,10 +436,16 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
                     usernameORemail === "username" ? "username" : "email"
                   }
                   data-tooltip-content={
-                    usernameORemail === "username"
-                      ? "Click on Email  to switch to email input"
+                    usernameORemail  === "username"
+                      ? "Click on Email  to switch to email input" 
                       : "Click on Username to switch to username input"
                   }
+                  data-tooltip-hidden={open2StepVerification === true ||
+      openResetTranspin === true||
+      twoStepVerificationSuccess === true||
+      openTranspinSuccessful === true ||
+    open2StepOTP === true||
+      openTranspin === true }
                 />
 
                 <ReactTooltip
@@ -441,12 +465,14 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
                 />
               </div>
               {errors.username && (
-                <div className="text-[12px] text-red-500 italic lg:text-[14px]">
+                <div className="text-[12px] text-red-500
+                 italic lg:text-[14px]">
                   {errors.username}
                 </div>
               )}
               {errors.email && (
-                <div className="text-[12px] text-red-500 italic lg:text-[14px]">
+                <div className="text-[12px] text-red-500
+                 italic lg:text-[14px]">
                   {errors.email}
                 </div>
               )}
@@ -454,15 +480,19 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
             {/* Email ends here*/}
             {/* Password starts here 268455*/}
             <div className="mb-[14px] md:mb-[18px] lg:mb-[20px]">
-              <p className="text-[12.93px] md:text-[14.58px] lg:text-[20px] font-[600] w-[30%] mb-[7px] lg:mb-[10px] tracking-wider">
+              <p className="text-[12.93px] md:text-[14.58px]
+               lg:text-[17px] leading-[16px] lg:leading-[21px] font-[600] w-[30%] mb-[7px] lg:mb-[10px] 
+               tracking-wider">
                 Password
               </p>
               <div
-                className={`relative inputBoxShadow w-[100%] h-[39.75px] lg:h-[42px]  rounded  flex items-center lg:hover:border-[#b3b3b3] lg:duration-300 
+                className={`relative inputBoxShadow w-[100%] h-[50.75px] 
+                  lg:h-[42px]  rounded  flex items-center
+                   lg:hover:border-[#b3b3b3] lg:duration-300 
             ${
               isFocused.includes(2)
                 ? "border-[#2684fe] border-2"
-                : "border-[#cdcdcd] border-[1px] "
+                : "border-[#cdcdcd] border-[1px]"
             }`}
                 onFocus={() => handleFocus(2)}
                 onBlur={() => handleBlur(2)}
@@ -471,7 +501,7 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
                   <img
                     src="./Images/login/eyeIcon2.png"
                     alt="icon"
-                    className="absolute right-2 w-[13.75px] lg:w-[24px] cursor-pointer"
+                    className="absolute h-[20px] w-[20px] right-2 lg:w-[24px] cursor-pointer"
                     onClick={() => setPasswordHidden("text")}
                   />
                 ) : (
@@ -485,8 +515,8 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
                 <input
                   className={`w-full h-full ${
                     passwordHidden === "password"
-                      ? "text-[12.93px] md:text-[14px] lg:text-[16px]"
-                      : "text-[12.93px] md:text-[14.58px] lg:text-[16px]"
+                      ? "text-[13.93px] leading-[18px] md:text-[14px] lg:text-[16px] lg:leading-[24px] font-[500]"
+                      : "text-[13.93px] leading-[18px] md:text-[14.58px] lg:text-[16px] lg:leading-[24px] font-[500]"
                   }  pl-[7.5px] md:pl-[10px] pr-[40px] md:pr-[50px] rounded  text-[#403f3f] outline-none`}
                   value={password}
                   onChange={passwordHandler}
@@ -498,23 +528,26 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
             </div>
             {/* Password ends here*/}
             <p
-              className="text-[#04177F] lg:text-[16px] md:text-[14.02px] text-[12.02px]
-              font-semibold my-2 cursor-pointer tracking-wider"
+              className="text-[rgb(4,23,127)] lg:text-[16px] md:text-[14.02px] text-[12.02px]
+              font-semibold my-[25px] cursor-pointer tracking-wider"
               onClick={() =>{
                 setShowModal(true)
               }}
             >
               Forgot password ?
             </p>
-            <div className="flex mb-[10px]">
+            <div className="flex items-center  mb-[30px]">
               <input
                 type="checkbox"
+                className="h-[25px] w-[25px]"
                 name=""
                 id=""
                 checked={checkbox}
                 onChange={checkBoxHandler}
               />
-              <p className="ml-2 lg:text-[14px] md:text-[8.02px]  text-[8.02px] text-[#575757]  tracking-wider  ">
+              <p className="ml-2 lg:text-[14px] md:text-[14.02px] 
+               text-[13.02px] leading-[18px] font-[400]
+               text-[#575757]  tracking-wider  ">
                 Remember me next time!
               </p>
             </div>
@@ -528,14 +561,16 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
                   username === "" || password === ""
                     ? "opacity-50 cursor-not-allowed"
                     : "opacity-[unset] cursor-pointer"
-                } inline-flex justify-center items-center text-[#fff]   text-center   
-text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rounded-[7px] lg:px-[37px] lg:py-[15px] lg:text-[14px]
+                } inline-flex justify-center items-center text-[#fff] text-center font-bold
+                 w-full py-[20px] text-[14px] leading-[18px] rounded-[4px]
+                  lg:text-[14px] lg:leading-[24px] lg:py-[5px]  lg:w-[140px] 
+                   lg:rounded-[7px] lg:px-[37px]
 `}
                 style={{
                   backgroundColor: primaryColor,
                 }}
               >
-                <p> Signin</p>
+                <p> Sign in</p>
               </button>
             ) : (
               <button
@@ -545,21 +580,22 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
                   email === "" || password === ""
                     ? "opacity-50 cursor-not-allowed"
                     : "opacity-[unset] cursor-pointer"
-                } inline-flex justify-center items-center text-[#fff]   text-center   
-text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rounded-[7px] lg:px-[37px] lg:py-[15px] lg:text-[14px]
+                } inline-flex justify-center items-center text-[#fff] text-center font-bold
+                 w-full py-[20px] text-[14px] leading-[18px] rounded-[4px]
+                  lg:text-[14px] lg:leading-[24px] lg:py-[5px]  lg:w-[140px] 
+                   lg:rounded-[7px] lg:px-[37px]
 `}
                 style={{
                   backgroundColor: primaryColor,
                 }}
               >
-                <p> Signin</p>
+                <p> Sign in</p>
               </button>
             )}
           </div>
         </form>
-        <p
-          className="text-center text-[14px] font-semibold text-[#575757] my-4 cursor-pointer"
-        >
+        <p className="text-center text-[14px] font-semibold
+           text-[#575757] my-4 cursor-pointer">
           -OR-
         </p>
         <div className="flex justify-center">
@@ -568,7 +604,8 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
             alert("The use of Google as a third party authentication OAuth isn't available for now.")
           }} 
           //  onClick={() => setOpenResetTranspin(true)}
-            className={`px-[10px] lg:px-[20px] py-[9px] rounded  flex items-center justify-center lg:hover:border-[#b3b3b3] lg:duration-300 border-[#cdcdcd] border-[1px] cursor-pointer `}
+            className={`px-[5px] w-full lg:w-auto lg:px-[20px] py-[15px] rounded  flex items-center justify-center
+               lg:hover:border-[#b3b3b3] lg:duration-300 border-[#cdcdcd] border-[1px] cursor-pointer `}
           >
             <img
               src="./Images/login/Google.png"
@@ -578,17 +615,22 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
             <p  onClick ={()=> {
             alert("The use of Google as a third party authentication OAuth isn't available for now.")
           }} 
-            className="lg:text-[14px] md:text-[8.02px] text-[8.02px]  pl-4 font-semibold tracking-wider">
-              Signin with Google
+            className="lg:text-[14px] md:text-[8.02px]
+             text-[12.02px] leadig-[16px]  pl-4 font-semibold tracking-wider">
+              Sign in with Google
             </p>
           </div>
         </div>
         <div className="flex justify-center mb-[20px] mt-[25px] lg:mb-[50px] lg:mt-[50px]">
-          <p className="text-[9.17px] lg:text-[16px] font-semibold tracking-wider">
+          <p className="text-[12.17px] leading-[16px] 
+          lg:text-[16px] lg:leading-[24px]
+           font-semibold tracking-wider">
             Don’t have an account yet{" "}
           </p>
           <Link to="/signup">
-            <p className="pl-2 text-[9.17px] lg:text-[16px] font-semibold  text-[#04177F] cursor-pointer tracking-wider">
+            <p className="pl-2 text-[12.17px] leading-[16px] 
+          lg:text-[16px] lg:leading-[24px]
+           font-semibold  text-[#04177F] cursor-pointer tracking-wider">
               ? Signup
             </p>
           </Link>

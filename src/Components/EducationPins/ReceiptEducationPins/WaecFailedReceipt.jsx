@@ -38,7 +38,6 @@ export const WaecFailedReceipt = () => {
   const description =
     waecShowDescription?.length > 0 ? waecShowDescription : "";
   const pins_generated = waecPinsGenerated?.length > 0 ? waecPinsGenerated : "";
-  console.log("pins-gen", pins_generated);
   const fullName = waecFullName?.length > 0 ? waecFullName : "";
   const transaction_product =
     waecTransactionProduct?.length > 0 ? waecTransactionProduct : "";
@@ -46,11 +45,11 @@ export const WaecFailedReceipt = () => {
   //   Function for Resetting the inputs
   const failedResult = () => {
     setQuantityResult("");
-    setExamType("");
+    setExamType("WAEC");
     setEducationPinPhone("");
     setEducationPinEmail("");
     setPaymentResult("");
-    setEducationAmount("₦");
+    setEducationAmount("");
     setWalletBalance("");
   };
 
@@ -130,8 +129,9 @@ export const WaecFailedReceipt = () => {
               Purchase Failed on
             </h3>
             <span
-              className="text-[11px] md:text-sm lg:text-base text-[#7C7C7C] 
-            font-semibold flex justify-center items-center"
+              className={`text-[11px] md:text-sm lg:text-[16px] font-semibold flex justify-center items-center ${
+                isDarkMode ? "text-white" : "text-[#7C7C7C]"
+              }`}
             >
               {date.toLocaleDateString(undefined, {
                 year: "numeric",
@@ -177,7 +177,7 @@ export const WaecFailedReceipt = () => {
                   >
                     Exam Type
                   </p>
-                  <span>{examType}</span>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black "}`}>{examType}</span>
                 </div>
                 <div
                   className="flex text-[10px] md:text-sm w-[90%] mx-auto 
@@ -191,9 +191,7 @@ export const WaecFailedReceipt = () => {
                     Quantity
                   </p>
                   <span
-                    className={` ${
-                      isDarkMode ? "text-white" : "text-black "
-                    }`}
+                    className={` ${isDarkMode ? "text-white" : "text-black "}`}
                   >
                     {quantityResult.split(" (")[0]}
                   </span>
@@ -208,9 +206,7 @@ export const WaecFailedReceipt = () => {
                     Phone Number
                   </p>
                   <span
-                    className={` ${
-                      isDarkMode ? "text-white" : "text-black "
-                    }`}
+                    className={` ${isDarkMode ? "text-white" : "text-black "}`}
                   >
                     {educationPinPhone}
                   </span>
@@ -227,9 +223,7 @@ export const WaecFailedReceipt = () => {
                     Email
                   </p>
                   <span
-                    className={` ${
-                      isDarkMode ? "text-white" : "text-black "
-                    }`}
+                    className={` ${isDarkMode ? "text-white" : "text-black "}`}
                   >
                     {educationPinEmail}
                   </span>
@@ -246,11 +240,9 @@ export const WaecFailedReceipt = () => {
                     Amount
                   </p>
                   <span
-                    className={` ${
-                      isDarkMode ? "text-white" : "text-black "
-                    }`}
+                    className={` ${isDarkMode ? "text-white" : "text-black "}`}
                   >
-                    {educationAmount}
+                    ₦{educationAmount.toLocaleString()}.00
                   </span>
                 </div>
               </div>
@@ -277,9 +269,7 @@ export const WaecFailedReceipt = () => {
                     Customer Name
                   </p>
                   <span
-                    className={` ${
-                      isDarkMode ? "text-white" : "text-black "
-                    }`}
+                    className={` ${isDarkMode ? "text-white" : "text-black "}`}
                   >
                     {fullName}
                   </span>
@@ -293,11 +283,9 @@ export const WaecFailedReceipt = () => {
                     Wallet Type
                   </p>
                   <span
-                    className={` ${
-                      isDarkMode ? "text-white" : "text-black "
-                    }`}
+                    className={` ${isDarkMode ? "text-white" : "text-black "}`}
                   >
-                    {paymentResult.split(" (")[0]}
+                    Nigerian {paymentResult.split(" (")[0]}
                   </span>
                 </div>
               </div>
@@ -324,9 +312,7 @@ export const WaecFailedReceipt = () => {
                     Product
                   </p>
                   <span
-                    className={`${
-                      isDarkMode ? "text-white" : "text-black"
-                    }`}
+                    className={`${isDarkMode ? "text-white" : "text-black"}`}
                   >
                     {transaction_product}
                   </span>
@@ -343,9 +329,7 @@ export const WaecFailedReceipt = () => {
                     Description
                   </p>
                   <span
-                    className={`${
-                      isDarkMode ? "text-white" : "text--black"
-                    }`}
+                    className={`${isDarkMode ? "text-white" : "text--black"}`}
                   >
                     {description}
                   </span>
@@ -362,33 +346,35 @@ export const WaecFailedReceipt = () => {
                     WAEC PIN Generated
                   </p>
                   <span
-                    className={`${
-                      isDarkMode ? "text-white" : "text-black"
-                    }`}
+                    className={`${isDarkMode ? "text-white" : "text-black"}`}
                   >
                     {pins_generated[0]}
                   </span>
                 </div>
                 <div className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between  lg:text-base font-medium">
-                  <p className={` ${
+                  <p
+                    className={` ${
                       isDarkMode ? "text-white" : "text-[#7C7C7C] "
-                    }`}>Order Number</p>
-                  <span
-                    className={`${
-                      isDarkMode ? "text-white" : "text-black"
                     }`}
+                  >
+                    Order Number
+                  </p>
+                  <span
+                    className={`${isDarkMode ? "text-white" : "text-black"}`}
                   >
                     {order_id}
                   </span>
                 </div>
                 <div className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between  lg:text-base font-medium">
-                  <p className={` ${
+                  <p
+                    className={` ${
                       isDarkMode ? "text-white" : "text-[#7C7C7C] "
-                    }`}>Transaction ID</p>
-                  <span
-                    className={`${
-                      isDarkMode ? "text-white" : "text-black"
                     }`}
+                  >
+                    Transaction ID
+                  </p>
+                  <span
+                    className={`${isDarkMode ? "text-white" : "text-black"}`}
                   >
                     {transaction_id}
                   </span>
@@ -427,7 +413,9 @@ export const WaecFailedReceipt = () => {
                 waecFailedPDF();
               }}
               className={`bg-[#ffffff] border-[1px] w-[111px] 
-            border-[#0003]  cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[150px] md:rounded-[8px] md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+            border-[#0003]  cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[150px] md:rounded-[8px] md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%] ${
+              isDarkMode ? "text-black" : "text-black"
+            }`}
             >
               Save as PDF
             </button>

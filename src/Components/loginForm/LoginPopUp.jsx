@@ -209,7 +209,7 @@ const handleVerificationOTP = ()=> {
     setBvnButtonState("Verified");
     setBvnVerifyImage(VerificationSuccess);
     setBvnStatus("Verified")
-    setBvnNumber(response.data.data.bvn)
+    setBvnNumber(response?.data?.data?.bvn)
     localStorage.setItem("bvnVerification",true);
     localStorage.setItem("idVerification",false);
   }else if(bvn && nin){
@@ -219,8 +219,8 @@ const handleVerificationOTP = ()=> {
   setBvnButtonState("Virtual Account Created");
     setBvnVerifyImage(VerificationSuccess);
     setBvnStatus("Verified")
-    setBvnNumber(response.data.data.bvn)
-    setIdNumber(response.data.data.nin)
+    setBvnNumber(response?.data?.data?.bvn)
+    setIdNumber(response?.data?.data?.nin)
     localStorage.setItem("bvnVerification",true);
     localStorage.setItem("idVerification",true);
   }
@@ -233,7 +233,7 @@ const handleVerificationOTP = ()=> {
      // alert(`ERROR : ${error}`)
       console.log(error);
      // console.log(error.response.data.message);
-      if(error && error.response.data.message === "unverified"){
+      if(error && error?.response?.data?.message === "unverified"){
           setBvnNumber("");
           setIdNumber("");
         localStorage.setItem("idVerification",false);
@@ -246,7 +246,7 @@ const handleVerificationOTP = ()=> {
         setBvnButtonState("Verify");
         setIdButtonState("Verify");
       
-      }else if(error && error.response.data.message === "action_required"){
+      }else if(error && error?.response?.data?.message === "action_required"){
         localStorage.setItem("AccCreated", false);
         const bvnCheck = error?.response?.data?.data?.bvn;
         
@@ -259,7 +259,7 @@ const handleVerificationOTP = ()=> {
           setBvnStatus("Verified");
             setVerifyImage(VerificationSuccess)
           setIdStatus("Verified");
-           setBvnNumber( error?.response?.data?.bvn);
+           setBvnNumber(error?.response?.data?.bvn);
           localStorage.setItem("bvnVerification",true);
           localStorage.setItem("idVerification",true);
           // setIdButtonState("Verify");
@@ -273,7 +273,7 @@ const handleVerificationOTP = ()=> {
           setBvnStatus("Verified");
           setVerifyImage(VerificationSuccess)
           setIdStatus("Verified");
-          setIdNumber( error?.response?.data?.nin);
+          setIdNumber(error?.response?.data?.nin);
           localStorage.setItem("idVerification",true);
           localStorage.setItem("bvnVerification",true);
           // setBvnButtonState("Verify");
@@ -632,7 +632,7 @@ return () => clearInterval(timer);
         <Modal>
           <div className="w-[100%]  mx-[24px] flex justify-center lg:justify-end lg:mr-[300px]">
           <div className=" p-4 flex flex-col gap-[5px] rounded-[8.6px] h-auto w-[100%] bg-white
-             lg:h-auto lg:w-[35%] lg:rounded-[15px]">
+             lg:h-auto lg:w-[35%] md:w-[45%] lg:rounded-[15px]">
             <div 
             className="w-[100%] flex justify-end ">
             <img onClick={()=>(
@@ -642,10 +642,10 @@ return () => clearInterval(timer);
                md:h-[25px] " alt="" />  
                </div>
             <div className="mb-[25px] lg:mb-[30px]">
-              <p className="text-center text-[12px] lg:text-[16px] font-[500] lg:font-[700]  mb-[7] lg:mb-[10px]">
+              <p className="text-center text-[14px] leading-[18px] lg:leading-[20px] lg:text-[16px] font-[500] lg:font-[700]  mb-[10px] lg:mb-[10px]">
                 2-Step Verification!!!
               </p>
-              <p className="text-center text-gray-500 font-[400] lg:font-[500] lg:text-[14px] text-[10px]">
+              <p className="text-center text-gray-500 font-[400] lg:font-[500] lg:text-[14px] text-[12px] leading-[16px]">
                 To ensure a safety security of your account, we want to verify
                 it’s really you.
               </p>
@@ -653,8 +653,8 @@ return () => clearInterval(timer);
             <div className="flex flex-col items-center">
               {/* VIA SMS STARTS HERE*/}
               <div
-                className="flex items-center  h-auto w-[92px] cursor-pointer rounded-[4.5px] p-[7px]   gap-[5px] 
-                lg:rounded-[8px] lg:w-[161px] lg:h-[60px] "
+                className="flex items-center  min-h-[60px] w-[100%] px-[10px] cursor-pointer rounded-[7.5px] p-[7px]   gap-[5px] 
+                lg:rounded-[8px] md:w-[161px] lg:h-[60px]"
                 onClick={() => setSmsOrEmail("sms")}
                 style={{
                   borderWidth: 1,
@@ -662,22 +662,22 @@ return () => clearInterval(timer);
                 }}
               >
                 <img
-                  className="w-[22px] h-[22px] lg:w-[25px] lg:h-[25px]"
+                  className="w-[30px] h-[30px] lg:w-[25px] lg:h-[25px]"
                   src="./Images/signupimages/sms.png"
                   alt=""
                 />
                 <div className="flex flex-col">
-                  <p className="text-[10px] lg:text-[14px] font-[400] lg:font-[600]">Via SMS</p>
-                  <p className="text-[8px] lg:text-[12px] text-gray-500 font-[400] lg:font-[600]">
-                    {`${phone.slice(0,3)}***${phone.slice(10)}`}
+                  <p className="text-[11px] leading-[14px] lg:text-[14px] font-[400] lg:font-[600]">Via SMS</p>
+                  <p className="text-[9px] leading-[13px] lg:text-[12px] text-gray-500 font-[400] lg:font-[600]">
+                    {`+${phone.slice(0,3)}******${phone.slice(10)}`}
                     </p>
                 </div>
               </div>
               {/* VIA SMS ENDS HERE*/}
               {/* VIA Email STARTS HERE*/}
               <div
-                className=" flex items-center mt-[17px]  w-[92px] cursor-pointer rounded-[4.5px] 
-               h-auto p-[7px] gap-[5px] lg:w-[161px] lg:h-[60px] lg:rounded-[8px]"
+                className=" flex items-center mt-[17px]  w-[100%] px-[10px] cursor-pointer rounded-[7.5px] 
+               min-h-[60px] p-[7px] gap-[5px] md:w-[161px] lg:h-[60px] lg:rounded-[8px] "
                 onClick={() => {
                   setSmsOrEmail("email");
                   console.log(customerDetail);
@@ -688,13 +688,13 @@ return () => clearInterval(timer);
                 }}
               >
                 <img
-                  className="w-[22px] h-[22px] lg:w-[25px] lg:h-[25px]"
+                  className="w-[30px] h-[30px] lg:w-[25px] lg:h-[25px]"
                   src="./Images/signupimages/email.png"
                   alt=""
                 />
                 <div className="flex flex-col">
-                  <p className="text-[10px] lg:text-[14px] font-[400] lg:font-[600]"> Via Email</p>
-                  <p className="text-[8px] lg:text-[12px]  text-gray-500 font-[400] lg:font-[600]">{`${email.slice(0,3)}****** ${email.slice(15)}`}</p>
+                  <p className="text-[11px] leading-[14px] lg:text-[14px] font-[400] lg:font-[600]"> Via Email</p>
+                  <p className="text-[9px] leading-[13px] lg:text-[12px]  text-gray-500 font-[400] lg:font-[600]">{`${email.slice(0,3)}****** ${email.slice(15)}`}</p>
                 </div>
               </div>
               {/* VIA Email ENDS HERE*/}
@@ -708,11 +708,13 @@ return () => clearInterval(timer);
                     smsOrEmail === ""
                       ? " bg-[#b3b3b3] cursor-not-allowed"
                       : "bg-[#04177F] cursor-pointer"
-                  } inline-flex justify-center items-center text-[#fff]   text-center   
-text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rounded-[7px] lg:px-[37px] lg:py-[15px] lg:text-[14px]
+                  } inline-flex justify-center items-center text-[#fff] text-center font-bold
+                 w-full py-[20px] text-[14px] leading-[18px] rounded-[4px]
+                  lg:text-[14px] lg:leading-[24px] lg:py-[5px]  lg:w-[140px] 
+                   lg:rounded-[7px] lg:px-[37px]
 `}
                 >
-                  <p> Signin</p>
+                  <p> Continue</p>
                 </button>
               </div>
             </div>
@@ -821,11 +823,11 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
 
       {open2StepOTP === true && smsOrEmail === "sms" && (
         <Modal>
-          <div className="lg:ml-[38.5%] md:ml-[40%] md:w-[30%] md:-mt-[20%] lg:-mb-[30%] w-[100%] 
+          <div className="lg:ml-[38.5%] md:ml-[45%] lg:w-[30%] md:w-[45%] md:-mt-[20%] lg:-mb-[30%] w-[100%] 
            mx-[24px] px-[20.609px] py-[35.536px] bg-white rounded-[10.3px] 
            md:py-[34.96px] md:px-[17.6px] lg:py-[40px] lg:px-[31px]">
-            <div className="mb-[25px] lg:mb-[30px]">
-              <p className=" lg:text-[16px] font-[500] lg:font-[700] text-[12px] ">
+            <div className="flex flex-col gap-[3px] mb-[25px] lg:mb-[30px]">
+              <p className=" lg:text-[16px] font-[500] lg:font-[700] text-[14px] leading-[18px] lg:leading-[20px]">
                 Verification code has been sent to your phone
               </p>
               <p className=" lg:text-[16px] font-[500] lg:font-[700] text-[12px] mb-[7] lg:mb-[10px]">
@@ -842,20 +844,23 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
               </p>
             </div>
             <div>
-              <div className="flex justify-center gap-[10px] flex-col w-[100%]">
+              <div className="flex justify-center gap-[35px] lg:gap-[15px] flex-col w-[100%]">
                <div className="flex justify-center">
                   <OtpInput
+                  
                     value={otp3}
                     inputType="tel"
                     onChange={setOtp3}
                     numInputs={6}
                     shouldAutoFocus={true}
                     inputStyle={{
+                      height : "50px",
                       width  : "16.67%",
                     }}
                     renderInput={(props) => (
                       <input
                       type="password"
+                     
                       {...props} className="flex h-[35px] md:h-[45px] lg:h-[65px] text-[12px]
                    md:text-[14px] lg:text-[20px] md:rounded-[12px] rounded-[10px]
                         lg:rounded-[14px] border-2 border-blue-300 lg:mx-2 mx-1 focus:outline-pink-300"/>
@@ -864,7 +869,8 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
                 </div>
                   {/* Error message starts here */}
                   {verificationPinError === true ? (
-                    <p className="text-center text-red-500 md:font-[500] font-[400] lg:text-[16px] text-[9.167px] mt-[3px] lg:mt-[15px]">
+                    <p className="text-center text-red-500 md:font-[500] 
+                    font-[500] lg:text-[16px] text-[12px] leading-[16px] lg:leading-[20px]">
                      Incorrect otp provided
                     </p>
                   ) : (
@@ -898,7 +904,7 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
                 </div>
               
 
-              <div className="w-full flex justify-center mt-[20px] mb-[10px] lg:mb-[10px] lg:mt-[50px]">
+              <div className="w-full flex justify-center mt-[30px] mb-[10px] lg:mb-[10px] lg:mt-[50px]">
                 <button
                   onClick={gettingSmsOrEmailFunctionOtp}
                   type="submit"
@@ -907,8 +913,10 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
                     otp3.length !== 6
                       ? " bg-[#b3b3b3] cursor-not-allowed"
                       : "bg-[#04177F] cursor-pointer"
-                  } inline-flex justify-center items-center text-[#fff]   text-center   
-text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rounded-[7px] lg:px-[37px] lg:py-[15px] lg:text-[14px]
+                  }  inline-flex justify-center items-center text-[#fff] text-center font-bold
+                 w-full py-[20px] text-[14px] leading-[18px] rounded-[4px]
+                  lg:text-[14px] lg:leading-[24px] lg:py-[5px]  lg:w-[140px] 
+                   lg:rounded-[7px] lg:px-[37px]
 `}
                   // style={{
                   //   backgroundColor: primaryColor,
@@ -923,18 +931,19 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
       )}
       {open2StepOTP === true && smsOrEmail === "email" && (
         <Modal>
-          <div className="lg:ml-[38.5%] md:ml-[40%] lg:w-[30%] md:w-[35%] md:-mt-[20%] lg:-mb-[30%] w-[100%] 
+          <div className="lg:ml-[38.5%] md:ml-[40%] lg:w-[30%] md:w-[45%]  md:-mt-[20%] lg:-mb-[30%] w-[100%] 
            mx-[24px] px-[20.609px] py-[35.536px] bg-white rounded-[10.3px] 
            md:py-[34.96px] md:px-[17.6px] lg:py-[40px] lg:px-[31px]">
-            <div className="mb-[25px] lg:mb-[30px]">
-              <p className="  lg:text-[16px] text-[14px] font-[500] lg:font-[700]">
+            <div className="flex flex-col gap-[3px] mb-[25px] lg:mb-[30px]">
+              <p className="  lg:text-[16px] text-[14px] leading-[16px] lg:leading-[20px] font-[500] lg:font-[700]">
                 Verification code has been sent to 
               </p>
-              <p className=" lg:text-[16px] text-[12px] font-[500] lg:font-[700] mb-[7] lg:mb-[10px]">
+              <p className=" lg:text-[16px] text-[12px] leading-[16px] lg:leading-[20px] font-[500] lg:font-[700] mb-[7] lg:mb-[10px]">
                 your email  {`${email.slice(0,3)}********`}
               </p>
               <p
-                className="text-[#737373] lg:text-[14px] font-[400] lg:font-[600] text-[10px] cursor-pointer"
+                className="text-[#737373] lg:text-[14px] font-[400] lg:font-[600]
+                 text-[12px] leading-[16px] lg:leading-[18px] cursor-pointer"
                 onClick={() => {
                   setCountdown(60);
                   setSmsOrEmail("sms");
@@ -944,7 +953,7 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
               </p>
             </div>
             <div>
-              <div className="flex flex-col justify-center gap-[10px] w-[100%]">
+              <div className="flex flex-col justify-center gap-[20px] w-[100%]">
                 <div className="flex justify-center">
                   <OtpInput
                     value={otp3}
@@ -954,6 +963,7 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
                     shouldAutoFocus={true}
                     inputStyle={{
                      width : "16.67%",
+                     height : "50px"
                     }}
                     renderInput={(props) => (
                       <input 
@@ -966,7 +976,9 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
                   </div>
                   {/* Error message starts here */}
                   {verificationPinError === true ? (
-                    <p className="text-center text-red-500 md:font-[500] font-[400] lg:text-[16px] text-[9.167px] mt-[3px] lg:mt-[15px]">
+                    <p className="text-center text-[12px] leading-[16px] lg:leading-[20px]
+                     text-red-500 md:font-[500] font-[500] 
+                    lg:text-[16px]  ">
                      Incorrect otp provided
                     </p>
                   ) : (
@@ -998,7 +1010,7 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
                 
               </div>
 
-              <div className="w-full flex justify-center mt-[20px] mb-[10px] lg:mb-[10px] lg:mt-[35px]">
+              <div className="w-full flex justify-center mt-[35px] mb-[10px] lg:mb-[10px] lg:mt-[35px]">
           
                 <button
                   onClick={gettingSmsOrEmailFunctionOtp}
@@ -1008,8 +1020,10 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
                     otp3.length !== 6
                       ? " bg-[#b3b3b3] cursor-not-allowed"
                       : "bg-[#04177F] cursor-pointer"
-                  } inline-flex justify-center items-center text-[#fff]   text-center   
-text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rounded-[7px] lg:px-[37px] lg:py-[15px] lg:text-[14px]
+                  }inline-flex justify-center items-center text-[#fff] text-center font-bold
+                 w-full py-[20px] text-[14px] leading-[18px] rounded-[4px]
+                  lg:text-[14px] lg:leading-[24px] lg:py-[5px]  lg:w-[140px] 
+                   lg:rounded-[7px] lg:px-[37px]
 `}
                   // style={{
                   //   backgroundColor: primaryColor,
@@ -1072,12 +1086,13 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
            py-[35.536px] bg-white rounded-[10.3px] md:py-[34.96px] md:px-[17.6px] lg:py-[62px] lg:px-[31px] ">
             
                 <div className="flex flex-col items-center w-[100%] ">
-                  <p className="lg:text-[14px] font-[500]  text-[12.021px]  text-green-500 mb-[30px]">
+                  <p className="lg:text-[16px] font-[500]  text-[14px] leading-[18px] 
+                  lg:leading-[20px]  text-green-500 mb-[30px]">
                     Verification Successful.
                   </p>
 
                   <img
-                    className="lg:w-[50px] lg:h-[50px] w-[32px] h-[32px]"
+                    className="lg:w-[100px] lg:h-[100px] w-[70px] h-[70px]"
                     src="./Gif/checkMarkGif.gif"
                     alt="thumbsUpGif"
                   />
@@ -1088,7 +1103,7 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
                   <div onClick={() =>handleAccountDetails()}
                    className="flex w-[100%] lg:w-[50%]  rounded-[8px] lg:rounded-[16px]
                 mt-[20px] justify-center  lg:mt-[50px]  cursor-pointer text-[10px] font-bold leading-[11.31px] 
-                     py-[14px]   lg:py-[15px] lg:text-[14px]"  style={{
+                     py-[20px]   lg:py-[15px] lg:text-[14px]"  style={{
                       backgroundColor: primaryColor,
                     }}
                   >

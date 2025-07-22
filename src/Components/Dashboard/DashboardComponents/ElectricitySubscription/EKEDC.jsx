@@ -19,6 +19,7 @@ import { Link, useNavigate } from "react-router-dom";
 import {
   PostFunction,
   VerifyTransPin,
+  HandleUserSession
 } from "../../../ApiCollection.jsx/ApiBuck";
 import { BalanceLoading, Loader } from "../../../Loader/Loader";
 
@@ -66,7 +67,7 @@ const EKEDC = () => {
   } = useContext(ContextProvider);
 
   const [showProductList, setShowProductList] = useState(false);
-
+  const [sessionModal, setSessionModal] = useState(false)
   const pointsEarned = "+2.00";
 
   // const handleValidate = () => {
@@ -341,9 +342,25 @@ const EKEDC = () => {
           }
           handleReceivedMeterData();
         };
-        const FailedHandler = () => {
-          setIsFailedMeterNumber(true);
-        };
+        const FailedHandler = async(ErrorType) => {
+        if(ErrorType === "unauthorised"){
+          //To handle re-running of the request with the new Token
+           await PostFunction(
+          path,
+          setMeterNumberLoading,
+          body,
+          SuccessHandler,
+          (ErrorType)=> {
+            if(ErrorType === "unauthorised"){
+              setSessionModal(true)
+            }
+          },
+          setEkedcFetchedResponse
+        );
+        }else if(ErrorType === "Bad request"){
+        setIsFailedMeterNumber(true);
+        }
+      }
 
         await PostFunction(
           path,
@@ -355,12 +372,15 @@ const EKEDC = () => {
         );
       }
     }
+  
     HandleMeterNumber();
+  
     // handleReceivedMeterData();
     passedMeterName = ekedcFetchedResponse
       ? ekedcFetchedResponse?.data?.name
       : "";
   };
+
 
   const handleEkedcMeterNumber = async (e) => {
     const inputValue = e.target.value;
@@ -395,10 +415,33 @@ const EKEDC = () => {
         setEkedcDiscoType(ekedcFetchedResponse?.data?.disco_type);
         setSuccessPopup(true);
       };
-      const FailedHandler = () => {
-        setInputPinPopUp(false);
+      //Function to help handle the error type encountered on running
+      //the api request
+      const FailedHandler = async(ErrorType) => {
+        //When the status code is 400
+        if(ErrorType === "Bad request"){
+         setInputPinPopUp(false);
         setFailedPopup(true);
+        
+        }else if(ErrorType === "unauthorised"){
+          //Re-running the api request with the new token
+           await PostFunction(
+        path,
+        setLoading,
+        data,
+        SuccessHandler,
+        (ErrorType)=> {
+          if(ErrorType === "unauthorised"){
+            //no option but to log user out due to expired token
+        return  setSessionModal(true)
+          }
+        },
+        setEkedcFetchedResponse
+      );
+    }
+       
       };
+    
 
       await PostFunction(
         path,
@@ -409,6 +452,26 @@ const EKEDC = () => {
         setEkedcFetchedResponse
       );
     }
+    //Kindly uncomment the code below after implementing the errorMessage
+    //rather than the pinfailed and pinSucess state
+    //Kindly also remove the setPinFailed state as there
+    //is no longer any use for it
+    // const setPinFailed= async(ErrorType)=> {
+    //   if(ErrorType==="unauthorised"){
+    //       await VerifyTransPin(
+    //   inputPin,
+    //   setPinSuccess,
+    //  (ErrorType)=> {
+    //   if(ErrorType === "unauthorised"){
+    //  setSessionModal(true)
+    //   }
+    //  },
+    //   setLoading,
+    //   setErrorMessage,
+    //   ElectricityHandler
+    // );
+    //   }
+    // }
     await VerifyTransPin(
       inputPin,
       setPinSuccess,
@@ -1511,6 +1574,9 @@ const EKEDC = () => {
         <Modal>
           <Loader />
         </Modal>
+      )}
+      {sessionModal && (
+        <HandleUserSession/>
       )}
     </DashBoardLayout>
   );

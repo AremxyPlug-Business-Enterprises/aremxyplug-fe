@@ -153,8 +153,7 @@ export const CheckVirtualAcc = async(authToken, customerDetail, setLoading,
           const response = await axios.get(url, {headers : {"Content-Type" : "application/json",
       Authorization : authToken
       }, withCredentials : true})
-    
-        if (response.status === 201 || 200 ) {
+        if (response.status === 201 || response.status === 200 ) {
              const virtualAccCreated = response?.data?.data?.acc_details;
             setVirtualAccCreated(virtualAccCreated);
             if(TwoStep === true){
@@ -167,7 +166,6 @@ export const CheckVirtualAcc = async(authToken, customerDetail, setLoading,
                   localStorage.setItem("UserStatus",true)
                   await confirmVirtualState();
                   }
-               //  console.log(response)
                 }}else{
             InActionVirtualAccountState(virtualAccCreated,setBankNameState, 
                setAccountNameState, setAccountNumberState);
@@ -286,8 +284,8 @@ export const VerifyTransPin = async (
      setSuccess(true);
        setErrorMessage(false);
      await asyncFuncAtSuccess()
-    
       }
+      
    }catch(error){
         if(error && error.response === undefined){
      alert("Kindly check your internet connection")
@@ -336,10 +334,12 @@ export const VerifyTransPin = async (
    }finally{
       if(asyncFuncAtSuccess){
       setLoading(false);
+
       }
-    } 
+   
   }
 };
+}
 
 //A general post function
 export const PostFunction = async (
@@ -353,7 +353,7 @@ export const PostFunction = async (
   const authToken = localStorage.getItem("authorisedLogin");
   const getToken = localStorage.getItem("getToken");
   if (!navigator.onLine) return alert("Check your internet connection");
-  if ((authToken || getToken) && navigator.onLine) {
+  if ((authToken || getToken) && navigator.onLine){
     try {
       setLoading(true);
       const url = `https://aremxyplug.onrender.com/api/v1/${path}`;
@@ -369,8 +369,9 @@ export const PostFunction = async (
         functionAtSuccess(response);
         if (functionAtSuccess) {
           setFetchedResponse(response?.data?.data);
-        }}
 
+        }
+      }
    }catch(error){
         if(error && error.response === undefined){
      alert("Kindly check your internet connection")
@@ -378,8 +379,8 @@ export const PostFunction = async (
       }  else  if(error && error.response.status === 400){
        functionAtFailed("Bad request");
           if(functionAtFailed) {
-            setFetchedResponse(error.response.data.data)
-              console.log(error.response.data.data)
+            setFetchedResponse(error?.response?.data?.data)
+              console.log(error?.response?.data?.data)
             alert("Invalid request")
          }
         
@@ -387,8 +388,8 @@ export const PostFunction = async (
          functionAtFailed("User error")
          alert("Check your internet connection");
            if(functionAtFailed) {
-            setFetchedResponse(error.response.data.data)
-              console.log(error.response.data.data)
+            setFetchedResponse(error?.response?.data?.data)
+              console.log(error?.response?.data?.data)
          }
       }else if(error && error.response.status === 401){
      
@@ -420,20 +421,18 @@ export const PostFunction = async (
       localStorage.setItem("getToken", newToken);
       functionAtFailed("unauthorised")
     if(functionAtFailed) {
-            setFetchedResponse(error.response.data.data)
+            setFetchedResponse(error?.response?.data.data)
            }
    }
         }else{
          functionAtFailed("unauthorised")
-
-        }
+ }
         console.log(error.response);
       } else if (error && error.response.status === 500) {
         functionAtFailed("Server error");
         alert("Server error: Try some other time");
         if (functionAtFailed) {
-          setFetchedResponse(error.response.data.data);
-          console.log(error.response.data.data);
+          setFetchedResponse(error?.response?.data?.data);
         }
       } else if (error && error.response.status === undefined) {
         alert("Check your internet Connection");
@@ -444,7 +443,9 @@ export const PostFunction = async (
       setLoading(false);
     }
   }
+
 };
+
 
 // A general Function to get useful data from the backend
 
@@ -474,19 +475,16 @@ export const GetFunction = async(path, setLoading, functionAtSuccess,functionAtF
        alert("Invalid request")
       }
       else if(error && error.response.status === 401){
-         
-
-        setFetchedResponse(error.response);
-
-        //  console.log(error.response);
+         setFetchedResponse(error?.response);
+ //  console.log(error.response);
         console.log(error.response.headers);
         console.log(error.response.headers.get("x-new-auth-token"));
         //  console.log(error.response.headers.hasAuthorization());
         // console.log(error.response.headers.hasAuthorization);
-        if(error.response.headers["x-new-auth-token"] || error.response.headers.get("x-new-auth-token")){
+        if(error?.response?.headers["x-new-auth-token"] || error?.response?.headers.get("x-new-auth-token")){
 
          setLoading(true);
-         const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
+         const newToken = error?.response?.headers.get("x-new-auth-token") ||error?.response?.headers["x-new-auth-token"];
         
          if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
              console.log(newToken)
@@ -550,11 +548,7 @@ export const PutFunction = async (
          functionAtFailed("Bad request");
        alert("Invalid request");
       }else if(error && error.response.status === 401){
-      functionAtFailed("unauthorised");
-      //  console.log(error.response);
-
-        console.log(error.response.headers);
-        console.log(error.response.headers.get("x-new-auth-token"));
+     
         //  console.log(error.response.headers.hasAuthorization());
         // console.log(error.response.headers.hasAuthorization);
         if (
@@ -572,11 +566,13 @@ export const PutFunction = async (
           ) {
             console.log(newToken);
             localStorage.setItem("authorisedLogin", newToken);
+             functionAtFailed("unauthorised");
    }else{
       localStorage.setItem("getToken", newToken);
      functionAtFailed("unauthorised");
-   }
+   
 }
+        }
          }else if(error && error.response.status === 404){
          functionAtFailed("User error")
          alert("Check your internet connection")

@@ -18,6 +18,7 @@ import { Link, useNavigate } from "react-router-dom";
 import {
   PostFunction,
   VerifyTransPin,
+  HandleUserSession
 } from "../../../ApiCollection.jsx/ApiBuck";
 import { BalanceLoading, Loader } from "../../../Loader/Loader";
 
@@ -65,7 +66,7 @@ const EEDC = () => {
   } = useContext(ContextProvider);
 
   const [showProductList, setShowProductList] = useState(false);
-
+const [sessionModal, setSessionModal] = useState(false)
   const pointsEarned = "+2.00";
 
   // const handleValidate = () => {
@@ -339,9 +340,24 @@ const EEDC = () => {
           }
           handleReceivedMeterData();
         };
-        const FailedHandler = () => {
+        const FailedHandler = async(ErrorType) => {
+          if(ErrorType === "Bad request"){
           setIsFailedMeterNumber(true);
-        };
+        }else if(ErrorType === "unauthorised"){
+              await PostFunction(
+          path,
+          setMeterNumberLoading,
+          body,
+          SuccessHandler,
+          (ErrorType)=> {
+            if(ErrorType==="unathorised"){
+              setSessionModal(true)
+            }
+          },
+          setEedcFetchedResponse
+        );
+        }
+      }
 
         await PostFunction(
           path,
@@ -392,10 +408,25 @@ const EEDC = () => {
         setEedcDiscoType(eedcFetchedResponse?.data?.disco_type);
         setSuccessPopup(true);
       };
-      const FailedHandler = () => {
+      const FailedHandler = async(ErrorType) => {
+     if(ErrorType === "Bad request"){
         setInputPinPopUp(false);
         setFailedPopup(true);
-      };
+      }else if(ErrorType === "unauthorised"){
+          await PostFunction(
+        path,
+        setLoading,
+        data,
+        SuccessHandler,
+        (ErrorType)=> {
+          if(ErrorType === "unauthorised"){
+            return setSessionModal(true)
+          }
+        },
+        setEedcFetchedResponse
+      );
+      }
+    }
 
       await PostFunction(
         path,
@@ -406,6 +437,26 @@ const EEDC = () => {
         setEedcFetchedResponse
       );
     }
+     //Kindly uncomment the code below after implementing the errorMessage
+    //rather than the pinfailed and pinSucess state
+    //Kindly also remove the setPinFailed state as there
+    //is no longer any use for it
+    // const setPinFailed= async(ErrorType)=> {
+    //   if(ErrorType==="unauthorised"){
+    //       await VerifyTransPin(
+    //   inputPin,
+    //   setPinSuccess,
+    //  (ErrorType)=> {
+    //   if(ErrorType === "unauthorised"){
+    //  setSessionModal(true)
+    //   }
+    //  },
+    //   setLoading,
+    //   setErrorMessage,
+    //   ElectricityHandler
+    // );
+    //   }
+    // }
     await VerifyTransPin(
       inputPin,
       setPinSuccess,
@@ -1509,6 +1560,9 @@ const EEDC = () => {
         <Modal>
           <Loader />
         </Modal>
+      )}
+      {sessionModal && (
+        <HandleUserSession/>
       )}
     </DashBoardLayout>
   );
