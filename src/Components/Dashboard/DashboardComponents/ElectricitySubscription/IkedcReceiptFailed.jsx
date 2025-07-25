@@ -27,7 +27,7 @@ export const IkedcReceiptFailed = () => {
     setIkedcEmail,
     ikedcAmount,
     setIkedcAmount,
-    setGlobalCountry,
+    setIkedcCountry,
     setIkedcFlag,
     selectedIkedcMeterType,
     ikedcDiscoType,
@@ -65,7 +65,7 @@ export const IkedcReceiptFailed = () => {
     setIkedcPhoneNumber("");
     setIkedcEmail("");
     setIkedcAmount("");
-    setGlobalCountry("");
+    setIkedcCountry("");
     setIkedcFlag("");
     navigate("/electricity-subscription");
   }

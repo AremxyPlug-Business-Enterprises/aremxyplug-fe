@@ -27,7 +27,7 @@ export const EkedcReceiptFailed = () => {
     setEkedcEmail,
     ekedcAmount,
     setEkedcAmount,
-    setGlobalCountry,
+    setEkedcCountry,
     setEkedcFlag,
     selectedEkedcMeterType,
     ekedcDiscoType,
@@ -65,7 +65,7 @@ export const EkedcReceiptFailed = () => {
     setEkedcPhoneNumber("");
     setEkedcEmail("");
     setEkedcAmount("");
-    setGlobalCountry("");
+    setEkedcCountry("");
     setEkedcFlag("");
     navigate("/electricity-subscription");
   }

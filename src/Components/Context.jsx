@@ -886,6 +886,7 @@ export const Context = ({ children }) => {
   const [ikedcPhoneNumber, setIkedcPhoneNumber] = useState("");
   const [ikedcEmail, setIkedcEmail] = useState("");
   const [ikedcAmount, setIkedcAmount] = useState("");
+  const [ikedcCountry, setIkedcCountry] = useState("");
   const [ikedcBillGenerate, setIkedcBillGenerate] = useState("");
   const [ikedcServiceID, setIkedcServiceID] = useState("");
   const [ikedcFlag, setIkedcFlag] = useState("");
@@ -901,6 +902,7 @@ export const Context = ({ children }) => {
   const [ibedcFullName, setIbedcFullName] = useState("");
   const [ibedcEmail, setIbedcEmail] = useState("");
   const [ibedcAmount, setIbedcAmount] = useState("");
+  const [ibedcCountry, setIbedcCountry] = useState("");
   const [ibedcMeterNumber, setIbedcMeterNumber] = useState("");
   const [ibedcVerifiedName, setIbedcVerifiedName] = useState("");
   const [ibedcPhoneNumber, setIbedcPhoneNumber] = useState("");
@@ -919,6 +921,7 @@ export const Context = ({ children }) => {
   const [aedcFullName, setAedcFullName] = useState("");
   const [aedcEmail, setAedcEmail] = useState("");
   const [aedcAmount, setAedcAmount] = useState("");
+  const [aedcCountry, setAedcCountry] = useState("");
   const [aedcMeterNumber, setAedcMeterNumber] = useState("");
   const [aedcVerifiedName, setAedcVerifiedName] = useState("");
   const [aedcPhoneNumber, setAedcPhoneNumber] = useState("");
@@ -937,6 +940,7 @@ export const Context = ({ children }) => {
   const [bedcFullName, setBedcFullName] = useState("");
   const [bedcEmail, setBedcEmail] = useState("");
   const [bedcAmount, setBedcAmount] = useState("");
+  const [bedcCountry, setBedcCountry] = useState("");
   const [bedcMeterNumber, setBedcMeterNumber] = useState("");
   const [bedcVerifiedName, setBedcVerifiedName] = useState("");
   const [bedcPhoneNumber, setBedcPhoneNumber] = useState("");
@@ -955,6 +959,7 @@ export const Context = ({ children }) => {
   const [eedcFullName, setEedcFullName] = useState("");
   const [eedcEmail, setEedcEmail] = useState("");
   const [eedcAmount, setEedcAmount] = useState("");
+  const [eedcCountry, setEedcCountry] = useState("");
   const [eedcMeterNumber, setEedcMeterNumber] = useState("");
   const [eedcVerifiedName, setEedcVerifiedName] = useState("");
   const [eedcPhoneNumber, setEedcPhoneNumber] = useState("");
@@ -973,6 +978,7 @@ export const Context = ({ children }) => {
   const [ekedcFullName, setEkedcFullName] = useState("");
   const [ekedcEmail, setEkedcEmail] = useState("");
   const [ekedcAmount, setEkedcAmount] = useState("");
+  const [ekedcCountry, setEkedcCountry] = useState("");
   const [ekedcMeterNumber, setEkedcMeterNumber] = useState("");
   const [ekedcVerifiedName, setEkedcVerifiedName] = useState("");
   const [ekedcPhoneNumber, setEkedcPhoneNumber] = useState("");
@@ -991,6 +997,7 @@ export const Context = ({ children }) => {
   const [jedFullName, setJedFullName] = useState("");
   const [jedEmail, setJedEmail] = useState("");
   const [jedAmount, setJedAmount] = useState("");
+  const [jedCountry, setJedCountry] = useState("");
   const [jedMeterNumber, setJedMeterNumber] = useState("");
   const [jedVerifiedName, setJedVerifiedName] = useState("");
   const [jedPhoneNumber, setJedPhoneNumber] = useState("");
@@ -1009,6 +1016,7 @@ export const Context = ({ children }) => {
   const [kaedcoFullName, setKaedcoFullName] = useState("");
   const [kaedcoEmail, setKaedcoEmail] = useState("");
   const [kaedcoAmount, setKaedcoAmount] = useState("");
+  const [kaedcoCountry, setKaedcoCountry] = useState("");
   const [kaedcoMeterNumber, setKaedcoMeterNumber] = useState("");
   const [kaedcoVerifiedName, setKaedcoVerifiedName] = useState("");
   const [kaedcoPhoneNumber, setKaedcoPhoneNumber] = useState("");
@@ -1027,6 +1035,7 @@ export const Context = ({ children }) => {
   const [kedcoFullName, setKedcoFullName] = useState("");
   const [kedcoEmail, setKedcoEmail] = useState("");
   const [kedcoAmount, setKedcoAmount] = useState("");
+  const [kedcoCountry, setKedcoCountry] = useState("");
   const [kedcoMeterNumber, setKedcoMeterNumber] = useState("");
   const [kedcoVerifiedName, setKedcoVerifiedName] = useState("");
   const [kedcoPhoneNumber, setKedcoPhoneNumber] = useState("");
@@ -1045,6 +1054,7 @@ export const Context = ({ children }) => {
   const [phedFullName, setPhedFullName] = useState("");
   const [phedEmail, setPhedEmail] = useState("");
   const [phedAmount, setPhedAmount] = useState("");
+  const [phedCountry, setPhedCountry] = useState("");
   const [phedMeterNumber, setPhedMeterNumber] = useState("");
   const [phedVerifiedName, setPhedVerifiedName] = useState("");
   const [phedPhoneNumber, setPhedPhoneNumber] = useState("");
@@ -1765,6 +1775,8 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
     setIkedcEmail,
     ikedcAmount,
     setIkedcAmount,
+    ikedcCountry,
+    setIkedcCountry,
     ikedcBillGenerate,
     setIkedcBillGenerate,
     ikedcServiceID,
@@ -1797,6 +1809,8 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
     setIbedcEmail,
     ibedcAmount,
     setIbedcAmount,
+    ibedcCountry,
+    setIbedcCountry,
     ibedcBillGenerate,
     setIbedcBillGenerate,
     ibedcServiceID,
@@ -1831,6 +1845,8 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
     setAedcEmail,
     aedcAmount,
     setAedcAmount,
+    aedcCountry,
+    setAedcCountry,
     aedcBillGenerate,
     setAedcBillGenerate,
     aedcServiceID,
@@ -1867,6 +1883,8 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
     setBedcEmail,
     bedcAmount,
     setBedcAmount,
+    bedcCountry,
+    setBedcCountry,
     bedcBillGenerate,
     setBedcBillGenerate,
     bedcServiceID,
@@ -1899,6 +1917,8 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
     setEedcEmail,
     eedcAmount,
     setEedcAmount,
+    eedcCountry,
+    setEedcCountry,
     eedcBillGenerate,
     setEedcBillGenerate,
     eedcServiceID,
@@ -1933,6 +1953,8 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
     setEkedcEmail,
     ekedcAmount,
     setEkedcAmount,
+    ekedcCountry,
+    setEkedcCountry,
     ekedcBillGenerate,
     setEkedcBillGenerate,
     ekedcServiceID,
@@ -1967,6 +1989,8 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
     setJedEmail,
     jedAmount,
     setJedAmount,
+    jedCountry,
+    setJedCountry,
     jedBillGenerate,
     setJedBillGenerate,
     jedServiceID,
@@ -2001,6 +2025,8 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
     setKaedcoEmail,
     kaedcoAmount,
     setKaedcoAmount,
+    kaedcoCountry,
+    setKaedcoCountry,
     kaedcoBillGenerate,
     setKaedcoBillGenerate,
     kaedcoServiceID,
@@ -2035,6 +2061,8 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
     setKedcoEmail,
     kedcoAmount,
     setKedcoAmount,
+    kedcoCountry,
+    setKedcoCountry,
     kedcoBillGenerate,
     setKedcoBillGenerate,
     kedcoServiceID,
@@ -2069,6 +2097,8 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
     setPhedEmail,
     phedAmount,
     setPhedAmount,
+    phedCountry,
+    setPhedCountry,
     phedBillGenerate,
     setPhedBillGenerate,
     phedServiceID,

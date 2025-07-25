@@ -19,7 +19,8 @@ import { Link, useNavigate } from "react-router-dom";
 import {
   PostFunction,
   VerifyTransPin,
-  HandleUserSession
+  HandleUserSession,
+  GetFunction,
 } from "../../../ApiCollection.jsx/ApiBuck";
 import { BalanceLoading, Loader } from "../../../Loader/Loader";
 
@@ -36,8 +37,8 @@ const EKEDC = () => {
     setShowList,
     setSelected,
     selected,
-    globalCountry,
-    setGlobalCountry,
+    ekedcCountry,
+    setEkedcCountry,
     globalTransferErrors,
     ekedcPhoneNumber,
     setEkedcPhoneNumber,
@@ -64,10 +65,11 @@ const EKEDC = () => {
     ekedcFetchedResponse,
     setEkedcFetchedResponse,
     newBalance,
+    setNewBalance,
   } = useContext(ContextProvider);
 
   const [showProductList, setShowProductList] = useState(false);
-  const [sessionModal, setSessionModal] = useState(false)
+  const [sessionModal, setSessionModal] = useState(false);
   const pointsEarned = "+2.00";
 
   // const handleValidate = () => {
@@ -100,10 +102,61 @@ const EKEDC = () => {
   };
   //   const { selectedOption, setSelectedOption } = useContext(ContextProvider);
   //   const [showOptionList, setShowOptionList] = useState(false);
-  const countryList = [
-    {
-      id: 1,
-      name: `NGN Wallet (${newBalance})`,
+
+  const [passDataBalance, setPassDataBalance] = useState({});
+      
+      const GetBalance = async () => {
+          const SuccessHandler = () => {
+            console.log("successfully retrieved balance");
+          };
+          const FailedHandler = async (ErrorType) => {
+            if (ErrorType === "unauthorised") {
+              await GetFunction(
+                `bills/verify`,
+                setLoading,
+                SuccessHandler,
+                (ErrorType) => {
+                  if (ErrorType === "unauthorised") {
+                    return setSessionModal(true);
+                  }
+                },
+                setPassDataBalance
+              );
+            }
+          };
+          await GetFunction(
+            "balance",
+            setLoading,
+            SuccessHandler,
+            FailedHandler,
+            setPassDataBalance
+          );
+        };
+        // get the balance on entering the page
+        useEffect(() => {
+          if (newBalance === "" || newBalance === null || newBalance === undefined) {
+            GetBalance();
+            if (GetBalance) {
+              setNewBalance(
+                passDataBalance?.data?.data
+                  ? passDataBalance?.data?.data?.data?.balance
+                  : ""
+              );
+            }
+          }
+          // handleResetFields();
+          // eslint-disable-next-line
+        }, []);
+    
+        const updateBalance = passDataBalance?.data?.data
+        ? passDataBalance?.data?.data?.data?.balance
+        : "";
+    
+      const countryList = [
+        {
+          id: 1,
+          name: `NGN Wallet ${newBalance === "" || newBalance === null || newBalance === undefined ? `(₦${updateBalance})`
+              : `(₦${newBalance})`}`,
       code: "Nigerian NGN Wallet",
       flag: require("../ElectricitySubscription/Electricity-sub-images/nigeriaFlag.png"),
     },
@@ -226,7 +279,7 @@ const EKEDC = () => {
       );
     } else if (amount < 1000) {
       setAmountError("Amount must be at least ₦1000");
-    }  else if (network === "Unknown network") {
+    } else if (network === "Unknown network") {
       setErrors({
         ekedcPhoneNumber:
           "Invalid phone number. Please enter a valid Nigerian network number.",
@@ -272,7 +325,7 @@ const EKEDC = () => {
     if (id !== 1 && code !== "Nigerian NGN Wallet") return;
     setEkedcFlag(flag);
     setShowList(false);
-    setGlobalCountry(name);
+    setEkedcCountry(name);
     setSelected(true);
     // setCountryCode(code);
     // setCurrencyAvailable(id !== 1);
@@ -309,7 +362,6 @@ const EKEDC = () => {
 
   const [errorMessage, setErrorMessage] = useState(false);
   const [pinSuccess, setPinSuccess] = useState(false);
-  const [pinFailed, setPinFailed] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isFailedMeterNumber, setIsFailedMeterNumber] = useState(false);
   const [meterNumberLoading, setMeterNumberLoading] = useState(false);
@@ -342,25 +394,25 @@ const EKEDC = () => {
           }
           handleReceivedMeterData();
         };
-        const FailedHandler = async(ErrorType) => {
-        if(ErrorType === "unauthorised"){
-          //To handle re-running of the request with the new Token
-           await PostFunction(
-          path,
-          setMeterNumberLoading,
-          body,
-          SuccessHandler,
-          (ErrorType)=> {
-            if(ErrorType === "unauthorised"){
-              setSessionModal(true)
-            }
-          },
-          setEkedcFetchedResponse
-        );
-        }else if(ErrorType === "Bad request"){
-        setIsFailedMeterNumber(true);
-        }
-      }
+        const FailedHandler = async (ErrorType) => {
+          if (ErrorType === "unauthorised") {
+            //To handle re-running of the request with the new Token
+            await PostFunction(
+              path,
+              setMeterNumberLoading,
+              body,
+              SuccessHandler,
+              (ErrorType) => {
+                if (ErrorType === "unauthorised") {
+                  setSessionModal(true);
+                }
+              },
+              setEkedcFetchedResponse
+            );
+          } else if (ErrorType === "Bad request") {
+            setIsFailedMeterNumber(true);
+          }
+        };
 
         await PostFunction(
           path,
@@ -372,19 +424,18 @@ const EKEDC = () => {
         );
       }
     }
-  
+
     HandleMeterNumber();
-  
+
     // handleReceivedMeterData();
     passedMeterName = ekedcFetchedResponse
       ? ekedcFetchedResponse?.data?.name
       : "";
   };
 
-
   const handleEkedcMeterNumber = async (e) => {
     const inputValue = e.target.value;
-    setEkedcMeterNumber(inputValue)
+    setEkedcMeterNumber(inputValue);
     await verifyMeterNumber(inputValue);
   };
 
@@ -417,31 +468,28 @@ const EKEDC = () => {
       };
       //Function to help handle the error type encountered on running
       //the api request
-      const FailedHandler = async(ErrorType) => {
+      const FailedHandler = async (ErrorType) => {
         //When the status code is 400
-        if(ErrorType === "Bad request"){
-         setInputPinPopUp(false);
-        setFailedPopup(true);
-        
-        }else if(ErrorType === "unauthorised"){
+        if (ErrorType === "Bad request") {
+          setInputPinPopUp(false);
+          setFailedPopup(true);
+        } else if (ErrorType === "unauthorised") {
           //Re-running the api request with the new token
-           await PostFunction(
-        path,
-        setLoading,
-        data,
-        SuccessHandler,
-        (ErrorType)=> {
-          if(ErrorType === "unauthorised"){
-            //no option but to log user out due to expired token
-        return  setSessionModal(true)
-          }
-        },
-        setEkedcFetchedResponse
-      );
-    }
-       
+          await PostFunction(
+            path,
+            setLoading,
+            data,
+            SuccessHandler,
+            (ErrorType) => {
+              if (ErrorType === "unauthorised") {
+                //no option but to log user out due to expired token
+                return setSessionModal(true);
+              }
+            },
+            setEkedcFetchedResponse
+          );
+        }
       };
-    
 
       await PostFunction(
         path,
@@ -456,22 +504,22 @@ const EKEDC = () => {
     //rather than the pinfailed and pinSucess state
     //Kindly also remove the setPinFailed state as there
     //is no longer any use for it
-    // const setPinFailed= async(ErrorType)=> {
-    //   if(ErrorType==="unauthorised"){
-    //       await VerifyTransPin(
-    //   inputPin,
-    //   setPinSuccess,
-    //  (ErrorType)=> {
-    //   if(ErrorType === "unauthorised"){
-    //  setSessionModal(true)
-    //   }
-    //  },
-    //   setLoading,
-    //   setErrorMessage,
-    //   ElectricityHandler
-    // );
-    //   }
-    // }
+    const setPinFailed= async(ErrorType)=> {
+      if(ErrorType==="unauthorised"){
+          await VerifyTransPin(
+      inputPin,
+      setPinSuccess,
+     (ErrorType)=> {
+      if(ErrorType === "unauthorised"){
+     setSessionModal(true)
+      }
+     },
+      setLoading,
+      setErrorMessage,
+      ElectricityHandler
+    );
+      }
+    }
     await VerifyTransPin(
       inputPin,
       setPinSuccess,
@@ -486,15 +534,19 @@ const EKEDC = () => {
     setLoading(true);
     const receivedData = () => {
       setEkedcBillGenerate(ekedcFetchedResponse?.data?.bill_generated);
-      console.log("bill", ekedcFetchedResponse?.data?.bill_generated)
+      console.log("bill", ekedcFetchedResponse?.data?.bill_generated);
       setEkedcOrderId(ekedcFetchedResponse?.data?.order_id);
       setEkedcTransactionId(ekedcFetchedResponse?.data?.transaction_id);
       setEkedcServiceID(ekedcFetchedResponse?.data?.RequestID);
-      setEkedcShowDescription(ekedcFetchedResponse?.data?.transaction_description);
+      setEkedcShowDescription(
+        ekedcFetchedResponse?.data?.transaction_description
+      );
       setEkedcDiscoType(ekedcFetchedResponse?.data?.disco_type);
       setEkedcVerifiedName(ekedcFetchedResponse?.data?.verified_name);
       setEkedcFullName(ekedcFetchedResponse?.data?.full_name);
-      setEkedcTransactionProduct(ekedcFetchedResponse?.data?.transaction_product);
+      setEkedcTransactionProduct(
+        ekedcFetchedResponse?.data?.transaction_product
+      );
     };
     receivedData();
     if (receivedData) {
@@ -518,7 +570,7 @@ const EKEDC = () => {
     setEkedcPhoneNumber("");
     setEkedcEmail("");
     setEkedcAmount("");
-    setGlobalCountry("");
+    setEkedcCountry("");
     setEkedcFlag("");
     setEkedcBillGenerate("");
     setEkedcOrderId("");
@@ -568,7 +620,7 @@ const EKEDC = () => {
           {/* top part after nav bar */}
           <div className="flex flex-row w-full pt-[10px] min-h-[91px] md:h-[112.29px] lg:h-[196px] lg:px-[50px]  px-[16px] rounded-lg md:rounded-[11.5px] lg:rounded-[20px] justify-between  py-0 bg-gradient-to-r from-[#FFA733] via-[#58FF4A] to-[#98B0FF]">
             <div className="flex flex-col gap-2  ">
-              <div className="text-[11px] font-semibold  pt-[10px] md:text-[12px] md:leading-[20.63px] lg:pt-[25px] lg:text-[24px] lg:leading-[36px] text-[#000000] leading-[12px]">
+              <div className="text-[11px] font-semibold  pt-[10px] md:text-xs md:leading-[20.63px] lg:pt-[25px] lg:text-[24px] lg:leading-[36px] text-[#000000] leading-[12px]">
                 ELECTRICITY BILLS, PREPAID AND POSTPAID <br /> PAYMENTS.
               </div>
               <div className="text-[9px] font-normal leading-[12px] md:text-[10px] md:leading-[14.9px] lg:text-[20px] lg:leading-[26px] text-[#000000] ">
@@ -585,15 +637,15 @@ const EKEDC = () => {
             </div>
           </div>
           <div
-            className={`flex lg:mt-[20px] text-[10px] sm:text-[12px] lg:text-[16px] font-semibold pt-[30px] items-center ${
+            className={`flex lg:mt-[20px] text-[10px] sm:text-xs lg:text-base font-semibold pt-[30px] items-center ${
               isDarkMode ? "text-white" : "text-[#7E7E7E]"
             }`}
           >
-            <div className="text-[9px] md:text-xs lg:text-[16px]">Recharge</div>
+            <div className="text-[9px] md:text-xs lg:text-base">Recharge</div>
             <div>
               <img className="w-[35px] lg:w-[3.5rem] ml-1" src={logo} alt="" />
             </div>
-            <div className="text-[9px] md:text-xs lg:text-[16px] ml-1">
+            <div className="text-[9px] md:text-xs lg:text-base ml-1">
               Eko Electric Payment-EKEDC Meter Instantly
             </div>
             <div>
@@ -606,7 +658,7 @@ const EKEDC = () => {
           </div>
           <div className="lg:flex lg:items-start ">
             <div
-              className={` mt-[10px] lg:mt-[15px] border border-[] from-[#E2F3FF] font-[700] text-[10px] lg:text-[16px] lg:rounded-sm lg:py-2 text-center lg:px-3 py-1 to-[#FFF]
+              className={` mt-[10px] lg:mt-[15px] border border-[] from-[#E2F3FF] font-[700] text-[10px] lg:text-base lg:rounded-sm lg:py-2 text-center lg:px-3 py-1 to-[#FFF]
              ${
                isDarkMode
                  ? "bg-black text-white border border-white"
@@ -619,7 +671,7 @@ const EKEDC = () => {
           </div>
 
           <div
-            className={`text-[14px] lg:text-[16px] font-semibold mt-[20px] ${
+            className={`text-sm lg:text-base font-semibold mt-[20px] ${
               isDarkMode ? "text-white" : "text-[#7E7E7E]"
             } `}
           >
@@ -627,7 +679,7 @@ const EKEDC = () => {
             MeterType if you load token on your meter.
           </div>
           <div
-            className={`text-[14px] lg:text-[16px] font-semibold mt-[10px] ${
+            className={`text-sm lg:text-base font-semibold mt-[10px] ${
               isDarkMode ? "text-white" : "text-[#7E7E7E]"
             } `}
           >
@@ -639,48 +691,44 @@ const EKEDC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 md:gap-6 lg:gap-6 items-center lg:mt-[20px] ">
             <div className=" flex flex-col mt-[20px] relative gap-2 lg:gap-2.5">
               <div
-                className={`text-[14px] lg:text-[16px]  md:font-semibold font-normal ${
+                className={`text-sm lg:text-base md:text-[13px]  md:font-semibold font-normal ${
                   isDarkMode ? "text-white" : "text-[#7E7E7E]"
                 }`}
               >
                 Select Meter Type
               </div>
               <div
-                className={`flex justify-between items-center py-[12px] pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
+                className={`rounded-[10px] md:rounded-0 p-[20px] md:py-5 text-[13.2px]  sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[11px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
                   isDarkMode
                     ? "text-white bg-black border border-white"
                     : "text-[#7E7E7E] bg-white"
                 }`}
                 onClick={() => setShowProductList(!showProductList)}
               >
-                <h2
-                  className={`text-[12px] font-normal  leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]
-                ${isDarkMode ? "text-white bg-black" : "text-[#7C7C7C]"}`}
-                >
-                  {selectedEkedcMeterType}
-                </h2>
-                <button className="lg:w-6 lg:h-6  w-4 h-4 cursor-pointer">
-                  <img src={arrowDown} alt="" className="w-full h-full" />
-                </button>
+                {selectedEkedcMeterType}
+                <img
+                  src={arrowDown}
+                  alt=""
+                  className="decdrop absolute left-[92%] lg:left-[94%] self-center align-middle md:h-[14.038px] md:w-[14.038px] lg:h-[24px] lg:w-[24px] w-[14px] h-[16px]"
+                />
               </div>
               {showProductList && (
                 <div
                   className={`
-                  ${
-                    isDarkMode
-                      ? "text-white bg-black border-white divide-white"
-                      : " text-[#7C7C7C] bg-white "
-                  }
-                  border flex flex-col divide-y items-center text-[14px] md:text-[12px] lg:text-[16px] mt-20 lg:mt-20  rounded-[4px] md:rounded-[10px] absolute top-1 lg:top-[1rem] shadow-md w-full z-[10]`}
+                    ${
+                      isDarkMode
+                        ? "text-white bg-black  "
+                        : " text-[#7C7C7C] bg-white hover:bg-[#EDEAEA]"
+                    } flex flex-col  absolute lg:top-[90px] md:top-[70px] top-[74px] transition-colors duration-300 z-[2] w-full`}
                 >
                   {productList?.map((item) => (
                     <div
                       key={item.name}
-                      className={`pb-[18px] pt-[8px] md:py-[14px] font-bold cursor-pointer md:text-[12px] lg:text-[16px] w-[100%]  md:rounded-[0px] lg:mt- text-[12px] pl-[5px] transition-all duration-300 hover:bg-slate-50
+                      className={`py-5 md:py-[14px] font-semibold cursor-pointer lg:text-base lg:leading-[20.8px] w-full md:rounded-[0px] text-sm leading-[10.4px] pl-2.5 md:text-[13.227px] transition-colors duration-300 md:leading-[17.195px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] 
                         ${
                           isDarkMode
-                            ? "bg-black text-white hover:bg-slate-800 hover:rounded-t-[10px]"
-                            : "text-[#7C7C7C]"
+                            ? "bg-black text-white hover:bg-slate-800 border border-white"
+                            : "text-[#7C7C7C] hover:bg-[#EDEAEA] bg-white"
                         }
                         ${selectedEkedcMeterType === item.name ? "" : ""}`}
                       onClick={() => handleSelectProduct(item.name)}
@@ -692,9 +740,9 @@ const EKEDC = () => {
               )}
             </div>
 
-            <div className="flex flex-col relative sm:mt-[10px] md:mt-[23px] lg:mt-[23px] gap-2 lg:gap-2.5">
+            <div className="flex flex-col relative gap-2 lg:gap-2.5 mt-5">
               <div
-                className={` text-[14px] lg:text-[16px] md:font-semibold font-normal ${
+                className={` text-sm md:text-[13px] lg:text-base md:font-semibold font-normal ${
                   isDarkMode ? "text-white" : "text-[#7E7E7E]"
                 }`}
               >
@@ -707,20 +755,22 @@ const EKEDC = () => {
                   maxLength={13}
                   onInput={(e) => {
                     setErrors({});
-                  const numericValue = e.target.value.replace(/\D/g, "");
+                    const numericValue = e.target.value.replace(/\D/g, "");
                     e.target.value = numericValue;
                     if (numericValue?.length === 13) {
-                      e.target.style.border = "2px solid green";
+                      e.target.style.border = "1px solid green";
                     } else if (numericValue?.length < 13) {
-                      e.target.style.border = "2px solid red";
+                      e.target.style.border = "1px solid red";
                     }
                     setIsFailedMeterNumber(false);
                     setErrors((prev) => ({ ...prev, ekedcMeterNumber: "" }));
                   }}
-                  onBlur={(e) => { e.target.style.border = "1px solid #7E7E7E";}}
+                  onBlur={(e) => {
+                    e.target.style.border = "1px solid #7E7E7E";
+                  }}
                   onChange={handleEkedcMeterNumber}
                   onClick={() => setShowProductList(false)}
-                  className={`py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full w-full  ${
+                  className={`py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-xs leading-[18px] border-[#9C9C9C] lg:text-base lg:leading-[20.8px] focus:outline-none placeholder:text-xs placeholder:leading-[10.4px] placeholder:lg:text-base placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full w-full  ${
                     isDarkMode
                       ? "bg-black text-white border border-white"
                       : "text-[#7E7E7E]"
@@ -729,21 +779,23 @@ const EKEDC = () => {
               </div>
               {errors.ekedcMeterNumber && (
                 <div
-                  className={`text-[14px] absolute left-0 -bottom-[1.3rem] text-red-500 italic lg:text-[14px
+                  className={`text-sm absolute left-0 -bottom-[1.3rem] text-red-500 italic lg:text-[14px
                   ${isDarkMode ? "text-white bg-black" : ""}`}
                 >
                   {errors.ekedcMeterNumber}
                 </div>
               )}
               {!errors.ekedcMeterNumber && isFailedMeterNumber && (
-                <div className="text-[14px] absolute left-0 -bottom-[1.3rem] text-red-500 italic lg:text-[14px]">
+                <div className="text-sm absolute left-0 -bottom-[1.3rem] text-red-500 italic lg:text-sm">
                   Invalid meter number
                 </div>
               )}
             </div>
 
             <div className="flex flex-col gap-2 lg:gap-2.5">
-              <div className="text-[#7E7E7E] text-[14px] lg:text-[16px] md:font-semibold font-normal">
+              <div className={`text-sm md:text-[13px] lg:text-base md:font-semibold font-normal ${
+                  isDarkMode ? "text-white" : "text-[#7E7E7E]"
+                }`}>
                 Verified Name
               </div>
               <div className="relative">
@@ -751,7 +803,7 @@ const EKEDC = () => {
                   type="text"
                   value={handleVerifiedName}
                   readOnly
-                  className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
+                  className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-xs leading-[18px] border-[#9C9C9C] lg:text-base lg:leading-[20.8px] focus:outline-none placeholder:text-xs placeholder:leading-[10.4px] placeholder:lg:text-base placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
                     isDarkMode
                       ? "text-white bg-black border border-white"
                       : "text-[#7E7E7E]"
@@ -766,8 +818,8 @@ const EKEDC = () => {
             </div>
             <div className="flex flex-col relative gap-2 lg:gap-2.5">
               <div
-                className={`text-[#7E7E7E] text-[14px] lg:text-[16px] md:font-semibold font-normal ${
-                  isDarkMode ? "text-white" : ""
+                className={` text-sm md:text-[13px] lg:text-base md:font-semibold font-normal ${
+                  isDarkMode ? "text-white" : "text-[#7E7E7E]"
                 }`}
               >
                 Phone Number
@@ -778,28 +830,28 @@ const EKEDC = () => {
                   value={ekedcPhoneNumber}
                   onInput={(e) => {
                     if (ekedcPhoneNumber?.length === 10) {
-                      e.target.style.border = "2px solid green";
+                      e.target.style.border = "1px solid green";
                     } else if (e.target.value?.length < 10) {
-                      e.target.style.border = "2px solid red";
+                      e.target.style.border = "1px solid red";
                     }
                     setErrors((prev) => ({ ...prev, ekedcPhoneNumber: "" }));
                   }}
-                  onBlur={(e) => {
-                    isDarkMode
-                      ? (e.target.style.border = "1px solid white")
-                      : (e.target.style.border = "1px solid #9C9C9C");
-                  }}
+                  // onBlur={(e) => {
+                  //   isDarkMode
+                  //     ? (e.target.style.border = "1px solid white")
+                  //     : (e.target.style.border = "1px solid #9C9C9C");
+                  // }}
                   onChange={handlePhoneNumber}
-                  className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full ${
+                  className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-xs leading-[18px]  lg:text-base lg:leading-[20.8px] focus:outline-none placeholder:text-xs placeholder:leading-[10.4px] placeholder:lg:text-base placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
                     isDarkMode
-                      ? "text-white bg-black border border-white"
-                      : "text-[#7E7E7E]"
+                      ? "text-white bg-black border-white"
+                      : "text-[#7E7E7E] bg-white border-[#9C9C9C]"
                   }`}
                 />
               </div>
               {errors.ekedcPhoneNumber && (
                 <div
-                  className={`text-[12px] absolute left-0 -bottom-[1.5rem] leading-3 text-red-500 italic lg:text-[14px]
+                  className={`text-xs absolute left-0 -bottom-[1.5rem] leading-3 text-red-500 italic lg:text-sm
                   ${isDarkMode ? "text-white bg-black" : ""}`}
                 >
                   {errors.ekedcPhoneNumber}
@@ -808,8 +860,8 @@ const EKEDC = () => {
             </div>
             <div className="flex flex-col relative gap-2 lg:gap-2.5">
               <div
-                className={`text-[#7E7E7E] text-[14px] lg:text-[16px] md:font-semibold font-normal ${
-                  isDarkMode ? "text-white" : ""
+                className={`text-sm md:text-[13px] lg:text-base md:font-semibold font-normal ${
+                  isDarkMode ? "text-white" : "text-[#7E7E7E]"
                 }`}
               >
                 Email
@@ -819,10 +871,10 @@ const EKEDC = () => {
                   type="text"
                   value={ekedcEmail}
                   onChange={handleEmail}
-                  onInput={()=>{
+                  onInput={() => {
                     setErrors((prev) => ({ ...prev, ekedcEmail: "" }));
                   }}
-                  className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
+                  className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-xs leading-[18px] border-[#9C9C9C] lg:text-base lg:leading-[20.8px] focus:outline-none placeholder:text-xs placeholder:leading-[10.4px] placeholder:lg:text-base placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
                     isDarkMode
                       ? "text-white bg-black border border-white"
                       : "text-[#7E7E7E]"
@@ -830,24 +882,24 @@ const EKEDC = () => {
                 />
               </div>
               {errors.ekedcEmail && (
-                <div className="text-[12px] absolute left-0 -bottom-[1.3rem] text-red-500 italic lg:text-[14px]">
+                <div className="text-xs absolute left-0 -bottom-[1.3rem] text-red-500 italic md:text-sm">
                   {errors.ekedcEmail}
                 </div>
               )}
             </div>
             <div className="flex flex-col relative gap-2 lg:gap-2.5">
               <div
-                className={`text-[#7E7E7E] text-[14px] lg:text-[16px] md:font-semibold font-normal ${
-                  isDarkMode ? "text-white" : ""
+                className={`text-sm md:text-[13px] lg:text-base md:font-semibold font-normal ${
+                  isDarkMode ? "text-white " : "text-[#7E7E7E]"
                 }`}
               >
                 Amount
               </div>
               <div
-                className={`flex items-center lg:text-[16px] text-[12px] border rounded-[10px] border-[#9C9C9C] pl-2 ${
+                className={`flex items-center py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-xs leading-[18px] border-[#9C9C9C] lg:text-base lg:leading-[20.8px]  rounded-lg sm:rounded-[10px] h-full w-full ${
                   isDarkMode
-                    ? "text-white bg-black border-white "
-                    : "text-[#7E7E7E]"
+                    ? "text-white bg-black border-white"
+                    : "text-[#7E7E7E] border-[#9C9C9C]"
                 }`}
               >
                 &#8358;
@@ -856,14 +908,18 @@ const EKEDC = () => {
                   name="ekedcamount"
                   value={ekedcAmount}
                   onChange={handleEkedcAmount}
-                  onInput={()=>setAmountError("")}
+                  onInput={() => setAmountError("")}
                   placeholder="Minimum of ₦1000"
-                  className={`w-full py-[10.33px] pl-[5.867px] pr-1 md:py-3 md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] text-[12px] leading-[18px] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none
-                 ${isDarkMode ? "text-white bg-black " : "text-[#7E7E7E]"}`}
+                  className={`w-full ml-0.5 placeholder:text-xs placeholder:leading-[10.4px] placeholder:lg:text-base placeholder:lg:leading-[20.8px] focus:outline-none
+                 ${
+                   isDarkMode
+                     ? "text-white bg-black"
+                     : "text-[#7E7E7E]"
+                 }`}
                 />
               </div>
               {amountError && (
-                <p className="text-[14px] absolute left-0 -bottom-[1.3rem] text-red-500 italic lg:text-[14px]">
+                <p className="text-sm absolute left-0 -bottom-[1.3rem] text-red-500 italic lg:text-sm">
                   {amountError}
                 </p>
               )}
@@ -871,14 +927,14 @@ const EKEDC = () => {
 
             <div className=" flex flex-col relative gap-2 lg:gap-2.5">
               <div
-                className={`text-[#7E7E7E] text-[14px] lg:text-[16px] md:font-semibold ${
-                  isDarkMode ? "text-white" : ""
+                className={`text-sm md:text-[13px] lg:text-base md:font-semibold font-normal ${
+                  isDarkMode ? "text-white" : "text-[#7E7E7E]"
                 }`}
               >
                 Payment Method
               </div>
               <div
-                className={`py-[10.33px] pl-[5.867px] pr-1 md:py-3 md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none flex items-center justify-between  ${
+                className={`rounded-[10px] md:rounded-0 p-[20px] md:py-5 text-[13.2px]  sm:p-3 sm:text-lg relative  pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[11px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] flex items-center justify-between  ${
                   isDarkMode
                     ? "text-white bg-black border border-white"
                     : "text-[#7E7E7E]"
@@ -892,11 +948,11 @@ const EKEDC = () => {
                    ${isDarkMode ? "text-white bg-black" : "text-[#7E7E7E]"}`}
                   >
                     <p
-                      className={`text-[12px] lg:text-[14px]
+                      className={`text-xs lg:text-sm
                      ${isDarkMode ? "text-white bg-black" : "text-[#7E7E7E]"}`}
                     >
                       {/* font-extrabold */}
-                      {globalCountry}
+                      {ekedcCountry}
                     </p>
                     <img
                       className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
@@ -918,7 +974,7 @@ const EKEDC = () => {
               </div>
               {globalTransferErrors.country && (
                 <div
-                  className={`text-[14px] text-red-500 italic lg:text-[14px]
+                  className={`text-sm text-red-500 italic lg:text-sm
                   ${isDarkMode ? "text-white " : ""}`}
                 >
                   {globalTransferErrors.country}
@@ -929,8 +985,8 @@ const EKEDC = () => {
                   className={`
                         ${
                           isDarkMode
-                            ? "bg-black border-white rounded-[7px] text-white"
-                            : "text-[#7C7C7C] bg-white rounded-br-[7px] rounded-bl-[7px] lg:rounded-br-[14px] lg:rounded-bl-[14px]"
+                            ? "bg-black border-white text-white"
+                            : "text-[#7C7C7C] bg-white "
                         }
                         ${
                           toggleSideBar
@@ -938,19 +994,22 @@ const EKEDC = () => {
                             : "lg:w-[38.5%] lg:top-[105.3%]"
                         }  ${
                     styles.countryDropDown
-                  } shadow-xl border w-full lg:w-full  flex flex-col divide-y absolute top-20`}
+                  } shadow-xl border w-full lg:w-full  flex flex-col divide-y absolute top-[4.3rem] md:top-[4.4rem]`}
                 >
                   {countryList?.map((country) => (
                     <div
-                      className={`py-[18px] md:py-[14px] font-normal px-2 flex items-center gap-[5px] text-[12px] md:text-[14px] lg:text-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] transition-all duration-300 hover:bg-slate-50
+                      className={`py-[18px] md:py-2 lg:py-[15px] pl-[10px] font-normal flex items-center gap-[5px] text-xs md:text-sm lg:text-base shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] transition-all duration-300
                      ${
-                       isDarkMode
-                         ? "text-white hover:bg-slate-800 bg-black "
-                         : "text-[#7E7E7E] "
-                     } ${
+                          isDarkMode ? "text-white bg-black " : "text-[#7E7E7E]"
+                        } ${
                         country.code === "Nigerian NGN Wallet"
-                          ? "cursor-pointer"
+                          ? "cursor-pointer hover:bg-[#EDEAEA]"
                           : "cursor-not-allowed opacity-50"
+                      }
+                      ${
+                        isDarkMode && country.code === "Nigerian NGN Wallet"
+                          ? "hover:bg-slate-800"
+                          : ""
                       }`}
                       key={country.id}
                       onClick={() =>
@@ -963,7 +1022,7 @@ const EKEDC = () => {
                       }
                     >
                       <img
-                        className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
+                        className="md:h-[29.27px]  h-[14.27px]"
                         src={country.flag}
                         alt="/"
                       />
@@ -976,7 +1035,7 @@ const EKEDC = () => {
           </div>
           <div
             onClick={handleProceed}
-            className={`text-[12px] mt-[30px] md:mt-[40px] bg-[#0008] md:w-fit lg:px-12 lg:text-[16px] lg:px md:py-1 md:rounded-md md:px-6 py-3 rounded-md font-semibold text-center text-white
+            className={`text-xs mt-[30px] md:mt-[40px] bg-[#0008] md:w-fit lg:px-12 lg:text-base lg:px md:py-1 md:rounded-md md:px-6 py-3 rounded-md font-semibold text-center text-white
              ${
                !ekedcMeterNumber ||
                !ekedcCustomerName ||
@@ -1002,7 +1061,7 @@ const EKEDC = () => {
           </div>
         </div>
         <footer className="flex justify-center text-center gap-[20px] mt-[200px] pb-[10%] md:mt-[750px]  lg:mt-[850px]">
-          <p className="text-[11px] md:text-[12px] lg:text-[18px] font-medium leading-[9.1px] mt-[5px] lg:mt-[13px]">
+          <p className="text-[11px] md:text-xs lg:text-[18px] font-medium leading-[9.1px] mt-[5px] lg:mt-[13px]">
             You need help?
           </p>
 
@@ -1010,7 +1069,7 @@ const EKEDC = () => {
             <div
               className={`${
                 isDarkMode ? "bg-[#04177f] " : "bg-[#04177f]"
-              } text-[11px] p-1.5 text-white rounded-[8px] lg:text-[16px]`}
+              } text-[11px] p-1.5 text-white rounded-[8px] lg:text-base`}
             >
               Contact Us
             </div>
@@ -1037,31 +1096,32 @@ const EKEDC = () => {
               alt=""
             />
             <hr className="h-[6px] bg-[#04177f] border-none mt-[9%] md:mt-[8%] md:h-[10px]" />
-            <h2 className="text-[12px] font-semibold my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
+            <h2 className="text-xs font-semibold my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-base">
               Confirm Transaction
             </h2>
             <p
-              className={`text-[10px] pt-[20px] font-medium text-center mb-2 md:text-[12px] lg:text-[14px] ${
+              className={`text-[10px] pt-[20px] font-medium text-center mb-2 md:text-xs lg:text-sm ${
                 isDarkMode ? "text-white" : "text-[#000]"
               }`}
             >
               You are about to Purchase{" "}
               <span
-                className={`font-extrabold text-[10px] md:text-[14px] lg:text-[12px] ${
+                className={`font-extrabold text-[10px] md:text-sm lg:text-xs ${
                   isDarkMode ? "text-white" : "text-[#000]"
                 }`}
               >
-                {selectedEkedcMeterType} Meter (&#8358;{Number(ekedcAmount).toLocaleString()}){" "}
+                {selectedEkedcMeterType} Meter (&#8358;
+                {Number(ekedcAmount).toLocaleString()}){" "}
               </span>
               {/* Points to <br></br>
-              <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]">
+              <span className="text-[#000] font-extrabold text-[10px] md:text-base lg:text-xs">
                 &#8358;{}
               </span> */}
               From <br /> your NGN Wallet to
             </p>
 
             <div className="flex flex-col gap-3 pt-[10px]">
-              <div className="flex text-[10px] md:text-[14px] pt-[10px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px] md:text-sm pt-[10px] w-[90%] mx-auto justify-between  lg:text-base">
                 <p
                   className={`font-medium ${
                     isDarkMode ? "text-white" : "text-[#7C7C7C] "
@@ -1076,7 +1136,7 @@ const EKEDC = () => {
                   <div>Eko-EKEDC</div>
                 </span>
               </div>
-              <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px]  md:text-sm w-[90%] mx-auto justify-between  lg:text-base">
                 <p
                   className={`font-medium ${
                     isDarkMode ? "text-white" : "text-[#7C7C7C] "
@@ -1086,7 +1146,7 @@ const EKEDC = () => {
                 </p>
                 <span>{selectedEkedcMeterType} </span>
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between  lg:text-base">
                 <p
                   className={`font-medium ${
                     isDarkMode ? "text-white" : "text-[#7C7C7C] "
@@ -1097,7 +1157,7 @@ const EKEDC = () => {
                 <span>{ekedcMeterNumber} </span>
               </div>
 
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between  lg:text-base">
                 <p
                   className={`font-medium ${
                     isDarkMode ? "text-white" : "text-[#7C7C7C] "
@@ -1108,7 +1168,7 @@ const EKEDC = () => {
                 <span>{ekedcCustomerName}</span>
               </div>
 
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between  lg:text-base">
                 <p
                   className={`font-medium ${
                     isDarkMode ? "text-white" : "text-[#7C7C7C] "
@@ -1118,7 +1178,7 @@ const EKEDC = () => {
                 </p>
                 <span>{ekedcPhoneNumber}</span>
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between  lg:text-base">
                 <p
                   className={`font-medium ${
                     isDarkMode ? "text-white" : "text-[#7C7C7C] "
@@ -1128,7 +1188,7 @@ const EKEDC = () => {
                 </p>
                 <span>{ekedcEmail}</span>
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between  lg:text-base">
                 <p
                   className={`font-medium ${
                     isDarkMode ? "text-white" : "text-[#7C7C7C] "
@@ -1138,7 +1198,7 @@ const EKEDC = () => {
                 </p>
                 <span>&#8358;{Number(ekedcAmount).toLocaleString()}</span>
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between  lg:text-base">
                 <p
                   className={`font-medium ${
                     isDarkMode ? "text-white" : "text-[#7C7C7C] "
@@ -1148,7 +1208,7 @@ const EKEDC = () => {
                 </p>
                 <span>Nigerian NGN Wallet</span>
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between  lg:text-base">
                 <p
                   className={`font-medium ${
                     isDarkMode ? "text-white" : "text-[#7C7C7C] "
@@ -1170,7 +1230,7 @@ const EKEDC = () => {
                   >
                     <img className="w-[16px] h-[16px]" src={nig} alt="/" />
                   </div>
-                  <p className="text-[10px] md:text-[14px]  lg:text-[16px]">
+                  <p className="text-[10px] md:text-sm  lg:text-base">
                     Available Balance
                     <span
                       className={` ${
@@ -1181,7 +1241,7 @@ const EKEDC = () => {
                     </span>
                   </p>
                 </div>
-                <span className="text-gray-500 text-[14px] font-[400] leading-[20px] lg:text-[16px] lg:leading-[22px] text-left">
+                <span className="text-gray-500 text-sm font-[400] leading-[20px] lg:text-base lg:leading-[22px] text-left">
                   {balanceStatus}
                 </span>
               </div>
@@ -1194,7 +1254,7 @@ const EKEDC = () => {
             <button
               onClick={handleSwitch}
               disabled={CheckSufficiency}
-              className={`my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:my-[2%] ${
+              className={`my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-sm font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-base lg:text-sm lg:w-[163px] lg:h-[38px] lg:my-[2%] ${
                 CheckSufficiency ? "bg-gray-400" : "bg-primary"
               }`}
             >
@@ -1232,7 +1292,7 @@ const EKEDC = () => {
                 isDarkMode ? "md:mt-10" : ""
               }`}
             />
-            <p className="text-[12px] md:text-[16px] font-extrabold text-center my-[10%] lg:my-[%] ">
+            <p className="text-xs md:text-base font-extrabold text-center my-[10%] lg:my-[%] ">
               Input PIN to complete transaction
             </p>
             <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[8%]">
@@ -1261,12 +1321,12 @@ const EKEDC = () => {
                     />
                     <span className="">
                       {pinSuccess && (
-                        <p className="text-[12px] text-green-500 text-center font-medium">
+                        <p className="text-xs text-green-500 text-center font-medium">
                           Pin matches
                         </p>
                       )}
-                      {pinFailed && errorMessage && (
-                        <p className="text-[12px] text-center text-red-600 font-medium">
+                      {errorMessage && (
+                        <p className="text-xs text-center text-red-600 font-medium">
                           Incorrect Pin
                         </p>
                       )}
@@ -1282,7 +1342,7 @@ const EKEDC = () => {
                   {isVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
                 </div>
               </div>
-              <p className="text-[10px] md:text-[12px] text-[#04177f]">
+              <p className="text-[10px] md:text-xs text-[#04177f]">
                 Forgot Pin ?
               </p>
             </div>
@@ -1291,7 +1351,7 @@ const EKEDC = () => {
               onClick={verifyPin}
               className={`${
                 inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
-              } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%] ${
+              } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%] ${
                 isDarkMode ? "border border-white" : ""
               }`}
             >
@@ -1335,7 +1395,7 @@ const EKEDC = () => {
               />
             </div>
             <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
-            <h2 className="text-[12px] my-[4%] text-center md:text-[20px] md:my-[3%] lg:text-[14px] lg:my-[2%]">
+            <h2 className="text-xs my-[4%] text-center md:text-[20px] md:my-[3%] lg:text-sm lg:my-[2%]">
               Purchase Successful
             </h2>
             <img
@@ -1344,13 +1404,13 @@ const EKEDC = () => {
               alt="/"
             />
             <p
-              className={`text-[10px] lg:text-[16px] font-medium text-center mb-2 md:text-[14px] ${
+              className={`text-[10px] lg:text-base font-medium text-center mb-2 md:text-sm ${
                 isDarkMode ? "text-white" : "text-[#000]"
               }`}
             >
               You have successfully Purchased
               <span
-                className={`font-extrabold text-[11px] md:text-[16px] lg:text-[14px] ${
+                className={`font-extrabold text-[11px] md:text-base lg:text-sm ${
                   isDarkMode ? "text-white" : "text-[#000]"
                 }`}
               >
@@ -1358,7 +1418,7 @@ const EKEDC = () => {
               </span>
               <br></br>
               <span
-                className={`font-extrabold text-[10px] md:text-[16px] lg:text-[14px] ${
+                className={`font-extrabold text-[10px] md:text-base lg:text-sm ${
                   isDarkMode ? "text-white" : "text-[#000]"
                 }`}
               >
@@ -1368,7 +1428,7 @@ const EKEDC = () => {
             </p>
 
             <div className="flex flex-col gap-3 pt-[10px]">
-              <div className="flex text-[10px] md:text-[14px] pt-[10px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px] md:text-sm pt-[10px] w-[90%] mx-auto justify-between  lg:text-base">
                 <p
                   className={`font-medium ${
                     isDarkMode ? "text-white" : "text-[#7C7C7C] "
@@ -1383,7 +1443,7 @@ const EKEDC = () => {
                   <div>{ekedcDiscoType}</div>
                 </span>
               </div>
-              <div className="flex text-[10px]  md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px]  md:text-sm w-[90%] mx-auto justify-between  lg:text-base">
                 <p
                   className={`font-medium ${
                     isDarkMode ? "text-white" : "text-[#7C7C7C] "
@@ -1393,7 +1453,7 @@ const EKEDC = () => {
                 </p>
                 <span>{selectedEkedcMeterType} </span>
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between  lg:text-base">
                 <p
                   className={`font-medium ${
                     isDarkMode ? "text-white" : "text-[#7C7C7C] "
@@ -1404,7 +1464,7 @@ const EKEDC = () => {
                 <span>{ekedcMeterNumber} </span>
               </div>
 
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between  lg:text-base">
                 <p
                   className={`font-medium ${
                     isDarkMode ? "text-white" : "text-[#7C7C7C] "
@@ -1415,7 +1475,7 @@ const EKEDC = () => {
                 <span>{ekedcVerifiedName}</span>
               </div>
 
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between  lg:text-base">
                 <p
                   className={`font-medium ${
                     isDarkMode ? "text-white" : "text-[#7C7C7C] "
@@ -1425,7 +1485,7 @@ const EKEDC = () => {
                 </p>
                 <span>{ekedcPhoneNumber}</span>
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between  lg:text-base">
                 <p
                   className={`font-medium ${
                     isDarkMode ? "text-white" : "text-[#7C7C7C] "
@@ -1435,7 +1495,7 @@ const EKEDC = () => {
                 </p>
                 <span>{ekedcEmail}</span>
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between  lg:text-base">
                 <p
                   className={`font-medium ${
                     isDarkMode ? "text-white" : "text-[#7C7C7C] "
@@ -1445,7 +1505,7 @@ const EKEDC = () => {
                 </p>
                 <span>&#8358;{Number(ekedcAmount).toLocaleString()}</span>
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between  lg:text-base">
                 <p
                   className={`font-medium ${
                     isDarkMode ? "text-white" : "text-[#7C7C7C] "
@@ -1455,7 +1515,7 @@ const EKEDC = () => {
                 </p>
                 <span>Nigerian NGN Wallet</span>
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between  lg:text-base">
                 <p
                   className={`font-medium ${
                     isDarkMode ? "text-white" : "text-[#7C7C7C] "
@@ -1472,7 +1532,7 @@ const EKEDC = () => {
                 isDarkMode ? "bg-slate-800" : "bg-[#F2FAFF]"
               }`}
             >
-              <p className="text-[8px] text-center md:text-[14px] md:w-[97%] lg:w-[90%] md:mx-auto lg:text-[14px] font-medium">
+              <p className="text-[8px] text-center md:text-sm md:w-[97%] lg:w-[90%] md:mx-auto lg:text-sm font-medium">
                 The electricity bills / token purchase has been generated
                 successfully. Please kindly check receipt to confirm the bills /
                 token. You can contact us for any further assistance.
@@ -1484,14 +1544,14 @@ const EKEDC = () => {
                   setSuccessPopup(false);
                   handleResetFields();
                 }}
-                className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:px-[50px] md:w-[70%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-xs font-extrabold h-[40px] text-white rounded-[6px] md:px-[50px] md:w-[70%] md:rounded-[8px] md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
               >
                 Done
               </button>
 
               <button
                 onClick={handleReceivedData}
-                className={`border w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] md:px-[50px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                className={`border w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-xs md:px-[50px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:rounded-[8px] md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
               >
                 Receipt
               </button>
@@ -1534,7 +1594,7 @@ const EKEDC = () => {
               />
             </div>
             <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
-            <h2 className="text-[12px] my-[5%] text-center md:text-[20px] md:my-[3%] lg:text-[14px] lg:my-[2%]">
+            <h2 className="text-xs my-[5%] text-center md:text-[20px] md:my-[3%] lg:text-sm lg:my-[2%]">
               Transaction Failed
             </h2>
             <img
@@ -1543,7 +1603,7 @@ const EKEDC = () => {
               alt="/"
             />
             <p
-              className={`text-[12px] mx-[10px] text-center my-[60px] md:text-[14px] lg:text-[12px] ${
+              className={`text-xs mx-[10px] text-center my-[60px] md:text-sm lg:text-xs ${
                 isDarkMode ? "text-white" : "text-[#0008]"
               }`}
             >
@@ -1556,13 +1616,13 @@ const EKEDC = () => {
                   setFailedPopup(false);
                   handleResetFields();
                 }}
-                className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:px-[50px] md:w-[70%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-xs font-extrabold h-[40px] text-white rounded-[6px] md:px-[50px] md:w-[70%] md:rounded-[8px] md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
               >
                 Done
               </button>
               <button
                 onClick={handleFailedData}
-                className={`border w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:px-[50px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                className={`border w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-xs font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:px-[50px] md:rounded-[8px] md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
               >
                 Receipt
               </button>
@@ -1575,9 +1635,7 @@ const EKEDC = () => {
           <Loader />
         </Modal>
       )}
-      {sessionModal && (
-        <HandleUserSession/>
-      )}
+      {sessionModal && <HandleUserSession />}
     </DashBoardLayout>
   );
 };

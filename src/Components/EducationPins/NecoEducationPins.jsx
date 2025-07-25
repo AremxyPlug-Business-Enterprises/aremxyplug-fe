@@ -194,7 +194,7 @@ export default function NecoEducationPins() {
               return setSessionModal(true);
             }
           },
-          setNecoEduResponse
+          setPassDataBalance
         );
       }
     };
@@ -361,7 +361,6 @@ export default function NecoEducationPins() {
   };
 
   const [pinSuccess, setPinSuccess] = useState(false);
-  const [pinFailed, setPinFailed] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
   const [fetchedPurchaseResponse, setFetchedPurchaseResponse] = useState({});
 
@@ -380,8 +379,23 @@ export default function NecoEducationPins() {
         setEducationPinStatus(true);
         setNecoOrderId(response?.data?.data?.data?.order_id);
       };
-      const FailedHandler = () => {
-        necoEduPinFailed();
+      const FailedHandler = async (ErrorType) => {
+        if (ErrorType === "Bad request") {
+          necoEduPinFailed();
+        } else if (ErrorType === "unauthorised") {
+          await PostFunction(
+            path,
+            setIsLoading,
+            body,
+            SuccessHandler,
+            (ErrorType) => {
+              if (ErrorType === "unauthorised") {
+                return setSessionModal(true);
+              }
+            },
+            setFetchedPurchaseResponse
+          );
+        }
       };
 
       await PostFunction(
@@ -393,6 +407,23 @@ export default function NecoEducationPins() {
         setFetchedPurchaseResponse
       );
     }
+
+    const setPinFailed = async (ErrorType) => {
+      if (ErrorType === "unauthorised") {
+        await VerifyTransPin(
+          inputPin,
+          setPinSuccess,
+          (ErrorType) => {
+            if (ErrorType === "unauthorised") {
+              setSessionModal(true);
+            }
+          },
+          setIsLoading,
+          setErrorMessage,
+          EduPinHandler
+        );
+      }
+    };
     await VerifyTransPin(
       inputPin,
       setPinSuccess,
@@ -474,7 +505,7 @@ export default function NecoEducationPins() {
                 <div className="relative flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
                   {/* header */}
                   <h2
-                    className={`md:font-semibold font-normal text-[14px] lg:text-[17px] md:text-[13px] ${
+                    className={`md:font-semibold font-normal text-sm lg:text-base md:text-[13px] ${
                       isDarkMode ? "text-white" : "text-[#7E7E7E]"
                     }`}
                   >
@@ -488,39 +519,33 @@ export default function NecoEducationPins() {
                       setNecoQuantityActive(false);
                       setNecoMethodActive(false);
                     }}
-                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px]  sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-normal leading-[10.4px] md:text-[11px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-5 md:p-0 text-[13.2px] sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-normal leading-[10.4px] md:text-[11px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
                       isDarkMode
                         ? "bg-black hover:bg-gray-800 text-white border border-white"
                         : "hover:bg-[#EDEAEA]"
                     }`}
                   >
-                    <input
-                      type="text"
-                      value={necoExamType}
-                      className={` bg-transparent
-                        text-xs focus:outline-none
-                      ${
-                        isDarkMode
-                          ? "bg-black text-white hover:bg-gray-800"
-                          : " text-[#7C7C7C] hover:bg-[#EDEAEA] "
-                      }`}
-                      readOnly
-                    />
-
+                    {necoExamType}
                     <img
-                      className="lg:w-6 lg:h-6 w-4 h-4 cursor-pointer Examdrop"
+                      className="Examdrop absolute left-[92%] lg:left-[94%] self-center align-middle md:h-[14.038px] md:w-[14.038px] lg:h-6 lg:w-6 w-[14px] h-[16px]"
                       src={arrowDown}
                       alt=""
                     />
+
+                    {/* <img
+                      className="lg:w-6 lg:h-6 w-4 h-4 cursor-pointer Examdrop"
+                      src={arrowDown}
+                      alt=""
+                    /> */}
                   </div>
                   {necoExamActive && (
                     <div
-                      className={`absolute lg:top-[90px] md:top-[60px] top-[74px] z-[2] flex flex-col w-full divide-y lg:h-225px md:h-[210px]
-                      ${
-                        isDarkMode
-                          ? "bg-black text-white divide-gray-50 border border-white"
-                          : "text-[#7C7C7C]"
-                      }`}
+                      className={`
+                    ${
+                      isDarkMode
+                        ? "text-white bg-black  "
+                        : " text-[#7C7C7C] bg-white hover:bg-[#EDEAEA]"
+                    } flex flex-col absolute lg:top-[80px] md:top-[60px] top-[74px] transition-colors duration-300 z-[2] w-full`}
                       // lg:h-225px md:h-[210px]
                     >
                       {necoExams?.map((exam) => {
@@ -534,7 +559,7 @@ export default function NecoEducationPins() {
                                 .querySelector(".Examdrop")
                                 .classList.remove("DropIt");
                             }}
-                            className={`py-5 text-sm leading-[10.4px] md:py-[14px] pl-[10px] font-medium md:text-[13.227px] md:leading-[17.195px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] lg:text-base lg:leading-[20.8px] cursor-pointer transition-colors duration-300 
+                            className={`py-5 md:py-[14px] font-semibold cursor-pointer lg:text-base lg:leading-[20.8px] w-full md:rounded-[0px] text-sm leading-[10.4px] pl-2.5 md:text-[13.227px] transition-colors duration-300 md:leading-[17.195px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
                             ${
                               isDarkMode
                                 ? "bg-black text-white  hover:bg-gray-800"
@@ -563,7 +588,7 @@ export default function NecoEducationPins() {
                   {/* input */}
                   <div
                     // className="w-full relative"
-                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] sm:p-3 sm:text-lg  flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-normal leading-[10.4px] md:text-[11px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] items-center outline-0 w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] self-center  ${
+                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-5 md:p-0 text-[13.2px] sm:p-3 sm:text-lg  flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-normal leading-[10.4px] md:text-[11px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] items-center outline-0 w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] self-center  ${
                       isDarkMode
                         ? "bg-black hover:bg-gray-800 text-white border border-white"
                         : "hover:bg-[#EDEAEA] border-[0.24px] lg:border-[0.4px] border-[#9C9C9C] text-[#7C7C7C]"
@@ -580,40 +605,31 @@ export default function NecoEducationPins() {
                       }
                     }}
                   >
-                    <input
-                      type="text"
-                      value={necoQuantityResult}
-                      className={`w-full h-full bg-transparent capitalize focus:outline-none
-                      ${
-                        isDarkMode
-                          ? "bg-black text-white "
-                          : " text-[#7C7C7C] hover:bg-[#EDEAEA] "
-                      } ${
-                        !necoQuantityAmount
-                          ? "cursor-not-allowed "
-                          : "cursor-pointer"
-                      } `}
-                      readOnly
-                    />
+                    {necoQuantityResult}
 
-                    <img
+                    {/* <img
                       className="lg:w-6 lg:h-6 w-4 h-4 imgdrop"
                       src={arrowDown}
                       alt=""
                       style={{
                         cursor: !necoQuantityAmount ? "not-allowed" : "pointer",
                       }}
+                    /> */}
+                    <img
+                      className="imgdrop absolute left-[90%] lg:left-[94%] self-center align-middle md:h-[14.038px] md:w-[14.038px] lg:h-6 lg:w-6 w-3.5 h-4"
+                      src={arrowDown}
+                      alt=""
                     />
                   </div>
                   {/* drop down */}
 
                   {necoQuantityActive && necoQuantityAmount && (
                     <div
-                      className={`absolute lg:top-[90px] md:top-[60px] top-[74px] z-[1] flex flex-col w-full divide-y rounded
+                      className={`dropdown-options absolute top-[100%] w-full z-[2]
                       ${
                         isDarkMode
-                          ? "bg-black text-white divide-gray-50 border border-white"
-                          : "text-[#7C7C7C] hover:bg-[#EDEAEA]"
+                          ? "bg-black text-white border border-white divide-y divide-white"
+                          : "text-[#7C7C7C] hover:bg-[#EDEAEA] bg-white"
                       }`}
                     >
                       {necoOptions?.map((option) => {
@@ -680,12 +696,12 @@ export default function NecoEducationPins() {
                       const numericValue = e.target.value.replace(/\D/g, "");
                       e.target.value = numericValue;
                       if (numericValue.length === 11) {
-                        e.target.style.border = "2px solid green";
+                        e.target.style.border = "1px solid green";
                       } else if (e.target.value.length < 11) {
-                        e.target.style.border = "2px solid red";
+                        e.target.style.border = "1px solid red";
                       }
                     }}
-                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-5 md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-normal leading-[10.4px] md:text-[11px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center focus:outline-0 outline-0 border lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px]  self-center
+                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-5 md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-normal leading-[10.4px] md:text-[11px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-3 lg:pr-[9px] lg:pl-[10px]  items-center focus:outline-0 outline-0 border lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px]  self-center
                     ${
                       isDarkMode
                         ? "bg-black text-white border-white"
@@ -725,7 +741,7 @@ export default function NecoEducationPins() {
                   </h2>
 
                   <input
-                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[13px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center focus:outline-0 outline-0 border lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center  
+                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-5 md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[13px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-3 lg:pr-[9px] lg:pl-[10px]  items-center focus:outline-0 outline-0 border lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center  
                     ${
                       isDarkMode
                         ? "bg-black text-white border-white"
@@ -766,7 +782,7 @@ export default function NecoEducationPins() {
                   </label>
                   {/* input */}
                   <input
-                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[13px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer focus:outline-0 outline-0 border lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center  
+                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-5 md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-normal leading-[10.4px] md:text-[13px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-3 lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer focus:outline-0 outline-0 border lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px]  self-center  
                     ${
                       isDarkMode
                         ? "bg-black text-white border-white"
@@ -783,13 +799,13 @@ export default function NecoEducationPins() {
                 {/* payment method */}
                 <div className="flex flex-col relative gap-[3px] lg:gap-[5px] w-full md:w-1/2">
                   {/* header */}
-                  <h2
+                  <label
                     className={`md:font-semibold font-normal text-sm md:text-[13px] lg:text-base ${
                       isDarkMode ? "text-white" : "text-[#7E7E7E]"
                     }`}
                   >
                     Payment Method
-                  </h2>
+                  </label>
                   {/* input */}
                   <div
                     onClick={(e) => {
@@ -797,7 +813,7 @@ export default function NecoEducationPins() {
                       setNecoExamActive(false);
                       setNecoQuantityActive(false);
                     }}
-                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px]  sm:p-3 sm:text-lg flex items-center justify-between border lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] cursor-pointer px-[11px] md:px-[6px] lg:px-[10px] ${
+                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-5 md:p-0 text-[13px]  sm:p-3 sm:text-lg flex items-center justify-between border lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] cursor-pointer px-[11px] md:px-[6px] lg:px-[10px] ${
                       isDarkMode
                         ? "bg-black hover:bg-gray-800 text-white border-white"
                         : "border-[#9C9C9C] hover:bg-[#EDEAEA] "
@@ -812,7 +828,7 @@ export default function NecoEducationPins() {
                     </p>
 
                     <img
-                      className="lg:w-6 lg:h-6 w-4 h-4 cursor-pointer methodDrop"
+                      className="lg:w-6 lg:h-6 md:h-[14.038px] md:w-[14.038px] w-3.5 h-4 cursor-pointer methodDrop"
                       src={necoPaymentResult ? necoImageState : arrowDown}
                       alt="CountryFlag"
                     />
@@ -821,11 +837,11 @@ export default function NecoEducationPins() {
 
                   {necoMethodActive && (
                     <div
-                      className={`absolute lg:top-[85px] md:top-[60px] top-[72px] border divide-y z-[5] rounded flex flex-col w-full  
+                      className={`absolute lg:top-[85px] md:top-[60px] top-[74px] border z-0 rounded flex flex-col w-full  
                       ${
                         isDarkMode
-                          ? "bg-black text-white divide-gray-50  border-white"
-                          : "text-[#7C7C7C] bg-white"
+                          ? "bg-black text-white divide-y divide-gray-50  border-white"
+                          : "text-[#7C7C7C] bg-white border-gray-100"
                       }`}
                     >
                       {necoMethodOptions?.map((methodOption) => {
@@ -833,7 +849,8 @@ export default function NecoEducationPins() {
                           <div
                             onClick={() => {
                               if (methodOption.method === "NGN Wallet") {
-                                setNecoPaymentResult( `${methodOption.method} ${methodOption.balance}`
+                                setNecoPaymentResult(
+                                  `${methodOption.method} ${methodOption.balance}`
                                 );
                                 setNecoWalletBalance(methodOption.balance);
                                 setNecoImageState(methodOption.flag);
@@ -845,15 +862,26 @@ export default function NecoEducationPins() {
                                 setNecoMethodActive(true);
                               }
                             }}
-                            className={`flex gap-2.5 lg:py-[15px] py-[10px] pl-[10px] pb-[20px] pt-[20px] md:py-2 transition-colors duration-300 items-center shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] 
-                            ${
-                              methodOption.id !== 1 && !isDarkMode
-                                ? "bg-gray-300 cursor-not-allowed"
-                                : methodOption.id !== 1 && isDarkMode
-                                ? "bg-black cursor-not-allowed"
-                                : methodOption.id === 1 && !isDarkMode
-                                ? "bg-white hover:bg-[#EDEAEA] cursor-pointer"
-                                : "bg-black cursor-pointer hover:bg-gray-800"
+                            // className={`flex gap-2.5 lg:py-[15px] py-[10px] pl-[10px] pb-[20px] pt-[20px] md:py-2 transition-colors duration-300 items-center shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
+                            // ${
+                            //   methodOption.id !== 1 && !isDarkMode
+                            //     ? "bg-gray-300 cursor-not-allowed"
+                            //     : methodOption.id !== 1 && isDarkMode
+                            //     ? "bg-black cursor-not-allowed"
+                            //     : methodOption.id === 1 && !isDarkMode
+                            //     ? "bg-white hover:bg-[#EDEAEA] cursor-pointer"
+                            //     : "bg-black cursor-pointer hover:bg-gray-800"
+                            // }`}
+
+                            className={`py-[18px] md:py-2 lg:py-[15px] font-normal pl-[10px] flex items-center gap-[5px] text-xs md:text-sm lg:text-base shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] transition-all duration-300
+                       ${
+                         isDarkMode
+                           ? "text-white hover:bg-slate-800 bg-black "
+                           : "text-[#7E7E7E] "
+                       } ${
+                              methodOption.method === "NGN Wallet"
+                                ? "cursor-pointer hover:bg-[#EDEAEA]"
+                                : "cursor-not-allowed opacity-50"
                             }`}
                             key={methodOption.id}
                           >
@@ -864,8 +892,11 @@ export default function NecoEducationPins() {
                             />
 
                             <h2
-                              className={`pb-[20px] md:pb-0 md:pt-0 pt-[20px] font-normal text-[13.5px] leading-[10.4px] md:text-[13.227px] md:leading-[17.195px] lg:text-base lg:leading-[20.8px] self-center
-                              ${isDarkMode ? " text-white" : "text-[#7C7C7C]"}`}
+                              className={`text-sm leading-[10.4px] font-medium md:text-[13.227px] md:leading-[17.195px] lg:text-base lg:leading-[20.8px] self-center cursor-pointer   ${
+                                isDarkMode
+                                  ? "text-white bg-black"
+                                  : "text-[#7C7C7C] "
+                              }`}
                             >
                               {methodOption.method + " " + methodOption.balance}
                             </h2>
@@ -1158,7 +1189,7 @@ export default function NecoEducationPins() {
                               Pin matches
                             </p>
                           )}
-                          {pinFailed && errorMessage && (
+                          {errorMessage && (
                             <p className="text-[12px] text-center text-red-600 font-medium">
                               Incorrect Pin
                             </p>
@@ -1515,8 +1546,8 @@ export default function NecoEducationPins() {
                     to="/NecoFailedReceipt"
                     onClick={handleFailedData}
                     className={`bg-[#ffffff] border-[1px] w-[111px] border-[#0003] flex justify-center items-center text-center  cursor-pointer text-xs font-extrabold h-[40px] rounded-[6px] md:w-[150px] md:rounded-[8px] md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%] ${
-                       isDarkMode ? "text-black" : "text-black"
-                     }`}
+                      isDarkMode ? "text-black" : "text-black"
+                    }`}
                   >
                     Receipt
                   </Link>
@@ -1527,8 +1558,7 @@ export default function NecoEducationPins() {
         )}
 
         <div
-          className=" flex gap-[8.729px]  md:gap-[14.896px] 
-       justify-center px-[8.594px] mb-[50px]"
+          className=" flex gap-[8.729px] md:gap-[14.896px] items-center justify-center px-[8.594px] mt-[21rem] md:mt-0"
         >
           <p
             className="font-medium text-[11px] md:text-[12px]

@@ -27,7 +27,7 @@ export const IkedcReceipt = () => {
     setIkedcEmail,
     ikedcAmount,
     setIkedcAmount,
-    setGlobalCountry,
+    setIkedcCountry,
     setIkedcFlag,
     selectedIkedcMeterType,
     // ikedcServiceID,
@@ -65,7 +65,7 @@ export const IkedcReceipt = () => {
     setIkedcPhoneNumber("");
     setIkedcEmail("");
     setIkedcAmount("");
-    setGlobalCountry("");
+    setIkedcCountry("");
     setIkedcFlag("");
     navigate("/electricity-subscription");
   }

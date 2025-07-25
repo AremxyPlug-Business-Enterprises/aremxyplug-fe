@@ -27,7 +27,7 @@ export const EedcReceipt = () => {
     setEedcEmail,
     eedcAmount,
     setEedcAmount,
-    setGlobalCountry,
+    setEedcCountry,
     setEedcFlag,
     selectedEedcMeterType,
     // eedcServiceID,
@@ -64,7 +64,7 @@ export const EedcReceipt = () => {
     setEedcPhoneNumber("");
     setEedcEmail("");
     setEedcAmount("");
-    setGlobalCountry("");
+    setEedcCountry("");
     setEedcFlag("");
     navigate("/electricity-subscription");
   }

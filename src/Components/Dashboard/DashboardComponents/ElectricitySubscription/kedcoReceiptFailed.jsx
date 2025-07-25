@@ -31,7 +31,7 @@ export const KedcoReceiptFailed = () => {
     setKedcoEmail,
     kedcoAmount,
     setKedcoAmount,
-    setGlobalCountry,
+    setKedcoCountry,
     setKedcoFlag,
     selectedKedcoMeterType,
     kedcoDiscoType,
@@ -71,7 +71,7 @@ export const KedcoReceiptFailed = () => {
     setKedcoPhoneNumber("");
     setKedcoEmail("");
     setKedcoAmount("");
-    setGlobalCountry("");
+    setKedcoCountry("");
     setKedcoFlag("");
     navigate("/electricity-subscription");
   }

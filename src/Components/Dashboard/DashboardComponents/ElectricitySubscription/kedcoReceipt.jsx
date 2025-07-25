@@ -26,7 +26,7 @@ export const KedcoReceipt = () => {
     setKedcoEmail,
     kedcoAmount,
     setKedcoAmount,
-    setGlobalCountry,
+    setKedcoCountry,
     setKedcoFlag,
     selectedKedcoMeterType,
     // kedcoServiceID,
@@ -69,7 +69,7 @@ export const KedcoReceipt = () => {
     setKedcoPhoneNumber("");
     setKedcoEmail("");
     setKedcoAmount("");
-    setGlobalCountry("");
+    setKedcoCountry("");
     setKedcoFlag("");
     navigate("/electricity-subscription");
   }

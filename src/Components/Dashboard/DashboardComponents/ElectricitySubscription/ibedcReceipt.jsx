@@ -26,7 +26,7 @@ export const IbedcReceipt = () => {
     setIbedcEmail,
     ibedcAmount,
     setIbedcAmount,
-    setGlobalCountry,
+    setIbedcCountry,
     setIbedcFlag,
     selectedIbedcMeterType,
     // ibedcServiceID,
@@ -65,7 +65,7 @@ export const IbedcReceipt = () => {
     setIbedcPhoneNumber("");
     setIbedcEmail("");
     setIbedcAmount("");
-    setGlobalCountry("");
+    setIbedcCountry("");
     setIbedcFlag("");
     navigate('/electricity-subscription');
   }

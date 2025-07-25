@@ -27,7 +27,7 @@ const navigate = useNavigate();
     setPhedEmail,
     phedAmount,
     setPhedAmount,
-    setGlobalCountry,
+    setPhedCountry,
     setPhedFlag,
     selectedPhedMeterType,
     phedDiscoType,
@@ -65,7 +65,7 @@ const navigate = useNavigate();
     setPhedPhoneNumber("");
     setPhedEmail("");
     setPhedAmount("");
-    setGlobalCountry("");
+    setPhedCountry("");
     setPhedFlag("");
     navigate("/electricity-subscription");
   }

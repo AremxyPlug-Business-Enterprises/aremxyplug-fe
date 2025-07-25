@@ -26,7 +26,7 @@ export const PhedReceipt = () => {
     setPhedEmail,
     phedAmount,
     setPhedAmount,
-    setGlobalCountry,
+    setPhedCountry,
     setPhedFlag,
     selectedPhedMeterType,
     // phedServiceID,
@@ -63,7 +63,7 @@ export const PhedReceipt = () => {
     setPhedPhoneNumber("");
     setPhedEmail("");
     setPhedAmount("");
-    setGlobalCountry("");
+    setPhedCountry("");
     setPhedFlag("");
     navigate("/electricity-subscription");
   }

@@ -15,12 +15,12 @@ import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import OtpInput from "react-otp-input";
 import { Link, useNavigate } from "react-router-dom";
-// import axios from 'axios';
 import { BalanceLoading, Loader } from "../../../Loader/Loader";
 import {
   PostFunction,
   VerifyTransPin,
-  HandleUserSession
+  HandleUserSession,
+  GetFunction,
 } from "../../../ApiCollection.jsx/ApiBuck";
 const AEDC = () => {
   const navigate = useNavigate();
@@ -35,8 +35,8 @@ const AEDC = () => {
     setShowList,
     setSelected,
     selected,
-    globalCountry,
-    setGlobalCountry,
+    aedcCountry,
+    setAedcCountry,
     globalTransferErrors,
     aedcPhoneNumber,
     setAedcPhoneNumber,
@@ -64,10 +64,10 @@ const AEDC = () => {
     setAedcFetchedResponse,
 
     newBalance,
+    setNewBalance,
   } = useContext(ContextProvider);
 
-  // const { selectedNetworkProduct, setSelectedNetworkProduct } =
-  //   useContext(ContextProvider);
+  
   const [showProductList, setShowProductList] = useState(false);
 
   const pointsEarned = "+2.00";
@@ -97,16 +97,64 @@ const AEDC = () => {
   ];
   const handleSelectProduct = (productName) => {
     setSelectedAedcMeterType(productName);
-    // setSelectedOption("");
     setShowProductList(false);
-    // setShowOptionList(false);
   };
-  //   const { selectedOption, setSelectedOption } = useContext(ContextProvider);
-  //   const [showOptionList, setShowOptionList] = useState(false);
-  const countryList = [
-    {
-      id: 1,
-      name: `NGN Wallet (₦${newBalance})`,
+
+  
+    const [passDataBalance, setPassDataBalance] = useState({});
+    
+    const GetBalance = async () => {
+        const SuccessHandler = () => {
+          console.log("successfully retrieved balance");
+        };
+        const FailedHandler = async (ErrorType) => {
+          if (ErrorType === "unauthorised") {
+            await GetFunction(
+              `bills/verify`,
+              setLoading,
+              SuccessHandler,
+              (ErrorType) => {
+                if (ErrorType === "unauthorised") {
+                  return setSessionModal(true);
+                }
+              },
+              setPassDataBalance
+            );
+          }
+        };
+        await GetFunction(
+          "balance",
+          setLoading,
+          SuccessHandler,
+          FailedHandler,
+          setPassDataBalance
+        );
+      };
+      // get the balance on entering the page
+      useEffect(() => {
+        if (newBalance === "" || newBalance === null || newBalance === undefined) {
+          GetBalance();
+          if (GetBalance) {
+            setNewBalance(
+              passDataBalance?.data?.data
+                ? passDataBalance?.data?.data?.data?.balance
+                : ""
+            );
+          }
+        }
+        // handleResetFields();
+        // eslint-disable-next-line
+      }, []);
+  
+      const updateBalance = passDataBalance?.data?.data
+      ? passDataBalance?.data?.data?.data?.balance
+      : "";
+  
+    const countryList = [
+      {
+        id: 1,
+        name: `NGN Wallet ${newBalance === "" || newBalance === null || newBalance === undefined ? `(₦${updateBalance})`
+            : `(₦${newBalance})`}`,
       code: "Nigerian NGN Wallet",
       flag: require("../ElectricitySubscription/Electricity-sub-images/nigeriaFlag.png"),
     },
@@ -274,21 +322,13 @@ const AEDC = () => {
     if (id !== 1 && code !== "Nigerian NGN Wallet") return;
     setAedcFlag(flag);
     setShowList(false);
-    setGlobalCountry(name);
+    setAedcCountry(name);
     setAmountError("");
     setSelected(true);
     // setSelectedCountry(country)
     // setCountryCode(code);
     // setCurrencyAvailable(id !== 1);
   };
-  // const handleVerifiedName = (event) => {
-  //   const newValue = event.target.value;
-  //   setAedcVerifiedName(newValue);
-  // };
-  // const handleMeterNumber = (event) => {
-  //   const newValue = event.target.value;
-  //   setAedcMeterNumber(newValue);
-  // };
   const handlePhoneNumber = (event) => {
     const value = event.target.value;
     const newValue = value.replace(/\D/g, "").slice(0, 11);
@@ -300,7 +340,6 @@ const AEDC = () => {
   };
   const handleAedcAmount = (event) => {
     const newValue = event.target.value;
-    // setIkedcamount(newValue);
     if (newValue.startsWith("")) {
       setAedcAmount(newValue);
     } else {
@@ -314,7 +353,6 @@ const AEDC = () => {
 
   const [errorMessage, setErrorMessage] = useState(false);
   const [pinSuccess, setPinSuccess] = useState(false);
-  const [pinFailed, setPinFailed] = useState(false);
   const [isFailedMeterNumber, setIsFailedMeterNumber] = useState(false);
   const [meterNumberLoading, setMeterNumberLoading] = useState(false);
 
@@ -339,30 +377,29 @@ const AEDC = () => {
           function handleReceivedMeterData() {
             if (aedcFetchedResponse?.data?.name) {
               setAedcCustomerName(aedcFetchedResponse?.data?.name);
-              // console.log("meter number", aedcFetchedResponse?.data?.name);
             } else {
               setAedcCustomerName("");
             }
           }
           handleReceivedMeterData();
         };
-        const FailedHandler = async(ErrorType) => {
-          if(ErrorType === "Bad request"){
-             setIsFailedMeterNumber(true);
-          }else if(ErrorType === "unauthorised"){
-                await PostFunction(
-          path,
-          setMeterNumberLoading,
-          body,
-          SuccessHandler,
-         (ErrorType)=> {
-          if(ErrorType === "unauthorised"){
-           return setSessionModal(true)
-           }},
-          setAedcFetchedResponse
-        );
+        const FailedHandler = async (ErrorType) => {
+          if (ErrorType === "Bad request") {
+            setIsFailedMeterNumber(true);
+          } else if (ErrorType === "unauthorised") {
+            await PostFunction(
+              path,
+              setMeterNumberLoading,
+              body,
+              SuccessHandler,
+              (ErrorType) => {
+                if (ErrorType === "unauthorised") {
+                  return setSessionModal(true);
+                }
+              },
+              setAedcFetchedResponse
+            );
           }
-        
         };
         await PostFunction(
           path,
@@ -375,7 +412,6 @@ const AEDC = () => {
       }
     }
     HandleMeterNumber();
-    // handleReceivedMeterData();
     passedMeterName = aedcFetchedResponse
       ? aedcFetchedResponse?.data?.name
       : "";
@@ -407,36 +443,33 @@ const AEDC = () => {
         phone: aedcPhoneNumber, // Use the parsed integer value
         email: aedcEmail,
         amount: parsedAmount,
-        // amount: "",
         disco_type: "abuja-electric",
       };
-      // const parsedAmount = parseInt(amount, 10);
       const SuccessHandler = () => {
         setInputPinPopUp(false);
         setAedcDiscoType(aedcFetchedResponse?.data?.disco_type);
         setSuccessPopup(true);
       };
-      const FailedHandler = async(ErrorType) => {
-        if(ErrorType === "Bad request"){
-           setInputPinPopUp(false);
-        setFailedPopup(true);
-        }else if(ErrorType === "unauthorised"){
+      const FailedHandler = async (ErrorType) => {
+        if (ErrorType === "Bad request") {
+          setInputPinPopUp(false);
+          setFailedPopup(true);
+        } else if (ErrorType === "unauthorised") {
           await PostFunction(
-        path,
-        setLoading,
-        data,
-        SuccessHandler,
-       (ErrorType)=> {
-        if(ErrorType === "unauthorised"){
-           return setSessionModal(true)
+            path,
+            setLoading,
+            data,
+            SuccessHandler,
+            (ErrorType) => {
+              if (ErrorType === "unauthorised") {
+                return setSessionModal(true);
+              }
+            },
+            setAedcFetchedResponse
+          );
         }
-        },
-        setAedcFetchedResponse
-      );
-        }
-
- };
-await PostFunction(
+      };
+      await PostFunction(
         path,
         setLoading,
         data,
@@ -445,26 +478,26 @@ await PostFunction(
         setAedcFetchedResponse
       );
     }
-   //Kindly uncomment the code below after implementing the errorMessage
+    //Kindly uncomment the code below after implementing the errorMessage
     //rather than the pinfailed and pinSucess state
     //Kindly also remove the setPinFailed state as there
     //is no longer any use for it
-    // const setPinFailed= async(ErrorType)=> {
-    //   if(ErrorType==="unauthorised"){
-    //       await VerifyTransPin(
-    //   inputPin,
-    //   setPinSuccess,
-    //  (ErrorType)=> {
-    //   if(ErrorType === "unauthorised"){
-    //  setSessionModal(true)
-    //   }
-    //  },
-    //   setLoading,
-    //   setErrorMessage,
-    //   ElectricityHandler
-    // );
-    //   }
-    // }
+    const setPinFailed= async(ErrorType)=> {
+      if(ErrorType==="unauthorised"){
+          await VerifyTransPin(
+      inputPin,
+      setPinSuccess,
+     (ErrorType)=> {
+      if(ErrorType === "unauthorised"){
+     setSessionModal(true)
+      }
+     },
+      setLoading,
+      setErrorMessage,
+      ElectricityHandler
+    );
+      }
+    }
     await VerifyTransPin(
       inputPin,
       setPinSuccess,
@@ -512,7 +545,7 @@ await PostFunction(
     setAedcPhoneNumber("");
     setAedcEmail("");
     setAedcAmount("");
-    setGlobalCountry("");
+    setAedcCountry("");
     setAedcFlag("");
     setAedcBillGenerate("");
     setAedcOrderId("");
@@ -535,7 +568,6 @@ await PostFunction(
     };
     HandleBalanceStatus();
   }, [CheckSufficiency]);
-  // console.log(balanceStringToNum, aedcAmountToNumber);
 
   const [InputPinPopUp, setInputPinPopUp] = useState(false);
   const [inputPin, setInputPin] = useState("");
@@ -563,7 +595,7 @@ await PostFunction(
           {/* top part after nav bar */}
           <div className="flex flex-row w-full pt-[10px] min-h-[91px] md:h-[112.29px] lg:h-[196px] lg:px-[50px]  px-[16px] rounded-lg md:rounded-[11.5px] lg:rounded-[20px] justify-between  py-0 bg-gradient-to-r from-[#FFA733] via-[#58FF4A] to-[#98B0FF]">
             <div className="flex flex-col gap-2  ">
-              <div className="text-[11px] font-semibold pt-[10px] md:text-[12px] md:leading-[20.63px] lg:pt-[25px] lg:text-[24px] lg:leading-[36px] text-[#000000] leading-[12px]">
+              <div className="text-[11px] font-semibold pt-[10px] md:text-xs md:leading-[20.63px] lg:pt-[25px] lg:text-[24px] lg:leading-[36px] text-[#000000] leading-[12px]">
                 ELECTRICITY BILLS, PREPAID AND POSTPAID <br /> PAYMENTS.
               </div>
               <div className="text-[9px] font-normal leading-[12px] md:text-[10px] md:leading-[14.9px] lg:text-[20px] lg:leading-[26px] text-[#000000]">
@@ -580,15 +612,15 @@ await PostFunction(
             </div>
           </div>
           <div
-            className={`flex lg:mt-[20px] text-[10px] sm:text-[12px] lg:text-[16px] font-semibold pt-[30px] items-center w-full ${
+            className={`flex lg:mt-[20px] text-xs lg:text-[18px] md:text-[13px]  font-semibold pt-[30px] items-center w-full ${
               isDarkMode ? "text-white" : "text-[#7E7E7E]"
             }`}
           >
-            <div className="text-[9px] md:text-xs lg:text-[16px]">Recharge</div>
+            <div className="">Recharge</div>
             <div>
               <img className="w-[35px] lg:w-[3.5rem] ml-1" src={logo} alt="" />
             </div>
-            <div className="ml-1 text-[9px] md:text-xs lg:text-[16px]">
+            <div className="ml-1">
               Abuja Electric Payment-AEDC Meter Instantly
             </div>
             <div className="ml-1">
@@ -601,7 +633,7 @@ await PostFunction(
           </div>
           <div className="lg:flex lg:items-start ">
             <div
-              className={`mt-[10px] lg:mt-[15px] border from-[#E2F3FF] font-bold text-[12px] lg:text-[16px] lg:rounded-sm lg:py-2 text-center lg:px-3 py-1 to-[#FFF]
+              className={`mt-[10px] lg:mt-[15px] border from-[#E2F3FF] font-bold text-xs lg:text-base lg:rounded-sm lg:py-2 text-center lg:px-3 py-1 to-[#FFF]
             ${
               isDarkMode
                 ? "text-white bg-black border-white"
@@ -614,7 +646,7 @@ await PostFunction(
           </div>
 
           <div
-            className={`text-[14px] lg:text-[16px] font-semibold mt-[20px] ${
+            className={`text-sm lg:text-base font-semibold mt-[20px] ${
               isDarkMode ? "text-white" : "text-[#7E7E7E]"
             } `}
           >
@@ -622,7 +654,7 @@ await PostFunction(
             MeterType if you load token on your meter.
           </div>
           <div
-            className={`text-[14px] lg:text-[16px] font-semibold mt-[10px] ${
+            className={`text-sm lg:text-base font-semibold mt-[10px] ${
               isDarkMode ? "text-white" : "text-[#7E7E7E]"
             } `}
           >
@@ -634,54 +666,45 @@ await PostFunction(
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 md:gap-6 lg:gap-6 items-center lg:mt-[20px] ">
             <div className="flex flex-col mt-[20px] relative gap-2 lg:gap-2.5">
               <div
-                className={`text-[14px] lg:text-[16px]  md:font-semibold font-normal ${
+                className={`text-sm lg:text-base md:text-[13px]  md:font-semibold font-normal ${
                   isDarkMode ? "text-white" : "text-[#7E7E7E]"
                 }`}
               >
                 Select Meter Type
               </div>
               <div
-                className={`flex justify-between items-center py-[12px] pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
+                className={`rounded-[10px] md:rounded-0 p-[20px] md:py-5 text-[13.2px]  sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[11px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
                   isDarkMode
                     ? "text-white bg-black border border-white"
-                    : "text-[#7E7E7E] bg-white"
+                    : "text-[#7E7E7E] bg-white hover:bg-[#EDEAEA]"
                 }`}
                 onClick={() => setShowProductList(!showProductList)}
               >
-                <h2
-                  className={`text-[12px] font-normal leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]
-                ${isDarkMode ? "text-white bg-black" : "text-[#7C7C7C]"}`}
-                >
-                  {selectedAedcMeterType}
-                </h2>
-                <button className="lg:w-6 lg:h-6 w-4 h-4 cursor-pointer">
-                  <img src={arrowDown} alt="" className="w-full h-full" />
-                </button>
+                {selectedAedcMeterType}
+                <img
+                  src={arrowDown}
+                  alt=""
+                  className="decdrop absolute left-[92%] lg:left-[94%] self-center align-middle md:h-[14.038px] md:w-[14.038px] lg:h-[24px] lg:w-[24px] w-[14px] h-[16px]"
+                />
               </div>
               {showProductList && (
                 <div
-                  // className="border md:rounded-[10px] text-[10px] md:text-[12px] lg:text-[16px] mt-14 lg:mt-20 w-[90%] md:w-[44%]  rounded-[4px] absolute  bg-[#FFF] z-[10]"
-                  //  ${toggleSideBar
-                  //   ? "lg:w-[35.8%] lg:top-[95%]"
-                  //   : "lg:w-[44.2%] lg:top-[95%]"
-                  //   }
                   className={`
                     ${
                       isDarkMode
-                        ? "text-white bg-black hover:bg-slate-800 divide-white border-white"
-                        : " text-[#7C7C7C] bg-white"
-                    }
-                    border flex flex-col divide-y items-center text-[14px] md:text-[12px] lg:text-[16px] mt-20 lg:mt-20  rounded-[4px] md:rounded-[10px] absolute top-1 lg:top-[1rem] w-full z-[10]`}
+                        ? "text-white bg-black  "
+                        : " text-[#7C7C7C] bg-white hover:bg-[#EDEAEA]"
+                    } flex flex-col absolute lg:top-[90px] md:top-[70px] top-[74px] transition-colors duration-300 z-[2] w-full`}
                 >
                   {/*  lg:top-[87%] */}
                   {productList?.map((item) => (
                     <div
                       key={item.name}
-                      className={`pb-[18px] pt-[8px] md:py-[14px] font-bold cursor-pointer md:text-[12px] lg:text-[16px] w-full md:rounded-[0px] text-[12px] pl-[5px] 
+                      className={`py-5 md:py-[14px] font-semibold cursor-pointer lg:text-base lg:leading-[20.8px] w-full md:rounded-[0px] text-sm leading-[10.4px] pl-2.5 md:text-[13.227px] transition-colors duration-300 md:leading-[17.195px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] 
                         ${
                           isDarkMode
-                            ? "bg-black text-white hover:bg-slate-800 hover:rounded-t-[10px]"
-                            : "text-[#7C7C7C]"
+                            ? "bg-black text-white hover:bg-slate-800 border border-white"
+                            : "text-[#7C7C7C] hover:bg-[#EDEAEA] bg-white"
                         }
                         ${selectedAedcMeterType === item.name ? "" : ""}`}
                       onClick={() => handleSelectProduct(item.name)}
@@ -693,9 +716,9 @@ await PostFunction(
               )}
             </div>
 
-            <div className="flex flex-col relative sm:mt-[10px] md:mt-[23px] lg:mt-[23px] gap-2 lg:gap-2.5">
+            <div className="flex flex-col relative gap-2 lg:gap-2.5 mt-5 ">
               <div
-                className={`text-[14px] lg:text-[16px] md:font-semibold font-normal ${
+                className={`text-sm md:text-[13px] lg:text-base md:font-semibold font-normal ${
                   isDarkMode ? "text-white" : "text-[#7E7E7E]"
                 }`}
               >
@@ -710,26 +733,18 @@ await PostFunction(
                     const numericValue = e.target.value.replace(/\D/g, "");
                     e.target.value = numericValue;
                     if (numericValue?.length === 13) {
-                      e.target.style.border = "2px solid green";
+                      e.target.style.border = "1px solid green";
                     } else {
-                      e.target.style.border = "2px solid red";
+                      e.target.style.border = "1px solid red";
                     }
-                    
+
                     setIsFailedMeterNumber(false);
                     setErrors((prev) => ({ ...prev, aedcMeterNumber: "" }));
                   }}
                   onChange={handleAedcMeterNumber}
-                  // onChange={(e) => {
-                  //   const newValue = e.target.value;
-                  //   setAedcMeterNumber(newValue);
-                  //   if (newValue?.length === 13 && !errors.aedcMeterNumber) {
-                  //     verifyMeterNumber(newValue);
-                  //   }
-                  // }}
 
                   onClick={() => setShowProductList(false)}
-                  // py-[10.33px] pl-[5.867px]
-                  className={`py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full w-full  ${
+                  className={`py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-xs leading-[18px] border-[#9C9C9C] lg:text-base lg:leading-[20.8px] focus:outline-none placeholder:text-xs placeholder:leading-[10.4px] placeholder:lg:text-base placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full w-full  ${
                     isDarkMode
                       ? "text-white bg-black border-white"
                       : "text-[#7E7E7E]"
@@ -737,21 +752,21 @@ await PostFunction(
                 />
               </div>
               {errors.aedcMeterNumber && (
-                <div className="text-[13px] absolute left-0 -bottom-[1.3rem] text-red-500 italic lg:text-[14px]">
+                <div className="text-[13px] absolute left-0 -bottom-[1.3rem] text-red-500 italic lg:text-sm">
                   {errors.aedcMeterNumber}
                 </div>
               )}
               {!errors.aedcMeterNumber && isFailedMeterNumber && (
-                <div className="text-[14px] absolute left-0 -bottom-[1.3rem] text-red-500 italic lg:text-[14px]">
+                <div className="text-sm absolute left-0 -bottom-[1.3rem] text-red-500 italic lg:text-sm">
                   Invalid meter number
                 </div>
               )}
             </div>
 
-            <div className="flex flex-col relative gap-2 lg:gap-2.5">
+            <div className="flex flex-col gap-2 lg:gap-2.5">
               <div
-                className={`text-[#7E7E7E] text-[14px] lg:text-[16px] md:font-semibold font-normal ${
-                  isDarkMode ? "text-white" : ""
+                className={`text-sm md:text-[13px] lg:text-base md:font-semibold font-normal ${
+                  isDarkMode ? "text-white" : "text-[#7E7E7E]"
                 }`}
               >
                 Verified Name
@@ -760,9 +775,8 @@ await PostFunction(
                 <input
                   type="text"
                   value={handleVerifiedName}
-                  // value="Judith"
                   readOnly
-                  className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
+                  className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-xs leading-[18px] border-[#9C9C9C] lg:text-base lg:leading-[20.8px] focus:outline-none placeholder:text-xs placeholder:leading-[10.4px] placeholder:lg:text-base placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
                     isDarkMode
                       ? "text-white bg-black border border-white"
                       : "text-[#7E7E7E]"
@@ -777,8 +791,8 @@ await PostFunction(
             </div>
             <div className="flex flex-col gap-2 relative lg:gap-2.5">
               <div
-                className={`text-[#7E7E7E] text-[14px] lg:text-[16px] md:font-semibold font-normal ${
-                  isDarkMode ? "text-white" : ""
+                className={`text-sm md:text-[13px] lg:text-base md:font-semibold font-normal ${
+                  isDarkMode ? "text-white" : "text-[#7E7E7E]"
                 }`}
               >
                 Phone Number
@@ -789,41 +803,36 @@ await PostFunction(
                   value={aedcPhoneNumber}
                   onInput={(e) => {
                     if (aedcPhoneNumber?.length === 10) {
-                      e.target.style.border = "2px solid green";
+                      e.target.style.border = "1px solid green";
                     } else if (e.target.value?.length < 10) {
-                      e.target.style.border = "2px solid red";
+                      e.target.style.border = "1px solid red";
                     }
                     setErrors((prev) => ({ ...prev, aedcPhoneNumber: "" }));
                   }}
-                  onBlur={(e) => {
-                    isDarkMode
-                      ? (e.target.style.border = "1px solid white")
-                      : (e.target.style.border = "1px solid #9C9C9C");
-                  }}
-                  onChange={handlePhoneNumber}
-                  // className={`w-full py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none font-medium  ${
+                  // onBlur={(e) => {
                   //   isDarkMode
-                  //     ? "text-white bg-black border border-white"
-                  //     : "text-[#7E7E7E]"
-                  // }`}
+                  //     ? (e.target.style.border = "1px solid white")
+                  //     : (e.target.style.border = "1px solid #9C9C9C");
+                  // }}
+                  onChange={handlePhoneNumber}
 
-                  className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
+                  className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-xs leading-[18px]  lg:text-base lg:leading-[20.8px] focus:outline-none placeholder:text-xs placeholder:leading-[10.4px] placeholder:lg:text-base placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
                     isDarkMode
                       ? "text-white bg-black border border-white"
-                      : "text-[#7E7E7E] bg-white"
+                      : "text-[#7E7E7E] bg-white border border-[#9C9C9C]"
                   }`}
                 />
               </div>
               {errors.aedcPhoneNumber && (
-                <div className="text-[12px] text-red-500 absolute left-0 -bottom-[1.5rem] leading-3 italic lg:text-[14px]">
+                <div className="text-xs text-red-500 absolute left-0 -bottom-[1.5rem] leading-3 italic lg:text-sm">
                   {errors.aedcPhoneNumber}
                 </div>
               )}
             </div>
             <div className="flex flex-col relative gap-2 lg:gap-2.5">
               <div
-                className={`text-[#7E7E7E] text-[14px] lg:text-[16px] md:font-semibold font-normal ${
-                  isDarkMode ? "text-white" : ""
+                className={`text-sm md:text-[13px] lg:text-base md:font-semibold font-normal ${
+                  isDarkMode ? "text-white" : "text-[#7E7E7E]"
                 }`}
               >
                 Email
@@ -833,10 +842,10 @@ await PostFunction(
                   type="text"
                   value={aedcEmail}
                   onChange={handleEmail}
-                  onInput={()=>{
+                  onInput={() => {
                     setErrors((prev) => ({ ...prev, aedcEmail: "" }));
                   }}
-                  className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
+                  className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-xs leading-[18px] border-[#9C9C9C] lg:text-base lg:leading-[20.8px] focus:outline-none placeholder:text-xs placeholder:leading-[10.4px] placeholder:lg:text-base placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
                     isDarkMode
                       ? "text-white bg-black border border-white"
                       : "text-[#7E7E7E] bg-white"
@@ -844,21 +853,21 @@ await PostFunction(
                 />
               </div>
               {errors.aedcEmail && (
-                <div className="text-[14px] absolute left-0 -bottom-[1.3rem] text-red-500 italic lg:text-[14px]">
+                <div className="text-xs absolute left-0 -bottom-[1.3rem] text-red-500 italic md:text-sm">
                   {errors.aedcEmail}
                 </div>
               )}
             </div>
-            <div className="flex flex-col gap-2 relative lg:gap-2.5">
+            <div className="flex flex-col relative gap-2 lg:gap-2.5">
               <div
-                className={`flex items-center lg:text-[16px] text-[12px] md:font-semibold font-normal ${
+                className={`text-sm md:text-[13px] lg:text-base md:font-semibold font-normal ${
                   isDarkMode ? "text-white " : "text-[#7E7E7E]"
                 }`}
               >
                 Amount
               </div>
               <div
-                className={`flex items-center lg:text-[16px] text-[12px] border pl-2 rounded-md md:rounded-[10px] ${
+                className={`flex items-center py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-xs leading-[18px] border-[#9C9C9C] lg:text-base lg:leading-[20.8px]  rounded-lg sm:rounded-[10px] h-full w-full ${
                   isDarkMode
                     ? "text-white bg-black border-white"
                     : "text-[#7E7E7E] border-[#9C9C9C]"
@@ -870,20 +879,20 @@ await PostFunction(
                   name="aedcamount"
                   value={aedcAmount}
                   onChange={handleAedcAmount}
-                  onInput={()=>{
-                    setAmountError("")
+                  onInput={() => {
+                    setAmountError("");
                   }}
                   placeholder="Minimum of ₦1000"
-                  className={`w-full py-[10.33px] pl-[5.867px] pr-1 md:py-3 md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] text-[12px] leading-[18px] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none
+                  className={`w-full ml-0.5 placeholder:text-xs placeholder:leading-[10.4px] placeholder:lg:text-base placeholder:lg:leading-[20.8px] focus:outline-none
                  ${
                    isDarkMode
-                     ? "text-white bg-black border border-black"
+                     ? "text-white bg-black"
                      : "text-[#7E7E7E]"
                  }`}
                 />
               </div>
               {amountError && (
-                <p className="text-[14px] absolute left-0 -bottom-[1.3rem] text-red-500 italic lg:text-[14px]">
+                <p className="text-sm absolute left-0 -bottom-[1.3rem] text-red-500 italic lg:text-sm">
                   {amountError}
                 </p>
               )}
@@ -891,14 +900,14 @@ await PostFunction(
 
             <div className="flex flex-col relative gap-2 lg:gap-2.5">
               <div
-                className={`text-[#7E7E7E] text-[14px] lg:text-[16px] md:font-semibold font-normal ${
-                  isDarkMode ? "text-white" : ""
+                className={`text-sm md:text-[13px] lg:text-base md:font-semibold font-normal ${
+                  isDarkMode ? "text-white" : "text-[#7E7E7E]"
                 }`}
               >
                 Payment Method
               </div>
               <div
-                className={`py-[10.33px] pl-[5.867px] pr-1 md:py-3 md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none flex items-center justify-between ${
+                className={`rounded-[10px] md:rounded-0 p-[20px] md:py-5 text-[13.2px]  sm:p-3 sm:text-lg relative  pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[11px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] flex items-center justify-between ${
                   isDarkMode
                     ? "text-white bg-black border border-white"
                     : "text-[#7E7E7E]"
@@ -912,13 +921,13 @@ await PostFunction(
                     ${isDarkMode ? "text-white bg-black" : "text-[#7E7E7E]"}`}
                   >
                     <p
-                      className={`text-[12px] lg:text-[14px]
+                      className={`text-xs lg:text-sm
                        ${
                          isDarkMode ? "text-white bg-black" : "text-[#7E7E7E]"
                        }`}
                     >
                       {/* font-extrabold */}
-                      {globalCountry}
+                      {aedcCountry}
                     </p>
                     <img
                       className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
@@ -940,19 +949,20 @@ await PostFunction(
               </div>
               {globalTransferErrors.country && (
                 <div
-                  className={`text-[14px] text-red-500 italic lg:text-[14px]
-                  ${isDarkMode ? "text-white bg-black " : ""}`}
+                  className={`text-sm text-red-500 italic lg:text-sm
+                  ${isDarkMode ? "text-white bg-black border border-white" : ""}`}
                 >
                   {globalTransferErrors.country}
                 </div>
               )}
               {showList && (
                 <div
+                // rounded-br-[7px] lg:rounded-b-[14px]
                   className={`
                   ${
                     isDarkMode
-                      ? "bg-black border-white rounded-[7px] text-white"
-                      : "text-[#7C7C7C] bg-white rounded-br-[7px] rounded-bl-[7px] lg:rounded-br-[14px] lg:rounded-bl-[14px]"
+                      ? "bg-black border-white text-white"
+                      : "text-[#7C7C7C] bg-white "
                   }
                   ${
                     toggleSideBar
@@ -960,19 +970,22 @@ await PostFunction(
                       : "lg:w-[38.5%] lg:top-[105.3%]"
                   }  ${
                     styles.countryDropDown
-                  } shadow-xl border w-full lg:w-full  flex flex-col divide-y absolute top-20`}
+                  } shadow-xl border w-full lg:w-full  flex flex-col divide-y absolute top-[4.3rem] md:top-[4.4rem]`}
                 >
                   {countryList?.map((country) => (
                     <div
-                      className={`py-[18px] md:py-[14px] font-normal px-2 flex items-center gap-[5px] text-[12px] md:text-[14px] lg:text-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] transition-all duration-300 hover:bg-slate-50
+                      className={`py-[18px] md:py-2 lg:py-[15px] pl-[10px] font-normal flex items-center gap-[5px] text-xs md:text-sm lg:text-base shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] transition-all duration-300
                        ${
-                         isDarkMode
-                           ? "text-white hover:bg-slate-800 bg-black "
-                           : "text-[#7E7E7E] "
-                       } ${
+                          isDarkMode ? "text-white bg-black " : "text-[#7E7E7E]"
+                        } ${
                         country.code === "Nigerian NGN Wallet"
-                          ? "cursor-pointer"
+                          ? "cursor-pointer hover:bg-[#EDEAEA]"
                           : "cursor-not-allowed opacity-50"
+                      }
+                      ${
+                        isDarkMode && country.code === "Nigerian NGN Wallet"
+                          ? "hover:bg-slate-800"
+                          : ""
                       }`}
                       key={country.id}
                       onClick={() =>
@@ -985,7 +998,8 @@ await PostFunction(
                       }
                     >
                       <img
-                        className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
+                        // className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
+                        className="md:h-[29.27px]  h-[14.27px]"
                         src={country.flag}
                         alt="/"
                       />
@@ -998,7 +1012,7 @@ await PostFunction(
           </div>
           <div
             onClick={handleProceed}
-            className={`text-[12px] mt-[30px] md:mt-[40px] bg-[#0008] md:w-fit lg:px-12 lg:text-[16px] lg:px md:py-1 md:rounded-md md:px-6 py-3 rounded-md font-semibold text-center text-white
+            className={`text-xs mt-[30px] md:mt-[40px] bg-[#0008] md:w-fit lg:px-12 lg:text-base lg:px md:py-1 md:rounded-md md:px-6 py-3 rounded-md font-semibold text-center text-white
               ${
                 !aedcMeterNumber ||
                 !aedcCustomerName ||
@@ -1024,7 +1038,7 @@ await PostFunction(
           </div>
         </div>
         <footer className="flex justify-center text-center gap-[20px] mt-[200px] pb-[10%] md:mt-[750px] lg:mt-[850px]">
-          <p className="text-[11px] md:text-[12px] lg:text-[18px] font-medium leading-[9.1px] mt-[5px] lg:mt-[13px]">
+          <p className="text-[11px] md:text-xs lg:text-[18px] font-medium leading-[9.1px] mt-[5px] lg:mt-[13px]">
             You need help?
           </p>
 
@@ -1032,7 +1046,7 @@ await PostFunction(
             <div
               className={`${
                 isDarkMode ? "bg-[#04177f] " : "bg-[#04177f]"
-              } text-[11px] p-1.5 text-white rounded-[8px] lg:text-[16px]`}
+              } text-[11px] p-1.5 text-white rounded-[8px] lg:text-base`}
             >
               Contact Us
             </div>
@@ -1059,31 +1073,32 @@ await PostFunction(
               alt=""
             />
             <hr className="h-[6px] bg-[#04177f] border-none mt-[9%] md:mt-[8%] md:h-[10px]" />
-            <h2 className="text-[12px] font-semibold my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
+            <h2 className="text-xs font-semibold my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-base">
               Confirm Transaction
             </h2>
             <p
-              className={`text-[10px] pt-[20px] font-medium text-center mb-2 md:text-[12px] lg:text-[14px] ${
+              className={`text-[10px] pt-[20px] font-medium text-center mb-2 md:text-xs lg:text-sm ${
                 isDarkMode ? "text-white" : "text-[#000]"
               }`}
             >
               You are about to Purchase{" "}
               <span
-                className={`font-extrabold text-[10px] md:text-[14px] lg:text-[12px] ${
+                className={`font-extrabold text-[10px] md:text-sm lg:text-xs ${
                   isDarkMode ? "text-white" : "text-[#000]"
                 }`}
               >
-                {selectedAedcMeterType} Meter (&#8358;{Number(aedcAmount).toLocaleString()}){" "}
+                {selectedAedcMeterType} Meter (&#8358;
+                {Number(aedcAmount).toLocaleString()}){" "}
               </span>
               {/* Points to <br></br>
-              <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]">
+              <span className="text-[#000] font-extrabold text-[10px] md:text-base lg:text-xs">
                 &#8358;{}
               </span> */}
               From <br /> your NGN Wallet to
             </p>
 
             <div className="flex flex-col gap-3 pt-[10px]">
-              <div className="flex text-[10px] md:text-[14px] pt-[10px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px] md:text-sm pt-[10px] w-[90%] mx-auto justify-between  lg:text-base">
                 <p
                   className={`font-medium ${
                     isDarkMode ? "text-white" : "text-[#7C7C7C] "
@@ -1098,7 +1113,7 @@ await PostFunction(
                   <div>Abuja-AEDC</div>
                 </span>
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between  lg:text-base">
                 <p
                   className={`font-medium ${
                     isDarkMode ? "text-white" : "text-[#7C7C7C] "
@@ -1108,7 +1123,7 @@ await PostFunction(
                 </p>
                 <span>{selectedAedcMeterType} </span>
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px]">
+              <div className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between lg:text-base">
                 <p
                   className={`font-medium ${
                     isDarkMode ? "text-white" : "text-[#7C7C7C] "
@@ -1119,7 +1134,7 @@ await PostFunction(
                 <span>{aedcMeterNumber} </span>
               </div>
 
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px]">
+              <div className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between lg:text-base">
                 <p
                   className={`font-medium ${
                     isDarkMode ? "text-white" : "text-[#7C7C7C] "
@@ -1130,7 +1145,7 @@ await PostFunction(
                 <span>{aedcCustomerName}</span>
               </div>
 
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between  lg:text-base">
                 <p
                   className={`font-medium ${
                     isDarkMode ? "text-white" : "text-[#7C7C7C] "
@@ -1140,7 +1155,7 @@ await PostFunction(
                 </p>
                 <span>{aedcPhoneNumber}</span>
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between  lg:text-base">
                 <p
                   className={`font-medium ${
                     isDarkMode ? "text-white" : "text-[#7C7C7C] "
@@ -1150,7 +1165,7 @@ await PostFunction(
                 </p>
                 <span>{aedcEmail}</span>
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between  lg:text-base">
                 <p
                   className={`font-medium ${
                     isDarkMode ? "text-white" : "text-[#7C7C7C] "
@@ -1160,7 +1175,7 @@ await PostFunction(
                 </p>
                 <span>&#8358;{Number(aedcAmount).toLocaleString()}</span>
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between  lg:text-base">
                 <p
                   className={`font-medium ${
                     isDarkMode ? "text-white" : "text-[#7C7C7C] "
@@ -1170,7 +1185,7 @@ await PostFunction(
                 </p>
                 <span>Nigerian NGN Wallet</span>
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between  lg:text-base">
                 <p
                   className={`font-medium ${
                     isDarkMode ? "text-white" : "text-[#7C7C7C] "
@@ -1192,7 +1207,7 @@ await PostFunction(
                   >
                     <img className="w-[16px] h-[16px]" src={nig} alt="/" />
                   </div>
-                  <p className="text-[10px] md:text-[14px]  lg:text-[16px]">
+                  <p className="text-[10px] md:text-sm  lg:text-base">
                     Available Balance
                     <span
                       className={` ${
@@ -1203,7 +1218,7 @@ await PostFunction(
                     </span>
                   </p>
                 </div>
-                <span className="text-gray-500 text-[14px] font-[400] leading-[20px] lg:text-[16px] lg:leading-[22px] text-left">
+                <span className="text-gray-500 text-sm font-[400] leading-[20px] lg:text-base lg:leading-[22px] text-left">
                   {balanceStatus}
                 </span>
               </div>
@@ -1216,7 +1231,7 @@ await PostFunction(
             <button
               onClick={handleSwitch}
               disabled={CheckSufficiency}
-              className={`my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:my-[2%] ${
+              className={`my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-sm font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-base lg:text-sm lg:w-[163px] lg:h-[38px] lg:my-[2%] ${
                 CheckSufficiency ? "bg-gray-400" : "bg-primary"
               }`}
             >
@@ -1254,7 +1269,7 @@ await PostFunction(
                 isDarkMode ? "md:mt-10" : ""
               }`}
             />
-            <p className="text-[12px] md:text-[16px] font-extrabold text-center my-[10%] lg:my-[%] ">
+            <p className="text-xs md:text-base font-extrabold text-center my-[10%] lg:my-[%] ">
               Input PIN to complete transaction
             </p>
             <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[8%]">
@@ -1283,12 +1298,12 @@ await PostFunction(
                     />
                     <span className="">
                       {pinSuccess && (
-                        <p className="text-[12px] text-green-500 text-center font-medium">
+                        <p className="text-xs text-green-500 text-center font-medium">
                           Pin matches
                         </p>
                       )}
-                      {pinFailed && errorMessage && (
-                        <p className="text-[12px] text-center text-red-600 font-medium">
+                      { errorMessage && (
+                        <p className="text-xs text-center text-red-600 font-medium">
                           Incorrect Pin
                         </p>
                       )}
@@ -1304,7 +1319,7 @@ await PostFunction(
                   {isVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
                 </div>
               </div>
-              <p className="text-[10px] md:text-[12px] text-[#04177f]">
+              <p className="text-[10px] md:text-xs text-[#04177f]">
                 Forgot Pin ?
               </p>
             </div>
@@ -1313,7 +1328,7 @@ await PostFunction(
               onClick={verifyPin}
               className={`${
                 inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
-              } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%] ${
+              } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%] ${
                 isDarkMode ? "border border-white" : ""
               }`}
             >
@@ -1357,7 +1372,7 @@ await PostFunction(
               />
             </div>
             <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
-            <h2 className="text-[12px] my-[4%] text-center md:text-[20px] font-semibold md:my-[3%] lg:text-[14px] lg:my-[2%]">
+            <h2 className="text-xs my-[4%] text-center md:text-[20px] font-semibold md:my-[3%] lg:text-sm lg:my-[2%]">
               Purchase Successful
             </h2>
             <img
@@ -1366,13 +1381,13 @@ await PostFunction(
               alt="/"
             />
             <p
-              className={`text-[10px] lg:text-[16px] font-medium text-center mb-2 md:text-[14px] ${
+              className={`text-[10px] lg:text-base font-medium text-center mb-2 md:text-sm ${
                 isDarkMode ? "text-white" : "text-[#000]"
               }`}
             >
               You have successfully Purchased{" "}
               <span
-                className={`font-extrabold text-[11px] md:text-[16px] lg:text-[14px] ${
+                className={`font-extrabold text-[11px] md:text-base lg:text-sm ${
                   isDarkMode ? "text-white" : "text-[#000]"
                 }`}
               >
@@ -1380,7 +1395,7 @@ await PostFunction(
               </span>
               <br></br>
               <span
-                className={`font-extrabold text-[11px] md:text-[16px] lg:text-[14px] ${
+                className={`font-extrabold text-[11px] md:text-base lg:text-sm ${
                   isDarkMode ? "text-white" : "text-[#000]"
                 }`}
               >
@@ -1390,7 +1405,7 @@ await PostFunction(
             </p>
 
             <div className="flex flex-col gap-3 pt-[10px]">
-              <div className="flex text-[10px] md:text-[14px] pt-[10px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px] md:text-sm pt-[10px] w-[90%] mx-auto justify-between  lg:text-base">
                 <p
                   className={`font-medium ${
                     isDarkMode ? "text-white" : "text-[#7C7C7C] "
@@ -1405,7 +1420,7 @@ await PostFunction(
                   <div>{aedcDiscoType}</div>
                 </span>
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px]">
+              <div className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between lg:text-base">
                 <p
                   className={`font-medium ${
                     isDarkMode ? "text-white" : "text-[#7C7C7C] "
@@ -1415,7 +1430,7 @@ await PostFunction(
                 </p>
                 <span>{selectedAedcMeterType} </span>
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px]">
+              <div className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between lg:text-base">
                 <p
                   className={`font-medium ${
                     isDarkMode ? "text-white" : "text-[#7C7C7C] "
@@ -1426,7 +1441,7 @@ await PostFunction(
                 <span>{aedcMeterNumber} </span>
               </div>
 
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px]">
+              <div className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between lg:text-base">
                 <p
                   className={`font-medium ${
                     isDarkMode ? "text-white" : "text-[#7C7C7C] "
@@ -1437,7 +1452,7 @@ await PostFunction(
                 <span>{aedcVerifiedName}</span>
               </div>
 
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px]">
+              <div className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between lg:text-base">
                 <p
                   className={`font-medium ${
                     isDarkMode ? "text-white" : "text-[#7C7C7C] "
@@ -1447,7 +1462,7 @@ await PostFunction(
                 </p>
                 <span>{aedcPhoneNumber}</span>
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between  lg:text-base">
                 <p
                   className={`font-medium ${
                     isDarkMode ? "text-white" : "text-[#7C7C7C] "
@@ -1457,7 +1472,7 @@ await PostFunction(
                 </p>
                 <span>{aedcEmail}</span>
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+              <div className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between  lg:text-base">
                 <p
                   className={`font-medium ${
                     isDarkMode ? "text-white" : "text-[#7C7C7C] "
@@ -1467,7 +1482,7 @@ await PostFunction(
                 </p>
                 <span>&#8358;{Number(aedcAmount).toLocaleString()}</span>
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px]">
+              <div className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between lg:text-base">
                 <p
                   className={`font-medium ${
                     isDarkMode ? "text-white" : "text-[#7C7C7C] "
@@ -1477,7 +1492,7 @@ await PostFunction(
                 </p>
                 <span>Nigerian NGN Wallet</span>
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[16px]">
+              <div className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between lg:text-base">
                 <p
                   className={`font-medium ${
                     isDarkMode ? "text-white" : "text-[#7C7C7C] "
@@ -1494,7 +1509,7 @@ await PostFunction(
                 isDarkMode ? "bg-slate-800" : "bg-[#F2FAFF]"
               }`}
             >
-              <p className="text-[8px] text-center md:text-[14px] md:w-[97%] lg:w-[90%] md:mx-auto lg:text-[14px] font-medium">
+              <p className="text-[8px] text-center md:text-sm md:w-[97%] lg:w-[90%] md:mx-auto lg:text-sm font-medium">
                 The electricity bills / token purchase has been generated
                 successfully. Please kindly check receipt to confirm the bills /
                 token. You can contact us for any further assistance.
@@ -1506,7 +1521,7 @@ await PostFunction(
                   setSuccessPopup(false);
                   handleResetFields();
                 }}
-                className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:px-[50px] md:w-[70%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-xs font-extrabold h-[40px] text-white rounded-[6px] md:px-[50px] md:w-[70%] md:rounded-[8px] md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
               >
                 Done
               </button>
@@ -1527,7 +1542,7 @@ await PostFunction(
               > */}
               <button
                 onClick={handleReceivedData}
-                className={`border w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] md:px-[50px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                className={`border w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-xs md:px-[50px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:rounded-[8px] md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
               >
                 Receipt
               </button>
@@ -1571,7 +1586,7 @@ await PostFunction(
               />
             </div>
             <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
-            <h2 className="text-[12px] my-[5%] text-center md:text-[20px] md:my-[3%] lg:text-[14px] lg:my-[2%]">
+            <h2 className="text-xs my-[5%] text-center md:text-[20px] md:my-[3%] lg:text-sm lg:my-[2%]">
               Transaction Failed
             </h2>
             <img
@@ -1580,7 +1595,7 @@ await PostFunction(
               alt="/"
             />
             <p
-              className={`text-[12px] mx-[10px] text-center my-[60px] md:text-[14px] lg:text-[12px] ${
+              className={`text-xs mx-[10px] text-center my-[60px] md:text-sm lg:text-xs ${
                 isDarkMode ? "text-white" : "text-[#0008]"
               }`}
             >
@@ -1593,7 +1608,7 @@ await PostFunction(
                   setFailedPopup(false);
                   handleResetFields();
                 }}
-                className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:px-[50px] md:w-[70%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%] `}
+                className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-xs font-extrabold h-[40px] text-white rounded-[6px] md:px-[50px] md:w-[70%] md:rounded-[8px] md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%] `}
               >
                 Done
               </button>
@@ -1613,7 +1628,7 @@ await PostFunction(
               > */}
               <button
                 onClick={handleFailedData}
-                className={`border w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:px-[50px] md:rounded-[8px] md:text-[16px] px-8 lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                className={`border w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-xs font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:px-[50px] md:rounded-[8px] md:text-base px-8 lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
               >
                 Receipt
               </button>
@@ -1627,9 +1642,7 @@ await PostFunction(
           <Loader />
         </Modal>
       )}
-      {sessionModal && (
-        <HandleUserSession/>
-      )}
+      {sessionModal && <HandleUserSession />}
     </DashBoardLayout>
   );
 };

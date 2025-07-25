@@ -27,7 +27,7 @@ export const BedcReceiptFailed = () => {
     setBedcEmail,
     bedcAmount,
     setBedcAmount,
-    setGlobalCountry,
+    setBedcCountry,
     setBedcFlag,
     selectedBedcMeterType,
     bedcDiscoType,
@@ -65,7 +65,7 @@ export const BedcReceiptFailed = () => {
     setBedcPhoneNumber("");
     setBedcEmail("");
     setBedcAmount("");
-    setGlobalCountry("");
+    setBedcCountry("");
     setBedcFlag("");
     navigate("/electricity-subscription");
   }

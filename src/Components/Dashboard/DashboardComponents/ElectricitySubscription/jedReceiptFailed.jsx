@@ -27,7 +27,7 @@ export const JedReceiptFailed = () => {
     setJedEmail,
     jedAmount,
     setJedAmount,
-    setGlobalCountry,
+    setJedCountry,
     setJedFlag,
     selectedJedMeterType,
     jedDiscoType,
@@ -65,7 +65,7 @@ export const JedReceiptFailed = () => {
     setJedPhoneNumber("");
     setJedEmail("");
     setJedAmount("");
-    setGlobalCountry("");
+    setJedCountry("");
     setJedFlag("");
     navigate("/electricity-subscription");
   }

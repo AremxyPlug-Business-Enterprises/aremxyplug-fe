@@ -19,7 +19,8 @@ import { Link, useNavigate } from "react-router-dom";
 import {
   PostFunction,
   VerifyTransPin,
-  HandleUserSession
+  HandleUserSession,
+  GetFunction,
 } from "../../../ApiCollection.jsx/ApiBuck";
 import { BalanceLoading, Loader } from "../../../Loader/Loader";
 
@@ -36,8 +37,8 @@ const BEDC = () => {
     setShowList,
     setSelected,
     selected,
-    globalCountry,
-    setGlobalCountry,
+    bedcCountry,
+    setBedcCountry,
     globalTransferErrors,
     bedcPhoneNumber,
     setBedcPhoneNumber,
@@ -64,11 +65,12 @@ const BEDC = () => {
     bedcFetchedResponse,
     setBedcFetchedResponse,
     newBalance,
+    setNewBalance,
   } = useContext(ContextProvider);
   // selectedEedcMeterType
 
   const [showProductList, setShowProductList] = useState(false);
-    const [sessionModal, setSessionModal] = useState(false)
+  const [sessionModal, setSessionModal] = useState(false);
   const pointsEarned = "+2.00";
 
   // const handleValidate = () => {
@@ -95,16 +97,63 @@ const BEDC = () => {
   ];
   const handleSelectProduct = (productName) => {
     setSelectedBedcMeterType(productName);
-    // setSelectedOption("");
     setShowProductList(false);
-    // setShowOptionList(false);
   };
-  //   const { selectedOption, setSelectedOption } = useContext(ContextProvider);
-  //   const [showOptionList, setShowOptionList] = useState(false);
-  const countryList = [
-    {
-      id: 1,
-      name: `NGN Wallet (${newBalance})`,
+
+  const [passDataBalance, setPassDataBalance] = useState({});
+      
+      const GetBalance = async () => {
+          const SuccessHandler = () => {
+            console.log("successfully retrieved balance");
+          };
+          const FailedHandler = async (ErrorType) => {
+            if (ErrorType === "unauthorised") {
+              await GetFunction(
+                `bills/verify`,
+                setLoading,
+                SuccessHandler,
+                (ErrorType) => {
+                  if (ErrorType === "unauthorised") {
+                    return setSessionModal(true);
+                  }
+                },
+                setPassDataBalance
+              );
+            }
+          };
+          await GetFunction(
+            "balance",
+            setLoading,
+            SuccessHandler,
+            FailedHandler,
+            setPassDataBalance
+          );
+        };
+        // get the balance on entering the page
+        useEffect(() => {
+          if (newBalance === "" || newBalance === null || newBalance === undefined) {
+            GetBalance();
+            if (GetBalance) {
+              setNewBalance(
+                passDataBalance?.data?.data
+                  ? passDataBalance?.data?.data?.data?.balance
+                  : ""
+              );
+            }
+          }
+          // handleResetFields();
+          // eslint-disable-next-line
+        }, []);
+    
+        const updateBalance = passDataBalance?.data?.data
+        ? passDataBalance?.data?.data?.data?.balance
+        : "";
+    
+      const countryList = [
+        {
+          id: 1,
+          name: `NGN Wallet ${newBalance === "" || newBalance === null || newBalance === undefined ? `(₦${updateBalance})`
+              : `(₦${newBalance})`}`,
       code: "Nigerian NGN Wallet",
       flag: require("../ElectricitySubscription/Electricity-sub-images/nigeriaFlag.png"),
     },
@@ -289,20 +338,11 @@ const BEDC = () => {
     if (id !== 1 && code !== "Nigerian NGN Wallet") return;
     setBedcFlag(flag);
     setShowList(false);
-    setGlobalCountry(name);
+    setBedcCountry(name);
     setSelected(true);
     // setCountryCode(code);
     // setCurrencyAvailable(id !== 1);
   };
-  // const handleVerifiedName = (event) => {
-  //   const newValue = event.target.value;
-  //   setBedcVerifiedName(newValue);
-  // };
-
-  // const handleMeterNumber = (event) => {
-  //   const newValue = event.target.value;
-  //   setBedcMeterNumber(newValue);
-  // };
 
   const handlePhoneNumber = (event) => {
     const value = event.target.value;
@@ -328,7 +368,6 @@ const BEDC = () => {
 
   const [errorMessage, setErrorMessage] = useState(false);
   const [pinSuccess, setPinSuccess] = useState(false);
-  const [pinFailed, setPinFailed] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isFailedMeterNumber, setIsFailedMeterNumber] = useState(false);
   const [meterNumberLoading, setMeterNumberLoading] = useState(false);
@@ -360,25 +399,23 @@ const BEDC = () => {
           }
           handleReceivedMeterData();
         };
-        const FailedHandler = async(ErrorType) => {
-          if(ErrorType === "Bad request"){
-          setIsFailedMeterNumber(true);
-          }else if(ErrorType === "unauthorised"){
-              await PostFunction(
-          path,
-          setMeterNumberLoading,
-          body,
-          SuccessHandler,
-          (ErrorType)=> {
-            if(ErrorType === "unauthorised") {
-            setSessionModal(true)
-            }
+        const FailedHandler = async (ErrorType) => {
+          if (ErrorType === "Bad request") {
+            setIsFailedMeterNumber(true);
+          } else if (ErrorType === "unauthorised") {
+            await PostFunction(
+              path,
+              setMeterNumberLoading,
+              body,
+              SuccessHandler,
+              (ErrorType) => {
+                if (ErrorType === "unauthorised") {
+                  setSessionModal(true);
+                }
+              },
+              setBedcFetchedResponse
+            );
           }
-          ,
-          setBedcFetchedResponse
-        );
-          }
-          
         };
 
         await PostFunction(
@@ -399,7 +436,7 @@ const BEDC = () => {
   };
   const handleBedcMeterNumber = async (e) => {
     const inputValue = e.target.value;
-    setBedcMeterNumber(inputValue)
+    setBedcMeterNumber(inputValue);
     await verifyMeterNumber(inputValue);
   };
 
@@ -430,25 +467,24 @@ const BEDC = () => {
         setBedcDiscoType(bedcFetchedResponse?.data?.disco_type);
         setSuccessPopup(true);
       };
-      const FailedHandler = async(ErrorType) => {
-        if(ErrorType === "Bad request"){
-           setInputPinPopUp(false);
-        setFailedPopup(true);
-        }else if(ErrorType === "unauthorised"){
-             await PostFunction(
-        path,
-        setLoading,
-        data,
-        SuccessHandler,
-       (ErrorType)=> {
-        if(ErrorType=== "unauthorised"){
-         return  setSessionModal(true)
+      const FailedHandler = async (ErrorType) => {
+        if (ErrorType === "Bad request") {
+          setInputPinPopUp(false);
+          setFailedPopup(true);
+        } else if (ErrorType === "unauthorised") {
+          await PostFunction(
+            path,
+            setLoading,
+            data,
+            SuccessHandler,
+            (ErrorType) => {
+              if (ErrorType === "unauthorised") {
+                return setSessionModal(true);
+              }
+            },
+            setBedcFetchedResponse
+          );
         }
-       },
-        setBedcFetchedResponse
-      );
-        }
-       
       };
 
       await PostFunction(
@@ -465,22 +501,22 @@ const BEDC = () => {
     //rather than the pinfailed and pinSucess state
     //Kindly also remove the setPinFailed state as there
     //is no longer any use for it
-    // const setPinFailed= async(ErrorType)=> {
-    //   if(ErrorType==="unauthorised"){
-    //       await VerifyTransPin(
-    //   inputPin,
-    //   setPinSuccess,
-    //  (ErrorType)=> {
-    //   if(ErrorType === "unauthorised"){
-    //  setSessionModal(true)
-    //   }
-    //  },
-    //   setLoading,
-    //   setErrorMessage,
-    //   ElectricityHandler
-    // );
-    //   }
-    // }
+    const setPinFailed= async(ErrorType)=> {
+      if(ErrorType==="unauthorised"){
+          await VerifyTransPin(
+      inputPin,
+      setPinSuccess,
+     (ErrorType)=> {
+      if(ErrorType === "unauthorised"){
+     setSessionModal(true)
+      }
+     },
+      setLoading,
+      setErrorMessage,
+      ElectricityHandler
+    );
+      }
+    }
     await VerifyTransPin(
       inputPin,
       setPinSuccess,
@@ -528,7 +564,7 @@ const BEDC = () => {
     setBedcPhoneNumber("");
     setBedcEmail("");
     setBedcAmount("");
-    setGlobalCountry("");
+    setBedcCountry("");
     setBedcFlag("");
     setBedcBillGenerate("");
     setBedcOrderId("");
@@ -536,66 +572,6 @@ const BEDC = () => {
     setBedcServiceID("");
     setBedcShowDescription("");
   }
-
-  // const handleSuccess = async () => {
-  //   async function buyBEDC(meter_type, meter_no, phone, email, amount) {
-  //     // const url = 'https://aremxyplug.onrender.com/api/v1/electric-bill';
-
-  //     const parsedAmount = parseInt(amount, 10);
-
-  //     const data = {
-  //       meter_type,
-  //       meter_no,
-  //       phone, // Use the parsed integer value
-  //       email,
-  //       amount: parsedAmount, // Use the parsed integer value
-  //       disco_type: "benin-electric",
-  //     };
-
-  //     console.log(data);
-
-  //     try {
-  //       const path = "electric-bill";
-  //       // const response = await PostFunction(path, data);
-  //       const response = await axiosInstance.post(path, data);
-  //       console.log(response.data);
-  //       console.log(response.status);
-  //       setSelectedNetworkProduct(response.data.data.meter_type);
-  //       setMeterNumber(response.data.data.meter_number);
-  //       setPhoneNumber(response.data.data.phone);
-  //       setEmail(response.data.data.email);
-  //       setIkedcamount(response.data.data.amount);
-  //       setBillGenerate(response.data.data.bill_generated);
-  //       setOrderId(response.data.data.order_id);
-  //       setTransactionId(response.data.data.transaction_id);
-  //       setServiceID(response.data.data.disco_type);
-  //       setShowDescription(response.data.data.description);
-  //       return { statusCode: response.status, data: response.data };
-  //       // console.log(response.data);
-  //     } catch (error) {
-  //       console.error(error);
-  //       return { statusCode: error.response.status, data: null };
-  //     }
-  //   }
-
-  //   // Usage
-  //   const response = await buyBEDC(
-  //     selectedNetworkProduct,
-  //     meterNumber,
-  //     phoneNumber,
-  //     ikedcEmail,
-  //     ikedcamount
-  //   );
-
-  //   setInputPinPopUp(false);
-  //   if (response.statusCode === 200) {
-  //     // Success response
-  //     setSuccessPopup(true); // Show success popup
-  //   } else {
-  //     // Failure response
-  //     setFailedPopup(true); // Show failure popup
-  //   }
-  // };
 
   const [InputPinPopUp, setInputPinPopUp] = useState(false);
   const [inputPin, setInputPin] = useState("");
@@ -693,50 +669,46 @@ const BEDC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 md:gap-6 lg:gap-6 items-center lg:mt-[20px] ">
             <div className="flex flex-col mt-[20px] relative gap-2 lg:gap-2.5">
               <div
-                className={`text-[14px] lg:text-[16px]  md:font-semibold font-normal ${
+                className={`text-sm lg:text-base md:text-[13px]  md:font-semibold font-normal ${
                   isDarkMode ? "text-white" : "text-[#7E7E7E]"
                 }`}
               >
                 Select Meter Type
               </div>
               <div
-                className={`flex justify-between items-center py-[12px] pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
+                className={`rounded-[10px] md:rounded-0 p-[20px] md:py-5 text-[13.2px]  sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[11px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center capitalize cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
                   isDarkMode
                     ? "text-white bg-black border border-white"
-                    : "text-[#7E7E7E] bg-white"
+                    : "text-[#7E7E7E] bg-white hover:bg-[#EDEAEA]"
                 }`}
                 onClick={() => setShowProductList(!showProductList)}
               >
-                <h2
-                  className={`text-[12px] font-normal leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]
-                   ${isDarkMode ? "text-white bg-black" : "text-[#7E7E7E]"}`}
-                >
-                  {selectedBedcMeterType}
-                </h2>
-                <button className="lg:w-6 lg:h-6 w-4 h-4 cursor-pointer">
-                  <img src={arrowDown} alt="" className="w-full h-full" />
-                </button>
+                {selectedBedcMeterType}
+                <img
+                  src={arrowDown}
+                  alt=""
+                  className="decdrop absolute left-[92%] lg:left-[94%] self-center align-middle md:h-[14.038px] md:w-[14.038px] lg:h-[24px] lg:w-[24px] w-[14px] h-[16px]"
+                />
               </div>
               {showProductList && (
                 <div
                   className={`
                     ${
                       isDarkMode
-                        ? "text-white bg-black divide-white border-white"
-                        : " text-[#7C7C7C] bg-white "
-                    }
-                    border flex flex-col divide-y items-center text-[14px] md:text-[12px] lg:text-[16px] mt-20 lg:mt-20 rounded-[4px] md:rounded-[10px] shadow-md absolute top-1 lg:top-[1rem] w-full z-[10]`}
+                        ? "text-white bg-black  "
+                        : " text-[#7C7C7C] bg-white hover:bg-[#EDEAEA]"
+                    } flex flex-col  absolute lg:top-[90px] md:top-[70px] top-[74px] transition-colors duration-300 z-[2] w-full`}
                 >
                   {/*  lg:top-[87%] */}
                   {productList?.map((item) => (
                     <div
                       key={item.name}
-                      className={`pb-[18px] pt-[8px] md:py-[16px] font-bold cursor-pointer md:text-[12px] lg:text-[16px] w-full capitalize md:rounded-[0px] lg:mt- text-[12px] pl-[5px] transition-all duration-300 hover:bg-slate-50 
-                       ${
-                         isDarkMode
-                           ? "bg-black text-white hover:bg-slate-800 hover:rounded-t-[10px]"
-                           : "text-[#7C7C7C]"
-                       }
+                      className={`py-5 md:py-[14px] capitalize font-semibold cursor-pointer lg:text-base lg:leading-[20.8px] w-full md:rounded-[0px] text-[14px] leading-[10.4px] pl-2.5 md:text-[13.227px] transition-colors duration-300 md:leading-[17.195px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] 
+                        ${
+                          isDarkMode
+                            ? "bg-black text-white hover:bg-slate-800 border border-white"
+                            : "text-[#7C7C7C] hover:bg-[#EDEAEA] bg-white"
+                        }
                        ${selectedBedcMeterType === item.name ? "" : ""}`}
                       onClick={() => handleSelectProduct(item.name)}
                     >
@@ -747,9 +719,9 @@ const BEDC = () => {
               )}
             </div>
 
-            <div className="flex flex-col relative sm:mt-[10px] md:mt-[23px] lg:mt-[23px] gap-2 lg:gap-2.5">
+            <div className="flex flex-col relative gap-2 lg:gap-2.5 mt-[20px]">
               <div
-                className={`text-[15px] lg:text-[16px] md:font-semibold font-normal ${
+                className={`text-sm md:text-[13px] lg:text-base md:font-semibold font-normal ${
                   isDarkMode ? "text-white" : "text-[#7E7E7E]"
                 }`}
               >
@@ -764,16 +736,16 @@ const BEDC = () => {
                     const numericValue = e.target.value.replace(/\D/g, "");
                     e.target.value = numericValue;
                     if (numericValue?.length === 13) {
-                      e.target.style.border = "2px solid green";
+                      e.target.style.border = "1px solid green";
                     } else {
-                      e.target.style.border = "2px solid red";
+                      e.target.style.border = "1px solid red";
                     }
                     setIsFailedMeterNumber(false);
                     setErrors((prev) => ({ ...prev, bedcMeterNumber: "" }));
                   }}
                   onChange={handleBedcMeterNumber}
                   onClick={() => setShowProductList(false)}
-                  className={`py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full w-full  ${
+                  className={`py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-base lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-base placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full w-full  ${
                     isDarkMode
                       ? "text-white bg-black border-white"
                       : "text-[#7E7E7E]"
@@ -783,7 +755,6 @@ const BEDC = () => {
               {errors.bedcMeterNumber && (
                 <div
                   className={`text-[14px] text-red-500 absolute left-0 -bottom-[1.3rem] italic lg:text-[14px] `}
-                  // ${isDarkMode ? "bg-black text-white" : ""}
                 >
                   {errors.bedcMeterNumber}
                 </div>
@@ -795,10 +766,10 @@ const BEDC = () => {
               )}
             </div>
 
-            <div className="flex flex-col gap-2 lg:gap-2.5">
+            <div className="flex flex-col relative gap-2 lg:gap-2.5">
               <div
-                className={`text-[#7E7E7E] text-[14px] lg:text-[16px] md:font-semibold font-normal ${
-                  isDarkMode ? "text-white" : ""
+                className={`text-sm md:text-[13px] lg:text-base md:font-semibold font-normal ${
+                  isDarkMode ? "text-white" : "text-[#7E7E7E]"
                 }`}
               >
                 Verified Name
@@ -808,7 +779,7 @@ const BEDC = () => {
                   type="text"
                   value={handleVerifiedName}
                   readOnly
-                  className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
+                  className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-base lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-base placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
                     isDarkMode
                       ? "text-white bg-black border border-white"
                       : "text-[#7E7E7E]"
@@ -823,8 +794,8 @@ const BEDC = () => {
             </div>
             <div className="flex flex-col relative gap-2 lg:gap-2.5">
               <div
-                className={`text-[#7E7E7E] text-[14px] lg:text-[16px] md:font-semibold font-normal ${
-                  isDarkMode ? "text-white" : ""
+                className={`text-sm md:text-[13px] lg:text-base md:font-semibold font-normal ${
+                  isDarkMode ? "text-white" : "text-[#7E7E7E]"
                 }`}
               >
                 Phone Number
@@ -835,22 +806,22 @@ const BEDC = () => {
                   value={bedcPhoneNumber}
                   onInput={(e) => {
                     if (bedcPhoneNumber?.length === 10) {
-                      e.target.style.border = "2px solid green";
+                      e.target.style.border = "1px solid green";
                     } else if (e.target.value?.length < 10) {
-                      e.target.style.border = "2px solid red";
+                      e.target.style.border = "1px solid red";
                     }
                     setErrors((prev) => ({ ...prev, bedcPhoneNumber: "" }));
                   }}
-                  onBlur={(e) => {
-                    isDarkMode
-                      ? (e.target.style.border = "1px solid white")
-                      : (e.target.style.border = "1px solid #9C9C9C");
-                  }}
+                  // onBlur={(e) => {
+                  //   isDarkMode
+                  //     ? (e.target.style.border = "1px solid white")
+                  //     : (e.target.style.border = "1px solid #9C9C9C");
+                  // }}
                   onChange={handlePhoneNumber}
-                  className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
+                  className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] lg:text-base lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-base placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
                     isDarkMode
                       ? "text-white bg-black border border-white"
-                      : "text-[#7E7E7E]"
+                      : "text-[#7E7E7E] border border-[#9C9C9C]"
                   }`}
                 />
               </div>
@@ -860,10 +831,10 @@ const BEDC = () => {
                 </div>
               )}
             </div>
-            <div className="flex flex-col gap-2 relative lg:gap-2.5">
+            <div className="flex flex-col relative gap-2 lg:gap-2.5">
               <div
-                className={`text-[#7E7E7E] text-[14px] lg:text-[16px] md:font-semibold font-normal ${
-                  isDarkMode ? "text-white" : ""
+                className={`text-sm md:text-[13px] lg:text-base md:font-semibold font-normal ${
+                  isDarkMode ? "text-white" : "text-[#7E7E7E]"
                 }`}
               >
                 Email
@@ -873,10 +844,10 @@ const BEDC = () => {
                   type="text"
                   value={bedcEmail}
                   onChange={handleEmail}
-                  onInput={()=>{
+                  onInput={() => {
                     setErrors((prev) => ({ ...prev, bedcEmail: "" }));
                   }}
-                  className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
+                  className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-base lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-base placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
                     isDarkMode
                       ? "text-white bg-black border border-white"
                       : "text-[#7E7E7E]"
@@ -884,25 +855,25 @@ const BEDC = () => {
                 />
               </div>
               {errors.bedcEmail && (
-                <div className="text-[14px] absolute left-0 -bottom-[1.3rem] text-red-500 italic lg:text-[14px]">
+                <div className="text-xs absolute left-0 -bottom-[1.3rem] text-red-500 italic md:text-sm">
                   {errors.bedcEmail}
                 </div>
               )}
             </div>
             <div className="flex flex-col relative gap-2 lg:gap-2.5">
               <div
-                className={`text-[#7E7E7E] text-[14px] lg:text-[16px] md:font-semibold font-normal ${
-                  isDarkMode ? "text-white" : ""
+                className={`text-sm md:text-[13px] lg:text-base md:font-semibold font-normal ${
+                  isDarkMode ? "text-white " : "text-[#7E7E7E]"
                 }`}
               >
                 Amount
               </div>
               <div
-                className={`flex items-center lg:text-[16px] text-[12px] border pl-2 border-[#9C9C9C] ${
+                className={`flex items-center py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-base lg:leading-[20.8px]  rounded-lg sm:rounded-[10px] h-full w-full ${
                   isDarkMode
-                    ? "text-white bg-black border-white "
-                    : "text-[#7E7E7E]"
-                } rounded-md md:rounded-[10px]`}
+                    ? "text-white bg-black border-white"
+                    : "text-[#7E7E7E] border-[#9C9C9C]"
+                }`}
               >
                 &#8358;
                 <input
@@ -910,20 +881,20 @@ const BEDC = () => {
                   name="bedcamount"
                   value={bedcAmount}
                   onChange={handleBedcAmount}
-                  onInput={()=>{
-                    setAmountError("")
+                  onInput={() => {
+                    setAmountError("");
                   }}
                   placeholder="Minimum of ₦1000"
-                  className={`w-full py-[10.33px] pl-[5.867px] pr-1 md:py-3 md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] text-[12px] leading-[18px] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none
+                  className={`w-full ml-0.5 placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-base placeholder:lg:leading-[20.8px] focus:outline-none
                  ${
                    isDarkMode
-                     ? "text-white bg-black border-black"
+                     ? "text-white bg-black"
                      : "text-[#7E7E7E]"
                  }`}
                 />
               </div>
               {amountError && (
-                <p className="text-[14px] absolute left-0 -bottom-[1.3rem] text-red-500 italic lg:text-[14px]">
+                <p className="text-sm absolute left-0 -bottom-[1.3rem] text-red-500 italic lg:text-sm">
                   {amountError}
                 </p>
               )}
@@ -931,14 +902,14 @@ const BEDC = () => {
 
             <div className=" flex flex-col relative gap-2 lg:gap-2.5">
               <div
-                className={`text-[#7E7E7E] text-[14px] lg:text-[16px] md:font-semibold ${
-                  isDarkMode ? "text-white" : ""
+                className={` text-sm md:text-[13px] lg:text-base md:font-semibold font-normal ${
+                  isDarkMode ? "text-white" : "text-[#7E7E7E]"
                 }`}
               >
                 Payment Method
               </div>
               <div
-                className={`py-[10.33px] pl-[5.867px] pr-1 md:py-3 md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none flex items-center justify-between  ${
+                className={`rounded-[10px] md:rounded-0 p-[20px] md:py-5 text-[13.2px]  sm:p-3 sm:text-lg relative  pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[11px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] flex items-center justify-between ${
                   isDarkMode
                     ? "text-white bg-black border border-white"
                     : "text-[#7E7E7E]"
@@ -952,11 +923,11 @@ const BEDC = () => {
                     ${isDarkMode ? "text-white bg-black" : "text-[#7E7E7E]"}`}
                   >
                     <p
-                      className={`text-[12px] lg:text-[14px]
+                      className={`text-[12px] lg:text-sm
                     ${isDarkMode ? "text-white bg-black" : "text-[#7E7E7E]"}`}
                     >
                       {/* font-extrabold */}
-                      {globalCountry}
+                      {bedcCountry}
                     </p>
                     <img
                       className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
@@ -978,7 +949,7 @@ const BEDC = () => {
               </div>
               {globalTransferErrors.country && (
                 <div
-                  className={`text-[14px] text-red-500 italic lg:text-[14px]
+                  className={`text-sm text-red-500 italic lg:text-sm
                   ${
                     isDarkMode ? "text-white bg-black border border-white" : ""
                   }`}
@@ -988,11 +959,12 @@ const BEDC = () => {
               )}
               {showList && (
                 <div
+                // rounded-b-[7px] lg:rounded-b-[14px]
                   className={`
                   ${
                     isDarkMode
-                      ? "bg-black border-white rounded-[7px] text-white"
-                      : "text-[#7C7C7C] bg-white rounded-br-[7px] rounded-bl-[7px] lg:rounded-br-[14px] lg:rounded-bl-[14px]"
+                      ? "bg-black border-white  text-white"
+                      : "text-[#7C7C7C] bg-white"
                   }
                   ${
                     toggleSideBar
@@ -1000,19 +972,22 @@ const BEDC = () => {
                       : "lg:w-[38.5%] lg:top-[105.3%]"
                   }  ${
                     styles.countryDropDown
-                  } shadow-xl border w-full lg:w-full  flex flex-col divide-y absolute top-20`}
+                  } shadow-xl border w-full lg:w-full  flex flex-col divide-y absolute top-[4.3rem] md:top-[4.4rem]`}
                 >
                   {countryList?.map((country) => (
                     <div
-                      className={`py-[18px] md:py-[14px] font-normal px-2 flex items-center gap-[5px] text-[12px] md:text-[14px] lg:text-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] transition-all duration-300 hover:bg-slate-50
+                      className={`py-[18px] md:py-2 lg:py-[15px] pl-[10px] font-normal flex items-center gap-[5px] text-xs md:text-sm lg:text-base shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] transition-all duration-300 
                        ${
-                         isDarkMode
-                           ? "text-white hover:bg-slate-800 bg-black "
-                           : "text-[#7E7E7E] "
-                       }  ${
+                          isDarkMode ? "text-white bg-black " : "text-[#7E7E7E]"
+                        } ${
                         country.code === "Nigerian NGN Wallet"
-                          ? "cursor-pointer"
+                          ? "cursor-pointer hover:bg-[#EDEAEA]"
                           : "cursor-not-allowed opacity-50"
+                      }
+                      ${
+                        isDarkMode && country.code === "Nigerian NGN Wallet"
+                          ? "hover:bg-slate-800"
+                          : ""
                       }`}
                       key={country.id}
                       onClick={() =>
@@ -1025,7 +1000,7 @@ const BEDC = () => {
                       }
                     >
                       <img
-                        className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
+                        className="md:h-[29.27px]  h-[14.27px]"
                         src={country.flag}
                         alt="/"
                       />
@@ -1038,7 +1013,7 @@ const BEDC = () => {
           </div>
           <div
             onClick={handleProceed}
-            className={`text-[12px] mt-[30px] md:mt-[40px] bg-[#0008] md:w-fit lg:px-12 lg:text-[16px] lg:px md:py-1 md:rounded-md md:px-6 py-3 rounded-md font-semibold text-center text-white
+            className={`text-xs mt-[30px] md:mt-[40px] bg-[#0008] md:w-fit lg:px-12 lg:text-[16px] lg:px md:py-1 md:rounded-md md:px-6 py-3 rounded-md font-semibold text-center text-white
             ${
               !bedcMeterNumber ||
               !bedcCustomerName ||
@@ -1113,7 +1088,8 @@ const BEDC = () => {
                   isDarkMode ? "text-white" : "text-[#000]"
                 }`}
               >
-                {selectedBedcMeterType} Meter (&#8358;{Number(bedcAmount).toLocaleString()}){" "}
+                {selectedBedcMeterType} Meter (&#8358;
+                {Number(bedcAmount).toLocaleString()}){" "}
               </span>
               {/* Points to <br></br>
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]">
@@ -1327,7 +1303,7 @@ const BEDC = () => {
                           Pin matches
                         </p>
                       )}
-                      {pinFailed && errorMessage && (
+                      {errorMessage && (
                         <p className="text-[12px] text-center text-red-600 font-medium">
                           Incorrect Pin
                         </p>
@@ -1637,9 +1613,7 @@ const BEDC = () => {
           <Loader />
         </Modal>
       )}
-      {sessionModal && (
-        <HandleUserSession/>
-      )}
+      {sessionModal && <HandleUserSession />}
     </DashBoardLayout>
   );
 };
