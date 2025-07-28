@@ -5,6 +5,7 @@ import { ContextProvider } from "../../Context";
 import { Modal } from "../../Screens/Modal/Modal";
 import arrowRight from "../../../Components/EducationPins/imagesEducation/educationArrowRight.svg";
 import styles from '../../AirTimePage/AirtimeVtu.module.css'
+import { date } from "joi";
 
 
  const ConfirmDstvPopup = ({ passDataBalance, userVerifiedName}) => {
@@ -43,7 +44,7 @@ import styles from '../../AirTimePage/AirtimeVtu.module.css'
   // };
 const [balanceStatus,setBalanceStatus] = useState("")
    let balanceStringToNum = Number(newBalance);
-   const updateBalance = (newBalance === "" && passDataBalance?.data?.data?.data?.balance) ? passDataBalance?.data?.data?.data?.balance : balanceStringToNum;
+   const updateBalance = (newBalance === "" && passDataBalance?.data?.data?.data?.balance) ? Number(passDataBalance?.data?.data?.data?.balance) : balanceStringToNum;
           let DstvAmountToNumber = Number(dstvAmount);
          let CheckSufficiency = DstvAmountToNumber > updateBalance;
       useEffect(()=> {
@@ -60,6 +61,7 @@ const [balanceStatus,setBalanceStatus] = useState("")
 
   const valueWithoutTilde = selectedOptionDstv.split(" ~ ")[0];
   // const trimmedValue = valueWithoutTilde.trim();
+console.log(typeof updateBalance)
 
     return(
        <>
@@ -67,21 +69,22 @@ const [balanceStatus,setBalanceStatus] = useState("")
             (
             <Modal>
              <div className={`w-full flex justify-center h-full 
-             py-[30px] px-[20px] lg:items-center
+             py-[30px] px-[15px] lg:px-[0px] lg:items-center
               items-end`}>
             <div 
             className={` bvnQuery lg:rounded-[12px] rounded-[10px] 
               h-[520px] ${ toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
               } w-[100%] md:w-[60%] overflow-auto  ${isDarkMode ? "bg-black text-white border rounded-[10px] border-white": "bg-white text-black"} `}
           >
-        <div className="flex justify-end pr-2 mt-1 mb-3 md:mt-2 md:mb-2 lg:mb-0 lg:mt-1">
+        <div className="flex justify-end pr-2 lg:py-[10px] py-[7px] ">
         <img  onClick={()=>{setConfirmDstvPopup(false);}}
-                className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[26px] lg:h-[26px]"
+                className=" w-[25px] h-[25px] md:w-[35px] md:h-[35px] 
+                lg:w-[26px] lg:h-[26px]"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
               />
         </div>
-        <hr className="h-[6px] bg-[#04177f] borde-none md:h-[10px]"/>
+        <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]"/>
         <div className="mx-auto">
             <div className="text-[12px] my-[5%] text-center md:my-[3%] md:text-[15px] 
             lg:my-[2%] lg:text-[16px]">
@@ -94,8 +97,7 @@ const [balanceStatus,setBalanceStatus] = useState("")
                 </div>
             
             <div className="flex flex-col gap-3 mt-5 md:mt-6 lg:mt-7">
-
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
+         <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
                     <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>Decoder Type</span>
                     <span className={`${isDarkMode ? "text-white" : "text-black"}`}>Dstv</span>
                 </div>
@@ -121,7 +123,10 @@ const [balanceStatus,setBalanceStatus] = useState("")
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
                     <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>Amount</span>
-                    <span>{`₦${dstvAmount}`}</span>
+                    <span>{`${dstvAmount !== "" ? dstvAmount?.toLocaleString("en-NG", {
+                      style : "currency",
+                      currency : "NGN"
+                   }) : "₦"}`}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
                     <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>Payment Method</span>
@@ -153,7 +158,10 @@ const [balanceStatus,setBalanceStatus] = useState("")
                     Available Balance {"  "} 
                      </p>
                      <span className={`${isDarkMode ? "text-white" : "text-black"}`}>
-                      {`(${updateBalance})`}
+                      {`(${updateBalance !== "" ? updateBalance?.toLocaleString("en-NG", {
+                        style : "currency",
+                        currency : "NGN"
+                      }) : "₦"})`}
                     </span>
                     </div>
                   </div>
@@ -173,8 +181,10 @@ const [balanceStatus,setBalanceStatus] = useState("")
            <button
            disabled={CheckSufficiency}
             onClick={handleInputDstv}
-              className={`bg-[#04177f] my-[5%] w-[90%] flex justify-center items-center mx-auto cursor-pointer 
-                text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] lg:rounded-[12px] md:text-[16px]
+              className={`bg-[#04177f] my-[5%] w-[90%] flex 
+                justify-center items-center mx-auto cursor-pointer 
+                text-[14px] font-extrabold h-[50px] text-white rounded-[6px] md:w-[25%]
+                 md:rounded-[8px] lg:rounded-[12px] md:text-[16px]
                  lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:my-[2%] ${CheckSufficiency ? "bg-gray-400" : "bg-primary"} `}
             >
               Confirmed

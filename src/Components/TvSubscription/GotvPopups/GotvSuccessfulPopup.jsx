@@ -109,7 +109,8 @@ import styles from "../../AirTimePage/AirtimeVtu.module.css";
                 </div> */}
             </div>
         </div>
-        <div className="bg-[#F2FAFF] mx-10 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]">
+        <div className="bg-[#F2FAFF] mx-10 h-[45px] my-5 flex justify-between 
+        items-center px-[4%] md:h-[65px] lg:h-[75px]">
             <div className="text-[7px] text-center mx-auto w-[171px] md:text-[14px] md:w-[80%] lg:text-[14px] font-semibold">
             The decoder has been subscribed successfully. Please kindly confirm from the smartcard / iuc. You can contact us for any further assistance.
             </div>

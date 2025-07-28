@@ -80,6 +80,9 @@ export const RemoveLocalStorage = () => {
  localStorage.removeItem("bvnVerification");
  localStorage.removeItem("ReferralLink");
  localStorage.removeItem("ReferralCode");
+ localStorage?.removeItem("aremxyPassword");
+  localStorage?.removeItem("aremxyUsername");
+   localStorage?.removeItem("3232");     
  const AccCreated = localStorage.getItem("AccCreated")
  const getToken = localStorage.getItem("getToken");
  if(getToken){
@@ -87,6 +90,7 @@ export const RemoveLocalStorage = () => {
    const userTransactionOtp = localStorage.getItem("userTransactionOtp")
   if(userTransactionOtp){
     localStorage.removeItem("userTransactionOtp")
+
   }
  if(AccCreated){
   localStorage.removeItem("AccCreated")
