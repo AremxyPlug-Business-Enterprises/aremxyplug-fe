@@ -35,8 +35,8 @@ const EtisalatDataBundle = () => {
   const { isDarkMode, newBalance,setNewBalance } = useContext(ContextProvider);
  const {selectedOptionEtisalat,
     setSelectedOptionEtisalat,
-   selectedNetworkProductEtisalat,
-    setSelectedNetworkProductEtisalat,
+  // selectedNetworkProductEtisalat,
+    //setSelectedNetworkProductEtisalat,
     recipientPhoneNumberEtisalat,
     setRecipientPhoneNumberEtisalat,
     selectedAmountEtisalat,
@@ -64,7 +64,6 @@ const EtisalatDataBundle = () => {
   const [image, setImage] = useState("");
   const [paymentAmount, setPaymentAmount] = useState("");
   const [codes, setCodes] = useState(false);
-  const [plan, setPlan] = useState("");
   const [etisalatpurchaseStatus, setEtisalatPurchaseStatus] = useState(null); // State to hold purchase status
   const [loading, setLoading] = useState("");
   const [products, setProducts] = useState([]);
@@ -72,7 +71,6 @@ const EtisalatDataBundle = () => {
   const [loadingProducts, setLoadingProducts] = useState(false);
   const [loadingPlans, setLoadingPlans] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null);
-  const [success, setSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 const [balanceStatus,setBalanceStatus ] = useState("");
 const [selectProductWarn, setSelectProductWarn] = useState(false);
@@ -100,28 +98,28 @@ const [sessionModal, setSessionModal] = useState(false)
            if(error && error.response === undefined){
              alert("Check your internet Connection, then reload the page.")
           } else if(error && error.response.status === 400){
-             alert("Service for etisalat is currently not available, Try again later.")
+             alert("Service for 9 mobile is currently not available, Try again later.")
           } else if(error && error.response.status === 401){
               if(error.response.headers["x-new-auth-token"] || error.response.headers.get("x-new-auth-token")){
          setLoading(true)
          const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
         
          if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
-           const setAuthorisedToken = localStorage.setItem("authorisedLogin", newToken);
-           if(setAuthorisedToken){
-            await inputPinHandler()
+           localStorage.setItem("authorisedLogin", newToken);
+           if(localStorage.getItem("authorisedLogin")?.length > 1){
+            await fetchProducts()
            }
             }else{
-    const setGetToken = localStorage.setItem("getToken", newToken);
-      if(setGetToken){
-        await inputPinHandler();
+    localStorage.setItem("getToken", newToken);
+      if(localStorage.getItem("getToken")?.length > 1){
+        await fetchProducts();
       }
       }
         }else{
           return setSessionModal(true)
         }
           }else if(error && error.response.status === 500){
-             alert("Service for etisalat is currently not available, Try again later.")
+             alert("Service for 9 mobile is currently not available, Try again later.")
           }
       } finally {
 
@@ -162,19 +160,19 @@ const [sessionModal, setSessionModal] = useState(false)
        if(error && error.response === undefined){
              alert("Your internet connection is quite unstable.")
         }else if(error && (error.response.status ===  401)){
-        if(error.response.headers["x-new-auth-token"] || error.response.headers.get("x-new-auth-token")){
+        if(error?.response?.headers["x-new-auth-token"] || error?.response?.headers?.get("x-new-auth-token")){
          setLoading(true)
          const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
         
          if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
-           const setAuthorisedToken = localStorage.setItem("authorisedLogin", newToken);
-           if(setAuthorisedToken){
-            await inputPinHandler()
+           localStorage.setItem("authorisedLogin", newToken);
+           if( localStorage.getItem("authorisedLogin")?.length > 1){
+            await fetchPlans()
            }
             }else{
-    const setGetToken = localStorage.setItem("getToken", newToken);
-      if(setGetToken){
-        await inputPinHandler();
+    localStorage.setItem("getToken", newToken);
+      if(localStorage.setItem("getToken")?.length > 1){
+        await fetchPlans();
       }
       }
         }else{
@@ -341,7 +339,8 @@ const [sessionModal, setSessionModal] = useState(false)
           if(newBalance === "" || newBalance === null || newBalance === undefined){
              GetBalance();
              if(GetBalance){
-              setNewBalance(passDataBalance?.data ? passDataBalance.data.data.data.balance : "");
+              setNewBalance(passDataBalance?.data ?
+                 passDataBalance.data.data.data.balance : "");
              }
        
           }
@@ -502,31 +501,13 @@ const [sessionModal, setSessionModal] = useState(false)
       try {
         setLoading(true)
         const response = await axiosInstance.post(path, data);
-        console.log(response.data);
-        console.log(response.status);
-
-        const resData = response?.data?.data?.data; // Accessing the nested `data` object
-
-        console.log(response.status);
-        setPlan(resData.plan_name);
-        console.log(resData?.plan_name);
-
+ const resData = response?.data?.data?.data; // Accessing the nested `data` object
         setInputValue(resData?.Phone_Number);
-        console.log(resData?.Phone_Number);
-
-        setEtisalatTransactionID(resData?.transaction_id);
-        console.log(resData?.transaction_id);
-
-        setEtisalatRefNumber(resData?.reference_number);
-        console.log(resData?.reference_number);
-
-        setEtisalatOrderID(resData?.order_id); // No `order_id`, using `id` instead
-        console.log(resData?.order_id);
-
-        setEtisalatDescription(`${resData?.network} - ${resData?.plan_name}`); // Fabricated description
-
-       
-         if (response.statusCode === 200) {
+          setEtisalatTransactionID(resData?.transaction_id);
+       setEtisalatRefNumber(resData?.reference_number);
+      setEtisalatOrderID(resData?.order_id); // No `order_id`, using `id` instead
+      setEtisalatDescription(`${resData?.network} - ${resData?.plan_name}`); // Fabricated description
+      if (response.statusCode === 200) {
       // Success response
       setTransactSuccessPopUp(true); // Show success popup
       setConfirm(false);
@@ -546,13 +527,13 @@ const [sessionModal, setSessionModal] = useState(false)
          const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
         
          if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
-           const setAuthorisedToken = localStorage.setItem("authorisedLogin", newToken);
-           if(setAuthorisedToken){
+      localStorage.setItem("authorisedLogin", newToken);
+           if(localStorage.getItem("authorisedLogin")?.length > 1){
             await inputPinHandler()
            }
             }else{
-    const setGetToken = localStorage.setItem("getToken", newToken);
-      if(setGetToken){
+    localStorage.setItem("getToken", newToken);
+      if(localStorage.getItem("getToken")?.length > 1){
         await inputPinHandler();
       }
       }
@@ -852,7 +833,7 @@ const [sessionModal, setSessionModal] = useState(false)
                     text-left font-[500] text-[14px] border-[1px]  border-gray-300 
                      rounded-[10px] lg:rounded-[20px]
             leading-[18px] lg:text-[16px] lg:leading-[22px]">
-         Plans unavailable,kindly select another etisalat product.
+         Plans unavailable,kindly select another 9 mobile product.
             </p>
               )}
             </div>
@@ -1404,7 +1385,6 @@ const [sessionModal, setSessionModal] = useState(false)
                   if(ErrorType === "unauthorised"){
                     await VerifyTransPin(
                       inputPin,
-                      setSuccess,
                       (ErrorType)=> {
                         if(ErrorType === "unauthorised"){
                         return setSessionModal(true)
@@ -1421,7 +1401,6 @@ const [sessionModal, setSessionModal] = useState(false)
                       //user's transaction purchase
                     VerifyTransPin(
                       inputPin,
-                      setSuccess,
                       setFailed,
                       setLoading,
                       setErrorMessage,

@@ -36,7 +36,7 @@ const GetFunctionHandler = async(GlobalTvSubscription,tvPage, TvSubscriptionValu
          setLoading(true);
      if(GlobalTvSubscription === 0){
     await GetFunction(`products/tvsub/gotv`, setLoading, SuccessHandler,(ErrorType)=> {
-        if(ErrorType){
+        if(ErrorType === "unauthorised"){
          setSessionModal(true);
         }
     }, setFetchedGotvPlans)
@@ -60,27 +60,119 @@ const GetFunctionHandler = async(GlobalTvSubscription,tvPage, TvSubscriptionValu
      }
     }
 
+
     if(DetectAuthorisation === "unauthorised"){
    return  AuthRetrieval();
+
      }else if(DetectAuthorisation === "Server error"){
-    console.log("Server error")
-     }else if(DetectAuthorisation === "User error"){
-       console.log("Running on 404")
-     }else if(DetectAuthorisation === undefined){
-     alert("Error connection issue");
+   //Handle the re-running of gotv to check if at the second time
+   //the request would be successful.
+      if(GlobalTvSubscription === 0){
+    await GetFunction(`products/tvsub/gotv`, setLoading, SuccessHandler, async(ErrorType)=> {
+        if(ErrorType === "unauthorised"){
+          await GetFunction(path, setLoading, SuccessHandler, (ErrorType)=> {
+            if(ErrorType === "unauthorised"){
+               return setSessionModal(true)
+            }else if(ErrorType === "Server error"){
+              alert("Failed to process your request, try again again some other time")
+            }else if(ErrorType === "Network error" || ErrorType === "User error"){
+             alert("Kindly check your internet connection")
+            }else{
+                alert("An unexpected error has occured")
+            }
+          }, fetchedPlans);
+        }else if(ErrorType === "Network error" || ErrorType === "User error"){
+               alert("Kindly check your internet connection.")
+        }else{
+            alert("An unexpected error has occured")
+        }
+    }, setFetchedGotvPlans)
+
+      //Handle the re-running of gotv to check if at the second time
+   //the request would be successful.
+     }else if(GlobalTvSubscription === 1){
+        await GetFunction(`products/tvsub/dstv`, setLoading, SuccessHandler, async(ErrorType)=> {
+        if(ErrorType === "unauthorised"){
+          await GetFunction(path, setLoading, SuccessHandler, (ErrorType)=> {
+            if(ErrorType === "unauthorised"){
+               return setSessionModal(true)
+            }else if(ErrorType === "Server error"){
+              alert("Failed to process your request, try again again some other time")
+            }else if(ErrorType === "Network error" || ErrorType === "User error"){
+             alert("Kindly check your internet connection")
+            }else{
+                alert("An unexpected error has occured")
+            }
+          }, fetchedPlans);
+        }else if(ErrorType === "Network error" || ErrorType === "User error"){
+               alert("Kindly check your internet connection.")
+        }else{
+            alert("An unexpected error has occured")
+        }
+    }, setFetchedDstvPlans)
+      //Handle the re-running of gotv to check if at the second time
+   //the request would be successful.
+     }else if(GlobalTvSubscription === 2 ){
+         await GetFunction(`products/tvsub/dstv`, setLoading, SuccessHandler, async(ErrorType)=> {
+        if(ErrorType === "unauthorised"){
+          await GetFunction(path, setLoading, SuccessHandler, (ErrorType)=> {
+            if(ErrorType === "unauthorised"){
+               return setSessionModal(true)
+            }else if(ErrorType === "Server error"){
+              alert("Failed to process your request, try again again some other time")
+            }else if(ErrorType === "Network error" || ErrorType === "User error"){
+             alert("Kindly check your internet connection")
+            }else{
+                alert("An unexpected error has occured")
+            }
+          }, fetchedPlans);
+        }else if(ErrorType === "Network error" || ErrorType === "User error"){
+               alert("Kindly check your internet connection.")
+        }else{
+            alert("An unexpected error has occured")
+        }
+    }, setFetchedStarTimesPlans)
+      //Handle the re-running of gotv to check if at the second time
+   //the request would be successful.
+     }else if(GlobalTvSubscription === 3){
+  await GetFunction(`products/tvsub/dstv`, setLoading, SuccessHandler, async(ErrorType)=> {
+        if(ErrorType === "unauthorised"){
+          await GetFunction(path, setLoading, SuccessHandler, (ErrorType)=> {
+            if(ErrorType === "unauthorised"){
+               return setSessionModal(true)
+            }else if(ErrorType === "Server error"){
+              alert("Failed to process your request, try again again some other time")
+            }else if(ErrorType === "Network error" || ErrorType === "User error"){
+             alert("Kindly check your internet connection")
+            }else{
+                alert("An unexpected error has occured")
+            }
+          }, fetchedPlans);
+        }else if(ErrorType === "Network error" || ErrorType === "User error"){
+               alert("Kindly check your internet connection.")
+        }else{
+            alert("An unexpected error has occured")
+        }
+    }, setFetchedShowMaxPlans)
+     }
+    
+
+     }else if(DetectAuthorisation === "User error" || DetectAuthorisation === "Network error" ){
+         alert("Kindly check your internet connection")
      }else{
-        alert("Check your internet connection.")
+        alert("An unexpected error has occured, try some other time.")
      }
 
     }
+
     let path;
     let fetchedPlans;
 const handleSubscriptionFunction = ()=> {
-    if(GlobalTvSubscription === 0){
+    if(GlobalTvSubscription === 0){ 
        TvSubscriptionValue = "Gotv";
       path = `products/tvsub/gotv`;
        fetchedPlans = setFetchedGotvPlans;
-       tvPage = "/GoTv"
+       tvPage = "/GoTv";
     }else if(GlobalTvSubscription === 1){
         TvSubscriptionValue = "Dstv";
         path =`products/tvsub/dstv`;
@@ -125,31 +217,25 @@ await GetFunction(path, setLoading, SuccessHandler, FailedHandler, fetchedPlans)
 //    return navigate("/GoTv");
 //   }
     } else if(handleSubscriptionFunction && GlobalTvSubscription === 1 && (fetchedDstvPlans.status !== 200 )){
-    try{
+    
   await GetFunction(path, setLoading, SuccessHandler, FailedHandler, fetchedPlans);
      if(GetFunction && (fetchedDstvPlans.status === 200 || fetchedDstvPlans.status === 201))
          return navigate("/DsTv");
-    }catch(error){
-        alert("Dstv Plans are unavailabe at the moment, please try again later.")
-    }
+    
     } else if(handleSubscriptionFunction && GlobalTvSubscription === 2 &&(fetchedStarTimesPlans.status !== 200 )){
-         try{
+        
  await GetFunction(path, setLoading, SuccessHandler, FailedHandler, fetchedPlans);
  if(GetFunction && (fetchedStarTimesPlans.status === 200 || fetchedStarTimesPlans.status === 201)){
 return navigate("/StarTimes");
  }
- }catch(error){
-        alert("StarTimes Plans are unavailabe at the moment, please try again later.")
-    }
+ 
     }else if(handleSubscriptionFunction && GlobalTvSubscription === 3 && (fetchedShowMaxPlans.status !== 200)){
-      try{
+     
   await GetFunction(path, setLoading, SuccessHandler, FailedHandler, fetchedPlans);
   if(GetFunction && (fetchedShowMaxPlans.status === 200 || fetchedShowMaxPlans.status === 201)){
  return navigate("/Showmax");
   }
-}catch(error){
-        alert("Showmax Plans are unavailabe at the moment, please try again later.")
-    }
+
      }else{
        return LinkToPage();
      }

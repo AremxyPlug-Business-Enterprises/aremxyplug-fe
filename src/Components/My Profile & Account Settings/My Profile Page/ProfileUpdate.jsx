@@ -6,22 +6,22 @@ import naijaFlag from "../../EducationPins/imagesEducation/Nigeriaflag.svg";
 import messageQuestion from "../ProfileImages/message-question.svg";
 import { Link } from "react-router-dom";
 import { ContextProvider } from "../../Context";
-import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
+// import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 
-export default function ProfileUpdate(Data, { fullname, Email, Phone, Username }) {
+export default function ProfileUpdate(  {fullname, Email, Phone, Username} ) {
   const { profilePage, customerDetail } = useContext(ContextProvider);
-  const { isDarkMode, state } = useContext(ContextProvider);
+  const { isDarkMode } = useContext(ContextProvider);
   const { full_name, username, email, phone } = customerDetail;
-  const { fullName, phoneNumber, userName } = state;
-Data = GetLocalStorage()
+
+// Data = GetLocalStorage()
   return (
     <div className="">
       {profilePage && (
         <div className="flex flex-col mt-[30px]">
-          <div className="flex flex-col gap-[20px] md:gap-[30px]  lg:gap-[40px]">
+          <div className="flex flex-col gap-[50px] md:gap-[30px]  lg:gap-[40px]">
             {/* Profile pic */}
             <div className="flex md:justify-start justify-center gap-[7.042px] lg:gap-[12px]">
-              <div className="relative">
+              <div className="relative pt-[30px]">
                 <img
                   src={ProfilePic}
                   className="h-[48px] w-[46.753px] rounded-[48px] lg:h-[150px] lg:w-[150px] md:h-[88.801px]  md:w-[88.801px] md:rounded-[88.201px] lg:rounded-[150px]"
@@ -34,30 +34,20 @@ Data = GetLocalStorage()
                 />
               </div>
               {/* Profile text */}
-              <div className="flex flex-col justify-center gap-[3.52px] lg:gap-[12px]">
+              <div className="flex flex-col justify-center gap-[3.52px] lg:gap-[12px] pt-[30px]">
                 <p
                   className={`text-[#7E7E7E] text-[12px] leading-[18px] md:text-[12.042px] md:leading-[16px] lg:text-[16px] lg:leading-[24.8px] ${
                     isDarkMode ? "text-white" : ""
                   }`}
                 >
-                  {!full_name && fullName?.length > 1
-                    ? fullName
-                    : full_name
-                    ? full_name
-                    : Data?.UserFullName
-                    ?  Data?.UserFullName
-                    : "Hi User"}
+                  {full_name ? full_name : fullname ? fullname : ""}
                 </p>
                 <p
                   className={`text-[#7C7C7C] text-[12px] leading-[18px] md:text-[12.042px] md:leading-[16px] lg:text-[16px] lg:leading-[24.8px] ${
                     isDarkMode ? "text-white" : ""
                   }`}
                 >
-                  {state?.email.length > 1 && !email ?
-                   state?.email : 
-                   email ? email : 
-                   Data?.UserEmail 
-                    ? Data?.UserEmail : "No email"}
+                  {email ? email : Email ? Email : ""}
                 </p>
               </div>
             </div>
@@ -78,10 +68,19 @@ Data = GetLocalStorage()
                       Country
                     </h2>
                     <div
-                      className={`flex items-center py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] gap-[5px]
-                         md:pl-[8.67px] md:pr-[5.867px] lg:py-[11.5px] lg:pl-[10px] border-[0.4px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] ${
-                        isDarkMode ? "border-slate-50" : ""
-                      }`}
+                       className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
+                         sm:p-3 sm:text-lg relative  flex gap-[5px]  pt-[8.803px]
+                          pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+                          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px]
+     md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]
+       items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px]
+        w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] 
+        px-[11px] md:px-[6px] lg:px-[10px] text-[#000] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}
                     >
                       {/* {`flex items-center py-[10.33px] pl-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] md:py-[12px] md:pl-[8.67px] md:pr-[5.867px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px]placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-[10px] h-full  ${
                         isDarkMode ? "border-slate-50" : ""
@@ -92,7 +91,8 @@ Data = GetLocalStorage()
                         alt=""
                       />
                       <p
-                        className={`text-[#7E7E7E] text-[12px] leading-[18px] md:text-[10.389px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] ${
+                        className={`text-[#7E7E7E] text-[12px] leading-[18px] 
+                          md:text-[10.389px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] ${
                           isDarkMode ? "text-white" : ""
                         }`}
                       >
@@ -111,22 +111,26 @@ Data = GetLocalStorage()
                       Full Name
                     </h2>
                     <div
-                      className={`flex items-center py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] ${
-                        isDarkMode ? "border-slate-50 " : ""
-                      }`}
+                      className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
+                         sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px]
+                          pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+                          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px]
+     md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]
+       items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px]
+        w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] 
+        px-[11px] md:px-[6px] lg:px-[10px] text-[#000] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}
                     >
                       <p
                         className={`text-[#7E7E7E] text-[12px] leading-[18px] md:text-[9.389px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] cursor-default ${
                           isDarkMode ? "text-white" : ""
                         }`}
                       >
-                        {!full_name && fullName.length > 1
-                          ? fullName
-                          : full_name
-                          ? full_name
-                          : Data.UserFullName
-                          ?  Data.UserFullName
-                          : "Hi user"}
+                        {full_name ? full_name : fullname ? fullname : ""}
                       </p>
                     </div>
                   </div>
@@ -145,49 +149,63 @@ Data = GetLocalStorage()
                       UserName
                     </h2>
                     <div
-                      className={`flex items-center py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] ${
-                        isDarkMode ? "border-white" : ""
-                      }`}
+                      className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
+                         sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px]
+                          pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+                          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px]
+     md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]
+       items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px]
+        w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] 
+        px-[11px] md:px-[6px] lg:px-[10px] text-[#000] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}
                     >
                       <p
-                        className={`text-[#7E7E7E] text-[12px] leading-[18px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] cursor-default ${
+                        className={`text-[#7E7E7E] text-[12px] 
+                          leading-[18px] md:leading-[12.206px] lg:text-[16px]
+                           lg:leading-[20.8px] cursor-default ${
                           isDarkMode ? "text-white" : ""
                         }`}
                       >
-                        {!username && userName.length > 1
-                          ? userName
-                          : username
-                          ? username
-                          : Data.aremxyUsername
-                          ?  Data.aremxyUsername
-                          : "Hi User"}
+                        {username ? username : Username ? Username : ""}
                       </p>
                     </div>
                   </div>
                   {/* second part level two */}
                   <div className="flex flex-col w-[100%] md:w-[50%] gap-[5.868px] lg:gap-[10px] cursor-default">
                     <h2
-                      className={`text-[#7E7E7E] text-[12px] leading-[10.4px] md:leading-[12.206px] font-semibold lg:text-[16px] lg:leading-[20.8px] cursor-default ${
+                      className={`text-[#7E7E7E] text-[12px] leading-[10.4px]
+                         md:leading-[12.206px] font-semibold lg:text-[16px] 
+                         lg:leading-[20.8px] cursor-default ${
                         isDarkMode ? "text-stone-50" : ""
                       }`}
                     >
                       Email
                     </h2>
                     <div
-                      className={`flex items-center py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] ${
-                        isDarkMode ? "border-white" : ""
-                      }`}
+                        className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
+                         sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px]
+                          pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+                          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px]
+     md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]
+       items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px]
+        w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] 
+        px-[11px] md:px-[6px] lg:px-[10px] text-[#000] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}
                     >
                       <p
                         className={`text-[#7E7E7E] text-[12px] leading-[18px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] cursor-default ${
                           isDarkMode ? "text-white" : ""
                         }`}
                       >
-                        {state.email && !email ?
-                   state.email : 
-                   email ? email : 
-                   Data.UserEmail 
-                    ? Data.UserEmail : "No email"}
+                        {email? email : Email ? Email : ""}
                       </p>
                     </div>
                   </div>
@@ -197,7 +215,8 @@ Data = GetLocalStorage()
                 {/* Start of level three */}
                 <div className="flex flex-col gap-[20px] md:flex md:flex-row md:gap-[12.91px] lg:gap-[22px] w-[100%]">
                   {/* Phone Number */}
-                  <div className="flex flex-col w-[100%] md:w-[50%] gap-[5.868px] lg:gap-[10px]">
+                  <div className="flex flex-col w-[100%] md:w-[50%] 
+                  gap-[5.868px] lg:gap-[10px]">
                     <h2
                       className={`text-[#7E7E7E] text-[12px] leading-[10.4px] md:leading-[12.206px] font-semibold lg:text-[16px] lg:leading-[20.8px] cursor-default mb-[5.868px] lg:mb-[10px] ${
                         isDarkMode ? "text-stone-50" : ""
@@ -207,24 +226,27 @@ Data = GetLocalStorage()
                     </h2>
 
                     <div
-                      className={`py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] ${
-                        isDarkMode ? "border-white" : ""
-                      }`}
+                       className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
+                         sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px]
+                          pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+                          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px]
+     md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]
+       items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px]
+        w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] 
+        px-[11px] md:px-[6px] lg:px-[10px] text-[#000] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}
                     >
                       <p
                         className={` text-[#7E7E7E] text-[12px] leading-[18px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] cursor-default ${
                           isDarkMode ? "text-white" : ""
                         }`}
                       >
-                        {`${
-                          !phone && phoneNumber.length > 1
-                            ? phoneNumber
-                            : phone
-                            ? phone.slice(3)
-                            : Data.UserPhone
-                            ? Data.UserPhone.slice(3)
-                            : "No Phone Number"
-                        }`}
+                        {phone?  `+${phone}`:Phone ? `+${Phone}` :""
+                            }
                       </p>
                     </div>
                   </div>

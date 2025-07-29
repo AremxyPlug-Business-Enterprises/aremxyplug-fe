@@ -3,7 +3,6 @@ import Joi from "joi";
 import axios from "axios";
 import arrowDown from "../../src/Components/EducationPins/imagesEducation/arrow-down.svg";
 import NotVerifiedIcon from "../Components/My Profile & Account Settings/ProfileImages/NotVerifiedIcon.svg";
-import { GetFunction } from "./ApiCollection.jsx/ApiBuck";
 // import { BASE_URL } from "../config";
 
 export const ContextProvider = createContext();
@@ -1113,7 +1112,7 @@ export const Context = ({ children }) => {
   const [inputPinDstv, setInputPinDstv] = useState(false);
   const [dstvSuccessful, setDstvSuccessful] = useState(false);
   const [fetchedDstvPlans, setFetchedDstvPlans] = useState([]);
-  const [dstvAmount, setDstvAmount] = useState("₦");
+  const [dstvAmount, setDstvAmount] = useState("");
   const [dstvEmail, setDstvEmail] = useState();
   const [packageDstv, setPackageDstv] = useState("");
   const [dstvSmartCard, setDstvSmartCard] = useState("");
@@ -1125,6 +1124,8 @@ export const Context = ({ children }) => {
   const [dstvDescription, setDstvDescription] = useState("");
   const [dstvRequestId, setDstvRequestId] = useState("");
   const [dstvWalletBalance, setDstvWalletBalance] = useState("");
+  const [purchaseDstvErrorType, setPurchaseDstvErrorType] = useState("");
+  const [dstvCardName, setDstvCardName] = useState("");
 
   //=========SHOWMAX===========
   const [selectedOptionShowmax, setSelectedOptionShowmax] = useState("");
@@ -1312,10 +1313,8 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
   const [userStatus, setUserStatus] = useState(false);
   const [idButtonState, setIdButtonState] = useState("Verify");
 
-  // Session Management Function for all the Api requests method
-  // const handleUnauthorisedGetMethod = async()=> {
-
-  // }
+ //The transactionResponse for getting user past transactions details
+  const [transactionResponse, setTransactionResponse] = useState({});
 
   const hold = {
     tvSubscriptionResponse,
@@ -2199,7 +2198,10 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
     setDstvRequestId,
     dstvWalletBalance,
     setDstvWalletBalance,
-
+  purchaseDstvErrorType,
+   setPurchaseDstvErrorType,
+   dstvCardName,
+    setDstvCardName,
     //=======SHOWMAX
     confirmShowmaxPopup,
     setConfirmShowmaxPopup,
@@ -2484,6 +2486,8 @@ bvnButtonState,
    setVerificationReason,
    verificationResponse,
    setVerificationResponse,
+   transactionResponse, 
+   setTransactionResponse,
 
     //========== Business PopUp =======
     businessPopUp,

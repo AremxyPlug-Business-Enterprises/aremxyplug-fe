@@ -358,8 +358,7 @@ export default function JambEducationPin() {
     setTransactSuccessPopUp(false);
   };
 
-  const [pinSuccess, setPinSuccess] = useState(false);
-  const [pinFailed, setPinFailed] = useState(false);
+ 
   const [errorMessage, setErrorMessage] = useState(false);
   const [fetchedPurchaseResponse, setFetchedPurchaseResponse] = useState({});
 
@@ -391,9 +390,24 @@ export default function JambEducationPin() {
         setFetchedPurchaseResponse
       );
     }
+    const setPinFailed = async(ErrorType)=> {
+      if(ErrorType ==="unauthorised" ){
+      await VerifyTransPin(
+          inputPin,
+          (ErrorType)=> {
+            if(ErrorType === "unauthorised"){
+              return setSessionModal(true)
+            }
+            //Kindly run the necessary statements as  done on waec
+          },
+          setIsLoading,
+          setErrorMessage,
+          EduPinHandler
+        );
+      }
+    }
     await VerifyTransPin(
       inputPin,
-      setPinSuccess,
       setPinFailed,
       setIsLoading,
       setErrorMessage,
@@ -1117,12 +1131,8 @@ export default function JambEducationPin() {
                               <input {...props} className="inputOTP mx-[3px]" />
                             )}
                           />
-                          {pinSuccess && (
-                            <p className="text-xs text-green-500 text-center font-medium">
-                              Pin matches
-                            </p>
-                          )}
-                          {pinFailed && errorMessage && (
+                       
+                          { errorMessage && (
                             <p className="text-xs text-center text-red-600 font-medium">
                               Incorrect Pin
                             </p>
