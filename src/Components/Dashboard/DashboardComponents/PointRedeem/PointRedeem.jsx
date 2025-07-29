@@ -40,7 +40,7 @@ const [text, setText] =useState(false);
   const [userPoints, setUserPoints] = useState(0);
    const [transactionInfo, setTransactionInfo] = useState(null);
   const [isLoading, setLoading] = useState(false);
-  const [fetchedResponse, setFetchedResponse] = useState(null);
+  const [fetchedResponse, setFetchedResponse] = useState({});
     const [InputPinPopUp, setInputPinPopUp] = useState(false);
   const [inputPin, setInputPin] = useState("");
   const [proceed, setProceed] = useState(false);
@@ -99,9 +99,9 @@ const [text, setText] =useState(false);
 // 75515487836
    //  Fetch Points
   useEffect(() => {
-    console.log("Fetched response update:", fetchedResponse?.data);
-  
-    const  successHandler = () => {console.log("fetch points succefully");
+   
+    const  successHandler = () => {
+      // console.log("fetch points succefully");
 
       const total = fetchedResponse?.data?.data?.total_points ?? 0;
     // const trxPoints = fetchedResponse?.data?.data?.transaction_points ?? 0;
@@ -119,6 +119,8 @@ const [text, setText] =useState(false);
       GetFunction("extra/point", setLoading,  successHandler, FailedHandler, setFetchedResponse)
    
   }, []);
+
+   console.log(fetchedResponse?.data);
 
   const handleProceed = (e) => {
     e.preventDefault();
