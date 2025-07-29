@@ -15,11 +15,10 @@ import "swiper/css/pagination";
 import { Autoplay, Pagination } from "swiper/modules";
 import QuickFeatures from "../DashboardComponents/QuickFeatures";
 import { WalletInOutFlows } from "../DashboardComponents/WalletInOutFlows";
-import { RecentTransaction } from "../DashboardComponents/RecentTransaction";
 import { Link } from "react-router-dom";
 import { Loader } from "../../Loader/Loader";
 import { BalanceLoading } from "../../Loader/Loader";
-import { GetLocalStorage, RemoveLocalStorage } from "../../LocalStorage/LocalStorage";
+import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 import { CheckVirtualAcc, HandleUserSession } from "../../ApiCollection.jsx/ApiBuck";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -152,9 +151,9 @@ if((clickedoption === "NGN")){
       try{
       setDashLoading(true)
       const body =""
-      const url = "https://aremxyplug.onrender.com/api/v1/virtualacc"
+      const url = "https://aremxyplug.onrender.com/api/v1/virtualacc";
        const response = await axios.post(url,body,{ headers : {"Content-Type" : "application/json",
-         Authorization : authToken || getToken},
+         Authorization : authToken || getToken},  withCredentials : true
       })
         if(response.status === 200 || response.status === 201){
            alert("Virtual Account Created")
@@ -184,8 +183,8 @@ if((clickedoption === "NGN")){
         
          if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
              console.log(newToken)
-          const EmailToken =  localStorage.setItem("authorisedLogin", newToken);
-          if(EmailToken){
+    localStorage.setItem("authorisedLogin", newToken);
+          if( localStorage.setItem("authorisedLogin")?.length > 1){
            GenerateVirtualAccount();
              if(GenerateVirtualAccount){
                setDashLoading(false)
@@ -193,8 +192,8 @@ if((clickedoption === "NGN")){
           }
            }else{
       localStorage.setItem("getToken", newToken);
-       const getToken =  localStorage.setItem("authorisedLogin", newToken);
-          if(getToken){
+    
+        if( localStorage.getItem("getToken")?.length > 1){
              GenerateVirtualAccount();
             if(GenerateVirtualAccount){
                setDashLoading(false)
@@ -254,16 +253,16 @@ if((clickedoption === "NGN")){
         
          if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
              console.log(newToken)
-          const EmailToken =  localStorage.setItem("authorisedLogin", newToken);
+          localStorage.setItem("authorisedLogin", newToken);
           
-          if(EmailToken){
+          if( localStorage.getItem("authorisedLogin")?.length > 1){
             return GenerateAccountBalance();
           }
            }else{
       localStorage.setItem("getToken", newToken);
-       const getToken =  localStorage.setItem("authorisedLogin", newToken);
+        ;
        console.log(getToken);
-          if(getToken){
+          if(localStorage.getItem("getToken")?.length > 1){
             return GenerateAccountBalance();
           }
       }}else{
@@ -326,7 +325,11 @@ if((clickedoption === "NGN")){
        }
     //eslint-disable-next-line
    }, [])
-
+window.addEventListener("online", ()=> {
+  if(balanceValue === false){
+    GenerateAccountBalance();
+  }
+})
       
 return (
     <div className="h-[150%]">
@@ -517,7 +520,10 @@ return (
       </div>
                       ) :(
                       
-                        symbol === "₦" ? `${symbol+newBalance}` : `${symbol}0.00`
+                        symbol === "₦" ? `${Number(newBalance).toLocaleString("en-NG",{
+                          style : "currency",
+                          currency : "NGN"
+                        })}` : `${symbol}0.00`
                       )}
                     </span>
                     )}
@@ -918,10 +924,10 @@ return (
 
           <QuickFeatures />
           <WalletInOutFlows className={styles.selected} />
-          <RecentTransaction />
+          
         </div>
         <div
-        className={`transaction2 flex justify-center pb-[10%]`}
+        className={`w-full flex justify-center gap-[5px] py-[40px] lg:pt-[0px] lg:pb-[20px]`}
           >
             <div className="flex gap-[15px] items-center md:mt-[40px]">
               <div className="text-[8px] md:text-[12px] lg:text-[14px]">

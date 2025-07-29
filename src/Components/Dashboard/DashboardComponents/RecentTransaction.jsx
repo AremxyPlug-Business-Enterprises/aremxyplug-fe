@@ -7,11 +7,12 @@ import { Calender } from "./Calender";
 import styles from "./component.module.css";
 import TransactionHistory from "./TransactionHistory";
 
-export const RecentTransaction = () => {
+export const RecentTransaction = ({transactionResponse, transactionHistoryError, loading}) => {
   const { toggleSideBar, isDarkMode } = useContext(ContextProvider);
   const [calender, setCalender] = useState(false);
+ 
   return (
-    <div className="mt-[5%]">
+    <div className="mt-[15%] lg:mt-[5%]">
       <div className="flex items-center gap-[10px] md:">
         <p className={styles.InOutText}>Recent Transactions</p>
         <img
@@ -100,7 +101,8 @@ export const RecentTransaction = () => {
         </div>
       </div> */}
 
-      <TransactionHistory />
+      <TransactionHistory transactionResponse = {transactionResponse} 
+      transactionHistoryError= {transactionHistoryError} loading={loading}/>
     </div>
   );
 };

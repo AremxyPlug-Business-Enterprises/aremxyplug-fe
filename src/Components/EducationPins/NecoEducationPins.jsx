@@ -360,8 +360,7 @@ export default function NecoEducationPins() {
     setNecoFailedTransaction(true);
   };
 
-  const [pinSuccess, setPinSuccess] = useState(false);
-  const [pinFailed, setPinFailed] = useState(false);
+ 
   const [errorMessage, setErrorMessage] = useState(false);
   const [fetchedPurchaseResponse, setFetchedPurchaseResponse] = useState({});
 
@@ -393,9 +392,25 @@ export default function NecoEducationPins() {
         setFetchedPurchaseResponse
       );
     }
+    const setPinFailed = async(ErrorType)=> {
+      if(ErrorType === "unauthorised"){
+           await VerifyTransPin(
+      inputPin,
+      (ErrorType)=> {
+        if(ErrorType === "unauthorised"){
+          setSessionModal(true)
+        }
+        //Kindly replicate the necessary conditional statement here as done
+        // on the waec
+      },
+      setIsLoading,
+      setErrorMessage,
+      EduPinHandler
+    );
+      }
+    }
     await VerifyTransPin(
       inputPin,
-      setPinSuccess,
       setPinFailed,
       setIsLoading,
       setErrorMessage,
@@ -1153,12 +1168,8 @@ export default function NecoEducationPins() {
                               <input {...props} className="inputOTP mx-[3px]" />
                             )}
                           />
-                          {pinSuccess && (
-                            <p className="text-[12px] text-green-500 text-center font-medium">
-                              Pin matches
-                            </p>
-                          )}
-                          {pinFailed && errorMessage && (
+                        
+                          { errorMessage && (
                             <p className="text-[12px] text-center text-red-600 font-medium">
                               Incorrect Pin
                             </p>

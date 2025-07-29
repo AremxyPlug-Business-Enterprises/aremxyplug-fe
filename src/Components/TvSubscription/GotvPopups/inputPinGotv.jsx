@@ -87,7 +87,8 @@ export const InputGotvPopup = ({VerifyPinHandler}) => {
                 }
                     
                     renderInput={(props) => (
-                      <input{...props} className={`inputOTP mx-[2px] ${isFocused ? 'focused' : ''}`} onFocus={handleFocus}
+                      <input{...props} className={`inputOTP  border-[1px] border-[#000]
+                        mx-[2px] ${isFocused ? 'focused' : ''}`} onFocus={handleFocus}
                       onBlur={handleBlur}/>
                     )}
                   />

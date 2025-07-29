@@ -80,7 +80,7 @@ const StarTimes = () => {
  
     const [isLoading, setIsLoading] = useState(false)
     const [failedPopup, setFailedPopup] = useState(false);
-      const [successConfig, setSuccessConfig] = useState("")
+      
           
              const [starTimesVerifyResponse, setStarTimesVerifyResponse] = useState({});
                 const [starTimesLoading, setStarTimesLoading] = useState(false);
@@ -412,7 +412,6 @@ const VerifyPinHandler = async () => {
     if(ErrorType === "unauthorised"){
       await VerifyTransPin(
       inputPin,
-      setSuccessConfig,
       (ErrorType)=> {
       if(ErrorType === "unauthorised"){
         setSessionModal(true)
@@ -427,7 +426,6 @@ const VerifyPinHandler = async () => {
   
     await VerifyTransPin(
       inputPin,
-      setSuccessConfig,
       setFailedConfig,
       setIsLoading,
       setErrorMessage,

@@ -191,7 +191,7 @@ export default function BvnVerification(Data) {
         <div
           className={` flex flex-col ${verificationOpen ? "block" : "hidden"} `}
         >
-          <div className="flex lg:gap-[10px] lg:py-[50px] py-[35px] ">
+      <div className="flex lg:gap-[10px] lg:py-[50px] py-[35px]  ">
             <h2
               className={`font-medium text-[#7C7C7C] text-[11px] leading-[14px] lg:text-[20px] lg:leading-[30px] ${isDarkMode ? "text-white" : ""}`}
             >
@@ -256,8 +256,8 @@ export default function BvnVerification(Data) {
           >
             {/* Header Container */}
 
-            <div className="flex flex-col lg:gap-[25px] gap-[20px]  w-full ">
-              <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]">
+            <div className="flex flex-col lg:gap-[25px] gap-[35px]  w-full  ">
+              <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[35px] w-[100%]">
                 {/* Country Bvn */}
                  <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
                   <h2
@@ -267,10 +267,19 @@ export default function BvnVerification(Data) {
                   >
                     Country
                   </h2>
-                  <div className={`py-[10.33px]  flex gap-[10px]  pl-[5.867px] items-center pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] 
-                  lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none ${
-                      isDarkMode ? "bg-black  border-slate-50" : "bg-white"
-                    }`}>
+                  <div  className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
+                         sm:p-3 sm:text-lg relative  flex gap-[5px] pt-[8.803px]
+                          pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+                          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px]
+     md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]
+       items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px]
+        w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] 
+        px-[11px] md:px-[6px] lg:px-[10px] text-[#000] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}>
                        <img className=" md:h-[20.27px]  h-[14.27px]
                    "
                   src={countryImage} alt="Country flag" />
@@ -290,7 +299,19 @@ export default function BvnVerification(Data) {
                     Full Name
                   </h2>
                   <div
-                    className={`py-[10.33px] pl-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[8px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-[10px] ${isDarkMode ? "text-white border-white" : ""}`}
+                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
+                         sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px]
+                          pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+                          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px]
+     md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]
+       items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px]
+        w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] 
+        px-[11px] md:px-[6px] lg:px-[10px] text-[#000] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}
                   >
                     {full_name ? full_name : Data.UserFullName}
                   </div>
@@ -301,7 +322,7 @@ export default function BvnVerification(Data) {
               </div>
               
               {/* Gender / Date of birth */}
-              <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]">
+              <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[35px] w-[100%]">
                 
               <div className="flex flex-col relative md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
                   <h2
@@ -317,8 +338,19 @@ export default function BvnVerification(Data) {
                         return null;
                       }
                     }}
-                    className={` py-[10.33px] pl-[5.867px] md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] flex justify-between pr-[10.917px] lg:pr-[10px] border-[0.4px] border-[#9C9C9C] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] rounded-[10px] ${isDarkMode ? "border-white" : ""}`}
-                  >
+                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
+                         sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px]
+                          pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+                          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px]
+     md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]
+       items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px]
+        w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] 
+        px-[11px] md:px-[6px] lg:px-[10px] text-[#000] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}>
                     <h2
                       className={`text-[#000] text-sm leading-[18px] lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : ""}`}
                     >
@@ -362,7 +394,7 @@ export default function BvnVerification(Data) {
                   >
                     D.O.B
                   </h2>
-                   <div className={`w-[100%] border-[0.4px] border-[#9C9C9C]  focus:outline-none cursor-pointer rounded-[10px] ${
+                   <div className={`w-[100%] ${
                       isDarkMode ? " border-white " : "border-[#9C9C9C]"
                     }`}>
                   <input
@@ -371,11 +403,19 @@ export default function BvnVerification(Data) {
                       setBvnDateOfBirth(e.target.value);
                     }}
                     
-                    className={`w-[100%]
-                      md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px]  lg:pr-[16px] pr-[9px] h-[100%] rounded-[10px]
-                  py-[10.33px] pl-[5.867px] lg:py-[15.5px] text-sm leading-[18px] focus:outline-none lg:text-[16px] lg:leading-[20.8px] ${
-                      isDarkMode ? "text-white  bg-black" : "bg-white text-black"
-                    }`}
+                   className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
+                         sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px]
+                          pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+                          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px]
+     md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]
+       items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px]
+        w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] 
+        px-[11px] md:px-[6px] lg:px-[10px] text-[#000] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}
                     type="date"
                     id="dob"
                     name="dob"
@@ -389,7 +429,7 @@ export default function BvnVerification(Data) {
               </div>
 
               {/*HOUSE ADDRESS / PHONE NUMBER */}
-              <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]">
+              <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[35px] w-[100%]">
                 {/* HOUSE ADDRESS */}
                   <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
                     <h2
@@ -402,7 +442,19 @@ export default function BvnVerification(Data) {
                       onChange={(e) => {
                         setIdAddress(e.target.value);
                       }}
-                      className={`py-[10.33px] pl-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none rounded-[10px]  ${isDarkMode ? "text-white border-white bg-black" : ""}`}
+                      className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
+                         sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px]
+                          pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+                          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px]
+     md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]
+       items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px]
+        w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] 
+        px-[11px] md:px-[6px] lg:px-[10px] text-[#000] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}
                       placeholder=""
                       readOnly={Data.ConfirmId === "true" || Data.ConfirmBvn === "true"}
                       type="text"
@@ -434,7 +486,7 @@ export default function BvnVerification(Data) {
                   <input
                 
                     readOnly
-                    value={phone ? phone : Data.UserPhone }
+                    value={phone ? `+${phone}` :Data.UserPhone ? `+${Data.UserPhone}` : "" }
                     onInput={(e) => {
                       const numericValue = e.target.value.replace(/\D/g, "");
                       e.target.value = numericValue;
@@ -448,11 +500,19 @@ export default function BvnVerification(Data) {
                     maxLength={11}
                     inputMode="tel"
                     required
-                    className={`py-[10.33px] pl-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px]
-                       md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] text-[12px] leading-[18px]
-                        border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] 
-                        focus:outline-none placeholder:text-[9px] placeholder:leading-[10.4px] 
-                        placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-[10px] ${isDarkMode ? "text-white border-white bg-black" : ""}`}
+                     className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
+                         sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px]
+                          pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+                          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px]
+     md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]
+       items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px]
+        w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] 
+        px-[11px] md:px-[6px] lg:px-[10px] text-[#000] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}
                         
                   />
                 </div>
@@ -474,11 +534,23 @@ export default function BvnVerification(Data) {
                       const numbersOnly = e.target.value.replace(/\D/g, "");
                       e.target.value = numbersOnly;
                     }}
-                    value={   bvnStatus === "Verified" ?  `${bvnNumber?.slice(0,4)}*******` : bvnNumber}
+                    value={   (bvnStatus === "Verified" || Data.ConfirmBvn === "true")?  `${bvnNumber?.slice(0,4)}*******` : bvnNumber}
                     onChange={(e) => {
                       setBvnNumber(e.target.value);
                     }}
-                    className={`py-[10.33px] pl-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none rounded-[10px]  ${isDarkMode ? "text-white border-white bg-black" : ""}`}
+                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
+                         sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px]
+                          pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+                          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px]
+     md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]
+       items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px]
+        w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] 
+        px-[11px] md:px-[6px] lg:px-[10px] text-[#000] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}
                     type="text"
                     inputMode="numeric"
                     maxLength={11}
@@ -508,7 +580,9 @@ export default function BvnVerification(Data) {
                 </button>
                 {errorVerify && (
                   <h2
-                    className={`font-[500] lg:text-[14px] lg:leading-[18px] md:text-[14px] md:leading-[18px] text-[12px] leading-[16px] text-red-600`}
+                    className={`font-[500] lg:text-[14px] lg:leading-[18px] 
+                      md:text-[14px] md:leading-[18px] text-[12px] leading-[16px]
+                       text-red-600`}
                   >
                     Fill all to Confirm Verification
                   </h2>

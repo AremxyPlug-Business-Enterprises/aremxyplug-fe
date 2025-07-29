@@ -1,4 +1,3 @@
-import React from "react";
 import { useState, useEffect } from "react";
 import { DashBoardLayout } from "../../../../Layout/DashBoardLayout";
 import { ContextProvider } from "../../../../../Context";
@@ -55,7 +54,6 @@ const { isDarkMode, newBalance, setNewBalance } = useContext(ContextProvider);
   const [image, setImage] = useState("");
   const [paymentAmount, setPaymentAmount] = useState("");
   const [codes, setCodes] = useState(false);
-  const [plan, setPlan] = useState("");
   const [purchaseStatus, setPurchaseStatus] = useState(null); // State to hold purchase status
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState([]);
@@ -63,7 +61,6 @@ const { isDarkMode, newBalance, setNewBalance } = useContext(ContextProvider);
   const [loadingProducts, setLoadingProducts] = useState(false);
   const [loadingPlans, setLoadingPlans] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null);
-  const [success, setSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
  const [balanceStatus,setBalanceStatus ] = useState("")
 
@@ -108,13 +105,13 @@ useEffect(() => {
          const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
         
          if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
-           const setAuthorisedToken = localStorage.setItem("authorisedLogin", newToken);
-           if(setAuthorisedToken){
-           await fetchProducts()
+           localStorage.setItem("authorisedLogin", newToken);
+           if(localStorage.getItem("authorisedLogin")?.length > 1){
+           await fetchProducts();
            }
             }else{
-    const setGetToken = localStorage.setItem("getToken", newToken);
-      if(setGetToken){
+     localStorage.setItem("getToken", newToken);
+      if(localStorage.getItem("authorisedLogin")?.length > 1){
         await fetchProducts();
       }
       }
@@ -172,14 +169,14 @@ useEffect(() => {
          const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
         
          if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
-           const setAuthorisedToken = localStorage.setItem("authorisedLogin", newToken);
-           if(setAuthorisedToken){
-            await inputPinHandler()
+           localStorage.setItem("authorisedLogin", newToken);
+           if( localStorage.getItem("authorisedLogin")?.length > 1){
+            await fetchPlans()
            }
             }else{
-    const setGetToken = localStorage.setItem("getToken", newToken);
-      if(setGetToken){
-        await inputPinHandler();
+    localStorage.setItem("getToken", newToken);
+      if(localStorage.getItem("getToken")?.length > 1){
+        await fetchPlans();
       }
       }
         }else{
@@ -207,7 +204,6 @@ useEffect(() => {
   };
 
   const handleSelectOption = (plan) => {
-    setPlan(`${plan?.ID}`);
     setSelectedOptionMtn(` ${plan?.Size} (₦${plan?.Amount}) ~ ${plan?.Validity ? plan?.Validity.toUpperCase() : ""} `);
    setMtnReceiptInfo(plan?.PlanType + " " + plan?.Size);
     setSelectedAmountMtn(`₦${plan?.Amount}`);
@@ -287,7 +283,11 @@ console.log("successfully retrieved balance");
       setPassDataBalance)
   }
  }
- await GetFunction("balance", setLoading, SuccessHandler, FailedHandler,setPassDataBalance)
+ await GetFunction("balance", 
+  setLoading,
+   SuccessHandler, 
+   FailedHandler,
+   setPassDataBalance)
    } 
     // Simulate async data loading
    
@@ -522,27 +522,13 @@ const [inputValue, setInputValue] = useState("");
       try {
         setLoading(true);
         const response = await axiosInstance.post(path, data);
-        console.log(response.data);
-        console.log(response.status);
-
-        const resData = response?.data?.data?.data; // Accessing the nested `data` object
+  const resData = response?.data?.data?.data; // Accessing the nested `data` object
 console.log(resData);
-        
-
-        setMtnTransactionID(resData?.transaction_id);
-        console.log(resData?.transaction_id);
-
-        setMtnRefNumber(resData?.reference_number);
-        console.log(resData?.reference_number);
-
-        setMtnOrderID(resData?.order_id); // No `order_id`, using `id` instead
-        console.log(resData?.order_id);
-
-        setMtnDescription(`${resData?.network} - ${resData?.plan_name}`); // Fabricated description
-
-    
-
-         if (response.statusCode === 200 || 201) {
+         setMtnTransactionID(resData?.transaction_id);
+ setMtnRefNumber(resData?.reference_number);
+ setMtnOrderID(resData?.order_id); // No `order_id`, using `id` instead
+       setMtnDescription(`${resData?.network} - ${resData?.plan_name}`); // Fabricated description
+if (response.statusCode === 200 || 201) {
       // Success response
       setTransactSuccessPopUp(true); 
       setInputPin("");
@@ -566,13 +552,13 @@ console.log(resData);
          const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
         
          if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
-           const setAuthorisedToken = localStorage.setItem("authorisedLogin", newToken);
-           if(setAuthorisedToken){
+           localStorage.setItem("authorisedLogin", newToken);
+           if( localStorage.getItem("authorisedLogin")?.length > 1){
             await inputPinHandler()
            }
             }else{
-    const setGetToken = localStorage.setItem("getToken", newToken);
-      if(setGetToken){
+     localStorage.setItem("getToken", newToken);
+      if(localStorage.getItem("getToken")?.length > 1){
         await inputPinHandler();
       }
       }
@@ -1541,7 +1527,6 @@ console.log(resData);
                         if(ErrorType=== "unauthorised"){
                         VerifyTransPin(
                       inputPin,
-                      setSuccess,
                       (ErrorType)=> {
                         if(ErrorType === "unauthorised"){
                           return setSessionModal(true)
@@ -1557,7 +1542,6 @@ console.log(resData);
                       // and proceed with purchase
                     VerifyTransPin(
                       inputPin,
-                      setSuccess,
                       setFailed,
                       setLoading,
                       setErrorMessage,

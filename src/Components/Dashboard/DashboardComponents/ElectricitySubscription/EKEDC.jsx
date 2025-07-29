@@ -540,7 +540,7 @@ const EKEDC = () => {
       }
     };
     HandleBalanceStatus();
-  }, [CheckSufficiency]);
+  }, [CheckSufficiency]); 
 
   const [InputPinPopUp, setInputPinPopUp] = useState(false);
   const [inputPin, setInputPin] = useState("");

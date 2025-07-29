@@ -62,7 +62,6 @@ const AirtimeVtu = () => {
     const [description, setDescription] = useState("");
     const [isLoading, setIsLoading] = useState(false); // For managing loading state
     const { isDarkMode } = useContext(ContextProvider);
-    const [successPin, setSuccessPin] = useState(false)
    const [sessionModal, setSessionModal] = useState(false)
     const [errorMessage, setErrorMessage] = useState(false);
     const [passDataBalance, setPassDataBalance] = useState({});
@@ -567,7 +566,6 @@ const AirtimeVtu = () => {
         const setFailedPin = async(ErrorType)=> {
         if(ErrorType === "unauthorised"){
              await VerifyTransPin(inputPin,
-    setSuccessPin,
     (ErrorType)=> {
         if(ErrorType === "unauthorised"){
             return setSessionModal(true)
@@ -579,8 +577,7 @@ const AirtimeVtu = () => {
         }
         }
    await VerifyTransPin(inputPin,
-    setSuccessPin,
-     setFailedPin,
+    setFailedPin,
       setIsLoading,
        setErrorMessage,
        handleTransactionSuccessClose)

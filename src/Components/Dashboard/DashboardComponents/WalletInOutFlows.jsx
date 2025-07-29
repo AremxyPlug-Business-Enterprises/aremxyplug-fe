@@ -1,17 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { RxDotFilled } from "react-icons/rx";
 import styles from "./component.module.css";
-// import { Line } from "react-chartjs-2";
-// import {
-//   Chart as ChartJS,
-//   CategoryScale,
-//   LinearScale,
-//   PointElement,
-//   LineElement,
-// } from "chart.js";
+import { GetFunction, HandleUserSession } from "../../ApiCollection.jsx/ApiBuck";
 import { useContext } from "react";
 import { ContextProvider } from "../../Context";
-// ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement);
+import  { RecentTransaction } from  "./RecentTransaction";
+
 
 import {
   LineChart,
@@ -32,7 +26,10 @@ export const WalletInOutFlows = ({className}) => {
   const [toggleTotalTransaction] = useState(false);
   //console.log(setToggleTotalTransaction)
   const [symbol, setSymbol] = useState("₦");
-
+ const [loading, setLoading] = useState(false);
+ const {transactionResponse, setTransactionResponse} = useContext(ContextProvider)
+ const [transactionHistoryError, setTransactionHistoryError] = useState("");
+ const [sessionModal, setSessionModal] = useState(false)
   const [activeButtons, setActiveButtons] = useState([
     true,
     false,
@@ -67,7 +64,41 @@ export const WalletInOutFlows = ({className}) => {
         : ""
     );
   };
-
+  // const [inflowAmount, setInflowAmount] = useState("");
+  // const [outflowAmount, setOutflowAmount] = useState("")
+   const GetTransactionInformation = async()=> {
+        if(!navigator.onLine) return setTransactionHistoryError("Network error")
+        const path ="transactions"
+        const SuccessHandler =()=>{
+        console.log('The user transactions are retrieved.');
+        }
+        const FailedHandler = async(ErrorType)=> {
+      if(ErrorType === "unauthorised"){
+        setTransactionHistoryError("unauthorised");
+        await GetFunction(path, setLoading, SuccessHandler,(ErrorType)=> {
+          if(ErrorType === "unauthorised"){
+         setSessionModal(true);
+          }
+        }, setTransactionResponse)
+      }else if(ErrorType === "Network error" || ErrorType === "User error" || ErrorType === "Bad request"){
+       setTransactionHistoryError("Network error")
+      }else if(ErrorType === "Server error"){
+        setTransactionHistoryError("Server error")
+      }else {
+        setTransactionHistoryError(null)
+      }
+        }   
+        await GetFunction(path, 
+          setLoading, 
+          SuccessHandler,
+           FailedHandler,
+            setTransactionResponse)}
+  
+         window.addEventListener("online", ()=> {
+   if(transactionHistoryError === "Network error"){
+    GetTransactionInformation();
+   }
+ })
   const [activeButton] = useState(0);
 
   //console.log(setActiveButton)
@@ -78,7 +109,7 @@ export const WalletInOutFlows = ({className}) => {
     const generateData = () => {
       const currentDate = new Date();
       const currentDay = currentDate.getDay();
-
+     GetTransactionInformation();
       console.log(currentDay)
       const todayData = [
         { xaxis: "0.00", inflow: 10, outflow: 0, amt: 2400 },
@@ -145,13 +176,13 @@ export const WalletInOutFlows = ({className}) => {
         // Generate data for last 30 days
         // Modify data based on your actual requirements
       ];
-
       const allTimeData = [
         // Generate data for all time
         // Modify data based on your actual requirements
       ];
 
       const customData = [
+
         // Generate data for custom time range
         // Modify data based on your actual requirements
       ];
@@ -180,7 +211,15 @@ export const WalletInOutFlows = ({className}) => {
     };
 
     generateData();
+    if(transactionResponse?.data?.data?.data === undefined){
+      GetTransactionInformation();
+    }
+    setSelected("NGN");
+    //eslint-disable-next-line
   }, [activeButton]);
+
+  const symbolValue = selected === "USD" ? "$" : selected === "AUD" ? 
+ "AU$" : selected === "KES" ?   "KSh" : selected === "EUR" ? "€" : selected === "GBP" ? "£" : "₦";
 
   // const handleClick = (index) => {
   //   setActiveButton(index);
@@ -198,78 +237,105 @@ export const WalletInOutFlows = ({className}) => {
       </div>
 
       {/* ==============================Inflows & Outflows Indicator====================== */}
-      <div
-        className={`${styles.INnOUT} my-[10%] flex lg:mt-[5%] lg:items-center`}
-      >
-        <select
-          name="curr"
-          id="curr"
-          className={className}
-          onChange={handleSelectedOption}
-          value={selected}
-        >
-          <option value="NGN">NGN</option>
-          <option value="USD">USD</option>
-          <option value="GBP">GBP</option>
-          <option value="EUR">EUR</option>
-          <option value="AUD">AUD</option>
-          <option value="KES">KES</option>
-        </select>
 
-        <div
-          className={`${styles.inflowOutflow} ${
-            isDarkMode ? "border " : " bg-[#D5F6E3]"
-          }  text-[7px] ${toggleSideBar ? "lg:text-[14px]" : "lg:text-[px]"}`}
-        >
-          <div className="flex gap-1 md:items-center ">
-            <p className={`${toggleSideBar ? "lg:text-[18px]" : ""}`}>
-              Total Inflows
-            </p>
-            <img
-              className="h-[8.3px] w-[8.3px] md:h-[18px] md:w-[18px] lg:w-[24px] lg:h-[24px]"
-              src="./Images/dashboardImages/newarrow-down.png"
-              alt="dropdown"
-            />
-          </div>
-          <div className="text-center">{symbol}0.00</div>
-        </div>
+          <div>
+            <div
+              className={` flex w-full gap-[5px] h-[70px] lg:h-[100px] md:items-center 
+              lg:mt-[5%] lg:items-center my-[30px]`}>
+              <select
+                name="curr"
+                id="curr"
+                onChange={handleSelectedOption}
+                value={selected}
+                className={`${styles.selected} w-[25%]`}
+              >
+                <option value="NGN">NGN</option>
+                <option value="USD">USD</option>
+                <option value="GBP">GBP</option>
+                <option value="EUR">EUR</option>
+                <option value="AUD">AUD</option>
+                <option value="KES">KES</option>
+              </select>
 
-        <div
-          className={`${styles.inflowOutflow} ${
-            isDarkMode ? "border " : " bg-[#92abfe81]"
-          }  text-[7px]`}
-        >
-          <div className="flex gap-1 md:items-center">
-            <p className={`${toggleSideBar ? "lg:text-[18px]" : ""}`}>
-              Total Transactions{" "}
-            </p>
-            <img
-              className="h-[8.3px] w-[8.3px] md:h-[18px] md:w-[18px] lg:w-[24px] lg:h-[24px]"
-              src="./Images/dashboardImages/newarrow-down.png"
-              alt="dropdown"
-            />
-          </div>
-          <div className="text-center">0</div>
-        </div>
+              <div
+                className={`w-[33.3%] rounded-[3px] lg:rounded-[5px] flex flex-col h-full justify-center items-center
+                   gap-[3px] ${
+                  isDarkMode ? "border " : " bg-[#D5F6E3]"
+                }   ${
+                  toggleSideBar ? "lg:text-[14px]" : "lg:text-[px]"
+                }`}
+              >
+                <div className="flex gap-1  justify-center items-center  ">
+                  <p className={` text-[11px] text-center leading-[14px] font-[500] 
+                  lg:text-[18px] lg:leading-[24px]
+                    ${toggleSideBar ? "lg:text-[18px]" : ""}`}>
+                    Total Inflows
+                  </p>
+                  <img
+                    className="h-[10.3px] w-[10.3px] md:h-[18px] md:w-[18px] lg:w-[24px] lg:h-[24px]"
+                    src="./Images/dashboardImages/newarrow-down.png"
+                    alt="dropdown"
+                  />
+                </div>
+                <p className="text-center text-[10px] leading-[13px] font-[500] 
+                  lg:text-[18px] lg:leading-[24px]">
+                  {selected === "NGN"  ? transactionResponse?.data?.data?.data ?
+        transactionResponse?.data?.data?.data?.total_inflow?.toLocaleString("en-NG", {
+          style : "currency",
+          currency : "NGN"
+        }) :   "₦"  : `${symbolValue}0.00` }
+                </p>
+              </div>
 
-        <div
-          className={`${styles.inflowOutflow} ${
-            isDarkMode ? "border " : " bg-[#FDCECE]"
-          } text-[7px]`}
-        >
-          <div className="flex gap-1 md:items-center">
-            <p className={`${toggleSideBar ? "lg:text-[18px]" : ""}`}>
-              Total Outflows
-            </p>
-            <img
-              className="h-[8.3px] w-[8.3px] md:h-[18px] md:w-[18px] lg:w-[24px] lg:h-[24px]"
-              src="./Images/dashboardImages/newarrow-up.png"
-              alt="dropdown"
-            />
+              <div
+                className={`w-[33.3%] rounded-[3px] lg:rounded-[5px]  flex flex-col h-full justify-center items-center
+                   gap-[3px] ${
+                  isDarkMode ? "border " : " bg-[#92abfe81]"
+                }  text-[7px] md:text-[12px]`}
+              >
+                <div className="flex gap-1 justify-center items-center ">
+                  <p className={`  text-[11px] text-center leading-[14px] font-[500] 
+                  lg:text-[18px] lg:leading-[24px] ${toggleSideBar ? "lg:text-[18px]" : ""}`}>
+                    Total Transactions{" "}
+                  </p>
+                  <img
+                    className="h-[10.3px] w-[10.3px] md:h-[18px] md:w-[18px] lg:w-[24px] lg:h-[24px]"
+                    src="./Images/dashboardImages/newarrow-down.png"
+                    alt="dropdown"
+                  />
+                </div>
+                <p className="text-center  text-[10px] leading-[13px] font-[500] 
+                  lg:text-[18px] lg:leading-[24px]">{selected === "NGN" ? transactionResponse?.data?.data?.data?.total_count || transactionResponse?.data?.status === 200  ? transactionResponse?.data?.data?.data?.total_count: "" : 0}  </p>
+              </div>
+
+              <div
+                className={`w-[33.3%] rounded-[3px] lg:rounded-[5px] flex flex-col h-full justify-center items-center
+                   gap-[3px] ${
+                  isDarkMode ? "border " : " bg-[#FDCECE]"
+                } text-[7px] md:text-[12px]`}
+              >
+                <div className="flex gap-1 justify-center items-center">
+                  <p className={`text-[11px] text-center leading-[14px] font-[500] 
+                  lg:text-[18px] lg:leading-[24px] ${toggleSideBar ? "lg:text-[18px]" : ""}`}>
+                    Total Outflows
+                  </p>
+                  <img
+                    className="h-[10.3px] w-[10.3px] md:h-[18px] md:w-[18px] lg:w-[24px] lg:h-[24px]"
+                    src="./Images/dashboardImages/newarrow-up.png"
+                    alt="dropdown"
+                  />
+                </div>
+                <p className="text-center  text-[10px] leading-[13px] font-[500] 
+                  lg:text-[18px] lg:leading-[24px]">
+                  {selected === "NGN" ? transactionResponse?.data?.data?.data ?
+        transactionResponse?.data?.data?.data?.total_outflow?.toLocaleString("en-NG", {
+          style : "currency",
+          currency : "NGN"
+        }) :   "₦"  : `${symbolValue}0.00`}
+                </p>
+              </div>
+            </div>
           </div>
-          <div className="text-center">{symbol}0.00</div>
-        </div>
-      </div>
 
       {toggleTotalTransaction && (
         <div
@@ -459,50 +525,17 @@ export const WalletInOutFlows = ({className}) => {
           </LineChart>
         </div>
 
-        {/* <LineChart
-          width={1100}
-          height={360}
-          data={data}
-          className="hidden lg:block"
-        >
-          <XAxis dataKey="xaxis" />
-          <YAxis dataKey="yaxis" />
-          <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
-          <Line type="linear" dataKey="inflow" stroke="#58DA8F" />
-          <Line type="linear" dataKey="outflow" stroke="#FA6B6B" />
-          <Tooltip />
-          <Legend />
-        </LineChart>
-        <LineChart
-          width={340}
-          height={280}
-          data={data}
-          className="pb-[10%] md:hidden"
-        >
-          <XAxis dataKey="xaxis" />
-          <YAxis dataKey="yaxis" />
-          <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
-          <Line type="linear" dataKey="inflow" stroke="#58DA8F" />
-          <Line type="linear" dataKey="outflow" stroke="#FA6B6B" />
-          <Tooltip />
-          <Legend />
-        </LineChart>
-        <LineChart
-          width={740}
-          height={280}
-          data={data}
-          className="pb-[10%] hidden md:block lg:hidden"
-        >
-          <XAxis dataKey="xaxis" />
-          <YAxis dataKey="yaxis" />
-          <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
-          <Line type="linear" dataKey="inflow" stroke="#58DA8F" />
-          <Line type="linear" dataKey="outflow" stroke="#FA6B6B" />
-          <Tooltip />
-          <Legend />
-        </LineChart> */}
+       
       </div>
       {/* ========================Chart End========================= */}
+     
+       <RecentTransaction transactionResponse = {transactionResponse} 
+       transactionHistoryError={transactionHistoryError} loading={loading} />
+       
+       
+        {sessionModal && (
+          <HandleUserSession/>
+        )}
     </div>
   );
 };

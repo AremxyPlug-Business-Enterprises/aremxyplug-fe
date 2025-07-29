@@ -452,8 +452,7 @@ export default function WaecEducationPin() {
     // setInputPin("");
   };
 
-  const [pinSuccess, setPinSuccess] = useState(false);
-  const [pinFailed, setPinFailed] = useState(false);
+ 
   const [errorMessage, setErrorMessage] = useState(false);
   const [fetchedPurchaseResponse, setFetchedPurchaseResponse] = useState({});
 
@@ -485,9 +484,42 @@ export default function WaecEducationPin() {
         setFetchedPurchaseResponse
       );
     }
+ 
+    //Hello Judith,
+    //kindly write these conditional statements in the failedHandler of other education pins
+   //Do not write this code for other api requests apart from the verifyTransPin
+   //The failed handler handling errors for the post function initiating the transaction
+   //would also be handled differently.
+   //The balance alert message would also be handled
+    const setPinFailed = async(ErrorType)=> {
+    if(ErrorType === "unauthorised"){
+        await VerifyTransPin(
+      inputPin,
+     (ErrorType)=> {
+      if(ErrorType === "unauthorised"){
+        setSessionModal(true)
+      }else if(ErrorType === "Network error" || ErrorType === "User error"){
+     return alert("Kindly Check your internet connection")
+      }else if(ErrorType === "Server error"){
+         alert("The server is currently experiencing a downtime, try again some other time.")
+      }else{
+      alert("An unexpected has occured try again some other time.")
+      }
+     },
+      setIsLoading,
+      setErrorMessage,
+      EduPinHandler
+    );
+    }else if(ErrorType === "Network error" || ErrorType === "User error"){
+     return alert("Kindly Check your internet connection")
+      }else if(ErrorType === "Server error"){
+         alert("The server is currently experiencing a downtime, try again some other time.")
+      }else{
+      alert("An unexpected has occured try again some other time.")
+      }
+    }
     await VerifyTransPin(
       inputPin,
-      setPinSuccess,
       setPinFailed,
       setIsLoading,
       setErrorMessage,
@@ -1228,12 +1260,8 @@ export default function WaecEducationPin() {
                               <input {...props} className="inputOTP mx-[3px]" />
                             )}
                           />
-                          {pinSuccess && (
-                            <p className="text-[12px] text-green-500 text-center font-medium">
-                              Pin matches
-                            </p>
-                          )}
-                          {pinFailed && errorMessage && (
+                         
+                          {errorMessage && (
                             <p className="text-[12px] text-center text-red-600 font-medium">
                               Incorrect Pin
                             </p>

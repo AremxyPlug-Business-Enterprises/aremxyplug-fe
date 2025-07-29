@@ -8,14 +8,14 @@ import ArrowDown from "./TransactionPageImages/ArrowDown.svg";
 import { Link } from "react-router-dom";
 import styles from "../component.module.css";
 import { Calender } from "../Calender";
-import Search1 from "./TransactionPageImages/Search.svg";
-import Search2 from "./TransactionPageImages/Search2.svg";
 import "../DataTopUpPage/DataTopUp.css";
 import { GetFunction,HandleUserSession } from "../../../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../../../Loader/Loader";
-
+import NoRecordImage from "../../../Add&SelectRecipient/RecipientImages/NoRecordImage.svg";
+import {useNavigate} from "react-router-dom"
 
 const TransactionPage = () => {
+  const navigate = useNavigate()
   const { isDarkMode, toggleSideBar } = useContext(ContextProvider);
 
   const [showCategories, setShowCategories] = useState(false);
@@ -31,10 +31,10 @@ const TransactionPage = () => {
   const [activeCategory, setActiveCategory] = useState("");
 
   const [activeTab, setActiveTab] = useState("");
-  const [transactionResponse, setTransactionResponse] = useState({});
+  const {transactionResponse, setTransactionResponse} = useContext(ContextProvider);
   const [loading,setLoading] = useState(false);
   const [sessionModal,setSessionModal] = useState(false)
-
+  const [transactionHistoryError, setTransactionHistoryError] = useState("");
   const handleTabClick = (tab) => {
     setActiveTab((prevTab) => (prevTab === tab ? null : tab));
   };
@@ -52,6 +52,10 @@ const TransactionPage = () => {
   const handleSelectedOption = (event) => {
     const clickedoption = event.target.value;
     setSelected(clickedoption);
+//     if(clickedoption){
+//      setSymbol(selected === "USD" ? "$" : selected === "AUD" ? 
+//  "AU$" : selected === "KES" ?   "KSh" : selected === "EUR" ? "€" : "")
+//     }
     return;
   };
 
@@ -59,434 +63,49 @@ const TransactionPage = () => {
   //Funcntio to help get the transaction details
   //  which include necessary query parameters for search
     const GetTransactionInformation = async()=> {
+      if(!navigator.onLine) return setTransactionHistoryError("Network error")
       const path ="transactions"
       const SuccessHandler =()=>{
-console.log("Successful")
+       console.log("user transaction details fetched")
 }
       const FailedHandler = async(ErrorType)=> {
     if(ErrorType === "unauthorised"){
+      setTransactionHistoryError("unauthorised");
       await GetFunction(path, setLoading, SuccessHandler, (ErrorType)=> {
         if(ErrorType === "unauthorised"){
-       setSessionModal(true)
+       setSessionModal(true);
         }
       }, setTransactionResponse)
+    }else if(ErrorType === "Network error" || ErrorType === "User error" || ErrorType === "Bad request"){
+     setTransactionHistoryError("Network error")
+    }else if(ErrorType === "Server error"){
+      setTransactionHistoryError("Server error")
+    }else {
+      setTransactionHistoryError(null)
     }
       }   
       await GetFunction(path, 
         setLoading, 
         SuccessHandler,
          FailedHandler,
-          setTransactionResponse)
-      }
+          setTransactionResponse)}
 
+   
   useEffect(()=> {
-   GetTransactionInformation()
-   //eslint-disable-next-line
-}, [])
-  const [transactions] = useState([
-    {
-      orderNo: "0000000",
-      product: "Virtual Account",
-      description: "Transfer",
-      amount: "₦25,000.00",
-      status: "Successful",
-      network: "",
-      plan: "",
-      recipientname: "Pranay",
-      phonenumber: "7741235545",
-      wallet: "NGN",
-    },
+    if(transactionResponse?.data?.data?.data === undefined){
+ GetTransactionInformation()
+    }
+    setSelected("NGN");
 
-    {
-      orderNo: "0000001",
-      product: "Virtual Account",
-      description: "NGN Wallet Top-Up",
-      amount: "₦25,000.00",
-      status: "Failed",
-      network: "",
-      plan: "",
-      recipientname: "Pranay",
-      phonenumber: "7741235545",
-      wallet: "NGN",
-    },
+ //eslint-disable-next-line
+ }, [])
+ window.addEventListener("online", ()=> {
+   if(transactionHistoryError === "Network error"){
+    GetTransactionInformation();
+   }
+ })
 
-    {
-      orderNo: "0000002",
-      product: "Airtime Top-Up",
-      description: "MTN CG 100GB",
-      amount: "₦25,000.00",
-      status: "Pending",
-      network: "MTN",
-      plan: "",
-      recipientname: "Pranay",
-      phonenumber: "7741235545",
-      wallet: "NGN",
-    },
-
-    {
-      orderNo: "0000003",
-      product: "Currency Conversion",
-      description: "NGN to USD",
-      amount: "₦25,000.00",
-      status: "Successful",
-      network: "",
-      plan: "",
-      recipientname: "Pranay",
-      phonenumber: "7741235545",
-      wallet: "NGN",
-    },
-
-    {
-      orderNo: "0000004",
-      product: "TV SubScription",
-      description: "GOTV Max",
-      amount: "₦25,000.00",
-      status: "Failed",
-      network: "",
-      plan: "",
-      recipientname: "Pranay",
-      phonenumber: "7741235545",
-      wallet: "NGN",
-    },
-
-    {
-      orderNo: "0000005",
-      product: "Education Pin",
-      description: "MTN CG 100GB",
-      amount: "₦25,000.00",
-      status: "Pending",
-      network: "MTN",
-      plan: "",
-      recipientname: "Pranay",
-      phonenumber: "7741235545",
-      wallet: "NGN",
-    },
-
-    {
-      orderNo: "0000006",
-      product: "Currency Conversion",
-      description: "NGN to USD",
-      amount: "₦25,000.00",
-      status: "Successful",
-      network: "",
-      plan: "",
-      recipientname: "Pranay",
-      phonenumber: "7741235545",
-      wallet: "NGN",
-    },
-
-    {
-      orderNo: "0000018",
-      product: "Education Pin",
-      description: "WAEC",
-      amount: "₦1,500.00",
-      status: "Refunded",
-      network: "",
-      plan: "",
-      recipientname: "Pranay",
-      phonenumber: "7741235545",
-      wallet: "NGN",
-    },
-
-    {
-      orderNo: "0000018",
-      product: "Education Pin",
-      description: "WAEC",
-      amount: "₦1,500.00",
-      status: "Cancelled",
-      network: "",
-      plan: "",
-      recipientname: "Pranay",
-      phonenumber: "7741235545",
-      wallet: "NGN",
-    },
-
-    {
-      orderNo: "0000018",
-      product: "Education Pin",
-      description: "WAEC",
-      amount: "₦1,500.00",
-      status: "Refunded",
-      network: "",
-      plan: "",
-      recipientname: "Pranay",
-      phonenumber: "7741235545",
-      wallet: "NGN",
-    },
-
-    {
-      orderNo: "0000018",
-      product: "Education Pin",
-      description: "WAEC",
-      amount: "₦1,500.00",
-      status: "Successful",
-      network: "",
-      plan: "",
-      recipientname: "Pranay",
-      phonenumber: "7741235545",
-      wallet: "NGN",
-    },
-
-    {
-      orderNo: "0000007",
-      product: "TV SubScription",
-      description: "GOTV Max",
-      amount: "₦25,000.00",
-      status: "Failed",
-      network: "",
-      plan: "",
-      recipientname: "Pranay",
-      phonenumber: "7741235545",
-      wallet: "NGN",
-    },
-
-    {
-      orderNo: "0000008",
-      product: "Education Pin",
-      description: "MTN CG 100GB",
-      amount: "₦25,000.00",
-      status: "Pending",
-      network: "",
-      plan: "",
-      recipientname: "Pranay",
-      phonenumber: "7741235545",
-      wallet: "NGN",
-    },
-
-    {
-      orderNo: "0000009",
-      product: "Education Pin",
-      description: "NECO",
-      amount: "₦25,000.00",
-      status: "Failed",
-      network: "",
-      plan: "",
-      recipientname: "Pranay",
-      phonenumber: "7741235545",
-      wallet: "NGN",
-    },
-
-    {
-      orderNo: "0000010",
-      product: "Education Pin",
-      description: "WAEC",
-      amount: "₦25,000.00",
-      status: "Successful",
-      network: "",
-      plan: "",
-      recipientname: "Pranay",
-      phonenumber: "7741235545",
-      wallet: "NGN",
-    },
-
-    {
-      orderNo: "0000011",
-      product: "Airtime Top-up",
-      description: "MTN VTU",
-      amount: "₦1,000.00",
-      status: "Successful",
-      network: "MTN",
-      plan: "",
-      recipientname: "Pranay",
-      phonenumber: "7741235545",
-      wallet: "NGN",
-    },
-
-    {
-      orderNo: "0000012",
-      product: "Data Top-up",
-      description: "MTN SME 100GB",
-      amount: "₦25,000.00",
-      status: "Successful",
-      network: "MTN",
-      plan: "",
-      recipientname: "Pranay",
-      phonenumber: "7741235545",
-      wallet: "NGN",
-    },
-
-    {
-      orderNo: "0000013",
-      product: "Data Top-up",
-      description: "MTN SME 100GB",
-      amount: "₦25,000.00",
-      status: "Successful",
-      network: "MTN",
-      plan: "",
-      recipientname: "Pranay",
-      phonenumber: "7741235545",
-      wallet: "NGN",
-    },
-
-    {
-      orderNo: "0000014",
-      product: "Data Top-up",
-      description: "Airtel CG 100GB",
-      amount: "₦25,000.00",
-      status: "Successful",
-      network: "AIRTEL",
-      plan: "",
-      recipientname: "Pranay",
-      phonenumber: "7741235545",
-      wallet: "NGN",
-    },
-
-    {
-      orderNo: "0000015",
-      product: "Virtual Account",
-      description: "NGN Wallet Top-up",
-      amount: "₦50,000.00",
-      status: "Pending",
-      network: "",
-      plan: "",
-      recipientname: "Pranay",
-      phonenumber: "7741235545",
-      wallet: "NGN",
-    },
-
-    {
-      orderNo: "0000016",
-      product: "Virtual Account",
-      description: "USD Wallet Top-up",
-      amount: "$60,000.00",
-      status: "Failed",
-      network: "",
-      plan: "",
-      recipientname: "Pranay",
-      phonenumber: "7741235545",
-      wallet: "USD",
-    },
-
-    {
-      orderNo: "0000017",
-      product: "Currency Conversion",
-      description: "NGN to USD",
-      amount: "₦10,000.00",
-      status: "Pending",
-      network: "",
-      plan: "",
-      recipientname: "Pranay",
-      phonenumber: "7741235545",
-      wallet: "NGN",
-    },
-
-    {
-      orderNo: "0000018",
-      product: "Education Pin",
-      description: "WAEC",
-      amount: "₦1,500.00",
-      status: "Successful",
-      network: "",
-      plan: "",
-      recipientname: "Pranay",
-      phonenumber: "7741235545",
-      wallet: "NGN",
-    },
-
-    {
-      orderNo: "0000018",
-      product: "Education Pin",
-      description: "WAEC",
-      amount: "₦1,500.00",
-      status: "Refunded",
-      network: "",
-      plan: "",
-      recipientname: "Pranay",
-      phonenumber: "7741235545",
-      wallet: "NGN",
-    },
-
-    {
-      orderNo: "0000018",
-      product: "Education Pin",
-      description: "WAEC",
-      amount: "₦1,500.00",
-      status: "Cancelled",
-      network: "",
-      plan: "",
-      recipientname: "Pranay",
-      phonenumber: "7741235545",
-      wallet: "NGN",
-    },
-
-    {
-      orderNo: "0000018",
-      product: "Education Pin",
-      description: "WAEC",
-      amount: "₦1,500.00",
-      status: "Refunded",
-      network: "",
-      plan: "",
-      recipientname: "Pranay",
-      phonenumber: "7741235545",
-      wallet: "NGN",
-    },
-
-    {
-      orderNo: "0000018",
-      product: "Education Pin",
-      description: "WAEC",
-      amount: "₦1,500.00",
-      status: "Cancelled",
-      network: "",
-      plan: "",
-      recipientname: "Pranay",
-      phonenumber: "7741235545",
-      wallet: "NGN",
-    },
-
-    {
-      orderNo: "0000018",
-      product: "Education Pin",
-      description: "WAEC",
-      amount: "₦1,500.00",
-      status: "Successful",
-      network: "",
-      plan: "",
-      recipientname: "Pranay",
-      phonenumber: "7741235545",
-      wallet: "NGN",
-    },
-
-    {
-      orderNo: "0000018",
-      product: "Education Pin",
-      description: "WAEC",
-      amount: "₦1,500.00",
-      status: "Successful",
-      network: "",
-      plan: "",
-      recipientname: "Pranay",
-      phonenumber: "7741235545",
-      wallet: "NGN",
-    },
-
-    {
-      orderNo: "0000018",
-      product: "Education Pin",
-      description: "WAEC",
-      amount: "₦1,500.00",
-      status: "Refunded",
-      network: "",
-      plan: "",
-      recipientname: "Pranay",
-      phonenumber: "7741235545",
-      wallet: "NGN",
-    },
-
-    {
-      orderNo: "0000018",
-      product: "Education Pin",
-      description: "WAEC",
-      amount: "₦1,500.00",
-      status: "Cancelled",
-      network: "",
-      plan: "",
-      recipientname: "Pranay",
-      phonenumber: "7741235545",
-      wallet: "NGN",
-    },
-  ]);
+    
 
   const getBackgroundColor = (status) => {
     if (status === "delivered" || status === "Successful") {
@@ -511,13 +130,36 @@ console.log("Successful")
     setShowStatus(false);
   };
 
-  const filteredTransactions = transactions.filter((transaction) => {
-    if (selectedStatus === "" || selectedStatus === "All Transactions") {
-      return true;
+ const filteredTransactions = transactionResponse?.data?.data?.data?.transactions.filter((transaction) => {
+  if(selectedStatus === "" || selectedStatus === "All Transactions"){
+      return transaction
+    }else{
+      return transaction.status === selectedStatus;
     }
-    return transaction.status === selectedStatus;
+   
   });
-console.log(transactionResponse?.data?.data?.data?.transactions)
+ 
+  const chooseStatus = ["All Transactions", "Delivered", "Failed", "Pending", "Refunded"];
+
+const symbolValue = selected === "USD" ? "$" : selected === "AUD" ? 
+ "AU$" : selected === "KES" ?   "KSh" : selected === "EUR" ? "€" : selected === "GBP" ? "£" : "₦";
+
+
+//Function handling filtering the transactionResponse based on the 
+//selected categpry by the user
+function filterBySelectCategory(categoryByFlowtype, categoryByProduct){
+  transactionResponse?.data?.data?.data?.transactions?.filter(filterData=> {
+    if(filterData?.flow_type === categoryByFlowtype){
+      return filterData?.flow_type === categoryByFlowtype
+    }else if(filterData?.product === categoryByProduct){
+   return filterData?.product === categoryByProduct;
+    }else{
+      return []
+    }
+  })
+}
+
+
   return (
     <DashBoardLayout>
       <div
@@ -530,34 +172,47 @@ console.log(transactionResponse?.data?.data?.data?.transactions)
         <section>
           <div
             id="Transaction"
-            className="w-full h-[90px] md:h-[112.29px] lg:h-[196px] md:rounded-[11.5px] rounded-[7px] md:mt-[-1px] px-[5px] lg:ml-[-20px] lg:w-[102%] 2xl:w-full 2xl:ml-0 lg:gap-[50px] pt-[10px] lg:px-[30px] lg:rounded-[20px] lg:py-[20px] pb-[16px] flex justify-between items-center"
+            className="min-h-[90px] py-[15px] lg:h-[196px] md:h-[112.29px] rounded-[6.6px] md:rounded-[11.46px] lg:rounded-[20px] mx-auto  flex gap-6 justify-between
+                 px-[16.51px] md:px-[28.65px] lg:px-[50px] mb-[30px] lg:mb-[40px]"
           >
-            <div className="w-[100%] pt-[19px] lg:pt-[20px] pl-[8.5px] md:pl-[9px]">
-              <p className="text-[10px] mb-2 font-bold uppercase w-[100%] md:text-[12px] md:w-[70%] lg:w-[70%] lg:text-[20px] 2xl:w-[80%] 2xl:text-[24px] lg:mb-4">
+            <div className="py-[9.57px] md:py-[16.61px] align-middle self-center
+                 flex flex-col gap-1.5 w-[70%]">
+              <p className="text-[11px] leading-[14px]  lg:leading-[30px]
+                   lg:text-[24px] md:text-[13.75px] font-semibold">
                 MANAGE ALL YOUR TRANSACTIONS AT A TIME WITHOUT ANY HASSLE.
               </p>
-              <p className="text-[7px] font-[400] leading-[9px] mb-3 md:text-[9px] md:leading-[12.2px] w-[90%] md:w-[80%] lg:w-[75%] 2xl:w-[85%] 2xl:mt-[5px] lg:mt-[20px] lg:text-[16px] lg:leading-[26px] 2xl:text-[20px] lg:mb-[20px]">
-                {/* Select, filter, and manage all your transactions at a time,
-                download all transactions stats and keep a record track. */}
-              </p>
+              {/* <p className="text-[7px] font-[400] leading-[9px] mb-3 md:text-[9px] md:leading-[12.2px] w-[90%] md:w-[80%] lg:w-[75%] 2xl:w-[85%] 2xl:mt-[5px] lg:mt-[20px] lg:text-[16px] lg:leading-[26px] 2xl:text-[20px] lg:mb-[20px]">
+               Select, filter, and manage all your transactions at a time,
+                download all transactions stats and keep a record track. 
+              </p> */}
             </div>
 
-            <div className="w-[91px] h-[66px] lg:w-[199px] lg:h-[199px] lg:mt-[40px]">
+            <div className="flex w-[23%] h-[97%] pt-2 shrink-0">
               <img
                 src={Transaction}
                 alt=""
-                className="w-[55.482px] h-full md:w-[98px] md:h-[px] lg:w-[166.447px] lg:h-[150px]"
+                className="w-[55.482px] h-full md:w-[98px] md:h-[px]
+                 lg:w-[166.447px] lg:h-[150px]"
               />
             </div>
           </div>
 
-          <div className="md:flex md:justify-between md:w-[90%]">
-            <div className="relative mt-[5%] md:w-[45%]">
-              <h2 className="lg:text-[18px] lg:leading-[24px] mb-1 text-[10px] md:text-[12px] font-[600] leading-[12px]">
+          <div className="flex flex-col gap-[20px] md:flex-row md:justify-between md:w-[90%]">
+            <div className="relative  md:w-1/2">
+              <h2 className="text-[#7E7E7E] text-[14px] lg:text-[17px] md:text-[13px] '
+                      md:font-[600] font-[400]">
                 Select Categories
               </h2>
               <div
-                className="input border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between"
+                  className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
+                         sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px]
+                          pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+                          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}
                 onClick={() => {
                   setShowCategories(!showCategories);
                   setShowStatus(false);
@@ -634,7 +289,8 @@ console.log(transactionResponse?.data?.data?.data?.transactions)
 
                   <hr />
 
-                  <p className="text-[#7C7C7C] text-[10px] lg:text-[15px] font-semibold pl-[5px] py-[7px]">
+                  <p className="text-[#7C7C7C] text-[10px] lg:text-[15px] 
+                  font-semibold pl-[5px] py-[7px]">
                     Telecom
                   </p>
 
@@ -975,18 +631,30 @@ console.log(transactionResponse?.data?.data?.data?.transactions)
               )}
             </div>
 
-            <div className="relative mt-[5%] md:w-[45%]">
-              <h2 className="lg:text-[18px] lg:leading-[24px] mb-1 text-[10px] md:text-[12px] font-[600] leading-[12px]">
+            <div className="relative  md:w-1/2">
+              <h2   className="text-[#7E7E7E] text-[14px] lg:text-[17px]
+                       md:text-[13px] 
+                      md:font-[600] font-[400]">
                 Select Status
               </h2>
               <div
-                className="input border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between"
+               className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
+                         sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px]
+                          pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+                          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}
                 onClick={() => {
                   setShowStatus(!showStatus);
                   setShowCategories(false);
                 }}
               >
-                <h2 className="text-[10px] font-[600] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                <h2 className="text-[12px] font-[600]
+                 leading-[16px] capitalize md:text-[13.17px]
+                  md:leading-[16.92px] lg:text-[16px] lg:leading-[24px]">
                   {selectedStatus}
                 </h2>
                 <button className="lg:w-6 lg:h-6 w-[11px] h-[11px]">
@@ -994,112 +662,133 @@ console.log(transactionResponse?.data?.data?.data?.transactions)
                 </button>
               </div>
               {showStatus && (
-                <div className="border md:rounded-[10px] text-[10px] md:text-[12px] lg:text-[16px] lg:mt-2 rounded-[4px] absolute right-0 w-[70%] md:w-full bg-[#FFF] z-[10]">
-                  <div
-                    onClick={() => handleStatusFilter("All Transactions")}
-                    className="text-[10px] text-[#7C7C7C] font-semibold pl-[5px] py-[7px] lg:text-[15px]"
-                  >
-                    All Transactions
-                  </div>
+                 <div 
+               className={`absolute lg:top-[90px] md:top-[60px]  top-[74px]
+                 z-[2]  flex flex-col w-[100%] lg:h-225px md:h-[210px]  
+          ${
+            isDarkMode
+              ? "bg-black text-white border border-white"
+              : "hover:bg-[#EDEAEA]"
+          }`}>
+            {chooseStatus.map((status)=> (
+             <p onClick={() => {
+                      handleStatusFilter(status === "Delivered"? "delivered": status)
+                      setSelectedStatus(status === "Delivered" ? "delivered" : status)
+                    }
+                    }
+                   className={`pb-[20px] pt-[20px] md:pb-[14px] 
+                                md:pt-[14px] font-weight-bold text-[14px] leading-[18.4px] 
+                                md:py-[15px]
+                                 py-[8px] pl-[10px] font-[500]  
+         md:text-[13.227px] md:leading-[17.195px] 
+         shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] 
+         lg:text-[16px] lg:leading-[20.8px] cursor-pointer ${
+           isDarkMode
+             ? "bg-black text-white border border-white"
+             : "hover:bg-[#EDEAEA] bg-white text-[#7C7C7C]"
+         }`}>
+                              {status}
+                  </p>
+                  
 
-                  <hr />
-
-                  <div
-                    onClick={() => handleStatusFilter("Successful")}
-                    className="text-[10px] text-[#7C7C7C] font-semibold pl-[5px] py-[7px] lg:text-[15px]"
-                  >
-                    Successful
-                  </div>
-
-                  <hr />
-
-                  <div
-                    onClick={() => handleStatusFilter("Failed")}
-                    className="text-[10px] text-[#7C7C7C] font-semibold pl-[5px] py-[7px] lg:text-[15px]"
-                  >
-                    Failed
-                  </div>
-
-                  <hr />
-
-                  <div
-                    onClick={() => handleStatusFilter("Pending")}
-                    className="text-[10px] text-[#7C7C7C] font-semibold pl-[5px] py-[7px] lg:text-[15px]"
-                  >
-                    Pending
-                  </div>
-
-                  <hr />
-
-                  <div
-                    onClick={() => handleStatusFilter("Refunded")}
-                    className="text-[10px] text-[#7C7C7C] font-semibold pl-[5px] py-[7px] lg:text-[15px]"
-                  >
-                    Refunded
-                  </div>
-
-                  <hr />
-
-                  <div
-                    onClick={() => handleStatusFilter("Cancelled")}
-                    className="text-[10px] text-[#7C7C7C] font-semibold pl-[5px] py-[7px] lg:text-[15px]"
-                  >
-                    Canceled
-                  </div>
-                </div>
+             ))} 
+               </div> 
               )}
             </div>
           </div>
 
-          <div className="border-t-[2px] border-b-[2px] border-l-[1px] border-r-[1px] mt-[20px] lg:mt-[40px]">
-            <div
-              className={`${
-                toggleSideBar
-                  ? "lg:gap-[px] lg:text-[20px]"
-                  : "lg:gap-[118px] lg:text-[23px]"
-              }relative my-[1%] flex text-[8px] font-extrabold justify-between gap-[8px] md:my-[0.5%] md:text-[10px] md:gap-[px] lg:text-[12] `}
-            >
+          <div className="flex justify-between items-center w-full 
+          py-[8px] px-[3px] gap-[5px] h-[50px] border-[1px] lg:border-[1.5px] mt-[30px]
+           border-gray-300 lg:border-gray-400 rounded-[5px]  lg:rounded-[15px] lg:h-[70px] ">
+            
               <div
                 onClick={() => {
                   setCalender((prev) => !prev);
                 }}
-                className={`cursor-pointer ${styles.filter} ${
+                className={`cursor-pointer bg-gray-100  ${
                   isDarkMode ? "border" : ""
-                } flex items-center gap-[1px] px-[2px] rounded-[3px] md:px-[8px]`}
+                } flex items-center gap-[1px] px-[1px]
+                 md:px-[8px] lg:rounded-[15px] rounded-[5px] w-[25%] h-full `}
               >
-                <div className={`text-[#04177f] lg:text-[15px]`}>
+                <p className={`text-[#04177f] text-[11px] 
+                leading-[14px] font-[500] 
+                  lg:text-[16px]`}>
                   Filter by Date{" "}
-                </div>
+                </p>
                 <img
                   className="w-[15px] h-[15px] md:w-[17px] md:h-[17px] lg:w-[20px] lg:h-[20px]"
                   src="./Images/dashboardImages/dateImg.png"
                   alt=""
                 />
               </div>
-              <Link to="/wallet-summary">
-                <div
-                  className={`${
-                    isDarkMode ? "border" : "bg-[#04177f]"
-                  } text-white rounded-[7px] px-[5px] py-[5px] md:rounded-[11px] md:px-[9px] md:py-[8px] lg:rounded-[13px] lg:py-[10px] lg:px-[19px]`}
+              <div className={`w-[25%] flex flex-col md:flex-row md:gap-[5px]
+               justify-center items-center
+               rounded-[7px] h-full
+                  md:rounded-[11px] md:py-[8px] ${
+                    isDarkMode ? "border" :  "bg-[#04177f]"
+                  }
+                  lg:rounded-[13px] lg:py-[10px] lg:px-[19px]`} onClick ={()=> {
+                    navigate("/wallet-summary")
+                  }}>
+                <p
+                  className={`text-white
+                  text-[10px] leading-[13px] font-[500]
+                   lg:leading-[24px] lg:text-[12px] `}
                 >
-                  Wallet Summary
-                </div>
-              </Link>
-              <Link to="/sales-summary">
-                <div
-                  className={`${
-                    isDarkMode ? "border" : "bg-[#04177f]"
-                  } text-white rounded-[7px] px-[5px] py-[5px] md:rounded-[11px] md:px-[9px] md:py-[8px] lg:rounded-[13px] lg:py-[10px] lg:px-[19px]`}
+                  Wallet
+                </p>
+                <p
+                  className={` text-white
+                  text-[10px] leading-[13px] font-[500]
+                   lg:leading-[24px] lg:text-[12px] `}
                 >
-                  Sales Summary
+                  Summary
+                </p>
+              </div>
+             
+                    
+            
+                <div
+                  className={`w-[25%] flex flex-col md:flex-row 
+                    justify-center items-center md:gap-[5px]
+               rounded-[7px] h-full
+                  md:rounded-[11px] md:py-[8px] ${
+                    isDarkMode ? "border" :  "bg-[#04177f]"
+                  }
+                  lg:rounded-[13px] lg:py-[10px] lg:px-[19px]`}
+                onClick={()=> {
+                  navigate("/sales-summary")
+                }}>
+                  <p
+                  className={`text-white
+                  text-[10px] leading-[13px]
+                   lg:leading-[24px] lg:text-[12px] font-[500]`}
+                >
+                  Sales
+                </p>
+                <p
+                  className={`text-white
+                  text-[10px] leading-[13px]
+                   lg:leading-[24px] lg:text-[12px] font-[500] `}
+                >
+                  Summary
+                </p>
                 </div>
-              </Link>
+              
               <div
-                className={`${
-                  isDarkMode ? "border" : "bg-[#04177f]"
-                } text-white rounded-[7px] px-[5px] py-[5px] flex items-center md:rounded-[11px] md:px-[7px] md:py-[8px] lg:rounded-[13px] lg:py-[10px] lg:px-[18px]`}
-              >
-                Download Stat.
+               className={`w-[25%] flex flex-col justify-center items-center
+                md:flex-row md:gap-[5px]
+               text-white rounded-[7px] h-full
+                  md:rounded-[11px] md:py-[8px] ${
+                    isDarkMode ? "border" :  "bg-[#04177f]"
+                  }
+                  lg:rounded-[13px] lg:py-[10px] lg:px-[19px]`}
+               >
+                <p  className={`text-white text-center
+                  text-[10px] leading-[13px]
+                   lg:leading-[24px] lg:text-[12px] font-[500] `}
+                > Download Stat.</p>
+               
                 <img
                   className="w-[10px] h-[10px] md:w-[15px] md:h-[15px] lg:w-[20px] lg:h-[20px]"
                   src="./Images/dashboardImages/downloadicon.png"
@@ -1113,18 +802,18 @@ console.log(transactionResponse?.data?.data?.data?.transactions)
                 </div>
               )}
             </div>
-          </div>
+          
 
           <div>
             <div
-              className={`${styles.INnOUT} my-[10%] md:my-[5%] flex md:items-center lg:mt-[5%] lg:items-center`}
-            >
+              className={` flex w-full gap-[5px] h-[70px] lg:h-[100px] md:items-center 
+              lg:mt-[5%] lg:items-center my-[30px]`}>
               <select
                 name="curr"
                 id="curr"
                 onChange={handleSelectedOption}
                 value={selected}
-                className={styles.selected}
+                className={`${styles.selected} w-[25%]`}
               >
                 <option value="NGN">NGN</option>
                 <option value="USD">USD</option>
@@ -1135,63 +824,84 @@ console.log(transactionResponse?.data?.data?.data?.transactions)
               </select>
 
               <div
-                className={`${styles.inflowOutflow} ${
+                className={`w-[33.3%] rounded-[3px] lg:rounded-[5px] flex flex-col h-full justify-center items-center
+                   gap-[3px] ${
                   isDarkMode ? "border " : " bg-[#D5F6E3]"
-                }  text-[7px] md:text-[12px] ${
+                }   ${
                   toggleSideBar ? "lg:text-[14px]" : "lg:text-[px]"
                 }`}
               >
-                <div className="flex gap-1 md:items-center ">
-                  <p className={`${toggleSideBar ? "lg:text-[18px]" : ""}`}>
+                <div className="flex gap-1  justify-center items-center  ">
+                  <p className={` text-[11px] text-center leading-[14px] font-[500] 
+                  lg:text-[18px] lg:leading-[24px]
+                    ${toggleSideBar ? "lg:text-[18px]" : ""}`}>
                     Total Inflows
                   </p>
                   <img
-                    className="h-[8.3px] w-[8.3px] md:h-[18px] md:w-[18px] lg:w-[24px] lg:h-[24px]"
+                    className="h-[10.3px] w-[10.3px] md:h-[18px] md:w-[18px] lg:w-[24px] lg:h-[24px]"
                     src="./Images/dashboardImages/newarrow-down.png"
                     alt="dropdown"
                   />
                 </div>
-                <div className="text-center">
-                  {selected === "NGN" ? "₦0.00" : "0.00"}
-                </div>
+                <p className="text-center text-[10px] leading-[13px] font-[500] 
+                  lg:text-[18px] lg:leading-[24px]">
+                  {selected === "NGN" ?  transactionResponse?.data?.data?.data ?
+        transactionResponse?.data?.data?.data?.total_inflow?.toLocaleString("en-NG", {
+          style : "currency",
+          currency : "NGN"
+        }) :   "₦"  : `${symbolValue}0.00` }
+                </p>
               </div>
 
               <div
-                className={`${styles.inflowOutflow} ${
+                className={`w-[33.3%] rounded-[3px] lg:rounded-[5px]  flex flex-col h-full justify-center items-center
+                   gap-[3px] ${
                   isDarkMode ? "border " : " bg-[#92abfe81]"
                 }  text-[7px] md:text-[12px]`}
               >
-                <div className="flex gap-1 md:items-center">
-                  <p className={`${toggleSideBar ? "lg:text-[18px]" : ""}`}>
+                <div className="flex gap-1 justify-center items-center ">
+                  <p className={`  text-[11px] text-center leading-[14px] font-[500] 
+                  lg:text-[18px] lg:leading-[24px] ${toggleSideBar ? "lg:text-[18px]" : ""}`}>
                     Total Transactions{" "}
                   </p>
                   <img
-                    className="h-[8.3px] w-[8.3px] md:h-[18px] md:w-[18px] lg:w-[24px] lg:h-[24px]"
+                    className="h-[10.3px] w-[10.3px] md:h-[18px] md:w-[18px] lg:w-[24px] lg:h-[24px]"
                     src="./Images/dashboardImages/newarrow-down.png"
                     alt="dropdown"
                   />
                 </div>
-                <div className="text-center">0</div>
+                <p className="text-center  text-[10px] leading-[13px] font-[500] 
+                  lg:text-[18px] lg:leading-[24px]">{selected === "NGN" ? 
+                  transactionResponse?.data?.data?.data?.total_count
+                   || transactionResponse?.data?.status === 200  ?
+                    transactionResponse?.data?.data?.data?.total_count: "" : 0}  </p>
               </div>
 
               <div
-                className={`${styles.inflowOutflow} ${
+                className={`w-[33.3%] rounded-[3px] lg:rounded-[5px] flex flex-col h-full justify-center items-center
+                   gap-[3px] ${
                   isDarkMode ? "border " : " bg-[#FDCECE]"
                 } text-[7px] md:text-[12px]`}
               >
-                <div className="flex gap-1 md:items-center">
-                  <p className={`${toggleSideBar ? "lg:text-[18px]" : ""}`}>
+                <div className="flex gap-1 justify-center items-center">
+                  <p className={`text-[11px] text-center leading-[14px] font-[500] 
+                  lg:text-[18px] lg:leading-[24px] ${toggleSideBar ? "lg:text-[18px]" : ""}`}>
                     Total Outflows
                   </p>
                   <img
-                    className="h-[8.3px] w-[8.3px] md:h-[18px] md:w-[18px] lg:w-[24px] lg:h-[24px]"
+                    className="h-[10.3px] w-[10.3px] md:h-[18px] md:w-[18px] lg:w-[24px] lg:h-[24px]"
                     src="./Images/dashboardImages/newarrow-up.png"
                     alt="dropdown"
                   />
                 </div>
-                <div className="text-center">
-                  {selected === "NGN" ? "₦0.00" : "0.00"}
-                </div>
+                <p className="text-center  text-[10px] leading-[13px] font-[500] 
+                  lg:text-[18px] lg:leading-[24px]">
+                  {selected === "NGN"  ? transactionResponse?.data?.data?.data ?
+        transactionResponse?.data?.data?.data?.total_outflow?.toLocaleString("en-NG", {
+          style : "currency",
+          currency : "NGN"
+        }) :   "₦"  : `${symbolValue}0.00`}
+                </p>
               </div>
             </div>
           </div>
@@ -1209,7 +919,7 @@ console.log(transactionResponse?.data?.data?.data?.transactions)
             </div>
           </div>
 
-          <div className="flex w-full justify-between mt-[20px]">
+          {/* <div className="flex w-full justify-between mt-[20px]">
             <div className="w-[75%] h-[30px] md:h-[40px] lg:h-[60px]  flex border-[1px] relative pl-[5px] lg:w-[85%]">
               <img
                 src={Search1}
@@ -1231,17 +941,25 @@ console.log(transactionResponse?.data?.data?.data?.transactions)
                 <img src={Search2} alt="" className="md:w-[20px]" />
               </span>
             </button>
-          </div>
+          </div> */}
 
           {/* table for mobile view */}
 
           <div>
             <div
-              className=" h-full md:hidden flex flex-col mt-9  w-full px-[20px] pb-[5px] border-x-[1.2px] border-b-[1.2px]
- border-gray-500 border-opacity-[25%] my-[50px] shadow-md"
+              className={`h-full md:hidden flex flex-col mt-9  w-full  border-x-[1.2px]
+   my-[50px]  border-b-[1.2px] px-[20px] border-opacity-[25%] shadow-md
+ ${isDarkMode ? "border-white": "border-gray-500 "}`}
             >
-              {transactionResponse?.data?.data?.data?.transactions?.map((transaction, index) => (
-                <div key={index}>
+              {loading === true ? (
+              <div className="h-[150px] flex items-center justify-center">
+          <Loader/>
+          </div>
+              ) : (
+          filteredTransactions && filteredTransactions?.length > 1 ? (
+     filteredTransactions?.map((transaction, index) => (
+                <div className={`${index < filteredTransactions?.length - 1 ? "border-b-[1px] border-gray-500 " : ""}`} 
+                key={index}>
                   <Link
                     to={`/${
                       transaction.status === "delivered"
@@ -1258,102 +976,118 @@ console.log(transactionResponse?.data?.data?.data?.transactions)
                     }`}
                     state={{ transaction }}
                   >
-                    <div
-                      key={index}
-                      className="flex justify-between pb-[31.5px] py-[20px] border-b-[1px] border-b-[black]
-   border-opacity-[20%]"
-                    >
-                      <div className="flex flex-col gap-[7.648px]">
-                        <h2 className="font-medium text-neutral-500 text-[9.167px] leading-[11.167px]">
-                          Order No : {transaction?.order_id}
-                        </h2>
-                        <h2 className="font-medium text-black text-[9.167px] leading-[11.167px]">
-                          Product : {transaction?.product}
-                        </h2>
-                        <p className="font-medium text-neutral-500 text-[9.167px] leading-[11.167px]">
-                          Description : {transaction.description}
-                        </p>
-
-                        <p className="font-medium text-neutral-500  text-[9.167px] leading-[11.167px]">
-                          Amount : {transaction.amount}
-                        </p>
-
-                        <div className="hidden">
-                          <p className="font-medium text-neutral-500  text-[9.167px] leading-[11.167px]">
-                            Network : {transaction?.network}
-                          </p>
-
-                          <p className="font-medium text-neutral-500  text-[9.167px] leading-[11.167px]">
-                            recipientname : {transaction?.recipientname}
-                          </p>
-
-                          <p className="font-medium text-neutral-500  text-[9.167px] leading-[11.167px]">
-                            phonenumber : {transaction?.phonenumber}
-                          </p>
-
-                          <p className="font-medium text-neutral-500  text-[9.167px] leading-[11.167px]">
-                            wallet : {transaction?.wallet}
-                          </p>
-                        </div>
-                      </div>
-                      {/* rightSide */}
-                      <div className="flex flex-col gap-[13.473px]">
-                        <div className="flex flex-row justify-between gap-[5px] items-center">
-                          <p className="font-medium text-neutral-500 self-start text-[9.167px] leading-[11.167px] cursor-pointer">
-                            Status:{" "}
-                          </p>
-                          <div className="mt-[-8px]">
-                            <span
-                              style={{
-                                backgroundColor: getBackgroundColor(
-                                  transaction?.status
-                                ),
-                              }}
-                              className="font-medium text-white self-end text-[9.167px] leading-[11.167px] cursor-pointer
-                  py-[2.122px] px-[4.245px]  rounded-sm"
-                            >
-                              {transaction?.status}
-                            </span>
-                          </div>
-                        </div>
-
-                        <div className="flex flex-row">
-                          <div>
-                            <p className="font-medium text-[10px] text-neutral-500 leading-[13px]">
-                              <span className="block">Date & Time:</span>
-                              <span className="block"> {transaction?.created_at?.slice(0,10)} </span>
-                              <span className="block">{ transaction?.created_at?.slice(14,19)}</span>
-                            </p>
-                          </div>
-                          <div className="w-[13.41px] mt-7 h-[12.06px]">
-                            <img
-                              className="w-[13.41px] h-[12.06px]"
-                              src="./Images/dashboardImages/arrowright.png"
-                              alt=""
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                     <div
+                                 key={index}
+                                 className="flex justify-between py-[20px]"
+                               >
+                                 <div className="flex flex-col gap-[7.648px]">
+                                   <h2 className={`font-medium  text-[9.167px] leading-[11.167px]
+                                    ${isDarkMode ? "text-white" : "text-neutral-500"}`}>
+                                     Order No : {transaction?.order_id}
+                                   </h2>
+                                   <h2 className={`font-medium text-black text-[9.167px] 
+                                   leading-[11.167px] ${isDarkMode ? "text-white" : "text-neutral-500"}`}>
+                                     Product : {transaction?.product}
+                                   </h2>
+                                   <p className={ `font-medium text-neutral-500 text-[9.167px] 
+                                   leading-[11.167px] ${isDarkMode ? "text-white" : "text-neutral-500"}`}>
+                                     Description : {transaction.description}
+                                   </p>
+           
+                                   <p className={`font-medium text-neutral-500  
+                                   text-[9.167px] leading-[11.167px] ${isDarkMode ? "text-white" : "text-neutral-500"}`}>
+                                     Amount : {transaction.amount ? transaction.amount?.toLocaleString("en-NG", {
+                                      style : "currency",
+                                      currency : "NGN"
+                                     }): ""}
+                                   </p>
+           
+                                   <div className="hidden">
+                                     <p className={`font-medium text-neutral-500 
+                                      text-[9.167px] leading-[11.167px] ${isDarkMode ?"text-white" : "text-neutral-500"  }`}>
+                                       Network : {transaction?.network}
+                                     </p>
+           
+                                     <p className="font-medium text-neutral-500  text-[9.167px] leading-[11.167px]">
+                                       recipientname : {transaction?.recipientname}
+                                     </p>
+           
+                                     <p className="font-medium text-neutral-500  text-[9.167px] leading-[11.167px]">
+                                       phonenumber : {transaction?.phonenumber}
+                                     </p>
+           
+                                     <p className="font-medium text-neutral-500  text-[9.167px] leading-[11.167px]">
+                                       wallet : {transaction?.wallet}
+                                     </p>
+                                   </div>
+                                 </div>
+                                 {/* rightSide */}
+                                 <div className="flex flex-col gap-[13.473px]">
+                                   <div className="flex flex-row justify-between gap-[5px] items-center">
+                                     <p className={`font-medium 
+                                    text-[9.167px] leading-[11.167px] cursor-pointer ${isDarkMode ? "text-white" : "text-neutral-500"}`}>
+                                       Status:{" "}
+                                     </p>
+                                     
+                                       <p
+                                         style={{
+                                           backgroundColor: getBackgroundColor(
+                                             transaction?.status
+                                           ),
+                                         }}
+                                         className="font-medium text-white self-center text-[9.167px] leading-[11.167px] cursor-pointer
+                             py-[2.122px] px-[4.245px]  rounded-sm"
+                                       >
+                                         {transaction?.status === "delivered" ? "Successful" : "unknown"}
+                                       </p>
+                                    
+                                   </div>
+           
+                                   <div className="flex flex-row">
+                                     <div>
+                                       <p className={`font-medium text-[10px] 
+                                        leading-[13px] ${isDarkMode ? "text-white" : "text-neutral-500"}`}>
+                                         <span className="block">Date & Time:</span>
+                                         <span className="block"> {transaction?.created_at?.slice(0,10)} </span>
+                                         <span className="block">{ transaction?.created_at?.slice(14,19)}</span>
+                                       </p>
+                                     </div>
+                                     <div className="w-[13.41px] mt-7 h-[12.06px]">
+                                       <img
+                                         className="w-[13.41px] h-[12.06px]"
+                                         src="./Images/dashboardImages/arrowright.png"
+                                         alt=""
+                                       />
+                                     </div>
+                                   </div>
+                                 </div>
+                               </div>
                   </Link>
                 </div>
-              ))}
-
-              <div className="flex justify-center text-center gap-[20px] mt-[15px] mb-[30px]">
-                <p className="text-[8px]  font-[500] leading-[9.1px] mt-[5px]">
-                  You need help?
-                </p>
-
-                <Link to="/ContactUs">
-                  <div
-                    className={`${
-                      isDarkMode ? "border " : "bg-[#04177f]"
-                    } text-[8px] p-1 text-white rounded-[8px]`}
-                  >
-                    Contact Us
-                  </div>
-                </Link>
-              </div>
+              ))) : (
+                ((filteredTransactions && filteredTransactions?.length < 1)|| transactionResponse?.data?.data?.data?.transactions?.length < 1 ) ? (
+              <img className="lg:w-[517px] lg:h-[456px]" src={NoRecordImage} alt="No record found"/> 
+              ) : 
+              transactionHistoryError === "Network error"  ? (
+               <p className={`text-[20px] text-black font-[500] 
+                ${isDarkMode ? "text-white" : "text-black"}`}>
+        An internet connection error has occured,
+         kindly check your internet connection.
+               </p>
+       ):  transactionHistoryError === "Server error" ? (
+             <p className={`text-[20px] text-black font-[500] 
+              ${isDarkMode ? "text-white" : "text-black"}`}>
+            Our server is currently facing a downtime, you would receive your transactions shortly.     
+               </p>
+       ) : transactionHistoryError === "unauthorised" && transactionResponse?.data?.data?.data?.transactions === undefined ? (
+            <div className="h-[150px] flex items-center justify-center">
+          <Loader/>
+          </div>
+       ) : loading === false && transactionHistoryError === null  &&   <p className ={`text-[20px] text-black font-[500]
+        ${isDarkMode ? "text-white" : "text-black"}`}>
+        An Error has occured try again later.
+               </p>))}
+            
             </div>
           </div>
 
@@ -1388,9 +1122,14 @@ console.log(transactionResponse?.data?.data?.data?.transactions)
               <div>Date & Time</div>
               <div>Status</div>
             </div>
-
-            {transactionResponse?.data?.data?.data?.transactions?.map((transaction, index) => (
-              <div key={index}>
+       {loading === true ? (
+              <div className="h-[150px] flex items-center justify-center">
+          <Loader/>
+          </div>
+              ) : (
+          filteredTransactions && filteredTransactions?.length > 1 ? (
+     filteredTransactions?.map((transaction, index) => (
+                 <div key={index}>
                 <Link
                   to={`/${
                     transaction.status === "delivered"
@@ -1440,7 +1179,10 @@ console.log(transactionResponse?.data?.data?.data?.transactions)
                         toggleSideBar ? "md:w-[16%]" : "md:w-[17%]"
                       }`}
                     >
-                      {transaction?.amount}
+                     {transaction.amount ? transaction.amount?.toLocaleString("en-NG", {
+                                      style : "currency",
+                                      currency : "NGN"
+                                     }): ""}
                     </div>
 
                     <div
@@ -1482,11 +1224,32 @@ console.log(transactionResponse?.data?.data?.data?.transactions)
                   </div>
                 </Link>
               </div>
-            ))}
+              ))) : (
+                ((filteredTransactions && filteredTransactions?.length < 1)|| transactionResponse?.data?.data?.data?.transactions?.length < 1 ) ? (
+              <img className="lg:w-full lg:h-[456px] flex self-center w-[" src={NoRecordImage} alt="No record found"/> 
+              ) : 
+              transactionHistoryError === "Network error"  ? (
+               <p className={`text-[20px] text-black font-[500]`}>
+        An internet connection error has occured,
+         kindly check your internet connection.
+               </p>
+       ):  transactionHistoryError === "Server error" ? (
+             <p className={`text-[20px] text-black font-[500]`}>
+            Our server is currently facing a downtime, you would receive your transactions shortly.     
+               </p>
+       ) : transactionHistoryError === "unauthorised" && transactionResponse?.data?.data?.data?.transactions === undefined ? (
+            <div className="h-[150px] flex items-center justify-center">
+          <Loader/>
+          </div>
+       ) : loading === false && transactionHistoryError === null  &&   <p className ={`text-[20px] text-black font-[500]`}>
+        An Error has occured try again later.
+               </p>))}
 
          
-            <div
-              className={`transaction2 md:flex md:justify-center md:pb-[30px]`}
+           
+          </div>
+           <div
+              className={`w-full flex justify-center gap-[5px] py-[70px] lg:py-[0px]`}
             >
               <div className="flex gap-[15px] items-center md:mt-[40px]">
                 <div className="text-[8px] md:text-[12px] lg:text-[14px]">
@@ -1503,12 +1266,9 @@ console.log(transactionResponse?.data?.data?.data?.transactions)
                 </Link>
               </div>
             </div>
-          </div>
         </section>
       </div>
-      {loading && (
-        <Loader/>
-      )}
+     
       {sessionModal && (
         <HandleUserSession/>
       )}
@@ -1517,3 +1277,4 @@ console.log(transactionResponse?.data?.data?.data?.transactions)
 };
 
 export default TransactionPage;
+  
