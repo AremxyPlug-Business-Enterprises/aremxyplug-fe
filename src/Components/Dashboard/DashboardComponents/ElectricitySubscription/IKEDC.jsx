@@ -980,7 +980,7 @@ const IKEDC = () => {
                 >
                   {countryList?.map((country) => (
                     <div
-                      className={`md:py-2 lg:py-[15px] pl-[10px] font-normal flex items-center gap-[5px] text-xs md:text-sm lg:text-base transition-all duration-300 shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
+                      className={`py-[18px] md:py-2 lg:py-[15px] pl-[10px] font-normal flex items-center gap-[5px] text-xs md:text-sm lg:text-base transition-all duration-300 shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
                         ${
                           isDarkMode ? "text-white bg-black " : "text-[#7E7E7E]"
                         } ${
