@@ -64,7 +64,7 @@ const AirtelDataBundle = () => {
   const [image, setImage] = useState("");
   const [paymentAmount, setPaymentAmount] = useState("");
   const [codes, setCodes] = useState(false);
-  const [plan, setPlan] = useState("");
+ 
   const [loading, setLoading] = useState("");
   const [airtelpurchaseStatus, setAirtelPurchaseStatus] = useState(null); // State to hold purchase status
   const [products, setProducts] = useState([]);
@@ -72,7 +72,7 @@ const AirtelDataBundle = () => {
   const [loadingProducts, setLoadingProducts] = useState(false);
   const [loadingPlans, setLoadingPlans] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null);
-  const [success, setSuccess] = useState(false);
+
  
   const [errorMessage, setErrorMessage] = useState("");
  const [balanceStatus,setBalanceStatus ] = useState("");
@@ -84,15 +84,15 @@ const AirtelDataBundle = () => {
    let balanceStringToNum = Number(newBalance);
 
 
-              let airtelDataAmount = Number(selectedAmountAirtel.replace(/\D/g, ""));
+              let airtelDataAmount = Number(selectedAmountAirtel?.replace(/\D/g, ""));
            const updateBalance = passDataBalance?.data ?  passDataBalance?.data?.data?.data?.balance : "";
-              const cleanUpBalanceToNumericOnly = Number(updateBalance.replace(/\D/g, ""));
+              const cleanUpBalanceToNumericOnly = Number(updateBalance?.replace(/\D/g, ""));
              let CheckSufficiency =  airtelDataAmount > (newBalance === "" || newBalance === null ? cleanUpBalanceToNumericOnly : balanceStringToNum);
   useEffect(() => {
     const fetchProducts = async () => {
       setLoadingProducts(true);
       try {
-        const response = await axiosInstance.get(
+        const response = await axiosInstance?.get(
           '/products/telecom/list/4'
         );
         setProducts(response.data.data.products || []);
@@ -105,19 +105,19 @@ const AirtelDataBundle = () => {
           }else if(error && error.response.status === 500){
              alert("Service for airtel is currently not available, Try again later.")
           }else if(error && error.response.status === 401){
-         if(error.response.headers["x-new-auth-token"] || error.response.headers.get("x-new-auth-token")){
+         if(error?.response?.headers["x-new-auth-token"] || error?.response?.headers?.get("x-new-auth-token")){
          setLoading(true)
-         const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
+         const newToken = error?.response?.headers?.get("x-new-auth-token") || error?.response?.headers["x-new-auth-token"];
         
          if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
-           const setAuthorisedToken = localStorage.setItem("authorisedLogin", newToken);
-           if(setAuthorisedToken){
-            await inputPinHandler()
+          localStorage.setItem("authorisedLogin", newToken);
+            if (localStorage.getItem("authorisedLogin")?.length > 1){
+            await fetchProducts()
            }
             }else{
-    const setGetToken = localStorage.setItem("getToken", newToken);
-      if(setGetToken){
-        await inputPinHandler();
+    localStorage.setItem("getToken", newToken);
+      if( localStorage.getItem("getToken")?.length > 1){
+        await fetchProducts();
       }
       }
         }else{
@@ -164,19 +164,19 @@ console.log(airtelDataAmount, balanceStringToNum)
        if(error && error.response === undefined){
              alert("Your internet connection is quite unstable.")
         }else if(error && (error.response.status ===  401)){
-       if(error.response.headers["x-new-auth-token"] || error.response.headers.get("x-new-auth-token")){
+       if(error?.response?.headers["x-new-auth-token"] || error?.response?.headers?.get("x-new-auth-token")){
          setLoading(true)
-         const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
+         const newToken = error.response?.headers?.get("x-new-auth-token") ||error?.response?.headers["x-new-auth-token"];
         
          if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
-           const setAuthorisedToken = localStorage.setItem("authorisedLogin", newToken);
-           if(setAuthorisedToken){
-            await inputPinHandler()
+          localStorage.setItem("authorisedLogin", newToken);
+           if(localStorage.getItem("authorisedLogin")?.length > 1){
+            await fetchPlans()
            }
             }else{
-    const setGetToken = localStorage.setItem("getToken", newToken);
-      if(setGetToken){
-        await inputPinHandler();
+    localStorage.setItem("getToken", newToken);
+      if(localStorage.getItem("getToken")?.length > 1){
+        await fetchPlans();
       }
       }
         }else{
@@ -509,22 +509,10 @@ console.log(airtelDataAmount, balanceStringToNum)
         const resData = response?.data?.data?.data; // Accessing the nested `data` object
      console.log(resData);
         console.log(response?.status);
-        setPlan(resData?.plan_name);
-        console.log(resData?.plan_name);
-
-      
-
-        setAirtelTransactionID(resData?.transaction_id);
-        console.log(resData?.transaction_id);
-
-        setAirtelRefNumber(resData?.reference_number);
-        console.log(resData?.reference_number);
-
-        setAirtelOrderID(resData?.order_id); // No `order_id`, using `id` instead
-        console.log(resData?.order_id);
-
-
-         if (response.statusCode === 200) {
+       setAirtelTransactionID(resData?.transaction_id);
+       setAirtelRefNumber(resData?.reference_number);
+       setAirtelOrderID(resData?.order_id); // No `order_id`, using `id` instead
+       if (response.statusCode === 200) {
       // Success response
       setTransactSuccessPopUp(true); // Show success popup
       setConfirm(false);
@@ -535,25 +523,25 @@ console.log(airtelDataAmount, balanceStringToNum)
       } catch (error) {
         if(error && error.response === undefined){
              alert("Your internet connection is quite unstable.");
-          }else if(error && (error.response.status === 500 || 400 )){
+          }else if(error && (error.response.status === 500 || error.response.status === 400 )){
               setAirtelPurchaseStatus(true); // Show failure popup
            setConfirm(false);
       setInputPin("");
       
      // alert("I am the problem");
       }else if(error && error.response.status === 401){
-    if(error.response.headers["x-new-auth-token"] || error.response.headers.get("x-new-auth-token")){
+    if(error?.response?.headers["x-new-auth-token"] || error?.response?.headers?.get("x-new-auth-token")){
          setLoading(true)
-         const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
+         const newToken = error?.response?.headers?.get("x-new-auth-token") || error?.response?.headers["x-new-auth-token"];
         
          if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
-           const setAuthorisedToken = localStorage.setItem("authorisedLogin", newToken);
-           if(setAuthorisedToken){
+         localStorage.setItem("authorisedLogin", newToken);
+           if( localStorage.getItem("authorisedLogin")?.length > 1){
             await inputPinHandler()
            }
             }else{
-    const setGetToken = localStorage.setItem("getToken", newToken);
-      if(setGetToken){
+localStorage.setItem("getToken", newToken);
+      if(localStorage.getItem("getToken")?.length > 1){
         await inputPinHandler();
       }
       }
@@ -1469,7 +1457,6 @@ console.log(airtelDataAmount, balanceStringToNum)
                if(ErrorType === "unauthorised"){
                   VerifyTransPin(
                       inputPin,
-                      setSuccess,
                       (ErrorType)=> {
                         if(ErrorType ==="unauthorised"){
                           return setSessionModal(true)
@@ -1484,7 +1471,6 @@ console.log(airtelDataAmount, balanceStringToNum)
                       //Function to verify the pin and handle the purchase of users
                     VerifyTransPin(
                       inputPin,
-                      setSuccess,
                       setFailed,
                       setLoading,
                       setErrorMessage,

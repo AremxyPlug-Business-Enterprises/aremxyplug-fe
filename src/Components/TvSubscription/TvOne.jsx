@@ -38,7 +38,7 @@ const GoTv = () => {
     //formatNumberWithCommas,
     mobileNumber,
     setCardName,
-    cardName,
+  //  cardName,
     tvEmail,
     smartCard,
     setSmartCard,
@@ -77,7 +77,7 @@ const GoTv = () => {
     newBalance,
     setNewBalance,
   } = useContext(ContextProvider);
-  const [successConfig, setSuccessConfig] = useState(false);
+  //const [successConfig, setSuccessConfig] = useState(false);
   const [passDataBalance, setPassDataBalance] = useState({});
   const [gotvData, setGotvData] = useState([]);
   const [stateInvalidDecoderNumber, setStateInvalidDecoderNumber] =
@@ -237,7 +237,7 @@ const GoTv = () => {
       const FailedHandler = async (ErrorType) => {
         if (ErrorType === "unauthorised") {
           await GetFunction(
-            `products/tvsub/gotv`,
+            `balance`,
             setIsLoading,
             SuccessHandler,
             (ErrorType) => {
@@ -245,7 +245,7 @@ const GoTv = () => {
                 return setSessionModal(true);
               }
             },
-            setFetchedGotvPlans
+             setPassDataBalance
           );
         }
       };
@@ -471,7 +471,6 @@ const GoTv = () => {
       if (ErrorType === "unauthorised") {
         await VerifyTransPin(
           inputPin,
-          setSuccessConfig,
           (ErrorType) => {
             if (ErrorType === "unauthorised") {
               return setSessionModal(true);
@@ -485,7 +484,6 @@ const GoTv = () => {
     };
     await VerifyTransPin(
       inputPin,
-      setSuccessConfig,
       setFailedConfig,
       setIsLoading,
       setErrorMessage,
@@ -497,6 +495,7 @@ const GoTv = () => {
   let userVerifiedName = gotvVerifyResponse?.data
     ? gotvVerifyResponse?.data?.name
     : "";
+    
   //Function to help Verify users account
   const VerifyUserAccount = async (UserTvSubscription) => {
     setGotvVerifyResponse({});
@@ -579,11 +578,14 @@ const GoTv = () => {
                 className="min-h-[90px] py-[15px] lg:h-[196px] md:h-[112.29px] rounded-[6.6px] md:rounded-[11.46px] lg:rounded-[20px] mx-auto  flex gap-6 justify-between
                  px-[16.51px] md:px-[28.65px] lg:px-[50px]"
               >
-                <div className="py-[9.57px] md:py-[16.61px] align-middle self-center flex flex-col gap-1.5 w-[70%]">
-                  <p className="text-[11px] leading-[14px]  lg:leading-[30px] lg:text-[24px] md:text-[13.75px] font-semibold">
+                <div className="py-[9.57px] md:py-[16.61px] align-middle self-center
+                 flex flex-col gap-1.5 w-[70%]">
+                  <p className="text-[11px] leading-[14px]  lg:leading-[30px]
+                   lg:text-[24px] md:text-[13.75px] font-semibold">
                     SUBSCRIBE YOUR TV CHANNELS WITH AREMXYPLUG.
                   </p>
-                  <p className="text-[10px] leading-[13px] lg:text-[20px] lg:leading-[25px] md:text-[11.46px]">
+                  <p className="text-[10px] leading-[13px] lg:text-[20px]
+                   lg:leading-[25px] md:text-[11.46px]">
                     Never miss a beat! Subscribe your tv channels on our
                     platform to watch and stream your favorite movies without
                     any hassle.
@@ -620,13 +622,18 @@ const GoTv = () => {
                   <div className="relative flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
                     <label
                       htmlFor="decoderType"
-                      className="text-[#7E7E7E] text-[14px] lg:text-[17px] md:text-[13px] md:font-[600] font-[400]"
+                      className="text-[#7E7E7E] text-[14px] lg:text-[17px]
+                       md:text-[13px] '
+                      md:font-[600] font-[400]"
                     >
                       Confirm Decoder Type
                     </label>
                     {/* <button className="border-[0.23px] lg:border-[0.4px] w-full md:w-1/2 h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C]">Gotv</button> */}
                     <div
-                      className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px]  sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+                      className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
+                         sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px]
+                          pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+                          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
       isDarkMode
         ? "bg-black text-white border border-white"
@@ -666,7 +673,10 @@ const GoTv = () => {
                                   .classList.remove("DropIt");
                                 console.log(e);
                               }}
-                              className={`pb-[20px] pt-[20px] md:pb-[14px] md:pt-[14px] font-weight-bold text-[14px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500]  
+                              className={`pb-[20px] pt-[20px] md:pb-[14px] 
+                                md:pt-[14px] font-weight-bold text-[14px] leading-[18.4px] 
+                                md:py-[15px]
+                                 py-[8px] pl-[10px] font-[500]  
          md:text-[13.227px] md:leading-[17.195px] 
          shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] 
          lg:text-[16px] lg:leading-[20.8px] cursor-pointer ${
@@ -701,8 +711,15 @@ const GoTv = () => {
                     </label>
 
                     <div
-                      className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] sm:p-3 sm:text-lg  flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+                      className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
+                        sm:p-3 sm:text-lg  flex justify-between pt-[8.803px] pb-[7.794px] 
+                        pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[11px] 
+                        md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] 
+    md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]
+     items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px]
+      w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] 
+      px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
       isDarkMode
         ? "bg-black text-white border border-white"
         : "hover:bg-[#EDEAEA]"

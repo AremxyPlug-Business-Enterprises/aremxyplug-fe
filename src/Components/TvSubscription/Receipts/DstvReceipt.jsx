@@ -24,7 +24,7 @@ export const DstvReceipt= (Data) => {
     dstvTransactionId,
     dstvOrderId,
     dstvDescription,
-    cardName,
+   dstvCardName,
     isDarkMode, 
     dstvAmount,
     date,
@@ -39,7 +39,10 @@ export const DstvReceipt= (Data) => {
    setPackageDstv,
    setDstvDecoderType,
     setFlagResult,
-    setDstvWalletBalance,} =
+    setDstvCardName,
+    setDstvWalletBalance,
+    dstvSubscriptionResponse
+  } =
     useContext(ContextProvider);
 
   const contentRef = useRef(null);
@@ -102,6 +105,7 @@ export const DstvReceipt= (Data) => {
       setDstvEmail("")
    setDstvMobileNumber("")
    setDstvSmartCard("");
+   setDstvCardName("")
    setDstvAmount("");
    setDstvOrderId("");
    setDstvDescription("")
@@ -111,8 +115,21 @@ export const DstvReceipt= (Data) => {
    setDstvDecoderType("")
     setFlagResult("");
     setDstvWalletBalance("");
-   navigate("/DsTv");
+    navigate("/DsTv");
   }
+ // console.log(dstvCardName)
+  // if(selectedOptionDstv === "" ||
+  //   formatNumberWithCommas ==="" ||
+  //   dstvEmail === "" ||
+  //   dstvMobileNumber === "" ||
+  //   dstvSmartCard === "" ||
+  //   dstvTransactionId === "" ||
+  //   dstvOrderId === "" ||
+  //   dstvDescription === "" ||
+  //   cardName){
+  //      window.location.replace("/DsTv");
+  //      alert("Check your dashborad for your transactions or transaction page for all your transactions.")
+  //   }
 
   return (
     <DashBoardLayout>
@@ -169,10 +186,14 @@ export const DstvReceipt= (Data) => {
                 hour12: true,
               })}
             </span>
-            <p className={`pt-2 md:pt-4 text-[9px] text- font-bold text-center
-             my-2 md:text-[14px] lg:text-[14px] ${isDarkMode ? "text-white" : "text-black" }`}>
-            You have successfully subscribed {" "}
-              <span className="text-[10px] md:text-[16px] lg:text-[16px]">
+            <p className={`text-[10px] p-[5.729px] border-[0.573px] rounded-[6.302px] md:p-[5.868px]
+                 md:border-[0.578px] md:rounded-[6.455px]  lg:border-[1px] lg:rounded-[11px]
+                   leading-[15px] md:leading-[20px] 
+                    lg:p-[10px] text-center my-2 md:text-sm
+                    lg:text-base  lg:leading-[24px] font-medium md:mb-7 ${dstvSubscriptionResponse?.data?.status === "delivered" ? "border-[#27AE60] text-[#27AE60] bg-[#D5F6E3]" :  'border-red-500 text-red-500 bg-red-100' }`}>
+             {dstvSubscriptionResponse?.data?.status === "delivered" ?  "You have successfully subscribed to " : dstvSubscriptionResponse?.data?.status === "delivered" ?
+              "Unexpected error occured during subscription of " : "Subscription failed due to an internet vconnection error."}
+              <span className="font-extrabold text-[10.9px] md:text-[14.9px] lg:text-[16.9px]">
                 {selectedOptionDstv}{" "}
               </span>
               from your{" "}
@@ -204,7 +225,7 @@ export const DstvReceipt= (Data) => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>Card Name</p>
-                  <span>{cardName}</span>
+                  <span>{dstvCardName}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>Phone</p>
@@ -216,7 +237,11 @@ export const DstvReceipt= (Data) => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>Amount</p>
-                  <span>{`₦${dstvAmount}`}</span>
+                  <span>{`${dstvAmount !== "" ? dstvAmount?.toLocaleString("en-NG", {
+                    style : "currency",
+                    currency : "NGN"
+
+                  }) : "₦"}`}</span>
                 </div>
               </div>
 
@@ -283,9 +308,14 @@ export const DstvReceipt= (Data) => {
                 
               </div>
             </div>
-            <div className="rounded-[8px] bg-[#E2F3FF] mx-4 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]">
-              <p className={`text-[8px] text-black text-center mx-auto w-[200px] md:text-[14px] md:w-[80%] lg:text-[16px]
-               `}>
+            <div className={`bg-[#F2FAFF] w-[90%]   mx-auto p-[8px] my-5 flex justify-between 
+        items-center md:p-[9px] lg:p-[10px] rounded-[5px] lg:rounded-[10px]
+         ${
+                isDarkMode ? "bg-slate-800 " : "bg-[#F2FAFF]"
+              }`}>
+              <p  className={`text-[10px] leading-[13px] text-center
+             md:text-[14px] md:leading-[18px] lg:text-[14px]  font-semibold 
+             ${isDarkMode ? "text-white" : "text-black"}`}>
                 Earn free points on every successful transactions, redeem your
                 earned points to real money, withdrawn to your bank account
                 instantly.

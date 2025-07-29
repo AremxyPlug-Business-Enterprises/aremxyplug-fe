@@ -260,7 +260,7 @@ export const CheckVirtualAcc = async(authToken, customerDetail, setLoading,
 
 export const VerifyTransPin = async (
   otp,
-  setSuccess,
+  //setSuccess,
   setFailed,
   setLoading,
   setErrorMessage,
@@ -281,7 +281,6 @@ export const VerifyTransPin = async (
       },withCredentials : true
    })
       if(response.status === 201 || response.status ===  200){
-     setSuccess(true);
        setErrorMessage(false);
      await asyncFuncAtSuccess()
       }
@@ -289,19 +288,15 @@ export const VerifyTransPin = async (
    }catch(error){
         if(error && error.response === undefined){
      alert("Kindly check your internet connection")
+     setFailed("Network error")
       } else if(error && error.response.status === 400){
-         setFailed("Bad request")
-         setErrorMessage(true)
+         setFailed("Bad request");
+         setErrorMessage(true);
       }else if(error && error.response.status === 401){
-         
          console.log(error.response.headers);
-
-        console.log(error.response.headers.get("x-new-auth-token"));
-
-        if (
-          error.response.headers["x-new-auth-token"] ||
-          error.response.headers.get("x-new-auth-token")
-        ) {
+      console.log(error.response.headers.get("x-new-auth-token"));
+if (error.response.headers["x-new-auth-token"] ||
+          error.response.headers.get("x-new-auth-token")) {
           setLoading(true);
           const newToken =
             error.response.headers.get("x-new-auth-token") ||
@@ -334,10 +329,7 @@ export const VerifyTransPin = async (
    }finally{
       if(asyncFuncAtSuccess){
       setLoading(false);
-
-      }
-   
-  }
+}}
 };
 }
 
@@ -468,8 +460,8 @@ export const GetFunction = async(path, setLoading, functionAtSuccess,functionAtF
       }
    }catch(error){
       if(error && error.response === undefined){
-     alert("Kindly check your internet connection")
-     functionAtFailed("Network error")
+     alert("Kindly check your internet connection");
+     functionAtFailed("Network error");
       } else if(error && error.response.status === 400){
          functionAtFailed("Bad request")
        alert("Invalid request")
@@ -505,7 +497,7 @@ export const GetFunction = async(path, setLoading, functionAtSuccess,functionAtF
         alert("Check your internet connection");
       } else if (error && error.response.status === 500) {
         functionAtFailed("Server error");
-        alert("Server error: Try some other time");
+       // alert("Server error: Try some other time");
       } else if (error && error.response.status === undefined) {
         alert("Check your internet Connection");
       } else {

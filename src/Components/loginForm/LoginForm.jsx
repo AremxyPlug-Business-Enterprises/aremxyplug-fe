@@ -35,31 +35,31 @@ function LoginForm() {
  
 
   // Check if login data exist starts here
-  function checkUsername() {
-    const getUsername = localStorage.getItem("aremxyUsername")
-      ? JSON.parse(localStorage.getItem("aremxyUsername"))
-      : "";
-    return getUsername;
-  }
+  // function checkUsername() {
+  //   const getUsername = localStorage.getItem("aremxyUsername")
+  //     ? JSON.parse(localStorage.getItem("aremxyUsername"))
+  //     : "";
+  //   return getUsername;
+  // }
 
-  function checkEmail() {
-    const getEmail = localStorage.getItem("aremxyEmail")
-      ? JSON.parse(localStorage.getItem("aremxyEmail"))
-      : "";
-    return getEmail;
-  }
+  // function checkEmail() {
+  //   const getEmail = localStorage.getItem("aremxyEmail")
+  //     ? JSON.parse(localStorage.getItem("aremxyEmail"))
+  //     : "";
+  //   return getEmail;
+  // }
 
-  function checkPassword() {
-    const getPassword = localStorage.getItem("aremxyPassword")
-      ? JSON.parse(localStorage.getItem("aremxyPassword"))
-      : "";
-    return getPassword;
-  }
+  // function checkPassword() {
+  //   const getPassword = localStorage.getItem("aremxyPassword")
+  //     ? JSON.parse(localStorage.getItem("aremxyPassword"))
+  //     : "";
+  //   return getPassword;
+  // }
   // Check if login data exist ends here
 
-  const [username, setUsername] = useState(checkUsername());
-  const [email, setEmail] = useState(checkEmail());
-  const [password, setPassword] = useState(checkPassword());
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [checkbox, setCheckbox] = useState(false);
  // const [cormfirmVirtualLoad, setConfirmVirtualLoad] = useState(false)
   const [passwordHidden, setPasswordHidden] = useState("password");
@@ -218,14 +218,14 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
               console.log(response);
               if (response.status === 202 && response.headers.hasAuthorization) {
                 setOpenTranspin(true);
-                console.log(`${response.data.data}`);
+                console.log(`${response?.data?.data}`);
                 const authToken = response.headers.get('Authorization');
                   const customer  =  response?.data?.data?.customer;
             
                 if(authToken){
                  localStorage.setItem("getToken", authToken);
                   if(customer){
-                    console.log(customer)
+                    console.log(customer);
                     setCustomerDetail(customer);
                } }
      } else if(response.status === 200){
@@ -258,10 +258,11 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
             alert("Check your internet connection")
           }
             });
-          if (checkbox === true) {
-            localStorage.setItem("aremxyPassword", JSON.stringify(password));
-            localStorage.setItem("aremxyUsername", JSON.stringify(username))
-          }
+          //if (checkbox === true) {
+            // localStorage.setItem("aremxyPassword", JSON.stringify(password));
+            // localStorage.setItem("aremxyUsername", JSON.stringify(username))
+        
+          //}
         }
       } catch (error) {
         console.log(error);
@@ -343,9 +344,9 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
                      console.log(error);
                    }
             });
-          if (checkbox === true) {
-            localStorage.setItem("aremxyPassword", JSON.stringify(password));
-          }
+         // if (checkbox === true) {
+            //localStorage.setItem("aremxyPassword", JSON.stringify(password));
+         // }
         }
       } catch (error) {
         console.log(error);
@@ -575,7 +576,7 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
             ) : (
               <button
                 type="submit"
-                disabled={email === "" || password === "" ? true : false}
+                disabled={ email === "" || password === "" ? true : false}
                 className={` ${
                   email === "" || password === ""
                     ? "opacity-50 cursor-not-allowed"
@@ -598,13 +599,15 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
            text-[#575757] my-4 cursor-pointer">
           -OR-
         </p>
-        <div className="flex justify-center">
+        <div className="flex justify-center"
+        >
           <div
            onClick ={()=> {
             alert("The use of Google as a third party authentication OAuth isn't available for now.")
           }} 
           //  onClick={() => setOpenResetTranspin(true)}
-            className={`px-[5px] w-full lg:w-auto lg:px-[20px] py-[15px] rounded  flex items-center justify-center
+            className={`px-[5px] w-full lg:w-auto lg:px-[20px] py-[15px] 
+              rounded  flex items-center justify-center
                lg:hover:border-[#b3b3b3] lg:duration-300 border-[#cdcdcd] border-[1px] cursor-pointer `}
           >
             <img
