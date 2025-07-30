@@ -6,7 +6,6 @@ import { Modal } from "../../Screens/Modal/Modal";
 import { AiFillEye } from "react-icons/ai";
 import OtpInput from "react-otp-input";
 import { AiFillEyeInvisible } from "react-icons/ai";
-import styles from "../../Dashboard/DashboardComponents/TransferComponent/transfer.module.css";
 import { Link } from "react-router-dom";
 //import { VerifyTransPin } from "../../ApiCollection.jsx/ApiBuck";
 //import { Loader } from "../../Loader/Loader";
