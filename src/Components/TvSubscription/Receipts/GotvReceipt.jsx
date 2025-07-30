@@ -157,7 +157,8 @@ export const GotvReceipt = (Data) => {
                 alt="/"
               />
             </div>
-            <h3 className="font-extrabold text-[12px] mt-[2%] text-center md:text-[20px] md:my-[7px] lg:text-[16px] lg:my-[10px]">
+            <h3 className="font-extrabold text-[12px] mt-[2%] text-center 
+            md:text-[20px] md:my-[7px] lg:text-[16px] lg:my-[10px]">
             Purchase Successful on
             </h3>
             <span className={`text-[11px] font-extrabold flex justify-center items-center   ${isDarkMode ? "text-white": "text-[#0008]"}`}>
