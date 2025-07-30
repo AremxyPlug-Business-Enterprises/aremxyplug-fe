@@ -662,15 +662,15 @@ export default function IdVerification(Data) {
       const numbersOnly = e.target.value.replace(/\D/g, '');
       e.target.value = numbersOnly;
     })}
-    value={  (idStatus === "Verified" || Data.ConfirmId === "true") ? `${idNumber.slice(0,4)}*******` : idNumber}
+    value={  (idStatus === "Verified" || Data.ConfirmId === "true") ? `${idNumber?.slice(0,4)}*******` : idNumber}
     
     onChange={(e) => {
       setIdNumber(e.target.value);
     }}
      className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
-                         sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px]
-                          pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
-                          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px]
+     pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+      leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px]
      md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]
        items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px]
