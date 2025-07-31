@@ -47,25 +47,34 @@ export const InputGotvPopup = ({VerifyPinHandler}) => {
     {inputPinGotv &&
             (
             <Modal>
-         <div className="flex items-end justify-center lg:items-center lg:justify-center 
-         h-[100%] w-[100%]  px-[10px] rounded-[10px]">
-        <div className={`bvnQuery flex flex-col justify-center mb-[50px] py-[2px] h-[250px] lg:h-auto overflow-scroll ${
-              toggleSideBar ? "md:w-[45%] lg:w-[40%] lg:ml-[20%] " : "lg:w-[40%]"
-            } md:w-[55%] w-[90%] ${isDarkMode ? "text-white bg-black border-[1px] border-white rounded-[10px]" : "text-black bg-white"}`}
+          <div className="flex items-end justify-center
+             lg:items-center lg:justify-center 
+   w-[100%] lg:px-[0px] rounded-[10px] h-[100%] px-[15px]">
+        <div className={`  flex flex-col lg:mb-[0px]  mb-[50px]  '
+         lg:h-[350px] overflow-scroll h-[300px] bvnQuery  ${
+                      toggleSideBar ? "md:w-[45%] lg:w-[40%]  " : "lg:w-[40%]"
+                    } md:w-[55%] w-full   ${isDarkMode ? "text-white bg-black border-[1px] border-white rounded-[10px]" : "text-black bg-white rounded-[10px]"}`}
             >
-            <div className=" pr-3 lg:pr-5 flex justify-end">
+            <div className="pr-3 lg:pr-2 py-[5px] flex justify-end">
             <img  onClick={cancelInputGotv}
-                className="w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px] self-center"
+                className="w-[25px] h-[25px]  md:w-[35px] md:h-[35px] 
+                lg:w-[25px] lg:h-[25px]"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
               />
             </div>
-            <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
-            <div className="flex flex-col">
-            <p className="font-extrabold text-[8px] md:text-[10px] lg:text-[16px] text-center my-[8%] 
+            <div className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
+            <div className="flex flex-col w-full  justify-center 
+             py-[15px] lg:py-[0px]
+             h-[100%] gap-[15px] ">
+            <p className="font-extrabold text-[12px] leading-[16px] 
+            pb-[20px]
+             md:text-[10px]
+             lg:text-[16px] text-center 
             ">Input PIN to complete transaction</p>
-            <div className="flex flex-col items-center gap-[1px] font-extrabold mb-[7%]">
-              <div className=" flex items-center ml-[5%] md:ml-[5%] gap-[10px]">
+            <div className="flex flex-col items-center lg:gap-[0px]
+             gap-[5px] font-extrabold">
+              <div className=" flex items-center  gap-[10px]">
                 {" "}
                 {isVisible ? (
                   <OtpInput
@@ -81,14 +90,12 @@ export const InputGotvPopup = ({VerifyPinHandler}) => {
                       borderRadius: 4,
                       height: '35px',
                       width: '35px',
-                      border : "1px",
-                      borderColor : "#04177f"
                     }
                 }
                     
                     renderInput={(props) => (
-                      <input{...props} className={`inputOTP  border-[1px] border-[#000]
-                        mx-[2px] ${isFocused ? 'focused' : ''}`} onFocus={handleFocus}
+                      <input {...props} className={`inputOTP mx-[2px] 
+                        ${isFocused ? 'focused' : ''}`} onFocus={handleFocus}
                       onBlur={handleBlur}/>
                     )}
                   />
@@ -101,37 +108,51 @@ export const InputGotvPopup = ({VerifyPinHandler}) => {
                   className="text-[#0003]"
                   onClick={toggleVisibility}
                 >
-                  {isVisible ? <AiFillEye className="w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]" /> : <AiFillEyeInvisible  className="w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]"/>}
+                  {isVisible ? <AiFillEye className="w-[16px] h-[16px]
+                   lg:w-[24px] lg:h-[24px]" /> : <AiFillEyeInvisible  className="w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]"/>}
                 </div>
               </div>
-              <Link to = {{
+              <Link  to = {{
                pathname : "/ProfileSettingMain",
                 state :  authenticationOpen
-              }} 
-               className="text-[8px] md:text-[12px] leading-[5px] my-3 text-[#04177f]">
+              }} className="text-[10px] leading-[14px] font-extrabold 
+              md:text-[12px]
+                my-2 text-[#04177f]">
                 Forgot Pin ?
               </Link>
             </div>
             {errorMessage && (
-              <p className="font-[400] md:font-[500] text-center leading-[15px] text-red-400 mb-[10px] lg:mb-[0px]">
+              <p className="font-bold text-[14px]  lg:text-[16px] md:font-[500] 
+              text-center leading-[18px] lg:leading-[20px]   text-red-600">
                  Incorrect Pin
               </p>
             ) 
             }
-            </div>
+             <div className="flex flex-col gap-[10px] px-[20px]" >
             <button
               onClick={handleGotvSuccessful}
               disabled={inputPin.length !== 4 ? true : false}
               className={`${
                 inputPin.length !== 4 && !isDarkMode ? "bg-[#0008]" : 
                  inputPin.length !== 4 && isDarkMode ? "bg-gray-300" : "bg-[#04177f]"
-              } lg:my-[52px] w-[225px] md:w-[94px] lg:w-[163px] flex justify-center items-center
-               mx-auto cursor-pointer text-[12px] md:text-[10px] py-[10px] lg:text-[16px] font-extrabold h-[40px] lg:h-[38px] md:h-[22px]
-                text-white rounded-[6px] md:rounded-[6.88px]  lg:rounded-[12px]
-               `}
+              }  w-full  md:w-[94px] lg:w-[163px] flex 
+              justify-center items-center mx-auto cursor-pointer text-[12px]
+               md:text-[10px] lg:text-[16px] font-extrabold h-[50px] 
+               lg:h-[38px] md:h-[22px] text-white rounded-[6px] md:rounded-[6.88px]
+                lg:rounded-[12px]`}
             >
               Purchase
             </button>
+            {/* {errorMessage && (
+              <p className="text-[10px] leading-[16px] font-[400]
+              lg:text-[12px] lg:leading-[18px] lg:font-[500] text-red-500">
+                Incorrect Pin
+                </p>
+
+            )} */}
+            </div>
+             </div>
+           
         </div>
         </div>
            </Modal>

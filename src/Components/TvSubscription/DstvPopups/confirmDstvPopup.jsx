@@ -89,8 +89,8 @@ const [balanceStatus,setBalanceStatus] = useState("")
               <div className={`text-[10px] font-semibold text-center mb-2
                md:text-[12px] lg:text-[14px] mx-2 ${isDarkMode ? "text-white" : "text-black"}`}>
                   You are about to purchase&nbsp;
-                  <span className="font-extrabold text-[10px] md:text-[16px] 
-                  lg:text-[12px]">{valueWithoutTilde}</span>&nbsp;
+                  <span className={`font-extrabold text-[10px] md:text-[16px]
+                     lg:text-[12px] ${isDarkMode ? "text-white" : "text-black"}`}>{valueWithoutTilde}</span>&nbsp;
                 from your {" "}
                 {flagResult} {" "} to
                 </div>
@@ -124,7 +124,7 @@ const [balanceStatus,setBalanceStatus] = useState("")
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
                     <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Amount</span>
-                    <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{`${dstvAmount !== "" ? dstvAmount?.toLocaleString("en-NG", {
+                    <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{`${(dstvAmount !== "" || dstvAmount !== undefined) ? dstvAmount?.toLocaleString("en-NG", {
                       style : "currency",
                       currency : "NGN"
                    }) : "₦"}`}</span>

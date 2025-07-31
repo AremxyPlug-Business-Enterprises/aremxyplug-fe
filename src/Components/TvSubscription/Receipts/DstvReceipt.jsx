@@ -159,7 +159,8 @@ export const DstvReceipt= (Data) => {
           <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
           <div ref={contentRef}>
             {" "}
-            <h3 className="font-extrabold text-[12px] my-[2%] text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
+            <h3 className="font-extrabold text-[12px] my-[2%] text-center 
+            md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
               Transaction Receipt
             </h3>
             <div className="w-full flex justify-center">
@@ -195,7 +196,8 @@ export const DstvReceipt= (Data) => {
                     lg:text-base  lg:leading-[24px] font-medium md:mb-7
              ${dstvSubscriptionResponse?.data?.status === "delivered" ? "border-[#27AE60] text-[#27AE60] bg-[#D5F6E3]" :  'border-red-500 text-red-500 bg-red-100' }`}>
              {dstvSubscriptionResponse?.data?.status === "delivered" ?  "You have successfully subscribed to " : purchaseDstvErrorType}
-              <span className="font-extrabold text-[10.9px] md:text-[14.9px] lg:text-[16.9px]">
+              <span className="font-extrabold text-[10.9px] md:text-[14.9px] 
+              lg:text-[16.9px]">
                 {selectedOptionDstv}{" "}
               </span>
               from your{" "}
