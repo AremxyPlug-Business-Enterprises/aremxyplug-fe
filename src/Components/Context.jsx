@@ -169,6 +169,8 @@ export const Context = ({ children }) => {
   function changeHandler(e) {
     const { name, value, type, checked } = e.target;
     const inputValue = type === "checkbox" ? checked : value;
+    console.log(value)
+    console.log(name)
     setState({ ...state, [name]: inputValue });
   }
 

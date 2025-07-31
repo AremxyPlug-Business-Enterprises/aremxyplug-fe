@@ -83,10 +83,18 @@ export const GotvReceipt = (Data) => {
     if (content) {
       const pdf = new jsPDF();
       html2canvas(content).then((canvas) => {
-        const imgData = canvas.toDataURL("image/png");
-        pdf.addImage(imgData, "PNG", 10, 10, 190, 0);
+      const bgPdf = pdf.setFillColor(isDarkMode ? 0 : 255, isDarkMode ? 0 : 255, isDarkMode ? 0 : 255 )
+      if(bgPdf){
+        const imgWidth = 190;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width
+        const imgData = canvas.toDataURL("");
+        pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
         pdf.save("GoTvSubscription.pdf");
-      });
+        pdf.setTextColor(isDarkMode? 0: 255,isDarkMode? 0: 255,isDarkMode? 0: 255 )
+        pdf.text("GoTv Subscription Receipt", 20, 20);
+      }
+      }
+    );
     }
   };
 
@@ -190,8 +198,8 @@ export const GotvReceipt = (Data) => {
               lg:text-[16.9px]">
                 {selectedOptionGOTV}{" "}
               </span>
-              from your
-              <span>{flagResult}</span>
+              from your {" "}
+              <span>{flagResult} to </span>
             </p>
             <div className="flex flex-col gap-3">
               {/* ========================Recipient Info================== */}
