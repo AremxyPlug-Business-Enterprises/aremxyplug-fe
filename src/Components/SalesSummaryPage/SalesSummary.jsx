@@ -198,36 +198,32 @@ const product = ["Airtime Top-up", "Data Top-up", "Bills payment"]
 
         <DashBoardLayout>
         <>
-        <div class="flex gap-[25px] lg:w-full 
-        lg:h-[1850px] md:h-[1200px] h-[800px] md:w-full w-full flex-col">
+        <div className="flex flex-col gap-[20px]">
 
           <div
             // id="Transaction"
-            className="w-full h-[90px] md:h-[112.29px] bg-gradient-to-r
-             from-yellow-300 to-rose-400  lg:h-[196px] md:rounded-[11.5px] rounded-[7px]
-              md:mt-[-1px] px-[5px] lg:ml-[-20px] lg:w-[102%] 2xl:w-full 2xl:ml-0 
-              lg:gap-[50px] pt-[10px] lg:px-[30px] lg:rounded-[20px] 
-              lg:py-[20px] pb-[16px] flex justify-between items-center"
+            className="min-h-[99px]   bg-gradient-to-r
+             from-yellow-300 to-rose-400 lg:h-[196px] md:h-[112.29px] rounded-[6.6px] md:rounded-[11.46px] lg:rounded-[20px]
+                           mx-auto  flex gap-6 justify-between px-[16.51px] md:px-[28.65px] lg:px-[50px]"
           >
-            <div className="w-[100%] pt-[19px] lg:pt-[20px] pl-[8.5px] md:pl-[9px]">
-              <p className="text-[10px] mb-2 font-bold uppercase w-[100%] md:text-[12px] md:w-[70%] '
-              lg:w-[70%] lg:text-[20px] 2xl:w-[80%] 2xl:text-[24px] lg:mb-4">
+            <div className="py-[9.57px] md:py-[16.61px] align-middle self-center 
+                            flex flex-col gap-1.5 w-[70%]">
+              <p className="text-[11px] leading-[13px] lg:leading-[30px]
+                                 lg:text-[24px] md:text-[13.75px] font-semibold">
                 MANAGE ALL YOUR TRANSACTIONS AT A TIME WITHOUT ANY HASSLE.
               </p>
-              <p className="text-[7px] font-[400] leading-[9px] mb-3 
-              md:text-[9px] md:leading-[12.2px] w-[90%] md:w-[80%] lg:w-[75%] 
-              2xl:w-[85%] 2xl:mt-[5px] lg:mt-[20px] lg:text-[16px] lg:leading-[26px] 
-              2xl:text-[20px] lg:mb-[20px]">
+              <p className="text-[10px] leading-[13px] lg:leading-[25px] lg:text-[20px]
+                                 md:text-[11.46px]">
                 Select, filter, and manage all your transactions at a time,
                 download all transactions stats and keep a record track.
               </p>
             </div>
 
-            <div className="w-[91px] h-[66px] lg:w-[199px] lg:h-[199px] lg:mt-[40px]">
+            <div className="flex w-[23%] h-[97%] pt-2 shrink-0">
               <img
                 src={receiptA}
                 alt=""
-                className="w-[67.482px] h-[60px] md:w-[98px] md:h-[px] lg:w-[196.447px] lg:h-[150px]"
+                className="w-[100%] h-[100%]"
               />
             </div>
           </div>
@@ -660,7 +656,7 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
   >
   
   
-  <div className="flex  justify-start items-center lg:w-full relative bg-white  md:mt-[-665px]
+  <div className="flex  justify-start items-center lg:w-full absolute bg-white  md:mt-[-665px]
     lg:mt-[-967px] mt-[-492px] lg:h-[1100px] md:h-[1000px] h-[653px] mb-5 border-b-[1.2px] flex-col">
   <div className={`${  
     toggleSideBar
