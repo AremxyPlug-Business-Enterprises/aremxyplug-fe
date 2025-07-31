@@ -103,61 +103,63 @@ const JED = () => {
   //   const { selectedOption, setSelectedOption } = useContext(ContextProvider);
   //   const [showOptionList, setShowOptionList] = useState(false);
 
+  const [passDataBalance, setPassDataBalance] = useState({});
 
- const [passDataBalance, setPassDataBalance] = useState({});
-     
-     const GetBalance = async () => {
-         const SuccessHandler = () => {
-           console.log("successfully retrieved balance");
-         };
-         const FailedHandler = async (ErrorType) => {
-           if (ErrorType === "unauthorised") {
-             await GetFunction(
-               `bills/verify`,
-               setLoading,
-               SuccessHandler,
-               (ErrorType) => {
-                 if (ErrorType === "unauthorised") {
-                   return setSessionModal(true);
-                 }
-               },
-               setPassDataBalance
-             );
-           }
-         };
-         await GetFunction(
-           "balance",
-           setLoading,
-           SuccessHandler,
-           FailedHandler,
-           setPassDataBalance
-         );
-       };
-       // get the balance on entering the page
-       useEffect(() => {
-         if (newBalance === "" || newBalance === null || newBalance === undefined) {
-           GetBalance();
-           if (GetBalance) {
-             setNewBalance(
-               passDataBalance?.data?.data
-                 ? passDataBalance?.data?.data?.data?.balance
-                 : ""
-             );
-           }
-         }
-         // handleResetFields();
-         // eslint-disable-next-line
-       }, []);
-   
-       const updateBalance = passDataBalance?.data?.data
-       ? passDataBalance?.data?.data?.data?.balance
-       : "";
-   
-     const countryList = [
-       {
-         id: 1,
-         name: `NGN Wallet ${newBalance === "" || newBalance === null || newBalance === undefined ? `(₦${updateBalance})`
-             : `(₦${newBalance})`}`,
+  const GetBalance = async () => {
+    const SuccessHandler = () => {
+      console.log("successfully retrieved balance");
+    };
+    const FailedHandler = async (ErrorType) => {
+      if (ErrorType === "unauthorised") {
+        await GetFunction(
+          `bills/verify`,
+          setLoading,
+          SuccessHandler,
+          (ErrorType) => {
+            if (ErrorType === "unauthorised") {
+              return setSessionModal(true);
+            }
+          },
+          setPassDataBalance
+        );
+      }
+    };
+    await GetFunction(
+      "balance",
+      setLoading,
+      SuccessHandler,
+      FailedHandler,
+      setPassDataBalance
+    );
+  };
+  // get the balance on entering the page
+  useEffect(() => {
+    if (newBalance === "" || newBalance === null || newBalance === undefined) {
+      GetBalance();
+      if (GetBalance) {
+        setNewBalance(
+          passDataBalance?.data?.data
+            ? passDataBalance?.data?.data?.data?.balance
+            : ""
+        );
+      }
+    }
+    // handleResetFields();
+    // eslint-disable-next-line
+  }, []);
+
+  const updateBalance = passDataBalance?.data?.data
+    ? passDataBalance?.data?.data?.data?.balance
+    : "";
+
+  const countryList = [
+    {
+      id: 1,
+      name: `NGN Wallet ${
+        newBalance === "" || newBalance === null || newBalance === undefined
+          ? `(₦${updateBalance})`
+          : `(₦${newBalance})`
+      }`,
       code: "Nigerian NGN Wallet",
       flag: require("../ElectricitySubscription/Electricity-sub-images/nigeriaFlag.png"),
     },
@@ -331,14 +333,6 @@ const JED = () => {
     // setCountryCode(code);
     // setCurrencyAvailable(id !== 1);
   };
-  // const handleVerifiedName = (event) => {
-  //   const newValue = event.target.value;
-  //   setJedVerifiedName(newValue);
-  // };
-  // const handleMeterNumber = (event) => {
-  //   const newValue = event.target.value;
-  //   setJedMeterNumber(newValue);
-  // };
   const handlePhoneNumber = (event) => {
     const value = event.target.value;
     const newValue = value.replace(/\D/g, "").slice(0, 11);
@@ -362,7 +356,6 @@ const JED = () => {
   const [jedCustomerName, setJedCustomerName] = useState("");
 
   const [errorMessage, setErrorMessage] = useState(false);
-  const [pinSuccess, setPinSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const [isFailedMeterNumber, setIsFailedMeterNumber] = useState(false);
@@ -487,28 +480,42 @@ const JED = () => {
         setJedFetchedResponse
       );
     }
-    //Kindly uncomment the code below after implementing the errorMessage
-    //rather than the pinfailed and pinSucess state
-    //Kindly also remove the setPinFailed state as there
-    //is no longer any use for it
-    const setPinFailed= async(ErrorType)=> {
-      if(ErrorType==="unauthorised"){
-          await VerifyTransPin(
-      inputPin,
-      setPinSuccess,
-     (ErrorType)=> {
-      if(ErrorType === "unauthorised"){
-     setSessionModal(true)
+    const setPinFailed = async (ErrorType) => {
+      if (ErrorType === "unauthorised") {
+        await VerifyTransPin(
+          inputPin,
+          (ErrorType) => {
+            if (ErrorType === "unauthorised") {
+              setSessionModal(true);
+            } else if (
+              ErrorType === "Network error" ||
+              ErrorType === "User error"
+            ) {
+              return alert("Kindly Check your internet connection");
+            } else if (ErrorType === "Server error") {
+              alert(
+                "The server is currently experiencing a downtime, try again some other time."
+              );
+            } else {
+              alert("An unexpected has occured try again some other time.");
+            }
+          },
+          setLoading,
+          setErrorMessage,
+          ElectricityHandler
+        );
+      } else if (ErrorType === "Network error" || ErrorType === "User error") {
+        return alert("Kindly Check your internet connection");
+      } else if (ErrorType === "Server error") {
+        alert(
+          "The server is currently experiencing a downtime, try again some other time."
+        );
+      } else {
+        alert("An unexpected has occured try again some other time.");
       }
-     },
-      setLoading,
-      setErrorMessage,
-      ElectricityHandler
-    );
-      }}
+    };
     await VerifyTransPin(
       inputPin,
-      setPinSuccess,
       setPinFailed,
       setLoading,
       setErrorMessage,
@@ -709,7 +716,7 @@ const JED = () => {
                           isDarkMode
                             ? "bg-black text-white hover:bg-slate-800 border border-white"
                             : "text-[#7C7C7C] hover:bg-[#EDEAEA] bg-white"
-                      }
+                        }
                         ${selectedJedMeterType === item.name ? "" : ""}`}
                       onClick={() => handleSelectProduct(item.name)}
                     >
@@ -893,11 +900,7 @@ const JED = () => {
                   }}
                   placeholder="Minimum of ₦1000"
                   className={`w-full ml-0.5 placeholder:text-xs placeholder:leading-[10.4px] placeholder:lg:text-base placeholder:lg:leading-[20.8px] focus:outline-none
-                 ${
-                   isDarkMode
-                     ? "text-white bg-black"
-                     : "text-[#7E7E7E]"
-                 }`}
+                 ${isDarkMode ? "text-white bg-black" : "text-[#7E7E7E]"}`}
                 />
               </div>
               {amountError && (
@@ -981,8 +984,8 @@ const JED = () => {
                     <div
                       className={`py-[18px] md:py-2 lg:py-[15px] pl-[10px] font-normal flex items-center gap-[5px] text-xs md:text-sm lg:text-base transition-all duration-300 shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
                       ${
-                          isDarkMode ? "text-white bg-black " : "text-[#7E7E7E]"
-                        } ${
+                        isDarkMode ? "text-white bg-black " : "text-[#7E7E7E]"
+                      } ${
                         country.code === "Nigerian NGN Wallet"
                           ? "cursor-pointer hover:bg-[#EDEAEA]"
                           : "cursor-not-allowed opacity-50"
@@ -1300,18 +1303,11 @@ const JED = () => {
                         <input {...props} className="inputOTP mx-[3px]" />
                       )}
                     />
-                    <span className="">
-                      {pinSuccess && (
-                        <p className="text-xs text-green-500 text-center font-medium">
-                          Pin matches
-                        </p>
-                      )}
-                      {errorMessage && (
-                        <p className="text-xs text-center text-red-600 font-medium">
-                          Incorrect Pin
-                        </p>
-                      )}
-                    </span>
+                    {errorMessage && (
+                      <p className="text-xs text-center text-red-600 font-medium">
+                        Incorrect Pin
+                      </p>
+                    )}
                   </div>
                 ) : (
                   <div className="text-[24px] md:text-[24px] mt-1">* * * *</div>

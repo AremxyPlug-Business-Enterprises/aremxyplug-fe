@@ -229,7 +229,7 @@ const handleVerificationOTP = ()=> {
        if(error && (error.response=== undefined)){
     alert("Check your network connection");
  }
-   else  if(error.status === 400){
+   else  if(error.response.status === 400){
      // alert(`ERROR : ${error}`)
       console.log(error);
      // console.log(error.response.data.message);
@@ -271,24 +271,12 @@ const handleVerificationOTP = ()=> {
            setBvnButtonState("Verified");
           setBvnVerifyImage(VerificationSuccess);
           setBvnStatus("Verified");
-          setVerifyImage(VerificationSuccess)
+          setVerifyImage(VerificationSuccess);
           setIdStatus("Verified");
           setIdNumber(error?.response?.data?.nin);
           localStorage.setItem("idVerification",true);
           localStorage.setItem("bvnVerification",true);
-          // setBvnButtonState("Verify");
-          // setBvnVerifyImage(NotVerifiedImage)
-          // setBvnStatus("Not Verified")
-          // setIdButtonState("Verified");
-          //  setBvnButtonState("Verified");
-          // setBvnVerifyImage(VerificationSuccess);
-          // setBvnStatus("Verified");
-          // setVerifyImage(VerificationSuccess)
-          // setIdStatus("Verified");
-          // setIdNumber( error.response.data.nin);
-          // localStorage.setItem("idVerification",true);
-          // localStorage.setItem("bvnVerification",true)
-        
+         
         } else if(bvnCheck && ninCheck) {
           setBvnButtonState("Verified");
           setBvnVerifyImage(VerificationSuccess)
@@ -303,9 +291,9 @@ const handleVerificationOTP = ()=> {
         }
       }
 
-      }else if (error && error.status === 404){
+      }else if (error && error.response.status === 404){
         alert("Network Error:, Please Check your Connection and try again");
-      }else if(error && error.status === 401){
+      }else if(error && error.response.status === 401){
         // console.log(error.response.headers.hasAuthorization);
         if(error.response.headers["x-new-auth-token"] || error.response.headers.get("x-new-auth-token") ){
        
@@ -319,7 +307,7 @@ const handleVerificationOTP = ()=> {
             
            } else if(newToken !== "" && localStorage.getItem("getToken") === "true"){
         localStorage.setItem("getToken", newToken)
-        if( localStorage.setItem("getToken", newToken)?.length > 1) {
+        if( localStorage.getItem("getToken")?.length > 1) {
        await ConfirmVirtualState();
          } 
     }
@@ -327,11 +315,9 @@ const handleVerificationOTP = ()=> {
     alert("We Couldn't retrieve your details, click okay to repeat the login process")
     return window.location.replace("/Login");
   }
-} else if(error.status === 500){
+} else if(error.response.status === 500){
         alert('Error:', "A SERVER ERROR");
-     }else if(error.status === undefined){
-    alert("Check your internet connection and try logging in again.");
- }else{
+     }else{
       alert("Check your internet connection and try logging in again.");
       //Create a pop up to assist the user into navigating back to the login page.
    }}finally{
@@ -427,22 +413,14 @@ const gettingSmsOrEmailFunctionOtp = async(url, body)=> {
         
          if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
              console.log(newToken)
-        const emailLogin = localStorage.setItem("authorisedLogin", newToken);
-            if(emailLogin){
-              try{
-               await gettingSmsOrEmailFunctionOtp();
-              }catch{
-                alert("Session expired, kindly login again.")
-              }
-            } else { 
-    const smsLogin =  localStorage.setItem("getToken", newToken)
-    if(smsLogin){
-      try{
-        await  gettingSmsOrEmailFunctionOtp()
-      }catch{
-        alert("Session expired, kindly login again.")
+        localStorage.setItem("authorisedLogin", newToken);
+            if(localStorage.getItem("authorisedLogin")?.length > 1){
+            await gettingSmsOrEmailFunctionOtp();
+              } else { 
+    localStorage.setItem("getToken", newToken)
+    if(localStorage.getItem("getToken")?.length > 1){
+     await  gettingSmsOrEmailFunctionOtp()
       }
-    }
     }
   }
         }

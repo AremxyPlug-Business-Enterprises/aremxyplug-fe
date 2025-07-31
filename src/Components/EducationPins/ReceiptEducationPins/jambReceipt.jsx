@@ -2,12 +2,16 @@ import React from "react";
 import { useContext, useRef } from "react";
 import { ContextProvider } from "../../Context";
 import { DashBoardLayout } from "../../Dashboard/Layout/DashBoardLayout";
-import { Link } from "react-router-dom";
+import styles from "../../Dashboard/DashboardComponents/TransferComponent/transfer.module.css";
+import { Link, useNavigate } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import AremxyPlugIcon from "../imagesEducation/AremxyPlug.svg";
+import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 
 export default function JambReceipt() {
+  const data = GetLocalStorage();
+  const navigate = useNavigate();
   const {
     jambExamType,
     jambQuantityResult,
@@ -23,11 +27,17 @@ export default function JambReceipt() {
     setJambEducationAmount,
     setJambWalletBalance,
     jambOrderId,
+    setJambOrderId,
     jambTransactionId,
+    setJambTransactionId,
     jambShowDescription,
-    jambFullName,
+    setJambShowDescription,
+    // jambFullName,
+    setJambFullName,
     jambTransactionProduct,
+    setJambTransactionProduct,
     jambPinsGenerated,
+    setJambPinsGenerated,
   } = useContext(ContextProvider);
 
   const { toggleSideBar, isDarkMode, date } = useContext(ContextProvider);
@@ -39,7 +49,7 @@ export default function JambReceipt() {
   const description =
     jambShowDescription?.length > 0 ? jambShowDescription : "";
   const pins_generated = jambPinsGenerated?.length > 0 ? jambPinsGenerated : "";
-  const fullName = jambFullName?.length > 0 ? jambFullName : "";
+  // const fullName = jambFullName?.length > 0 ? jambFullName : "";
   const transaction_product =
     jambTransactionProduct?.length > 0 ? jambTransactionProduct : "";
 
@@ -51,6 +61,13 @@ export default function JambReceipt() {
     setJambPaymentResult("");
     setJambEducationAmount("");
     setJambWalletBalance("");
+    setJambFullName("");
+    setJambOrderId("");
+    setJambTransactionId("");
+    setJambShowDescription("");
+    setJambPinsGenerated([]);
+    setJambTransactionProduct("");
+    navigate("/JambEducationPin");
   };
 
   //   Share function
@@ -85,9 +102,9 @@ export default function JambReceipt() {
     <DashBoardLayout>
       <div className="flex flex-col gap-[35px] lg:gap-[85px]">
         <div
-          className={`  ${
+          className={`${styles.receipt} ${
             toggleSideBar ? "" : "lg:w-[880px] "
-          } w-full lg:mx-auto border-[2px] rounded-[10px]`}
+          } w-full lg:mx-auto ${isDarkMode ? "border border-white" : ""}`}
         >
           <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
             <Link to="/">

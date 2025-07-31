@@ -101,59 +101,62 @@ const KAEDCO = () => {
     // setShowOptionList(false);
   };
   const [passDataBalance, setPassDataBalance] = useState({});
-      
-      const GetBalance = async () => {
-          const SuccessHandler = () => {
-            console.log("successfully retrieved balance");
-          };
-          const FailedHandler = async (ErrorType) => {
+
+  const GetBalance = async () => {
+    const SuccessHandler = () => {
+      console.log("successfully retrieved balance");
+    };
+    const FailedHandler = async (ErrorType) => {
+      if (ErrorType === "unauthorised") {
+        await GetFunction(
+          `bills/verify`,
+          setLoading,
+          SuccessHandler,
+          (ErrorType) => {
             if (ErrorType === "unauthorised") {
-              await GetFunction(
-                `bills/verify`,
-                setLoading,
-                SuccessHandler,
-                (ErrorType) => {
-                  if (ErrorType === "unauthorised") {
-                    return setSessionModal(true);
-                  }
-                },
-                setPassDataBalance
-              );
+              return setSessionModal(true);
             }
-          };
-          await GetFunction(
-            "balance",
-            setLoading,
-            SuccessHandler,
-            FailedHandler,
-            setPassDataBalance
-          );
-        };
-        // get the balance on entering the page
-        useEffect(() => {
-          if (newBalance === "" || newBalance === null || newBalance === undefined) {
-            GetBalance();
-            if (GetBalance) {
-              setNewBalance(
-                passDataBalance?.data?.data
-                  ? passDataBalance?.data?.data?.data?.balance
-                  : ""
-              );
-            }
-          }
-          // handleResetFields();
-          // eslint-disable-next-line
-        }, []);
-    
-        const updateBalance = passDataBalance?.data?.data
-        ? passDataBalance?.data?.data?.data?.balance
-        : "";
-    
-      const countryList = [
-        {
-          id: 1,
-          name: `NGN Wallet ${newBalance === "" || newBalance === null || newBalance === undefined ? `(₦${updateBalance})`
-              : `(₦${newBalance})`}`,
+          },
+          setPassDataBalance
+        );
+      }
+    };
+    await GetFunction(
+      "balance",
+      setLoading,
+      SuccessHandler,
+      FailedHandler,
+      setPassDataBalance
+    );
+  };
+  // get the balance on entering the page
+  useEffect(() => {
+    if (newBalance === "" || newBalance === null || newBalance === undefined) {
+      GetBalance();
+      if (GetBalance) {
+        setNewBalance(
+          passDataBalance?.data?.data
+            ? passDataBalance?.data?.data?.data?.balance
+            : ""
+        );
+      }
+    }
+    // handleResetFields();
+    // eslint-disable-next-line
+  }, []);
+
+  const updateBalance = passDataBalance?.data?.data
+    ? passDataBalance?.data?.data?.data?.balance
+    : "";
+
+  const countryList = [
+    {
+      id: 1,
+      name: `NGN Wallet ${
+        newBalance === "" || newBalance === null || newBalance === undefined
+          ? `(₦${updateBalance})`
+          : `(₦${newBalance})`
+      }`,
       code: "Nigerian NGN Wallet",
       flag: require("../ElectricitySubscription/Electricity-sub-images/nigeriaFlag.png"),
     },
@@ -358,7 +361,6 @@ const KAEDCO = () => {
   const [kaedcoCustomerName, setKaedcoCustomerName] = useState("");
 
   const [errorMessage, setErrorMessage] = useState(false);
-  const [pinSuccess, setPinSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isFailedMeterNumber, setIsFailedMeterNumber] = useState(false);
   const [meterNumberLoading, setMeterNumberLoading] = useState(false);
@@ -490,28 +492,42 @@ const KAEDCO = () => {
         setKaedcoFetchedResponse
       );
     }
-    //Kindly uncomment the code below after implementing the errorMessage
-    //rather than the pinfailed and pinSucess state
-    //Kindly also remove the setPinFailed state as there
-    //is no longer any use for it
-    const setPinFailed= async(ErrorType)=> {
-      if(ErrorType==="unauthorised"){
-          await VerifyTransPin(
-      inputPin,
-      setPinSuccess,
-     (ErrorType)=> {
-      if(ErrorType === "unauthorised"){
-     setSessionModal(true)
+    const setPinFailed = async (ErrorType) => {
+      if (ErrorType === "unauthorised") {
+        await VerifyTransPin(
+          inputPin,
+          (ErrorType) => {
+            if (ErrorType === "unauthorised") {
+              setSessionModal(true);
+            } else if (
+              ErrorType === "Network error" ||
+              ErrorType === "User error"
+            ) {
+              return alert("Kindly Check your internet connection");
+            } else if (ErrorType === "Server error") {
+              alert(
+                "The server is currently experiencing a downtime, try again some other time."
+              );
+            } else {
+              alert("An unexpected has occured try again some other time.");
+            }
+          },
+          setLoading,
+          setErrorMessage,
+          ElectricityHandler
+        );
+      } else if (ErrorType === "Network error" || ErrorType === "User error") {
+        return alert("Kindly Check your internet connection");
+      } else if (ErrorType === "Server error") {
+        alert(
+          "The server is currently experiencing a downtime, try again some other time."
+        );
+      } else {
+        alert("An unexpected has occured try again some other time.");
       }
-     },
-      setLoading,
-      setErrorMessage,
-      ElectricityHandler
-    );
-      }}
+    };
     await VerifyTransPin(
       inputPin,
-      setPinSuccess,
       setPinFailed,
       setLoading,
       setErrorMessage,
@@ -710,10 +726,10 @@ const KAEDCO = () => {
                       key={item.name}
                       className={`py-5 md:py-[14px] font-semibold cursor-pointer lg:text-base lg:leading-[20.8px] w-full md:rounded-[0px] text-[14px] leading-[10.4px] pl-2.5 md:text-[13.227px] transition-colors duration-300 md:leading-[17.195px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
                       ${
-                          isDarkMode
-                            ? "bg-black text-white hover:bg-slate-800 border border-white"
-                            : "text-[#7C7C7C] hover:bg-[#EDEAEA] bg-white"
-                        }
+                        isDarkMode
+                          ? "bg-black text-white hover:bg-slate-800 border border-white"
+                          : "text-[#7C7C7C] hover:bg-[#EDEAEA] bg-white"
+                      }
                       ${selectedKaedcoMeterType === item.name ? "" : ""}  `}
                       onClick={() => handleSelectProduct(item.name)}
                     >
@@ -974,8 +990,8 @@ const KAEDCO = () => {
                     <div
                       className={`py-[18px] md:py-2 lg:py-[15px] pl-[10px] font-normal flex items-center gap-[5px] text-xs md:text-sm lg:text-base shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] transition-all duration-300
                        ${
-                          isDarkMode ? "text-white bg-black " : "text-[#7E7E7E]"
-                        } ${
+                         isDarkMode ? "text-white bg-black " : "text-[#7E7E7E]"
+                       } ${
                         country.code === "Nigerian NGN Wallet"
                           ? "cursor-pointer hover:bg-[#EDEAEA]"
                           : "cursor-not-allowed opacity-50"
@@ -1293,18 +1309,11 @@ const KAEDCO = () => {
                         <input {...props} className="inputOTP mx-[3px]" />
                       )}
                     />
-                    <span className="">
-                      {pinSuccess && (
-                        <p className="text-xs text-green-500 text-center font-medium">
-                          Pin matches
-                        </p>
-                      )}
-                      {errorMessage && (
-                        <p className="text-xs text-center text-red-600 font-medium">
-                          Incorrect Pin
-                        </p>
-                      )}
-                    </span>
+                    {errorMessage && (
+                      <p className="text-xs text-center text-red-600 font-medium">
+                        Incorrect Pin
+                      </p>
+                    )}
                   </div>
                 ) : (
                   <div className="text-[24px] md:text-[24px] mt-1">* * * *</div>

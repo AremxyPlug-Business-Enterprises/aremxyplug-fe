@@ -193,7 +193,7 @@ export default function IdVerification(Data) {
       } catch (error) {
         if(error && (error.response === undefined)){
           alert("Your network is quite unstable.")
-        } else if (error.status === 401 || 400) {
+        } else if (error.status === 401 || error.status === 400) {
           alert(ErrorMessage);
           console.log(`ERROR : ${error}`);
 
@@ -264,7 +264,7 @@ export default function IdVerification(Data) {
                    && (Data.ConfirmId === "true" || Data.ConfirmBvn === "true") ? "Verified" 
                    :   idStatus ===  "Not Verified"
                    && (Data.ConfirmId === "false" && Data.ConfirmBvn === "false") ? "Not Verified" :   
-                   verifyImage ===  idSuccess
+                   idStatus === "Verified"
                    || (Data.ConfirmId === "true" || Data.ConfirmBvn === "true") ? "Verified":  "Not Verified" }
                 </h2>
               </div>
@@ -297,9 +297,9 @@ export default function IdVerification(Data) {
             action=""
           >
             {/* Container for all Forms */}
-            <div className="flex flex-col lg:gap-[25px] gap-[20px] w-full mb-[50px]">
+            <div className="flex flex-col lg:gap-[25px] gap-[35px] w-full mb-[50px]">
             
-              <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]">
+              <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[35px] w-[100%]">
                   {/*  Country / Fullname */}
  {/* COUNTRY */}
                  <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
@@ -310,10 +310,15 @@ export default function IdVerification(Data) {
                                  >
                                    Country
                                  </h2>
-                                 <div className={`py-[10.33px]  flex gap-[10px]  pl-[5.867px] items-center pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] 
-                                 lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none ${
-                                     isDarkMode ? "bg-black  border-slate-50" : "bg-white"
-                                   }`}>
+                                 <div  className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
+                         sm:p-3 sm:text-lg relative  flex gap-[5px] pt-[8.803px]
+                          pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+                          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}>
                                       <img className=" md:h-[20.27px]  h-[14.27px]"
                                  src={countryImage} alt="Country flag" />
                                  <p className={`text-[12px] leading-[18px] 
@@ -327,28 +332,37 @@ export default function IdVerification(Data) {
                 {/* Full Name */}
                 <div className="flex flex-col md:w-[50%] w-full md:gap-[10px] gap-2.5">
                   <h2
-                    className={`font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${
+                    className={`font-semibold text-[#7E7E7E] 
+                      text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${
                       isDarkMode ? "text-slate-50" : ""
                     }`}
                   >
                     Full Name
                   </h2>
-                  <div
-                    className={`py-[10.33px] pl-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] md:py-[12px] md:pl-[8.67px] md:pr-[5.867px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-[10px] h-full  ${
-                      isDarkMode ? "border-slate-50 text-white " : ""
-                    }`}
-                  >
+                  <p
+                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
+                         sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px]
+                          pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+                          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px]
+     md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer 
+     outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#000] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}>
                   {full_name ? full_name : Data.UserFullName }
-                  </div>
+                  </p>
                 </div>
                
 
 
               </div>
               {/* Gender and date of birth*/}
-              <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]">
+              <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[35px] w-[100%]">
                 {/* HOUSE ADDRESS */}
-                              <div className="relative flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
+                              <div className="relative flex flex-col md:w-[50%]
+                               w-[100%] md:gap-[10px] gap-2.5">
                   <h2
                     className={`font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${
                       isDarkMode ? "text-slate-50" : ""
@@ -364,9 +378,19 @@ export default function IdVerification(Data) {
                         return null;
                       }
                     }}
-                    className={`flex justify-between items-center py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] ${
-                      isDarkMode ? "border-slate-50" : ""
-                    }`}
+                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
+                         sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px]
+                          pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+                          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px]
+     md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
+      items-center cursor-pointer outline-0 border-[0.24px] 
+      lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]
+       border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#000] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}
                   >
                     <h2
                       className={`text-[#000] font-[400] text-[12px] leading-[18px] lg:text-[16px] lg:leading-[20.8px] ${
@@ -410,7 +434,7 @@ export default function IdVerification(Data) {
                     </div>
                   )}
                 </div>
-                {/* Date of Birth / BVN */}
+                {/* Date of Birth*/}
                 <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
                   <h2
                     className={`font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${
@@ -419,7 +443,8 @@ export default function IdVerification(Data) {
                   >
                     D.O.B
                   </h2>
-                  <div className={`w-[100%] border-[0.4px] border-[#9C9C9C]  focus:outline-none cursor-pointer rounded-[10px] ${
+                  <div className={`w-[100%] 
+                      ${
                       isDarkMode ? " border-white " : "border-[#9C9C9C]"
                     }`}>
                   <input
@@ -427,11 +452,19 @@ export default function IdVerification(Data) {
                     onChange={(e) => {
                       setIdDateOfBirth(e.target.value);
                     }}
-                    className={`w-[100%]
-                      md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px]  lg:pr-[16px] pr-[9px] h-[100%] rounded-[10px]
-                  py-[10.33px] pl-[5.867px] lg:py-[15.5px] text-sm leading-[18px] focus:outline-none lg:text-[16px] lg:leading-[20.8px] ${
-                      isDarkMode ? "text-white  bg-black" : "bg-white text-black"
-                    }`}
+                   className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
+                         sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px]
+                          pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+                          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] 
+    md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer
+     outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px]
+      md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] 
+      md:px-[6px] lg:px-[10px] text-[#000] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}
                     type="date"
                     id="dob"
                     name="dob"
@@ -444,7 +477,7 @@ export default function IdVerification(Data) {
               </div>
              
 
-  <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]">
+  <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[35px] w-[100%]">
     {/*House Address and postal code  */}
   <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
                   <h2
@@ -459,11 +492,19 @@ export default function IdVerification(Data) {
                     onChange={(e) => {
                       setIdAddress(e.target.value);
                     }}
-                    className={`py-[10.33px] pl-[5.867px] pr-1 md:py-[10] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none ${
-                      isDarkMode
-                        ? "bg-transparent text-slate-50 border-slate-50"
-                        : ""
-                    }`}
+                   className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
+                         sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px]
+                          pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+                          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] 
+    md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer
+     outline-0 border-[0.24px] lg:border-[0.4px] w-full 
+     h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C]
+      px-[11px] md:px-[6px] lg:px-[10px] text-[#000] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}
                     placeholder=""
                     type="text"
                     onInvalid={validAddress}
@@ -491,11 +532,20 @@ export default function IdVerification(Data) {
                     setIdPostalCode(e.target.value);
                   }}
                   readOnly={Data.ConfirmId === "true" || Data.ConfirmBvn === "true"}
-                  className={` py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none ${
-                    isDarkMode
-                      ? "bg-black text-slate-50 border-slate-50"
-                      : "text-black"
-                  }`}
+                  className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
+                         sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px]
+                          pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+                          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] 
+    md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] 
+    lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer 
+    outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px]
+     md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px]
+      lg:px-[10px] text-[#000] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}
                   placeholder=""
                   type="text"
                   inputMode="numeric"
@@ -507,7 +557,7 @@ export default function IdVerification(Data) {
              
 
     {/* ID TYPE & ID NUMBER */}
-    <div className='flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]'>
+    <div className='flex flex-col md:flex-row lg:gap-[22px] gap-[35px] w-[100%]'>
         {/* ID TYPE */}
         <div className='relative flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
    <h2 className='font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] 
@@ -523,8 +573,19 @@ export default function IdVerification(Data) {
      return null;
     }
     }}
-    className='flex justify-between items-center font-[500] py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px]
-     md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[12px] leading-[16.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px]'>
+    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
+                         sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px]
+                          pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+                          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px]
+     md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
+      items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] 
+      w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C]
+       px-[11px] md:px-[6px] lg:px-[10px] text-[#000] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}>
       <h2 className={`text-[#000] font-[400]  leading-[10.4px]
       lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : "text-black"}`}>
         {idResult || (Data.ConfirmId ==="true"   ? "National ID" : idResult)}
@@ -601,16 +662,24 @@ export default function IdVerification(Data) {
       const numbersOnly = e.target.value.replace(/\D/g, '');
       e.target.value = numbersOnly;
     })}
-    value={  idStatus === "Verified" ? `${idNumber.slice(0,4)}*******` : idNumber}
+    value={  (idStatus === "Verified" || Data.ConfirmId === "true") ? `${idNumber.slice(0,4)}*******` : idNumber}
     
     onChange={(e) => {
       setIdNumber(e.target.value);
     }}
-    className={`flex justify-between items-center font-[500] py-[10.33px] pl-[5.867px] pr-1 md:py-[10px]
-       md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] 
-       border-[0.4px] text-[12px] leading-[16.4px] border-[#9C9C9C] 
-       lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] 
-       focus:outline-none  ${isDarkMode ? "bg-black" : "bg-white"}`}
+     className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
+                         sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px]
+                          pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+                          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px]
+     md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]
+       items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px]
+        w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] 
+        px-[11px] md:px-[6px] lg:px-[10px] text-[#000] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}
     placeholder=''
     type="text" inputMode='numeric' maxLength={11} onInvalid={validId}  required/>
     {(verificationReason?.length > 1 && idNumber?.length < 1) && (

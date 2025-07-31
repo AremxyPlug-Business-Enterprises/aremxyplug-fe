@@ -3,7 +3,6 @@ import ReactFlagsSelect from "chima-flags-select";
 import PhoneInput from "react-phone-input-2";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
-import { FcGoogle } from "react-icons/fc";
 import "./SignUp.css";
 import { Link } from "react-router-dom";
 import { ContextProvider } from "../../../Context";
@@ -106,7 +105,8 @@ const ContinueSignUp = ()=> {
 
 
   return (
-    <div className="h-[230%] pb-[70px] lg:h-[200%] bg-[#04177f]  md:flex md:justify-center md:items-center  md:h-[100vh] ">
+    <div className="h-[240%] pb-[70px] lg:pb-[0px] lg:h-[200%] bg-[#04177f]
+      md:flex md:justify-center md:items-center  md:h-[100vh] ">
       {/* =====Hero Image==== */}
       {showPassModal && <FirstModal />}
       {<Verification/>}
@@ -118,8 +118,10 @@ const ContinueSignUp = ()=> {
       {/* =====Hero Image==== */}
 
       {/* =====Sign up Form==== */}
-      <div className="md:h-[55%] pb-[2%] bg-[#ffffff] ml-[3%] rounded-bl-3xl rounded-tl-3xl px-[4%] md:pb-[5%] md:w-[573px] 
-       md:ml-[30%] lg:min-h-[100%]  lg:w-[1024px]  min-h-[1300px] lg:ml-[%] lg:px-0 lg:rounded-bl-[52px] lg:rounded-tl-[52px]">
+      <div className="md:h-[55%] pb-[2%] bg-[#ffffff]
+       ml-[3%] rounded-bl-3xl rounded-tl-3xl px-[4%] md:pb-[5%] md:w-[573px] 
+       md:ml-[30%] lg:min-h-[100%]  lg:w-[1024px] 
+        min-h-[1300px] lg:ml-[%] lg:px-0 lg:rounded-bl-[52px] lg:rounded-tl-[52px]">
         <Link to="/">
           <img
             className="w-[36px] py-[5%] lg:w-[93px] lg:h-[] lg:py-[2%] lg:pl-[3%]"
@@ -178,13 +180,13 @@ const ContinueSignUp = ()=> {
               onFocus={() => handleFocus(1)}
               onBlur={() => handleBlur(1)}
             >
-              <input
+              <input title="fullname"
                 className="outline-none flex justify-center items-center leading-[18px] lg:leading-[24px]
               font-[400] lg:font-[500] text-[14px] h-full w-full lg:h-full lg:text-[16px]"
                 type="text"
           placeholder ="Enter your full legal name"
                 value={state.fullName}
-                name="fullName"
+                name="fullname"
                 onChange={changeHandler}
               />
              
@@ -212,7 +214,7 @@ const ContinueSignUp = ()=> {
               onFocus={() => handleFocus(2)}
               onBlur={() => handleBlur(2)}
             >
-              <input
+              <input title ="username"
                 className="outline-none flex justify-center items-center leading-[18px] lg:leading-[24px]
               font-[400] lg:font-[500] text-[14px] h-full w-full lg:text-[16px]"
                 type="text"
@@ -246,6 +248,7 @@ const ContinueSignUp = ()=> {
               onBlur={() => handleBlur(3)}
             >
               <input
+              title ="email"
                 className="outline-none flex justify-center items-center leading-[18px] lg:leading-[24px]
               font-[400] lg:font-[500] text-[14px] h-full w-full  lg:text-[16px]"
                 type="email"
@@ -358,6 +361,7 @@ const ContinueSignUp = ()=> {
               onBlur={() => handleBlur(6)}
             >
               <input
+              title="password"
                 className="outline-none flex justify-center items-center leading-[18px] lg:leading-[24px]
               font-[400] lg:font-[500] text-[14px] h-full w-full lg:text-[16px]"
                 type={showPassword ? "text" : "password"}
@@ -403,6 +407,7 @@ const ContinueSignUp = ()=> {
               onBlur={() => handleBlur(7)}
             >
               <input
+              title="password"
                 className="outline-none flex justify-center items-center leading-[18px] lg:leading-[24px]
               font-[400] lg:font-[500] text-[14px] h-full w-full lg:text-[16px]"
                 type={showPasswordTwo ? "text" : "password"}
@@ -498,20 +503,31 @@ const ContinueSignUp = ()=> {
           <p className="text-[8px] lg:text-[14px]">OR</p>{" "}
           <hr className="w-[1%]"></hr>
         </div>
-        <div
-          className={`inputBorder flex cursor-pointer
-             justify-center items-center gap-[10px] p-5 font-semibold
-              border-[0.57px] w-[118px] h-[30px] rounded-sm mx-auto text-center mt-[7%] text-[9px] lg:mt-[2%] lg:w-[207px] lg:h-[40px] lg:text-[16px] lg:rounded-md`}
+       <div className="flex justify-center mt-[20px]"
         >
-          <div className="text-[12px] leading-[14px]
-          lg:text-[11px] lg:leading-[14px]">
-          <FcGoogle />
-          </div>
-          <p onClick ={()=> {
+          <div
+           onClick ={()=> {
             alert("The use of Google as a third party authentication OAuth isn't available for now.")
-          }} className="text-[12px] leading-[16px]  font-semibold
-          lg:text-[11px] lg:leading-[14px]">Use Google</p>
-                 </div>
+          }} 
+          //  onClick={() => setOpenResetTranspin(true)}
+            className={`px-[5px] w-full lg:w-auto lg:px-[20px] py-[15px] 
+              rounded  flex items-center justify-center
+               lg:hover:border-[#b3b3b3] lg:duration-300 border-[#cdcdcd] border-[1px] cursor-pointer `}
+          >
+            <img
+              src="./Images/login/Google.png"
+              alt="google"
+              className="w-[11.46px] lg:w-[20px] "
+            />
+            <p  onClick ={()=> {
+            alert("The use of Google as a third party authentication OAuth isn't available for now.")
+          }} 
+            className="lg:text-[14px] md:text-[8.02px]
+             text-[12.02px] leadig-[16px]  pl-4 font-semibold tracking-wider">
+              Sign up with Google
+            </p>
+          </div>
+        </div>
         <p className="text-[14px] leading-[18px]  text-center mt-[5%] md:pb-[1%] 
         lg:mt-[2%] lg:text-[16px] lg:leading-[24px]">
           Already have an account ?{" "}

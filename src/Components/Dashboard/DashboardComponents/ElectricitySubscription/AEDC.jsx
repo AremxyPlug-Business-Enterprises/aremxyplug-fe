@@ -67,7 +67,6 @@ const AEDC = () => {
     setNewBalance,
   } = useContext(ContextProvider);
 
-  
   const [showProductList, setShowProductList] = useState(false);
 
   const pointsEarned = "+2.00";
@@ -100,61 +99,63 @@ const AEDC = () => {
     setShowProductList(false);
   };
 
-  
-    const [passDataBalance, setPassDataBalance] = useState({});
-    
-    const GetBalance = async () => {
-        const SuccessHandler = () => {
-          console.log("successfully retrieved balance");
-        };
-        const FailedHandler = async (ErrorType) => {
-          if (ErrorType === "unauthorised") {
-            await GetFunction(
-              `bills/verify`,
-              setLoading,
-              SuccessHandler,
-              (ErrorType) => {
-                if (ErrorType === "unauthorised") {
-                  return setSessionModal(true);
-                }
-              },
-              setPassDataBalance
-            );
-          }
-        };
+  const [passDataBalance, setPassDataBalance] = useState({});
+
+  const GetBalance = async () => {
+    const SuccessHandler = () => {
+      console.log("successfully retrieved balance");
+    };
+    const FailedHandler = async (ErrorType) => {
+      if (ErrorType === "unauthorised") {
         await GetFunction(
-          "balance",
+          `bills/verify`,
           setLoading,
           SuccessHandler,
-          FailedHandler,
+          (ErrorType) => {
+            if (ErrorType === "unauthorised") {
+              return setSessionModal(true);
+            }
+          },
           setPassDataBalance
         );
-      };
-      // get the balance on entering the page
-      useEffect(() => {
-        if (newBalance === "" || newBalance === null || newBalance === undefined) {
-          GetBalance();
-          if (GetBalance) {
-            setNewBalance(
-              passDataBalance?.data?.data
-                ? passDataBalance?.data?.data?.data?.balance
-                : ""
-            );
-          }
-        }
-        // handleResetFields();
-        // eslint-disable-next-line
-      }, []);
-  
-      const updateBalance = passDataBalance?.data?.data
-      ? passDataBalance?.data?.data?.data?.balance
-      : "";
-  
-    const countryList = [
-      {
-        id: 1,
-        name: `NGN Wallet ${newBalance === "" || newBalance === null || newBalance === undefined ? `(₦${updateBalance})`
-            : `(₦${newBalance})`}`,
+      }
+    };
+    await GetFunction(
+      "balance",
+      setLoading,
+      SuccessHandler,
+      FailedHandler,
+      setPassDataBalance
+    );
+  };
+  // get the balance on entering the page
+  useEffect(() => {
+    if (newBalance === "" || newBalance === null || newBalance === undefined) {
+      GetBalance();
+      if (GetBalance) {
+        setNewBalance(
+          passDataBalance?.data?.data
+            ? passDataBalance?.data?.data?.data?.balance
+            : ""
+        );
+      }
+    }
+    // handleResetFields();
+    // eslint-disable-next-line
+  }, []);
+
+  const updateBalance = passDataBalance?.data?.data
+    ? passDataBalance?.data?.data?.data?.balance
+    : "";
+
+  const countryList = [
+    {
+      id: 1,
+      name: `NGN Wallet ${
+        newBalance === "" || newBalance === null || newBalance === undefined
+          ? `(₦${updateBalance})`
+          : `(₦${newBalance})`
+      }`,
       code: "Nigerian NGN Wallet",
       flag: require("../ElectricitySubscription/Electricity-sub-images/nigeriaFlag.png"),
     },
@@ -352,7 +353,6 @@ const AEDC = () => {
   const [aedcCustomerName, setAedcCustomerName] = useState("");
 
   const [errorMessage, setErrorMessage] = useState(false);
-  const [pinSuccess, setPinSuccess] = useState(false);
   const [isFailedMeterNumber, setIsFailedMeterNumber] = useState(false);
   const [meterNumberLoading, setMeterNumberLoading] = useState(false);
 
@@ -478,29 +478,43 @@ const AEDC = () => {
         setAedcFetchedResponse
       );
     }
-    //Kindly uncomment the code below after implementing the errorMessage
-    //rather than the pinfailed and pinSucess state
-    //Kindly also remove the setPinFailed state as there
-    //is no longer any use for it
-    const setPinFailed= async(ErrorType)=> {
-      if(ErrorType==="unauthorised"){
-          await VerifyTransPin(
-      inputPin,
-      setPinSuccess,
-     (ErrorType)=> {
-      if(ErrorType === "unauthorised"){
-     setSessionModal(true)
+
+    const setPinFailed = async (ErrorType) => {
+      if (ErrorType === "unauthorised") {
+        await VerifyTransPin(
+          inputPin,
+          (ErrorType) => {
+            if (ErrorType === "unauthorised") {
+              setSessionModal(true);
+            } else if (
+              ErrorType === "Network error" ||
+              ErrorType === "User error"
+            ) {
+              return alert("Kindly Check your internet connection");
+            } else if (ErrorType === "Server error") {
+              alert(
+                "The server is currently experiencing a downtime, try again some other time."
+              );
+            } else {
+              alert("An unexpected has occured try again some other time.");
+            }
+          },
+          setLoading,
+          setErrorMessage,
+          ElectricityHandler
+        );
+      } else if (ErrorType === "Network error" || ErrorType === "User error") {
+        return alert("Kindly Check your internet connection");
+      } else if (ErrorType === "Server error") {
+        alert(
+          "The server is currently experiencing a downtime, try again some other time."
+        );
+      } else {
+        alert("An unexpected has occured try again some other time.");
       }
-     },
-      setLoading,
-      setErrorMessage,
-      ElectricityHandler
-    );
-      }
-    }
+    };
     await VerifyTransPin(
       inputPin,
-      setPinSuccess,
       setPinFailed,
       setLoading,
       setErrorMessage,
@@ -742,7 +756,6 @@ const AEDC = () => {
                     setErrors((prev) => ({ ...prev, aedcMeterNumber: "" }));
                   }}
                   onChange={handleAedcMeterNumber}
-
                   onClick={() => setShowProductList(false)}
                   className={`py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] border md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-xs leading-[18px] border-[#9C9C9C] lg:text-base lg:leading-[20.8px] focus:outline-none placeholder:text-xs placeholder:leading-[10.4px] placeholder:lg:text-base placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full w-full  ${
                     isDarkMode
@@ -815,7 +828,6 @@ const AEDC = () => {
                   //     : (e.target.style.border = "1px solid #9C9C9C");
                   // }}
                   onChange={handlePhoneNumber}
-
                   className={`w-full py-3 pl-[5.867px] lg:py-[14px] lg:pl-[10px] md:py-3 md:pl-[8.67px] pr-1 md:pr-[5.867px] text-xs leading-[18px]  lg:text-base lg:leading-[20.8px] focus:outline-none placeholder:text-xs placeholder:leading-[10.4px] placeholder:lg:text-base placeholder:lg:leading-[20.8px] rounded-lg sm:rounded-[10px] h-full  ${
                     isDarkMode
                       ? "text-white bg-black border border-white"
@@ -884,11 +896,7 @@ const AEDC = () => {
                   }}
                   placeholder="Minimum of ₦1000"
                   className={`w-full ml-0.5 placeholder:text-xs placeholder:leading-[10.4px] placeholder:lg:text-base placeholder:lg:leading-[20.8px] focus:outline-none
-                 ${
-                   isDarkMode
-                     ? "text-white bg-black"
-                     : "text-[#7E7E7E]"
-                 }`}
+                 ${isDarkMode ? "text-white bg-black" : "text-[#7E7E7E]"}`}
                 />
               </div>
               {amountError && (
@@ -950,14 +958,16 @@ const AEDC = () => {
               {globalTransferErrors.country && (
                 <div
                   className={`text-sm text-red-500 italic lg:text-sm
-                  ${isDarkMode ? "text-white bg-black border border-white" : ""}`}
+                  ${
+                    isDarkMode ? "text-white bg-black border border-white" : ""
+                  }`}
                 >
                   {globalTransferErrors.country}
                 </div>
               )}
               {showList && (
                 <div
-                // rounded-br-[7px] lg:rounded-b-[14px]
+                  // rounded-br-[7px] lg:rounded-b-[14px]
                   className={`
                   ${
                     isDarkMode
@@ -976,8 +986,8 @@ const AEDC = () => {
                     <div
                       className={`py-[18px] md:py-2 lg:py-[15px] pl-[10px] font-normal flex items-center gap-[5px] text-xs md:text-sm lg:text-base shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] transition-all duration-300
                        ${
-                          isDarkMode ? "text-white bg-black " : "text-[#7E7E7E]"
-                        } ${
+                         isDarkMode ? "text-white bg-black " : "text-[#7E7E7E]"
+                       } ${
                         country.code === "Nigerian NGN Wallet"
                           ? "cursor-pointer hover:bg-[#EDEAEA]"
                           : "cursor-not-allowed opacity-50"
@@ -1296,18 +1306,11 @@ const AEDC = () => {
                         <input {...props} className="inputOTP mx-[3px]" />
                       )}
                     />
-                    <span className="">
-                      {pinSuccess && (
-                        <p className="text-xs text-green-500 text-center font-medium">
-                          Pin matches
-                        </p>
-                      )}
-                      { errorMessage && (
+                      {errorMessage && (
                         <p className="text-xs text-center text-red-600 font-medium">
                           Incorrect Pin
                         </p>
                       )}
-                    </span>
                   </div>
                 ) : (
                   <div className="text-[24px] md:text-[24px] mt-1">* * * *</div>

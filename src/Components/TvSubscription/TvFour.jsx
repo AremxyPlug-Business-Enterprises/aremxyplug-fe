@@ -74,7 +74,6 @@ setShowMaxMobileNumber,
   } = useContext(ContextProvider)
  const [isLoading, setIsLoading] = useState(false)
       const [failedPopup, setFailedPopup] = useState(false);
-      const [successConfig, setSuccessConfig] = useState("")
       
        const [showMaxLoading, setShowMaxLoading] = useState(false);
                        const [stateInvalidDecoderNumber, setStateInvalidDecoderNumber] = useState(false);
@@ -453,7 +452,6 @@ setShowMaxMobileNumber,
         if(ErrorType === "unauthorised"){
        await VerifyTransPin(
         inputPin,
-       setSuccessConfig,
        (ErrorType)=> {
         if(ErrorType === "unauthorised"){
           return setSessionModal(true)
@@ -468,7 +466,6 @@ setShowMaxMobileNumber,
       }
       await VerifyTransPin(
         inputPin,
-       setSuccessConfig,
        setFailedConfig,
         setIsLoading,
         setErrorMessage,

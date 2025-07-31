@@ -364,10 +364,7 @@ const KEDCO = () => {
   const [successPopup, setSuccessPopup] = useState(false);
   const [failedPopup, setFailedPopup] = useState(false);
   const [kedcoCustomerName, setKedcoCustomerName] = useState("");
-
-  // const [fetchedResponse, setFetchedResponse] = useState({});
   const [errorMessage, setErrorMessage] = useState(false);
-  const [pinSuccess, setPinSuccess] = useState(false);
   const [sessionModal, setSessionModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isFailedMeterNumber, setIsFailedMeterNumber] = useState(false);
@@ -503,21 +500,38 @@ const KEDCO = () => {
       if (ErrorType === "unauthorised") {
         await VerifyTransPin(
           inputPin,
-          setPinSuccess,
           (ErrorType) => {
             if (ErrorType === "unauthorised") {
               setSessionModal(true);
+            } else if (
+              ErrorType === "Network error" ||
+              ErrorType === "User error"
+            ) {
+              return alert("Kindly Check your internet connection");
+            } else if (ErrorType === "Server error") {
+              alert(
+                "The server is currently experiencing a downtime, try again some other time."
+              );
+            } else {
+              alert("An unexpected has occured try again some other time.");
             }
           },
           setLoading,
           setErrorMessage,
           ElectricityHandler
         );
+      } else if (ErrorType === "Network error" || ErrorType === "User error") {
+        return alert("Kindly Check your internet connection");
+      } else if (ErrorType === "Server error") {
+        alert(
+          "The server is currently experiencing a downtime, try again some other time."
+        );
+      } else {
+        alert("An unexpected has occured try again some other time.");
       }
     };
     await VerifyTransPin(
       inputPin,
-      setPinSuccess,
       setPinFailed,
       setLoading,
       setErrorMessage,
@@ -1067,8 +1081,8 @@ const KEDCO = () => {
                     <div
                       className={`py-[18px] md:py-2 lg:py-[15px] pl-[10px] font-normal flex items-center gap-[5px] text-xs md:text-sm lg:text-base shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] transition-all duration-300
                        ${
-                          isDarkMode ? "text-white bg-black " : "text-[#7E7E7E]"
-                        } ${
+                         isDarkMode ? "text-white bg-black " : "text-[#7E7E7E]"
+                       } ${
                         country.code === "Nigerian NGN Wallet"
                           ? "cursor-pointer hover:bg-[#EDEAEA]"
                           : "cursor-not-allowed opacity-50"
@@ -1386,18 +1400,11 @@ const KEDCO = () => {
                         <input {...props} className="inputOTP mx-[3px]" />
                       )}
                     />
-                    <span className="">
-                      {pinSuccess && (
-                        <p className="text-xs text-green-500 text-center font-medium">
-                          Pin matches
-                        </p>
-                      )}
-                      {errorMessage && (
-                        <p className="text-xs text-center text-red-600 font-medium">
-                          Incorrect Pin
-                        </p>
-                      )}
-                    </span>
+                    {errorMessage && (
+                      <p className="text-xs text-center text-red-600 font-medium">
+                        Incorrect Pin
+                      </p>
+                    )}
                   </div>
                 ) : (
                   <div className="text-[24px] md:text-[24px] mt-1">* * * *</div>

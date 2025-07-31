@@ -103,59 +103,62 @@ const IKEDC = () => {
   };
   const [loading, setLoading] = useState(false);
   const [passDataBalance, setPassDataBalance] = useState({});
-  
-  const GetBalance = async () => {
-      const SuccessHandler = () => {
-        console.log("successfully retrieved balance");
-      };
-      const FailedHandler = async (ErrorType) => {
-        if (ErrorType === "unauthorised") {
-          await GetFunction(
-            `bills/verify`,
-            setLoading,
-            SuccessHandler,
-            (ErrorType) => {
-              if (ErrorType === "unauthorised") {
-                return setSessionModal(true);
-              }
-            },
-            setPassDataBalance
-          );
-        }
-      };
-      await GetFunction(
-        "balance",
-        setLoading,
-        SuccessHandler,
-        FailedHandler,
-        setPassDataBalance
-      );
-    };
-    // get the balance on entering the page
-    useEffect(() => {
-      if (newBalance === "" || newBalance === null || newBalance === undefined) {
-        GetBalance();
-        if (GetBalance) {
-          setNewBalance(
-            passDataBalance?.data?.data
-              ? passDataBalance?.data?.data?.data?.balance
-              : ""
-          );
-        }
-      }
-      // handleResetFields();
-      // eslint-disable-next-line
-    }, []);
 
-    const updateBalance = passDataBalance?.data?.data
+  const GetBalance = async () => {
+    const SuccessHandler = () => {
+      console.log("successfully retrieved balance");
+    };
+    const FailedHandler = async (ErrorType) => {
+      if (ErrorType === "unauthorised") {
+        await GetFunction(
+          `bills/verify`,
+          setLoading,
+          SuccessHandler,
+          (ErrorType) => {
+            if (ErrorType === "unauthorised") {
+              return setSessionModal(true);
+            }
+          },
+          setPassDataBalance
+        );
+      }
+    };
+    await GetFunction(
+      "balance",
+      setLoading,
+      SuccessHandler,
+      FailedHandler,
+      setPassDataBalance
+    );
+  };
+  // get the balance on entering the page
+  useEffect(() => {
+    if (newBalance === "" || newBalance === null || newBalance === undefined) {
+      GetBalance();
+      if (GetBalance) {
+        setNewBalance(
+          passDataBalance?.data?.data
+            ? passDataBalance?.data?.data?.data?.balance
+            : ""
+        );
+      }
+    }
+    // handleResetFields();
+    // eslint-disable-next-line
+  }, []);
+
+  const updateBalance = passDataBalance?.data?.data
     ? passDataBalance?.data?.data?.data?.balance
     : "";
 
   const countryList = [
     {
       id: 1,
-      name: `NGN Wallet ${newBalance === "" || newBalance === null || newBalance === undefined ? `(₦${updateBalance})`
-          : `(₦${newBalance})`}`,
+      name: `NGN Wallet ${
+        newBalance === "" || newBalance === null || newBalance === undefined
+          ? `(₦${updateBalance})`
+          : `(₦${newBalance})`
+      }`,
       code: "Nigerian NGN Wallet",
       flag: require("../ElectricitySubscription/Electricity-sub-images/nigeriaFlag.png"),
     },
@@ -360,7 +363,6 @@ const IKEDC = () => {
   const [ikedcCustomerName, setIkedcCustomerName] = useState("");
 
   const [errorMessage, setErrorMessage] = useState(false);
-  const [pinSuccess, setPinSuccess] = useState(false);
   const [isFailedMeterNumber, setIsFailedMeterNumber] = useState(false);
   const [meterNumberLoading, setMeterNumberLoading] = useState(false);
 
@@ -490,29 +492,42 @@ const IKEDC = () => {
         setIkedcFetchedResponse
       );
     }
-    //Kindly uncomment the code below after implementing the errorMessage
-    //rather than the pinfailed and pinSucess state
-    //Kindly also remove the setPinFailed state as there
-    //is no longer any use for it
     const setPinFailed = async (ErrorType) => {
       if (ErrorType === "unauthorised") {
         await VerifyTransPin(
           inputPin,
-          setPinSuccess,
           (ErrorType) => {
             if (ErrorType === "unauthorised") {
               setSessionModal(true);
+            } else if (
+              ErrorType === "Network error" ||
+              ErrorType === "User error"
+            ) {
+              return alert("Kindly Check your internet connection");
+            } else if (ErrorType === "Server error") {
+              alert(
+                "The server is currently experiencing a downtime, try again some other time."
+              );
+            } else {
+              alert("An unexpected has occured try again some other time.");
             }
           },
           setLoading,
           setErrorMessage,
           ElectricityHandler
         );
+      } else if (ErrorType === "Network error" || ErrorType === "User error") {
+        return alert("Kindly Check your internet connection");
+      } else if (ErrorType === "Server error") {
+        alert(
+          "The server is currently experiencing a downtime, try again some other time."
+        );
+      } else {
+        alert("An unexpected has occured try again some other time.");
       }
     };
     await VerifyTransPin(
       inputPin,
-      setPinSuccess,
       setPinFailed,
       setLoading,
       setErrorMessage,
@@ -1320,18 +1335,11 @@ const IKEDC = () => {
                         <input {...props} className="inputOTP mx-[3px]" />
                       )}
                     />
-                    <span className="">
-                      {pinSuccess && (
-                        <p className="text-xs text-green-500 text-center font-medium">
-                          Pin matches
-                        </p>
-                      )}
-                      {errorMessage && (
-                        <p className="text-xs text-center text-red-600 font-medium">
-                          Incorrect Pin
-                        </p>
-                      )}
-                    </span>
+                    {errorMessage && (
+                      <p className="text-xs text-center text-red-600 font-medium">
+                        Incorrect Pin
+                      </p>
+                    )}
                   </div>
                 ) : (
                   <div className="text-[24px] md:text-[24px] mt-1">* * * *</div>

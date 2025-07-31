@@ -239,12 +239,14 @@ border-radius : 10px;
     background: linear-gradient(91deg, #367CFF 0.39%, #69FFD2 101.71%);
   }
   .bvnQuery{
-    overflow-y: scroll;
-    scrollbar-width: thin;
+   overflow-y: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style : none;
     scrollbar-color: transparent transparent;
   }
   .bvnQuery::-webkit-scrollbar{
     display : none;
+    width: 0px;
   }
   .bnvQuery::-webkit-scrollbar-thumb{
     background-color: transparent;

@@ -162,7 +162,7 @@ const ElectricitySubscription = () => {
                 }`}
               >
                 <div>
-                  <img className="w-[89px] lg:w-[100px]  " src={bill5} alt="" />
+                  <img className="w-[89px] lg:w-[100px]" src={bill5} alt="" />
                 </div>
                 <div className="text-[12px] lg:text-[16px] font-medium leading-[11.27px]">
                   PHED

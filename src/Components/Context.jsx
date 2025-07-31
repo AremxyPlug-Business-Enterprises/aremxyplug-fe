@@ -3,7 +3,6 @@ import Joi from "joi";
 import axios from "axios";
 import arrowDown from "../../src/Components/EducationPins/imagesEducation/arrow-down.svg";
 import NotVerifiedIcon from "../Components/My Profile & Account Settings/ProfileImages/NotVerifiedIcon.svg";
-import { GetFunction } from "./ApiCollection.jsx/ApiBuck";
 // import { BASE_URL } from "../config";
 
 export const ContextProvider = createContext();
@@ -1123,7 +1122,7 @@ export const Context = ({ children }) => {
   const [inputPinDstv, setInputPinDstv] = useState(false);
   const [dstvSuccessful, setDstvSuccessful] = useState(false);
   const [fetchedDstvPlans, setFetchedDstvPlans] = useState([]);
-  const [dstvAmount, setDstvAmount] = useState("₦");
+  const [dstvAmount, setDstvAmount] = useState("");
   const [dstvEmail, setDstvEmail] = useState();
   const [packageDstv, setPackageDstv] = useState("");
   const [dstvSmartCard, setDstvSmartCard] = useState("");
@@ -1135,6 +1134,8 @@ export const Context = ({ children }) => {
   const [dstvDescription, setDstvDescription] = useState("");
   const [dstvRequestId, setDstvRequestId] = useState("");
   const [dstvWalletBalance, setDstvWalletBalance] = useState("");
+  const [purchaseDstvErrorType, setPurchaseDstvErrorType] = useState("");
+  const [dstvCardName, setDstvCardName] = useState("");
 
   //=========SHOWMAX===========
   const [selectedOptionShowmax, setSelectedOptionShowmax] = useState("");
@@ -1190,12 +1191,13 @@ export const Context = ({ children }) => {
   const [quantityAmount, setQuantityAmount] = useState("");
   const [walletBalance, setWalletBalance] = useState("");
 
-   const [waecPinsGenerated, setWaecPinsGenerated] = useState([]);
+  const [waecPinsGenerated, setWaecPinsGenerated] = useState([]);
   const [waecOrderId, setWaecOrderId] = useState("");
   const [waecTransactionId, setWaecTransactionId] = useState("");
   const [waecShowDescription, setWaecShowDescription] = useState("");
   const [waecFullName, setWaecFullName] = useState("");
   const [waecTransactionProduct, setWaecTransactionProduct] = useState("");
+  const [purchaseEduErrorType, setPurchaseEduErrorType] = useState("");
 
   //==============  NECO PINS  ================
   const [necoQuantityResult, setNecoQuantityResult] = useState("");
@@ -1277,18 +1279,18 @@ export const Context = ({ children }) => {
   const [bvnNumber, setBvnNumber] = useState("");
   const [bvnVerifyImage, setBvnVerifyImage] = useState(NotVerifiedIcon);
 
- const [bvnStatus, setBvnStatus] = useState('Not Verified');
-const [dashLoading, setDashLoading] = useState(false);
-const [bvnButtonState, setBvnButtonState] = useState("Verify")
-const [virtualAccCreated, setVirtualAccCreated] = useState(false);
-const [idCountry, setIdCountry] = useState("");
-const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
-   const [idStatus, setIdStatus] = useState('Not Verified');
-   const [bvnCountry, setBvnCountry] = useState("");
-   const [ bvnCountryImage, setBvnCountryImage] = useState(null);
+  const [bvnStatus, setBvnStatus] = useState("Not Verified");
+  const [dashLoading, setDashLoading] = useState(false);
+  const [bvnButtonState, setBvnButtonState] = useState("Verify");
+  const [virtualAccCreated, setVirtualAccCreated] = useState(false);
+  const [idCountry, setIdCountry] = useState("");
+  const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
+  const [idStatus, setIdStatus] = useState("Not Verified");
+  const [bvnCountry, setBvnCountry] = useState("");
+  const [bvnCountryImage, setBvnCountryImage] = useState(null);
   const [verificationReason, setVerificationReason] = useState("");
-  const [verificationResponse, setVerificationResponse] = useState({})
-  
+  const [verificationResponse, setVerificationResponse] = useState({});
+
   //========== BUSINESS KYC =============
   const [businessPopUp, setBusinessPopUp] = useState(false);
 
@@ -1322,10 +1324,8 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
   const [userStatus, setUserStatus] = useState(false);
   const [idButtonState, setIdButtonState] = useState("Verify");
 
-  // Session Management Function for all the Api requests method
-  // const handleUnauthorisedGetMethod = async()=> {
-
-  // }
+  //The transactionResponse for getting user past transactions details
+  const [transactionResponse, setTransactionResponse] = useState({});
 
   const hold = {
     tvSubscriptionResponse,
@@ -2229,7 +2229,10 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
     setDstvRequestId,
     dstvWalletBalance,
     setDstvWalletBalance,
-
+    purchaseDstvErrorType,
+    setPurchaseDstvErrorType,
+    dstvCardName,
+    setDstvCardName,
     //=======SHOWMAX
     confirmShowmaxPopup,
     setConfirmShowmaxPopup,
@@ -2339,6 +2342,8 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
     setWaecFullName,
     waecTransactionProduct,
     setWaecTransactionProduct,
+    purchaseEduErrorType,
+    setPurchaseEduErrorType,
 
     //======NECO PINS ==========
     necoQuantityResult,
@@ -2493,27 +2498,28 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
     setIdCountry,
     // ==========  BVN ========
 
-
-bvnNumber, 
-setBvnNumber,
-bvnVerifyImage, 
-setBvnVerifyImage,
-bvnStatus,
-setBvnStatus,
-dashLoading, 
-setDashLoading,
-virtualAccCreated,
-setVirtualAccCreated,
-bvnButtonState,
- setBvnButtonState,
- bvnCountry,
-  setBvnCountry,
-  bvnCountryImage,
-  setBvnCountryImage,
-  verificationReason,
-   setVerificationReason,
-   verificationResponse,
-   setVerificationResponse,
+    bvnNumber,
+    setBvnNumber,
+    bvnVerifyImage,
+    setBvnVerifyImage,
+    bvnStatus,
+    setBvnStatus,
+    dashLoading,
+    setDashLoading,
+    virtualAccCreated,
+    setVirtualAccCreated,
+    bvnButtonState,
+    setBvnButtonState,
+    bvnCountry,
+    setBvnCountry,
+    bvnCountryImage,
+    setBvnCountryImage,
+    verificationReason,
+    setVerificationReason,
+    verificationResponse,
+    setVerificationResponse,
+    transactionResponse,
+    setTransactionResponse,
 
     //========== Business PopUp =======
     businessPopUp,
