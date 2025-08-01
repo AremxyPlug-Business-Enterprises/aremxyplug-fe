@@ -242,33 +242,116 @@ const DstvOptionalPlan = dstvData?.length < 1 && fetchedDstvPlans.status === 200
 }
 RetrieveGotvPlans()
 }
- const GetBalance =   async()=> {
-                        const SuccessHandler = ()=> {
-                      //alert("Successful");
-                 console.log("successfully retrieved balance");
-                 //alert("Successful")
-                   }
-                  const FailedHandler = async(ErrorType)=> {
-                    console.log(`Failed to retrieve balance`)
-                    if(ErrorType === "unauthorised"){
-                    await GetFunction("balance", 
-                      setIsLoading, 
-                      SuccessHandler,
-                      (ErrorType)=> {
-                        if(ErrorType === "unauthorised"){
-                      return setSessionModal(true)
-                        }
-                     },
-                       setPassDataBalance)
-                    }
-                  
-                  }
-                  await GetFunction("balance",
-                     setIsLoading,
-                      SuccessHandler,
-                       FailedHandler,
-                       setPassDataBalance)
-                    } 
+  const GetBalance = async () => {
+      const SuccessHandler = () => {
+        //alert("Successful");
+        console.log("successfully retrieved balance");
+        //alert("Successful")
+      };
+      const FailedHandler = async (ErrorType) => {
+        if (ErrorType === "unauthorised") {
+          await GetFunction(
+            `balance`,
+            setIsLoading,
+            SuccessHandler,
+            //Handling the error Use Cases of the Unauthorised inside
+            // of the statement.
+            async(ErrorType) => {
+              if (ErrorType === "unauthorised") {
+                return setSessionModal(true);
+              }else if(ErrorType === "Server error"){
+                  await GetFunction(
+        "balance",
+        setIsLoading,
+        SuccessHandler,
+       async(ErrorType)=> {
+        if(ErrorType === "Server error"){
+          alert("Failed to retrieve the balance.")
+        }else if(ErrorType === "Network error" || ErrorType === "User error"){
+              alert("Kindly check your internet connection to retrieve balance.")
+        }else {
+          alert("An unexpected error has occured on attempt to retrieve balance.")
+        }
+       },
+        setPassDataBalance
+      );
+       }else if(ErrorType === "Network error" || ErrorType === "User error"){
+           alert("Kindly check your internet connection to retrieve balance")
+       }else {
+        alert("An unexpected error has occured on attempt to retrieve the balance")
+       }
+            },
+             setPassDataBalance
+          );
+        }else if(ErrorType === "Server error"){
+            await GetFunction(
+        "balance",
+        setIsLoading,
+        SuccessHandler,
+       async(ErrorType)=> {
+         if(ErrorType === "unauthorised"){
+            await GetFunction(
+        "balance",
+        setIsLoading,
+        SuccessHandler,
+        async(ErrorType)=> {
+          if(ErrorType === "unauthorised"){
+            return setSessionModal(true)
+          }else if(ErrorType === "Server error"){
+               await GetFunction(
+        "balance",
+        setIsLoading,
+        SuccessHandler,
+       async(ErrorType)=> {
+        //if Statements
+      //We run again cause the previous one was interrupted by 401
+      //Let us re-run server error
+      if(ErrorType === "Server error"){
+        alert("Failed to retrieve the balance")
+      }else if(ErrorType === "unauthorised"){
+        return sessionModal(true)
+      }else if(ErrorType === "Network error" || ErrorType === "User error"){
+       alert("Kindly check your internet connection to retrieve balance")
+      }else{
+        alert("An Unexpected error occured in attempt to retrieve balance")
+      }
+
+       },
+        setPassDataBalance
+      );
+          }else if(ErrorType === "Network error" || ErrorType === "User error"){
+            alert("Kindly check your internet connection to retrieve the balance")
+          }else{
+            alert("An Unexpected error occured in attempt to retrieve balance")
+          }
+        },
+        setPassDataBalance
+      );
+    }
+          else if(ErrorType === "Network error" || ErrorType === "User error"){
+            //The operation was interrupted by a network error
+            alert("Kindly check your internet connection to retrieve balance.")
+         }else {
+          //An alien error has occured with the re-run of the "Server error" ErrorType
+          alert("An unexpected error occured in attempt to retrieve the balance.")
+         }
+       },
+        setPassDataBalance
+      );
+        }else if(ErrorType === "Network error" || ErrorType === "User error"){
+
+        }else{
+          alert("An unexpected error occured in attempt to retrieve balance.")
+        }
+      }
+      await GetFunction(
+        "balance",
+        setIsLoading,
+        SuccessHandler,
+        FailedHandler,
+        setPassDataBalance
+      );
+    };
                      // Simulate async data loading
                     if(newBalance === "" || newBalance === null || newBalance === undefined){
                         GetBalance();
@@ -609,7 +692,8 @@ if(ErrorType === "unauthorised"){
       }
 
    }, setDstvVerifyResponse);
-   //2. Handling the server error by re-running 
+  //2. Handling the server for the general conditional 
+        // statement under the failedHandler then re-running 
   }else if(ErrorType === "Server error"){
          await PostFunction("bills/verify", setDstvLoading, 
   bodyToJson,
