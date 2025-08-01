@@ -17,7 +17,6 @@ export const DstvReceipt= (Data) => {
   const { toggleSideBar, textRef,
     flagResult,
     selectedOptionDstv,
-    formatNumberWithCommas,
     dstvEmail,
     dstvMobileNumber,
     dstvSmartCard,
@@ -41,7 +40,8 @@ export const DstvReceipt= (Data) => {
     setFlagResult,
     setDstvCardName,
     setDstvWalletBalance,
-    dstvSubscriptionResponse
+    dstvSubscriptionResponse,
+    purchaseDstvErrorType, 
   } =
     useContext(ContextProvider);
 
@@ -159,7 +159,8 @@ export const DstvReceipt= (Data) => {
           <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
           <div ref={contentRef}>
             {" "}
-            <h3 className="font-extrabold text-[12px] my-[2%] text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
+            <h3 className="font-extrabold text-[12px] my-[2%] text-center 
+            md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
               Transaction Receipt
             </h3>
             <div className="w-full flex justify-center">
@@ -169,9 +170,11 @@ export const DstvReceipt= (Data) => {
                 alt="/"
               />
             </div>
-            <h3 className="font-extrabold text-[12px] mt-[2%] 
-            text-center md:text-[20px] md:my-[7px] lg:text-[16px] lg:my-[10px]">
-            Purchase Successful on
+            <h3 className={`font-extrabold text-[12px]  mt-[2%] text-center 
+            md:text-[20px] md:my-[7px] lg:text-[16px] lg:my-[10px]
+            ${isDarkMode ? "text-white" : "text-black"}
+          `}>
+             {dstvSubscriptionResponse?.data?.status === "delivered" ?  "Purchase Successful on" : "Purchase Failed on"}
             </h3>
             <span className={`text-[11px] ${isDarkMode ? "text-white" : "text-black"}
              font-extrabold flex justify-center items-center
@@ -190,10 +193,11 @@ export const DstvReceipt= (Data) => {
                  md:border-[0.578px] md:rounded-[6.455px]  lg:border-[1px] lg:rounded-[11px]
                    leading-[15px] md:leading-[20px] 
                     lg:p-[10px] text-center my-2 md:text-sm
-                    lg:text-base  lg:leading-[24px] font-medium md:mb-7 ${dstvSubscriptionResponse?.data?.status === "delivered" ? "border-[#27AE60] text-[#27AE60] bg-[#D5F6E3]" :  'border-red-500 text-red-500 bg-red-100' }`}>
-             {dstvSubscriptionResponse?.data?.status === "delivered" ?  "You have successfully subscribed to " : dstvSubscriptionResponse?.data?.status === "delivered" ?
-              "Unexpected error occured during subscription of " : "Subscription failed due to an internet vconnection error."}
-              <span className="font-extrabold text-[10.9px] md:text-[14.9px] lg:text-[16.9px]">
+                    lg:text-base  lg:leading-[24px] font-medium md:mb-7
+             ${dstvSubscriptionResponse?.data?.status === "delivered" ? "border-[#27AE60] text-[#27AE60] bg-[#D5F6E3]" :  'border-red-500 text-red-500 bg-red-100' }`}>
+             {dstvSubscriptionResponse?.data?.status === "delivered" ?  "You have successfully subscribed to " : purchaseDstvErrorType}
+              <span className="font-extrabold text-[10.9px] md:text-[14.9px] 
+              lg:text-[16.9px]">
                 {selectedOptionDstv}{" "}
               </span>
               from your{" "}
@@ -210,34 +214,42 @@ export const DstvReceipt= (Data) => {
                     alt="/"
                   />
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className={` ${isDarkMode ? "text-white" : "text-black"}
-                  `}>Decoder Type</p>
-                  <span>Dstv</span>
+                <div className="flex text-[10px] font-[500] md:text-[14px] w-[90%]
+                 mx-auto justify-between 
+                 lg:text-[16px]">
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}
+                 >Decoder Type</p>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>Dstv</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className={`text-[#0008  ${isDarkMode ? "text-white" : "text-black"}`}>Package</p>
-                  <span>{selectedOptionDstv}</span>
+                <div className="flex text-[10px] md:text-[14px] font-[500] w-[90%] 
+                mx-auto justify-between  lg:text-[16px]">
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Package</p>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{selectedOptionDstv}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>Smartcard / IUC Number</p>
-                  <span>{dstvSmartCard}</span>
+                <div className="flex text-[10px] md:text-[14px]
+                 w-[90%] mx-auto justify-between  lg:text-[16px] font-[500]">
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Smartcard / IUC Number</p>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{dstvSmartCard}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>Card Name</p>
-                  <span>{dstvCardName}</span>
+                <div className="flex text-[10px] md:text-[14px] font-[500] w-[90%] 
+                mx-auto justify-between  lg:text-[16px]">
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Card Name</p>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{dstvCardName}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>Phone</p>
-                  <span>{dstvMobileNumber}</span>
+                <div className="flex text-[10px] md:text-[14px] font-[500] w-[90%] 
+                mx-auto justify-between  lg:text-[16px]">
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Phone</p>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{dstvMobileNumber}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>Email</p>
-                  <span>{dstvEmail}</span>
+                <div className="flex text-[10px] md:text-[14px] w-[90%] 
+                mx-auto justify-between  lg:text-[16px] font-[500]">
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Email</p>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{dstvEmail}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>Amount</p>
-                  <span>{`${dstvAmount !== "" ? dstvAmount?.toLocaleString("en-NG", {
+                <div className="flex text-[10px] md:text-[14px] w-[90%] 
+                mx-auto justify-between  lg:text-[16px] font-[500]">
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Amount</p>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{`${dstvAmount !== "" ? dstvAmount?.toLocaleString("en-NG", {
                     style : "currency",
                     currency : "NGN"
 
@@ -257,13 +269,15 @@ export const DstvReceipt= (Data) => {
                     alt="/"
                   />
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className= {`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>Customer Name</p>
-                  <span>{Data?.aremxyUsername ? Data?.aremxyUsername : ""}</span>
+                <div className="flex text-[10px] md:text-[14px] w-[90%] 
+                mx-auto justify-between  lg:text-[16px] font-[500]">
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Customer Name</p>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{Data?.aremxyUsername ? Data?.aremxyUsername : ""}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-              <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>Wallet Type</p>
-                  <span>{flagResult}</span>
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between
+                  lg:text-[16px] font-[500]">
+              <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Wallet Type</p>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{flagResult}</span>
                 </div>
                 
               </div>
@@ -279,21 +293,22 @@ export const DstvReceipt= (Data) => {
                     alt="/"
                   />
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>Product</p>
-                  <span>TV Subscriptions</span>
+                <div className="flex text-[10px] font-[500] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Product</p>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>TV Subscriptions</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>Description</p>
-                  <span>{DstvDescriptionInfo}</span>
+                <div className="flex text-[10px] font-[500] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                  <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Description</p>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{DstvDescriptionInfo}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>Order Number</p>
-                  <span>{DstvOrderInfo}</span>
+                <div className="flex text-[10px] font-[500] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                  <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Order Number</p>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{DstvOrderInfo}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between items-center lg:text-[16px]">
-                  <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>Transaction ID</p>
-                  <div className="flex items-center">
+                <div className="flex text-[10px] font-[500] md:text-[14px] w-[90%] mx-auto justify-between 
+                items-center lg:text-[16px]">
+                  <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Transaction ID</p>
+                  <div className={`flex items-center ${isDarkMode ? "text-white" : "text-black"}`}>
                     <span ref={textRef}>
                     {DstvTransactionInfo}
                     </span>

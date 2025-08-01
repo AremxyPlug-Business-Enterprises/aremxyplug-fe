@@ -169,6 +169,8 @@ export const Context = ({ children }) => {
   function changeHandler(e) {
     const { name, value, type, checked } = e.target;
     const inputValue = type === "checkbox" ? checked : value;
+    console.log(value)
+    console.log(name)
     setState({ ...state, [name]: inputValue });
   }
 
@@ -1104,6 +1106,7 @@ export const Context = ({ children }) => {
   const [gotvRequestId, setGotvRequestId] = useState("");
   const [gotvDescription, setGotvDescription] = useState("");
   const [packageGotv, setPackageGotv] = useState("");
+  const [purchaseGotvErrorType, setPurchaseGotvErrorType] = useState("")
 
   //==========DSTV===========
   const [selectedOptionDstv, setSelectedOptionDstv] = useState("");
@@ -2160,6 +2163,8 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
     setFetchedGotvPlans,
     packageGotv,
     setPackageGotv,
+    purchaseGotvErrorType, 
+    setPurchaseGotvErrorType,
 
     //=======DSTV
     confirmDstvPopup,

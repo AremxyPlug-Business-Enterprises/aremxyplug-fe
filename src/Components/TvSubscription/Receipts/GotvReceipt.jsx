@@ -40,6 +40,8 @@ export const GotvReceipt = (Data) => {
     gotvDescription,
     setFlagResult,
     setTvWalletBalance,
+    purchaseGotvErrorType,
+    tvSubscriptionResponse,
    } =
     useContext(ContextProvider);
 
@@ -81,10 +83,18 @@ export const GotvReceipt = (Data) => {
     if (content) {
       const pdf = new jsPDF();
       html2canvas(content).then((canvas) => {
-        const imgData = canvas.toDataURL("image/png");
-        pdf.addImage(imgData, "PNG", 10, 10, 190, 0);
+      const bgPdf = pdf.setFillColor(isDarkMode ? 0 : 255, isDarkMode ? 0 : 255, isDarkMode ? 0 : 255 )
+      if(bgPdf){
+        const imgWidth = 190;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width
+        const imgData = canvas.toDataURL("");
+        pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
         pdf.save("GoTvSubscription.pdf");
-      });
+        pdf.setTextColor(isDarkMode? 0: 255,isDarkMode? 0: 255,isDarkMode? 0: 255 )
+        pdf.text("GoTv Subscription Receipt", 20, 20);
+      }
+      }
+    );
     }
   };
 
@@ -147,7 +157,8 @@ export const GotvReceipt = (Data) => {
           <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
           <div ref={contentRef}>
             {" "}
-            <h3 className="font-extrabold text-[12px] my-[2%] text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
+            <h3 className="font-extrabold text-[12px] my-[2%] 
+            text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
               Transaction Receipt
             </h3>
             <div className="w-full flex justify-center ">
@@ -157,10 +168,15 @@ export const GotvReceipt = (Data) => {
                 alt="/"
               />
             </div>
-            <h3 className="font-extrabold text-[12px] mt-[2%] text-center md:text-[20px] md:my-[7px] lg:text-[16px] lg:my-[10px]">
-            Purchase Successful on
+            <h3 className={`font-extrabold text-[12px]  mt-[2%] text-center 
+            md:text-[20px] md:my-[7px] lg:text-[16px] lg:my-[10px]
+            ${isDarkMode ? "text-white" : "text-black"}
+          `}>
+             {tvSubscriptionResponse?.data?.status === "delivered" ?  "Purchase Successful on" : "Purchase Failed on"}
             </h3>
-            <span className={`text-[11px] font-extrabold flex justify-center items-center   ${isDarkMode ? "text-white": "text-[#0008]"}`}>
+            <span className={`text-[11px] ${isDarkMode ? "text-white" : "text-black"}
+             font-extrabold flex justify-center items-center
+            `}>
               {date.toLocaleDateString(undefined, {
                 year: "numeric",
                 month: "long",
@@ -171,53 +187,78 @@ export const GotvReceipt = (Data) => {
                 hour12: true,
               })}
             </span>
-            <p className={`pt-2 md:pt-4 text-[9px] text-[#0008] font-bold text-center
-             my-2 md:text-[14px] lg:text-[14px] ${isDarkMode ? "text-white": "text-black"}`}>
-            You have successfully subscribed {" "}
-              <span className=" text-[10px] md:text-[16px] lg:text-[16px]">
+            <p className={`text-[10px] p-[5.729px] border-[0.573px] rounded-[6.302px]
+             md:p-[5.868px] md:border-[0.578px] md:rounded-[6.455px]  lg:border-[1px] lg:rounded-[11px]
+                   leading-[15px] md:leading-[20px] 
+                    lg:p-[10px] text-center my-2 md:text-sm
+                    lg:text-base  lg:leading-[24px] font-medium md:mb-7
+             ${tvSubscriptionResponse?.data?.status === "delivered" ? "border-[#27AE60] text-[#27AE60] bg-[#D5F6E3]" :  'border-red-500 text-red-500 bg-red-100' }`}>
+             {tvSubscriptionResponse?.data?.status === "delivered" ?  "You have successfully subscribed to " : purchaseGotvErrorType}
+              <span  className="font-extrabold text-[10.9px] md:text-[14.9px] 
+              lg:text-[16.9px]">
                 {selectedOptionGOTV}{" "}
               </span>
-              from your
-              <span>{flagResult}</span>
+              from your {" "}
+              <span>{flagResult} to </span>
             </p>
             <div className="flex flex-col gap-3">
               {/* ========================Recipient Info================== */}
               <div className="flex flex-col gap-[5px] w-[90%] mx-auto lg:gap-[10px]">
                 <div className="flex gap-[5px] items-center text-[10px] lg:text-[16px] font-extrabold">
-                  <p className={` ${isDarkMode ? "text-white": "text-black"}`}>Recipient Info</p>
+                  <p className= {`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
+                    Recipient Info
+                    </p>
                   <img
                     className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
                     src="./Images/dashboardImages/arrowright.png"
                     alt="/"
                   />
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className={` ${isDarkMode ? "text-white": "text-black"}`}>Decoder Type</p>
+                <div className="flex text-[10px] font-[500] md:text-[14px] w-[90%]
+                 mx-auto justify-between 
+                 lg:text-[16px]">
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+                    Decoder Type</p>
                   <span  className={` ${isDarkMode ? "text-white": "text-black"}`}>GOtv</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p  className={` ${isDarkMode ? "text-white": "text-black"}`}>Package</p>
+                <div className="flex text-[10px] font-[500] md:text-[14px] w-[90%]
+                 mx-auto justify-between 
+                 lg:text-[16px]">
+                  <p  className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Package</p>
                   <span  className={` ${isDarkMode ? "text-white": "text-black"}`}>{selectedOptionGOTV}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p  className={` ${isDarkMode ? "text-white": "text-black"}`}>Smartcard / IUC Number</p>
+                <div className="flex text-[10px] font-[500] md:text-[14px] w-[90%]
+                 mx-auto justify-between 
+                 lg:text-[16px]">
+                  <p  className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Smartcard / IUC Number</p>
                   <span  className={` ${isDarkMode ? "text-white": "text-black"}`}>{smartCard}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p  className={` ${isDarkMode ? "text-white": "text-black"}`}>Card Name</p>
+                <div className="flex text-[10px] font-[500] md:text-[14px] w-[90%]
+                 mx-auto justify-between 
+                 lg:text-[16px]">
+                  <p  className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Card Name</p>
                   <span  className={` ${isDarkMode ? "text-white": "text-black"}`}>{cardName}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p  className={` ${isDarkMode ? "text-white": "text-black"}`}>Phone</p>
+                <div className="flex text-[10px] font-[500] md:text-[14px] w-[90%]
+                 mx-auto justify-between 
+                 lg:text-[16px]">
+                  <p  className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Phone</p>
                   <span  className={` ${isDarkMode ? "text-white": "text-black"}`}>{mobileNumber}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p  className={` ${isDarkMode ? "text-white": "text-black"}`}>Email</p>
+                <div className="flex text-[10px] font-[500] md:text-[14px] w-[90%]
+                 mx-auto justify-between 
+                 lg:text-[16px]">
+                  <p  className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Email</p>
                   <span  className={` ${isDarkMode ? "text-white": "text-black"}`}>{tvEmail}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className={` ${isDarkMode ? "text-white": "text-black"}`}>Amount</p>
-                  <span  className={` ${isDarkMode ? "text-white": "text-black"}`}>{`₦${tvAmount}`}</span>
+                <div className="flex text-[10px] font-[500] md:text-[14px] w-[90%]
+                 mx-auto justify-between 
+                 lg:text-[16px]">
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Amount</p>
+                  <span  className={` ${isDarkMode ? "text-white": "text-black"}`}>{`${tvAmount !== undefined ? tvAmount?.toLocaleString("en-Ng", {
+                    style : "currency",
+                    currency : "NGN"
+                  }) : "₦"}`}</span>
                 </div>
               </div>
 
@@ -233,12 +274,16 @@ export const GotvReceipt = (Data) => {
                     alt="/"
                   />
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className={` ${isDarkMode ? "text-white": "text-black"}`}>Customer Name</p>
+                <div className="flex text-[10px] font-[500] md:text-[14px] w-[90%]
+                 mx-auto justify-between 
+                 lg:text-[16px]">
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Customer Name</p>
                   <span  className={` ${isDarkMode ? "text-white": "text-black"}`}>{Data?.aremxyUsername ? Data.aremxyUsername : ""}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className={` ${isDarkMode ? "text-white": "text-black"}`}>Wallet Type</p>
+                <div className="flex text-[10px] font-[500] md:text-[14px] w-[90%]
+                 mx-auto justify-between 
+                 lg:text-[16px]">
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Wallet Type</p>
                   <span  className={` ${isDarkMode ? "text-white": "text-black"}`}>{flagResult}</span>
                 </div>
                 
@@ -255,20 +300,28 @@ export const GotvReceipt = (Data) => {
                     alt="/"
                   />
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p  className={` ${isDarkMode ? "text-white": "text-black"}`}>Product</p>
+                <div className="flex text-[10px] font-[500] md:text-[14px] w-[90%]
+                 mx-auto justify-between 
+                 lg:text-[16px]">
+                  <p  className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Product</p>
                   <span  className={` ${isDarkMode ? "text-white": "text-black"}`}>TV Subscriptions</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p  className={` ${isDarkMode ? "text-white": "text-black"}`}>Description</p>
+                <div className="flex text-[10px] font-[500] md:text-[14px] w-[90%]
+                 mx-auto justify-between 
+                 lg:text-[16px]">
+                  <p  className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Description</p>
                   <span  className={` ${isDarkMode ? "text-white": "text-black"}`}>{GotvDescriptionInfo}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p  className={` ${isDarkMode ? "text-white": "text-black"}`}>Order Number</p>
+                <div className="flex text-[10px] font-[500] md:text-[14px] w-[90%]
+                 mx-auto justify-between 
+                 lg:text-[16px]">
+                  <p  className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Order Number</p>
                   <span  className={` ${isDarkMode ? "text-white": "text-black"}`}>{GotvOrderInfo}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between items-center lg:text-[16px]">
-                  <p  className={` ${isDarkMode ? "text-white": "text-black"}`}>Transaction ID</p>
+                <div className="flex text-[10px] font-[500] md:text-[14px] w-[90%]
+                 mx-auto justify-between 
+                 lg:text-[16px]">
+                  <p  className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Transaction ID</p>
                   <div className="flex items-center">
                     <span ref={textRef}  className={` ${isDarkMode ? "text-white": "text-black"}`}>
                       {GotvTransactionInfo}
@@ -284,8 +337,14 @@ export const GotvReceipt = (Data) => {
                 
               </div>
             </div>
-            <div className="rounded-[8px]  bg-[#E2F3FF] mx-4 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]">
-              <p className="text-[8px] text-black text-center mx-auto w-[200px] md:text-[14px] md:w-[80%] lg:text-[16px]">
+            <div className={`bg-[#F2FAFF] w-[90%]   mx-auto p-[8px] my-5 flex justify-between 
+        items-center md:p-[9px] lg:p-[10px] rounded-[5px] lg:rounded-[10px]
+         ${
+                isDarkMode ? "bg-slate-800 " : "bg-[#F2FAFF]"
+              }`}>
+              <p  className={`text-[10px] leading-[13px] text-center
+             md:text-[14px] md:leading-[18px] lg:text-[14px]  font-semibold 
+             ${isDarkMode ? "text-white" : "text-black"}`}>
                 Earn free points on every successful transactions, redeem your
                 earned points to real money, withdrawn to your bank account
                 instantly.

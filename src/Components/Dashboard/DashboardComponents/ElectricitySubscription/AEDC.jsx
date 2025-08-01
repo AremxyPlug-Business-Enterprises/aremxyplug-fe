@@ -958,17 +958,18 @@ await PostFunction(
                     toggleSideBar
                       ? "lg:w-[31.5%] lg:top-[100.5%]"
                       : "lg:w-[38.5%] lg:top-[105.3%]"
-                  }  ${
-                    styles.countryDropDown
-                  } shadow-xl border w-full lg:w-full  flex flex-col divide-y absolute top-20`}
+                  }  shadow-xl border w-full lg:w-full  flex flex-col divide-y absolute top-20`}
                 >
                   {countryList?.map((country) => (
                     <div
-                      className={`py-[18px] md:py-[14px] font-normal px-2 flex items-center gap-[5px] text-[12px] md:text-[14px] lg:text-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] transition-all duration-300 hover:bg-slate-50
+                      className={`py-[18px] md:py-[14px] font-normal px-2 flex
+                         items-center gap-[5px] text-[12px] md:text-[14px] 
+                         lg:text-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
+                          transition-all duration-300 hover:bg-slate-50
                        ${
                          isDarkMode
                            ? "text-white hover:bg-slate-800 bg-black "
-                           : "text-[#7E7E7E] "
+                           : "text-[#7E7E7E]"
                        } ${
                         country.code === "Nigerian NGN Wallet"
                           ? "cursor-pointer"

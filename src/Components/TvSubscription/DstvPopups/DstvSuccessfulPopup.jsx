@@ -14,7 +14,6 @@ import { Link } from "react-router-dom";
      toggleSideBar,
      dstvMobileNumber,
      flagResult,
-     cardName,
      dstvSmartCard,
      selectedOptionDstv,
      dstvEmail,
@@ -80,54 +79,61 @@ import { Link } from "react-router-dom";
         </div>
         <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
         <div className="">
-            <div className={`text-[12px] my-[4%] font-medium 
+            <p className={`text-[12px] font-extrabold my-[4%] 
             text-center md:text-[20px] md:my-[3%] lg:text-[14px] lg:my-[2%] ${isDarkMode ? "text-white" : "text-[#000]"}`}
-            >Subscription Successful</div>
+            >Subscription Successful</p>
             <img
               className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[70px] lg:h-[70px]"
               src="./Gif/checkMarkGif.gif"
               alt="/"
             />
-            <p className={`text-[#7C7C7C] w-[97%] mx-auto text-[10px] font-bold text-center
+            <p className={`font-semibold w-[97%] mx-auto text-[10px] text-center
                mb-2 md:pb-2 lg:pb-3 md:text-[14px] lg:text-[14px]
-               ${isDarkMode ? "text-white" : "text-[#7C7C7C]" }`}>
+               ${isDarkMode ? "text-white" : "text-black" }`}>
               You have successfully subscribed &nbsp;
-                  <span className={` ${isDarkMode? "text-white" : "text-black"} font-bold text-[10px]
+                  <span className={` ${isDarkMode? "text-white" : "text-black"} font-bold 
                    md:text-[16px] lg:text-[14px]`}>{valueWithoutTilde}</span>&nbsp;
                   From Your {" "}
                   {flagResult} {" "} to
             </p>
-            <div className="flex mt-4 flex-col gap-2 lg:gap-4 ">
-            <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[15px] font-semibold">
+            <div className="flex mt-4 flex-col gap-2 lg:gap-4">
+            <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between 
+            lg:text-[15px] font-[500]">
                     <span  className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Decoder Type</span>
                     <div className="flex">
                       <img src="./Images/TvSubscription/dstvIcon.svg" alt="" className="md:w-[60px] md:h-[15px] lg:w-[98px] lg:h-[18.6px]" />
-                      <span  className={`${isDarkMode ? "text-white" : "text-[#000]"}`}>Dstv</span>
+                      <span  className={`${isDarkMode ? "text-white" : "text-black"}`}>Dstv</span>
                     </div>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[15px] font-semibold">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between 
+                lg:text-[15px] font-[500]">
                     <span  className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Package</span>
-                    <span  className={`  ${isDarkMode ? "text-white" : "text-[#000]"}`}>{selectedOptionDstv}</span>
+                    <span  className={`  ${isDarkMode ? "text-white" : "text-black"}`}>{selectedOptionDstv}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[15px] font-semibold">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] 
+                mx-auto justify-between lg:text-[15px] font-[500]">
                     <span  className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Smartcard / IUC Number</span>
-                    <span  className={`  ${isDarkMode ? "text-white" : "text-[#000]"}`}>{dstvSmartCard}</span>
+                    <span  className={`  ${isDarkMode ? "text-white" : "text-black"}`}>{dstvSmartCard}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[15px] font-semibold">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
+                justify-between lg:text-[15px] font-[500]">
                     <span className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Card Name</span>
-                    <span className={`  ${isDarkMode ? "text-white" : "text-[#000]"}`}>{userVerifiedName}</span>
+                    <span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>{userVerifiedName}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[15px] font-semibold">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
+                justify-between lg:text-[15px] font-[500]">
                     <span className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Phone Number</span>
-                    <span className={`  ${isDarkMode ? "text-white" : "text-[#000]"}`}>{dstvMobileNumber}</span>
+                    <span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>{dstvMobileNumber}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[15px] font-semibold">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] 
+                mx-auto justify-between lg:text-[15px] font-[500]">
                     <span className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Email</span>
-                    <span className={`  ${isDarkMode ? "text-white" : "text-[#000]"}`}>{dstvEmail}</span>
+                    <span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>{dstvEmail}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[15px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto
+                 justify-between font-[500] lg:text-[15px]">
                     <span className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Payment Method</span>
-                    <span className={`  ${isDarkMode ? "text-white" : "text-[#000]"}`}>{flagResult}</span>
+                    <span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>{flagResult}</span>
                 </div>
               
             </div>
@@ -146,7 +152,8 @@ import { Link } from "react-router-dom";
             </p>
         </div>
 
-        <div className="flex w-full justify-center items-center gap-[10px] pb-4 md:gap-[8.59px] lg:gap-[15px] md:pb-2">
+        <div className="flex w-full justify-center items-center 
+        gap-[10px] pb-4 md:gap-[8.59px] lg:gap-[15px] md:pb-2">
          
                
                    <button
