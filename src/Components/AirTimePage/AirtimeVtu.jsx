@@ -651,19 +651,26 @@ const AirtimeVtu = () => {
                                 </div>
                             </Link>
                         </div>
-                    </div>
-                    <div className={`${styles.containFlex1} !text-[15px] md:!text-base`}>
-                        <div className={styles.FlexPut1} onClick={handleCodes}>
-                            <div className={styles.conPut1}>
-                                <h2>Airtime Balance USSD Codes</h2>
-                                <div className={styles.FlexImg1}>
-                                    <img src={data} alt="" className='' />
-                                </div>
+                    </div>  
+              {/* .containFlex1 */}
+                    <div className={`flex mt-[35px] my-[30px] md:w-[100%] md:gap-[10%] !text-[15px] md:!text-base`}>
+                        {/* </div><div className={styles.FlexPut1} onClick={handleCodes}> */}
+                        <div className="rounded-[4px] w-full bg-primary text-white md:w-[50%] h-[30px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-center md:justify-between gap-[10px] px-[5px]" onClick={handleCodes}>
+                            {/* <div className={styles.conPut1}> */}
+                                 <h2 className="lg:text-[16px] lg:leading-[24px] text-[14px] md:text-[12px] leading-[12px]">
+              Airtime Balance USSD Codes</h2>
+                                {/* <div className={styles.FlexImg1}> */}
+                                <div className="lg:w-6 lg:h-6 w-[11px] h-[11px]">
+                                    <img src={data} alt="" className="w-full h-full hidden md:block" />
+                                {/* </div> */}
                             </div>
                         </div>
+                         <div className="hidden md:w-[50%] md:block"></div>
                     </div>
-                    <div className={styles.mainGrid}>
-                        <div className={styles.mainGridCol}>
+                    <div className="grid grid-cols-1 mt-[25px] md:grid-cols-2 gap-y-[20px] md:gap-x-[58.68px] lg:gap-x-[100px] md:gap-y-[15px] lg:gap-y-[25px] pb-[30px] lg:py-[30px] md:mt-[20px]">
+                    {/* <div className={styles.mainGrid}> */}
+                        <div className="flex flex-col lg:gap-[14px] gap-[7px]">
+                        {/* <div className={styles.mainGridCol}> */}
                             <div>
                                 <div className={styles.NetworkFlex}>
                                     <h2 className={`${styles.head3} !text-[15px] md:text-[15px]   ${isDarkMode 
@@ -678,13 +685,18 @@ const AirtimeVtu = () => {
                                     ${styles.input} !h-[44.927px] md:!h-[58px]
        `} >
 
-                                        <div className={`${styles.output2}
+                                        <div 
+                                        
+                                        className={`${styles.output2}
+                                       
 
                                         !relative !top-[17px] md:!relative md:!top-base !text-[14px] md:!text-base
                                      `}>
                                             {networkName ? (
-                                                <li onClick={handleShowList} className={`${styles.labelInput}  
-                                              `}>
+                                                <li onClick={handleShowList} 
+                                                className={`${styles.labelInput}  
+                                              `}
+                                              >
                                                     <div className={styles.network}>
                                                         {networkImage && <img src={networkImage} alt="" />}
                                                     </div>
@@ -713,8 +725,14 @@ const AirtimeVtu = () => {
                                         </div>
                                     </div>
                                 </div>
+                                <div className="relative">
+                                {/* ${styles.colDown} */}
                                 {showList &&
-                                    <div className={`${styles.colDown}
+                                    <div className={`text-[16px] md:text-[12px]  bvnQuery
+                  shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] 
+                     
+                   lg:text-[16px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[10]
+                 
                                       ${isDarkMode ? "!bg-black md:!bg-black border border-white text-[#7E7E7E] border-2 rounded-[5px]" : "border border-none rounded-[5px] text-black bg-[#FFF]"}
         `}
                                     >
@@ -725,14 +743,16 @@ const AirtimeVtu = () => {
 
                                 }
                             </div>
-                            <div className={styles.headPro}>
+                            </div>
+                            {/* <div className={styles.headPro}> */}
+                            <div className="flex flex-col lg:gap-[14px] gap-[7px]">
                                 <h2 className={`
                                     ${
                                         isDarkMode 
                                             ? "!text-[#7E7E7E]" 
                                             : ""
                                     }
-                                    ${styles.head3} !text-[15px] md:!text-[15px]`}> Product</h2>
+                                   lg:text-[18px] md:text-[14px] lg:leading-[24px] mb-1 text-[16px] md:font-[600] font-[400] leading-[12px]`}> Product</h2>
                                 <div className={` 
                                            ${
                                             isDarkMode 

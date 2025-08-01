@@ -103,7 +103,7 @@ const [text, setText] =useState(false);
     const  successHandler = () => {
       // console.log("fetch points succefully");
 
-      const total = fetchedResponse?.data?.data?.total_points ?? 0;
+      const total = fetchedResponse?.data?.total_points ?? 0;
     // const trxPoints = fetchedResponse?.data?.data?.transaction_points ?? 0;
     // const referralPts = fetchedResponse?.data?.data?.referral_points ?? 0;
 
@@ -120,8 +120,7 @@ const [text, setText] =useState(false);
    
   }, []);
 
-   console.log(fetchedResponse?.data);
-
+   console.log(fetchedResponse?.data?.total_points);
   const handleProceed = (e) => {
     e.preventDefault();
 
