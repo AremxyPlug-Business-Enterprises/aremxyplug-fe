@@ -111,7 +111,7 @@ const [balanceStatus,setBalanceStatus ] = useState("");
              alert("Check your internet Connection, then reload the page.")
           } else if(error && error.response.status === 400){
              alert("Service for glo is currently not available, Try again later.")
-          }if(error && error.response.status === 401){
+          }else if(error && error?.response?.status === 401){
            if(error.response.headers["x-new-auth-token"] || error.response.headers.get("x-new-auth-token")){
          setLoading(true)
          const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
@@ -318,7 +318,7 @@ const [balanceStatus,setBalanceStatus ] = useState("");
       if(newBalance === "" || newBalance === null || newBalance === undefined){
          GetBalance();
          if(GetBalance){
-          setNewBalance(passDataBalance?.data ? passDataBalance?.data?.data?.data?.balance : "");
+          setNewBalance(passDataBalance?.data?.data?.data ? passDataBalance?.data?.data?.data?.balance : "");
          }
       }
      //eslint-disable-next-line
@@ -549,15 +549,15 @@ const [balanceStatus,setBalanceStatus ] = useState("");
         }else{
           return setSessionModal(true)
         }
-        }else if(error && error.response.status === 400){
+        }else if(error && error?.response?.status === 400){
            setGloPurchaseStatus(true); // Show failure popup
       setConfirm(false);
       setInputPin("");
-        } else if(error && (error.response.status === 500|| error.response.status === 400)){
+        } else if(error && (error?.response?.status === 500|| error?.response?.status === 400)){
         setGloPurchaseStatus(true); // Show failure popup
       setConfirm(false)
       setInputPin("");
-        } else if(error && error.response.status === 401){
+        } else if(error && error?.response?.status === 401){
          setSessionModal(true)
         }else {
           alert("An error has occurred, kindly check your internet connection.")

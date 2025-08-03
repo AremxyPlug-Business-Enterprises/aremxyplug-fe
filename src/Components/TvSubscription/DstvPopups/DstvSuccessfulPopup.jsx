@@ -79,9 +79,9 @@ import { Link } from "react-router-dom";
         </div>
         <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
         <div className="">
-            <div className={`text-[12px] font-extrabold my-[4%] 
+            <p className={`text-[12px] font-extrabold my-[4%] 
             text-center md:text-[20px] md:my-[3%] lg:text-[14px] lg:my-[2%] ${isDarkMode ? "text-white" : "text-[#000]"}`}
-            >Subscription Successful</div>
+            >Subscription Successful</p>
             <img
               className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[70px] lg:h-[70px]"
               src="./Gif/checkMarkGif.gif"
@@ -96,8 +96,9 @@ import { Link } from "react-router-dom";
                   From Your {" "}
                   {flagResult} {" "} to
             </p>
-            <div className="flex mt-4 flex-col gap-2 lg:gap-4 ">
-            <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between lg:text-[15px] font-[500]">
+            <div className="flex mt-4 flex-col gap-2 lg:gap-4">
+            <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between 
+            lg:text-[15px] font-[500]">
                     <span  className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Decoder Type</span>
                     <div className="flex">
                       <img src="./Images/TvSubscription/dstvIcon.svg" alt="" className="md:w-[60px] md:h-[15px] lg:w-[98px] lg:h-[18.6px]" />
@@ -151,7 +152,8 @@ import { Link } from "react-router-dom";
             </p>
         </div>
 
-        <div className="flex w-full justify-center items-center gap-[10px] pb-4 md:gap-[8.59px] lg:gap-[15px] md:pb-2">
+        <div className="flex w-full justify-center items-center 
+        gap-[10px] pb-4 md:gap-[8.59px] lg:gap-[15px] md:pb-2">
          
                
                    <button

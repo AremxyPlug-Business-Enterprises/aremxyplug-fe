@@ -180,13 +180,13 @@ const ContinueSignUp = ()=> {
               onFocus={() => handleFocus(1)}
               onBlur={() => handleBlur(1)}
             >
-              <input title="fullname"
+              <input 
                 className="outline-none flex justify-center items-center leading-[18px] lg:leading-[24px]
               font-[400] lg:font-[500] text-[14px] h-full w-full lg:h-full lg:text-[16px]"
                 type="text"
           placeholder ="Enter your full legal name"
                 value={state.fullName}
-                name="fullname"
+                name="fullName"
                 onChange={changeHandler}
               />
              

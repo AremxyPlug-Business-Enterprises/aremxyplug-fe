@@ -39,7 +39,7 @@ const ConfirmGotvPopup = ({passDataBalance, userVerifiedName}) => {
   
      const balanceStringToNum = Number(newBalance);
               let GotvNumericAmount = Number(tvAmount);
-           const updateBalance = passDataBalance?.data && (passDataBalance?.status === 200 || passDataBalance?.status === 201) && newBalance === ""  ?  passDataBalance?.data?.data?.data?.balance : newBalance;
+           const updateBalance = passDataBalance?.data?.data?.data && (passDataBalance?.status === 200 || passDataBalance?.status === 201) && newBalance === ""  ?  passDataBalance?.data?.data?.data?.balance : newBalance;
               const cleanUpBalanceToNumericOnly = Number(updateBalance?.replace(/\D/g, ""));
              let CheckSufficiency =  GotvNumericAmount > (newBalance === "" || newBalance === null ? cleanUpBalanceToNumericOnly : balanceStringToNum);
     useEffect(()=> {
@@ -61,29 +61,28 @@ const ConfirmGotvPopup = ({passDataBalance, userVerifiedName}) => {
         (
           <Modal>
        <div className={`w-full flex justify-center h-full 
-             py-[30px] px-[10px] lg:items-center
+             py-[30px] px-[15px] lg:px-[0px] lg:items-center
               items-end`}>
             <div
-              className={`bvnQuery lg:rounded-[12px] rounded-[10px]
-                 ${isDarkMode ? "bg-black text-white border rounded-[10px] border-white": "bg-white text-black"}
- ${
-                toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-                } w-[90%] md:w-[60%] overflow-auto h-[520px]`}
-            >
-              <div className="flex justify-end pr-2 mt-1 mb-3 md:mt-2 md:mb-2 lg:mb-0 lg:mt-1">
+              className={` bvnQuery lg:rounded-[12px] rounded-[10px] 
+              h-[520px] ${ toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+              } w-[100%] md:w-[60%] overflow-auto  ${isDarkMode ? "bg-black text-white border rounded-[10px] border-white": "bg-white text-black"} `}
+          >
+              <div className="flex justify-end pr-2 lg:py-[10px] py-[7px]">
               <img onClick={() => { setConfirmGotvPopup(false);}}
-                  className={`w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[26px]
-                   lg:h-[26px]`}
+                  className={`w-[25px] h-[25px] md:w-[35px] md:h-[35px] 
+                lg:w-[26px] lg:h-[26px]`}
                   src="/Images/transferImages/close-circle.png"
                   alt=""
                 />
               </div>
               <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
               <div className="mx-auto">
-                <div className="text-[12px] my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
-                  Confirm Transaction</div>
-                <div className={`text-[8px] text-[#0008] text-center mb-2 md:text-[12px]
-                 lg:text-[14px] mx-2  ${isDarkMode ? "text-white" : "text-black"}`}>
+                <p className="text-[12px] font-extrabold my-[5%] text-center md:my-[3%] md:text-[15px] 
+            lg:my-[2%] lg:text-[16px]">
+                  Confirm Transaction</p>
+                <div className={`text-[10px] font-semibold text-center mb-2
+               md:text-[12px] lg:text-[14px] mx-2 ${isDarkMode ? "text-white" : "text-black"}`}>
                   You are about to purchase&nbsp;
                   <span className={`font-extrabold text-[10px] md:text-[16px]
                      lg:text-[12px] ${isDarkMode ? "text-white" : "text-black"}`}>{valueWithoutTilde}</span>&nbsp;
@@ -93,44 +92,48 @@ const ConfirmGotvPopup = ({passDataBalance, userVerifiedName}) => {
 
                 <div className="flex flex-col gap-3 mt-5 md:mt-6 lg:mt-7">
 
-                  <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>Decoder Type</span>
+                  <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
+                  justify-between font-semibold lg:text-[16px]">
+                    <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Decoder Type</span>
                     <span className={`${isDarkMode ? "text-white" : "text-black"}`}>GOtv</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>Package</span>
+                    <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Package</span>
                     <span className={`${isDarkMode ? "text-white" : "text-black"}`}>{selectedOptionGOTV}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>Smartcard / IUC Number</span>
+                    <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Smartcard / IUC Number</span>
                     <span className={`${isDarkMode ? "text-white" : "text-black"}`}>{smartCard}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>Card Name</span>
+                    <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Card Name</span>
                     <span className={`${isDarkMode ? "text-white" : "text-black"}`}>{userVerifiedName}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>Phone Number</span>
+                    <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Phone Number</span>
                     <span className={`${isDarkMode ? "text-white" : "text-black"}`}>{mobileNumber}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>Email</span>
+                    <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Email</span>
                     <span className= {`${isDarkMode ? "text-white" : "text-black"}`}>{tvEmail}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>Amount</span>
-                    <span className= {`${isDarkMode ? "text-white" : "text-black"}`}> {`₦${tvAmount}`}</span>
+                    <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Amount</span>
+                    <span className= {`${isDarkMode ? "text-white" : "text-black"}`}> {`${(tvAmount !== "" || tvAmount !== undefined) ? tvAmount?.toLocaleString("en-Ng",{
+                      style : "currency",
+                      currency : "NGN"
+                    }): "₦"}`}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>Payment Method</span>
+                    <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Payment Method</span>
                     <span className= {`${isDarkMode ? "text-white" : "text-black"}`}>{flagResult}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>Transaction Fee</span>
+                    <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Transaction Fee</span>
                     <span className= {`${isDarkMode ? "text-white" : "text-black"}`}>₦0.00</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>Points Earned</span>
+                    <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Points Earned</span>
                     <span className="text-[#2ED173]">+2.00</span>
                   </div>
                 </div>
@@ -146,16 +149,20 @@ const ConfirmGotvPopup = ({passDataBalance, userVerifiedName}) => {
                                    alt="/"
                                  />
                                  <div className={`flex gap-[10px] items-center `}>
-                                     <p className="text-[12px] md:text-[14px] leading-[20px] lg:leading-[22px]  lg:text-[16px] font-[500]">
+                                     <p className={`text-[12px] md:text-[14px] leading-[20px] 
+                        lg:leading-[22px]  lg:text-[16px] font-[500 ${isDarkMode ? "text-white" : "text-black"}`}>
                                  Available Balance {"  "} 
                                   </p>
-                                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>
-                                   {`(${updateBalance})`}
+                                  <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+                                   {`(${updateBalance !== undefined ? updateBalance?.toLocaleString("en-Ng", {
+                                    style : "currency",
+                                    currency : "NGN"
+                                   }) : "₦"})`}
                                  </span>
                                  </div>
                                </div>
                              <span className={`text-gray-500 text-[14px] font-bold leading-[20px]
-                                  lg:text-[16px] lg:leading-[22px] text-left `}>
+                     lg:text-[16px] lg:leading-[22px] text-left `}>
                                     {balanceStatus}
                                     </span>
                              </div>
