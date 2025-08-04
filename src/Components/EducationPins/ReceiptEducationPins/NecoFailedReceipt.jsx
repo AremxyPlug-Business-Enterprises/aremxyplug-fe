@@ -242,7 +242,7 @@ export const NecoFailedReceipt = () => {
                   <span
                     className={` ${isDarkMode ? "text-white" : "text-black "}`}
                   >
-                    ₦{necoEducationAmount.toLocaleString()}.00
+                    {necoEducationAmount?`₦${necoEducationAmount.toLocaleString()}.00`:`₦`}
                   </span>
                 </div>
               </div>

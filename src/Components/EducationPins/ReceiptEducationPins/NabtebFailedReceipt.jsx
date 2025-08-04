@@ -258,7 +258,7 @@ export const NabtebFailedReceipt = () => {
                   <span
                     className={` ${isDarkMode ? "text-white" : "text-black"}`}
                   >
-                    ₦{nabtebEducationAmount.toLocaleString()}.00
+                    {nabtebEducationAmount?`₦${nabtebEducationAmount.toLocaleString()}.00`:`₦`}
                   </span>
                 </div>
               </div>

@@ -248,7 +248,7 @@ export default function NecoReceipt() {
                   <span
                     className={` ${isDarkMode ? "text-white" : "text-black"}`}
                   >
-                    ₦{necoEducationAmount.toLocaleString()}.00
+                   {necoEducationAmount?`₦${necoEducationAmount.toLocaleString()}.00`:`₦`}
                   </span>
                 </div>
               </div>

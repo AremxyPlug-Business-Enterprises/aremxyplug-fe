@@ -38,6 +38,8 @@ export default function JambReceipt() {
     setJambTransactionProduct,
     jambPinsGenerated,
     setJambPinsGenerated,
+    purchaseEduErrorType,
+    fetchedPurchaseResponse,
   } = useContext(ContextProvider);
 
   const { toggleSideBar, isDarkMode, date } = useContext(ContextProvider);
@@ -109,7 +111,7 @@ export default function JambReceipt() {
           <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
             <Link to="/">
               <img
-                className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[29px]"
+                className="w-[15px] h-[10px] md:w-[24px] md:h-[15px] lg:w-[42px] lg:h-[25px]"
                 src={AremxyPlugIcon}
                 alt=""
               />
@@ -129,7 +131,7 @@ export default function JambReceipt() {
           <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
           <div ref={contentRef}>
             {" "}
-            <h3 className="font-extrabold text-[12px] my-[2%] text-center md:text-[20px] md:my-[3%] lg:text-base lg:my-[2%]">
+            <h3 className="font-extrabold text-xs my-[2%] text-center md:text-[20px] md:my-[3%] lg:text-base lg:my-[2%]">
               Transaction Receipt
             </h3>
             <div className="w-full flex justify-center ">
@@ -139,13 +141,11 @@ export default function JambReceipt() {
                 alt="/"
               />
             </div>
-            <h3 className="font-extrabold text-[12px] mt-[2%] text-center md:text-[20px] md:my-[3%] lg:text-base lg:my-[2%]">
-              Purchase Successful on
+            <h3 className="font-extrabold text-xs mt-[2%] text-center md:text-[20px] md:my-[7px] lg:text-base lg:my-[10px]">
+              {fetchedPurchaseResponse?.data?.status === "delivered" ?  "Purchase Successful on" : "Purchase Failed on"}
             </h3>
             <span
-              className={`text-[11px] md:text-sm lg:text-base font-semibold flex justify-center items-center ${
-                isDarkMode ? "text-white" : "text-[#7C7C7C]"
-              }`}
+              className={`text-[11px] font-extrabold flex justify-center items-center`}
             >
               {date.toLocaleDateString(undefined, {
                 year: "numeric",
@@ -157,12 +157,11 @@ export default function JambReceipt() {
                 hour12: true,
               })}
             </span>
-            <div className="flex justify-center mx-[19px]">
+            
               <p
-                className="text-[10px] p-[5.729px] border-[0.573px] rounded-[6.302px] md:p-[5.868px] md:border-[0.578px] md:rounded-[6.455px]  lg:border-[1px] lg:rounded-[11px] border-[#27AE60] leading-[15px] md:leading-[20px] text-[#27AE60] bg-[#D5F6E3] lg:p-[10px] text-center my-2 md:text-sm 
-          lg:text-base lg:leading-[24px] font-medium md:mb-7"
+                className={`text-[10px] p-[5.729px] border-[0.573px] rounded-[6.302px] md:p-[5.868px] md:border-[0.578px] md:rounded-[6.455px]  lg:border lg:rounded-[11px] border-[#27AE60] leading-[15px] md:leading-[20px] text-[#27AE60] bg-[#D5F6E3] lg:p-2.5 text-center my-2 md:text-sm lg:text-base  lg:leading-6 font-medium md:mb-7 ${fetchedPurchaseResponse?.data?.status === "delivered" ? "border-[#27AE60] text-[#27AE60] bg-[#D5F6E3]" :  'border-red-500 text-red-500 bg-red-100' }`}
               >
-                You have successfully purchased{" "}
+                {fetchedPurchaseResponse?.data?.status === "delivered" ?  "You have successfully subscribed to " : purchaseEduErrorType}{" "}
                 <span
                   className=" font-extrabold text-[10.9px] md:text-[14.9px] lg:text-[16.9px]   
             "
@@ -171,24 +170,20 @@ export default function JambReceipt() {
                 </span>
                 from your {jambPaymentResult.split(" (")[0]} to{" "}
               </p>
-            </div>
-            <div className="flex flex-col gap-7  md:gap-10">
+            
+            <div className="flex flex-col gap-3">
               {/* ========================Recipient Info================== */}
-              <div className="flex flex-col gap-[3px] md:gap-[7px] w-[90%] mx-auto lg:gap-[8px]">
-                <div
-                  className="flex gap-[5px] items-center text-[10px]
-               lg:text-base font-semibold"
-                >
+              <div className="flex flex-col gap-[5px] w-[90%] mx-auto lg:gap-[10px]">
+                <div className="flex gap-[5px] items-center text-[10px] lg:text-[16px] font-extrabold">
                   <p>Recipient Info</p>
                   <img
-                    className="w-[13px] h-[13px] lg:w-[20px] lg:h-[20px]"
+                    className="w-[13px] h-[13px] lg:w-5 lg:h-5"
                     src="./Images/dashboardImages/arrowright.png"
                     alt="/"
                   />
                 </div>
                 <div
-                  className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between  
-              lg:text-base font-medium"
+                  className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between lg:text-base font-medium"
                 >
                   <p
                     className={` ${
@@ -257,17 +252,17 @@ export default function JambReceipt() {
                   <span
                     className={` ${isDarkMode ? "text-white" : "text-black"}`}
                   >
-                    ₦{jambEducationAmount.toLocaleString()}
+                    {jambEducationAmount?`₦${jambEducationAmount.toLocaleString()}.00`:`₦`}
                   </span>
                 </div>
               </div>
 
               {/* ===================Sender Info====================== */}
-              <div className="flex flex-col gap-[3px] md:gap-[7px] w-[90%] mx-auto lg:gap-[8px]">
-                <div className="flex gap-[5px] items-center text-[10px] lg:text-base font-semibold">
+              <div className="flex flex-col gap-[5px] w-[90%] mx-auto lg:gap-[10px]">
+                <div className="flex gap-[5px] items-center text-[10px] lg:text-[16px] font-extrabold">
                   <p>Sender Info</p>
                   <img
-                    className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
+                    className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-5 lg:h-5"
                     src="./Images/dashboardImages/arrowright.png"
                     alt="/"
                   />
@@ -283,10 +278,10 @@ export default function JambReceipt() {
                   <span
                     className={` ${isDarkMode ? "text-white" : "text-black"}`}
                   >
-                    {fullName}
+                    {data?.aremxyUsername ? data?.aremxyUsername : ""}
                   </span>
                 </div>
-                <div className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between  lg:text-base font-medium">
+                <div className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between lg:text-base font-medium">
                   <p
                     className={`${
                       isDarkMode ? "text-white" : "text-[#7C7C7C]"
@@ -303,16 +298,16 @@ export default function JambReceipt() {
               </div>
 
               {/* ===================Transaction Info==================== */}
-              <div className="flex flex-col gap-[3px] md:gap-[7px] w-[90%] mx-auto lg:gap-[8px]">
-                <div className="flex gap-[5px] items-center text-[10px] lg:text-base font-semibold">
+              <div className="flex flex-col gap-[5px] w-[90%] mx-auto lg:gap-[10px]">
+                <div className="flex gap-[5px] items-center text-[10px] lg:text-base font-extrabold">
                   <p>Transaction Info</p>
                   <img
-                    className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
+                    className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-5 lg:h-5"
                     src="./Images/dashboardImages/arrowright.png"
                     alt="/"
                   />
                 </div>
-                <div className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between  lg:text-base font-medium">
+                <div className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between lg:text-base font-medium">
                   <p
                     className={`${
                       isDarkMode ? "text-white" : "text-[#7C7C7C]"
@@ -329,8 +324,7 @@ export default function JambReceipt() {
                   </span>
                 </div>
                 <div
-                  className="flex text-[10px] md:text-sm w-[90%] mx-auto 
-              justify-between  lg:text-base font-medium"
+                  className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between  lg:text-base font-medium"
                 >
                   <p
                     className={`${
@@ -390,12 +384,11 @@ export default function JambReceipt() {
               </div>
             </div>
             <div
-              className={`rounded-[8px] bg-[#E2F3FF] mx-4 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px] ${
-                isDarkMode ? "bg-slate-800" : "bg-[#E2F3FF]"
-              }`}
+              className={`bg-[#F2FAFF] w-[90%] mx-auto p-2 my-5 flex justify-between items-center md:p-[9px] lg:p-2.5 rounded-[5px] lg:rounded-[10px]
+              ${isDarkMode ? "bg-slate-800 " : "bg-[#F2FAFF]"}`}
             >
               <p
-                className={`text-[8px] text-center mx-auto w-[200px] md:text-sm md:w-[80%] lg:text-base font-medium ${
+                className={`text-[10px] leading-[13px] text-center md:text-sm md:leading-[18px] font-semibold ${
                   isDarkMode ? "text-white" : "text-[#7C7C7C]"
                 }`}
               >
@@ -407,14 +400,13 @@ export default function JambReceipt() {
           </div>
 
           <div
-            className="flex w-full justify-center 
-        gap-[10px] md:gap-[20px] px-[20px] mb-[5%]  "
+            className="flex w-[70%] mx-auto mb-[5%] md:w-[60%] "
           >
             <button
               onClick={() => {
                 jambShareClick();
               }}
-              className={`bg-[#04177f] w-[111px] cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[150px] md:rounded-[8px] md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+              className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-xs font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
             >
               Share Receipt
             </button>
@@ -422,7 +414,11 @@ export default function JambReceipt() {
               onClick={() => {
                 jambSaveAsPDFClick();
               }}
-              className={`bg-[#ffffff] border-[1px] w-[111px] border-[#0003]  cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[150px] md:rounded-[8px] md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%] ${isDarkMode ? "text-black" : "text-black"}`}
+              className={`bg-[#ffffff] border w-[111px] flex justify-center items-center mx-auto cursor-pointer text-xs font-extrabold  ${
+                isDarkMode
+                  ? " bg-black border-white"
+                  : " bg-[#ffffff] border-[#0003]"
+              } h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
             >
               Save as PDF
             </button>
@@ -433,21 +429,19 @@ export default function JambReceipt() {
         <div
           className={`${
             isDarkMode ? "mb-[1%]" : "mb-[5%]"
-          } flex gap-[15px] justify-center items-center lg:mb-[%]`}
+          } flex gap-[15px] justify-center items-center lg:mb-[20px] mt-[120px] mb-[50px] lg:mt-11`}
         >
-          <div
-            className="flex gap-2 justify-center items-center mb-[50px] md:mt-40 mt-[100px] lg:mt-[100px]"
-          >
-            <h2 className="text-[8px] leading-[12px] lg:text-base">
+          
+            <h2 className="text-[10px] leading-[12px] lg:text-base">
               You need help?
             </h2>
             <Link
               to={`/ContactUs`}
-              className="text-[8px] leading-[12px] text-white bg-primary px-2 py-1 rounded-full lg:text-base lg:px-[10px] lg:py-[10px]"
+              className={`${styles.contactus} bg-[#04177f] text-[8px] p-1 text-white rounded-[8px] lg:text-[14px]`}
             >
               Contact Us
             </Link>
-          </div>
+          
         </div>
       </div>
     </DashBoardLayout>

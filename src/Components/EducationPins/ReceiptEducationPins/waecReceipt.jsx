@@ -266,7 +266,7 @@ export default function WaecReceipt() {
                   <span
                     className={` ${isDarkMode ? "text-white" : "text-black"}`}
                   >
-                    ₦{educationAmount.toLocaleString()}.00
+                   {educationAmount?`₦${educationAmount.toLocaleString()}.00`:`₦`}
                   </span>
                 </div>
               </div>

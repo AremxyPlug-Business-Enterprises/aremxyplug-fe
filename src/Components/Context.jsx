@@ -895,7 +895,11 @@ export const Context = ({ children }) => {
   const [ikedcShowDescription, setIkedcShowDescription] = useState("");
   const [ikedcTransactionProduct, setIkedcTransactionProduct] = useState("");
   const [ikedcFullName, setIkedcFullName] = useState("");
+  const [ikedcWalletBalance, setIkedcWalletBalance] = useState("");
+  const [ikedcPaymentResult, setIkedcPaymentResult] = useState("");
   const [ikedcFetchedResponse, setIkedcFetchedResponse] = useState({});
+  const [purchaseElectricityErrorType, setPurchaseElectricityErrorType] =
+    useState("");
 
   // ibedc
   const [ibedcFullName, setIbedcFullName] = useState("");
@@ -915,6 +919,8 @@ export const Context = ({ children }) => {
   const [ibedcShowDescription, setIbedcShowDescription] = useState("");
   const [ibedcTransactionProduct, setIbedcTransactionProduct] = useState("");
   const [ibedcFetchedResponse, setIbedcFetchedResponse] = useState({});
+  const [ibedcWalletBalance, setIbedcWalletBalance] = useState("");
+  const [ibedcPaymentResult, setIbedcPaymentResult] = useState("");
 
   // aedc
   const [aedcFullName, setAedcFullName] = useState("");
@@ -934,6 +940,8 @@ export const Context = ({ children }) => {
   const [aedcShowDescription, setAedcShowDescription] = useState("");
   const [aedcTransactionProduct, setAedcTransactionProduct] = useState("");
   const [aedcFetchedResponse, setAedcFetchedResponse] = useState({});
+  const [aedcWalletBalance, setAedcWalletBalance] = useState("");
+  const [aedcPaymentResult, setAedcPaymentResult] = useState("");
 
   // bedc
   const [bedcFullName, setBedcFullName] = useState("");
@@ -953,6 +961,8 @@ export const Context = ({ children }) => {
   const [bedcShowDescription, setBedcShowDescription] = useState("");
   const [bedcTransactionProduct, setBedcTransactionProduct] = useState("");
   const [bedcFetchedResponse, setBedcFetchedResponse] = useState({});
+  const [bedcWalletBalance, setBedcWalletBalance] = useState("");
+  const [bedcPaymentResult, setBedcPaymentResult] = useState("");
 
   // eedc
   const [eedcFullName, setEedcFullName] = useState("");
@@ -972,6 +982,8 @@ export const Context = ({ children }) => {
   const [eedcShowDescription, setEedcShowDescription] = useState("");
   const [eedcTransactionProduct, setEedcTransactionProduct] = useState("");
   const [eedcFetchedResponse, setEedcFetchedResponse] = useState({});
+  const [eedcWalletBalance, setEedcWalletBalance] = useState("");
+  const [eedcPaymentResult, setEedcPaymentResult] = useState("");
 
   // ekedc
   const [ekedcFullName, setEkedcFullName] = useState("");
@@ -991,6 +1003,8 @@ export const Context = ({ children }) => {
   const [ekedcShowDescription, setEkedcShowDescription] = useState("");
   const [ekedcTransactionProduct, setEkedcTransactionProduct] = useState("");
   const [ekedcFetchedResponse, setEkedcFetchedResponse] = useState({});
+  const [ekedcWalletBalance, setEkedcWalletBalance] = useState("");
+  const [ekedcPaymentResult, setEkedcPaymentResult] = useState("");
 
   // jed
   const [jedFullName, setJedFullName] = useState("");
@@ -1010,6 +1024,8 @@ export const Context = ({ children }) => {
   const [jedShowDescription, setJedShowDescription] = useState("");
   const [jedTransactionProduct, setJedTransactionProduct] = useState("");
   const [jedFetchedResponse, setJedFetchedResponse] = useState({});
+  const [jedWalletBalance, setJedWalletBalance] = useState("");
+  const [jedPaymentResult, setJedPaymentResult] = useState("");
 
   // kaedco
   const [kaedcoFullName, setKaedcoFullName] = useState("");
@@ -1029,6 +1045,8 @@ export const Context = ({ children }) => {
   const [kaedcoShowDescription, setKaedcoShowDescription] = useState("");
   const [kaedcoTransactionProduct, setKaedcoTransactionProduct] = useState("");
   const [kaedcoFetchedResponse, setKaedcoFetchedResponse] = useState({});
+  const [kaedcoWalletBalance, setKaedcoWalletBalance] = useState("");
+  const [kaedcoPaymentResult, setKaedcoPaymentResult] = useState("");
 
   // kedco
   const [kedcoFullName, setKedcoFullName] = useState("");
@@ -1048,6 +1066,8 @@ export const Context = ({ children }) => {
   const [kedcoShowDescription, setKedcoShowDescription] = useState("");
   const [kedcoTransactionProduct, setKedcoTransactionProduct] = useState("");
   const [kedcoFetchedResponse, setKedcoFetchedResponse] = useState({});
+  const [kedcoWalletBalance, setKedcoWalletBalance] = useState("");
+  const [kedcoPaymentResult, setKedcoPaymentResult] = useState("");
 
   // phed
   const [phedFullName, setPhedFullName] = useState("");
@@ -1067,6 +1087,8 @@ export const Context = ({ children }) => {
   const [phedShowDescription, setPhedShowDescription] = useState("");
   const [phedTransactionProduct, setPhedTransactionProduct] = useState("");
   const [phedFetchedResponse, setPhedFetchedResponse] = useState({});
+  const [phedWalletBalance, setPhedWalletBalance] = useState("");
+  const [phedPaymentResult, setPhedPaymentResult] = useState("");
 
   //------------Airtime Conversion---------
   const [inputValueA, setInputValueA] = useState("");
@@ -1795,6 +1817,12 @@ export const Context = ({ children }) => {
     setIkedcFetchedResponse,
     ikedcTransactionProduct,
     setIkedcTransactionProduct,
+    purchaseEduErrorType,
+    setPurchaseEduErrorType,
+    ikedcWalletBalance,
+    setIkedcWalletBalance,
+    ikedcPaymentResult,
+    setIkedcPaymentResult,
 
     // ibedc
     ibedcFullName,
@@ -1831,6 +1859,10 @@ export const Context = ({ children }) => {
     setIbedcFetchedResponse,
     ibedcTransactionProduct,
     setIbedcTransactionProduct,
+    ibedcWalletBalance,
+    setIbedcWalletBalance,
+    ibedcPaymentResult,
+    setIbedcPaymentResult,
 
     // aedc
     aedcFullName,
@@ -1867,6 +1899,10 @@ export const Context = ({ children }) => {
     setAedcFetchedResponse,
     aedcTransactionProduct,
     setAedcTransactionProduct,
+    aedcWalletBalance,
+    setAedcWalletBalance,
+    aedcPaymentResult,
+    setAedcPaymentResult,
 
     // bedc
     bedcFullName,
@@ -1905,6 +1941,10 @@ export const Context = ({ children }) => {
     setBedcFetchedResponse,
     bedcTransactionProduct,
     setBedcTransactionProduct,
+    bedcWalletBalance,
+    setBedcWalletBalance,
+    bedcPaymentResult,
+    setBedcPaymentResult,
 
     // eedc
     eedcFullName,
@@ -1939,6 +1979,10 @@ export const Context = ({ children }) => {
     setEedcFetchedResponse,
     eedcTransactionProduct,
     setEedcTransactionProduct,
+    eedcWalletBalance,
+    setEedcWalletBalance,
+    eedcPaymentResult,
+    setEedcPaymentResult,
 
     // ekedc
     ekedcFullName,
@@ -1975,6 +2019,10 @@ export const Context = ({ children }) => {
     setEkedcFetchedResponse,
     ekedcTransactionProduct,
     setEkedcTransactionProduct,
+    ekedcWalletBalance,
+    setEkedcWalletBalance,
+    ekedcPaymentResult,
+    setEkedcPaymentResult,
 
     // jed
     jedFullName,
@@ -2011,6 +2059,10 @@ export const Context = ({ children }) => {
     setJedFetchedResponse,
     jedTransactionProduct,
     setJedTransactionProduct,
+    jedWalletBalance,
+    setJedWalletBalance,
+    jedPaymentResult,
+    setJedPaymentResult,
 
     // kaedco
     kaedcoFullName,
@@ -2047,6 +2099,10 @@ export const Context = ({ children }) => {
     setKaedcoFetchedResponse,
     kaedcoTransactionProduct,
     setKaedcoTransactionProduct,
+    kaedcoWalletBalance,
+    setKaedcoWalletBalance,
+    kaedcoPaymentResult,
+    setKaedcoPaymentResult,
 
     // kedco
     kedcoFullName,
@@ -2083,6 +2139,10 @@ export const Context = ({ children }) => {
     setKedcoFetchedResponse,
     kedcoTransactionProduct,
     setKedcoTransactionProduct,
+    kedcoWalletBalance,
+    setKedcoWalletBalance,
+    kedcoPaymentResult,
+    setKedcoPaymentResult,
 
     // phed
     phedFullName,
@@ -2119,6 +2179,10 @@ export const Context = ({ children }) => {
     setPhedFetchedResponse,
     phedTransactionProduct,
     setPhedTransactionProduct,
+    phedWalletBalance,
+    setPhedWalletBalance,
+    phedPaymentResult,
+    setPhedPaymentResult,
 
     //Airtime Conversion
     inputValueA,
@@ -2342,8 +2406,8 @@ export const Context = ({ children }) => {
     setWaecFullName,
     waecTransactionProduct,
     setWaecTransactionProduct,
-    purchaseEduErrorType,
-    setPurchaseEduErrorType,
+    purchaseElectricityErrorType,
+    setPurchaseElectricityErrorType,
 
     //======NECO PINS ==========
     necoQuantityResult,

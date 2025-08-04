@@ -197,8 +197,7 @@ export const WaecFailedReceipt = () => {
                   />
                 </div>
                 <div
-                  className="flex text-[10px] md:text-sm 
-                w-[90%] mx-auto justify-between lg:text-base font-medium"
+                  className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between lg:text-base font-medium"
                 >
                   <p
                     className={` ${
@@ -271,7 +270,7 @@ export const WaecFailedReceipt = () => {
                   <span
                     className={` ${isDarkMode ? "text-white" : "text-black "}`}
                   >
-                    ₦{educationAmount.toLocaleString()}.00
+                    {educationAmount?`₦${educationAmount.toLocaleString()}.00`:`₦`}
                   </span>
                 </div>
               </div>

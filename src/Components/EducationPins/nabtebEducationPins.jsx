@@ -5,7 +5,7 @@ import HeroComponent from "./heroComponent";
 import arrowRight from "../EducationPins/imagesEducation/educationArrowRight.svg";
 import arrowDown from "../EducationPins/imagesEducation/arrow-down.svg";
 import { useState, useEffect } from "react";
-import { Link, uNavigatese } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import nigerianFlag from "./imagesEducation/Nigeriaflag.svg";
 import americaFlag from "./imagesEducation/Usa.svg";
 import britainFlag from "./imagesEducation/Britain.svg";
@@ -827,7 +827,7 @@ export default function NabtebEducationPins() {
                   </label>
                   {/* input */}
                   <input
-                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-5 md:p-0 text-[13.2px]  sm:p-3 text-sm flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-normal leading-[10.4px] md:text-[13px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer focus:outline-0 outline-0 border lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center  
+                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-5 md:p-0 text-[13.2px]  sm:p-3 text-sm flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-normal leading-[10.4px] md:text-[13px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-not-allowed focus:outline-0 outline-0 border lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center  
                     ${
                       isDarkMode
                         ? "bg-black text-white border-white"
@@ -976,10 +976,10 @@ export default function NabtebEducationPins() {
                     <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
 
                     <div className="mx-auto">
-                      <h2 className="text-xs my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-base">
+                      <h2 className="text-xs my-[5%] text-center font-extrabold md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-base">
                         Confirm Transaction
                       </h2>
-                      <p className="text-[8px] text-center mb-2 md:text-xs lg:text-sm mx-2">
+                      <p className="text-[10px] font-semibold text-center mb-2 md:text-xs lg:text-sm mx-2">
                         You are about to purchase{" "}
                         <span className="font-extrabold text-[10px] md:text-base lg:text-xs">
                           {nabtebExamType} PIN (₦
@@ -1114,15 +1114,15 @@ export default function NabtebEducationPins() {
                             alt="/"
                           />
 
-                          <div className="flex gap-[10px] items-center">
+                          <div className="flex gap-[10px] items-center font-medium">
                             <p
-                              className={`text-xs md:text-sm leading-[20px] lg:leading-[22px] lg:text-base font-[500 ${
+                              className={`text-xs md:text-sm leading-[20px] lg:leading-[22px] lg:text-base ${
                                 isDarkMode ? "text-white" : "text-black"
                               }`}
                             >
                               Available Balance {"  "}
                             </p>
-                            <span>
+                            <span className={`${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
                               {nabtebWalletBalance !== ""
                                 ? nabtebWalletBalance
                                 : "₦"}
@@ -1141,10 +1141,10 @@ export default function NabtebEducationPins() {
                     </div>
 
                     <button
-                      className={`my-[5%] w-[90%] flex justify-center items-center mx-auto cursor-pointer text-sm font-extrabold h-[50px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] lg:rounded-[12px] md:text-base lg:text-sm lg:w-[163px] lg:h-[38px] lg:my-[2%] ${
+                      className={`my-[5%] w-[90%] flex justify-center items-center mx-auto text-sm font-extrabold h-[50px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] lg:rounded-[12px] md:text-base lg:text-sm lg:w-[163px] lg:h-[38px] lg:my-[2%] ${
                         CheckSufficiency
                           ? "bg-gray-400 cursor-not-allowed"
-                          : "bg-primary"
+                          : "bg-primary cursor-pointer"
                       }`}
                       onClick={() => {
                         confirmButton();
@@ -1245,7 +1245,7 @@ export default function NabtebEducationPins() {
                         </Link>
                       </div>
                       {errorMessage && (
-                        <p className="text-xs text-center text-red-600 font-medium">
+                        <p className="font-bold text-sm  lg:text-base md:font-medium text-center leading-[18px] lg:leading-[20px] text-red-600">
                           Incorrect Pin
                         </p>
                       )}
@@ -1520,6 +1520,7 @@ export default function NabtebEducationPins() {
                     setInputPin("");
                     handleResetFields();
                     setPurchaseEduErrorType("");
+                    navigate("/NabtebEducationPin");
                   }}
                   className="w-[18px] h-[18px] md:w-[25px] cursor-pointer md:h-[25px] lg:w-[35px] lg:h-[35px]"
                 />
