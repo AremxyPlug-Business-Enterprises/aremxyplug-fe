@@ -38,8 +38,7 @@ export default function EducationMain() {
           </div>
           {/* Examinations to click to request for the pins */}
           <div
-            className="flex flex-wrap justify-between w-full gap-[15px] md:h-[70px] md:flex-row md:flex-nowrap  
-      md:gap-[21.27px] lg:h-[120px]  md:w-[100%] lg:gap-[37px]"
+            className="flex flex-wrap justify-between w-full gap-[15px] md:h-[70px] md:flex-row md:flex-nowrap md:gap-[21.27px] lg:h-[120px]  md:w-[100%] lg:gap-[37px]"
           >
             {/* WAEC Examination */}
             <Link
@@ -53,22 +52,13 @@ export default function EducationMain() {
         `}
             >
               <div
-                className="flex h-[100%] p-[5.868px] gap-[3.35px] md:p-[5.868px] md:gap-[2.347px] rounded-[2.934px]
-       border-[0.587px] border-[solid] border-[black] border-opacity-[30%]
-      shadow-[0px_0.58686px_0.34722px_0px_rgba(0,0,0,0.25)]
-       lg:shadow-[0px_1px_4px_0px_rgba(0,0,0,0.25)] 
-       lg:border-[1px]  lg:border-[solid]
-       lg:border-[black] lg:border-opacity-[30%]
-         lg:p-[10px] lg:rounded-[5px] 
-       lg:gap-[6px]  cursor-pointer"
+                className="flex h-[100%] p-[5.868px] gap-[3.35px] md:p-[5.868px] md:gap-[2.347px] rounded-[2.934px] border-[0.587px] border-[solid] border-[black] border-opacity-[30%] shadow-[0px_0.58686px_0.34722px_0px_rgba(0,0,0,0.25)] lg:shadow-[0px_1px_4px_0px_rgba(0,0,0,0.25)] lg:border-[1px] lg:border-[black] lg:border-opacity-[30%] lg:p-[10px] lg:rounded-[5px] lg:gap-[6px]  cursor-pointer"
               >
                 {/* Waec Logo */}
                 <img className="md:w-1/2 w-[42%]" src={Waec} alt="Waec logo" />
                 {/* text */}
                 <h2
-                  className="w-1/2 font-semibold text-[13px] leading-[12.675px] 
-         md:text-[10.563px] md:leading-[12.675px] 
-         lg:text-[18px] lg:leading-[21.6px] self-center"
+                  className="w-1/2 font-semibold text-[13px] leading-[12.675px] md:text-[10.563px] md:leading-[12.675px] lg:text-[18px] lg:leading-[21.6px] self-center"
                 >
                   WAEC
                 </h2>
@@ -107,14 +97,7 @@ export default function EducationMain() {
         `}
             >
               <div
-                className="flex h-[100%] p-[7.868px] gap-[3.35px] md:p-[5.868px] md:gap-[2.347px] rounded-[2.934px]
-       border-[0.587px] border-[solid] border-[black] border-opacity-[30%]
-      shadow-[0px_0.58686px_0.34722px_0px_rgba(0,0,0,0.25)]
-       lg:shadow-[0px_1px_4px_0px_rgba(0,0,0,0.25)] 
-       lg:border-[1px]  lg:border-[solid]
-       lg:border-[black] lg:border-opacity-[30%]
-         lg:p-[10px] lg:rounded-[5px] 
-       lg:gap-[6px]  cursor-pointer "
+                className="flex h-[100%] p-[7.868px] gap-[3.35px] md:p-[5.868px] md:gap-[2.347px] rounded-[2.934px] border-[0.587px] border-[black] border-opacity-[30%] shadow-[0px_0.58686px_0.34722px_0px_rgba(0,0,0,0.25)] lg:shadow-[0px_1px_4px_0px_rgba(0,0,0,0.25)] lg:border-[1px] lg:border-[black] lg:border-opacity-[30%] lg:p-[10px] lg:rounded-[5px] lg:gap-[6px]  cursor-pointer "
               >
                 {/* Nabteb Logo */}
                 <img
@@ -124,9 +107,7 @@ export default function EducationMain() {
                 />
                 {/* text */}
                 <h2
-                  className="w-1/2 font-semibold text-[13px] leading-[12.675px]
-          md:text-[10.563px] md:leading-[12.675px]
-         lg:text-[18px] lg:leading-[21.6px] self-center"
+                  className="w-1/2 font-semibold text-[13px] leading-[12.675px] md:text-[10.563px] md:leading-[12.675px] lg:text-[18px] lg:leading-[21.6px] self-center"
                 >
                   NABTEB
                 </h2>
@@ -144,15 +125,7 @@ export default function EducationMain() {
         `}
             >
               <div
-                className="flex h-[100%] p-[6.868px] gap-[3.35px] md:p-[5.868px] md:gap-[2.347px]
-         rounded-[2.934px]
-       border-[0.587px] border-[solid] border-[black] border-opacity-[30%]
-      shadow-[0px_0.58686px_0.34722px_0px_rgba(0,0,0,0.25)]
-       lg:shadow-[0px_1px_4px_0px_rgba(0,0,0,0.25)] 
-       lg:border-[1px]  lg:border-[solid]
-       lg:border-[black] lg:border-opacity-[30%]
-         lg:p-[10px] lg:rounded-[5px] 
-       lg:gap-[6px]  cursor-pointer"
+                className="flex h-[100%] p-[6.868px] gap-[3.35px] md:p-[5.868px] md:gap-[2.347px] rounded-[2.934px] border-[0.587px] border-[black] border-opacity-[30%] shadow-[0px_0.58686px_0.34722px_0px_rgba(0,0,0,0.25)] lg:shadow-[0px_1px_4px_0px_rgba(0,0,0,0.25)] lg:border-[1px] lg:border-[black] lg:border-opacity-[30%] lg:p-[10px] lg:rounded-[5px] lg:gap-[6px]  cursor-pointer"
               >
                 {/* Jamb Logo */}
                 <img
@@ -162,9 +135,7 @@ export default function EducationMain() {
                 />
                 {/* text */}
                 <h2
-                  className="w-1/2 font-semibold text-[13px] leading-[12.675px]
-         md:text-[10.563px] md:leading-[12.675px]
-         lg:text-[18px] lg:leading-[21.6px] self-center"
+                  className="w-1/2 font-semibold text-[13px] leading-[12.675px] md:text-[10.563px] md:leading-[12.675px] lg:text-[18px] lg:leading-[21.6px] self-center"
                 >
                   JAMB
                 </h2>
