@@ -114,7 +114,7 @@ export const AedcReceipt = () => {
       html2canvas(content).then((canvas) => {
         const imgData = canvas.toDataURL("image/png");
         pdf.addImage(imgData, "PNG", 10, 10, 190, 0);
-        pdf.save("page.pdf");
+        pdf.save("AEDC-Success-Receipt.pdf");
       });
     }
   };

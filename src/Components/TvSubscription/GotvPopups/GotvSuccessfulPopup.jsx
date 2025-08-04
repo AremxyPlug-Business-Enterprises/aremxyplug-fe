@@ -4,7 +4,6 @@ import { useContext } from "react";
 import { ContextProvider } from "../../Context";
 import { Modal } from "../../Screens/Modal/Modal";
 import { Link } from "react-router-dom";
-import styles from "../../AirTimePage/AirtimeVtu.module.css";
 
 
  const GotvSuccessfulPopup = ({handleReceivedData, userVerifiedName}) => {
@@ -15,11 +14,11 @@ import styles from "../../AirTimePage/AirtimeVtu.module.css";
      toggleSideBar,
      mobileNumber,
      flagResult,
-     cardName,
+    // cardName,
      smartCard,
      tvEmail,
-       
-     selectedOptionGOTV,
+     isDarkMode,
+       selectedOptionGOTV,
   } = useContext(ContextProvider)
 
   //  const GotvOrderInfo = (gotvOrderId !== undefined || gotvOrderId.length > 1) ? gotvOrderId : "";
@@ -35,20 +34,23 @@ import styles from "../../AirTimePage/AirtimeVtu.module.css";
        {gotvSuccessful &&
             (
             <Modal>
-           
-       <div className={`${styles.successfulTwo} ${
-              toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-            } md:w-[45%] w-[90%] overflow-auto`}>
-        <div className="flex justify-between items-center mx-[3%] my-[2%] md:my-[1%]">
-        <Link to="/">
+             <div  className={`w-full flex justify-center h-full 
+             py-[30px] px-[15px] lg:items-center
+              items-end`}>
+       <div className={` bvnQuery lg:rounded-[12px] rounded-[10px] 
+              h-[520px] ${ toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+              } w-[100%] md:w-[60%] overflow-auto  ${isDarkMode ? "bg-black text-white border rounded-[10px] border-white": "bg-white text-black"} `}>
+        <div className="flex justify-between items-center 
+        mx-[3%] my-[2%] md:my-[1%]">
+        <div>
               <img
                     onClick={() => { setGotvSuccessful(false);}}
                 className=" w-[15px] h-[10px] md:w-[24px] md:h-[15px] lg:w-[42px] lg:h-[25px]"
                 src="/Images/login/arpLogo.png"
                 alt=""
               />
-                </Link>
-            <Link to='/TvSubscription'>
+                </div>
+            <Link to='/GoTv'>
               <img
                     onClick={() => { setGotvSuccessful(false);}}
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
@@ -59,49 +61,62 @@ import styles from "../../AirTimePage/AirtimeVtu.module.css";
         </div>
         <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
         <div className="">
-            <div className="text-[12px] my-[4%] font-medium text-center md:text-[20px] md:my-[3%] lg:text-[14px] lg:my-[2%]"
-            >Subscription Successful</div>
+            <p className={`text-[12px] font-extrabold my-[4%] 
+            text-center md:text-[20px] md:my-[3%] lg:text-[14px] lg:my-[2%] ${isDarkMode ? "text-white" : "text-[#000]"}`}
+            >Subscription Successful</p>
             <img
               className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[70px] lg:h-[70px]"
               src="./Gif/checkMarkGif.gif"
               alt="/"
                 />
-                <div className="text-[#7C7C7C] w-[97%] mx-auto text-[10px] font-bold text-center mb-2 md:pb-2 lg:pb-3 md:text-[14px] lg:text-[14px]">You have successfully subscribed &nbsp;
-                  <span className="text-black font-bold text-[10px] md:text-[16px] lg:text-[14px]">{valueWithoutTilde}</span>&nbsp;
+                <div  className={`font-semibold w-[97%] mx-auto text-[10px] text-center
+               mb-2 md:pb-2 lg:pb-3 md:text-[14px] lg:text-[14px]
+               ${isDarkMode ? "text-white" : "text-black" }`}>
+                You have successfully subscribed &nbsp;
+                  <span className={` ${isDarkMode? "text-white" : "text-black"} font-bold 
+                   md:text-[16px] lg:text-[14px]`}>{valueWithoutTilde}</span>&nbsp;
                   From Your {" "}
                   {flagResult} {" "} to
                 </div>
-            <div className="flex flex-col mt-4 gap-2 lg:gap-4 ">
-            <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto font-semibold justify-between lg:text-[15px]">
-                    <span className="text-[#7C7C7C]">Decoder Type</span>
+            <div className="flex mt-4 flex-col gap-2 lg:gap-4 ">
+            <div className="flex text-[10px] md:text-[14px] w-[90%] 
+            mx-auto justify-between 
+            lg:text-[15px] font-[500]">
+                    <span className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Decoder Type</span>
                     <div className="flex">
                       <img src="./Images/TvSubscription/gotvIcon.svg" alt="" className="md:w-[60px] md:h-[15px] lg:w-[100px] lg:h-[18.6px]" />
-                      <span>GOtv</span>
+                      <span className={`${isDarkMode ? "text-white" : "text-black"}`}>GOtv</span>
                     </div>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto font-semibold justify-between lg:text-[15px]">
-                    <span className="text-[#7C7C7C]">Package</span>
-                    <span>{selectedOptionGOTV}</span>
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between 
+            lg:text-[15px] font-[500]">
+                    <span className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Package</span>
+                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>{selectedOptionGOTV}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto font-semibold justify-between lg:text-[15px]">
-                    <span className="text-[#7C7C7C]">Smartcard / IUC Number</span>
-                    <span>{smartCard}</span>
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between 
+            lg:text-[15px] font-[500]">
+                    <span className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Smartcard / IUC Number</span>
+                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>{smartCard}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto font-semibold justify-between lg:text-[15px]">
-                    <span className="text-[#7C7C7C]">Card Name</span>
-                    <span>{userVerifiedName}</span>
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between 
+            lg:text-[15px] font-[500]">
+                    <span className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Card Name</span>
+                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>{userVerifiedName}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto font-semibold justify-between lg:text-[15px]">
-                    <span className="text-[#7C7C7C]">Phone Number</span>
-                    <span>{mobileNumber}</span>
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between 
+            lg:text-[15px] font-[500]">
+                    <span className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Phone Number</span>
+                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>{mobileNumber}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto font-semibold justify-between lg:text-[15px]">
-                    <span className="text-[#7C7C7C]">Email</span>
-                    <span>{tvEmail}</span>
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between 
+            lg:text-[15px] font-[500]">
+                    <span className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Email</span>
+                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>{tvEmail}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] font-semibold mx-auto justify-between lg:text-[15px]">
-                    <span className="text-[#7C7C7C]">Payment Method</span>
-                    <span>{flagResult}</span>
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between 
+            lg:text-[15px] font-[500]">
+                    <span className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Payment Method</span>
+                    <span className={`${isDarkMode ? "text-white" : "text-black"}`}>{flagResult}</span>
                 </div>
                 {/* <div className="flex text-[10px] md:text-[14px] w-[90%] font-semibold mx-auto justify-between lg:text-[15px]">
                     <span className="text-[#7C7C7C]">Order Number</span>
@@ -109,34 +124,51 @@ import styles from "../../AirTimePage/AirtimeVtu.module.css";
                 </div> */}
             </div>
         </div>
-        <div className="bg-[#F2FAFF] mx-10 h-[45px] my-5 flex justify-between 
-        items-center px-[4%] md:h-[65px] lg:h-[75px]">
-            <div className="text-[7px] text-center mx-auto w-[171px] md:text-[14px] md:w-[80%] lg:text-[14px] font-semibold">
-            The decoder has been subscribed successfully. Please kindly confirm from the smartcard / iuc. You can contact us for any further assistance.
-            </div>
+        <div className={`bg-[#F2FAFF] w-[90%]   mx-auto p-[8px] my-5 flex justify-between 
+        items-center md:p-[9px] lg:p-[10px] rounded-[5px] lg:rounded-[10px]
+         ${
+                isDarkMode ? "bg-slate-800 " : "bg-[#F2FAFF]"
+              }`}>
+            <p className={`text-[10px] leading-[13px] text-center
+             md:text-[14px] md:leading-[18px] lg:text-[14px]  font-semibold 
+             ${isDarkMode ? "text-white" : "text-black"}`}>
+            The decoder has been subscribed successfully.
+             Please kindly confirm from the smartcard / iuc.
+              You can contact us for any further assistance.
+            </p>
         </div>
 
-        <div className="flex w-full justify-center items-center gap-[10px] md:gap-[8.59px] lg:gap-[15px] pb-4 md:pb-2">
+        <div className="flex w-full justify-center items-center 
+        gap-[10px] pb-4 md:gap-[8.59px] lg:gap-[15px] md:pb-2">
     
                 <button
                     onClick={() => {
                       setGotvSuccessful(false);
                       window.location.reload();
                     }}
-                className={`bg-[#04177f] w-[111px] lg:w-[200px] md:w-[99px] h-[40px] md:h-[24px] lg:h-[42px] lg:my-[2%] flex justify-center items-center cursor-pointer text-[12px] md:text-[12px] lg:text-[16px] font-semibold text-white rounded-[6px] md:rounded-[7px] lg:rounded-[12px]`}
+               className={`bg-[#04177f] w-[111px] lg:w-[200px] md:w-[99px]
+                   h-[40px] md:h-[24px] lg:h-[42px] lg:my-[2%] flex justify-center 
+                   items-center cursor-pointer text-[12px] md:text-[12px] lg:text-[16px]
+                    font-semibold text-white rounded-[6px] md:rounded-[7px] 
+                    lg:rounded-[12px]`}
               >
                 Done
                   </button>
                
               
                 <button onClick ={handleReceipt}
-                style={{boxShadow : '0px 0px 2.0368096828460693px 0px #00000040'}} className={`border-[1px]  w-[111px] lg:w-[200px] md:w-[99px] h-[40px] md:h-[24px] lg:h-[42px] lg:my-[2%] flex justify-center items-center cursor-pointer text-[12px] md:text-[12px] lg:text-[16px] font-semibold rounded-[6px] md:rounded-[7px] lg:rounded-[12px]`}
+              style={{boxShadow : '0px 0px 2.0368096828460693px 0px #00000040'}} 
+                className={`border-[1px]  w-[111px] lg:w-[200px] md:w-[99px]
+                   h-[40px] md:h-[24px] lg:h-[42px] lg:my-[2%] flex justify-center
+                    items-center cursor-pointer text-[12px] md:text-[12px] lg:text-[16px]
+                     font-semibold rounded-[6px] md:rounded-[7px] lg:rounded-[12px]`}
                 >
                   Receipt
                 </button>
                 
         </div>
        </div>   
+       </div>
             </Modal>
           )}
        </>

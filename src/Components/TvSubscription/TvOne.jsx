@@ -76,6 +76,9 @@ const GoTv = () => {
     setTvSubscriptionResponse,
     newBalance,
     setNewBalance,
+    purchaseGotvErrorType,
+     setPurchaseGotvErrorType,
+    toggleSideBar
   } = useContext(ContextProvider);
   //const [successConfig, setSuccessConfig] = useState(false);
   const [passDataBalance, setPassDataBalance] = useState({});
@@ -240,15 +243,96 @@ const GoTv = () => {
             `balance`,
             setIsLoading,
             SuccessHandler,
-            (ErrorType) => {
+            //Handling the error Use Cases of the Unauthorised inside
+            // of the statement.
+            async(ErrorType) => {
               if (ErrorType === "unauthorised") {
                 return setSessionModal(true);
-              }
+              }else if(ErrorType === "Server error"){
+                  await GetFunction(
+        "balance",
+        setIsLoading,
+        SuccessHandler,
+       async(ErrorType)=> {
+        if(ErrorType === "Server error"){
+          alert("Failed to retrieve the balance.")
+        }else if(ErrorType === "Network error" || ErrorType === "User error"){
+              alert("Kindly check your internet connection to retrieve balance.")
+        }else {
+          alert("An unexpected error has occured on attempt to retrieve balance.")
+        }
+       },
+        setPassDataBalance
+      );
+       }else if(ErrorType === "Network error" || ErrorType === "User error"){
+           alert("Kindly check your internet connection to retrieve balance")
+       }else {
+        alert("An unexpected error has occured on attempt to retrieve the balance")
+       }
             },
              setPassDataBalance
           );
+        }else if(ErrorType === "Server error"){
+            await GetFunction(
+        "balance",
+        setIsLoading,
+        SuccessHandler,
+       async(ErrorType)=> {
+         if(ErrorType === "unauthorised"){
+            await GetFunction(
+        "balance",
+        setIsLoading,
+        SuccessHandler,
+        async(ErrorType)=> {
+          if(ErrorType === "unauthorised"){
+            return setSessionModal(true)
+          }else if(ErrorType === "Server error"){
+               await GetFunction(
+        "balance",
+        setIsLoading,
+        SuccessHandler,
+       async(ErrorType)=> {
+        //if Statements
+      //We run again cause the previous one was interrupted by 401
+      //Let us re-run server error
+      if(ErrorType === "Server error"){
+        alert("Failed to retrieve the balance")
+      }else if(ErrorType === "unauthorised"){
+        return sessionModal(true)
+      }else if(ErrorType === "Network error" || ErrorType === "User error"){
+       alert("Kindly check your internet connection to retrieve balance")
+      }else{
+        alert("An Unexpected error occured in attempt to retrieve balance")
+      }
+
+       },
+        setPassDataBalance
+      );
+          }else if(ErrorType === "Network error" || ErrorType === "User error"){
+            alert("Kindly check your internet connection to retrieve the balance")
+          }else{
+            alert("An Unexpected error occured in attempt to retrieve balance")
+          }
+        },
+        setPassDataBalance
+      );
+    }
+          else if(ErrorType === "Network error" || ErrorType === "User error"){
+            //The operation was interrupted by a network error
+            alert("Kindly check your internet connection to retrieve balance.")
+         }else {
+          //An alien error has occured with the re-run of the "Server error" ErrorType
+          alert("An unexpected error occured in attempt to retrieve the balance.")
+         }
+       },
+        setPassDataBalance
+      );
+        }else if(ErrorType === "Network error" || ErrorType === "User error"){
+
+        }else{
+          alert("An unexpected error occured in attempt to retrieve balance.")
         }
-      };
+      }
       await GetFunction(
         "balance",
         setIsLoading,
@@ -263,7 +347,7 @@ const GoTv = () => {
       GetBalance();
       if (GetBalance) {
         setNewBalance(
-          passDataBalance?.data?.data
+          passDataBalance?.data?.data?.data !== undefined
             ? passDataBalance?.data?.data?.data?.balance
             : ""
         );
@@ -347,19 +431,27 @@ const GoTv = () => {
     setMethodPayment(!methodPayment);
     document.querySelector(".methodDrop").classList.toggle("DropIt");
   }
-  const updateBalance = passDataBalance?.data?.data
+  const updateBalance = passDataBalance?.data?.data?.data !== undefined
     ? passDataBalance?.data?.data?.data?.balance
     : "";
 
   //console.log(passDataBalance);
   //console.log(updateBalance);
+  const updateBalanceToNumber = Number(updateBalance)
+  const newBalanceToNumber = Number(newBalance)
   const methodOptions = [
     {
       method: "NGN Wallet",
       balance:
         newBalance === "" || newBalance === null || newBalance === undefined
-          ? `(${updateBalance})`
-          : `(${newBalance})`,
+          ? `(${updateBalance?.length > 1 ? updateBalanceToNumber?.toLocaleString("en-NG", {
+               style : "currency",
+               currency : "NGN"
+          }) : ""})`
+          : `(${newBalance?.length > 1 ? newBalanceToNumber?.toLocaleString("en-Ng", {
+            style : "currency",
+            currency : "NGN"
+          }) : ""})`,
       flag: nigerianFlag,
       id: 1,
     },
@@ -444,8 +536,14 @@ const GoTv = () => {
             DataJson,
             successHandler,
             (ErrorType) => {
-              if (ErrorType === "unauthorised") {
+              if(ErrorType === "unauthorised") {
                 return setSessionModal(true);
+              }else if(ErrorType ==="Server error"){
+                setPurchaseGotvErrorType("Server Error: Purchase Failed")
+              }else if(ErrorType === "Network error" || ErrorType === "User error"){
+              setPurchaseGotvErrorType("Network Error : Purchase Failed")
+              }else{
+                setPurchaseGotvErrorType("An Unexpected error has occured")
               }
             },
             setTvSubscriptionResponse
@@ -467,21 +565,91 @@ const GoTv = () => {
       );
     };
 
-    const setFailedConfig = async (ErrorType) => {
-      if (ErrorType === "unauthorised") {
-        await VerifyTransPin(
-          inputPin,
-          (ErrorType) => {
-            if (ErrorType === "unauthorised") {
-              return setSessionModal(true);
-            }
+      const setFailedConfig= async(ErrorType)=> {
+         if(ErrorType === "unauthorised"){
+           //The concept behind this code : A user session is regulated by tokens,
+           // the moment we notice it expires we try to get the token for the user before
+           // a transaction completed(i.e we get it during a transaction process), when unauthorised
+           //we get the necessary tokens, then re-run the transaction, there are different errors that 
+           //could occur, when re-running such as: it could return same unauthorised errorType,
+           //a server error and even network connection issue or an unexpected error
+           //hence, the reason we account for other types of errors even while re-running,
+           //due to the inpredictability of the output of the transaction.
+       await VerifyTransPin(
+         inputPin,
+          async(ErrorType)=> {
+           if(ErrorType === "unauthorised"){
+             return setSessionModal(true)
+           }else if(ErrorType === "Server error"){
+            await VerifyTransPin(
+         inputPin,
+         (ErrorType)=> {
+           if(ErrorType === "Server error"){
+           alert("Failed to process your request, try again some other time")
+           }else if(ErrorType === "Network error" || ErrorType === "User error"){
+             alert("Kindly check your internet connection.")
+           }else{
+             alert("Failed to process your request, try some other time.")
+           }
+         },
+         setIsLoading,
+         setErrorMessage,
+       GotvHandler,
+      );
+           }
           },
-          setIsLoading,
-          setErrorMessage,
-          GotvHandler
-        );
-      }
-    };
+         setIsLoading,
+         setErrorMessage,
+       GotvHandler,
+      );
+      //Handling of user error or network error for the general
+      //  conditional statement under the setPinFailed
+     }else if(ErrorType === "Server error"){
+       //The server could return a 500 then be successful
+       //  on next call, so let us try twice.
+        await VerifyTransPin(
+         inputPin,
+         async(ErrorType)=> {
+   if(ErrorType === "Server error"){
+    alert("Failed to process your request try some other time.")
+   }else if(ErrorType === "unauthorised"){
+   // Error When "Server error" occured on first try then the server notices 
+   // an "unauthorised" ErrorType.
+      await VerifyTransPin(
+         inputPin,
+          (ErrorType)=> {
+           //handling of ErrorTypes after unauthorisation occurs in server error re-try
+           if(ErrorType === "unauthorised"){
+             return setSessionModal(true);
+           }else if(ErrorType === "Server error"){
+             alert("The server is currently experiencing a downtime, try again some other time.")
+           }else if(ErrorType === "User error" || ErrorType === "Network error"){
+             alert("Kindly check your internet connection")
+           }
+          },
+         setIsLoading,
+         setErrorMessage,
+       GotvHandler,
+      );
+      //End of the "unauthorised" ErrorType handling on "server error"
+      //  ErrorType re-run.
+   
+   }else if(ErrorType === "User error" || ErrorType === "Network error"){
+     //A network error occured  during trying to re-try the code on server error
+     alert("Kindly check your internet connection");
+   }
+         },
+         setIsLoading,
+         setErrorMessage,
+       GotvHandler,
+      );
+          //The general error message on an "Network error, User error" ErrorType
+         }else if( ErrorType === "User error"
+       || ErrorType === "Network error" ){
+     alert("Kindly check your internet connection")
+     }
+       }
+   
     await VerifyTransPin(
       inputPin,
       setFailedConfig,
@@ -511,26 +679,100 @@ const GoTv = () => {
         iuc_number: UserTvSubscription,
       };
       const bodyToJson = JSON.stringify(body);
-      const SuccessHandler = () => {
+      const SuccessHandler = (response) => {
         console.log("Succesfully verified tv subscription account.");
         setSmartCard(UserTvSubscription);
+        setCardName(response?.data?.data?.data?.name);
       };
-      const FailedHandler = async (ErrorType) => {
-        if (ErrorType === "unauthorised") {
-          await PostFunction(
-            "bills/verify",
-            setGotvLoading,
-            bodyToJson,
-            SuccessHandler,
-            (ErrorType) => {
-              if (ErrorType === "unauthorised") {
-                return setSessionModal(true);
-              }
-            },
-            setGotvVerifyResponse
-          );
+     const FailedHandler = async(ErrorType)=> {
+       //1.
+     if(ErrorType === "unauthorised"){
+       //Handling  the various cases that could occur on 
+       //the ErrorType "unauthorised"
+        await PostFunction("bills/verify",
+          setGotvLoading, 
+          bodyToJson, 
+          SuccessHandler,
+          async(ErrorType)=> {
+         if(ErrorType === "unauthorised"){
+          return setSessionModal(true);
+           }else if(ErrorType === "Server error"){
+             //A server error returns only if the auth Token
+             //has been retrieved then communication with the server occurs
+             //which wouldn't have returned "Server error", if the 
+             //"unauthorised" ErrorType occured as a result of authToken
+             //being expired and not retrieved through cookies
+             //  but 401 returning as error cause.
+             //hence we are running again in the ErrorType "Server error" statememt
+             //from the unauthorization which was the error from
+             //inception or beginning.
+             //Not also leaving handling the other ErrorTypes the UI 
+             //could be vulnerable to on re-try on server error.
+            await PostFunction("bills/verify", setGotvLoading, 
+       bodyToJson,
+       SuccessHandler, 
+      (ErrorType)=> {
+       if(ErrorType === "Server error"){
+         alert("Failed to process your request, try again some other time.")
+       }else if(ErrorType === "Network error" || ErrorType === "User error"
+          ){
+           alert("Kindly check your internet connection")
+          }
+      },
+        setGotvVerifyResponse)
+        //2.Handling the ErrorType "Server error" on the general conditional statement
+           
+           }else if(ErrorType === "Network error" || ErrorType === "User error"){
+           //3. Handling the ErrorType "Network error, User error" for the general "unauthorised" 
+           //function
+           alert("Kindly check your internet connection.")
+           }
+     
+        }, setGotvVerifyResponse);
+        //2. Handling the server for the general conditional 
+        // statement under the failedHandler
+       }else if(ErrorType === "Server error"){
+              await PostFunction("bills/verify", setGotvLoading, 
+       bodyToJson,
+       SuccessHandler, 
+       async(ErrorType)=> {
+        if(ErrorType === "Server error"){
+          alert("Failed to process your request, try again some other time.")
+        }else if(ErrorType === "unauthorised"){
+        
+             await PostFunction("bills/verify", setGotvLoading, 
+       bodyToJson,
+       SuccessHandler, 
+      (ErrorType)=> {
+       if(ErrorType==="unauthorised"){
+         setSessionModal(true)
+       }else if(ErrorType === "Server error"){
+        alert("Failed to process your request, try again some other time")
+       }else if(ErrorType === "Network error" || ErrorType === "User error"){
+         alert("Kindly check your internet connection")
+       }else{
+         alert("An unexpected error has occured.")
+       }
+      },
+        setGotvVerifyResponse)
+        }else if(ErrorType === "Network error" || ErrorType === "User error") {
+     //Handling the network error for the server error of the general function
+     alert("Kindly check your internet connection.")
+        }else{
+         //When an alien errorType occured
+         alert("An unexpected error has occured, try again some other time.")
         }
-      };
+       },
+        setGotvVerifyResponse)
+        //3.Handling the ErrorType "Network error, User error"
+     }else if(ErrorType === "Network error" || ErrorType === "User error"){
+       alert("Kindly check your internet connection")
+     }else {
+       //4. Handling the "alien" ErrorType.
+        alert("An unexpected error has occured, try again some other time.")
+     }
+     }
+     
 
       await PostFunction(
         "bills/verify",
@@ -564,6 +806,7 @@ const GoTv = () => {
     setFlagResult("");
     setTvWalletBalance("");
     setFailedPopup(false);
+    setCardName("")
     //  navigate("/GoTv");
   };
 
@@ -922,7 +1165,10 @@ const GoTv = () => {
                     ? "bg-black text-white border border-white"
                     : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
                 }`}
-                      value={`₦ ${tvAmount}`}
+                      value={`${tvAmount !== undefined ? tvAmount?.toLocaleString("en-NG", {
+                      style : "currency",
+                      currency : "NGN"
+                      }) : "₦"}`}
                       readOnly
                     />
                   </div>
@@ -954,12 +1200,19 @@ const GoTv = () => {
                     {methodPayment && (
                       <div
                         className={`absolute top-[102%] z-0 flex flex-col w-[100%]  
-                          cursor-pointer border-[1px] border-gray-100 rounded-[3px]  ${
-                            isDarkMode
-                              ? "bg-black text-white border border-white"
-                              : "bg-white"
-                          }`}
-                      >
+                          cursor-pointer border-[1px] border-gray-100 rounded-[3px]  
+                          
+                  ${
+                    isDarkMode
+                      ? "bg-black border-white rounded-[7px] text-white"
+                      : "text-[#7C7C7C] bg-white rounded-br-[7px] rounded-bl-[7px] lg:rounded-br-[14px] lg:rounded-bl-[14px]"
+                  }
+                  ${
+                    toggleSideBar
+                      ? "lg:w-[31.5%] lg:top-[100.5%]"
+                      : "lg:w-[38.5%] lg:top-[105.3%]"
+                  }  shadow-xl border w-full lg:w-full  flex flex-col divide-y absolute top-20`}
+                >
                         {methodOptions.map((methodOption) => {
                           return (
                             <div
@@ -1002,17 +1255,20 @@ const GoTv = () => {
                                   }
                                 });
                               }}
-                              className={`flex gap-[10px] lg:py-[15px] 
-                                 pl-[10px] pb-[20px] pt-[20px] md:pb-0 md:pt-0 border-b-[1px]
-                                 border-b-gray-400 cursor-pointer  items-center  ${
-                                  methodOption.id !== 1 && !isDarkMode
-                                    ? "bg-gray-300 cursor-not-allowed"
-                                    : methodOption.id !== 1 && isDarkMode
-                                    ? "bg-black"
-                                    : methodOption.id === 1 && !isDarkMode
-                                    ? "bg-white"
-                                    : "bg-black"
-                                } `}
+                             className={`py-[18px] md:py-[14px] font-normal px-2 flex
+                         items-center gap-[5px] text-[12px] md:text-[14px] 
+                         lg:text-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
+                          transition-all duration-300 hover:bg-slate-50
+                       ${
+                         isDarkMode
+                           ? "text-white hover:bg-slate-800 bg-black "
+                           : "text-[#7E7E7E]"
+                       } ${
+                        methodOption.method === "NGN Wallet"
+                          ? "cursor-pointer"
+                          : "cursor-not-allowed opacity-50"
+                      }`}
+                      
                               key={methodOption.id}
                             >
                               <img
@@ -1021,18 +1277,12 @@ const GoTv = () => {
                                 alt=""
                               />
 
-                              <h2
-                                className={`text-[14px] leading-[10.4px]
-               font-[500] text-[#7C7C7C]  
-         md:text-[13.227px] md:leading-[17.195px] 
-         lg:text-[16px] lg:leading-[20.8px] self-center cursor-pointer   ${
-           isDarkMode ? "text-white bg-black" : "text-[#7C7C7C] "
-         }`}
-                              >
+                            
+                              
                                 {methodOption.method +
                                   " " +
                                   methodOption.balance}
-                              </h2>
+                              
                             </div>
                           );
                         })}
@@ -1116,7 +1366,7 @@ const GoTv = () => {
                 alt="Failed"
               />
               <p className="text-sm text-gray-600 mb-8">
-                An unexpected error has occurred, please try again.
+                {purchaseGotvErrorType}
               </p>
               <div className="flex gap-[10px] justify-between w-full px-[10px]">
                 <button

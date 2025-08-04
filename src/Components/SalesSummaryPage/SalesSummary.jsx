@@ -22,13 +22,14 @@ import { Link } from "react-router-dom/dist/react-router-dom.development";
 import { GetFunction, HandleUserSession } from '../ApiCollection.jsx/ApiBuck';
 import { Loader } from '../Loader/Loader';
 import { Modal } from '../Screens/Modal/Modal';
+import NoRecordImage from "../Add&SelectRecipient/RecipientImages/NoRecordImage.svg";
 
 export default function SalesSummaryPage ()  {
 
     const [isOpen1, setIsOpen1] = useState(false); 
-    const [isOpen2, setIsOpen2] = useState(false);
-    const [isOpen3, setIsOpen3] = useState(false); 
-    const [isOpen4, setIsOpen4] = useState(false);
+    // const [isOpen2, setIsOpen2] = useState(false);
+    // const [isOpen3, setIsOpen3] = useState(false); 
+    // const [isOpen4, setIsOpen4] = useState(false);
     const [isOpen5, setIsOpen5] = useState(false);
     const [loading, setLoading] = useState(false);
     const [sessionModal, setSessionModal] = useState(false);
@@ -193,6 +194,7 @@ const symbolValue = selected === "USD" ? "$" : selected === "AUD" ?
 // const handleSelectedOption = ()=> {
  
 // }
+console.log(salesResponse?.data?.data?.data?.data)
 const product = ["Airtime Top-up", "Data Top-up", "Bills payment"]
     return (
 
@@ -295,15 +297,19 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
        {methodBalance && (
                 <div className={`absolute top-[60%] z-[2] flex
                    flex-col w-[100%] lg:w-[30%] md:w-[50%]  cursor-pointer 
-                   justify-center bg-slate-600   ${
-                    isDarkMode 
-        ? "bg-black text-white border border-white" 
-        : "bg-white"
-                  }`}>
+                   justify-center bg-slate-600   ${  isDarkMode
+                                         ? "bg-black border-white rounded-[7px] text-white"
+                                         : "text-[#7C7C7C] bg-white rounded-br-[7px] rounded-bl-[7px] lg:rounded-br-[14px] lg:rounded-bl-[14px]"
+                                     }
+                                     ${
+                                       toggleSideBar
+                                         ? "lg:w-[31.5%] lg:top-[100.5%]"
+                                         : "lg:w-[38.5%] lg:top-[105.3%]"
+                                     } shadow-xl border w-full lg:w-full  flex flex-col divide-y absolute top-20`}>
             {methodOptions.map((method)=> (
              <div onClick ={()=> {
                setSelectedBalance(method.id === 1   ? 
-                            method.balance : method.option === "NGN Wallet" ?
+                            method.balance : method.method === "NGN Wallet" ?
                             ( newBalance === "" || newBalance === null ? `(${updateBalance})` :
                             `(${newBalance})`) : method.balance);
                           setMethodImage(method.flag);
@@ -313,22 +319,27 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
                           setMethodBalance(false);
                             document.querySelector('.methodDrop').classList.remove('DropIt');
                }}
-             className={`pb-[20px] pt-[20px] z-[100px] md:pb-0 md:pt-0 justify-start
-                           flex gap-[10px] lg:py-[15px] py-[10px] pl-[10px]
-        cursor-pointer  items-center shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]  
-
-           ${method.id !== 1 && !isDarkMode  ? "bg-gray-300 cursor-not-allowed" : 
-            method.id !== 1 && isDarkMode ? "bg-black" : method.id === 1 && !isDarkMode ? "bg-white" : "bg-black" }
-                  `}
+              className={`py-[18px] md:py-[14px] font-normal px-2 flex
+                         items-center gap-[5px] text-[12px] md:text-[14px] 
+                         lg:text-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
+                          transition-all duration-300 hover:bg-slate-50
+                       ${
+                         isDarkMode
+                           ? "text-white hover:bg-slate-800 bg-black"
+                           : "text-[#7E7E7E] "
+                       } ${
+                        method.method === "NGN Wallet"
+                          ? "cursor-pointer"
+                          : "cursor-not-allowed opacity-50"
+                      }`}
                         key={method.id}>
       <img className='lg:w-[29.27px] w-3 lg:h-[29.45px]
                     h-3 lg:left-0 lg:top-[0.91px] md:w-[16.77px]
                     md:h-[16.77px] ' src={method.flag} alt="" />
                   
-     <p className="text-neutral-500 text-[9px] md:text-[13px] lg:text-xl lg:font-medium 
-                  md:leading-3 lg:leading-tight">
+    
                  {method.method} : {method.balance}
-                </p>
+                
               
             </div>
             
@@ -429,23 +440,17 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
                         
                           GetTransactionInformation("airtime")
                           setIsOpen1(false);
-                          setIsOpen2(true);
-                          setIsOpen3(false);
-                          setIsOpen4(false);
+                         
                         }else if(option === "Data Top-up"){
                          
                           GetTransactionInformation("data")
                              setIsOpen1(false);
-                          setIsOpen2(false);
-                          setIsOpen3(true);
-                          setIsOpen4(false)
+                        
                         }else if(option === "Bills payment"){
                          
                            GetTransactionInformation("bills")
                           setIsOpen1(false);
-                          setIsOpen2(false);
-                          setIsOpen3(false);
-                          setIsOpen4(true)
+                         
                         }
                       }
                       }
@@ -591,20 +596,51 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
      
  {/* product, quantity and total amount */}
     <div className="flex md:w-full w-full border-opacity-100 
-      lg:w-full shadow border-black flex-col">
-    <div class="w-full h-[25px] lg:pr-0 pl-[8.67px] pr-[1.33px] pt-[8.17px] pb-[6.83px]
-     md:w-full lg:w-full lg:pl-[23px]
+      lg:w-full shadow border-black  flex-col">
+
+        <div className="justify-between md:w-full 
+        w-full h-[25px] lg:pr-0 pl-[8.67px] pr-[1.33px] pt-[8.17px] pb-[6.83px]
+    lg:w-full lg:pl-[23px]
      lg:h-[42px] md:h-[24.06px]  md:pl-[14.90px] md:pr-[2.29px]
-      md:pt-[6.32px] md:pb-[5.74px] bg-indigo-200 justify-evenly
-       lg:justify-between md:justify-evenly items-center inline-flex">
-        <div className="self-stretch md:justify-between md:w-full lg:justify-between 
-        lg:gap-[300px]  lg:w-full justify-start items-start gap-[66px] md:gap-[113.44px] inline-flex">
-            <div className="w-[56.33px] md:w-[96.82px] lg:w-full text-black text-[8px] md:text-[12px] lg:text-[16px] font-semibold  md:leading-3 lg:leading-tight  leading-[10.40px]">Products</div>
-            <div className="w-[53.33px] md:w-[91.67px] lg:w-full text-black text-[8px] md:text-[12px] lg:text-[16px] font-semibold  md:leading-3 lg:leading-tight  leading-[10.40px]">Quantity</div>
-            <div className="w-[60.33px] md:w-[103.70px] lg:w-full text-black text-[8px] md:text-[12px] lg:text-[16px] font-semibold md:leading-3 lg:leading-tight leading-[10.40px]">Total Amount</div>
+      md:pt-[6.32px] md:pb-[5.74px] bg-indigo-200 
+        items-center lg:justify-between 
+        lg:gap-[300px]  md:gap-[113.44px] flex">
+          <div className={`w-[33.33%] flex  justify-center items-center h-full`}>
+      <p className={`text-[12px] leading-[14px ] font-[500] leading-[16px] lg:leading-[20px] text-center`}>Product</p>
+      </div>
+       <div className={`w-[33.33%] flex  justify-center items-center h-full`}>
+      <p className={`text-[12px] leading-[14px]  font-[500] lg:leading-20px] text-center`}>Quantity</p>
+      </div>
+       <div className={`w-[33.33%] flex  justify-center items-center h-full`}>
+      <p className={`text-[12px] font-[500] leading-[16px]`}>Amount</p>
+      </div>
         </div>
+        {/* {salesResponse?.data?.data?.data} */}
+         {salesResponse?.data?.data?.data?.data !== undefined && salesResponse?.data?.data?.data?.data?.length > 1 ? (
+            salesResponse?.data?.data?.data?.data.map((item)=> (
+               <div className=" justify-between md:w-full 
+        w-full h-[25px] lg:pr-0 pl-[8.67px] pr-[1.33px] 
+    lg:w-full lg:pl-[23px] 
+     lg:h-[42px] md:h-[24.06px]  md:pl-[14.90px] md:pr-[2.29px]
+      md:pt-[6.32px] md:pb-[5.74px] 
+        items-center  lg:justify-between  py-[20px]
+        lg:gap-[300px] md:gap-[113.44px] flex">
+         
+      <div className={`w-[33.33%] flex  justify-center items-center h-full`}>
+      <p className={`text-[10px] font-[500] leading-[16px] text-center`}>{ item?.product}</p>
+      </div>
+       <div className={`w-[33.33%] flex  justify-center items-center h-full `}>
+      <p className={`text-[10px] font-[500] leading-[16px] text-center`}>{item?.quantity}</p>
+      </div>
+       <div className={`w-[33.33%] flex  justify-center items-center h-full`}>
+      <p className={`text-[10px] font-[500] leading-[16px]`}>{item?.total_amount}</p>
+      </div>
+ 
     </div>
-    <div className="w-[312px] lg:h-[101px]  h-[33.67px] md:w-full md:h-[0px] "></div>
+            ))) :(
+        <img className="lg:w-full lg:h-[456px] flex self-center w-[" src={NoRecordImage} alt="No record found"/> 
+            )}
+   
   </div>
 
 
@@ -647,708 +683,7 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
 
 
 {/* airtime top-up dropdown */}
-{isOpen2 && (
-  <div className=''>
-  <div
-  className={`${styles.viewTransact} ${
-    isDarkMode ? "bg-black border" : "bg-white"
-  }`}
-  >
-  
-  
-  <div className="flex  justify-start items-center lg:w-full absolute bg-white  md:mt-[-665px]
-    lg:mt-[-967px] mt-[-492px] lg:h-[1100px] md:h-[1000px] h-[653px] mb-5 border-b-[1.2px] flex-col">
-  <div className={`${  
-    toggleSideBar
-    ? "lg:gap-[360px]"
-    : "lg:gap-[445px]"}
-  lg:w-full md:w-full md:h-[70.86px] md:pl-[14.90px]  md:pr-[9.29px]  lg:h-[101px] 
-  lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px]  pr-[1.33px] pt-3 pb-[11.67px] bg-white 
-  justify-between md:justify-between
-   lg:justify-start 
-  items-center inline-flex`}>
-      
-          <div class="lg:w-[100px] lg:text-base md:w-[96.82px] md:whitespace-nowrap  md:text-[12px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium leading-[10.40px]">MTN VTU</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
-      
-  </div>
-  <div class={`${
-      toggleSideBar
-      ? "lg:gap-[360px]"
-      : "lg:gap-[445px]"}
-    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px]
-   lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white 
-   justify-between md:justify-between lg:justify-start  items-center inline-flex`}>
-      
-          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[12px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium leading-[10.40px]">MTN SNS</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
-      
-  </div>
-  <div class={`${
-      toggleSideBar
-      ? "lg:gap-[360px]"
-      : "lg:gap-[445px]"}
-    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px]
-   lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px]
-    pt-3 pb-[11.67px] bg-white justify-between md:justify-between  md:whitespace-nowrap lg:justify-start  items-center inline-flex`}>
-      
-          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[12px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium  leading-[10.40px]">AIRTEL VTU</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium  leading-[10.40px]">100</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium  leading-[10.40px]">(₦10,000.00)</div>
-      </div>
-  
-  <div class={`${
-      toggleSideBar
-      ? "lg:gap-[360px]"
-      : "lg:gap-[445px]"}
-    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px]
-   lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px]
-    pt-3 pb-[11.67px] bg-white justify-between md:justify-between lg:justify-start md:whitespace-nowrap
-     items-center inline-flex`}>
-      
-          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[12px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium  leading-[10.40px]">AIRTEL SNS</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium  leading-[10.40px]">100</div>
-          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium  leading-[10.40px]">(₦10,000.00)</div>
-      
-  </div>
-  <div class={`${
-      toggleSideBar
-      ? "lg:gap-[360px]"
-      : "lg:gap-[445px]"}
-    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px]
-   lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.66px] bg-white
-    justify-between md:justify-between lg:justify-start  md:whitespace-nowrap items-center inline-flex`}>
-      
-          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[12px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[7px] font-medium  leading-[9.10px]">GLO VTU</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium  leading-[10.40px]">100</div>
-          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium  leading-[10.40px]">(₦10,000.00)</div>
-      
-  </div>
-  <div class={`${
-      toggleSideBar
-      ? "lg:gap-[360px]"
-      : "lg:gap-[445px]"}
-    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px]
-   lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] lg:justify-start  pr-[1.33px] pt-2 pb-[7.67px] bg-white
-    justify-between md:justify-between md:whitespace-nowrap items-center inline-flex`}>
-      
-          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[12px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[7px] font-medium leading-[9.10px]">GLO SNS</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
-      
-  </div>
-  <div class={`${
-      toggleSideBar
-      ? "lg:gap-[360px]"
-      : "lg:gap-[445px]"}
-    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px] 
-  lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.67px] bg-white
-   justify-between md:justify-between items-center lg:justify-start  md:whitespace-nowrap inline-flex`}>
-      
-          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[12px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[7px] font-medium  leading-[9.10px]">9MOBILE VTU</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium  leading-[10.40px]">100</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium  leading-[10.40px]">(₦10,000.00)</div>
-      
-  </div>
-  <div class={`${
-      toggleSideBar
-      ? "lg:gap-[360px]"
-      : "lg:gap-[445px]"}
-    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px]
-   lg:pl-[26px] lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.67px] bg-white
-    justify-between md:justify-between lg:justify-start  md:whitespace-nowrap items-center inline-flex`}>
-      
-          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[96.82px]  md:text-[12px] md:leading-3 w-[56.33px] text-black text-[7px] font-medium leading-[9.10px]">9MOBILE SNS</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
-      
-  </div>
-  <div class={`${
-      toggleSideBar
-      ? "lg:gap-[360px]"
-      : "lg:gap-[445px]"}
-    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px] lg:pl-[26px]
-   lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-[7px] pb-[6.67px] bg-white justify-between
-   md:justify-between lg:justify-start  md:whitespace-nowrap items-center inline-flex`}>
-      
-          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[12px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium leading-[10.40px]">SMILE AIRTIME</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100</div>
-          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
-      
-  </div>
-  <div class={`${
-      toggleSideBar
-      ? "lg:gap-[360px]"
-      : "lg:gap-[445px]"}
-    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px] lg:pl-[26px]
-   lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
-   md:justify-between lg:justify-start items-center inline-flex `}>
-      
-          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium leading-[10.40px]">INTERNATIONAL AIRTIME</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100</div>
-          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
-      </div>
-  
-  
-  
-      <footer className="flex justify-center  text-center gap-[20px] mt-[270px] mb-[10px]
-       md:mt-[350px] lg:mb-[30px] lg:mt-[185px]">
-              <p className="text-[8px] md:text-[12px] lg:text-[12px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]">
-                You need help?
-              </p>
-  
-              <Link to="/ContactUs">
-                <div
-                  className={`${
-                    isDarkMode ? "border " : "bg-[#04177f]"
-                  } text-[8px] p-1 text-white md:text-[10px] rounded-[8px] lg:w-[100px] w-[70px] lg:text-[12px]`}
-                >
-                  Contact Us
-                </div>
-              </Link>
-            </footer>
-            </div>
-  </div>
-  </div>
-  
-)}
 
-
-
-
-
-{/* data top-up dropdown */}
-{isOpen3 && (
-  <div className=' bg-white'>
-
-
-  <div className="flex  justify-start items-center lg:w-full shadow relative bg-white  md:mt-[-670px]
-    lg:mt-[-967px] mt-[-492px] lg:h-[1590px] md:h-[1390px]  h-[1050px]
-     border mb-5 border-b-[1.2px] flex-col">
-  <div className={`${  
-    toggleSideBar
-    ? "lg:gap-[360px]"
-    : "lg:gap-[445px]"}
-  lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px]  lg:h-[101px] 
-  lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px]  pr-[1.33px] pt-3 pb-[11.67px] bg-white 
-  justify-between md:justify-between
-   lg:justify-start 
-  items-center inline-flex`}>
-      
-          <div class="lg:w-[100px] lg:text-base md:w-[96.82px] md:whitespace-nowrap  md:text-[12px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium leading-[10.40px]">MTN SME</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100GB</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
-      
-  </div>
-  <div class={`${
-      toggleSideBar
-      ? "lg:gap-[360px]"
-      : "lg:gap-[445px]"}
-    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px]
-   lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white 
-   justify-between md:justify-between lg:justify-start  items-center inline-flex`}>
-      
-          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[12px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium leading-[10.40px]">MTN SME2</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100GB</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
-      
-  </div>
-  <div class={`${
-      toggleSideBar
-      ? "lg:gap-[360px]"
-      : "lg:gap-[445px]"}
-    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px]
-   lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px]
-    pt-3 pb-[11.67px] bg-white justify-between md:justify-between  md:whitespace-nowrap lg:justify-start  items-center inline-flex`}>
-      
-          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[12px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium  leading-[10.40px]">MTN CG</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium  leading-[10.40px]">100GB</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium  leading-[10.40px]">(₦10,000.00)</div>
-      </div>
-  
-  <div class={`${
-      toggleSideBar
-      ? "lg:gap-[360px]"
-      : "lg:gap-[445px]"}
-    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px]
-   lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px]
-    pt-3 pb-[11.67px] bg-white justify-between md:justify-between lg:justify-start md:whitespace-nowrap
-     items-center inline-flex`}>
-      
-          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[12px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium  leading-[10.40px]">MTN GIFTING</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium  leading-[10.40px]">100GB</div>
-          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium  leading-[10.40px]">(₦10,000.00)</div>
-      
-  </div>
-  <div class={`${
-      toggleSideBar
-      ? "lg:gap-[360px]"
-      : "lg:gap-[445px]"}
-    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px]
-   lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.66px] bg-white
-    justify-between md:justify-between lg:justify-start  md:whitespace-nowrap items-center inline-flex`}>
-      
-          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[12px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[7px] font-medium whitespace-nowrap leading-[9.10px]">MTN DIRECT <br/> COUPON</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium  leading-[10.40px]">100GB</div>
-          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium  leading-[10.40px]">(₦10,000.00)</div>
-      
-  </div>
-  <div class={`${
-      toggleSideBar
-      ? "lg:gap-[360px]"
-      : "lg:gap-[445px]"}
-    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px]
-   lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] lg:justify-start  pr-[1.33px] pt-2 pb-[7.67px] bg-white
-    justify-between md:justify-between md:whitespace-nowrap items-center inline-flex`}>
-      
-          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[12px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[7px] font-medium whitespace-nowrap leading-[9.10px]">MTN GENERAL<br /> BUNDLES</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100GB</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
-      
-  </div>
-  <div class={`${
-      toggleSideBar
-      ? "lg:gap-[360px]"
-      : "lg:gap-[445px]"}
-    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] 
-  lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.67px] bg-white
-   justify-between md:justify-between items-center lg:justify-start  md:whitespace-nowrap inline-flex`}>
-      
-          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[12px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[7px] font-medium  leading-[9.10px]">AIRTEL CG</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium  leading-[10.40px]">100GB</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium  leading-[10.40px]">(₦10,000.00)</div>
-      
-  </div>
-  <div class={`${
-      toggleSideBar
-      ? "lg:gap-[360px]"
-      : "lg:gap-[445px]"}
-    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
-   lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
-   md:justify-between lg:justify-start items-center inline-flex `}>
-      
-          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium whitespace-nowrap leading-[10.40px]">AIRTEL GIFTING</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100GB</div>
-          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
-      </div>
-  
-      <div class={`${
-      toggleSideBar
-      ? "lg:gap-[360px]"
-      : "lg:gap-[445px]"}
-    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
-   lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
-   md:justify-between lg:justify-start items-center inline-flex `}>
-      
-          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium whitespace-nowrap leading-[10.40px]">AIRTEL GENERAL<br/> BUNDLE</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100GB</div>
-          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
-      </div>
-
-      <div class={`${
-      toggleSideBar
-      ? "lg:gap-[360px]"
-      : "lg:gap-[445px]"}
-    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
-   lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
-   md:justify-between lg:justify-start items-center inline-flex `}>
-      
-          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium leading-[10.40px]">GLO CG</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100GB</div>
-          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
-      </div>
-
-      <div class={`${
-      toggleSideBar
-      ? "lg:gap-[360px]"
-      : "lg:gap-[445px]"}
-    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
-   lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
-   md:justify-between lg:justify-start items-center inline-flex `}>
-      
-          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium whitespace-nowrap leading-[10.40px]">GLO GIFTING</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100GB</div>
-          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
-      </div>
-
-      <div class={`${
-      toggleSideBar
-      ? "lg:gap-[360px]"
-      : "lg:gap-[445px]"}
-    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
-   lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
-   md:justify-between lg:justify-start items-center inline-flex `}>
-      
-          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium whitespace-nowrap leading-[10.40px]">GLO GENERAL<br/> BUNDLES</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100GB</div>
-          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
-      </div>
-
-      <div class={`${
-      toggleSideBar
-      ? "lg:gap-[360px]"
-      : "lg:gap-[445px]"}
-    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
-   lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
-   md:justify-between lg:justify-start items-center inline-flex `}>
-      
-          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium whitespace-nowrap leading-[10.40px]">9MOBILE SME</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100GB</div>
-          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
-      </div>
-
-      <div class={`${
-      toggleSideBar
-      ? "lg:gap-[360px]"
-      : "lg:gap-[445px]"}
-    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
-   lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
-   md:justify-between lg:justify-start items-center inline-flex `}>
-      
-          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium whitespace-nowrap leading-[10.40px]">9MOBILE CG</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100GB</div>
-          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
-      </div>
-
-      <div class={`${
-      toggleSideBar
-      ? "lg:gap-[360px]"
-      : "lg:gap-[445px]"}
-    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
-   lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
-   md:justify-between lg:justify-start items-center inline-flex `}>
-      
-          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium whitespace-nowrap leading-[10.40px]">9MOBILE GENERAL<br/> BUNDLES</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100GB</div>
-          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
-      </div>
-
-      <div class={`${
-      toggleSideBar
-      ? "lg:gap-[360px]"
-      : "lg:gap-[445px]"}
-    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
-   lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
-   md:justify-between lg:justify-start items-center inline-flex `}>
-      
-          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium whitespace-nowrap leading-[10.40px]">SMILE BIGGA</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100GB</div>
-          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
-      </div>
-
-      <div class={`${
-      toggleSideBar
-      ? "lg:gap-[360px]"
-      : "lg:gap-[445px]"}
-    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
-   lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
-   md:justify-between lg:justify-start items-center inline-flex `}>
-      
-          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium whitespace-nowrap leading-[10.40px]">SMILE UNLIMITED</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100GB</div>
-          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
-      </div>
-
-      <div class={`${
-      toggleSideBar
-      ? "lg:gap-[360px]"
-      : "lg:gap-[445px]"}
-    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
-   lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
-   md:justify-between lg:justify-start items-center inline-flex `}>
-      
-          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium whitespace-nowrap leading-[10.40px]">SMILE DAILY</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100GB</div>
-          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
-      </div>
-
-      <div class={`${
-      toggleSideBar
-      ? "lg:gap-[360px]"
-      : "lg:gap-[445px]"}
-    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
-   lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
-   md:justify-between lg:justify-start items-center inline-flex `}>
-      
-          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium whitespace-nowrap leading-[10.40px]">SMILE WEEKLY</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100GB</div>
-          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
-      </div>
-
-      <div class={`${
-      toggleSideBar
-      ? "lg:gap-[360px]"
-      : "lg:gap-[445px]"}
-    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
-   lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
-   md:justify-between lg:justify-start items-center inline-flex `}>
-      
-          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium whitespace-nowrap leading-[10.40px]">SMILE NIGHT</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100GB</div>
-          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
-      </div>
-
-      <div class={`${
-      toggleSideBar
-      ? "lg:gap-[360px]"
-      : "lg:gap-[445px]"}
-    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
-   lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
-   md:justify-between lg:justify-start items-center inline-flex `}>
-      
-          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium whitespace-nowrap leading-[10.40px]">SMILEVOICE ONLY</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100GB</div>
-          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
-      </div>
-
-      <div class={`${
-      toggleSideBar
-      ? "lg:gap-[360px]"
-      : "lg:gap-[445px]"}
-    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
-   lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
-   md:justify-between lg:justify-start items-center inline-flex `}>
-      
-          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium whitespace-nowrap leading-[10.40px]">SMILE FREEDOM</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100GB</div>
-          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
-      </div>
-
-      <div class={`${
-      toggleSideBar
-      ? "lg:gap-[360px]"
-      : "lg:gap-[445px]"}
-    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
-   lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
-   md:justify-between lg:justify-start items-center inline-flex `}>
-      
-          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium whitespace-nowrap leading-[10.40px]">SPECTRANET DATA</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100GB</div>
-          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
-      </div>
-
-      <div class={`${
-      toggleSideBar
-      ? "lg:gap-[360px]"
-      : "lg:gap-[445px]"}
-    lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[2.29px] lg:h-[101px] lg:pl-[26px]
-   lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
-   md:justify-between lg:justify-start items-center inline-flex `}>
-      
-          <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium leading-[10.40px]">INTERNATIONAL<br /> DATA</div>
-          <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[12px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100GB</div>
-          <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[12px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
-      </div>
-
-
-      
-      <footer className="flex justify-center  text-center  gap-[20px] mt-[190px] mb-[30px]
-       md:mt-[200px] lg:mb-[30px] lg:mt-[150px]">
-              <p className="text-[8px] md:text-[12px] lg:text-[12px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]">
-                You need help?
-              </p>
-  
-              <Link to="/ContactUs">
-                <div
-                  className={`${
-                    isDarkMode ? "border " : "bg-[#04177f]"
-                  } text-[8px] p-1 text-white rounded-[8px] lg:w-[100px] w-[70px] lg:text-[12px]`}
-                >
-                  Contact Us
-                </div>
-              </Link>
-            </footer>
-            </div>
-  
-  
-
-
-</div>
-
-)}
-
-
-
-{/* bills payment dropdown */}
-{isOpen4 && (
-
-<div className=''>
-<div
-className={`${styles.viewTransact} ${
-  isDarkMode ? "bg-black border" : "bg-white"
-}`}
->
-
-
-<div className="flex  justify-start items-center lg:h-[1030px] md:h-[800px] h-[580px] mb-5 border-b-[1.2px]
- lg:w-full relative bg-white  md:mt-[-670px]  lg:mt-[-968px] mt-[-492px] flex-col">
-<div className={`${  
-  toggleSideBar
-  ? "lg:gap-[360px]"
-  : "lg:gap-[445px]"}
-lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px]  lg:h-[101px] 
-lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.67px] bg-white justify-between md:justify-between
- lg:justify-start 
-items-center inline-flex`}>
-    
-        <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium leading-[10.40px]">WAEC PIN</div>
-        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[11px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100</div>
-        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[11px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
-    
-</div>
-<div class={`${
-    toggleSideBar
-    ? "lg:gap-[360px]"
-    : "lg:gap-[445px]"}
-  lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px]
- lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white 
- justify-between md:justify-between lg:justify-start  items-center inline-flex`}>
-    
-        <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium leading-[10.40px]">NECO PIN</div>
-        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[11px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100</div>
-        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[11px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
-    
-</div>
-<div class={`${
-    toggleSideBar
-    ? "lg:gap-[360px]"
-    : "lg:gap-[445px]"}
-  lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px]
- lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px]
-  pt-3 pb-[11.67px] bg-white justify-between md:justify-between lg:justify-start  items-center inline-flex`}>
-    
-        <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium  leading-[10.40px]">JAMB PIN</div>
-        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[11px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium  leading-[10.40px]">100</div>
-        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[11px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium  leading-[10.40px]">(₦10,000.00)</div>
-    </div>
-
-<div class={`${
-    toggleSideBar
-    ? "lg:gap-[360px]"
-    : "lg:gap-[445px]"}
-  lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px]
- lg:h-[101px] lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px]
-  pt-3 pb-[11.67px] bg-white justify-between md:justify-between lg:justify-start  items-center inline-flex`}>
-    
-        <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium  leading-[10.40px]">NABTEB PIN</div>
-        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[11px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium  leading-[10.40px]">100</div>
-        <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[11px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium  leading-[10.40px]">(₦10,000.00)</div>
-    
-</div>
-<div class={`${
-    toggleSideBar
-    ? "lg:gap-[360px]"
-    : "lg:gap-[445px]"}
-  lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px]
- lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.66px] bg-white
-  justify-between md:justify-between lg:justify-start  items-center inline-flex`}>
-    
-        <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[7px] font-medium  leading-[9.10px]">GOTV SUBSCRIPTION</div>
-        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[11px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium  leading-[10.40px]">100</div>
-        <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[11px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium  leading-[10.40px]">(₦10,000.00)</div>
-    
-</div>
-<div class={`${
-    toggleSideBar
-    ? "lg:gap-[360px]"
-    : "lg:gap-[445px]"}
-  lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px]
- lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] lg:justify-start  pr-[1.33px] pt-2 pb-[7.67px] bg-white
-  justify-between md:justify-between items-center inline-flex`}>
-    
-        <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[7px] font-medium leading-[9.10px]">DSTV SUBSCRIPTION</div>
-        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[11px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100</div>
-        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[11px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
-    
-</div>
-<div class={`${
-    toggleSideBar
-    ? "lg:gap-[360px]"
-    : "lg:gap-[445px]"}
-  lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px] 
-lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.67px] bg-white
- justify-between md:justify-between items-center lg:justify-start  inline-flex`}>
-    
-        <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[7px] font-medium  leading-[9.10px]">STARTIME SUBSCRIPTION</div>
-        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[11px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium  leading-[10.40px]">100</div>
-        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[11px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium  leading-[10.40px]">(₦10,000.00)</div>
-    
-</div>
-<div class={`${
-    toggleSideBar
-    ? "lg:gap-[360px]"
-    : "lg:gap-[445px]"}
-  lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px]
- lg:pl-[26px] lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.67px] bg-white
-  justify-between md:justify-between lg:justify-start  items-center inline-flex`}>
-    
-        <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[96.82px]  md:text-[11px] md:leading-3 w-[56.33px] text-black text-[7px] font-medium leading-[9.10px]">SHOWMAX SUBSCRIPTION</div>
-        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[11px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100</div>
-        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[11px] md:leading-3 lg:leading-tight w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
-    
-</div>
-<div class={`${
-    toggleSideBar
-    ? "lg:gap-[360px]"
-    : "lg:gap-[445px]"}
-  lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px] lg:pl-[26px]
- lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-[7px] pb-[6.67px] bg-white justify-between
- md:justify-between lg:justify-start  items-center inline-flex`}>
-    
-        <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium leading-[10.40px]">ELECTRICITY BILLS</div>
-        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[11px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100</div>
-        <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[11px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
-    
-</div>
-<div class={`${
-    toggleSideBar
-    ? "lg:gap-[360px]"
-    : "lg:gap-[445px]"}
-  lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px] lg:pl-[26px]
- lg:pr-1  w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-3 pb-[11.66px] bg-white justify-between
- md:justify-between lg:justify-start  items-center inline-flex `}>
-    
-        <div class="lg:w-[100px] lg:text-base md:w-[96.82px]  md:text-[11px] md:leading-3 lg:leading-tight w-[56.33px] text-black text-[8px] font-medium leading-[10.40px]">BULK SMS</div>
-        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[11px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100</div>
-        <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[11px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
-    </div>
-
-<div class={`${
-    toggleSideBar
-    ? "lg:gap-[360px]"
-    : "lg:gap-[445px]"}
-  lg:w-full md:w-full md:h-[57.86px] md:pl-[14.90px] md:pr-[9.29px] lg:h-[101px] lg:pl-[26px] lg:pr-1
- w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] lg:justify-start  pt-2 pb-[7.67px] bg-white
-  justify-between md:justify-between items-center inline-flex`}>
-    
-        <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[96.82px]  md:text-[11px] md:leading-3 w-[56.33px] text-black text-[7px] font-medium leading-[9.10px]">RECHARGE CARD PRINTING</div>
-        <div class="lg:w-[100px] lg:text-base md:w-[91.67px]  md:text-[11px] md:leading-3 lg:leading-tight w-[53.33px] text-black text-[8px] font-medium leading-[10.40px]">100</div>
-        <div class="lg:w-[100px] lg:text-base lg:leading-tight md:w-[91.67px]  md:text-[11px] md:leading-3 w-[60.33px] text-black text-[8px] font-medium leading-[10.40px]">(₦10,000.00)</div>
-    </div>
-
-
-    <footer className="flex justify-center  text-center gap-[20px] mt-[160px] mb-[20px]
-     md:mt-[200px] lg:mb-[30px] lg:mt-[200px]">
-            <p className="text-[8px] md:text-[12px] lg:text-[12px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]">
-              You need help?
-            </p>
-
-            <Link to="/ContactUs">
-              <div
-                className={`${
-                  isDarkMode ? "border " : "bg-[#04177f]"
-                } text-[8px] p-1 text-white rounded-[8px] lg:w-[100px] w-[70px] lg:text-[12px]`}
-              >
-                Contact Us
-              </div>
-            </Link>
-          </footer>
-          </div>
-</div>
-</div>
-)}
 {loading && (
   <Modal>
   <Loader/>
@@ -1364,49 +699,4 @@ lg:pl-[26px] lg:pr-1 w-[312px] h-[33.67px] pl-[8.67px] pr-[1.33px] pt-2 pb-[7.67
         </DashBoardLayout>
         )
         }
-
-//                 {isOpen1 && (
-//   <div className="flex absolute  top-[100%] cursor-pointer lg:h-[300px]
-//     md:h-[150px] h-[200px] 
-//      flex-col">
-//     <div class="w-44 h-[29px] md:w-[200px] lg:w-[230px] md:h-[35px] lg:h-[40px]  bg-white shadow">
-        
-//         <div  onClick={() => {
-            
-//     setIsOpen2((prev) => !prev);
-//     setIsOpen3(false); setIsOpen4(false); setIsOpen1(false);
-//   handleClick('Airtime Top-up'); }}
-//         className="w-[199.37px] ml-[5px] md:w-[199.37px] lg:w-[196px] justify-start items-center inline-flex">
-//             <div className="w-[186.20px] text-neutral-500 justify-start md:w-[131px] 
-//    items-center text-[9px] md:text-[12px] lg:text-[16px] font-medium  md:leading-3 leading-[10.48px] flex">Airtime Top-up</div>
-//         </div>
-//     </div>
-//     <hr class="bg-slate-500 h-[1px] w-[176px] Lg:w-[198px]"></hr>
-//     <div class="w-44 h-[29px] md:w-[200px] md:h-[35px] lg:w-[230px] lg:h-[40px] bg-white shadow">
-        
-//         <div  onClick={() => {
-//     setIsOpen3((prev) => !prev);
-   
-//     setIsOpen2(false); setIsOpen4(false); setIsOpen1(false);
-// handleClick('Data Top-up'); }} 
-//          class="w-[199.37px] ml-[5px] md:w-[199.37px]  justify-start items-center inline-flex">
-//             <p className="w-[186.20px] text-neutral-500 text-[9px] md:text-[12px]
-//  md:w-[131px] items-center lg:text-[16px] font-medium 
-//   md:leading-3 leading-[10.48px]">Data Top-up</p>
-//         </div>
-//     </div>
-    
-//     <div class="w-44 h-[29px] md:w-[200px] lg:h-[40px] lg:w-[230px] md:h-[35px] bg-white shadow">
-        
-//         <div onClick={() => {
-//     setIsOpen4((prev) => !prev);
-//     setIsOpen3(false); setIsOpen2(false); setIsOpen1(false);
-//                 handleClick('Bills Payment'); }} 
-//         className="w-[199.37px] ml-[5px] md:w-[199.37px]  justify-start items-center inline-flex">
-//             <div  className="w-[131.60px] text-neutral-500 text-[9px] md:text-[12px] md:w-[131px] items-center lg:text-[16px] font-medium  md:leading-3 leading-[10.48px]">Bills Payments</div>
-//         </div>
-//     </div>
-  
-//   </div>
-// )}
 
