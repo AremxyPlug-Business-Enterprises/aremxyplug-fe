@@ -120,7 +120,8 @@ const [text, setText] =useState(false);
    
   }, []);
 
-   console.log(fetchedResponse?.data?.total_points);
+   console.log(fetchedResponse?.data?.data?.point?.total_points);
+
   const handleProceed = (e) => {
     e.preventDefault();
 
