@@ -43,7 +43,7 @@ const navigate = useNavigate()
   const [selected2, setSelected2] = useState("");
   const [symbol, setSymbol] = useState("₦");
  const [balanceLoading, setBalanceLoading] = useState(false)
- const [balanceValue, setBalanceValue] = useState(true);
+ const [balanceValue, setBalanceValue] = useState("");
  const [sessionModal, setSessionModal] = useState(false)
 
   const handleCopyClick = () => {
@@ -223,7 +223,7 @@ if((clickedoption === "NGN")){
       const GenerateAccountBalance = async()=>{
         const authToken = localStorage.getItem("authorisedLogin")
         const getToken = localStorage.getItem("getToken")
-        if(!navigator.onLine) return setBalanceValue(false);
+        if(!navigator.onLine) return setBalanceValue("Check your internet connection.");
         if((authToken || getToken) && navigator.onLine){
         try{
           setBalanceLoading(true)
@@ -234,7 +234,7 @@ if((clickedoption === "NGN")){
            if(response){
             console.log(response)
           if(response.status && (response.status === 200 || 201)){
-             setBalanceValue(true);
+             setBalanceValue("");
            const checkBal =  response?.data?.data?.data?.balance;
            console.log(checkBal);
            setNewBalance(checkBal)
@@ -242,11 +242,8 @@ if((clickedoption === "NGN")){
         }
         }catch(error){
            if((error.response === undefined || error.response === null) ) {
-           setBalanceValue(false);
-       }
-        else if( error.response && (error.response.status === 400)){
-           setBalanceValue(false);
-        }else if(error && error.response.status === 401){
+           setBalanceValue("Your internet connection is quite unstable.");
+           }else if(error && error.response.status === 401){
            if(error.response?.headers.get("x-new-auth-token") || error.response?.headers["x-new-auth-token"]){
              setBalanceLoading(true)
          const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
@@ -269,19 +266,20 @@ if((clickedoption === "NGN")){
         return setSessionModal(true);
       }
         }
-        else if(error.response.status === 404){
-     setBalanceValue(false);
+        else if(error?.response?.status === 404){
+     setBalanceValue("Check your internet connection.");
      
-          }else if(error.response === undefined) {
-     setBalanceValue(false)
-
-          }else if (error && error.response.status === 500){
+          } else if(error && error?.response?.status === 400){
+     setBalanceValue("An unexpected error occured.");
+     
+          }else if (error && error?.response?.status === 500){
             setNewBalance("");
+            setBalanceValue("Could not refresh balance.")
     }else if(error && error.response === undefined){
         setBalanceLoading(false);
-        setBalanceValue(false);
+        setBalanceValue("Check your internet connection.")
  }else{
-  setBalanceValue(false);
+  setBalanceValue("Check your internet connection.");
       }
           }finally {
           setBalanceLoading(false);
@@ -326,7 +324,7 @@ if((clickedoption === "NGN")){
     //eslint-disable-next-line
    }, [])
 window.addEventListener("online", ()=> {
-  if(balanceValue === false){
+  if(balanceValue?.length > 1){
     GenerateAccountBalance();
   }
 })
@@ -481,7 +479,7 @@ return (
               {/* ================= */}
              
               {!activeButtons[2] ? (
-                balanceValue === true ? (
+                balanceValue?.length < 1 ? (
                 <div
                   className={`${toggleSideBar ? "lg:pt-[7%]" : ""} ${
                     styles.viewBalance
@@ -520,10 +518,10 @@ return (
       </div>
                       ) :(
                       
-                        symbol === "₦" ? `${Number(newBalance).toLocaleString("en-NG",{
+                        symbol === "₦" & newBalance !== "" ? `${Number(newBalance).toLocaleString("en-NG",{
                           style : "currency",
                           currency : "NGN"
-                        })}` : `${symbol}0.00`
+                        })}` : `${symbol}`
                       )}
                     </span>
                     )}
@@ -543,7 +541,7 @@ return (
                 </div>) :  (
                   <div className=" w-full flex justify-center backdrop-blur-[6px] lg:mt-[9px] lg:h-[40px]">
        <p className="lg:text-[16px] text-[10px] leading-[16px] lg:leading-[24px] font-[400] lg:font-[500] mt-[5px]">
-         Check your network connection
+       {balanceValue}
        </p>
                     </div>
                  )

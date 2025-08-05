@@ -25,10 +25,12 @@ import { useNavigate } from "react-router-dom";
 import { GetFunction } from "../ApiCollection.jsx/ApiBuck";
 import { BalanceLoading } from "../Loader/Loader";
 import { HandleUserSession } from "../../Components/ApiCollection.jsx/ApiBuck";
-
+import { GetLocalStorage } from "../LocalStorage/LocalStorage";
 const DsTv = () => {
 
   const {
+    dstvFlagResult,
+    setDstvFlagResult,
     setConfirmDstvPopup,
     selectedOptionDstv,
    setSelectedOptionDstv,
@@ -72,8 +74,9 @@ const DsTv = () => {
         newBalance,
         setNewBalance,
         setFetchedDstvPlans,
+        toggleSideBar
  } = useContext(ContextProvider);
-
+const Data = GetLocalStorage();
    // const [packageDstv, setPackageDstv] = useState("");
   //   const [tvTwoOtp, setTvTwoOtp] = useState('');
      const [isLoading, setIsLoading] = useState(false);
@@ -88,14 +91,13 @@ const DsTv = () => {
      const { setDstvCardName} = useContext(ContextProvider)
       const navigate = useNavigate();
   
-
- const handleOptionClickDstv = (option) => {
+const handleOptionClickDstv = (option) => {
        //setSelectedOptionDstv(option);
         setShowDropdownDstv(false);
       };
     
      const Decoders  = [
-        { decoderType :'Dstv',  id : 1},
+        { decoderType :'DStv',  id : 1},
           { decoderType :'GOtv', path : "/GoTv", id : 3 },
           { decoderType :' StarTimes', path :  "/StarTimes", id : 2 },
         { decoderType :'Showmax', path : "/Showmax", id : 4 }
@@ -353,11 +355,16 @@ RetrieveGotvPlans()
       );
     };
                      // Simulate async data loading
-                    if(newBalance === "" || newBalance === null || newBalance === undefined){
+                    if((newBalance === "" ||
+       newBalance === null ||
+        newBalance === undefined) && Data?.ConfirmAcc === "true"){
                         GetBalance();
                         if(GetBalance){
-                         setNewBalance(passDataBalance?.data ? passDataBalance?.data?.data?.data?.balance : "");
+                         setNewBalance(passDataBalance?.data?.data?.data !== undefined
+                           ? passDataBalance?.data?.data?.data?.balance : "");
                         }
+                      }else{
+                        console.log("Create an account to access this feature.")
                       }
      //eslint-disable-next-line             
       },[])
@@ -402,7 +409,8 @@ RetrieveGotvPlans()
   const newBalanceToNumber = Number(newBalance)
   const methodOptions = [
     { method: 'NGN Wallet', 
-       balance : newBalance === "" || newBalance === null || newBalance === undefined  ? `(${updateBalanceToNumber?.toLocaleString("en-NG",{
+       balance : 
+       newBalance === "" || newBalance === null || newBalance === undefined  ? `(${updateBalanceToNumber?.toLocaleString("en-NG",{
         style : "currency",
         currency : "NGN"
        })})` : `(${ newBalanceToNumber?.toLocaleString("en-NG",{
@@ -410,11 +418,11 @@ RetrieveGotvPlans()
         currency : "NGN"
        }) })`, 
        flag: nigerianFlag, id: 1 },
-    { method: 'USD Wallet ', balance: '(0.00)', flag: americaFlag, id: 2 },
-    { method: 'EUR Wallet', balance: '(0.00)', flag: britainFlag, id: 3 },
-    { method: 'GBP Wallet', balance: '(0.00)', flag: euroFlag, id: 4 },
-    { method: 'AUD Wallet', balance: '(0.00)', flag: austriaFlag, id: 5 },
-    { method: 'KES Wallet', balance: '(0.00)', flag: kenyaFlag, id: 6 }
+    { method: 'USD Wallet ', balance: '($0.00)', flag: americaFlag, id: 2 },
+    { method: 'EUR Wallet', balance: '(€0.00)', flag: britainFlag, id: 3 },
+    { method: 'GBP Wallet', balance: '(£0.00)', flag: euroFlag, id: 4 },
+    { method: 'AUD Wallet', balance: '(AU$0.00)', flag: austriaFlag, id: 5 },
+    { method: 'KES Wallet', balance: '(KSh0.00)', flag: kenyaFlag, id: 6 }
   ];
 
 const [errorFillDecoder, setErrorFillDecoder] = useState(false);
@@ -426,7 +434,7 @@ const [errorFillDecoder, setErrorFillDecoder] = useState(false);
     else {
     setShowDropdownDstv(!showDropdownDstv)
       document.querySelector('.imgdrop').classList.toggle('DropIt');
-      setErrorFillDecoder(false)
+      setErrorFillDecoder(false);
     
     }
   }
@@ -642,7 +650,7 @@ const VerifyUserAccount = async(UserTvSubscription)=> {
   console.log("Succesfully verified tv subscription account.");
 setDstvSmartCard(UserTvSubscription);
 setDstvCardName(response?.data?.data?.data?.name);
-console.log(response?.data?.data?.data?.name);
+
 }
 
 
@@ -807,11 +815,7 @@ console.log(dstvAmount)
       lg:h-[24px] lg:w-[24px] w-[14px] h-[16px]" src={arrowDown} alt="" />
       
               </div>
-              {errorFillDecoder && (
-                <p className="text-[10px] leading-[14px] font-[400] lg:text-[14px] lg:leading-[20px] text-left text-red-500">
-                 Select a decoder to choose a package
-                </p>
-              )}
+             
             </div>
 
                       {decoderActive && (
@@ -896,6 +900,12 @@ console.log(dstvAmount)
                     </li>
                   ))}
                 </ul>
+              )}
+               {errorFillDecoder && (
+                <p className="text-[12px] leading-[14px] font-semibold 
+                lg:text-[14px] lg:leading-[20px] text-left text-red-700">
+                 Select a decoder to choose a package
+                </p>
               )}
 
             </div>
@@ -1020,11 +1030,10 @@ console.log(dstvAmount)
                     ? "bg-black text-white border border-white" 
                     : "hover:bg-[#EDEAEA] border-[#9C9C9C] text-[#7C7C7C] "
                 }`}>
-                <p className='font-[500] text-[13px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] lg:text-[16px] text-[#7C7C7C] lg:leading-[20.8px] cursor-pointer'>
-                   {`${flagResult}  ${" "} ${dstvWalletBalance !== " " ? dstvWalletBalance?.toLocaleString("en-NG", {
-                  style : "currency",
-                  currency : "NGN"
-                }) : "₦" }`}
+                <p className={`font-[500] text-[13px] leading-[10.4px] md:text-[9.389px] 
+                md:leading-[12.206px] lg:text-[16px] text-[#7C7C7C] lg:leading-[20.8px] cursor-pointer
+                ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+                   {`${dstvFlagResult}  ${" "} ${dstvWalletBalance}`}
                 </p>
                 <img className='methodDrop h-[16px] w-[14px] md:h-[14.038px]
                  md:w-[14.038px] lg:h-[24px] lg:w-[24px]'
@@ -1032,21 +1041,40 @@ console.log(dstvAmount)
               </div>
               {methodPayment && (
                 <div className={`absolute top-[102%] z-0 flex flex-col w-[100%]  cursor-pointer    
+                ${
+                    isDarkMode
+                      ? "bg-black border-white rounded-[7px] text-white"
+                      : "text-[#7C7C7C] bg-white rounded-br-[7px] rounded-bl-[7px] lg:rounded-br-[14px] lg:rounded-bl-[14px]"
+                  }
                   ${
-                    isDarkMode 
-        ? "bg-black text-white border border-white" 
-        : "bg-white"
-                  }`}>
+                    toggleSideBar
+                      ? "lg:w-[31.5%] lg:top-[100.5%]"
+                      : "lg:w-[38.5%] lg:top-[105.3%]"
+                  }  shadow-xl border w-full lg:w-full  flex flex-col divide-y absolute top-20`}>
 
                   {(methodOptions.map(methodOption => {
                     return (
                       <div
                         onClick={(e => {
-                           setFlagResult(methodOption.id === 1 ? methodOption.method : (flagResult === "NGN Wallet" && methodOption.id !== 1 ) ? "NGN Wallet" : "");
-                          setDstvWalletBalance(methodOption.id === 1   ? 
-                            methodOption.balance : flagResult === "NGN Wallet" ?
-                            ( newBalance === "" || newBalance === null ? `(${updateBalance})` :
-                               `(${newBalance})`) : "");
+                           setDstvFlagResult(methodOption.id === 1 ? methodOption.method : (dstvFlagResult === "NGN Wallet" && methodOption.id !== 1 ) ? "NGN Wallet" : "");
+                          setDstvWalletBalance(methodOption.id === 1 && dstvWalletBalance === ""? 
+                                                          newBalance === "" || newBalance === null || newBalance === undefined
+                                    ? `(${updateBalance?.length > 1 ? updateBalanceToNumber?.toLocaleString("en-NG", {
+                                         style : "currency",
+                                         currency : "NGN"
+                                    }) : ""})`
+                                    : `(${newBalance?.length > 1 ? newBalanceToNumber?.toLocaleString("en-NG", {
+                                      style : "currency",
+                                      currency : "NGN"
+                                    }) : ""})` : dstvFlagResult === "NGN Wallet"  ?  newBalance === "" || newBalance === null || newBalance === undefined
+                                    ? `(${updateBalance?.length > 1 ? updateBalanceToNumber?.toLocaleString("en-NG", {
+                                         style : "currency",
+                                         currency : "NGN"
+                                    }) : ""})`
+                                    : `(${newBalance?.length > 1 ? newBalanceToNumber?.toLocaleString("en-NG", {
+                                      style : "currency",
+                                      currency : "NGN"
+                                    }) : ""})` : "");
                           setMethodImage(methodOption.id === 1 ? methodOption.flag : methodImage);
                                 setMethodPayment(false);
                                setMethodPayment(()=> {
@@ -1059,26 +1087,25 @@ console.log(dstvAmount)
                             }
                           });
                         })}
-                        className={`pb-[20px] pt-[20px] md:pb-0 md:pt-0
-                           flex gap-[10px] lg:py-[15px] py-[10px] pl-[10px]
-        cursor-pointer  items-center shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]  
-
-           ${methodOption.id !== 1 && !isDarkMode  ? "bg-gray-300 cursor-not-allowed" : 
-            methodOption.id !== 1 && isDarkMode ? "bg-black" : methodOption.id === 1 && !isDarkMode ? "bg-white" : "bg-black" }
-                  `}
+                         className={`py-[18px] md:py-[14px] font-normal px-2 flex
+                         items-center gap-[5px] text-[12px] md:text-[14px] 
+                         lg:text-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
+                          transition-all duration-300 hover:bg-slate-50
+                       ${
+                         isDarkMode
+                           ? "text-white hover:bg-slate-800 bg-black "
+                           : "text-[#7E7E7E]"
+                       } ${
+                        methodOption.method === "NGN Wallet"
+                          ? "cursor-pointer"
+                          : "cursor-not-allowed opacity-50"
+                      }`}
                         key={methodOption.id}>
- <img className='md:h-[29.27px]  h-[14.27px]' src={methodOption.flag} alt="" />
+ <img className='md:h-[29.27px]  h-[14.27px]' 
+ src={methodOption.flag} alt="" />
 
-         <h2 className={`text-[13px] leading-[10.4px]
-               font-[500] text-[#7C7C7C]  
-         md:text-[13.227px] md:leading-[17.195px]  
-         lg:text-[16px] lg:leading-[20.8px] self-center cursor-pointer ${
-          isDarkMode 
-? " text-white" 
-: " hover:bg-[#EDEAEA]"
-        }`} >
-                          {methodOption.method + ' ' + methodOption.balance}
-                        </h2>
+         {methodOption.method + ' ' + methodOption.balance}
+                    
                       </div>
 
                     )
@@ -1093,9 +1120,9 @@ console.log(dstvAmount)
         </div>
 
         <button onClick={handleDstv}
-          disabled={dstvMobileNumber.length !== 11 || !userVerifiedName || !dstvEmail || !dstvSmartCard || !dstvDecoderType || !selectedOptionDstv}
+          disabled={dstvMobileNumber.length !== 11 || !userVerifiedName || !dstvEmail || !dstvSmartCard || !dstvDecoderType || !selectedOptionDstv ||!dstvFlagResult}
           className={`
-             ${dstvMobileNumber.length !== 11 || !userVerifiedName || !dstvEmail || !dstvSmartCard || !dstvDecoderType || !selectedOptionDstv || !flagResult
+             ${dstvMobileNumber.length !== 11 || !userVerifiedName || !dstvEmail || !dstvSmartCard || !dstvDecoderType || !selectedOptionDstv || !dstvFlagResult
               ? "bg-[#63616188] "
               : "bg-primary"
             }

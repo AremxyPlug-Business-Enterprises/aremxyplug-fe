@@ -25,22 +25,23 @@ import {PostFunction} from "../../Components/ApiCollection.jsx/ApiBuck";
 import { GetFunction } from "../ApiCollection.jsx/ApiBuck";
 import { BalanceLoading } from "../Loader/Loader";
 import { HandleUserSession } from "../../Components/ApiCollection.jsx/ApiBuck";
-
+import { GetLocalStorage } from "../LocalStorage/LocalStorage";
 const StarTimes = () => {
-
+const Data = GetLocalStorage();
   const {
     setConfirmStarTimesPopup,
     selectedOptionStarTimes,
     showDropdownStarTimes,
     setShowDropdownStarTimes,
     setSelectedOptionStarTimes,
-  inputPin,
-    setCardName,
+     inputPin,
+      setStarTimesCardName,
+      starTimesFlagResult,
+      setStarTimesFlagResult,
    // cardName,
-   starTimesEmail,
-   setStarTimesEmail,
-
-    setStarTimesSmartCard,
+     starTimesEmail,
+     setStarTimesEmail,
+      setStarTimesSmartCard,
     starTimesSmartCard,
    setInputPin,
   setStarTimesDecoderType,
@@ -72,7 +73,8 @@ const StarTimes = () => {
     setPackageStarTimes,
     starTimesMobileNumber,
     setStarTimesMobileNumber,
-    setFetchedStarTimesPlans
+    setFetchedStarTimesPlans,
+    toggleSideBar,
     } = useContext(ContextProvider);
       
 
@@ -80,6 +82,7 @@ const StarTimes = () => {
  
     const [isLoading, setIsLoading] = useState(false)
     const [failedPopup, setFailedPopup] = useState(false);
+    const [errorFillDecoder, setErrorFillDecoder] = useState(false)
       
           
              const [starTimesVerifyResponse, setStarTimesVerifyResponse] = useState({});
@@ -206,11 +209,15 @@ const StarTimes = () => {
                      await GetFunction("balance", setIsLoading, SuccessHandler, FailedHandler,setPassDataBalance)
                        } 
                         // Simulate async data loading
-                       if(newBalance === "" || newBalance === null || newBalance === undefined){
+                       if((newBalance === "" ||
+                         newBalance === null || 
+                         newBalance === undefined) && Data?.ConfirmAcc === "true"){
                            GetBalance();
                            if(GetBalance){
-                            setNewBalance(passDataBalance?.data ? passDataBalance?.data?.data?.data?.balance : "");
+                            setNewBalance(passDataBalance?.data?.data?.data !== undefined ? passDataBalance?.data?.data?.data?.balance : "");
                            }
+                         }else{
+                          console.log("Craete an account to access this feature.")
                          }
         //eslint-disable-next-line             
          },[])
@@ -302,7 +309,7 @@ const StarTimes = () => {
     // }
   };
 
-  const { flagResult, setFlagResult } = useContext(ContextProvider);
+ 
   const { methodPayment, setMethodPayment } = useContext(ContextProvider);
   const {starTimesWalletBalance,setStarTimesWalletBalance } = useContext(ContextProvider);
 
@@ -313,25 +320,38 @@ const StarTimes = () => {
     document.querySelector('.methodDrop').classList.toggle('DropIt');
   }
 
-   const updateBalance = passDataBalance?.data?.data  ? passDataBalance.data.data.data.balance : "";
+   const updateBalance = passDataBalance?.data?.data?.data !== undefined  ? passDataBalance?.data?.data?.data?.balance : "";
+   const updateBalanceToNumber = Number( updateBalance);
+  const newBalanceToNumber = Number(newBalance)
   const methodOptions = [
-    { method: 'NGN Wallet', balance:newBalance === "" || newBalance === null || newBalance === undefined  ? `(${updateBalance})` : `(${newBalance})`,  
+    { method: 'NGN Wallet',
+       balance: newBalance === "" || 
+       newBalance === null ||
+        newBalance === undefined  ? 
+        `(${updateBalanceToNumber?.toLocaleString("en-NG",{
+               style : "currency",
+               currency : "NGN"
+              })})` : `(${ newBalanceToNumber?.toLocaleString("en-NG",{
+               style : "currency",
+               currency : "NGN"
+              }) })`,  
     flag: nigerianFlag, id: 1 },
-    { method: 'USD Wallet ', balance: '(0.00)', flag: americaFlag, id: 2 },
-    { method: 'EUR Wallet', balance: '(0.00)', flag: britainFlag, id: 3 },
-    { method: 'GBP Wallet', balance: '(0.00)', flag: euroFlag, id: 4 },
-    { method: 'AUD Wallet', balance: '(0.00)', flag: austriaFlag, id: 5 },
-    { method: 'KES Wallet', balance: '(0.00)', flag: kenyaFlag, id: 6 }
+    { method: 'USD Wallet ', balance: '($0.00)', flag: americaFlag, id: 2 },
+    { method: 'EUR Wallet', balance: '(€0.00)', flag: britainFlag, id: 3 },
+    { method: 'GBP Wallet', balance: '((£0.00)', flag: euroFlag, id: 4 },
+    { method: 'AUD Wallet', balance: '(AU$0.00)', flag: austriaFlag, id: 5 },
+    { method: 'KES Wallet', balance: '((KSh0.00)', flag: kenyaFlag, id: 6 }
   ]
 
   function packageDropdown() {
     if (!starTimesDecoderType) {
       setShowDropdownStarTimes(false);
+      setErrorFillDecoder(true)
     }
     else {
     setShowDropdownStarTimes(!showDropdownStarTimes)
       document.querySelector('.imgdrop').classList.toggle('DropIt');
-    
+      setErrorFillDecoder(false)
     }
   }
 
@@ -348,7 +368,7 @@ const StarTimes = () => {
       setStarTimesTransactionId(starTimesSubscriptionResponse?.data?.transaction_id ? starTimesSubscriptionResponse?.data?.transaction_id : ""  );
      // setStarTimesRequestId(starTimesSubscriptionResponse.data.request_id);
       setStarTimesDescription(starTimesSubscriptionResponse?.data?.transaction_description ? starTimesSubscriptionResponse?.data?.transaction_description : "");
-      setCardName(userVerifiedName);
+     
 }
   
     receivedData();
@@ -442,8 +462,9 @@ const VerifyPinHandler = async () => {
            iuc_number : UserTvSubscription
          }
          const bodyToJson = JSON.stringify(body);
-  const SuccessHandler = ()=> {
+  const SuccessHandler = (response)=> {
    setStarTimesSmartCard(UserTvSubscription);
+    setStarTimesCardName(response?.data?.data?.data?.name);
  }
  const FailedHandler = async(ErrorType)=> {
      if(ErrorType === "unauthorised"){
@@ -490,7 +511,7 @@ const VerifyPinHandler = async () => {
    setSelectedOptionStarTimes("");
    setPackageStarTimes("");
    setStarTimesDecoderType("")
-    setFlagResult("");
+    setStarTimesFlagResult("");
     setStarTimesWalletBalance("");
     setFailedPopup(false);
   //navigate("/StarTimes");
@@ -587,8 +608,18 @@ const VerifyPinHandler = async () => {
               <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] md:font-[600] font-[400]">
                 Select Package</label>
 
-              <div onClick ={packageDropdown} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.4px] sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px]  self-center" onClick={packageDropdown} ${
+              <div onClick ={packageDropdown} className={`mt-2 md:mt-0 
+              rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.4px]
+               sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] 
+               pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] 
+               md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] 
+    md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] 
+    lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
+    items-center cursor-pointer outline-0 border-[0.24px] 
+    lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] 
+    lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px]  
+    self-center ${
       
         isDarkMode
             ? "bg-black text-white border border-white"
@@ -600,10 +631,12 @@ const VerifyPinHandler = async () => {
               </div>
 
               {showDropdownStarTimes && (
-                <ul className="dropdown-options z-[2] absolute top-[100%] w-full bg-white cursor-pointer h-[300px] overflow-y-scroll">
+                <ul className="dropdown-options z-[2] absolute top-[100%] w-full bg-white 
+                cursor-pointer h-[300px] overflow-y-scroll">
                   {starTimesOptionalPlan.map((option, index) => (
                     <li
-                      className={`pb-[20px] md:pb-[14px] pt-[20px] md:pt-[14px] font-weight-bold text-[14px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500] 
+                      className={`pb-[20px] md:pb-[14px] pt-[20px] md:pt-[14px] font-weight-bold
+                         text-[14px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500] 
                       md:text-[13.227px] md:leading-[17.195px] 
                       shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] 
                       lg:text-[16px] lg:leading-[20.8px] cursor-pointer  dropdownCSS 
@@ -615,15 +648,21 @@ const VerifyPinHandler = async () => {
                       key={index}
                       onClick={() => {
                         handleOptionClickStarTimes();
-                        setStarTimesAmount(option.Amount)
-                        setSelectedOptionStarTimes(`${option.PackageName}`)
-                        setPackageStarTimes(option.Package);
+                        setStarTimesAmount(option?.Amount)
+                        setSelectedOptionStarTimes(`${option?.PackageName}`)
+                        setPackageStarTimes(option?.Package);
                       }}
                     >
-                     {`${option.PackageName}`}
+                     {`${option?.PackageName}`}
                     </li>
                   ))}
                 </ul>
+              )}
+                {errorFillDecoder && (
+                <p className="text-[12px] leading-[14px] font-semibold 
+                lg:text-[14px] lg:leading-[20px] text-left text-red-700">
+                 Select a decoder to choose a package
+                </p>
               )}
 
             </div>
@@ -719,7 +758,8 @@ const VerifyPinHandler = async () => {
           </div>
           <div className="flex flex-col md:flex-row gap-[20px] md:gap-[12px] lg:gap-[22px] md:my-2 lg:my-4">
             <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
-              <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] font-[400] md:font-[600]">
+              <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px]
+               md:text-[13px] font-[400] md:font-[600]">
                 Amount</label>
 
 
@@ -732,7 +772,10 @@ const VerifyPinHandler = async () => {
                   ? "bg-black text-white border border-white" 
                   : "text-[#7C7C7C] border-[#9C9C9C] hover:bg-[#EDEAEA]"
               }`}    
-                value={`₦ ${starTimesAmount}`}
+                value={(starTimesAmount !== undefined || starTimesAmount !== "") ? starTimesAmount?.toLocaleString("en-NG", {
+                  style :"currency",
+                  currency : "NGN"
+                }): "₦"}
               />
 
             </div>
@@ -745,25 +788,52 @@ const VerifyPinHandler = async () => {
        ? "bg-black text-white border border-white" 
        : " border-[#9C9C9C]"
    }`}     >
-                <p className='font-[400] text-[13px] leading-[10.4px] md:text-[12px] md:leading-[12.206px] lg:text-[16px] text-[#7C7C7C] lg:leading-[20.8px] cursor-pointer'>
-                   {`${flagResult}  ${" "} ${starTimesWalletBalance}`}
+                <p className={`font-[500] text-[13px] leading-[10.4px] md:text-[9.389px] 
+                md:leading-[12.206px] lg:text-[16px] text-[#7C7C7C] lg:leading-[20.8px] cursor-pointer
+                ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+                   {`${starTimesFlagResult}  ${" "} ${starTimesWalletBalance}`}
                 </p>
                 <img className='methodDrop h-[16px] w-[14px] md:h-[14.038px] md:w-[14.038px] lg:h-[24px] lg:w-[24px]'
                   src={methodImage} alt="" />
               </div>
               {methodPayment && (
-                <div className='absolute top-[102%] z-0 flex flex-col 
-                w-[100%] bg-white cursor-pointer '>
+                <div className={`absolute top-[102%] z-0 flex flex-col w-[100%]  cursor-pointer
+                  ${
+                    isDarkMode
+                      ? "bg-black border-white rounded-[7px] text-white"
+                      : "text-[#7C7C7C] bg-white rounded-br-[7px] rounded-bl-[7px] lg:rounded-br-[14px] lg:rounded-bl-[14px]"
+                  }
+                  ${
+                    toggleSideBar
+                      ? "lg:w-[31.5%] lg:top-[100.5%]"
+                      : "lg:w-[38.5%] lg:top-[105.3%]"
+                  }  shadow-xl border w-full lg:w-full  flex flex-col divide-y absolute top-20`}>
+                
+  
 
                   {(methodOptions.map(methodOption => {
                     return (
                       <div
                         onClick={(e) => {
-                           setFlagResult(methodOption.id === 1 ? methodOption.method : (flagResult === "NGN Wallet" && methodOption.id !== 1 ) ? "NGN Wallet" : "");
-                          setStarTimesWalletBalance(methodOption.id === 1   ? 
-                            methodOption.balance : flagResult === "NGN Wallet" ?
-                            ( newBalance === "" || newBalance === null ? `(${updateBalance})` :
-                               `(${newBalance})`) : "");
+                           setStarTimesFlagResult(methodOption.id === 1 ? methodOption.method : (starTimesFlagResult === "NGN Wallet" && methodOption.id !== 1 ) ? "NGN Wallet" : "");
+                          setStarTimesWalletBalance(methodOption.id === 1 && starTimesWalletBalance === ""? 
+                                                                                    newBalance === "" || newBalance === null || newBalance === undefined
+                                                              ? `(${updateBalance?.length > 1 ? updateBalanceToNumber?.toLocaleString("en-NG", {
+                                                                   style : "currency",
+                                                                   currency : "NGN"
+                                                              }) : ""})`
+                                                              : `(${newBalance?.length > 1 ? newBalanceToNumber?.toLocaleString("en-NG", {
+                                                                style : "currency",
+                                                                currency : "NGN"
+                                                              }) : ""})` : starTimesFlagResult === "NGN Wallet"  ?  newBalance === "" || newBalance === null || newBalance === undefined
+                                                              ? `(${updateBalance?.length > 1 ? updateBalanceToNumber?.toLocaleString("en-NG", {
+                                                                   style : "currency",
+                                                                   currency : "NGN"
+                                                              }) : ""})`
+                                                              : `(${newBalance?.length > 1 ? newBalanceToNumber?.toLocaleString("en-NG", {
+                                                                style : "currency",
+                                                                currency : "NGN"
+                                                              }) : ""})` : "");
                           setMethodImage(methodOption.id === 1 ? methodOption.flag : methodImage);
                                 setMethodPayment(false);
                                setMethodPayment(()=> {
@@ -775,24 +845,24 @@ const VerifyPinHandler = async () => {
                                 document.querySelector('.methodDrop').classList.add('DropIt');
                             }})}}
                                
-         className={`pb-[20px] md:pb-0 pt-[20px] md:pt-0 font-weight-bold text-[15px] flex gap-[10px] lg:py-[15px] py-[10px] pl-[10px]
-        cursor-pointer items-center 
-        shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
-        ${methodOption.id !== 1 && !isDarkMode  ? "bg-gray-300 cursor-not-allowed" : 
-            methodOption.id !== 1 && isDarkMode ? "bg-black"
-             : methodOption.id === 1 && !isDarkMode ? "bg-white" : "bg-black" }`}    
+        className={`py-[18px] md:py-[14px] font-normal px-2 flex
+                         items-center gap-[5px] text-[12px] md:text-[14px] 
+                         lg:text-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
+                          transition-all duration-300 hover:bg-slate-50
+                       ${
+                         isDarkMode
+                           ? "text-white hover:bg-slate-800 bg-black "
+                           : "text-[#7E7E7E]"
+                       } ${
+                        methodOption.method === "NGN Wallet"
+                          ? "cursor-pointer"
+                          : "cursor-not-allowed opacity-50"
+                      }`}
                         key={methodOption.id} >
         <img className='md:h-[29.27px]  h-[14.27px]' src={methodOption.flag} alt="" />
- <h2 className={`text-[14px] leading-[10.4px]
-               font-[500]   
-         md:text-[13.227px] md:leading-[17.195px]  
-         lg:text-[16px] lg:leading-[20.8px] self-center cursor-pointer  
-          ${ isDarkMode 
-          ? "bg-black text-white" 
-          : "text-[#7C7C7C]"
-      }`}    >
+ 
                           {methodOption.method + ' ' + methodOption.balance}
-                        </h2>
+                       
                       </div>
 
                     )
@@ -807,9 +877,9 @@ const VerifyPinHandler = async () => {
         </div>
 
         <button onClick={handleStarTimes}
-          disabled={starTimesMobileNumber.length !== 11 || !userVerifiedName || !starTimesEmail || !starTimesSmartCard || !starTimesDecoderType || !selectedOptionStarTimes}
+          disabled={starTimesMobileNumber.length !== 11 || !userVerifiedName || !starTimesEmail || !starTimesSmartCard || !starTimesDecoderType || !selectedOptionStarTimes || !starTimesFlagResult}
           className={`
-             ${starTimesMobileNumber.length !== 11 || !userVerifiedName || !starTimesEmail || !starTimesSmartCard || !starTimesDecoderType || !selectedOptionStarTimes || !flagResult
+             ${starTimesMobileNumber.length !== 11 || !userVerifiedName || !starTimesEmail || !starTimesSmartCard || !starTimesDecoderType || !selectedOptionStarTimes || !starTimesFlagResult
               ? "bg-[#63616188] "
               : "bg-primary"
             }

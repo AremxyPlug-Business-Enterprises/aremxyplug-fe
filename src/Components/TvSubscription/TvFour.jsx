@@ -25,9 +25,10 @@ import { GetFunction } from "../ApiCollection.jsx/ApiBuck";
 import { Modal } from "../Screens/Modal/Modal";
 import { BalanceLoading } from "../Loader/Loader";
 import { HandleUserSession } from "../../Components/ApiCollection.jsx/ApiBuck";
+import { GetLocalStorage } from "../LocalStorage/LocalStorage";
 
 const Showmax = () => {
-
+const Data = GetLocalStorage()
   const {
     inputPin,
     setInputPin,
@@ -162,7 +163,7 @@ setShowMaxMobileNumber,
      const showMaxOptionalPlan = showMaxData?.length < 1 && fetchedShowMaxPlans.status === 200 ? fetchedShowMaxPlans.data.data.data : showMaxData;
             useEffect(()=> {
              if(fetchedShowMaxPlans.status === 200 || fetchedShowMaxPlans.status === 201){
-            setShowMaxData(fetchedShowMaxPlans.data.data.data);
+            setShowMaxData(fetchedShowMaxPlans?.data?.data?.data);
             }else if(fetchedShowMaxPlans.status === undefined){
              const RetrieveGotvPlans = async()=> {
                 const SuccessHandler = ()=> {
@@ -182,7 +183,11 @@ setShowMaxMobileNumber,
           }
           }
             
-       await GetFunction(`products/tvsub/showmax`, setIsLoading, SuccessHandler, failedHandler, setFetchedStarTimesPlans);
+       await GetFunction(`products/tvsub/showmax`, 
+        setIsLoading,
+         SuccessHandler,
+          failedHandler,
+           setFetchedStarTimesPlans);
       
         }
       RetrieveGotvPlans()
@@ -206,14 +211,22 @@ setShowMaxMobileNumber,
                               setPassDataBalance)
                         }
                         }
-                        await GetFunction("balance", setIsLoading, SuccessHandler, FailedHandler,setPassDataBalance)
+                        await GetFunction("balance",
+                           setIsLoading,
+                            SuccessHandler, 
+                            FailedHandler,
+                            setPassDataBalance)
                           } 
                            // Simulate async data loading
-                          if(newBalance === "" || newBalance === null || newBalance === undefined){
+                          if((newBalance === "" || newBalance === null || newBalance === undefined)
+                          && Data?.ConfirmAcc === "true"){
                               GetBalance();
                               if(GetBalance){
-                               setNewBalance(passDataBalance?.data ? passDataBalance.data.data.data.balance : "");
+                               setNewBalance(passDataBalance?.data?.data?.data !== undefined
+                                 ? passDataBalance?.data?.data?.data?.balance : "");
                               }
+                            }else{
+                              console.log("Create an account to access this feature")
                             }
            //eslint-disable-next-line             
             },[])

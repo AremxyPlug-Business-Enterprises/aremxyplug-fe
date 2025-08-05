@@ -293,8 +293,8 @@ export const VerifyTransPin = async (
          setFailed("Bad request");
          setErrorMessage(true);
       }else if(error && error.response.status === 401){
-         console.log(error.response.headers);
-      console.log(error.response.headers.get("x-new-auth-token"));
+         console.log(error?.response?.headers);
+      console.log(error?.response?.headers.get("x-new-auth-token"));
 if (error.response.headers["x-new-auth-token"] ||
           error.response.headers.get("x-new-auth-token")) {
           setLoading(true);

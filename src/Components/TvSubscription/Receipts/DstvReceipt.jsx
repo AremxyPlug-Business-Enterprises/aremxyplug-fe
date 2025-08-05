@@ -15,7 +15,7 @@ export const DstvReceipt= (Data) => {
   Data = GetLocalStorage();
   const navigate = useNavigate()
   const { toggleSideBar, textRef,
-    flagResult,
+    dstvFlagResult,
     selectedOptionDstv,
     dstvEmail,
     dstvMobileNumber,
@@ -37,7 +37,7 @@ export const DstvReceipt= (Data) => {
    setSelectedOptionDstv,
    setPackageDstv,
    setDstvDecoderType,
-    setFlagResult,
+    setDstvFlagResult,
     setDstvCardName,
     setDstvWalletBalance,
     dstvSubscriptionResponse,
@@ -113,7 +113,7 @@ export const DstvReceipt= (Data) => {
    setSelectedOptionDstv("");
    setPackageDstv("");
    setDstvDecoderType("")
-    setFlagResult("");
+    setDstvFlagResult("");
     setDstvWalletBalance("");
     navigate("/DsTv");
   }
@@ -201,7 +201,7 @@ export const DstvReceipt= (Data) => {
                 {selectedOptionDstv}{" "}
               </span>
               from your{" "}
-              <span>{flagResult}</span>{" "} to
+              <span>{dstvFlagResult}</span>{" "} to
             </p>
             <div className="flex flex-col gap-3">
               {/* ========================Recipient Info================== */}
@@ -277,7 +277,7 @@ export const DstvReceipt= (Data) => {
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between
                   lg:text-[16px] font-[500]">
               <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Wallet Type</p>
-                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{flagResult}</span>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{dstvFlagResult}</span>
                 </div>
                 
               </div>

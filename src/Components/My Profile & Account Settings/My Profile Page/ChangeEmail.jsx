@@ -16,23 +16,23 @@ import PopUpGreen from "../ProfileImages/PopUpGreen.svg";
 import PopUpGreenTab from "../ProfileImages/PopUpGreenTab.svg";
 import PopUpGreenDeskTop from "../ProfileImages/PopUpGreenDeskTop.svg";
 import Success from "../ProfileImages/success.gif";
-
+import { PostFunction } from "../../ApiCollection.jsx/ApiBuck";
+import { Loader } from "../../Loader/Loader";
 const ChangeEmail = () => {
   const { isDarkMode } = useContext(ContextProvider);
   const { emailId, setEmailId } = useContext(ContextProvider);
-
+  const [verificationPinError, setVerificationPinError] = useState(false)
   const {
     toggleSideBar,
-    inputPin,
-    setInputPin,
-    inputPinHandler,
     toggleVisibility,
     isVisible,
   } = useContext(ContextProvider);
 
   const [countdown, setCountdown] = useState(60);
   const [resendActive, setResendActive] = useState(false);
-
+  const [otp, setOtp] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [fetchedResponse, setFetchedResponse] = useState({})
   useEffect(() => {
     let timer;
 
@@ -47,10 +47,7 @@ const ChangeEmail = () => {
     return () => clearInterval(timer);
   }, [countdown]);
 
-  const handleResendOTP = () => {
-    setCountdown(60);
-    setResendActive(false);
-  };
+ 
   useEffect(() => {
     if (countdown === 0) {
       setResendActive(true);
@@ -60,25 +57,82 @@ const ChangeEmail = () => {
   const [update, setUpdate] = useState("");
   const [verify, setVerify] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [emailChange, setEmailChange] = useState("")
   const [emailInputColor, setEmailInputColor] = useState("");
 
-  const handleUpdate = (e) => {
-    const isEmail = (input) => {
-      const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{3,}$/i;
-      return emailRegex.test(input);
-    };
-
-    if (isEmail(emailId)) {
-      setErrorMessage("");
+  
+   const HandleChangeEmail = async()=> {
+  
+      const FailedHandler=()=> {
+        console.log("Failed to change email")
+      }
+      const SuccessHandler =()=> {
+       // console.log("Successful")
+     setErrorMessage("");
       setEmailInputColor("#2ED173");
       setUpdate(true);
       setCountdown(60);
+       
+      }
+      const body ={
+        new_email: emailChange
+      }
+     const handleUpdate = async(e) => {
+    const isEmail = (input) => {
+      const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{3,}$/i;
+      return emailRegex.test(emailChange);
+    };
+
+    if (isEmail(emailId)) {
+     
+       await PostFunction("change-email",
+       setLoading, 
+       body, 
+       SuccessHandler,
+        FailedHandler,
+         setFetchedResponse)
     } else {
       setErrorMessage("Invalid email..");
       setEmailInputColor("#F95252");
       setUpdate(false);
     }
-  };
+  
+     };
+     handleUpdate()
+   }
+    const VerifyPopUpHandler =async()=> {
+          const FailedHandler=()=> {
+         setVerificationPinError(true)
+        }
+        const SuccessHandler =()=> {
+         // console.log("Successful")
+         setVerificationPinError("")
+          setUpdate(false);
+       setVerify(true);
+       setOtp("");
+        }
+        const body ={
+          new_email: emailChange,
+          otp : otp
+        }
+      await PostFunction("change-phone/update",
+         setLoading, 
+         body, 
+         SuccessHandler,
+          FailedHandler,
+           setFetchedResponse)  
+      }
+      
+    
+    
+ const handleResendOTP = async() => {
+      setCountdown(60);
+      setResendActive(false);
+      await HandleChangeEmail();
+    };
+  
+  
+    
 
   return (
     <DashBoardLayout>
@@ -134,10 +188,10 @@ const ChangeEmail = () => {
                   isDarkMode ? "bg-black text-white border-white" : ""
                 }`}
                 placeholder=""
-                value={emailId}
+                value={emailChange}
                 style={{ borderColor: emailInputColor }}
                 onChange={(event) => {
-                  setEmailId(event.target.value);
+                  setEmailChange(event.target.value);
                   setEmailInputColor("");
                 }}
               />
@@ -154,7 +208,7 @@ const ChangeEmail = () => {
             <button
               className={`w-full md:w-fit text-white rounded-md px-[28px] text-[12px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[600] leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px] bg-primary
               `}
-              onClick={handleUpdate}
+              onClick={HandleChangeEmail}
             >
               Update
             </button>
@@ -188,9 +242,9 @@ const ChangeEmail = () => {
                   {" "}
                   {isVisible ? (
                     <OtpInput
-                      value={inputPin}
+                      value={otp}
                       inputType="tel"
-                      onChange={setInputPin}
+                      onChange={setOtp}
                       numInputs={6}
                       shouldAutoFocus={true}
                       inputStyle={{
@@ -245,18 +299,23 @@ const ChangeEmail = () => {
                     Resend OTP
                   </p>
                 </p>
+
+                   {verificationPinError && (
+                  <p className ="text-red-500 text-[12px] md:text-[14px] 
+                  lg:text-[16px] mt-[5px]">
+                     Incorrect otp
+                    </p>
+                )}
               </div>
 
               <button
                 onClick={(e) => {
-                  e.preventDefault();
-                  setUpdate(false);
-                  inputPinHandler(e);
-                  setVerify(true);
+                  VerifyPopUpHandler()
+              
                 }}
-                disabled={inputPin.length !== 6}
+                disabled={otp.length !== 6}
                 className={`${
-                  inputPin.length !== 6 ? "bg-[#0008]" : "bg-[#04177f]"
+                  otp.length !== 6 ? "bg-[#0008]" : "bg-[#04177f]"
                 } my-[2%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%] ${
                   isDarkMode ? "border border-white" : ""
                 }`}
@@ -346,6 +405,11 @@ const ChangeEmail = () => {
           </Link>
         </div>
       </div>
+      {loading && (
+        <Modal>
+      <Loader/>
+        </Modal>
+      )}
     </DashBoardLayout>
   );
 };
