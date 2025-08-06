@@ -258,8 +258,8 @@ const AirtimeVtu = () => {
 
     const Network = ({ name, image, onClick }) => {
         return (
-            <li className="py-[10px]  border-[0.5px] border-y-gray-200 flex items-center
-         gap-[10px] pl-[7px] text-black" onClick={onClick}>
+            <li className="py-[10px]  border-[0.5px] flex items-center
+         gap-[10px] pl-[7px]" onClick={onClick}>
                 <div className={styles.netImage}>
                     <img src={image} alt="" className={styles.NoImage} />
                 </div>
@@ -268,10 +268,10 @@ const AirtimeVtu = () => {
         )
     }
 
-    const Payment = ({ code, flag, amount, onClick }) => {
+    const Payment = ({ code, flag, amount, onClick, className }) => {
         return (
-            <li className="py-[10px] bg-white  border-[0.5px] border-y-gray-200 flex items-center
-         gap-[10px] pl-[7px] text-black" onClick={onClick}>
+            <li className="py-[10px] flex items-center 
+         gap-[10px] pl-[7px]" onClick={onClick}>
                 <div className={styles.netImage}>
                     <img src={flag} alt="" className={styles.NoImage} />
                 </div>
@@ -651,23 +651,31 @@ const AirtimeVtu = () => {
                                 </div>
                             </Link>
                         </div>
-                    </div>
-                    <div className={`${styles.containFlex1} !text-[15px] md:!text-base`}>
-                        <div className={styles.FlexPut1} onClick={handleCodes}>
-                            <div className={styles.conPut1}>
-                                <h2>Airtime Balance USSD Codes</h2>
-                                <div className={styles.FlexImg1}>
-                                    <img src={data} alt="" className='' />
-                                </div>
+                    </div>  
+              {/* .containFlex1 */}
+                    <div className={`flex mt-[35px] my-[30px] md:w-[100%] md:gap-[10%] !text-[15px] md:!text-base`}>
+                        {/* </div><div className={styles.FlexPut1} onClick={handleCodes}> */}
+                        <div className="rounded-[4px] w-full bg-primary text-white md:w-[50%] h-[30px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-center md:justify-between gap-[10px] px-[5px]" onClick={handleCodes}>
+                            {/* <div className={styles.conPut1}> */}
+                                 <h2 className="lg:text-[16px] lg:leading-[24px] text-[14px] md:text-[12px] leading-[12px]">
+              Airtime Balance USSD Codes</h2>
+                                {/* <div className={styles.FlexImg1}> */}
+                                <div className="lg:w-6 lg:h-6 w-[11px] h-[11px]">
+                                    <img src={data} alt="" className="w-full h-full hidden md:block" />
+                                {/* </div> */}
                             </div>
+                            
                         </div>
+                         <div className="hidden md:w-[50%] md:block"></div>
                     </div>
-                    <div className={styles.mainGrid}>
-                        <div className={styles.mainGridCol}>
+                    <div className="grid grid-cols-1 mt-[25px] md:grid-cols-2 gap-y-[20px] md:gap-x-[58.68px] lg:gap-x-[100px] md:gap-y-[15px] lg:gap-y-[25px] pb-[30px] lg:py-[30px] md:mt-[20px]">
+                    {/* <div className={styles.mainGrid}> */}
+                        <div className="flex flex-col lg:gap-[14px] gap-[7px]">
+                        {/* <div className={styles.mainGridCol}> */}
                             <div>
                                 <div className={styles.NetworkFlex}>
-                                    <h2 className={`${styles.head3} !text-[15px] md:text-[15px]   ${isDarkMode 
-                                              ? "!text-[#7E7E7E]" : "text-[#7E7E7E]"
+                                    <h2 className={`lg:text-[18px] text-[#7c7c7c] lg:leading-[24px] mb-4 text-[15px] md:text-[12px] md:font-[600] font-[400] leading-[12px]   ${isDarkMode 
+                                              ? "text-[#7c7c7c]" : "text-[#7c7c7c]"
                                           }`}>Select Network</h2>
                                     <div className={`
                                               ${
@@ -678,13 +686,18 @@ const AirtimeVtu = () => {
                                     ${styles.input} !h-[44.927px] md:!h-[58px]
        `} >
 
-                                        <div className={`${styles.output2}
+                                        <div 
+                                        
+                                        className={`${styles.output2}
+                                       
 
                                         !relative !top-[17px] md:!relative md:!top-base !text-[14px] md:!text-base
                                      `}>
                                             {networkName ? (
-                                                <li onClick={handleShowList} className={`${styles.labelInput}  
-                                              `}>
+                                                <li onClick={handleShowList} 
+                                                className={`${styles.labelInput}  
+                                              `}
+                                              >
                                                     <div className={styles.network}>
                                                         {networkImage && <img src={networkImage} alt="" />}
                                                     </div>
@@ -692,7 +705,7 @@ const AirtimeVtu = () => {
                                                     ${
                                                         isDarkMode ? "!text-[#7C7C7C] !bg-black !border !border-none !border-0 !border-width:0" : ""
                                                     }
-                                                    ${styles.head2}
+                                                    ${styles.head2x}
                                                      !text-[13px] md:!text-[13px]`}>{networkName}</h2>
                                                 </li>
                                             ) : (
@@ -713,31 +726,46 @@ const AirtimeVtu = () => {
                                         </div>
                                     </div>
                                 </div>
+                                <div className="relative">
+                                {/* ${styles.colDown} */}
                                 {showList &&
-                                    <div className={`${styles.colDown}
-                                      ${isDarkMode ? "!bg-black md:!bg-black border border-white text-[#7E7E7E] border-2 rounded-[5px]" : "border border-none rounded-[5px] text-black bg-[#FFF]"}
+                                    <div className={`text-[16px] md:text-[12px]  bvnQuery text-[#7C7C7C]
+                  shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] 
+                     
+                   lg:text-[16px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[10]
+                 
+                                      ${isDarkMode ? "!bg-black md:!bg-black border border-white border-2 rounded-[5px]" : "border border-none rounded-[5px] text-[#7C7C7C] bg-[#FFF]"}
         `}
                                     >
                                         {networkList.map((item) => (
-                                            <Network key={item.id} image={item.image} name={item.name} onClick={() => handleSelectNetwork(item.name, item.image, item.discount, item.networkId)} />
+                                             <div className='text-[#7C7C7C]'>
+                                            <Network key={item.id} image={item.image} name={item.name} onClick={() => handleSelectNetwork(item.name, item.image, item.discount, item.networkId)}
+                                            
+                                            />
+                                             </div>
+
                                         ))}
                                     </div>
 
+
                                 }
                             </div>
-                            <div className={styles.headPro}>
+                            </div>
+                            
+                            {/* <div className={styles.headPro}> */}
+                            <div className="flex flex-col">
                                 <h2 className={`
                                     ${
                                         isDarkMode 
                                             ? "!text-[#7E7E7E]" 
                                             : ""
                                     }
-                                    ${styles.head3} !text-[15px] md:!text-[15px]`}> Product</h2>
+                                  mt-8 lg:text-[18px] md:text-[14px] lg:leading-[24px] mb-4 text-[16px] md:font-[600] font-[400] leading-[12px] text-[#7c7c7c]`}> Product</h2>
                                 <div className={` 
                                            ${
                                             isDarkMode 
                                                 ? "!mt-2 md:!mt-0 !bg-black !text-white !border !border-solid !border-white !rounded-[7px]" 
-                                                : "!mt-2 md:!mt-0 border border-solid border-[#0003] bg-white text-black"
+                                                : "!mt-2 md:!mt-0 border border-solid border-[#0003] bg-white  text-[#7c7c7c]"
                                         }                  ${styles.input1} !h-[44.927px] md:!h-[58px]
             `}
                                 >
@@ -767,16 +795,16 @@ const AirtimeVtu = () => {
                             </div>
                         </div>
                         <div className={styles.mainGridCol}>
-                            <div className={styles.headPr}>
-                                <h2 className={`${styles.head3} !text-[15px] md:text-base ${
+                            <div className="flex flex-col lg:gap-0 gap-[2px] md:mt-0 mt-4">
+                                <h2 className={` text-[#7c7c7c] lg:text-[18px] lg:leading-[24px] mb-2 md:mb-4 text-[15px] md:text-[12px] md:font-[600] font-[400] leading-[12px] md:text-base ${
                                             isDarkMode 
-                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                                              ? "!text-[#7c7c7c]" : "!text-text-[#7E7E7E]"
                                           }`}>Discount</h2>
                                 <div className={`${styles.input2} !h-[44.927px] md:!h-[57px] !mt-2 md:!mt-0
                                     ${
                                             isDarkMode 
                                                 ? "!bg-black !text-[#7E7E7E] !border !border-solid !border-white !rounded-[7px]" 
-                                                : "border border-solid border-[#0003] bg-white text-black"
+                                                : "border border-solid border-[#0003] bg-white text-[#7c7c7c]"
                                         }`}>
                                     <h2 className={`!relative !top-[6px] md:!relative md:!top-base !text-[13px] md:!text-[13px]
                                          ${
@@ -796,10 +824,10 @@ const AirtimeVtu = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className={styles.headPro}> 
-                                <h2 className={`${styles.head3} !text-[15px] md:!text-base ${
+                            <div className="flex flex-col lg:gap-[14px] gap-[7px] md:mt-12 mt-8"> 
+                                <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
                                             isDarkMode 
-                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                                              ? "!text-[#7c7c7c]" : "!text-[#7c7c7c]"
                                           }`}>Phone Number <span
                                     className={`
                                        
@@ -812,7 +840,7 @@ const AirtimeVtu = () => {
                                                 ? "!bg-black !text-white !border !border-solid !border-white" 
                                                 : "border border-solid border-[#0003] bg-white text-black"
                                         }
-                                ${styles.input} !h-[44.927px] md:!h-[50px]
+                                ${styles.input} !h-[48.927px] md:!h-[57px]
                                           `}>
                                     <div className={`
                                          ${
@@ -825,7 +853,7 @@ const AirtimeVtu = () => {
                                             className={`
                                                   ${
                                             isDarkMode 
-                                                ? "!bg-black !text-[#7E7E7E]" 
+                                                ? "!bg-black !text-[#7c7c7c]" 
                                                 : ""
                                         }
                                                 ${styles.phone} !text-[14px] md:!top-[14px]`}  required
@@ -837,7 +865,7 @@ const AirtimeVtu = () => {
                                         <div className={`${styles.call}
                                             ${
                                             isDarkMode 
-                                                ? "!bg-black !text-white" 
+                                                ? "!bg-black !text-[#7c7c7c]" 
                                                 : ""
                                         }
                                         `}>
@@ -849,7 +877,7 @@ const AirtimeVtu = () => {
                                     <div className={`
                                         ${
                                             isDarkMode 
-                                                ? "!bg-black !text-white" 
+                                                ? "!bg-black !text-[#7c7c7c]" 
                                                 : ""
                                         }!text-[14px] text-red-500 italic lg:text-[14px]
                                         
@@ -860,17 +888,17 @@ const AirtimeVtu = () => {
                             </div>
                         </div >
                         <div className={styles.mainGridCol}>
-                            <div className={styles.headPr}>
-                                <h2 className={`${styles.head3} !text-[15px] md:!text-base ${
+                            <div className='flex flex-col lg:gap-[14px] gap-[7px] mt-3 md:mt-5'>
+                                <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
                                             isDarkMode 
-                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                                              ? "!text-[#7c7c7c]" : "!text-[#7c7c7c]"
                                           }
                                           `}>Recipient Name <span className={`${styles.span4} !text-[15px] md:!text-base`}>(optional)</span></h2>
                                 <div className={`!mt-2 md:!mt-0
                                      ${
                                             isDarkMode 
-                                                ? "!bg-black !text-white !border !border-solid !border-white" 
-                                                : "border border-solid border-[#0003] bg-white text-black"
+                                                ? "!bg-black !text-[#7c7c7c] !border !border-solid !border-white" 
+                                                : "border border-solid border-[#0003] bg-white text-[#7c7c7c]"
                                         }
                                     ${styles.input} !h-[44.927px] md:!h-[51px]`}>
                                     <div className={` ${
@@ -892,36 +920,36 @@ const AirtimeVtu = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className={styles.headPro}>
-                                <h2 className={`${styles.head3} !text-[15px] md:!text-base ${
+                            <div className="flex flex-col lg:gap-[14px] gap-[7px] mt-8 md:mt-10">
+                                <h2 className={`text-[#7c7c7c] text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
                                             isDarkMode 
                                               ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
                                           }`}>Type Amount</h2>
                                 <div className={`!mt-2 md:!mt-0
                                      ${
                                             isDarkMode 
-                                                ? "!bg-black !text-white !border !border-solid !border-white" 
-                                                : "border border-solid border-[#0003] bg-white text-black"
+                                                ? "!bg-black !text-[#7c7c7c] !border !border-solid !border-white" 
+                                                : "border border-solid border-[#0003] bg-white text-[#7c7c7c]"
                                         }
                                     ${styles.input} !h-[44.927px] md:!h-[56px] `}>
                                     <div className={`
                                          ${
                                             isDarkMode 
-                                                ? "!bg-black !text-[#7E7E7E]" 
+                                                ? "!bg-black !text-[#7c7c7c]" 
                                                 : ""
                                         }
                                         ${styles.output} !relative !top-[9px] md:!relative md:!top-base !text-[14px] md:!text-base`}>
                                         <span className={`text-gray-500 bottom-[1px] !relative !top-[7px] md:!relative md:!top-base !text-[14px] md:!text-base
                                              ${
                                             isDarkMode 
-                                                ? "!bg-black !text-[#7E7E7E]" 
+                                                ? "!bg-black !text-[#7c7c7c]" 
                                                 : ""
                                         }
                                             `}>&#8358;</span>
                                         <input type='number' placeholder='Type amount' required className={`pl-[8px] md:pl-base
                                              ${
                                             isDarkMode 
-                                                ? "!bg-black !text-[#7E7E7E]" 
+                                                ? "!bg-black !text-[#7c7c7c]" 
                                                 : ""
                                         }
                                             ${styles.phones} !relative !top-[5px] md:!relative md:!top-base !text-[14px] md:!text-base`} onChange={(event) => setAmount(event.target.value)} value={amount.toLocaleString()} />
@@ -938,32 +966,32 @@ const AirtimeVtu = () => {
                             </div>
                         </div>
                         <div className={styles.mainGridCol}>
-                            <div className={styles.headPro}>
-                                <h2 className={`${styles.head3} !text-[15px] md:!text-base ${
+                            <div className="flex flex-col lg:gap-[14px] gap-[6.6px] md:mt-4 mt-5">
+                                <h2 className={`text-[#7c7c7c] text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px]  ${
                                             isDarkMode 
-                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                                              ? "!text-[#7c7c7c]" : "!text-[#7c7c7c]"
                                           }`}>Total Amount</h2>
                                 <div className={`!mt-2 md:!mt-0
                                 ${
         isDarkMode 
-            ? "!bg-black !text-white !border !border-solid !border-white" 
-            : "border border-solid border-[#0003] bg-white text-black"
+            ? "!bg-black !text-[#7c7c7c] !border !border-solid !border-white" 
+            : "border border-solid border-[#0003] bg-white text-[#7c7c7c]"
     }
                                 ${styles.input} !h-[44.927px] md:!h-[56px] `}>
                                     <div className={`
                                     ${
         isDarkMode 
-            ? "!bg-black !text-[#7E7E7E]" 
+            ? "!bg-black !text-[#7c7c7c]" 
             : ""
     }
                                     ${styles.output1} !relative !top-[17px] md:!relative md:!top-base !text-[14px] md:!text-base`}>
                                         <h2 className={`
                                         ${
         isDarkMode 
-            ? "!bg-black !text-[#7E7E7E] " 
+            ? "!bg-black !text-[#7c7c7c]" 
             : ""
     }
-                                        !text-[14px] md:!text-[13px] `}>{newAmount ? `NGN${newAmount}` : `Total Amount`}</h2>
+                                        !text-[14px] md:!text-[15px] text-[#7C7C7C] `}>{newAmount ? `NGN${newAmount}` : `Total Amount`}</h2>
                                         <div className={styles.disc}>
                                             <img src={money} alt="" className='w-full h-full' />
                                         </div>
@@ -971,16 +999,16 @@ const AirtimeVtu = () => {
                                 </div>
                             </div>
                             <div>
-                                <div className={styles.headPro}>
-                                    <h2 className={`${styles.head3} !text-[15px] md:!text-base ${
+                                <div className="flex flex-col lg:gap-[14px] gap-[7px] md:mt-10 mt-8">
+                                    <h2 className={`text-[#7c7c7c] text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px]  ${
                                             isDarkMode 
-                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                                              ? "!text-[#7c7c7c]" : "!text-[#7c7c7c]]"
                                           }`}>Payment Method</h2>
                                     <div className={`!mt-2 md:!mt-0
                                     ${
         isDarkMode 
-            ? "!bg-black !text-white !border !border-solid !border-white !rounded-[7px]"  
-            : "border border-solid border-[#0003] bg-white text-black"
+            ? "!bg-black text-[#7c7c7c] !border !border-solid !border-white !rounded-[7px]"  
+            : "border border-solid border-[#0003] bg-white text-[#7c7c7c]"
     }
                                     ${styles.input1} !h-[44.927px] md:!h-[58px]
                                   `}>
@@ -989,22 +1017,22 @@ const AirtimeVtu = () => {
                                                 <h2 className={`
                                                 ${
         isDarkMode 
-            ? "!bg-black !text-[#7E7E7E] " 
+            ? "!bg-black !text-[#7c7c7c]" 
             : ""
     }
-                                                ${styles.head4} !relative !top-[3.8px] md:!relative md:!top-base !text-[14px] md:!text-[13px]`}>{name}</h2>
-                                                <h2 className={`${styles.head4} !relative !top-[3.8px] md:!relative md:!top-base !text-[14px] md:!text-[13px]`}>Wallet({paymentAmount.toLocaleString()})</h2>
+                                                ${styles.head4} !relative !top-[3.8px] md:!relative md:!top-base !text-[14px] md:!text-[15px]`}>{name}</h2>
+                                                <h2 className={`${styles.head4} !relative !top-[3.8px] md:!relative md:!top-base !text-[14px] md:!text-[15px]`}>Wallet({paymentAmount.toLocaleString()})</h2>
                                             </li>
                                             :
                                             <h2 onClick={handleShowPayment} className={`
                                              ${
         isDarkMode 
-            ? "!bg-black !text-[#7E7E7E]" 
+            ? "!bg-black !text-[#7c7c7c]" 
             : ""
     }
-                                            ${styles.head9} !relative !top-[5px] md:!relative md:!top-base !text-[14px] md:!text-base`}>Select Payment Method</h2>}
+                                            ${styles.head9} !relative !top-[5px] md:!relative md:!top-base !text-[14px] md:!text-base text-[#7C7C7C]`}>Select Payment Method</h2>}
                                         {paymentSelected ?
-                                            <button className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px] !relative !top-[4px] md:!relative md:!top-base !text-[14px] md:!text-base" onClick={handleShowPayment}>
+                                            <button className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px] !relative !top-[4px] md:!relative md:!top-base md:!text-base" onClick={handleShowPayment}>
                                                 <img src={image} alt="" className='w-full h-full object-cover ' />
                                             </button>
                                             :
@@ -1014,22 +1042,53 @@ const AirtimeVtu = () => {
                                         }
                                     </div>
                                 </div>
+                                {/* <div className="relative"> */}
                                 {showPayment &&
-                                    <div className={`
-                                    
-                                    ${
-        isDarkMode 
-            ? "!bg-black !text-white !border !border-solid !border-white" 
-            : ""
-    }${styles.colDown} `}>
+                                    <div className={`mt-[14px]
+                                                 ${
+                      isDarkMode
+                        ? "bg-black border-white rounded-[7px] text-white"
+                        : "text-[#7C7C7C] bg-white rounded-br-[7px] rounded-bl-[7px] lg:rounded-br-[14px] lg:rounded-bl-[14px]"
+                    }
+                    ${
+                      toggleSideBar
+                        ? "lg:w-[31.5%] lg:top-[100.5%]"
+                        : "lg:w-[38.5%] lg:top-[105.3%]"
+                    }  ${
+                    styles.countryDropDown
+                  }  shadow-xl border w-full lg:w-full  flex flex-col divide-y`}
+               
+    >
                                         {countryList.map((country) => (
-                                            <Payment key={country.id} flag={country.flag} code={country.code} amount={country.amount} onClick={() => handleSelectPayment(country.code, country.flag, country.amount)} />
+                                              <div
+    key={country.id}
+    className={`py-[18px] md:py-[14px] font-normal px-2 flex items-center gap-[5px] text-[12px] md:text-[14px] lg:text-[16px] transition-all duration-300 hover:bg-slate-50 shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
+                        ${
+                          isDarkMode
+                            ? "text-white hover:bg-slate-800 bg-black "
+                            : "text-[#7C7C7C]"
+                        } ${
+                        country.code === "Nigerian NGN Wallet"
+                          ? "cursor-pointer"
+                          : "cursor-not-allowed opacity-50"
+                      }`}
+    onClick={() => {
+      if (country.code === "Nigerian NGN Wallet") {
+        handleSelectPayment(country.code, country.flag, country.amount);
+      }
+    }}
+  >
+
+                                            <Payment key={country.id} flag={country.flag} code={country.code} amount={country.amount} onClick={() => handleSelectPayment(country.code, country.flag, country.amount)}  
+                                            />
+                                             </div>
                                         ))}
                                     </div>
                                 }
                             </div>
+                            </div>
                         </div>
-                    </div>
+                    {/* </div> */}
                     <div className={styles.add}>
                         <h2 className='!text-[13px] md:!text-base'>Add to Recipient?</h2>
                         <div onClick={() => { setAddRecipient(!addRecipient); if (!addRecipient) handleAddRecipient(); }}
