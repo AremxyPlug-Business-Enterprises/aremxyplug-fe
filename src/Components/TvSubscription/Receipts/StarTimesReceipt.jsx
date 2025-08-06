@@ -15,14 +15,11 @@ export const StarTimesReceipt= (Data) => {
   Data = GetLocalStorage()
   const navigate = useNavigate()
   const { toggleSideBar, textRef,
-    flagResult,
     selectedOptionStarTimes,
     starTimesEmail,
     starTimesAmount,
-    formatNumberWithCommas,
     starTimesMobileNumber,
     starTimesSmartCard,
-    cardName,
     isDarkMode,
     starTimesOrderId,
     starTimesTransactionId,
@@ -39,7 +36,12 @@ export const StarTimesReceipt= (Data) => {
    setStarTimesDecoderType,
     setFlagResult,
     setStarTimesWalletBalance,
-    date } =
+    date,
+  starTimesSubscriptionResponse,
+  starTimesFlagResult,
+  purchaseStarTimesErrorType,
+  starTimesCardName
+ } =
     useContext(ContextProvider);
 
   const contentRef = useRef(null);
@@ -119,14 +121,16 @@ export const StarTimesReceipt= (Data) => {
     <DashBoardLayout>
       <div className="flex flex-col gap-[35px] lg:gap-[85px]">
         <div
-          className={` ${styles.receipt} ${
-            toggleSideBar ? "" : "lg:w-[880px] "
-          } w-full lg:mx-auto`}
+           className={` ${styles.receipt} ${
+                     toggleSideBar ? "" : "lg:w-[880px] "
+                   } w-full lg:mx-auto ${isDarkMode ? "border border-white" : ""}`}
         >
-          <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
+          <div className="flex justify-between items-center 
+          mx-[3%] my-[2%] lg:my-[1%]">
             <div>
               <img
-                className=" w-[15px] h-[10px] md:w-[24px] md:h-[15px] lg:w-[42px] lg:h-[25px]"
+                 className=" w-[15px] h-[10px] md:w-[24px] 
+                md:h-[15px] lg:w-[42px] lg:h-[25px]"
                 src="/Images/login/arpLogo.png"
                 alt=""
               />
@@ -134,7 +138,8 @@ export const StarTimesReceipt= (Data) => {
             <div onClick = {()=> ExitTheReceipt()}>
               {" "}
               <img
-                className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
+                className=" w-[18px] h-[18px] md:w-[35px] 
+                md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
               />
@@ -144,21 +149,27 @@ export const StarTimesReceipt= (Data) => {
           <div ref={contentRef}>
             {" "}
             <h3 className={`font-extrabold text-[12px] my-[2%] text-center
-             md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%] ${isDarkMode ? "text-white" : "text-black"}`}>
+             md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]
+              ${isDarkMode ? "text-white" : "text-black"}`}>
               Transaction Receipt
             </h3>
-            <div className="w-full flex justify-center ">
+            <div className="w-full flex justify-center">
               <img
-                className="absolute w-[250px] h-[450px] md:w-[70%] lg:w-[50%] lg:h-[550px]"
+               className="absolute w-[250px] h-[450px] md:w-[70%] 
+                lg:w-[50%] lg:h-[550px]"
                 src="./Images/transferImages/receipt-background.png"
                 alt="/"
               />
             </div>
-            <h3 className="font-extrabold text-[12px] mt-[2%] text-center md:text-[20px] md:my-[7px] lg:text-[16px] lg:my-[10px]">
-            Purchase Successful on
+            <h3 className={`font-extrabold text-[12px]  mt-[2%] text-center 
+            md:text-[20px] md:my-[7px] lg:text-[16px] lg:my-[10px]
+            ${isDarkMode ? "text-white" : "text-black"}
+          `}>
+            {starTimesSubscriptionResponse?.data?.status === "delivered" ?  "Purchase Successful on" : "Purchase Failed on"}
             </h3>
-            <span className={`text-[11px] text-[#0008] font-extrabold flex 
-              justify-center items-center ${isDarkMode ? "text-white" : "text-black"}`}>
+            <span  className={`text-[11px] ${isDarkMode ? "text-white" : "text-black"}
+             font-extrabold flex justify-center items-center
+            `}>
               {date.toLocaleDateString(undefined, {
                 year: "numeric",
                 month: "long",
@@ -169,14 +180,19 @@ export const StarTimesReceipt= (Data) => {
                 hour12: true,
               })}
             </span>
-            <p className={`pt-2 md:pt-4 text-[9px] text-[#0008] font-bold 
-            text-center my-2 md:text-[14px] lg:text-[14px] ${isDarkMode ? "text-white" : "text-black"}`}>
-            You have successfully subscribed {" "}
-              <span className= {`text-[#000] text-[10px] md:text-[16px] lg:text-[16px] ${isDarkMode ? "text-white" : "text-black"}`} >
+            <p className={`text-[10px] p-[5.729px] border-[0.573px] rounded-[6.302px] md:p-[5.868px]
+                 md:border-[0.578px] md:rounded-[6.455px]  lg:border-[1px] lg:rounded-[11px]
+                   leading-[15px] md:leading-[20px] 
+                    lg:p-[10px] text-center my-2 md:text-sm
+                    lg:text-base  lg:leading-[24px] font-medium md:mb-7
+             ${starTimesSubscriptionResponse?.data?.status === "delivered" ? "border-[#27AE60] text-[#27AE60] bg-[#D5F6E3]" :  'border-red-500 text-red-500 bg-red-100' }`}>
+             {starTimesSubscriptionResponse?.data?.status === "delivered" ?  "You have successfully subscribed to " : purchaseStarTimesErrorType}
+              <span className={`font-extrabold text-[10.9px] md:text-[14.9px] 
+              lg:text-[16.9px] `} >
                 {selectedOptionStarTimes}{" "}
               </span>
               from your{" "}
-              <span>{flagResult}</span>{" "} to
+              <span>{starTimesFlagResult}</span>{" "} to
             </p>
             <div className="flex flex-col gap-3">
               {/* ========================Recipient Info================== */}
@@ -189,33 +205,50 @@ export const StarTimesReceipt= (Data) => {
                     alt="/"
                   />
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className={`${isDarkMode ? "text-white" : "text-black"}`}>Decoder Type</p>
-                  <span>StarTimes</span>
+                <div className="flex text-[10px] font-[500] md:text-[14px] w-[90%]
+                 mx-auto justify-between 
+                 lg:text-[16px]">
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Decoder Type</p>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>StarTimes</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className={`${isDarkMode ? "text-white" : "text-black"}`}>Package</p>
-                  <span>{selectedOptionStarTimes}</span>
+                <div className="flex text-[10px] font-[500] md:text-[14px] w-[90%]
+                 mx-auto justify-between 
+                 lg:text-[16px]">
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Package</p>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{selectedOptionStarTimes}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className={`${isDarkMode ? "text-white" : "text-black"}`}>Smartcard / IUC Number</p>
-                  <span>{starTimesSmartCard}</span>
+                <div className="flex text-[10px] font-[500] md:text-[14px] w-[90%]
+                 mx-auto justify-between 
+                 lg:text-[16px]">
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Smartcard / IUC Number</p>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{starTimesSmartCard}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className={`${isDarkMode ? "text-white" : "text-black"}`}>Card Name</p>
-                  <span>{cardName}</span>
+                <div className="flex text-[10px] font-[500] md:text-[14px] w-[90%]
+                 mx-auto justify-between 
+                 lg:text-[16px]">
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Card Name</p>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{starTimesCardName}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className={`${isDarkMode ? "text-white" : "text-black"}`}>Phone</p>
-                  <span>{starTimesMobileNumber}</span>
+                <div className="flex text-[10px] font-[500] md:text-[14px] w-[90%]
+                 mx-auto justify-between 
+                 lg:text-[16px]">
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Phone</p>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{starTimesMobileNumber}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className={`${isDarkMode ? "text-white" : "text-black"}`}>Email</p>
-                  <span>{starTimesEmail}</span>
+                <div className="flex text-[10px] font-[500] md:text-[14px] w-[90%]
+                 mx-auto justify-between 
+                 lg:text-[16px]">
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Email</p>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{starTimesEmail}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className={`${isDarkMode ? "text-white" : "text-black"}`}>Amount</p>
-                  <span>{`₦ ${starTimesAmount}`}</span>
+                <div className="flex text-[10px] font-[500] md:text-[14px] w-[90%]
+                 mx-auto justify-between 
+                 lg:text-[16px]">
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Amount</p>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{ starTimesAmount !== "" || starTimesAmount !== undefined ? starTimesAmount?.toLocaleString("en-NG", {
+                    style : "currency",
+                    currency : "NGN"
+                  }) : "₦"}</span>
                 </div>
               </div>
 
@@ -231,13 +264,17 @@ export const StarTimesReceipt= (Data) => {
                     alt="/"
                   />
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className={`${isDarkMode ? "text-white" : "text-black"}`}>Customer Name</p>
-                  <span>{Data?.aremxyUsername ? Data?.aremxyUsername : ""}</span>
+                <div className="flex text-[10px] font-[500] md:text-[14px] w-[90%]
+                 mx-auto justify-between 
+                 lg:text-[16px]">
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Customer Name</p>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{Data?.aremxyUsername ? Data?.aremxyUsername : ""}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className={`${isDarkMode ? "text-white" : "text-black"}`}>Wallet Type</p>
-                  <span>{flagResult}</span>
+                <div className="flex text-[10px] font-[500] md:text-[14px] w-[90%]
+                 mx-auto justify-between 
+                 lg:text-[16px]">
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Wallet Type</p>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{starTimesFlagResult}</span>
                 </div>
                 
               </div>
@@ -253,22 +290,30 @@ export const StarTimesReceipt= (Data) => {
                     alt="/"
                   />
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className={`${isDarkMode ? "text-white" : "text-black"}`}>Product</p>
-                  <span>TV Subscriptions</span>
+                <div className="flex text-[10px] font-[500] md:text-[14px] w-[90%]
+                 mx-auto justify-between 
+                 lg:text-[16px]">
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Product</p>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>TV Subscriptions</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className={`${isDarkMode ? "text-white" : "text-black"}`}>Description</p>
-                  <span>{StarTimesDescriptionInfo}</span>
+                <div className="flex text-[10px] font-[500] md:text-[14px] w-[90%]
+                 mx-auto justify-between 
+                 lg:text-[16px]">
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Description</p>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{StarTimesDescriptionInfo}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className={`${isDarkMode ? "text-white" : "text-black"}`}>Order Number</p>
-                  <span>{StarTimesOrderInfo}</span>
+                <div className="flex text-[10px] font-[500] md:text-[14px] w-[90%]
+                 mx-auto justify-between 
+                 lg:text-[16px]">
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Order Number</p>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{StarTimesOrderInfo}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between items-center lg:text-[16px]">
-                  <p className={`${isDarkMode ? "text-white" : "text-black"}`}>Transaction ID</p>
+                <div className="flex text-[10px] font-[500] md:text-[14px] w-[90%]
+                 mx-auto justify-between 
+                 lg:text-[16px]">
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Transaction ID</p>
                   <div className="flex items-center">
-                    <span ref={textRef}>
+                    <span ref={textRef} className={` ${isDarkMode ? "text-white" : "text-black"}`}>
                      {StarTimesTransactionInfo}
                     </span>
                     <div

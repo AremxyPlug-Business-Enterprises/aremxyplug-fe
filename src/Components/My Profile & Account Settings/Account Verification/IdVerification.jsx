@@ -199,7 +199,7 @@ export default function IdVerification(Data) {
         }
       } catch (error) {
         if(error && (error.response === undefined)){
-          alert("Your network is quite unstable.")
+          alert("Your network is quite unstable.");
         } else if (error.status === 401 || error.status === 400) {
           alert(ErrorMessage);
           console.log(`ERROR : ${error}`);

@@ -45,7 +45,7 @@ const ConfirmStarTimesPopup = ({passDataBalance, userVerifiedName}) => {
    let balanceStringToNum = Number(newBalance);
       let starTimesAmountToNumber = Number(starTimesAmount);
        const updateBalance = (newBalance === "" && passDataBalance?.data?.data?.data?.balance) ? Number(passDataBalance?.data?.data?.data?.balance) : balanceStringToNum;
-     let CheckSufficiency = starTimesAmountToNumber > balanceStringToNum
+     let CheckSufficiency = starTimesAmountToNumber > updateBalance
   useEffect(()=> {
     const HandleBalanceStatus = ()=> {
     if(CheckSufficiency){
@@ -64,7 +64,7 @@ const ConfirmStarTimesPopup = ({passDataBalance, userVerifiedName}) => {
         (
           <Modal>
            <div className={`w-full flex justify-center h-full 
-             py-[30px] px-[20px] lg:items-center
+             py-[30px] px-[15px] lg:px-[0px] lg:items-center
               items-end`}>
              <div 
              className={` bvnQuery lg:rounded-[12px] rounded-[10px] 
@@ -194,7 +194,7 @@ const ConfirmStarTimesPopup = ({passDataBalance, userVerifiedName}) => {
                                         </div>
               <button
                 onClick={handleInputStarTimes}
-                disabled ={starTimesAmountToNumber > balanceStringToNum}
+                disabled ={CheckSufficiency}
                className={`bg-[#04177f] my-[5%] w-[90%] flex 
                 justify-center items-center mx-auto cursor-pointer 
                 text-[14px] font-extrabold h-[50px] text-white rounded-[6px]

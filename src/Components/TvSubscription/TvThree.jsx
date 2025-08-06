@@ -75,6 +75,8 @@ const Data = GetLocalStorage();
     setStarTimesMobileNumber,
     setFetchedStarTimesPlans,
     toggleSideBar,
+    purchaseStarTimesErrorType,
+    setPurchaseStarTimesErrorType
     } = useContext(ContextProvider);
       
 
@@ -368,12 +370,9 @@ const Data = GetLocalStorage();
       setStarTimesTransactionId(starTimesSubscriptionResponse?.data?.transaction_id ? starTimesSubscriptionResponse?.data?.transaction_id : ""  );
      // setStarTimesRequestId(starTimesSubscriptionResponse.data.request_id);
       setStarTimesDescription(starTimesSubscriptionResponse?.data?.transaction_description ? starTimesSubscriptionResponse?.data?.transaction_description : "");
-     
-}
-  
-    receivedData();
-    
-    if (receivedData) {
+     }
+   receivedData();
+     if(receivedData) {
       setStarTimesSuccessful(false);
       setIsLoading(false);
       navigate("/StarTimesReceipt");
@@ -399,24 +398,41 @@ const VerifyPinHandler = async () => {
       //  handleReceivedData()
       }
       const FailedHandler = async(ErrorType) =>{
-        if(ErrorType === "unauthorised"){
-        await PostFunction(
-        Path,
-        setIsLoading,
-        requestData,
-        successHandler,
-        (ErrorType)=> {
          if(ErrorType === "unauthorised"){
-       return setSessionModal(true)
-        }
-      },
-  setStarTimesSubscriptionResponse
-      );
-    }else{
-        setFailedPopup(true);
-       setInputPinStarTimes(false);
-       setInputPin("")
-      }
+                await PostFunction(
+               Path,
+               setIsLoading,
+               requestData,
+               successHandler,
+               (ErrorType)=> {
+                 if(ErrorType === "unauthorised"){
+                   return setSessionModal(true)
+                 }
+               },
+               setStarTimesSubscriptionResponse
+             );
+               }else if(ErrorType === "Server error"){
+                 //Why arepition did not occur here,
+                 //We dont want it to be only about User experience here,
+                 //There are several things that could happen to the backend,
+                 // and there is also a possibility that the server was able to process and 
+                 //initiate the transaction but still returned 500,
+                 //so we need to prevent the case of carrying two transaction for a user,
+                 //which doesn't only affect us through service of the platform we are using,
+                 //but also unrest and panic to the user and the amount for purchase and 
+                 //been removed twice without a result or successful output.
+                 setPurchaseStarTimesErrorType("Failed to process your request, try again some other time")
+              setFailedPopup(true);
+              setInputPinStarTimes(false);
+                setInputPin("")
+               }else if(ErrorType === "Network error" || ErrorType === "User error"){
+                 setPurchaseStarTimesErrorType("An internet connection error");
+                 setFailedPopup(true);
+              setInputPinStarTimes(false);
+                setInputPin("")
+               }else {
+       
+               }
     }
       
       await PostFunction(

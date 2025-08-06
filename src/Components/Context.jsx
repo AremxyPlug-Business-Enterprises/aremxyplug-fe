@@ -1183,7 +1183,8 @@ export const Context = ({ children }) => {
   const [showMaxDescription, setShowMaxDescription] = useState("");
   const [showMaxMobileNumber, setShowMaxMobileNumber] = useState("");
   const [showMaxWalletBalance, setShowMaxWalletBalance] = useState("");
-  const [showMaxCardName, setShowMaxCardName] = useState("")
+  const [showMaxCardName, setShowMaxCardName] = useState("");
+   const [purchaseShowMaxErrorType, setPurchaseShowMaxErrorType] = useState("")
 
   //=========STARTIMES===========
   const [selectedOptionStarTimes, setSelectedOptionStarTimes] = useState("");
@@ -1205,7 +1206,8 @@ export const Context = ({ children }) => {
   const [starTimesDescription, setStarTimesDescription] = useState("");
   const [starTimesWalletBalance, setStarTimesWalletBalance] = useState("");
   const [starTimesFlagResult, setStarTimesFlagResult] = useState("");
-  const [starTimesCardName, setStarTimesCardName] = useState("")
+  const [starTimesCardName, setStarTimesCardName] = useState("");
+   const [purchaseStarTimesErrorType, setPurchaseStarTimesErrorType] = useState("")
   //============= EDUCATION PINS ========================
   //===============WAEC PINS================
   const [quantityResult, setQuantityResult] = useState("");
@@ -2347,6 +2349,8 @@ export const Context = ({ children }) => {
     setShowMaxFlagResult,
     showMaxCardName,
     setShowMaxCardName,
+    purchaseShowMaxErrorType,
+     setPurchaseShowMaxErrorType,
 
     //=======STARTIMES
     confirmStarTimesPopup,
@@ -2387,6 +2391,8 @@ export const Context = ({ children }) => {
     setStarTimesFlagResult,
     starTimesCardName,
     setStarTimesCardName,
+    purchaseStarTimesErrorType,
+     setPurchaseStarTimesErrorType,
 
     //====== EDUCATION PINS
     //=======WAEC PINS

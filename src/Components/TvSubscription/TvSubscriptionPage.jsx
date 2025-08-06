@@ -82,8 +82,10 @@ const GetFunctionHandler = async(GlobalTvSubscription,tvPage, TvSubscriptionValu
           }, fetchedPlans);
         }else if(ErrorType === "Network error" || ErrorType === "User error"){
                alert("Kindly check your internet connection.")
+        }else if(ErrorType === "Server error"){
+            alert("Failed to process your request, try again some other time.") 
         }else{
-            alert("An unexpected error has occured")
+       alert("An unexpected error has occured")
         }
     }, setFetchedGotvPlans)
 
@@ -94,17 +96,20 @@ const GetFunctionHandler = async(GlobalTvSubscription,tvPage, TvSubscriptionValu
         if(ErrorType === "unauthorised"){
           await GetFunction(path, setLoading, SuccessHandler, (ErrorType)=> {
             if(ErrorType === "unauthorised"){
-               return setSessionModal(true)
+               return setSessionModal(true);
             }else if(ErrorType === "Server error"){
               alert("Failed to process your request, try again again some other time")
             }else if(ErrorType === "Network error" || ErrorType === "User error"){
              alert("Kindly check your internet connection")
             }else{
+              console.log("Yes i am the one running in  the dstv")
                 alert("An unexpected error has occured")
             }
           }, fetchedPlans);
         }else if(ErrorType === "Network error" || ErrorType === "User error"){
                alert("Kindly check your internet connection.")
+        }else if(ErrorType === "Server error"){
+            alert("Failed to process your request, try again some other time.") 
         }else{
             alert("An unexpected error has occured")
         }
@@ -127,6 +132,8 @@ const GetFunctionHandler = async(GlobalTvSubscription,tvPage, TvSubscriptionValu
           }, fetchedPlans);
         }else if(ErrorType === "Network error" || ErrorType === "User error"){
                alert("Kindly check your internet connection.")
+        }else if(ErrorType === "Server error"){
+            alert("Failed to process your request, try again some other time.") 
         }else{
             alert("An unexpected error has occured")
         }
@@ -143,7 +150,9 @@ const GetFunctionHandler = async(GlobalTvSubscription,tvPage, TvSubscriptionValu
               alert("Failed to process your request, try again again some other time")
             }else if(ErrorType === "Network error" || ErrorType === "User error"){
              alert("Kindly check your internet connection")
-            }else{
+            }else if(ErrorType === "Server error"){
+            alert("Failed to process your request, try again some other time.") 
+        }else{
                 alert("An unexpected error has occured")
             }
           }, fetchedPlans);
@@ -240,7 +249,7 @@ return navigate("/StarTimes");
      }
     }
   //  console.log(fetchedGotvPlans)
-  console.log(sessionModal)
+ // console.log(sessionModal)
 return(
         <DashBoardLayout>
             <div className={style.AirtimeTops}>
