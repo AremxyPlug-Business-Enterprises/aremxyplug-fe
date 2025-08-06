@@ -887,6 +887,7 @@ export const Context = ({ children }) => {
   const [ikedcPhoneNumber, setIkedcPhoneNumber] = useState("");
   const [ikedcEmail, setIkedcEmail] = useState("");
   const [ikedcAmount, setIkedcAmount] = useState("");
+  const [ikedcCountry, setIkedcCountry] = useState("");
   const [ikedcBillGenerate, setIkedcBillGenerate] = useState("");
   const [ikedcServiceID, setIkedcServiceID] = useState("");
   const [ikedcFlag, setIkedcFlag] = useState("");
@@ -896,12 +897,17 @@ export const Context = ({ children }) => {
   const [ikedcShowDescription, setIkedcShowDescription] = useState("");
   const [ikedcTransactionProduct, setIkedcTransactionProduct] = useState("");
   const [ikedcFullName, setIkedcFullName] = useState("");
+  const [ikedcWalletBalance, setIkedcWalletBalance] = useState("");
+  const [ikedcPaymentResult, setIkedcPaymentResult] = useState("");
   const [ikedcFetchedResponse, setIkedcFetchedResponse] = useState({});
+  const [purchaseElectricityErrorType, setPurchaseElectricityErrorType] =
+    useState("");
 
   // ibedc
   const [ibedcFullName, setIbedcFullName] = useState("");
   const [ibedcEmail, setIbedcEmail] = useState("");
   const [ibedcAmount, setIbedcAmount] = useState("");
+  const [ibedcCountry, setIbedcCountry] = useState("");
   const [ibedcMeterNumber, setIbedcMeterNumber] = useState("");
   const [ibedcVerifiedName, setIbedcVerifiedName] = useState("");
   const [ibedcPhoneNumber, setIbedcPhoneNumber] = useState("");
@@ -915,11 +921,14 @@ export const Context = ({ children }) => {
   const [ibedcShowDescription, setIbedcShowDescription] = useState("");
   const [ibedcTransactionProduct, setIbedcTransactionProduct] = useState("");
   const [ibedcFetchedResponse, setIbedcFetchedResponse] = useState({});
+  const [ibedcWalletBalance, setIbedcWalletBalance] = useState("");
+  const [ibedcPaymentResult, setIbedcPaymentResult] = useState("");
 
   // aedc
   const [aedcFullName, setAedcFullName] = useState("");
   const [aedcEmail, setAedcEmail] = useState("");
   const [aedcAmount, setAedcAmount] = useState("");
+  const [aedcCountry, setAedcCountry] = useState("");
   const [aedcMeterNumber, setAedcMeterNumber] = useState("");
   const [aedcVerifiedName, setAedcVerifiedName] = useState("");
   const [aedcPhoneNumber, setAedcPhoneNumber] = useState("");
@@ -933,11 +942,14 @@ export const Context = ({ children }) => {
   const [aedcShowDescription, setAedcShowDescription] = useState("");
   const [aedcTransactionProduct, setAedcTransactionProduct] = useState("");
   const [aedcFetchedResponse, setAedcFetchedResponse] = useState({});
+  const [aedcWalletBalance, setAedcWalletBalance] = useState("");
+  const [aedcPaymentResult, setAedcPaymentResult] = useState("");
 
   // bedc
   const [bedcFullName, setBedcFullName] = useState("");
   const [bedcEmail, setBedcEmail] = useState("");
   const [bedcAmount, setBedcAmount] = useState("");
+  const [bedcCountry, setBedcCountry] = useState("");
   const [bedcMeterNumber, setBedcMeterNumber] = useState("");
   const [bedcVerifiedName, setBedcVerifiedName] = useState("");
   const [bedcPhoneNumber, setBedcPhoneNumber] = useState("");
@@ -951,11 +963,14 @@ export const Context = ({ children }) => {
   const [bedcShowDescription, setBedcShowDescription] = useState("");
   const [bedcTransactionProduct, setBedcTransactionProduct] = useState("");
   const [bedcFetchedResponse, setBedcFetchedResponse] = useState({});
+  const [bedcWalletBalance, setBedcWalletBalance] = useState("");
+  const [bedcPaymentResult, setBedcPaymentResult] = useState("");
 
   // eedc
   const [eedcFullName, setEedcFullName] = useState("");
   const [eedcEmail, setEedcEmail] = useState("");
   const [eedcAmount, setEedcAmount] = useState("");
+  const [eedcCountry, setEedcCountry] = useState("");
   const [eedcMeterNumber, setEedcMeterNumber] = useState("");
   const [eedcVerifiedName, setEedcVerifiedName] = useState("");
   const [eedcPhoneNumber, setEedcPhoneNumber] = useState("");
@@ -969,11 +984,14 @@ export const Context = ({ children }) => {
   const [eedcShowDescription, setEedcShowDescription] = useState("");
   const [eedcTransactionProduct, setEedcTransactionProduct] = useState("");
   const [eedcFetchedResponse, setEedcFetchedResponse] = useState({});
+  const [eedcWalletBalance, setEedcWalletBalance] = useState("");
+  const [eedcPaymentResult, setEedcPaymentResult] = useState("");
 
   // ekedc
   const [ekedcFullName, setEkedcFullName] = useState("");
   const [ekedcEmail, setEkedcEmail] = useState("");
   const [ekedcAmount, setEkedcAmount] = useState("");
+  const [ekedcCountry, setEkedcCountry] = useState("");
   const [ekedcMeterNumber, setEkedcMeterNumber] = useState("");
   const [ekedcVerifiedName, setEkedcVerifiedName] = useState("");
   const [ekedcPhoneNumber, setEkedcPhoneNumber] = useState("");
@@ -987,11 +1005,14 @@ export const Context = ({ children }) => {
   const [ekedcShowDescription, setEkedcShowDescription] = useState("");
   const [ekedcTransactionProduct, setEkedcTransactionProduct] = useState("");
   const [ekedcFetchedResponse, setEkedcFetchedResponse] = useState({});
+  const [ekedcWalletBalance, setEkedcWalletBalance] = useState("");
+  const [ekedcPaymentResult, setEkedcPaymentResult] = useState("");
 
   // jed
   const [jedFullName, setJedFullName] = useState("");
   const [jedEmail, setJedEmail] = useState("");
   const [jedAmount, setJedAmount] = useState("");
+  const [jedCountry, setJedCountry] = useState("");
   const [jedMeterNumber, setJedMeterNumber] = useState("");
   const [jedVerifiedName, setJedVerifiedName] = useState("");
   const [jedPhoneNumber, setJedPhoneNumber] = useState("");
@@ -1005,11 +1026,14 @@ export const Context = ({ children }) => {
   const [jedShowDescription, setJedShowDescription] = useState("");
   const [jedTransactionProduct, setJedTransactionProduct] = useState("");
   const [jedFetchedResponse, setJedFetchedResponse] = useState({});
+  const [jedWalletBalance, setJedWalletBalance] = useState("");
+  const [jedPaymentResult, setJedPaymentResult] = useState("");
 
   // kaedco
   const [kaedcoFullName, setKaedcoFullName] = useState("");
   const [kaedcoEmail, setKaedcoEmail] = useState("");
   const [kaedcoAmount, setKaedcoAmount] = useState("");
+  const [kaedcoCountry, setKaedcoCountry] = useState("");
   const [kaedcoMeterNumber, setKaedcoMeterNumber] = useState("");
   const [kaedcoVerifiedName, setKaedcoVerifiedName] = useState("");
   const [kaedcoPhoneNumber, setKaedcoPhoneNumber] = useState("");
@@ -1023,11 +1047,14 @@ export const Context = ({ children }) => {
   const [kaedcoShowDescription, setKaedcoShowDescription] = useState("");
   const [kaedcoTransactionProduct, setKaedcoTransactionProduct] = useState("");
   const [kaedcoFetchedResponse, setKaedcoFetchedResponse] = useState({});
+  const [kaedcoWalletBalance, setKaedcoWalletBalance] = useState("");
+  const [kaedcoPaymentResult, setKaedcoPaymentResult] = useState("");
 
   // kedco
   const [kedcoFullName, setKedcoFullName] = useState("");
   const [kedcoEmail, setKedcoEmail] = useState("");
   const [kedcoAmount, setKedcoAmount] = useState("");
+  const [kedcoCountry, setKedcoCountry] = useState("");
   const [kedcoMeterNumber, setKedcoMeterNumber] = useState("");
   const [kedcoVerifiedName, setKedcoVerifiedName] = useState("");
   const [kedcoPhoneNumber, setKedcoPhoneNumber] = useState("");
@@ -1041,11 +1068,14 @@ export const Context = ({ children }) => {
   const [kedcoShowDescription, setKedcoShowDescription] = useState("");
   const [kedcoTransactionProduct, setKedcoTransactionProduct] = useState("");
   const [kedcoFetchedResponse, setKedcoFetchedResponse] = useState({});
+  const [kedcoWalletBalance, setKedcoWalletBalance] = useState("");
+  const [kedcoPaymentResult, setKedcoPaymentResult] = useState("");
 
   // phed
   const [phedFullName, setPhedFullName] = useState("");
   const [phedEmail, setPhedEmail] = useState("");
   const [phedAmount, setPhedAmount] = useState("");
+  const [phedCountry, setPhedCountry] = useState("");
   const [phedMeterNumber, setPhedMeterNumber] = useState("");
   const [phedVerifiedName, setPhedVerifiedName] = useState("");
   const [phedPhoneNumber, setPhedPhoneNumber] = useState("");
@@ -1059,6 +1089,8 @@ export const Context = ({ children }) => {
   const [phedShowDescription, setPhedShowDescription] = useState("");
   const [phedTransactionProduct, setPhedTransactionProduct] = useState("");
   const [phedFetchedResponse, setPhedFetchedResponse] = useState({});
+  const [phedWalletBalance, setPhedWalletBalance] = useState("");
+  const [phedPaymentResult, setPhedPaymentResult] = useState("");
 
   //------------Airtime Conversion---------
   const [inputValueA, setInputValueA] = useState("");
@@ -1184,12 +1216,13 @@ export const Context = ({ children }) => {
   const [quantityAmount, setQuantityAmount] = useState("");
   const [walletBalance, setWalletBalance] = useState("");
 
-   const [waecPinsGenerated, setWaecPinsGenerated] = useState([]);
+  const [waecPinsGenerated, setWaecPinsGenerated] = useState([]);
   const [waecOrderId, setWaecOrderId] = useState("");
   const [waecTransactionId, setWaecTransactionId] = useState("");
   const [waecShowDescription, setWaecShowDescription] = useState("");
   const [waecFullName, setWaecFullName] = useState("");
   const [waecTransactionProduct, setWaecTransactionProduct] = useState("");
+  const [purchaseEduErrorType, setPurchaseEduErrorType] = useState("");
 
   //==============  NECO PINS  ================
   const [necoQuantityResult, setNecoQuantityResult] = useState("");
@@ -1271,18 +1304,18 @@ export const Context = ({ children }) => {
   const [bvnNumber, setBvnNumber] = useState("");
   const [bvnVerifyImage, setBvnVerifyImage] = useState(NotVerifiedIcon);
 
- const [bvnStatus, setBvnStatus] = useState('Not Verified');
-const [dashLoading, setDashLoading] = useState(false);
-const [bvnButtonState, setBvnButtonState] = useState("Verify")
-const [virtualAccCreated, setVirtualAccCreated] = useState(false);
-const [idCountry, setIdCountry] = useState("");
-const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
-   const [idStatus, setIdStatus] = useState('Not Verified');
-   const [bvnCountry, setBvnCountry] = useState("");
-   const [ bvnCountryImage, setBvnCountryImage] = useState(null);
+  const [bvnStatus, setBvnStatus] = useState("Not Verified");
+  const [dashLoading, setDashLoading] = useState(false);
+  const [bvnButtonState, setBvnButtonState] = useState("Verify");
+  const [virtualAccCreated, setVirtualAccCreated] = useState(false);
+  const [idCountry, setIdCountry] = useState("");
+  const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
+  const [idStatus, setIdStatus] = useState("Not Verified");
+  const [bvnCountry, setBvnCountry] = useState("");
+  const [bvnCountryImage, setBvnCountryImage] = useState(null);
   const [verificationReason, setVerificationReason] = useState("");
-  const [verificationResponse, setVerificationResponse] = useState({})
-  
+  const [verificationResponse, setVerificationResponse] = useState({});
+
   //========== BUSINESS KYC =============
   const [businessPopUp, setBusinessPopUp] = useState(false);
 
@@ -1316,7 +1349,7 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
   const [userStatus, setUserStatus] = useState(false);
   const [idButtonState, setIdButtonState] = useState("Verify");
 
- //The transactionResponse for getting user past transactions details
+  //The transactionResponse for getting user past transactions details
   const [transactionResponse, setTransactionResponse] = useState({});
 
   const hold = {
@@ -1767,6 +1800,8 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
     setIkedcEmail,
     ikedcAmount,
     setIkedcAmount,
+    ikedcCountry,
+    setIkedcCountry,
     ikedcBillGenerate,
     setIkedcBillGenerate,
     ikedcServiceID,
@@ -1785,6 +1820,12 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
     setIkedcFetchedResponse,
     ikedcTransactionProduct,
     setIkedcTransactionProduct,
+    purchaseEduErrorType,
+    setPurchaseEduErrorType,
+    ikedcWalletBalance,
+    setIkedcWalletBalance,
+    ikedcPaymentResult,
+    setIkedcPaymentResult,
 
     // ibedc
     ibedcFullName,
@@ -1799,6 +1840,8 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
     setIbedcEmail,
     ibedcAmount,
     setIbedcAmount,
+    ibedcCountry,
+    setIbedcCountry,
     ibedcBillGenerate,
     setIbedcBillGenerate,
     ibedcServiceID,
@@ -1819,6 +1862,10 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
     setIbedcFetchedResponse,
     ibedcTransactionProduct,
     setIbedcTransactionProduct,
+    ibedcWalletBalance,
+    setIbedcWalletBalance,
+    ibedcPaymentResult,
+    setIbedcPaymentResult,
 
     // aedc
     aedcFullName,
@@ -1833,6 +1880,8 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
     setAedcEmail,
     aedcAmount,
     setAedcAmount,
+    aedcCountry,
+    setAedcCountry,
     aedcBillGenerate,
     setAedcBillGenerate,
     aedcServiceID,
@@ -1853,6 +1902,10 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
     setAedcFetchedResponse,
     aedcTransactionProduct,
     setAedcTransactionProduct,
+    aedcWalletBalance,
+    setAedcWalletBalance,
+    aedcPaymentResult,
+    setAedcPaymentResult,
 
     // bedc
     bedcFullName,
@@ -1869,6 +1922,8 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
     setBedcEmail,
     bedcAmount,
     setBedcAmount,
+    bedcCountry,
+    setBedcCountry,
     bedcBillGenerate,
     setBedcBillGenerate,
     bedcServiceID,
@@ -1889,6 +1944,10 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
     setBedcFetchedResponse,
     bedcTransactionProduct,
     setBedcTransactionProduct,
+    bedcWalletBalance,
+    setBedcWalletBalance,
+    bedcPaymentResult,
+    setBedcPaymentResult,
 
     // eedc
     eedcFullName,
@@ -1901,6 +1960,8 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
     setEedcEmail,
     eedcAmount,
     setEedcAmount,
+    eedcCountry,
+    setEedcCountry,
     eedcBillGenerate,
     setEedcBillGenerate,
     eedcServiceID,
@@ -1921,6 +1982,10 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
     setEedcFetchedResponse,
     eedcTransactionProduct,
     setEedcTransactionProduct,
+    eedcWalletBalance,
+    setEedcWalletBalance,
+    eedcPaymentResult,
+    setEedcPaymentResult,
 
     // ekedc
     ekedcFullName,
@@ -1935,6 +2000,8 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
     setEkedcEmail,
     ekedcAmount,
     setEkedcAmount,
+    ekedcCountry,
+    setEkedcCountry,
     ekedcBillGenerate,
     setEkedcBillGenerate,
     ekedcServiceID,
@@ -1955,6 +2022,10 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
     setEkedcFetchedResponse,
     ekedcTransactionProduct,
     setEkedcTransactionProduct,
+    ekedcWalletBalance,
+    setEkedcWalletBalance,
+    ekedcPaymentResult,
+    setEkedcPaymentResult,
 
     // jed
     jedFullName,
@@ -1969,6 +2040,8 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
     setJedEmail,
     jedAmount,
     setJedAmount,
+    jedCountry,
+    setJedCountry,
     jedBillGenerate,
     setJedBillGenerate,
     jedServiceID,
@@ -1989,6 +2062,10 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
     setJedFetchedResponse,
     jedTransactionProduct,
     setJedTransactionProduct,
+    jedWalletBalance,
+    setJedWalletBalance,
+    jedPaymentResult,
+    setJedPaymentResult,
 
     // kaedco
     kaedcoFullName,
@@ -2003,6 +2080,8 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
     setKaedcoEmail,
     kaedcoAmount,
     setKaedcoAmount,
+    kaedcoCountry,
+    setKaedcoCountry,
     kaedcoBillGenerate,
     setKaedcoBillGenerate,
     kaedcoServiceID,
@@ -2023,6 +2102,10 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
     setKaedcoFetchedResponse,
     kaedcoTransactionProduct,
     setKaedcoTransactionProduct,
+    kaedcoWalletBalance,
+    setKaedcoWalletBalance,
+    kaedcoPaymentResult,
+    setKaedcoPaymentResult,
 
     // kedco
     kedcoFullName,
@@ -2037,6 +2120,8 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
     setKedcoEmail,
     kedcoAmount,
     setKedcoAmount,
+    kedcoCountry,
+    setKedcoCountry,
     kedcoBillGenerate,
     setKedcoBillGenerate,
     kedcoServiceID,
@@ -2057,6 +2142,10 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
     setKedcoFetchedResponse,
     kedcoTransactionProduct,
     setKedcoTransactionProduct,
+    kedcoWalletBalance,
+    setKedcoWalletBalance,
+    kedcoPaymentResult,
+    setKedcoPaymentResult,
 
     // phed
     phedFullName,
@@ -2071,6 +2160,8 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
     setPhedEmail,
     phedAmount,
     setPhedAmount,
+    phedCountry,
+    setPhedCountry,
     phedBillGenerate,
     setPhedBillGenerate,
     phedServiceID,
@@ -2091,6 +2182,10 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
     setPhedFetchedResponse,
     phedTransactionProduct,
     setPhedTransactionProduct,
+    phedWalletBalance,
+    setPhedWalletBalance,
+    phedPaymentResult,
+    setPhedPaymentResult,
 
     //Airtime Conversion
     inputValueA,
@@ -2203,9 +2298,9 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
     setDstvRequestId,
     dstvWalletBalance,
     setDstvWalletBalance,
-  purchaseDstvErrorType,
-   setPurchaseDstvErrorType,
-   dstvCardName,
+    purchaseDstvErrorType,
+    setPurchaseDstvErrorType,
+    dstvCardName,
     setDstvCardName,
     //=======SHOWMAX
     confirmShowmaxPopup,
@@ -2316,6 +2411,8 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
     setWaecFullName,
     waecTransactionProduct,
     setWaecTransactionProduct,
+    purchaseElectricityErrorType,
+    setPurchaseElectricityErrorType,
 
     //======NECO PINS ==========
     necoQuantityResult,
@@ -2470,29 +2567,28 @@ const [verifyImage, setVerifyImage] = useState(NotVerifiedIcon);
     setIdCountry,
     // ==========  BVN ========
 
-
-bvnNumber, 
-setBvnNumber,
-bvnVerifyImage, 
-setBvnVerifyImage,
-bvnStatus,
-setBvnStatus,
-dashLoading, 
-setDashLoading,
-virtualAccCreated,
-setVirtualAccCreated,
-bvnButtonState,
- setBvnButtonState,
- bvnCountry,
-  setBvnCountry,
-  bvnCountryImage,
-  setBvnCountryImage,
-  verificationReason,
-   setVerificationReason,
-   verificationResponse,
-   setVerificationResponse,
-   transactionResponse, 
-   setTransactionResponse,
+    bvnNumber,
+    setBvnNumber,
+    bvnVerifyImage,
+    setBvnVerifyImage,
+    bvnStatus,
+    setBvnStatus,
+    dashLoading,
+    setDashLoading,
+    virtualAccCreated,
+    setVirtualAccCreated,
+    bvnButtonState,
+    setBvnButtonState,
+    bvnCountry,
+    setBvnCountry,
+    bvnCountryImage,
+    setBvnCountryImage,
+    verificationReason,
+    setVerificationReason,
+    verificationResponse,
+    setVerificationResponse,
+    transactionResponse,
+    setTransactionResponse,
 
     //========== Business PopUp =======
     businessPopUp,

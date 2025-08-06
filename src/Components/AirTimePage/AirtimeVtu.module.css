@@ -291,6 +291,7 @@
 }
 .output2 .labelInput {
     width: 100%;
+    /* cursor: pointer; */
 }
 .output2 input {
     width: 100%;
@@ -920,7 +921,7 @@
         font-size: 16px
       }
       .colDown{
-        width:100% !important
+        /* width:100% !important */
       }
       /* .head3{
           margin-top: 10px;
