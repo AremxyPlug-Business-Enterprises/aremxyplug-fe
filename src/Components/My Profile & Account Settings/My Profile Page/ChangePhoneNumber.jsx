@@ -110,9 +110,8 @@ const VerifyPopUpHandler =async()=> {
    setOtp("");
    
      localStorage.setItem("userPhone",JSON.stringify(response?.data?.data?.phone) )
-     if(localStorage.setItem("userPhone",JSON.stringify(response?.data?.data?.phone))){
-     window.location.reload()
-     }
+      window.location.reload()
+     
     }
     const body ={
       new_phone: `234${inputValue?.slice(1)}`,
