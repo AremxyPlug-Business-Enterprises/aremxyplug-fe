@@ -2058,7 +2058,7 @@ export default function WaecEducationPin() {
           <Loader />
         </Modal>
       )}
-      {/* {sessionModal && <HandleUserSession />} */}
+      {sessionModal && <HandleUserSession />}
     </DashBoardLayout>
   );
 }

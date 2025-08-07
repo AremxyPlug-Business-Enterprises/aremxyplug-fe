@@ -24,6 +24,7 @@ import countryImage from "../../EducationPins/imagesEducation/Nigeriaflag.svg"
 
 export default function IdVerification(Data) {
   const { verificationOpen } = useContext(ContextProvider);
+  const dateInputRef = useRef(null);
 
   const {
     idVerificationOpen,
@@ -123,6 +124,9 @@ export default function IdVerification(Data) {
       verifyPopId = () => setIdPopVerified(true);
       data = {
         nin: idNumber.toString(),
+        dob: idDateOfBirth,
+        address:idAddress,
+        gender:genderResult,
       };
     
   
@@ -139,6 +143,7 @@ export default function IdVerification(Data) {
     );
     }
   };
+
 
   //The main function to verify the Id Number and create the virtual account
   const CheckIdForm = async (
@@ -161,8 +166,8 @@ export default function IdVerification(Data) {
       idResult &&
       idDateOfBirth &&
       genderResult &&
-      idAddress &&
-      idCountry
+      idAddress 
+      // idCountry
     ) {
       setLoading(true);
 
@@ -446,11 +451,22 @@ export default function IdVerification(Data) {
                   <div className={`w-[100%] 
                       ${
                       isDarkMode ? " border-white " : "border-[#9C9C9C]"
-                    }`}>
+                    }`}
+                    onClick={() => {
+                      const input = dateInputRef.current;
+                      if (input) {
+                        input.showPicker ? input.showPicker() : input.click();
+                      }
+                    }}>
                   <input
+
                     value={idDateOfBirth}
+                    ref={dateInputRef}
                     onChange={(e) => {
+                      // const dobValue = dateInputRef.current ? dateInputRef.current.value : "";
+                      // setIdDateOfBirth(dobValue);
                       setIdDateOfBirth(e.target.value);
+                      
                     }}
                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
                          sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px]
