@@ -559,7 +559,7 @@ const EEDC = () => {
   }
 
   const [balanceStatus, setBalanceStatus] = useState("");
-  let balanceStringToNum = Number(newBalance);
+  let balanceStringToNum = Number(newBalance ? newBalance : updateBalance);
   let aedcAmountToNumber = Number(eedcAmount);
   let CheckSufficiency = aedcAmountToNumber > balanceStringToNum;
   useEffect(() => {

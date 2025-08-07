@@ -558,7 +558,7 @@ const PHED = () => {
   }
 
   const [balanceStatus, setBalanceStatus] = useState("");
-  let balanceStringToNum = Number(newBalance);
+  let balanceStringToNum = Number(newBalance ? newBalance : updateBalance);
   let phedAmountToNumber = Number(phedAmount);
   let CheckSufficiency = phedAmountToNumber > balanceStringToNum;
   useEffect(() => {
