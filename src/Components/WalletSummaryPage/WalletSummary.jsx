@@ -193,7 +193,7 @@ export default function WalletSummaryPage() {
 //  Ascretaining the status from the response object then assigning
 // it the necessary bg-color
 const getBackgroundColor = (status) => {
-    if (status === "delivered" || status === "Successful") {
+    if (status === "success" || status === "Successful") {
       return "#97E8B9";
     } else if (status === "Failed") {
       return "#FB9393";
@@ -210,15 +210,22 @@ const getBackgroundColor = (status) => {
  const symbolValue = selected === "USD" ? "$" : selected === "AUD" ? 
   "AU$" : selected === "KES" ?   "KSh" : selected === "EUR" ? "€" : selected === "GBP" ? "£" : "₦";
  
-  const filteredWalletTransactions = walletTransactionResponse?.data?.data?.data?.transactions?.filter((transaction) => {
-  if(selectedStatus === "" || selectedStatus === "All Transactions"){
+  const filteredWalletTransactions = walletTransactionResponse?.data?.data?.data?.data?.transactions?.filter((transaction) => {
+  if(selectedStatus === ""
+     || selectedStatus === "All Transactions"
+    || selectedStatus === "Filter by Status"){
       return transaction
     }else{
-      return transaction.status === selectedStatus;
-    }
-   
-  });
- console.log(walletTransactionResponse?.data?.data?.data?.data);
+     if(selectedStatus !== "Successful"){
+        return  transaction?.status === selectedStatus
+        }else if(selectedStatus === "Successful"){
+        return transaction?.status === "success" || 
+        transaction?.status === "Successful" || 
+        transaction?.status === "delivered"
+        }
+      }
+ });
+ //console.log(walletTransactionResponse?.data?.data?.data?.data);
  const product = ["All Transactions", "Successful", "Failed","Pending", "Refunded", "Cancelled"]
   return (
   <DashBoardLayout>
@@ -306,7 +313,7 @@ const getBackgroundColor = (status) => {
           })})` : `(${ newBalanceToNumber?.toLocaleString("en-NG",{
            style : "currency",
            currency : "NGN"
-          }) })` : selectedBalance }
+          }) })` : selectedBalance}
                   </p>
               
               
@@ -457,8 +464,10 @@ const getBackgroundColor = (status) => {
                         }`}
                         key={index}
                         onClick={() =>{
-                           setSelectedStatus(option)
-                        setIsOpen1(false)
+                        
+                             setSelectedStatus(option);
+                            setIsOpen1(false);
+                          
   }
                         }
                       >
@@ -531,7 +540,7 @@ const getBackgroundColor = (status) => {
              walletTransactionResponse?.data?.data?.data?.total_inflow?.toLocaleString("en-NG", {
                 style : "currency",
                 currency : "NGN"
-              }) :   "₦"  : `${symbolValue}0.00` }
+              }) :   "₦"  : `${symbolValue}` }
                       </p>
                     </div>
       
@@ -619,7 +628,7 @@ const getBackgroundColor = (status) => {
                      key={index}>
                        <Link
                          to={`/${
-                           transaction.status === "delivered"
+                           transaction?.status === "success"
                              ? "SuccessfullReceipt"
                              : transaction.status === "Failed"
                              ? "FailedReceipt"
@@ -695,7 +704,7 @@ const getBackgroundColor = (status) => {
                                               className="font-medium text-white self-center text-[9.167px] leading-[11.167px] cursor-pointer
                                   py-[2.122px] px-[4.245px]  rounded-sm"
                                             >
-                                              {transaction?.status === "delivered" ? "Successful" : "unknown"}
+                                              {transaction?.status  === "success"? "Successful" : "unknown"}
                                             </p>
                                          
                                         </div>
@@ -946,12 +955,12 @@ const getBackgroundColor = (status) => {
   
   {/* airtime top-up dropdown */}
   
-  {loading && (
+  {/* {loading && (
     <Modal>
     <Loader/>
     </Modal>
   
-  )}
+  )} */}
   {sessionModal && (
     <HandleUserSession/>
   )}

@@ -889,9 +889,9 @@ console.log(dstvAmount)
                       key={index}
                       onClick={() =>{
                         handleOptionClickDstv();
-                        setSelectedOptionDstv(`${option.PackageName}`)
-                        setPackageDstv(option.Package)
-                        setDstvAmount(option.Amount)
+                        setSelectedOptionDstv(`${option?.PackageName}`)
+                        setPackageDstv(option?.Package)
+                        setDstvAmount(option?.Amount)
                         document.querySelector(".imgdrop").classList.remove("DropIt");
                       }
                       }
@@ -988,8 +988,16 @@ console.log(dstvAmount)
             <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
               <label htmlFor="Email" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px font-[400] md:font-[600]">
                 Email</label>
-              <input type="email" onChange={handleTvEmail} placeholder="example@gmail.com" required className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[14px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400]  leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
+              <input type="email" onChange={handleTvEmail} 
+              placeholder="example@gmail.com" 
+              
+              required 
+              className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] 
+                md:p-0 text-[14px]  sm:p-3 sm:text-lg flex justify-between 
+                pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400]  
+                leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px]
+     md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
       isDarkMode 
       ? "bg-black text-white border border-white" 
       : "hover:bg-[#EDEAEA] border-[#9C9C9C] text-[#7C7C7C] "
@@ -1013,7 +1021,7 @@ console.log(dstvAmount)
                   ? "bg-black text-white border border-white" 
                   : "hover:bg-[#EDEAEA] border-[#9C9C9C] text-[#7C7C7C] "
               }`}
-                value={`${dstvAmount !== "" ? dstvAmount?.toLocaleString("en-NG", {
+                value={`${(dstvAmount !==  undefined || dstvAmount !== null) ? dstvAmount?.toLocaleString("en-NG", {
                   style : "currency",
                   currency : "NGN"
                 }) : "₦"  }`}

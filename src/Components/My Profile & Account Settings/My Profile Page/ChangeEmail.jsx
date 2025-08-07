@@ -64,6 +64,7 @@ const ChangeEmail = () => {
    const HandleChangeEmail = async()=> {
   
       const FailedHandler=()=> {
+        
         console.log("Failed to change email")
       }
       const SuccessHandler =()=> {
@@ -102,8 +103,8 @@ const ChangeEmail = () => {
    }
     const VerifyPopUpHandler =async()=> {
           const FailedHandler=()=> {
-         setVerificationPinError(true)
-        }
+          setVerificationPinError(true)
+          }
         const SuccessHandler =()=> {
          // console.log("Successful")
          setVerificationPinError("")

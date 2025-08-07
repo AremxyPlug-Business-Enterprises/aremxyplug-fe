@@ -34,7 +34,7 @@ export const StarTimesReceipt= (Data) => {
    setSelectedOptionStarTimes,
    setPackageStarTimes,
    setStarTimesDecoderType,
-    setFlagResult,
+    setStarTimesFlagResult,
     setStarTimesWalletBalance,
     date,
   starTimesSubscriptionResponse,
@@ -112,7 +112,7 @@ export const StarTimesReceipt= (Data) => {
    setSelectedOptionStarTimes("");
    setPackageStarTimes("");
    setStarTimesDecoderType("")
-    setFlagResult("");
+    setStarTimesFlagResult("");
     setStarTimesWalletBalance("");
    navigate("/StarTimes");
   }

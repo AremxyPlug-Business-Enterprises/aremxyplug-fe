@@ -294,7 +294,9 @@ if((clickedoption === "NGN")){
  
   useEffect(() => {
     ValueRef.current = Data;
+    if(Data?.ConfirmAcc === "true"){
     GenerateAccountBalance();
+    }
     setNav();
     setSelected("NGN"); 
     setSelected2("NGN");
@@ -324,7 +326,7 @@ if((clickedoption === "NGN")){
     //eslint-disable-next-line
    }, [])
 window.addEventListener("online", ()=> {
-  if(balanceValue?.length > 1){
+  if(balanceValue?.length > 1 && Data?.ConfirmAcc === "true"){
     GenerateAccountBalance();
   }
 })
@@ -450,14 +452,13 @@ return (
                 >
                   View Wallets
                 </Link>
-              
-              </div>
+               </div>
               <p 
                 className={`cursor-pointer ${
                   toggleSideBar ? "lg:text-[18px]" : "lg:text-[24px]"
                 } ${styles.walletText} `}
               >
-                Available Balance
+              {Data?.ConfirmAcc === "true" ? "Available Balance" : "No Account Created"}
               </p>
 
               {blur && (
@@ -467,8 +468,8 @@ return (
                     isDarkMode ? " text-[#fff] bg-black" : "text-[#04177f]"
                   } ${
                     toggleSideBar
-                      ? "bg-[#e9edfb]  font-bold text-[13px] pt-[4%] md:absolute md:w-[30%]  md:ml-[3%] md:text-[19px] md:text-center lg:absolute  lg:mt-[3%] lg:w-[30%] lg:text-[24px]  text-[#04177f] lg:pb-[50px]"
-                      : " bg-[#e9edfb]  absolute w-[75%] md:w-[30%] text-[13px] font-bold text-center mt-[9.5%] md:mt-[3%] pt-[4%] md:pt-[4%] md:text-[15px]  md:pb-[6%] lg:pb-[5%]  md:text-extrabold lg:text-[24px] lg:mt-[1%]  lg:w-[33%] lg:pt-[%]  "}
+                      ? "bg-[#e9edfb] font-bold text-[13px] pt-[4%] md:absolute md:w-[30%]  md:ml-[3%] md:text-[19px] md:text-center lg:absolute  lg:mt-[3%] lg:w-[30%] lg:text-[24px]  text-[#04177f] lg:pb-[50px]"
+                      : " bg-[#e9edfb] absolute w-[75%] md:w-[30%] text-[13px] font-bold text-center mt-[9.5%] md:mt-[3%] pt-[4%] md:pt-[4%] md:text-[15px]  md:pb-[6%] lg:pb-[5%]  md:text-extrabold lg:text-[24px] lg:mt-[1%]  lg:w-[33%] lg:pt-[%]  "}
                     ${activeButtons[1] 
                     ? "h-[100px] md:h-[100px] lg:h-[200px] md:pt-[8%]" :"h-[50px]  md:h-[40px] lg:h-[60px] md:pt-[2%]"}`}>
                   This feature is currently not available...
@@ -478,8 +479,8 @@ return (
             
               {/* ================= */}
              
-              {!activeButtons[2] ? (
-                balanceValue?.length < 1 ? (
+              {!activeButtons[2]  ? (
+                balanceValue?.length < 1 && Data.ConfirmAcc === "true" ? (
                 <div
                   className={`${toggleSideBar ? "lg:pt-[7%]" : ""} ${
                     styles.viewBalance
@@ -490,9 +491,7 @@ return (
                     name="curr"
                     id="curr"
                     onChange={handleSelectedOption2}
-                    value={selected2}
-                       
-                  >
+                    value={selected2}>
                     <option value="NGN">NGN</option>
                     <option  value="USD">USD</option>
                     <option  value="GBP">GBP</option>
@@ -518,7 +517,7 @@ return (
       </div>
                       ) :(
                       
-                        symbol === "₦" & newBalance !== "" ? `${Number(newBalance).toLocaleString("en-NG",{
+                        symbol === "₦" && newBalance !== "" ? `${Number(newBalance).toLocaleString("en-NG",{
                           style : "currency",
                           currency : "NGN"
                         })}` : `${symbol}`
@@ -539,9 +538,10 @@ return (
                     )}
                   </div>
                 </div>) :  (
-                  <div className=" w-full flex justify-center backdrop-blur-[6px] lg:mt-[9px] lg:h-[40px]">
+                  <div className="w-full flex justify-center backdrop-blur-[6px] lg:mt-[9px] lg:h-[40px]">
        <p className="lg:text-[16px] text-[10px] leading-[16px] lg:leading-[24px] font-[400] lg:font-[500] mt-[5px]">
-       {balanceValue}
+       {balanceValue === "" && Data?.ConfirmAcc === "false" ? "Create your virtual account." : balanceValue }
+
        </p>
                     </div>
                  )
@@ -630,7 +630,7 @@ return (
                     // setBlurThree();
                   }}
                   className={`${styles.fcp2} ${
-                    isDarkMode ? " border" : " "
+                    isDarkMode ? " border" : ""
                   }  cursor-pointer flex  justify-center
                    items-center text-[10px] md:text-[11px] lg:text-[12px] font-[600] leading-normal 
                    rounded-[10px] py-[10px] px-[20px] lg:w-[16%] lg:py-[10.47px] lg:px-[15px] lg:rounded-[19px] ${

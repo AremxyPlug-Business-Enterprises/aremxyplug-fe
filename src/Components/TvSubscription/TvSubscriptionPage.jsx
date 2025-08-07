@@ -102,7 +102,6 @@ const GetFunctionHandler = async(GlobalTvSubscription,tvPage, TvSubscriptionValu
             }else if(ErrorType === "Network error" || ErrorType === "User error"){
              alert("Kindly check your internet connection")
             }else{
-              console.log("Yes i am the one running in  the dstv")
                 alert("An unexpected error has occured")
             }
           }, fetchedPlans);
@@ -167,7 +166,9 @@ const GetFunctionHandler = async(GlobalTvSubscription,tvPage, TvSubscriptionValu
 
      }else if(DetectAuthorisation === "User error" || DetectAuthorisation === "Network error" ){
          alert("Kindly check your internet connection")
-     }else{
+     }else if(DetectAuthorisation === "Server error"){
+            alert("Failed to process your request, try again some other time.") 
+        }else{
         alert("An unexpected error has occured, try some other time.")
      }
 

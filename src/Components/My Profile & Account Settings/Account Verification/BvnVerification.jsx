@@ -19,7 +19,7 @@ import NotVerifiedImage from "../ProfileImages/NotVerifiedIcon.svg";
 import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 import { Loader } from "../../Loader/Loader";
 import countryImage from "../../EducationPins/imagesEducation/Nigeriaflag.svg";
-
+import { HandleUserSession } from "../../ApiCollection.jsx/ApiBuck";
 export default function BvnVerification(Data) {
   const dateInputRef = useRef(null);
   const { bvnVerificationOpen } = useContext(ContextProvider);
@@ -41,6 +41,7 @@ export default function BvnVerification(Data) {
     useContext(ContextProvider);
   const [loading, setLoading] = useState(false);
   const [genderResult, setGenderResult] = useState("");
+  const [sessionModal, setSessionModal] = useState(false)
   // const genderInfo = ["Male", "Female", "Others.."];
   const chooseGender = () => {
     setDropDownGender(!dropDownGender);
@@ -77,7 +78,7 @@ export default function BvnVerification(Data) {
     if (bvnButtonState === "Verify" && navigator.onLine) {
       url = "https://aremxyplug.onrender.com/api/v1/verify";
       buttonStateSuccess = "Verified";
-      ErrorMessage = "Bvn Name Mismatch or network failure";
+      ErrorMessage = "Bvn Name Mismatch or Network Failure";
       PendingImageFxn = () => setBvnVerifyImage(PendingImage);
       PendingText = () => setBvnStatus("Pending");
       verifyBvnImage = () => setBvnVerifyImage(bvnVerifiedSuccess);
@@ -134,7 +135,7 @@ export default function BvnVerification(Data) {
             Authorization: authToken || getToken,
           },
         });
-        if (response.status === 201 || 200) {
+        if (response.status === 201 || response.status ===  200) {
           setBvnNumber(bvnNumber);
           verifyBvnImage();
           statusBvn();
@@ -146,7 +147,7 @@ export default function BvnVerification(Data) {
       } catch (error) {
         if (error && error.response === undefined) {
           alert("Your network connection is quite unstable.");
-        } else if (error.status === 401 || 400) {
+        } else if ( error.response.status ===  400) {
           alert(ErrorMessage);
           console.log(`ERROR : ${error}`);
           setBvnVerifyImage(NotVerifiedImage);
@@ -155,6 +156,8 @@ export default function BvnVerification(Data) {
           alert("SERVER ERROR, Try again some other time.");
           setBvnStatus("Not Verified");
           setBvnVerifyImage(NotVerifiedImage);
+        }else if(error.response.status === 401){
+            setSessionModal(true);
         } else {
           alert("Check your internet connection.");
           setErrorVerify(true);
@@ -840,6 +843,9 @@ export default function BvnVerification(Data) {
         <Modal>
           <Loader />
         </Modal>
+      )}
+      {sessionModal && (
+        <HandleUserSession/>
       )}
     </div>
   );
