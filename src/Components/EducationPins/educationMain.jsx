@@ -12,7 +12,90 @@ import { ContextProvider } from "../Context";
 import { useContext } from "react";
 
 export default function EducationMain() {
-  const { isDarkMode } = useContext(ContextProvider);
+  const {
+    isDarkMode,
+    setExamType,
+    setQuantityResult,
+    setEducationPinPhone,
+    setEducationPinEmail,
+    setEducationAmount,
+    setPaymentResult,
+    setQuantityActive,
+    setMethodActive,
+    setExamActive,
+    setNecoExamType,
+    setNecoQuantityResult,
+    setNecoEducationPinPhone,
+    setNecoEducationPinEmail,
+    setNecoEducationAmount,
+    setNecoPaymentResult,
+    setNecoQuantityActive,
+    setNecoMethodActive,
+    setNecoExamActive,
+    setNabtebExamType,
+    setNabtebQuantityResult,
+    setNabtebEducationPinPhone,
+    setNabtebEducationPinEmail,
+    setNabtebEducationAmount,
+    setNabtebPaymentResult,
+    setNabtebQuantityActive,
+    setNabtebMethodActive,
+    setNabtebExamActive,
+    setJambExamType,
+    setJambQuantityResult,
+    setJambEducationPinPhone,
+    setJambEducationPinEmail,
+    setJambEducationAmount,
+    setJambPaymentResult,
+    setJambQuantityActive,
+    setJambMethodActive,
+    setJambExamActive,
+  } = useContext(ContextProvider);
+
+  function handleResetWaecFields() {
+    setExamType("WAEC");
+    setQuantityResult("");
+    setEducationPinPhone("");
+    setEducationPinEmail("");
+    setEducationAmount("");
+    setPaymentResult("");
+    setQuantityActive(false);
+    setMethodActive(false);
+    setExamActive(false);
+  }
+  function handleResetNecoFields() {
+    setNecoExamType("NECO");
+    setNecoQuantityResult("");
+    setNecoEducationPinPhone("");
+    setNecoEducationPinEmail("");
+    setNecoEducationAmount("");
+    setNecoPaymentResult("");
+    setNecoQuantityActive(false);
+    setNecoMethodActive(false);
+    setNecoExamActive(false);
+  }
+  function handleResetNabtebFields() {
+    setNabtebExamType("NABTEB");
+    setNabtebQuantityResult("");
+    setNabtebEducationPinPhone("");
+    setNabtebEducationPinEmail("");
+    setNabtebEducationAmount("");
+    setNabtebPaymentResult("");
+    setNabtebQuantityActive(false);
+    setNabtebMethodActive(false);
+    setNabtebExamActive(false);
+  }
+  function handleResetJambFields() {
+    setJambExamType("JAMB");
+    setJambQuantityResult("");
+    setJambEducationPinPhone("");
+    setJambEducationPinEmail("");
+    setJambEducationAmount("");
+    setJambPaymentResult("");
+    setJambQuantityActive(false);
+    setJambMethodActive(false);
+    setJambExamActive(false);
+  }
 
   return (
     <DashBoardLayout>
@@ -37,12 +120,11 @@ export default function EducationMain() {
             />
           </div>
           {/* Examinations to click to request for the pins */}
-          <div
-            className="flex flex-wrap justify-between w-full gap-[15px] md:h-[70px] md:flex-row md:flex-nowrap md:gap-[21.27px] lg:h-[120px]  md:w-[100%] lg:gap-[37px]"
-          >
+          <div className="flex flex-wrap justify-between w-full gap-[15px] md:h-[70px] md:flex-row md:flex-nowrap md:gap-[21.27px] lg:h-[120px]  md:w-[100%] lg:gap-[37px]">
             {/* WAEC Examination */}
             <Link
               to="/WaecEducationPin"
+              onClick={handleResetWaecFields}
               className={`${"md:w-1/4  md:h-[100%] h-auto w-[45%]"}
          ${
            isDarkMode
@@ -51,15 +133,11 @@ export default function EducationMain() {
          }
         `}
             >
-              <div
-                className="flex h-[100%] p-[5.868px] gap-[3.35px] md:p-[5.868px] md:gap-[2.347px] rounded-[2.934px] border-[0.587px] border-[solid] border-[black] border-opacity-[30%] shadow-[0px_0.58686px_0.34722px_0px_rgba(0,0,0,0.25)] lg:shadow-[0px_1px_4px_0px_rgba(0,0,0,0.25)] lg:border-[1px] lg:border-[black] lg:border-opacity-[30%] lg:p-[10px] lg:rounded-[5px] lg:gap-[6px]  cursor-pointer"
-              >
+              <div className="flex h-[100%] p-[5.868px] gap-[3.35px] md:p-[5.868px] md:gap-[2.347px] rounded-[2.934px] border-[0.587px] border-[solid] border-[black] border-opacity-[30%] shadow-[0px_0.58686px_0.34722px_0px_rgba(0,0,0,0.25)] lg:shadow-[0px_1px_4px_0px_rgba(0,0,0,0.25)] lg:border-[1px] lg:border-[black] lg:border-opacity-[30%] lg:p-[10px] lg:rounded-[5px] lg:gap-[6px]  cursor-pointer">
                 {/* Waec Logo */}
                 <img className="md:w-1/2 w-[42%]" src={Waec} alt="Waec logo" />
                 {/* text */}
-                <h2
-                  className="w-1/2 font-semibold text-[13px] leading-[12.675px] md:text-[10.563px] md:leading-[12.675px] lg:text-[18px] lg:leading-[21.6px] self-center"
-                >
+                <h2 className="w-1/2 font-semibold text-[13px] leading-[12.675px] md:text-[10.563px] md:leading-[12.675px] lg:text-[18px] lg:leading-[21.6px] self-center">
                   WAEC
                 </h2>
               </div>
@@ -67,20 +145,19 @@ export default function EducationMain() {
             {/* Neco Examination */}
             <Link
               to="/NecoEducationPin"
+              onClick={handleResetNecoFields}
               className={`${"md:w-1/4 md:h-[100%] h-auto w-[45%]"}
-                          ${
-                            isDarkMode
-                              ? "!bg-black !text-white !border !border-white rounded-[7px]"
-                              : "bg-white border-none border-[7px]"
-                          }`}
+              ${
+                isDarkMode
+                  ? "!bg-black !text-white !border !border-white rounded-[7px]"
+                  : "bg-white border-none border-[7px]"
+              }`}
             >
               <div className="flex h-[100%] p-[5.868px] gap-[3.35px] md:p-[5.868px] md:gap-[2.347px] rounded-[2.934px] border-[0.587px] border-[black] border-opacity-[30%] shadow-[0px_0.58686px_0.34722px_0px_rgba(0,0,0,0.25)] lg:shadow-[0px_1px_4px_0px_rgba(0,0,0,0.25)] lg:border-[1px] lg:border-[black] lg:border-opacity-[30%] lg:p-[10px] lg:rounded-[5px] lg:gap-[6px]  cursor-pointer">
                 {/* Neco Logo */}
                 <img className="md:w-1/2 w-[42%]" src={Neco} alt="Waec logo" />
                 {/* text */}
-                <h2
-                  className="w-1/2 font-semibold text-[13px] leading-[12.675px] md:text-[10.563px] md:leading-[12.675px] lg:text-[18px] lg:leading-[21.6px] self-center"
-                >
+                <h2 className="w-1/2 font-semibold text-[13px] leading-[12.675px] md:text-[10.563px] md:leading-[12.675px] lg:text-[18px] lg:leading-[21.6px] self-center">
                   NECO
                 </h2>
               </div>
@@ -88,6 +165,7 @@ export default function EducationMain() {
             {/* Nabteb Examination */}
             <Link
               to="/NabtebEducationPin"
+              onClick={handleResetNabtebFields}
               className={`${"md:w-1/4 md:h-[100%] h-auto w-[45%]"}
          ${
            isDarkMode
@@ -96,9 +174,7 @@ export default function EducationMain() {
          }
         `}
             >
-              <div
-                className="flex h-[100%] p-[7.868px] gap-[3.35px] md:p-[5.868px] md:gap-[2.347px] rounded-[2.934px] border-[0.587px] border-[black] border-opacity-[30%] shadow-[0px_0.58686px_0.34722px_0px_rgba(0,0,0,0.25)] lg:shadow-[0px_1px_4px_0px_rgba(0,0,0,0.25)] lg:border-[1px] lg:border-[black] lg:border-opacity-[30%] lg:p-[10px] lg:rounded-[5px] lg:gap-[6px]  cursor-pointer "
-              >
+              <div className="flex h-[100%] p-[7.868px] gap-[3.35px] md:p-[5.868px] md:gap-[2.347px] rounded-[2.934px] border-[0.587px] border-[black] border-opacity-[30%] shadow-[0px_0.58686px_0.34722px_0px_rgba(0,0,0,0.25)] lg:shadow-[0px_1px_4px_0px_rgba(0,0,0,0.25)] lg:border-[1px] lg:border-[black] lg:border-opacity-[30%] lg:p-[10px] lg:rounded-[5px] lg:gap-[6px]  cursor-pointer ">
                 {/* Nabteb Logo */}
                 <img
                   className="md:w-1/2 w-[38%]"
@@ -106,9 +182,7 @@ export default function EducationMain() {
                   alt="Waec logo"
                 />
                 {/* text */}
-                <h2
-                  className="w-1/2 font-semibold text-[13px] leading-[12.675px] md:text-[10.563px] md:leading-[12.675px] lg:text-[18px] lg:leading-[21.6px] self-center"
-                >
+                <h2 className="w-1/2 font-semibold text-[13px] leading-[12.675px] md:text-[10.563px] md:leading-[12.675px] lg:text-[18px] lg:leading-[21.6px] self-center">
                   NABTEB
                 </h2>
               </div>
@@ -116,6 +190,7 @@ export default function EducationMain() {
             {/* Jamb Examination */}
             <Link
               to="/JambEducationPin"
+              onClick={handleResetJambFields}
               className={`${"md:w-1/4 md:h-[100%] h-auto w-[45%]"}
           ${
             isDarkMode
@@ -124,9 +199,7 @@ export default function EducationMain() {
           }
         `}
             >
-              <div
-                className="flex h-[100%] p-[6.868px] gap-[3.35px] md:p-[5.868px] md:gap-[2.347px] rounded-[2.934px] border-[0.587px] border-[black] border-opacity-[30%] shadow-[0px_0.58686px_0.34722px_0px_rgba(0,0,0,0.25)] lg:shadow-[0px_1px_4px_0px_rgba(0,0,0,0.25)] lg:border-[1px] lg:border-[black] lg:border-opacity-[30%] lg:p-[10px] lg:rounded-[5px] lg:gap-[6px]  cursor-pointer"
-              >
+              <div className="flex h-[100%] p-[6.868px] gap-[3.35px] md:p-[5.868px] md:gap-[2.347px] rounded-[2.934px] border-[0.587px] border-[black] border-opacity-[30%] shadow-[0px_0.58686px_0.34722px_0px_rgba(0,0,0,0.25)] lg:shadow-[0px_1px_4px_0px_rgba(0,0,0,0.25)] lg:border-[1px] lg:border-[black] lg:border-opacity-[30%] lg:p-[10px] lg:rounded-[5px] lg:gap-[6px]  cursor-pointer">
                 {/* Jamb Logo */}
                 <img
                   className="md:w-1/2 w-[40%]"
@@ -134,9 +207,7 @@ export default function EducationMain() {
                   alt="Waec logo"
                 />
                 {/* text */}
-                <h2
-                  className="w-1/2 font-semibold text-[13px] leading-[12.675px] md:text-[10.563px] md:leading-[12.675px] lg:text-[18px] lg:leading-[21.6px] self-center"
-                >
+                <h2 className="w-1/2 font-semibold text-[13px] leading-[12.675px] md:text-[10.563px] md:leading-[12.675px] lg:text-[18px] lg:leading-[21.6px] self-center">
                   JAMB
                 </h2>
               </div>

@@ -16,7 +16,235 @@ import bill10 from "../ElectricitySubscription/Electricity-sub-images/BEDC-Logo-
 import "./Electricity.css";
 
 const ElectricitySubscription = () => {
-  const { isDarkMode, toggleSideBar } = useContext(ContextProvider);
+  const {
+    isDarkMode,
+    toggleSideBar,
+    setShowList,
+    setShowProductList,
+    setSelectedAedcMeterType,
+    setAedcMeterNumber,
+    setAedcVerifiedName,
+    setAedcPhoneNumber,
+    setAedcEmail,
+    setAedcAmount,
+    setAedcCountry,
+    setAedcFlag,
+    setAedcPaymentResult,
+    setSelectedBedcMeterType,
+    setBedcMeterNumber,
+    setBedcVerifiedName,
+    setBedcPhoneNumber,
+    setBedcEmail,
+    setBedcAmount,
+    setBedcCountry,
+    setBedcFlag,
+    setBedcPaymentResult,
+    setSelectedEedcMeterType,
+    setEedcMeterNumber,
+    setEedcVerifiedName,
+    setEedcPhoneNumber,
+    setEedcEmail,
+    setEedcAmount,
+    setEedcCountry,
+    setEedcFlag,
+    setEedcPaymentResult,
+    setSelectedEkedcMeterType,
+    setEkedcMeterNumber,
+    setEkedcVerifiedName,
+    setEkedcPhoneNumber,
+    setEkedcEmail,
+    setEkedcAmount,
+    setEkedcCountry,
+    setEkedcFlag,
+    setEkedcPaymentResult,
+    setSelectedIkedcMeterType,
+    setIkedcMeterNumber,
+    setIkedcVerifiedName,
+    setIkedcPhoneNumber,
+    setIkedcEmail,
+    setIkedcAmount,
+    setIkedcCountry,
+    setIkedcFlag,
+    setIkedcPaymentResult,
+    setSelectedIbedcMeterType,
+    setIbedcMeterNumber,
+    setIbedcVerifiedName,
+    setIbedcPhoneNumber,
+    setIbedcEmail,
+    setIbedcAmount,
+    setIbedcCountry,
+    setIbedcFlag,
+    setIbedcPaymentResult,
+    setSelectedJedMeterType,
+    setJedMeterNumber,
+    setJedVerifiedName,
+    setJedPhoneNumber,
+    setJedEmail,
+    setJedAmount,
+    setJedCountry,
+    setJedFlag,
+    setJedPaymentResult,
+    setSelectedKaedcoMeterType,
+    setKaedcoMeterNumber,
+    setKaedcoVerifiedName,
+    setKaedcoPhoneNumber,
+    setKaedcoEmail,
+    setKaedcoAmount,
+    setKaedcoCountry,
+    setKaedcoFlag,
+    setKaedcoPaymentResult,
+    setSelectedKedcoMeterType,
+    setKedcoMeterNumber,
+    setKedcoVerifiedName,
+    setKedcoPhoneNumber,
+    setKedcoEmail,
+    setKedcoAmount,
+    setKedcoCountry,
+    setKedcoFlag,
+    setKedcoPaymentResult,
+    setSelectedPhedMeterType,
+    setPhedMeterNumber,
+    setPhedVerifiedName,
+    setPhedPhoneNumber,
+    setPhedEmail,
+    setPhedAmount,
+    setPhedCountry,
+    setPhedFlag,
+    setPhedPaymentResult,
+  } = useContext(ContextProvider);
+
+
+  function handleResetAedcFields() {
+    setShowList(false);
+    setShowProductList(false);
+    setSelectedAedcMeterType("");
+    setAedcMeterNumber("");
+    setAedcVerifiedName("");
+    setAedcPhoneNumber("");
+    setAedcEmail("");
+    setAedcAmount("");
+    setAedcCountry("");
+    setAedcFlag("");
+    setAedcPaymentResult("");
+  }
+  function handleResetBedcFields() {
+    setShowList(false);
+    setShowProductList(false);
+    setSelectedBedcMeterType("");
+    setBedcMeterNumber("");
+    setBedcVerifiedName("");
+    setBedcPhoneNumber("");
+    setBedcEmail("");
+    setBedcAmount("");
+    setBedcCountry("");
+    setBedcFlag("");
+    setBedcPaymentResult("");
+  }
+  function handleResetEedcFields() {
+    setShowList(false);
+    setShowProductList(false);
+    setSelectedEedcMeterType("");
+    setEedcMeterNumber("");
+    setEedcVerifiedName("");
+    setEedcPhoneNumber("");
+    setEedcEmail("");
+    setEedcAmount("");
+    setEedcCountry("");
+    setEedcFlag("");
+    setEedcPaymentResult("");
+  }
+  function handleResetEkedcFields() {
+    setShowList(false);
+    setShowProductList(false);
+    setSelectedEkedcMeterType("");
+    setEkedcMeterNumber("");
+    setEkedcVerifiedName("");
+    setEkedcPhoneNumber("");
+    setEkedcEmail("");
+    setEkedcAmount("");
+    setEkedcCountry("");
+    setEkedcFlag("");
+    setEkedcPaymentResult("");
+  }
+  function handleResetIkedcFields() {
+    setShowList(false);
+    setShowProductList(false);
+    setSelectedIkedcMeterType("");
+    setIkedcMeterNumber("");
+    setIkedcVerifiedName("");
+    setIkedcPhoneNumber("");
+    setIkedcEmail("");
+    setIkedcAmount("");
+    setIkedcCountry("");
+    setIkedcFlag("");
+    setIkedcPaymentResult("");
+  }
+  function handleResetIbedcFields() {
+    setShowList(false);
+    setShowProductList(false);
+    setSelectedIbedcMeterType("");
+    setIbedcMeterNumber("");
+    setIbedcVerifiedName("");
+    setIbedcPhoneNumber("");
+    setIbedcEmail("");
+    setIbedcAmount("");
+    setIbedcCountry("");
+    setIbedcFlag("");
+    setIbedcPaymentResult("");
+  }
+  function handleResetJedFields() {
+    setShowList(false);
+    setShowProductList(false);
+    setSelectedJedMeterType("");
+    setJedMeterNumber("");
+    setJedVerifiedName("");
+    setJedPhoneNumber("");
+    setJedEmail("");
+    setJedAmount("");
+    setJedCountry("");
+    setJedFlag("");
+    setJedPaymentResult("");
+  }
+  function handleResetKaedcoFields() {
+    setShowList(false);
+    setShowProductList(false);
+    setSelectedKaedcoMeterType("");
+    setKaedcoMeterNumber("");
+    setKaedcoVerifiedName("");
+    setKaedcoPhoneNumber("");
+    setKaedcoEmail("");
+    setKaedcoAmount("");
+    setKaedcoCountry("");
+    setKaedcoFlag("");
+    setKaedcoPaymentResult("");
+  }
+  function handleResetKedcoFields() {
+    setShowList(false);
+    setShowProductList(false);
+    setSelectedKedcoMeterType("");
+    setKedcoMeterNumber("");
+    setKedcoVerifiedName("");
+    setKedcoPhoneNumber("");
+    setKedcoEmail("");
+    setKedcoAmount("");
+    setKedcoCountry("");
+    setKedcoFlag("");
+    setKedcoPaymentResult("");
+  }
+  function handleResetPhedFields() {
+    setShowList(false);
+    setShowProductList(false);
+    setSelectedPhedMeterType("");
+    setPhedMeterNumber("");
+    setPhedVerifiedName("");
+    setPhedPhoneNumber("");
+    setPhedEmail("");
+    setPhedAmount("");
+    setPhedCountry("");
+    setPhedFlag("");
+    setPhedPaymentResult("");
+  }
+
   return (
     <DashBoardLayout>
       <div
@@ -34,7 +262,8 @@ const ElectricitySubscription = () => {
                 ELECTRICITY BILLS, PREPAID AND POSTPAID <br /> PAYMENTS.
               </div>
               <div className="text-[9px] font-normal leading-[12px] md:text-[10px] md:leading-[14.9px] lg:text-[20px] lg:leading-[26px] text-[#000000] ">
-                Recharge your metre and pay bills with our electricity bills payment feature for both prepaid and postpaid metertypes.
+                Recharge your metre and pay bills with our electricity bills
+                payment feature for both prepaid and postpaid metertypes.
               </div>
             </div>
             <div>
@@ -65,7 +294,7 @@ const ElectricitySubscription = () => {
               toggleSideBar ? "alignwidth " : "alignwidth1 xl:gap-[100px]"
             } mt-[20px] grid grid-cols-3 sm:grid-cols-5 w-full justify-between gap-4 lg:mt-[70px] md:gap-6  `}
           >
-            <Link to="/ikedc">
+            <Link to="/ikedc" onClick={handleResetIkedcFields}>
               <div
                 className={`flex flex-col justify-between items-center rounded-md border pb-3 lg:pb-5 px-4 w-[100px] h-[94px] ${
                   toggleSideBar
@@ -87,7 +316,7 @@ const ElectricitySubscription = () => {
                 </div>
               </div>
             </Link>
-            <Link to="/ekedc">
+            <Link to="/ekedc" onClick={handleResetEkedcFields}>
               <div
                 className={`flex flex-col justify-between items-center rounded-md border pt-2 pb-3 lg:pb-5 px-4 w-[100px] h-[94px] ${
                   toggleSideBar
@@ -110,7 +339,7 @@ const ElectricitySubscription = () => {
               </div>
             </Link>
 
-            <Link to="/aedc">
+            <Link to="/aedc" onClick={handleResetAedcFields}>
               <div
                 className={`flex flex-col justify-between items-center rounded-md border pt-1 pb-3 lg:pb-5 px-4 w-[100px] h-[94px] ${
                   toggleSideBar
@@ -132,7 +361,7 @@ const ElectricitySubscription = () => {
                 </div>
               </div>
             </Link>
-            <Link to="/kedco">
+            <Link to="/kedco" onClick={handleResetKedcoFields}>
               <div
                 className={`flex flex-col justify-between items-center rounded-md border pt-1 pb-3 lg:pb-5 px-4 w-[100px] h-[94px] ${
                   toggleSideBar
@@ -151,7 +380,7 @@ const ElectricitySubscription = () => {
                 </div>
               </div>
             </Link>
-            <Link to="/phed">
+            <Link to="/phed" onClick={handleResetPhedFields}>
               <div
                 className={`flex flex-col justify-between items-center rounded-md border pt-1 pb-3 lg:pb-5 px-4 w-[100px] h-[94px] ${
                   toggleSideBar
@@ -169,7 +398,7 @@ const ElectricitySubscription = () => {
                 </div>
               </div>
             </Link>
-            <Link to="/jed">
+            <Link to="/jed" onClick={handleResetJedFields}>
               <div
                 className={`flex flex-col justify-between items-center rounded-md border pt-0 pb-3 lg:pb-5 px-4 w-[100px] h-[94px] ${
                   toggleSideBar
@@ -187,7 +416,7 @@ const ElectricitySubscription = () => {
                 </div>
               </div>
             </Link>
-            <Link to="/kaedco">
+            <Link to="/kaedco" onClick={handleResetKaedcoFields}>
               <div
                 className={`flex flex-col justify-between items-center rounded-md border pt-0 pb-3 lg:pb-5 px-4 w-[100px] h-[94px] ${
                   toggleSideBar
@@ -209,7 +438,7 @@ const ElectricitySubscription = () => {
                 </div>
               </div>
             </Link>
-            <Link to="/eedc">
+            <Link to="/eedc" onClick={handleResetEedcFields}>
               <div
                 className={`flex flex-col justify-between items-center rounded-md border pt-0 pb-3 lg:pb-5 px-4 w-[100px] h-[94px] ${
                   toggleSideBar
@@ -231,7 +460,7 @@ const ElectricitySubscription = () => {
                 </div>
               </div>
             </Link>
-            <Link to="/ibedc">
+            <Link to="/ibedc" onClick={handleResetIbedcFields}>
               <div
                 className={`flex flex-col justify-between items-center rounded-md border pt-0 pb-3 lg:pb-5 px-4 w-[100px] h-[94px] ${
                   toggleSideBar
@@ -253,7 +482,7 @@ const ElectricitySubscription = () => {
                 </div>
               </div>
             </Link>
-            <Link to="/bedc">
+            <Link to="/bedc" onClick={handleResetBedcFields}>
               <div
                 className={`flex flex-col justify-between items-center rounded-md border pt-0 pb-3 lg:pb-5 px-4 w-[100px] h-[94px] ${
                   toggleSideBar
