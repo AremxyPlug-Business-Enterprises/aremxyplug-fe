@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DashBoardLayout } from "../../Layout/DashBoardLayout";
 import { Link } from "react-router-dom";
 import cloud from "../PointRedeem/images/cloud storage convert.svg";
@@ -19,6 +19,8 @@ import { AiFillEye } from "react-icons/ai";
 import OtpInput from "react-otp-input";
 import Joi from "joi";
 // import axios from 'axios';
+import { GetFunction } from "../../../../Components/ApiCollection.jsx/ApiBuck";
+
 
 const PointRedeem = () => {
   const { toggleSideBar, transferFee, toggleVisibility, isVisible } =
@@ -35,9 +37,20 @@ const PointRedeem = () => {
    } = useContext(ContextProvider);
   
 const [text, setText] =useState(false);
+  const [userPoints, setUserPoints] = useState(0);
+   const [transactionInfo, setTransactionInfo] = useState(null);
+  const [isLoading, setLoading] = useState(false);
+  const [fetchedResponse, setFetchedResponse] = useState({});
+    const [InputPinPopUp, setInputPinPopUp] = useState(false);
+  const [inputPin, setInputPin] = useState("");
+  const [proceed, setProceed] = useState(false);
+   const [successPopup, setSuccessPopup] = useState(false);
+  const [errors, setErrors] = useState({});
+//  const [transactionPoints, setTransactionPoints] = useState(0);
+// const [referralPoints, setReferralPoints] = useState(0);
+
   const handleInputChange = (event) => {
     const newValue = event.target.value;
-
     setInputValue(newValue);
     setOutputValue(newValue);
     setText(true);
@@ -52,8 +65,7 @@ const [text, setText] =useState(false);
   };
   const pointsEarned = "+2.00";
 
-  const [InputPinPopUp, setInputPinPopUp] = useState(false);
-  const [inputPin, setInputPin] = useState("");
+
 
   const handleSwitch = () => {
     setInputPinPopUp(true);
@@ -64,8 +76,6 @@ const [text, setText] =useState(false);
     setInputPinPopUp(false);
     setProceed(true);
   };
-  const [proceed, setProceed] = useState(false);
-
   // const handleProceed = () => {
 
   //     setProceed(true);
@@ -85,7 +95,32 @@ const [text, setText] =useState(false);
         "string.pattern.base": "Minimum Point Redeem is 100 and Above",
       }),
   });
-  const [errors, setErrors] = useState({});
+
+// 75515487836
+   //  Fetch Points
+  useEffect(() => {
+   
+    const  successHandler = () => {
+      // console.log("fetch points succefully");
+
+      const total = fetchedResponse?.data?.total_points ?? 0;
+    // const trxPoints = fetchedResponse?.data?.data?.transaction_points ?? 0;
+    // const referralPts = fetchedResponse?.data?.data?.referral_points ?? 0;
+
+    setUserPoints(total);
+    // setTransactionPoints(trxPoints);
+    // setReferralPoints(referralPts);
+    };
+    const FailedHandler = (msg) => {
+      console.warn("Failed to fetch points:", msg);
+    };
+
+   
+      GetFunction("extra/point", setLoading,  successHandler, FailedHandler, setFetchedResponse)
+   
+  }, []);
+
+   console.log(fetchedResponse?.data?.data?.point?.total_points);
 
   const handleProceed = (e) => {
     e.preventDefault();
@@ -108,7 +143,6 @@ const [text, setText] =useState(false);
     }
   };
 
-  const [successPopup, setSuccessPopup] = useState(false);
 
   const handleSuccess = () => {
     setSuccessPopup(true);
@@ -202,7 +236,7 @@ const [text, setText] =useState(false);
             Minimum 100 PTS
           </div>
           <div className="border-[1px] border-slate-200 pl-1 pr-3 py-0 rounded-sm">
-            Available Points Balance (50,000.00)
+            Available Points Balance: {userPoints}
           </div>
         </div>
         <div className="mt-[7px] flex flex-row lg:mt-[20px]">
