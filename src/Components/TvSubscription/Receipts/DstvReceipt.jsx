@@ -139,10 +139,12 @@ export const DstvReceipt= (Data) => {
             toggleSideBar ? "" : "lg:w-[880px] "
           } w-full lg:mx-auto ${isDarkMode ? "border border-white" : ""}`}
         >
-          <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
+          <div className="flex justify-between items-center 
+          mx-[3%] my-[2%] lg:my-[1%]">
             <div>
               <img
-                className=" w-[15px] h-[10px] md:w-[24px] md:h-[15px] lg:w-[42px] lg:h-[25px]"
+                className=" w-[15px] h-[10px] md:w-[24px] 
+                md:h-[15px] lg:w-[42px] lg:h-[25px]"
                 src="/Images/login/arpLogo.png"
                 alt=""
               />
@@ -150,7 +152,8 @@ export const DstvReceipt= (Data) => {
             <div onClick = {()=> ExitTheReceipt()}>
               {" "}
               <img
-                className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
+                className=" w-[18px] h-[18px] md:w-[35px] 
+                md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
               />
@@ -159,13 +162,15 @@ export const DstvReceipt= (Data) => {
           <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
           <div ref={contentRef}>
             {" "}
-            <h3 className="font-extrabold text-[12px] my-[2%] text-center 
-            md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
+            <h3 className={`font-extrabold text-[12px] my-[2%] text-center
+             md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]
+              ${isDarkMode ? "text-white" : "text-black"}`}>
               Transaction Receipt
             </h3>
             <div className="w-full flex justify-center">
               <img
-                className="absolute w-[250px] h-[450px] md:w-[70%] lg:w-[50%] lg:h-[550px]"
+                className="absolute w-[250px] h-[450px] md:w-[70%] 
+                lg:w-[50%] lg:h-[550px]"
                 src="./Images/transferImages/receipt-background.png"
                 alt="/"
               />
