@@ -20,14 +20,14 @@ import BusinessKYC from "./BusinessKYC";
 import Success from "../ProfileImages/success.gif";
 import { PostFunction } from "../../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../../Loader/Loader";
-
+import { HandleUserSession } from "../../ApiCollection.jsx/ApiBuck";
 const ChangePhoneNumber = () => {
   const { isDarkMode } = useContext(ContextProvider);
   // const { recipientPhoneNumber, setRecipientPhoneNumber } =
   //   useContext(ContextProvider);
     const [loading, setLoading] = useState(false);
     const [fetchedResponse, setFetchedResponse] = useState({});
-
+  const [sessionModal, setSessionModal] = useState(false)
 
  const [otp, setOtp] = useState("");
  const [verificationPinError, setVerificationPinError] = useState("");
@@ -87,15 +87,29 @@ const ChangePhoneNumber = () => {
 
 
 const VerifyPopUpHandler =async()=> {
-      const FailedHandler=()=> {
-     setVerificationPinError(true)
+      const FailedHandler=(Error)=> {
+        if(Error === "Server error" ){
+     setVerificationPinError(true);
+        }else if(Error  === "Network error" || Error === "user error"){
+        alert("Kindly check your internet connection.")
+      }else if(Error === "Unauthorised"){
+     setSessionModal(true)
+      }else if(Error === undefined){
+        alert("Your internet connection is quite unstable.")
+      }else{
+        alert(" An unexpected error occured, please try again later.")
+      }
     }
-    const SuccessHandler =()=> {
+
+    
+    const SuccessHandler =(response)=> {
      // console.log("Successful")
      setVerificationPinError("")
       setUpdate(false);
    setVerify(true);
    setOtp("");
+   
+     localStorage.setItem("userPhone",JSON.stringify(response?.data?.data?.phone) )
     }
     const body ={
       new_phone: `234${inputValue?.slice(1)}`,
@@ -114,15 +128,27 @@ const VerifyPopUpHandler =async()=> {
   //The implementation for the Change email,
   const HandleChangePhoneNumber = async()=> {
 
-    const FailedHandler=()=> {
-      console.log("Failed to change Phone Number")
+    const FailedHandler=(ErrorType)=> {
+      if(ErrorType === "Server error" ){
+   //  setVerificationPinError(true)
+   alert("Failed to process your request, please try again later.")
+      }else if(ErrorType  === "Network error" || ErrorType === "user error"){
+        alert("Kindly check your internet connection.")
+      }else if(ErrorType === "Unauthorised"){
+     setSessionModal(true)
+      }else if(ErrorType === undefined){
+        alert("Your internet connection is quite unstable.")
+      }else{
+        alert("An unexpected error occured, please try again later.")
+      }
     }
-    const SuccessHandler =()=> {
+    const SuccessHandler =(response)=> {
      // console.log("Successful")
     setUpdate(true);
       setErrors({});
       setCountdown(60);
      console.log("Successful");
+   
     }
     const body ={
       new_phone: `234${inputValue?.slice(1)}`
@@ -170,7 +196,7 @@ const VerifyPopUpHandler =async()=> {
 
   
   
-   
+   console.log(fetchedResponse)
   
   
   return (
@@ -452,6 +478,9 @@ const VerifyPopUpHandler =async()=> {
         <Modal>
           <Loader/>
         </Modal>
+      )}
+      {sessionModal && (
+        <HandleUserSession/>
       )}
     
            
