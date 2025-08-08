@@ -26,67 +26,67 @@ import {
   GetFunction,
 } from "../../../ApiCollection.jsx/ApiBuck";
 // validating the network numbers
-  export function validateNigerianNumberByNetwork(number) {
-    const networks = [
-      {
-        name: "GLO",
-        values: ["0705", "0805", "0807", "0811", "0815", "0905", "0915"],
-      },
-      {
-        name: "AIRTEL",
-        values: [
-          "0701",
-          "0708",
-          "0802",
-          "0808",
-          "0812",
-          "0901",
-          "0902",
-          "0904",
-          "0907",
-          "0912",
-          "0911",
-        ],
-      },
-      {
-        name: "9MOBILE",
-        values: ["0809", "0817", "0818", "0909", "0908"],
-      },
-      {
-        name: "GLO",
-        values: ["0705", "0805", "0807", "0811", "0815", "0905", "0915"],
-      },
-      {
-        name: "MTN",
-        values: [
-          "0703",
-          "0704",
-          "0814",
-          "0706",
-          "0803",
-          "0806",
-          "0810",
-          "0813",
-          "0814",
-          "0816",
-          "0903",
-          "0906",
-          "0913",
-          "0916",
-        ],
-      },
-    ];
+export function validateNigerianNumberByNetwork(number) {
+  const networks = [
+    {
+      name: "GLO",
+      values: ["0705", "0805", "0807", "0811", "0815", "0905", "0915"],
+    },
+    {
+      name: "AIRTEL",
+      values: [
+        "0701",
+        "0708",
+        "0802",
+        "0808",
+        "0812",
+        "0901",
+        "0902",
+        "0904",
+        "0907",
+        "0912",
+        "0911",
+      ],
+    },
+    {
+      name: "9MOBILE",
+      values: ["0809", "0817", "0818", "0909", "0908"],
+    },
+    {
+      name: "GLO",
+      values: ["0705", "0805", "0807", "0811", "0815", "0905", "0915"],
+    },
+    {
+      name: "MTN",
+      values: [
+        "0703",
+        "0704",
+        "0814",
+        "0706",
+        "0803",
+        "0806",
+        "0810",
+        "0813",
+        "0814",
+        "0816",
+        "0903",
+        "0906",
+        "0913",
+        "0916",
+      ],
+    },
+  ];
 
-    for (let network of networks) {
-      for (let prefix of network.values) {
-        if (number.startsWith(prefix) && number.length === 11) {
-          return network.name;
-        }
+  for (let network of networks) {
+    for (let prefix of network.values) {
+      if (number.startsWith(prefix) && number.length === 11) {
+        return network.name;
       }
     }
-
-    return "Unknown network";
   }
+
+  return "Unknown network";
+}
 
 const AEDC = () => {
   const navigate = useNavigate();
@@ -607,7 +607,7 @@ const AEDC = () => {
   }
 
   const [balanceStatus, setBalanceStatus] = useState("");
-  let balanceStringToNum = Number(newBalance);
+  let balanceStringToNum = Number(newBalance ? newBalance : updateBalance);
   let aedcAmountToNumber = Number(aedcAmount);
   let CheckSufficiency = aedcAmountToNumber > balanceStringToNum;
   useEffect(() => {
@@ -962,7 +962,9 @@ const AEDC = () => {
                       setAmountError("");
                     }}
                     placeholder="Minimum of ₦1000"
-                    className={`w-full ml-0.5 placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-base placeholder:lg:leading-[20.8px] focus:outline-0 outline-0 ${isDarkMode ? "bg-black" : ""}`}
+                    className={`w-full ml-0.5 placeholder:text-[12px] placeholder:leading-[10.4px] placeholder:lg:text-base placeholder:lg:leading-[20.8px] focus:outline-0 outline-0 ${
+                      isDarkMode ? "bg-black" : ""
+                    }`}
                   />
                 </div>
                 {amountError && (
@@ -972,7 +974,7 @@ const AEDC = () => {
                 )}
               </div>
             </div>
-                {/* Conatiner for Payment Method */}
+            {/* Conatiner for Payment Method */}
             <div className="w-full flex flex-col md:flex-row gap-5 md:gap-3 lg:gap-[22px] md:my-2 lg:my-4">
               <div className="flex flex-col gap-[3px] lg:gap-[5px] relative w-full md:w-1/2">
                 <label
@@ -1001,9 +1003,7 @@ const AEDC = () => {
                     >
                       <p
                         className={`text-xs lg:text-sm
-                       ${
-                         isDarkMode ? "text-white " : "text-[#7E7E7E]"
-                       }`}
+                       ${isDarkMode ? "text-white " : "text-[#7E7E7E]"}`}
                       >
                         {/* {aedcCountry} */}
                         {aedcPaymentResult}
@@ -1039,20 +1039,20 @@ const AEDC = () => {
                 {showList && (
                   <div
                     // rounded-br-[7px] lg:rounded-b-[14px]
-                  //   ${
-                  //   toggleSideBar
-                  //     ? "lg:w-[31.5%] lg:top-[100.5%]"
-                  //     : "lg:w-[38.5%] lg:top-[105.3%]"
-                  // } 
+                    //   ${
+                    //   toggleSideBar
+                    //     ? "lg:w-[31.5%] lg:top-[100.5%]"
+                    //     : "lg:w-[38.5%] lg:top-[105.3%]"
+                    // }
                     className={`
                   ${
-                        isDarkMode
-                          ? "bg-black text-white divide-y divide-white  border-white"
-                          : "text-[#7C7C7C] rounded bg-white border-gray-100"
-                      }
+                    isDarkMode
+                      ? "bg-black text-white divide-y divide-white  border-white"
+                      : "text-[#7C7C7C] rounded bg-white border-gray-100"
+                  }
                       ${
-                      styles.countryDropDown
-                    }  absolute lg:top-[85px] md:top-[60px] top-[74px] z-[5] border flex flex-col w-full cursor-pointer`}
+                        styles.countryDropDown
+                      }  absolute lg:top-[85px] md:top-[60px] top-[74px] z-[5] border flex flex-col w-full cursor-pointer`}
                   >
                     {countryList?.map((country) => (
                       <div
@@ -1296,7 +1296,9 @@ const AEDC = () => {
                     </p>
                     {/* <span>&#8358;{Number(aedcAmount).toLocaleString()}</span> */}
                     <span>
-                      {aedcAmount ? `₦${Number(aedcAmount).toLocaleString()}.00` : "₦"}
+                      {aedcAmount
+                        ? `₦${Number(aedcAmount).toLocaleString()}.00`
+                        : "₦"}
                     </span>
                   </div>
                   <div className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between font-medium lg:text-base items-center">
@@ -1704,7 +1706,9 @@ const AEDC = () => {
                     </p>
                     <span>
                       {/* &#8358;{Number(aedcAmount).toLocaleString()} */}
-                      {aedcAmount ? `₦${Number(aedcAmount).toLocaleString()}.00` : "₦"}
+                      {aedcAmount
+                        ? `₦${Number(aedcAmount).toLocaleString()}.00`
+                        : "₦"}
                     </span>
                   </div>
                   <div className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between lg:text-[15px] font-medium items-center">

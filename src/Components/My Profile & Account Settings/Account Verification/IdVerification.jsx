@@ -41,7 +41,9 @@ export default function IdVerification(Data) {
   const [idDropDown, setIdDropDown] = useState(false);
   const { idAddress, setIdAddress } = useContext(ContextProvider);
   // const {idState, setIdState} = useContext(ContextProvider);
-  const { idCountry, setIdCountry } = useContext(ContextProvider);
+  const { 
+    // idCountry, 
+    setIdCountry } = useContext(ContextProvider);
   // const {idLGA, setIdLGA} = useContext(ContextProvider);
   const { idNumber, setIdNumber } = useContext(ContextProvider);
   const { idPostalCode, setIdPostalCode } = useContext(ContextProvider);

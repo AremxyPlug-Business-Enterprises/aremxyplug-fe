@@ -20,7 +20,7 @@ const ElectricitySubscription = () => {
     isDarkMode,
     toggleSideBar,
     setShowList,
-    setShowProductList,
+    // setShowProductList,
     setSelectedAedcMeterType,
     setAedcMeterNumber,
     setAedcVerifiedName,
@@ -116,7 +116,7 @@ const ElectricitySubscription = () => {
 
   function handleResetAedcFields() {
     setShowList(false);
-    setShowProductList(false);
+    // setShowProductList(false);
     setSelectedAedcMeterType("");
     setAedcMeterNumber("");
     setAedcVerifiedName("");
@@ -129,7 +129,7 @@ const ElectricitySubscription = () => {
   }
   function handleResetBedcFields() {
     setShowList(false);
-    setShowProductList(false);
+    // setShowProductList(false);
     setSelectedBedcMeterType("");
     setBedcMeterNumber("");
     setBedcVerifiedName("");
@@ -142,7 +142,7 @@ const ElectricitySubscription = () => {
   }
   function handleResetEedcFields() {
     setShowList(false);
-    setShowProductList(false);
+    // setShowProductList(false);
     setSelectedEedcMeterType("");
     setEedcMeterNumber("");
     setEedcVerifiedName("");
@@ -155,7 +155,7 @@ const ElectricitySubscription = () => {
   }
   function handleResetEkedcFields() {
     setShowList(false);
-    setShowProductList(false);
+    // setShowProductList(false);
     setSelectedEkedcMeterType("");
     setEkedcMeterNumber("");
     setEkedcVerifiedName("");
@@ -168,7 +168,7 @@ const ElectricitySubscription = () => {
   }
   function handleResetIkedcFields() {
     setShowList(false);
-    setShowProductList(false);
+    // setShowProductList(false);
     setSelectedIkedcMeterType("");
     setIkedcMeterNumber("");
     setIkedcVerifiedName("");
@@ -181,7 +181,7 @@ const ElectricitySubscription = () => {
   }
   function handleResetIbedcFields() {
     setShowList(false);
-    setShowProductList(false);
+    // setShowProductList(false);
     setSelectedIbedcMeterType("");
     setIbedcMeterNumber("");
     setIbedcVerifiedName("");
@@ -194,7 +194,7 @@ const ElectricitySubscription = () => {
   }
   function handleResetJedFields() {
     setShowList(false);
-    setShowProductList(false);
+    // setShowProductList(false);
     setSelectedJedMeterType("");
     setJedMeterNumber("");
     setJedVerifiedName("");
@@ -207,7 +207,7 @@ const ElectricitySubscription = () => {
   }
   function handleResetKaedcoFields() {
     setShowList(false);
-    setShowProductList(false);
+    // setShowProductList(false);
     setSelectedKaedcoMeterType("");
     setKaedcoMeterNumber("");
     setKaedcoVerifiedName("");
@@ -220,7 +220,7 @@ const ElectricitySubscription = () => {
   }
   function handleResetKedcoFields() {
     setShowList(false);
-    setShowProductList(false);
+    // setShowProductList(false);
     setSelectedKedcoMeterType("");
     setKedcoMeterNumber("");
     setKedcoVerifiedName("");
@@ -233,7 +233,7 @@ const ElectricitySubscription = () => {
   }
   function handleResetPhedFields() {
     setShowList(false);
-    setShowProductList(false);
+    // setShowProductList(false);
     setSelectedPhedMeterType("");
     setPhedMeterNumber("");
     setPhedVerifiedName("");
