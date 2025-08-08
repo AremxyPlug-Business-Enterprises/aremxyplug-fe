@@ -25,6 +25,7 @@ import { Loader } from "../Loader/Loader";
 import { Modal } from "../Screens/Modal/Modal";
 import { BalanceLoading } from "../Loader/Loader";
 import { HandleUserSession } from "../../Components/ApiCollection.jsx/ApiBuck";
+import { GetLocalStorage } from "../LocalStorage/LocalStorage";
 
 // import { duration } from "html2canvas/dist/types/css/property-descriptors/duration";
 
@@ -91,7 +92,9 @@ const GoTv = () => {
   const [failedPopup, setFailedPopup] = useState(false);
   const [gotvLoading, setGotvLoading] = useState(false);
   const [gotvVerifyResponse, setGotvVerifyResponse] = useState({});
-
+  const [errorFillDecoder, setErrorFillDecoder] = useState(false)
+const Data = GetLocalStorage();
+//console.log(Data?.ConfirmAcc)
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -302,6 +305,7 @@ const GoTv = () => {
       }else if(ErrorType === "Network error" || ErrorType === "User error"){
        alert("Kindly check your internet connection to retrieve balance")
       }else{
+       // console.log("yeah bro i am the one running blehh")
         alert("An Unexpected error occured in attempt to retrieve balance")
       }
 
@@ -310,6 +314,8 @@ const GoTv = () => {
       );
           }else if(ErrorType === "Network error" || ErrorType === "User error"){
             alert("Kindly check your internet connection to retrieve the balance")
+          }else if(ErrorType === "Server error"){
+            alert("Failed to retrieve the balance.")
           }else{
             alert("An Unexpected error occured in attempt to retrieve balance")
           }
@@ -321,6 +327,7 @@ const GoTv = () => {
             //The operation was interrupted by a network error
             alert("Kindly check your internet connection to retrieve balance.")
          }else {
+          //Place 
           //An alien error has occured with the re-run of the "Server error" ErrorType
           alert("An unexpected error occured in attempt to retrieve the balance.")
          }
@@ -330,6 +337,7 @@ const GoTv = () => {
         }else if(ErrorType === "Network error" || ErrorType === "User error"){
 
         }else{
+           
           alert("An unexpected error occured in attempt to retrieve balance.")
         }
       }
@@ -342,9 +350,10 @@ const GoTv = () => {
       );
     };
     // Simulate async data loading
-
-    if (newBalance === "" || newBalance === null || newBalance === undefined) {
-      GetBalance();
+    if ((newBalance === "" ||
+       newBalance === null ||
+        newBalance === undefined) && Data?.ConfirmAcc === "true") {
+    GetBalance();
       if (GetBalance) {
         setNewBalance(
           passDataBalance?.data?.data?.data !== undefined
@@ -352,8 +361,10 @@ const GoTv = () => {
             : ""
         );
       }
+    }else{
+     // alert("Create an account to access this feature.");
+     console.log("Create an account to access this feature.")
     }
-
     //eslint-disable-next-line
   }, []);
 
@@ -455,17 +466,19 @@ const GoTv = () => {
       flag: nigerianFlag,
       id: 1,
     },
-    { method: "USD Wallet", balance: "(0.00)", flag: americaFlag, id: 2 },
-    { method: "EUR Wallet", balance: "(0.00)", flag: britainFlag, id: 3 },
-    { method: "GBP Wallet", balance: "(0.00)", flag: euroFlag, id: 4 },
-    { method: "AUD Wallet", balance: "(0.00)", flag: austriaFlag, id: 5 },
-    { method: "KES Wallet", balance: "(0.00)", flag: kenyaFlag, id: 6 },
+    { method: "USD Wallet", balance: "($0.00)", flag: americaFlag, id: 2 },
+    { method: "EUR Wallet", balance: "(€0.00)", flag: britainFlag, id: 3 },
+    { method: "GBP Wallet", balance: "(£0.00)", flag: euroFlag, id: 4 },
+    { method: "AUD Wallet", balance: "(AU$0.00)", flag: austriaFlag, id: 5 },
+    { method: "KES Wallet", balance: "(KSh0.00)", flag: kenyaFlag, id: 6 },
   ];
 
   function packageDropdown() {
     if (!decoderType) {
       setShowDropdownGOTV(false);
+      setErrorFillDecoder(true)
     } else {
+      setErrorFillDecoder(false);
       setShowDropdownGOTV(!showDropdownGOTV);
       document.querySelector(".imgdrop").classList.toggle("DropIt");
     }
@@ -895,7 +908,8 @@ const GoTv = () => {
 
                     {decoderActive && (
                       <div
-                        className={`absolute lg:top-[90px] md:top-[60px]  top-[74px] z-[2]  flex flex-col w-[100%] lg:h-225px md:h-[210px]  
+                        className={`absolute lg:top-[90px] md:top-[60px]  top-[74px] 
+                          z-[2]  flex flex-col w-[100%] lg:h-225px md:h-[210px]  
           ${
             isDarkMode
               ? "bg-black text-white border border-white"
@@ -1018,6 +1032,12 @@ const GoTv = () => {
                         })}
                       </ul>
                     )}
+                      {errorFillDecoder && (
+                <p className="text-[12px] leading-[14px] font-semibold 
+                lg:text-[14px] lg:leading-[20px] text-left text-red-700">
+                 Select a decoder to choose a package
+                </p>
+              )}
                   </div>
                 </div>
                 <div className="flex flex-col md:flex-row gap-[20px] md:gap-[12px lg:gap-[22px]] md:my-2 lg:my-4">
@@ -1188,7 +1208,10 @@ const GoTv = () => {
                           : "border-[#9C9C9C]"
                       }`}
                     >
-                      <p className="font-[500] text-[13px] leading-[10.4px] md:text-[12px] md:leading-[12.206px] lg:text-[16px] text-[#7C7C7C] lg:leading-[20.8px] cursor-pointer">
+                      <p className={`font-[500] text-[13px] leading-[10.4px] 
+                      md:text-[12px] md:leading-[12.206px] lg:text-[16px]
+                       lg:leading-[20.8px] cursor-pointer
+                         ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
                         {`${flagResult}  ${" "} ${tvWalletBalance}`}
                       </p>
                       <img
@@ -1226,15 +1249,24 @@ const GoTv = () => {
                                     ? "NGN Wallet"
                                     : ""
                                 );
-                                setTvWalletBalance(
-                                  methodOption.id === 1
-                                    ? methodOption.balance
-                                    : flagResult === "NGN Wallet"
-                                    ? newBalance === "" || newBalance === null
-                                      ? `(${updateBalance})`
-                                      : `(${newBalance})`
-                                    : ""
-                                );
+                                setTvWalletBalance(methodOption.id === 1 && tvWalletBalance === ""? 
+                                newBalance === "" || newBalance === null || newBalance === undefined
+          ? `(${updateBalance?.length > 1 ? updateBalanceToNumber?.toLocaleString("en-NG", {
+               style : "currency",
+               currency : "NGN"
+          }) : ""})`
+          : `(${newBalance?.length > 1 ? newBalanceToNumber?.toLocaleString("en-NG", {
+            style : "currency",
+            currency : "NGN"
+          }) : ""})` : flagResult === "NGN Wallet" ?  newBalance === "" || newBalance === null || newBalance === undefined
+          ? `(${updateBalance?.length > 1 ? updateBalanceToNumber?.toLocaleString("en-NG", {
+               style : "currency",
+               currency : "NGN"
+          }) : ""})`
+          : `(${newBalance?.length > 1 ? newBalanceToNumber?.toLocaleString("en-NG", {
+            style : "currency",
+            currency : "NGN"
+          }) : ""})` : "");
                                 setMethodImage(
                                   methodOption.id === 1
                                     ? methodOption.flag

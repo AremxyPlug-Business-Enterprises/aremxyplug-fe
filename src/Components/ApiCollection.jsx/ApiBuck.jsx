@@ -293,8 +293,8 @@ export const VerifyTransPin = async (
          setFailed("Bad request");
          setErrorMessage(true);
       }else if(error && error.response.status === 401){
-         console.log(error.response.headers);
-      console.log(error.response.headers.get("x-new-auth-token"));
+         console.log(error?.response?.headers);
+      console.log(error?.response?.headers.get("x-new-auth-token"));
 if (error.response.headers["x-new-auth-token"] ||
           error.response.headers.get("x-new-auth-token")) {
           setLoading(true);
@@ -422,7 +422,7 @@ export const PostFunction = async (
         console.log(error.response);
       } else if (error && error.response.status === 500) {
         functionAtFailed("Server error");
-        alert("Server error: Try some other time");
+      //  alert("Server error: Try some other time");
         if (functionAtFailed) {
           setFetchedResponse(error?.response?.data?.data);
         }
@@ -452,7 +452,7 @@ export const GetFunction = async(path, setLoading, functionAtSuccess,functionAtF
       const response = await axios.get(url, {headers: {"Content-Type" :"application/json",
          Authorization : authToken || getToken
       }, withCredentials : true})
-    if(response.status === 201 || 200){
+    if(response.status === 201 ||  200){
      functionAtSuccess(response);
      if(functionAtSuccess){
      setFetchedResponse(response);

@@ -20,7 +20,8 @@ import axios from "axios";
 import { Loader } from "../../Loader/Loader";
 import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 import idSuccess from "../ProfileImages/user-tick.svg";
-import countryImage from "../../EducationPins/imagesEducation/Nigeriaflag.svg"
+import countryImage from "../../EducationPins/imagesEducation/Nigeriaflag.svg";
+import { HandleUserSession } from "../../ApiCollection.jsx/ApiBuck";
 
 export default function IdVerification(Data) {
   const { verificationOpen } = useContext(ContextProvider);
@@ -40,6 +41,7 @@ export default function IdVerification(Data) {
     useContext(ContextProvider);
   const [idDropDown, setIdDropDown] = useState(false);
   const { idAddress, setIdAddress } = useContext(ContextProvider);
+  const [sessionModal, setSessionModal] = useState(false);
   // const {idState, setIdState} = useContext(ContextProvider);
   const { 
     // idCountry, 
@@ -172,10 +174,8 @@ export default function IdVerification(Data) {
       // idCountry
     ) {
       setLoading(true);
-
       console.log("getToken", getToken);
-
-      // console.log(data)
+     // console.log(data)
       try {
         if (idButtonState === "Verify") {
           setErrorSubmit(false);
@@ -188,7 +188,7 @@ export default function IdVerification(Data) {
             Authorization: authToken || getToken,
           },
         });
-        if (response.status === 201 || 200) {
+        if (response.status === 201 || response.status === 200) {
           setIdNumber(idNumber);
           verifyIdImage();
           statusId();
@@ -199,17 +199,19 @@ export default function IdVerification(Data) {
         }
       } catch (error) {
         if(error && (error.response === undefined)){
-          alert("Your network is quite unstable.")
-        } else if (error.status === 401 || error.status === 400) {
+          alert("Your network is quite unstable.");
+        } else if (error.response.status === 400) {
           alert(ErrorMessage);
           console.log(`ERROR : ${error}`);
-
-          setVerifyImage(NotVerifiedIcon);
+         setVerifyImage(NotVerifiedIcon);
           setIdStatus("Not Verified");
-        } else if (error.status === 500) {
+          alert("Please check your ID Number and try again.")
+        } else if (error.response.status === 500) {
           alert("SERVER_ERROR, Try again some other time.");
           setIdStatus("Not Verified");
           setVerifyImage(NotVerifiedIcon);
+        }else if( error.response.status === 401){
+         setSessionModal(true);
         }else {
           alert("Check your internet connection.")
         }
@@ -989,6 +991,9 @@ Confirming your identity ensures that the person accessing the account is indeed
             </Modal>
           )}
         </div>
+      )}
+      {sessionModal && (
+        <HandleUserSession/>
       )}
       {loading && (
         <Modal>
