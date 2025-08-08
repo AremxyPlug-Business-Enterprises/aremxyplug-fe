@@ -208,7 +208,7 @@ const BEDC = () => {
   ];
 
   const [balanceStatus, setBalanceStatus] = useState("");
-  let balanceStringToNum = Number(newBalance);
+  let balanceStringToNum = Number(newBalance ? newBalance : updateBalance);
   let bedcAmountToNumber = Number(bedcAmount);
   let CheckSufficiency = bedcAmountToNumber > balanceStringToNum;
   useEffect(() => {

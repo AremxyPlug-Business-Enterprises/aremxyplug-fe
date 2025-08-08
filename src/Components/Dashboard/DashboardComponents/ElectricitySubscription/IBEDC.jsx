@@ -565,7 +565,7 @@ const IBEDC = () => {
   }
 
   const [balanceStatus, setBalanceStatus] = useState("");
-  let balanceStringToNum = Number(newBalance);
+  let balanceStringToNum = Number(newBalance ? newBalance : updateBalance);
   let ibedcAmountToNumber = Number(ibedcAmount);
   let CheckSufficiency = ibedcAmountToNumber > balanceStringToNum;
   useEffect(() => {
