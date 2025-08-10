@@ -24,6 +24,7 @@ const AddRecipient = () => {
     const [inputValue, setInputValue] = useState("");
     const [saveRecipient, setSaveRecipient] = useState(false);
     const [isLoading, setIsLoading] = useState(false); // For managing loading state
+  const { isDarkMode } = useContext(ContextProvider);
 
     const networkList = [
         {
@@ -219,63 +220,172 @@ const AddRecipient = () => {
                             alt="/"
                         />
                     </div>
-                    <div className={styles.mainGrid}>
-                        <div className={styles.mainGridCol}>
+                       <div className="grid grid-cols-1 mt-[25px] md:grid-cols-2 gap-y-[20px] md:gap-x-[58.68px] lg:gap-x-[100px] md:gap-y-[15px] lg:gap-y-[25px] pb-[30px] lg:py-[30px] md:mt-[20px]">
+                    {/* <div className={styles.mainGrid}> */}
+                        {/* <div className={styles.mainGridCol}> */}
+                          <div className="flex flex-col lg:gap-[14px] gap-[7px]">
                             <div>
                                 <div className={styles.NetworkFlex}>
-                                    <h2 className={styles.head3}>Select Network</h2>
-                                    <div className={styles.input}>
-                                        <div className={styles.output2}>
+                                    <h2 className={`lg:text-[18px] text-[#7c7c7c] lg:leading-[24px] mb-4 text-[15px] md:text-[12px] md:font-[600] font-[400] leading-[12px]   ${isDarkMode 
+                                              ? "text-[#7c7c7c]" : "text-[#7c7c7c]"
+                                          }`}>Select Network</h2>
+                                    <div className={`${styles.input} !h-[44.927px] md:!h-[58px]
+                                                                             ${
+        isDarkMode 
+            ? "!bg-black !text-white !border !border-solid !border-white !mt-2 md:!mt-0" 
+            : "border border-solid border-[#0003] bg-white text-black !mt-2 md:!mt-0"
+    }
+                                    `}
+                                    
+                                    >
+                                        <div className={`${styles.output2}
+                                            
+
+                                        !relative !top-[17px] md:!relative md:!top-base !text-[14px] md:!text-base
+                                     `
+                                        }>
                                             {selected ?
-                                                <li onClick={handleShowList} className={styles.labelInput}>
+                                                <li onClick={handleShowList} className={`${styles.labelInput
+
+                                                }
+                                               
+                                                 
+                                                 `}>
                                                     <div className={styles.network}>
                                                         {networkImage && <img src={networkImage} alt="" />}
                                                     </div>
-                                                    <h2 className={styles.head2}>{networkName}</h2>
+                                                    <h2 className={`
+                                                                                                        ${
+                                                                                                            isDarkMode ? "!text-[#7C7C7C] !bg-black !border !border-none !border-0 !border-width:0" : ""
+                                                                                                        }
+                                                                                                        ${styles.head2}
+                                                                                                         !text-[13px] md:!text-[13px]`}>{networkName}</h2>
                                                 </li>
                                                 :
-                                                <h2 onClick={handleShowList} className={styles.head6}>Select Network</h2>
+                                                <h2 onClick={handleShowList} className={`
+                                                    ${isDarkMode ? "!text-[#7C7C7C] " : ""}
+                                                    ${styles.head6}
+                                                 
+                                                
+                                                !text-[14px] md:!text-base`}>Select Network</h2>
                                             }
-                                            <button className={styles.btnDrop} onClick={handleShowList}>
+                                            <button className={`
+                                                                                        ${isDarkMode ? "!text-[#7C7C7C] " : ""}
+                                                                                        ${styles.btnDrop} !text-[14px] md:!text-base
+                                                                                                 
+                                                                                        `} onClick={handleShowList}>
                                                 <img src={arrowDown} alt="" />
                                             </button>
                                         </div>
                                     </div>
                                 </div>
+                                 <div className="relative">
                                 {showList &&
-                                    <div className={styles.colDown}>
+                                    // <div className={styles.colDown}>
+                                    <div className={`text-[16px] md:text-[12px]  bvnQuery text-[#7C7C7C]
+                  shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
+                   lg:text-[16px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[10]
+                 
+
+                  ${isDarkMode ? "!bg-black md:!bg-black border border-white border-2 rounded-[5px]" : "border border-none rounded-[5px] text-[#7C7C7C] bg-[#FFF]"}
+                  `}>
                                         {networkList.map((item) => (
+                                            <div className='text-[#7C7C7C]'>
                                             <Network key={item.id} image={item.image} name={item.name} onClick={() => handleSelectNetwork(item.name, item.image, item.discount)} />
+                                        </div>
                                         ))}
                                     </div>
                                 }
                             </div>
-                            <div>
-                                <h2 className={styles.head3}>Phone Number <span className={styles.span3}>(Select Recipient)</span></h2>
-                                <div className={styles.input}>
-                                    <div className={styles.output}>
-                                        <input type='number' className={styles.phone} required placeholder='Add recipient phone number' onChange={(event) => {
+                            </div>
+                             <div className="flex flex-col lg:gap-[14px] gap-[7px] md:mt-12 mt-8"> 
+                                <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
+                                            isDarkMode 
+                                              ? "!text-[#7c7c7c]" : "!text-[#7c7c7c]"
+                                          }`}>Phone Number <span className={`
+                                       
+                                       
+                                    ${styles.span3} !text-[15px] md:!text-base`}>(Select Recipient)</span></h2>
+                                <div className={`!mt-2 md:!mt-0
+                                                                   ${
+                                                                            isDarkMode 
+                                                                                ? "!bg-black !text-white !border !border-solid !border-white" 
+                                                                                : "border border-solid border-[#0003] bg-white text-black"
+                                                                        }
+                                                                ${styles.input} !h-[48.927px] md:!h-[57px]
+                                                                          `}>
+                                    <div className={`
+                                         ${
+                                            isDarkMode 
+                                                ? "!bg-black !text-[#7E7E7E]]" 
+                                                : ""
+                                        }
+                                        ${styles.output} !relative !top-[11px] md:!relative md:!top-[14px] !text-[14px] md:!text-base`}>
+                                        
+                                        <input type='number' className={`
+                                                                                          ${
+                                                                                    isDarkMode 
+                                                                                        ? "!bg-black !text-[#7c7c7c]" 
+                                                                                        : ""
+                                                                                }
+                                                                                        ${styles.phone} !text-[14px] md:!top-[14px]`} required placeholder='Add recipient phone number' onChange={(event) => {
                                             handleChange(event);
                                             setRecipientNumber(event.target.value);
                                         }} value={inputValue} />
-                                        <div className={styles.call}>
+                                        <div className={`${styles.call}
+                                            ${
+                                            isDarkMode 
+                                                ? "!bg-black !text-[#7c7c7c]" 
+                                                : ""
+                                        }
+                                        `}>
                                             <img src={call} alt="" />
                                         </div>
                                     </div>
                                 </div>
                                 {errors.recipientNumber && (
-                                    <div className="text-[12px] text-red-500 italic lg:text-[14px]">
+                                    <div className={`
+                                        ${
+                                            isDarkMode 
+                                                ? "!bg-black !text-[#7c7c7c]" 
+                                                : ""
+                                        }!text-[14px] text-red-500 italic lg:text-[14px]
+                                        
+                                        `}>
                                         {errors.recipientNumber}
                                     </div>
                                 )}
                             </div>
                         </div>
                         <div className={styles.mainGridCol}>
-                            <div>
-                                <h2 className={styles.head3}>Recipient Name <span className={styles.span4}>(optional)</span></h2>
-                                <div className={styles.input}>
-                                    <div className={styles.output}>
-                                        <input type='text' className={styles.phone} required placeholder='Add recipient name' onChange={(event) => setRecipientName(event.target.value)} value={recipientName} />
+                              <div className='flex flex-col lg:gap-[14px] gap-[7px]'>
+                            
+                                <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
+                                            isDarkMode 
+                                              ? "!text-[#7c7c7c]" : "!text-[#7c7c7c]"
+                                          }
+                                          `}>Recipient Name <span className={`${styles.span4} !text-[15px] md:!text-base`}>(optional)</span></h2>
+                                <div className={`!mt-2 md:!mt-0
+                                                                     ${
+                                                                            isDarkMode 
+                                                                                ? "!bg-black !text-[#7c7c7c] !border !border-solid !border-white" 
+                                                                                : "border border-solid border-[#0003] bg-white text-[#7c7c7c]"
+                                                                        }
+                                                                    ${styles.input} !h-[44.927px] md:!h-[51px]`}>
+                                    <div className={` ${
+                                            isDarkMode 
+                                                ? "!bg-black !text-[#7E7E7E]" 
+                                                : ""
+                                        }
+                                        ${styles.output} !relative !top-[11px] md:!relative md:!top-base !text-[14px] md:!text-base`}>
+                                       
+                                        <input type='text' className={`
+                                                                                     ${
+                                                                                    isDarkMode 
+                                                                                        ? "!bg-black !text-[#7E7E7E]" 
+                                                                                        : ""
+                                                                                }
+                                                                                    ${styles.phone} !text-[14px] md:!text-base`} required placeholder='Add recipient name' onChange={(event) => setRecipientName(event.target.value)} value={recipientName} />
                                         <div className={styles.call}>
                                             <img src={user} alt="" />
                                         </div>
