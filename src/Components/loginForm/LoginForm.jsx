@@ -363,7 +363,7 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
   return (
     <div
       className="relative overflow-hidden lg:top-[10%]  w-[100%] mb-[50%] xl:w-[85%] md:mx-[unset]  
-       loginForm p-[25px] rounded-lg md:rounded-xl xl:rounded-3xl "
+       loginForm p-[25px] rounded-lg md:rounded-xl xl:rounded-3xl"
       style={{
         zIndex: 950,
       }}

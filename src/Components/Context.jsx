@@ -1309,6 +1309,8 @@ export const Context = ({ children }) => {
   const [idPostalCode, setIdPostalCode] = useState("");
   const [bvnNumber, setBvnNumber] = useState("");
   const [bvnVerifyImage, setBvnVerifyImage] = useState(NotVerifiedIcon);
+   const [idDateOfBirth, setIdDateOfBirth] = useState("");
+    const [genderResult, setGenderResult] = useState("");
 
   const [bvnStatus, setBvnStatus] = useState("Not Verified");
   const [dashLoading, setDashLoading] = useState(false);
@@ -1321,6 +1323,7 @@ export const Context = ({ children }) => {
   const [bvnCountryImage, setBvnCountryImage] = useState(null);
   const [verificationReason, setVerificationReason] = useState("");
   const [verificationResponse, setVerificationResponse] = useState({});
+
 
   //========== BUSINESS KYC =============
   const [businessPopUp, setBusinessPopUp] = useState(false);
@@ -2609,6 +2612,10 @@ export const Context = ({ children }) => {
     setVerificationResponse,
     transactionResponse,
     setTransactionResponse,
+    idDateOfBirth,
+     setIdDateOfBirth,
+     genderResult,
+      setGenderResult,
 
     //========== Business PopUp =======
     businessPopUp,

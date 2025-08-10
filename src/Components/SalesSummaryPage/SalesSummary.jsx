@@ -672,7 +672,7 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
 <div className=' '>
 <footer className="
  flex  justify-center   text-center gap-[20px] 
- mt-[370px] mb-[20px] md:mt-[580px] lg:mb-[30px]  
+ mt-[50px] mb-[20px] md:mt-[580px] lg:mb-[30px]  
   z-index-2 onset-[500px] lg:mt-[760px]">
             <p className="text-[8px] md:text-[12px] lg:text-[12px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]">
               You need help?

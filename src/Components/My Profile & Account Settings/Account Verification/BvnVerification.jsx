@@ -119,9 +119,10 @@ export default function BvnVerification(Data) {
   ) => {
     const authToken = localStorage.getItem("authorisedLogin");
     const getToken = localStorage.getItem("getToken");
-    if (bvnDateOfBirth && bvnNumber && genderResult && idAddress) {
+    if (bvnDateOfBirth !== "" 
+    && bvnNumber !== ""  && genderResult !== ""  && idAddress !== "" ) {
       setLoading(true);
-
+         setErrorVerify(false);
       // console.log(data)
       try {
         if (bvnButtonState === "Verify") {
@@ -143,6 +144,7 @@ export default function BvnVerification(Data) {
           setBvnButtonState(buttonStateSuccess);
           localStorage.setItem("bvnVerification", "true");
           localStorage.setItem("idVerification", "true");
+            
         }
       } catch (error) {
         if (error && error.response === undefined) {
@@ -166,6 +168,8 @@ export default function BvnVerification(Data) {
         setLoading(false);
         //alert("success")
       }
+    }else{
+       setErrorVerify(true);
     }
   };
 
@@ -182,9 +186,10 @@ export default function BvnVerification(Data) {
     // eslint-disable-next-line
   }, [Data]);
 
+
   // console.log(bvnDateOfBirth);
 
-  const genderInfo = ["Male", "Female", "Prefer not to say"];
+  const genderInfo = ["Male", "Female", "Others.."];
 
   return (
     <div>
@@ -397,7 +402,8 @@ export default function BvnVerification(Data) {
                         isDarkMode ? "text-white" : ""
                       }`}
                     >
-                      {genderResult}
+                      {(Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false")
+                       && verificationResponse?.data?.data?.gender === undefined ? genderResult : verificationResponse?.data?.data?.gender}
                     </h2>
                     <img
                       src={ArrowDown}
@@ -407,10 +413,18 @@ export default function BvnVerification(Data) {
                   </div>
                   {dropDownGender && (
                     <div
-                      className={`absolute lg:top-[90px] md:top-[60px] top-[70px] z-[5] flex flex-col w-[100%] ${
-                        isDarkMode ? "bg-black border border-white" : "bg-white"
-                      }`}
-                    >
+                        className={`absolute lg:top-[90px] md:top-[60px] top-[70px] 
+          z-[5] flex flex-col w-[100%]
+            ${
+                    isDarkMode
+                      ? "bg-black border-white rounded-[7px] text-white"
+                      : "text-[#7C7C7C] bg-white rounded-br-[7px] rounded-bl-[7px] lg:rounded-br-[14px] lg:rounded-bl-[14px]"
+                  }
+                  ${
+                    toggleSideBar
+                      ? "lg:w-[31.5%] lg:top-[100.5%]"
+                      : "lg:w-[38.5%] lg:top-[105.3%]"
+                  }  shadow-xl border w-full lg:w-full  flex flex-col divide-y absolute top-20`}>
                       {genderInfo.map((info) => {
                         return (
                           <h2
@@ -421,7 +435,10 @@ export default function BvnVerification(Data) {
                                 .querySelector(".genderDrop")
                                 .classList.remove("DropIt");
                             }}
-                            className={`font-[500] text-[#7C7C7C] text-[12px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] md:py-[20px] py-[15px] pl-[10px] lg:pl-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] md:shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)] cursor-pointer ${
+                            className = {`py-[18px] md:py-[14px]  font-normal px-2 flex
+                         items-center gap-[5px] text-[12px] md:text-[14px] 
+                         lg:text-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
+                          transition-all duration-300 hover:bg-slate-50 ${
                               isDarkMode
                                 ? "bg-black text-white border-b border-white hover:bg-slate-800"
                                 : "bg-white"
@@ -455,7 +472,8 @@ export default function BvnVerification(Data) {
                     }}
                   >
                     <input
-                      value={bvnDateOfBirth}
+                      value={(Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false")
+                       && verificationResponse?.data?.data?.dob === undefined ? bvnDateOfBirth : verificationResponse?.data?.data?.dob}
                       ref={dateInputRef}
                       onChange={(e) => {
                         setBvnDateOfBirth(e.target.value);
@@ -499,7 +517,8 @@ export default function BvnVerification(Data) {
                     House Address
                   </h2>
                   <input
-                    value={idAddress}
+                    value={(Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false")
+                       && verificationResponse?.data?.data?.address === undefined ? idAddress : verificationResponse?.data?.data?.address}
                     onChange={(e) => {
                       setIdAddress(e.target.value);
                     }}
@@ -604,9 +623,9 @@ export default function BvnVerification(Data) {
                       e.target.value = numbersOnly;
                     }}
                     value={
-                      bvnStatus === "Verified" || Data.ConfirmBvn === "true"
+                      (verificationResponse?.data?.data?.bvn !== undefined && Data.ConfirmBvn === "true")
                         ? `${bvnNumber?.slice(0, 4)}*******`
-                        : bvnNumber
+                        : verificationResponse?.data?.data?.bvn === undefined && (Data?.ConfirmId === "true" || Data?.ConfirmBvn === "true") ? "NO BVN" :  bvnNumber
                     }
                     onChange={(e) => {
                       setBvnNumber(e.target.value);
@@ -650,7 +669,7 @@ export default function BvnVerification(Data) {
                   }}
                   className={`lg:py-[13px] md:py-[7.868px] py-[16.531px] rounded-[4.241px] w-[100%] md:w-[150px] lg:w-[163px] lg:rounded-[12px] bg-[#04177F]
          font-[600] text-[12px] leading-[18px] lg:text-[16px] text-center text-white lg:leading-[24px ${
-           Data.ConfirmBvn === "true" ? "bg-slate-400" : "bg-[#04177F]"
+           (Data.ConfirmBvn === "true" || Data?.ConfirmId === "true") ? "bg-slate-400" : "bg-[#04177F]"
          }`}
                 >
                   {bvnButtonState &&

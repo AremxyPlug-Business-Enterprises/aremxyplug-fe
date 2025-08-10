@@ -2,11 +2,9 @@ import  {useState, useEffect} from 'react';
 import { DashBoardLayout } from '../Dashboard/Layout/DashBoardLayout';
 import receiptA from "../SalesSummaryPage/assets/cash receipt from online shopping on mobile phone (3)A.png";
 import arrowsales from "../SalesSummaryPage/assets/arrow-square-rightsales.png";
-import flagsales from "../SalesSummaryPage/assets/Country Flags (5)sales.png";
 import menusales from "../SalesSummaryPage/assets/menusales.png";
 import arrow44 from "../SalesSummaryPage/assets/arrow-down@4x.png";
 import arrow11 from "../SalesSummaryPage/assets/arrow-down@1x.png";
-import arrow00 from "../SalesSummaryPage/assets/arrow-down@0x.png";
 import flagpage from "../SalesSummaryPage/assets/Country Flagspage.png";
 import flagpage1 from "../SalesSummaryPage/assets/Country Flagspage1.png";
 import flagpage2 from "../SalesSummaryPage/assets/Countryflag2.svg";
@@ -210,7 +208,7 @@ const getBackgroundColor = (status) => {
  const symbolValue = selected === "USD" ? "$" : selected === "AUD" ? 
   "AU$" : selected === "KES" ?   "KSh" : selected === "EUR" ? "€" : selected === "GBP" ? "£" : "₦";
  
-  const filteredWalletTransactions = walletTransactionResponse?.data?.data?.data?.data?.transactions?.filter((transaction) => {
+  const filteredWalletTransactions = walletTransactionResponse?.data?.data?.data?.data?.transactions !== null ? walletTransactionResponse?.data?.data?.data?.data?.transactions?.filter((transaction) => {
   if(selectedStatus === ""
      || selectedStatus === "All Transactions"
     || selectedStatus === "Filter by Status"){
@@ -224,7 +222,7 @@ const getBackgroundColor = (status) => {
         transaction?.status === "delivered"
         }
       }
- });
+ }) : [];
  //console.log(walletTransactionResponse?.data?.data?.data?.data);
  const product = ["All Transactions", "Successful", "Failed","Pending", "Refunded", "Cancelled"]
   return (
@@ -892,7 +890,7 @@ const getBackgroundColor = (status) => {
                   </Link>
                 </div>
                 ))) : (
-                  ((filteredWalletTransactions && filteredWalletTransactions?.length < 1)|| walletTransactionResponse?.data?.data?.data?.transactions?.length < 1 ) ? (
+                  ((filteredWalletTransactions?.length < 1)|| walletTransactionResponse?.data?.data?.data?.transactions?.length < 1 ||walletTransactionResponse?.data?.data?.data?.transactions === null ) ? (
                 <img className="lg:w-full lg:h-[456px] flex self-center w-[" src={NoRecordImage} alt="No record found"/> 
                 ) : 
                 transactionHistoryError === "Network error"  ? (

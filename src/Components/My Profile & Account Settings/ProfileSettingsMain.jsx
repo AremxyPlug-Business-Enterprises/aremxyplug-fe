@@ -16,7 +16,9 @@ export default function ProfileSettingsMain(Data) {
   const { profilePage, setProfilePage } = useContext(ContextProvider);
   const { verificationOpen, setVerificationOpen } = useContext(ContextProvider);
   const { setBusinessPopUp } = useContext(ContextProvider);
-  const { authenticationOpen, setAuthenticationOpen } =
+  const { authenticationOpen, setAuthenticationOpen,
+     
+   } =
     useContext(ContextProvider);
   const { bvnVerificationOpen, setBvnVerificationOpen } =
     useContext(ContextProvider);
@@ -24,7 +26,7 @@ export default function ProfileSettingsMain(Data) {
   const { idVerificationOpen, setIdVerificationOpen } =
     useContext(ContextProvider);
     const {setVerificationReason} = useContext(ContextProvider);
-    const { setVerificationResponse} = useContext(ContextProvider);
+    const {verificationResponse, setVerificationResponse} = useContext(ContextProvider);
     const [sessionModal, setSessionModal] = useState(false);
 
   const location = useLocation();
@@ -57,7 +59,7 @@ export default function ProfileSettingsMain(Data) {
      
     if(!navigator.onLine) return  setVerificationReason(`${idVerificationOpen === true ? "Nin" : bvnVerificationOpen === true ? "Bvn" : "Nin"} retrieval failed: internet connection error`)
     const path ="check-verification";
-    const SuccessHandler = ()=> {
+    const SuccessHandler = (response)=> {
       console.log("Successful");
     }
     const FailedHandler = async(ErrorType)=> {
@@ -81,6 +83,7 @@ export default function ProfileSettingsMain(Data) {
       setVerificationResponse)
       }
     }
+  console.log(verificationResponse?.data?.data?.address);
     const setLoading=(Value)=> {
   console.log(Value)
     }

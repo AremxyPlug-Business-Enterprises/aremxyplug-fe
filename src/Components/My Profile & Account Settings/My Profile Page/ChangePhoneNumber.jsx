@@ -34,8 +34,6 @@ const ChangePhoneNumber = () => {
 
   const {
     toggleSideBar,
-    inputPin,
-    setInputPin,
  
     toggleVisibility,
     isVisible,
@@ -87,17 +85,25 @@ const ChangePhoneNumber = () => {
 
 
 const VerifyPopUpHandler =async()=> {
-      const FailedHandler=(Error)=> {
+      const FailedHandler= async(Error)=> {
         if(Error === "Server error" ){
      setVerificationPinError(true);
         }else if(Error  === "Network error" || Error === "user error"){
         alert("Kindly check your internet connection.")
-      }else if(Error === "Unauthorised"){
-     setSessionModal(true)
+      }else if(Error === "unauthorised"){
+      await PostFunction("change-phone/update",
+     setLoading, 
+     body, 
+     SuccessHandler,
+      ()=> {
+        setSessionModal(true)
+      },
+       setFetchedResponse)  
       }else if(Error === undefined){
         alert("Your internet connection is quite unstable.")
-      }else{
-        alert(" An unexpected error occured, please try again later.")
+      }
+        else{
+        alert("An unexpected error occured, please try again later.")
       }
     }
 
@@ -130,16 +136,25 @@ const VerifyPopUpHandler =async()=> {
   //The implementation for the Change email,
   const HandleChangePhoneNumber = async()=> {
 
-    const FailedHandler=(ErrorType)=> {
+    const FailedHandler=async(ErrorType)=> {
       if(ErrorType === "Server error" ){
    //  setVerificationPinError(true)
    alert("Failed to process your request, please try again later.")
       }else if(ErrorType  === "Network error" || ErrorType === "user error"){
         alert("Kindly check your internet connection.")
-      }else if(ErrorType === "Unauthorised"){
-     setSessionModal(true)
+      }else if(ErrorType === "unauthorised"){
+     await PostFunction("change-phone",
+     setLoading, 
+     body, 
+     SuccessHandler,
+     ()=> {
+      setSessionModal(true);
+     },
+       setFetchedResponse)
       }else if(ErrorType === undefined){
         alert("Your internet connection is quite unstable.")
+      }else if(ErrorType=== "Bad request"){
+        alert("The phone number you entered is already in use. Please try another phone number.")
       }else{
         alert("An unexpected error occured, please try again later.")
       }
@@ -150,8 +165,7 @@ const VerifyPopUpHandler =async()=> {
       setErrors({});
       setCountdown(60);
      console.log("Successful");
-   
-    }
+   }
     const body ={
       new_phone: `234${inputValue?.slice(1)}`
     }
@@ -251,10 +265,11 @@ const VerifyPopUpHandler =async()=> {
             <div className="relative mt-[5px] lg:mt-[15px]">
               <input
                 type="tel"
+             
                 className={`w-full md:w-[50%] lg:w-[40%] py-[10.33px] pl-[5.867px] pr-1 md:py-[10] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none ${
                   isDarkMode ? "bg-black text-white border-white" : ""
                 }`}
-                placeholder=""
+                placeholder="088*******"
                 value={inputValue}
                 style={{ borderColor: emailInputColor }}
                 onChange={(event) => {

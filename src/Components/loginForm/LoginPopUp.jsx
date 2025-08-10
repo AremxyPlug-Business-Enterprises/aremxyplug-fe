@@ -203,7 +203,7 @@ const handleVerificationOTP = ()=> {
   setVerifyImage(VerificationSuccess);
   setIdStatus("Verified")
   setIdNumber(response.data.data.nin)
-  localStorage.setItem("bvnVerification",false);
+  localStorage.setItem("bvnVerification",true);
   localStorage.setItem("idVerification",true);
   }else if(bvn && !nin){
     setBvnButtonState("Verified");
@@ -211,7 +211,7 @@ const handleVerificationOTP = ()=> {
     setBvnStatus("Verified")
     setBvnNumber(response?.data?.data?.bvn)
     localStorage.setItem("bvnVerification",true);
-    localStorage.setItem("idVerification",false);
+    localStorage.setItem("idVerification",true);
   }else if(bvn && nin){
     setIdButtonState("Verified");
   setVerifyImage(VerificationSuccess);
