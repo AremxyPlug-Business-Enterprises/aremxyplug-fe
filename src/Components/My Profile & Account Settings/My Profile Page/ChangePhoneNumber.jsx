@@ -18,17 +18,25 @@ import PopUpGreenDeskTop from "../ProfileImages/PopUpGreenDeskTop.svg";
 import Joi from "joi";
 import BusinessKYC from "./BusinessKYC";
 import Success from "../ProfileImages/success.gif";
-
+import { PostFunction } from "../../ApiCollection.jsx/ApiBuck";
+import { Loader } from "../../Loader/Loader";
+import { HandleUserSession } from "../../ApiCollection.jsx/ApiBuck";
 const ChangePhoneNumber = () => {
   const { isDarkMode } = useContext(ContextProvider);
-  const { recipientPhoneNumber, setRecipientPhoneNumber } =
-    useContext(ContextProvider);
+  // const { recipientPhoneNumber, setRecipientPhoneNumber } =
+  //   useContext(ContextProvider);
+    const [loading, setLoading] = useState(false);
+    const [fetchedResponse, setFetchedResponse] = useState({});
+  const [sessionModal, setSessionModal] = useState(false)
+
+ const [otp, setOtp] = useState("");
+ const [verificationPinError, setVerificationPinError] = useState("");
 
   const {
     toggleSideBar,
     inputPin,
     setInputPin,
-    inputPinHandler,
+ 
     toggleVisibility,
     isVisible,
   } = useContext(ContextProvider);
@@ -38,7 +46,7 @@ const ChangePhoneNumber = () => {
   const [countdown, setCountdown] = useState(60);
   const [resendActive, setResendActive] = useState(false);
   const [inputValue, setInputValue] = useState("");
-
+  //const [error, setError] = useState({})
   useEffect(() => {
     let timer;
 
@@ -53,10 +61,7 @@ const ChangePhoneNumber = () => {
     return () => clearInterval(timer);
   }, [countdown]);
 
-  const handleResendOTP = () => {
-    setCountdown(60);
-    setResendActive(false);
-  };
+ 
   useEffect(() => {
     if (countdown === 0) {
       setResendActive(true);
@@ -68,9 +73,92 @@ const ChangePhoneNumber = () => {
   const [emailInputColor, setEmailInputColor] = useState("");
   const [errors, setErrors] = useState({});
 
-  const handleUpdate = (e) => {
+ 
+
+ 
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+
+    const numericValue = value.replace(/\D/g, "").slice(0, 11);
+
+    setInputValue(numericValue);
+  };
+
+
+const VerifyPopUpHandler =async()=> {
+      const FailedHandler=(Error)=> {
+        if(Error === "Server error" ){
+     setVerificationPinError(true);
+        }else if(Error  === "Network error" || Error === "user error"){
+        alert("Kindly check your internet connection.")
+      }else if(Error === "Unauthorised"){
+     setSessionModal(true)
+      }else if(Error === undefined){
+        alert("Your internet connection is quite unstable.")
+      }else{
+        alert(" An unexpected error occured, please try again later.")
+      }
+    }
+
+    
+    const SuccessHandler =(response)=> {
+     // console.log("Successful")
+     setVerificationPinError("")
+      setUpdate(false);
+   setVerify(true);
+   setOtp("");
+   
+     localStorage.setItem("userPhone",JSON.stringify(response?.data?.data?.phone) )
+     if(localStorage.setItem("userPhone",JSON.stringify(response?.data?.data?.phone))){
+     window.location.reload()
+     }
+    }
+    const body ={
+      new_phone: `234${inputValue?.slice(1)}`,
+      otp : otp
+    }
+  await PostFunction("change-phone/update",
+     setLoading, 
+     body, 
+     SuccessHandler,
+      FailedHandler,
+       setFetchedResponse)  
+  }
+  
+
+
+  //The implementation for the Change email,
+  const HandleChangePhoneNumber = async()=> {
+
+    const FailedHandler=(ErrorType)=> {
+      if(ErrorType === "Server error" ){
+   //  setVerificationPinError(true)
+   alert("Failed to process your request, please try again later.")
+      }else if(ErrorType  === "Network error" || ErrorType === "user error"){
+        alert("Kindly check your internet connection.")
+      }else if(ErrorType === "Unauthorised"){
+     setSessionModal(true)
+      }else if(ErrorType === undefined){
+        alert("Your internet connection is quite unstable.")
+      }else{
+        alert("An unexpected error occured, please try again later.")
+      }
+    }
+    const SuccessHandler =(response)=> {
+     // console.log("Successful")
+    setUpdate(true);
+      setErrors({});
+      setCountdown(60);
+     console.log("Successful");
+   
+    }
+    const body ={
+      new_phone: `234${inputValue?.slice(1)}`
+    }
+     const handleUpdate = async(e) => {
     const { error } = schema.validate({
-      recipientPhoneNumber,
+      inputValue,
     });
 
     if (error) {
@@ -81,29 +169,39 @@ const ChangePhoneNumber = () => {
         }, {})
       );
     } else {
-      setUpdate(true);
-      setErrors({});
-      setCountdown(60);
+     
+      await PostFunction("change-phone",
+     setLoading, 
+     body, 
+     SuccessHandler,
+      FailedHandler,
+       setFetchedResponse)
+  }
     }
-  };
-
-  const schema = Joi.object({
-    recipientPhoneNumber: Joi.string()
+    const schema = Joi.object({
+    inputValue : Joi.string()
       .pattern(new RegExp(/^\d{11,}/))
       .required()
       .messages({
         "string.pattern.base": "Phone number should be 11 digits ",
       }),
   });
-
-  const handleChange = (e) => {
-    const value = e.target.value;
-
-    const numericValue = value.replace(/\D/g, "").slice(0, 11);
-
-    setInputValue(numericValue);
+  handleUpdate()
   };
 
+  
+
+  const handleResendOTP = async() => {
+    setCountdown(60);
+    setResendActive(false);
+    await HandleChangePhoneNumber();
+  };
+
+  
+  
+   console.log(fetchedResponse)
+  
+  
   return (
     <DashBoardLayout>
       <div
@@ -161,24 +259,25 @@ const ChangePhoneNumber = () => {
                 value={inputValue}
                 style={{ borderColor: emailInputColor }}
                 onChange={(event) => {
-                  setRecipientPhoneNumber(event.target.value);
+                  setInputValue(event.target.value);
                   handleChange(event);
                   setEmailInputColor("");
                 }}
               />
             </div>
 
-            {errors.recipientPhoneNumber && (
-              <div className="text-[12px] text-red-500 mt-[5px] lg:text-[14px]">
-                {errors.recipientPhoneNumber}
-              </div>
-            )}
+           {errors.inputValue && (
+            <p className="text-red-500 text-[12px] md:text-[14px] lg:text-[16px] mt-[5px]">
+            {errors.inputValue}
+            </p>
+
+           )}
           </div>
 
           <div className="py-[30px] lg:py-[60px]">
             <button
               className={`w-full bg-primary md:w-fit text-white rounded-md px-[28px] text-[12px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[600] leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px]`}
-              onClick={handleUpdate}
+              onClick={HandleChangePhoneNumber}
             >
               Update
             </button>
@@ -197,7 +296,11 @@ const ChangePhoneNumber = () => {
               } `}
             >
               <img
-                onClick={() => setUpdate(false)}
+                onClick={() => {
+                  setUpdate(false)
+                   setOtp("")
+                   setVerificationPinError(false);
+                }}
                 className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[45px] lg:h-[45px] "
                 src={Cancel}
                 alt=""
@@ -212,9 +315,9 @@ const ChangePhoneNumber = () => {
                   {" "}
                   {isVisible ? (
                     <OtpInput
-                      value={inputPin}
+                      value={otp}
                       inputType="tel"
-                      onChange={setInputPin}
+                      onChange={setOtp}
                       numInputs={6}
                       shouldAutoFocus={true}
                       inputStyle={{
@@ -269,19 +372,25 @@ const ChangePhoneNumber = () => {
                     Resend OTP
                   </p>
                 </p>
+                {verificationPinError && (
+                  <p className ="text-red-500 text-[12px] md:text-[14px] 
+                  lg:text-[16px] mt-[5px]">
+                     Incorrect otp
+                    </p>
+                )}
               </div>
 
               <button
                 onClick={(e) => {
-                  e.preventDefault();
-                  setUpdate(false);
-                  inputPinHandler(e);
-                  setVerify(true);
+                 VerifyPopUpHandler()
+                 
                 }}
-                disabled={inputPin.length !== 6}
+                disabled={otp.length !== 6}
                 className={`${
-                  inputPin.length !== 6 ? "bg-[#0008]" : "bg-[#04177f]"
-                } my-[2%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%] ${
+                  otp.length !== 6 ? "bg-[#0008]" : "bg-[#04177f]"
+                } my-[2%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[12px]
+                 font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] 
+                 lg:w-[163px] lg:h-[38px] lg:my-[2%] ${
                   isDarkMode ? "border border-white" : ""
                 }`}
               >
@@ -368,6 +477,21 @@ const ChangePhoneNumber = () => {
           </Link>
         </div>
       </div>
+      {loading && (
+        <Modal>
+          <Loader/>
+        </Modal>
+      )}
+      {sessionModal && (
+        <HandleUserSession/>
+      )}
+    
+           
+         {/*TRANSACTION SUCCESSFUL MODAL STOPS HERE */}
+        
+              {/* FORM OVERLAY AND RESET TRANSACTION PIN  HERE */}
+             
+      
     </DashBoardLayout>
   );
 };

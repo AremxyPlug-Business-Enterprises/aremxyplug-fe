@@ -147,17 +147,17 @@ const symbolValue = selected === "USD" ? "$" : selected === "AUD" ?
 
 //Function handling filtering the transactionResponse based on the 
 //selected categpry by the user
-function filterBySelectCategory(categoryByFlowtype, categoryByProduct){
-  transactionResponse?.data?.data?.data?.transactions?.filter(filterData=> {
-    if(filterData?.flow_type === categoryByFlowtype){
-      return filterData?.flow_type === categoryByFlowtype
-    }else if(filterData?.product === categoryByProduct){
-   return filterData?.product === categoryByProduct;
-    }else{
-      return []
-    }
-  })
-}
+// function filterBySelectCategory(categoryByFlowtype, categoryByProduct){
+//   transactionResponse?.data?.data?.data?.transactions?.filter(filterData=> {
+//     if(filterData?.flow_type === categoryByFlowtype){
+//       return filterData?.flow_type === categoryByFlowtype
+//     }else if(filterData?.product === categoryByProduct){
+//    return filterData?.product === categoryByProduct;
+//     }else{
+//       return []
+//     }
+//   })
+// }
 
 
   return (

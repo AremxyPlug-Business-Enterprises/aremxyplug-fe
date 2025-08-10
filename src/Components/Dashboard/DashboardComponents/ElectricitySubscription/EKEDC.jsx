@@ -572,9 +572,11 @@ const EKEDC = () => {
   }
 
   const [balanceStatus, setBalanceStatus] = useState("");
-  let balanceStringToNum = Number(newBalance);
+  let balanceStringToNum = Number(newBalance ? newBalance : updateBalance);
   let ekedcAmountToNumber = Number(ekedcAmount);
   let CheckSufficiency = ekedcAmountToNumber > balanceStringToNum;
+  console.log("typeb", typeof balanceStringToNum);
+  console.log("typee", typeof ekedcAmountToNumber);
   useEffect(() => {
     const HandleBalanceStatus = () => {
       if (CheckSufficiency) {

@@ -565,7 +565,7 @@ const KEDCO = () => {
   }
 
   const [balanceStatus, setBalanceStatus] = useState("");
-  let balanceStringToNum = Number(newBalance);
+  let balanceStringToNum = Number(newBalance ? newBalance : updateBalance);
   let aedcAmountToNumber = Number(kedcoAmount);
   let CheckSufficiency = aedcAmountToNumber > balanceStringToNum;
   useEffect(() => {

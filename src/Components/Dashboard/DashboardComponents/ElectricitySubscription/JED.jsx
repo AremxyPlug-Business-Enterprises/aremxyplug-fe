@@ -548,7 +548,7 @@ const JED = () => {
   }
 
   const [balanceStatus, setBalanceStatus] = useState("");
-  let balanceStringToNum = Number(newBalance);
+  let balanceStringToNum = Number(newBalance ? newBalance : updateBalance);
   let jedAmountToNumber = Number(jedAmount);
   let CheckSufficiency = jedAmountToNumber > balanceStringToNum;
   useEffect(() => {
