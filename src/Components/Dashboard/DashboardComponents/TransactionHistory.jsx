@@ -13,13 +13,13 @@ const TransactionHistory = ({transactionResponse, transactionHistoryError, loadi
   const getBackgroundColor = (status) => {
     if (status === "Successful" || status === "delivered") {
       return "#97E8B9";
-    } else if (status === "Failed") {
+    } else if (status === "Failed"){
       return "#FB9393";
-    } else if (status === "Pending") {
+    } else if (status === "Pending"){
       return "#FFD98F";
-    } else if (status === "Refunded") {
+    } else if (status === "Refunded"){
       return "#A6D9FF";
-    } else if (status === "Cancelled") {
+    } else if (status === "Cancelled"){
       return "#EFC6BE";
     } else {
       return "";
@@ -28,10 +28,10 @@ const TransactionHistory = ({transactionResponse, transactionHistoryError, loadi
 
   
 
-  const filteredTransactions = transactionResponse?.data?.data?.data?.transactions?.filter((transaction, index) => {
+  const filteredTransactions = transactionResponse?.data?.data?.data?.transactions !== null ? transactionResponse?.data?.data?.data?.transactions?.filter((transaction, index) => {
     console.log(transaction);
  return index < 4;
-     });
+     }): [];
 
 //Variable types to handle the filtering of the recent transaction history
 //which is viewed or displays the transaction receipt
@@ -323,7 +323,7 @@ const TransactionHistory = ({transactionResponse, transactionHistoryError, loadi
                         } md:px-[10px] md:py-[5px] md:text-[#FFFFFF] md:rounded-[5px]`}
                       >
                         {" "}
-                        {transaction.status === "delivered" ? "Successful" : ""}
+                        {transaction?.status === "delivered" ? "Successful" : ""}
                       </p>
                       <img
                         className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
@@ -335,8 +335,11 @@ const TransactionHistory = ({transactionResponse, transactionHistoryError, loadi
                 </Link>
               </div>
               ))) : (
-                ((filteredTransactions && filteredTransactions?.length < 1)|| transactionResponse?.data?.data?.data?.transactions?.length < 1 ) ? (
-              <img className="lg:w-full lg:h-[456px] flex self-center w-[" src={NoRecordImage} alt="No record found"/> 
+                ((filteredTransactions?.length < 1) || 
+                transactionResponse?.data?.data?.data?.transactions?.length < 1 ||
+                  transactionResponse?.data?.data?.data?.transactions === null ||
+                transactionResponse?.data?.data?.data?.transactions === undefined  ) ? (
+              <img className="lg:w-full lg:h-[456px] flex self-center" src={NoRecordImage} alt="No record found"/> 
               ) : 
               transactionHistoryError === "Network error"  ? (
                <p className={`text-[20px] text-black font-[500]`}>

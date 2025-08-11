@@ -6,9 +6,13 @@ import { ToConfirmAremxyMain } from "./ToConfirmAremxyMain";
 import { Modal } from "../../../../Screens/Modal/Modal";
 import pickPinIcon from "../../../../My Profile & Account Settings/ProfileImages/pickPinIcon.svg";
 import { Link } from "react-router-dom";
+import { GetLocalStorage } from "../../../../LocalStorage/LocalStorage";
+import { GetFunction } from "../../../../ApiCollection.jsx/ApiBuck";
+import { Loader } from "../../../../Loader/Loader";
+import { HandleUserSession } from "../../../../ApiCollection.jsx/ApiBuck";
 // import { useNavigate } from "react-router-dom";
 
-export default function ToAremxyMain() {
+export default function ToAremxyMain(Data) {
   const {
     showList,
     setShowList,
@@ -17,7 +21,7 @@ export default function ToAremxyMain() {
     toggleSideBar,
     amtToTransfer,
     setAmtToTransfer,
-    mainEmailUsername,
+  
     mainUserPhoneNumber,
     mainCountry,
     setMainCountry,
@@ -28,7 +32,13 @@ export default function ToAremxyMain() {
 
   const [addToRecipient, SetAddToRecipient] = useState(false);
   const [saveToFavorite, setSaveTofavorite] = useState(false);
-
+  const [errorMessage, setErrorMessage] = useState("");
+  const [transferValue, setTransferValue] = useState("")
+  const [loading, setLoading] = useState(false);
+  const [sessionModal, setSessionModal] = useState(false) 
+  const [fetchedResponse, setFetchedResponse] = useState({})
+    //const [errors, setErrors] = useState({});
+Data = GetLocalStorage();
   const countryList = [
     {
       id: 1,
@@ -67,6 +77,86 @@ export default function ToAremxyMain() {
       flag: require("../../../../Dashboard/DashboardComponents/flagsImages/kenyaFlag.png"),
     },
   ];
+const GetUserDetails =async(value, transferIdentity)=> {
+
+
+  if((transferIdentity === "email" || transferIdentity === "username")
+  && value?.length > 2 ){
+  const SuccessHandler =()=> {
+ setErrorMessage("Verified User");
+  }
+  const FailedHandler= async(Error)=> {
+  
+        if(Error === "Server error" ){
+   //  setVerificationPinError(true);
+    setErrorMessage("Account does not exist");
+        }else if(Error  === "Network error" || Error === "user error"){
+         setErrorMessage("Kindly check your internet connection.")
+      }else if(Error  === "Bad request"){
+         setErrorMessage("Account does not exist.")
+      }else if(Error === "unauthorised"){
+     await GetFunction(`search?${transferIdentity}=${value}`,
+      setLoading, 
+      SuccessHandler, ()=> {
+        setSessionModal(true)
+      }, setFetchedResponse);
+      }else if(Error === undefined){
+         setErrorMessage("Your internet connection is quite unstable.")
+      }
+        else{
+         setErrorMessage("An unexpected error occured, please try again later.")
+      }
+      setTimeout(()=> {
+  if(errorMessage?.length > 1 && value?.length < 1){
+    setErrorMessage("")
+  }
+}, 1500)
+  }
+  await GetFunction(`search?${transferIdentity}=${value}`,setLoading, SuccessHandler, FailedHandler, setFetchedResponse);
+}
+
+}
+const HandleIdentifyCredentials = async(value)=> {
+//  console.log(value)
+//console.log(value);
+const TestingTransferIdentify = async(transferIdentity)=> {
+const testEmail = new RegExp(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)
+const testUsername = new RegExp( /^[a-zA-Z0-9_]{3,20}$/);
+if(testEmail.test(value) && value?.endsWith(".com") && value?.length > 7 ){
+  setErrorMessage("");
+ transferIdentity = "email";
+
+}else if(testUsername.test(value) === true && value?.length > 2 && value?.includes("@")=== false ){
+  setErrorMessage("");
+ transferIdentity = "username";
+}else if(testEmail.test(value) === false && 
+testUsername.test(value) === false && value?.endsWith(".com") === true
+ && value?.length > 7){
+  setErrorMessage("Your email address is not valid.");
+   transferIdentity = null;
+}else if(testEmail.test(value) === true && 
+testUsername.test(value) === false && value?.endsWith(".com") === false
+ && value?.length > 7){
+  
+  setErrorMessage(`Your email address does not include the ${`${".com"}`} extension `);
+  transferIdentity = null;
+}else{
+  if(value?.length > 2) {
+      setErrorMessage("Your transfer Identity is neither a recognized email nor an username.");
+  }else{
+    setErrorMessage("")
+  }
+ }
+console.log(transferIdentity)
+GetUserDetails(value, transferIdentity);
+}
+TestingTransferIdentify();
+
+}
+
+
+
+
 
   const [flag, setFlag] = useState("");
   const [countryCode, setCountryCode] = useState("");
@@ -261,14 +351,14 @@ export default function ToAremxyMain() {
               className="font-[500] text-[10px] leading-[15px] md:text-[9.389px] md:leading-[12.206px] 
               lg:text-[16px] lg:leading-[20.8px]"
             >
-              Habib Kamaldeen
+             {Data?.UserFullName}
             </p>
             <p
               className="font-[500] text-[#7C7C7C] text-[10px] leading-[15px]
               md:text-[7.042px] md:leading-[9.154px]
               lg:text-[12px] lg:leading-[15.6px]"
             >
-              habib@aremxyplug.com
+              {Data?.UserEmail}
             </p>
           </div>
         </div>
@@ -292,10 +382,17 @@ export default function ToAremxyMain() {
               className='flex justify-between items-center font-[500] py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px]'
             >
             <input
-              onChange={handleMainInputChange}
-              name="emailUsername"
-              value={mainEmailUsername}
-              className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px] "
+              onChange={(e)=> {
+             HandleIdentifyCredentials(e.target.value) 
+              setTransferValue(e.target.value)
+
+              }}
+             
+              value={transferValue}
+              placeholder="Username29 / name@email.com"
+              disabled={Data?.ConfirmAcc === "false"}
+              className="text-[10px] w-[100%] h-[100%] outline-none 
+              lg:text-[14px] "
               type="text"
             />
             <img
@@ -304,9 +401,10 @@ export default function ToAremxyMain() {
               alt="dropdown"
             />
           </div>
-          {mainTransferErrors.emailUsername && (
-            <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-              {mainTransferErrors.emailUsername}
+          {errorMessage?.length > 1 && (
+            <div className={`text-[12px] text-red-500 italic lg:text-[14px]
+            ${errorMessage === "Verified User" ? "text-green-400" : ""} `}>
+              {errorMessage}
             </div>
           )}
         </div>
@@ -478,6 +576,12 @@ export default function ToAremxyMain() {
         </Modal>
       )}
       <ToConfirmAremxyMain />
+      {loading && (
+        <Loader/>
+      )}
+      {sessionModal && (
+     <HandleUserSession/>
+      )}
     </div>
   );
 }

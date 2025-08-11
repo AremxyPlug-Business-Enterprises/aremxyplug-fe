@@ -373,7 +373,7 @@ export const PostFunction = async (
           if(functionAtFailed) {
             setFetchedResponse(error?.response?.data?.data)
               console.log(error?.response?.data?.data)
-            alert("Invalid request")
+           // alert("Invalid request")
          }
         
     }else if(error && error.response.status === 404){

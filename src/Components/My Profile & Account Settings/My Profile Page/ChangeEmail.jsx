@@ -18,10 +18,12 @@ import PopUpGreenDeskTop from "../ProfileImages/PopUpGreenDeskTop.svg";
 import Success from "../ProfileImages/success.gif";
 import { PostFunction } from "../../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../../Loader/Loader";
+import { HandleUserSession } from "../../ApiCollection.jsx/ApiBuck";
 const ChangeEmail = () => {
   const { isDarkMode } = useContext(ContextProvider);
   const { emailId, setEmailId } = useContext(ContextProvider);
   const [verificationPinError, setVerificationPinError] = useState(false)
+  const [sessionModal, setSessionModal] = useState(false)
   const {
     toggleSideBar,
     toggleVisibility,
@@ -63,9 +65,26 @@ const ChangeEmail = () => {
   
    const HandleChangeEmail = async()=> {
   
-      const FailedHandler=()=> {
+      const FailedHandler=async(ErrorType)=> {
         
-        console.log("Failed to change email")
+     if(ErrorType === "Bad request"){
+      alert("The email you entered is already in use. Please try another email.")
+     }else if(ErrorType === "unauthorised"){
+        await PostFunction("change-email",
+       setLoading, 
+       body, 
+       SuccessHandler,
+       ()=> {
+        setSessionModal(true)
+       },
+         setFetchedResponse)
+     }else if(ErrorType === "Server error"){
+        alert("Failed to process your request. Please try again later.")
+     }else if(ErrorType === "Network error" || ErrorType === "User error"){
+      alert("Kindly check your internet connection and try again")
+     }else{
+      alert("An Unexpected error occured, please try again later.")
+     }
       }
       const SuccessHandler =()=> {
        // console.log("Successful")
@@ -75,7 +94,7 @@ const ChangeEmail = () => {
       setCountdown(60);
        
       }
-      const body ={
+      const body = {
         new_email: emailChange
       }
      const handleUpdate = async(e) => {
@@ -102,21 +121,41 @@ const ChangeEmail = () => {
      handleUpdate()
    }
     const VerifyPopUpHandler =async()=> {
-          const FailedHandler=()=> {
-          setVerificationPinError(true)
-          }
-        const SuccessHandler =()=> {
+          const FailedHandler= async(Error)=> {
+                 if(Error === "Server error" ){
+              setVerificationPinError(true);
+                 }else if(Error  === "Network error" || Error === "user error"){
+                 alert("Kindly check your internet connection.")
+               }else if(Error === "unauthorised"){
+               await PostFunction("change-email/update",
+              setLoading, 
+              body, 
+              SuccessHandler,
+               ()=> {
+                 setSessionModal(true)
+               },
+                setFetchedResponse)  
+               }else if(Error === undefined){
+                 alert("Your internet connection is quite unstable.")
+               }
+                 else{
+                 alert("An unexpected error occured, please try again later.")
+               }
+             }
+        const SuccessHandler =(response)=> {
          // console.log("Successful")
-         setVerificationPinError("")
+         setVerificationPinError("");
           setUpdate(false);
        setVerify(true);
        setOtp("");
+       localStorage.setItem("userEmail",JSON.stringify(response?.data?.data?.email) )
+       window.location.reload();
         }
         const body ={
           new_email: emailChange,
           otp : otp
         }
-      await PostFunction("change-phone/update",
+      await PostFunction("change-email/update",
          setLoading, 
          body, 
          SuccessHandler,
@@ -236,7 +275,7 @@ const ChangeEmail = () => {
 
               <hr className="h-[6px] bg-[#04177f] lg:mt-[10%] border-none mt-[6%] md:mt-[7%] md:h-[10px]" />
               <p className="md:mt-[15%] lg:mt-[10%] text-[12px] px-[20px] md:text-[14px] lg:text-[18px] font-extrabold text-center my-[4%] md:my-[5%]">
-                Verification code has been sent to your email - {emailId}
+                Verification code has been sent to your email - {emailChange}
               </p>
               <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[5%] md:mb-[7%]">
                 <div className=" flex justify-center items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
@@ -410,6 +449,9 @@ const ChangeEmail = () => {
         <Modal>
       <Loader/>
         </Modal>
+      )}
+      {sessionModal && (
+        <HandleUserSession/>
       )}
     </DashBoardLayout>
   );
