@@ -19,7 +19,7 @@ import { AiFillEye } from "react-icons/ai";
 import OtpInput from "react-otp-input";
 import Joi from "joi";
 // import axios from 'axios';
-import { GetFunction } from "../../../../Components/ApiCollection.jsx/ApiBuck";
+import { GetFunction, PostFunction } from "../../../../Components/ApiCollection.jsx/ApiBuck";
 
 
 const PointRedeem = () => {
@@ -46,8 +46,15 @@ const [text, setText] =useState(false);
   const [proceed, setProceed] = useState(false);
    const [successPopup, setSuccessPopup] = useState(false);
   const [errors, setErrors] = useState({});
-//  const [transactionPoints, setTransactionPoints] = useState(0);
-// const [referralPoints, setReferralPoints] = useState(0);
+ const [transactionPoints, setTransactionPoints] = useState(0);
+const [referralPoints, setReferralPoints] = useState(0);
+  const [redeemResponse, setRedeemResponse] = useState(null);
+  const [isRedeeming, setIsRedeeming] = useState(false);
+  const [redeemedPoints, setRedeemedPoints] = useState(0);
+  const [amountRedeemed, setAmountRedeemed] = useState(0);
+  const [rateRedeemed, setRateRedeemed] = useState(0);
+  const [ transactionId,  setTransactionId] = useState(0);
+  const [ orderId,  setOrderId] = useState(0);
 
   const handleInputChange = (event) => {
     const newValue = event.target.value;
@@ -81,38 +88,54 @@ const [text, setText] =useState(false);
   //     setProceed(true);
 
   // };
+
+
+
+  
   const handlerealClear = () =>{
     setRealInputValue('');
     setRealOutputValue('');
     setText(true);
   }
 
-  const schema = Joi.object({
-    inputValue: Joi.string()
-      .pattern(new RegExp(/\d{3,}/))
-      .required()
-      .messages({
-        "string.pattern.base": "Minimum Point Redeem is 100 and Above",
-      }),
-  });
+  // const schema = Joi.object({
+  //   inputValue: Joi.string()
+  //     .pattern(new RegExp(/\d{3,}/))
+  //     .required()
+  //     .messages({
+  //       "string.pattern.base": "Minimum Point Redeem is 1000 and Above",
+  //     }),
+  // });
 
-// 75515487836
-   //  Fetch Points
+  const schema = Joi.object({
+  inputValue: Joi.number()
+    .min(1000)
+    .required()
+    .messages({
+      "number.base": "Please enter a valid number",
+      "number.min": "Minimum Point Redeem is 1000 and Above",
+      "any.required": "This field is required",
+    }),
+});
+
+
+    //Fetch Points
   useEffect(() => {
    
     const  successHandler = () => {
       // console.log("fetch points succefully");
+      console.log(fetchedResponse?.data?.data?.point?.total_points);
 
-      const total = fetchedResponse?.data?.total_points ?? 0;
-    // const trxPoints = fetchedResponse?.data?.data?.transaction_points ?? 0;
-    // const referralPts = fetchedResponse?.data?.data?.referral_points ?? 0;
+    const total = fetchedResponse?.data?.data?.point?.total_points;
+    const trxPoints = fetchedResponse?.data?.data?.point?.transaction_points ?? 0;
+    const referralPts = fetchedResponse?.data?.data?.point?.referral_points ?? 0;
 
     setUserPoints(total);
-    // setTransactionPoints(trxPoints);
-    // setReferralPoints(referralPts);
+    setTransactionPoints(trxPoints);
+    setReferralPoints(referralPts);
     };
-    const FailedHandler = (msg) => {
-      console.warn("Failed to fetch points:", msg);
+    const FailedHandler = (error) => {
+      console.error("Failed to fetch points:", error);
     };
 
    
@@ -120,8 +143,7 @@ const [text, setText] =useState(false);
    
   }, []);
 
-   console.log(fetchedResponse?.data?.data?.point?.total_points);
-
+  
   const handleProceed = (e) => {
     e.preventDefault();
 
@@ -129,19 +151,111 @@ const [text, setText] =useState(false);
       inputValue,
     });
 
-    if (error) {
+     if (error) {
       setErrors(
         error.details.reduce((acc, curr) => {
           acc[curr.path[0]] = curr.message;
           return acc;
         }, {})
       );
+    } else if (parseInt(inputValue) > userPoints) {
+      setErrors({
+        inputValue: "You don't have enough points to redeem this amount"
+      });
     } else {
       setErrors({});
       setProceed(true);
-      
     }
   };
+
+
+const handleRedeemPoints = async (e) => {
+  e.preventDefault();
+  
+  // Validate input
+  if (!inputValue || parseInt(inputValue) < 1000) {
+    alert("Minimum redemption is 1000 points");
+    return;
+  }
+
+  if (parseInt(inputValue) > userPoints) {
+    console.error("You don't have enough points for this redemption");
+    return;
+  }
+
+  const payload = {
+    points: parseInt(inputValue)
+  };
+
+  const successHandler = () => {
+      //console.log("Full API Response:", fetchedResponse); 
+  const redemptionData = fetchedResponse.data?.data || fetchedResponse.data;
+ //console.log("Redemption data:", redemptionData);
+
+
+   // redeemed points value
+  const points = redemptionData.points_redeemed || parseInt(inputValue);
+  const amount = redemptionData.amount_redeemed || parseInt(inputValue);
+  const rate = redemptionData.redeemed_rate || parseInt(inputValue);
+  const trans = redemptionData.transaction_id || parseInt(inputValue);
+  const order = redemptionData.transaction_description || parseInt(inputValue);
+  setRedeemedPoints(points);
+  setAmountRedeemed(amount);
+   setRateRedeemed(rate);
+  setTransactionId(trans);
+  setOrderId(order);
+
+     // Calculat and update the user's remaining points
+    const redeemedPoints = parseInt(inputValue);
+    const newPointsBalance = userPoints - redeemedPoints;
+    setUserPoints(newPointsBalance);
+    
+    // Update state
+  setUserPoints(prev => prev - points);
+    
+    // success popup
+     setRedeemResponse(redemptionData);
+    setSuccessPopup(true);
+    setInputPinPopUp(false);
+    setProceed(false);
+    
+    // Clear input values
+    setInputValue("");
+    setOutputValue("");
+
+     
+    // console.log(`Successfully redeemed ${redeemedPoints}`);
+  };
+
+ const failedHandler = (error) => {
+    console.error("Redemption failed:", error);
+    setInputPinPopUp(false);
+    
+    if (error.response) {
+      alert("Failed to redeem points");
+    } else {
+      alert("Network error - Please try again");
+    }
+  };
+
+  try {
+    console.log("Attempting to redeem points...");
+    await PostFunction(
+      "extra/point", 
+      setLoading, 
+      payload, 
+      successHandler, 
+      failedHandler, 
+      setFetchedResponse
+    );
+  } catch (error) {
+    console.error("Unexpected error in handleRedeemPoints:", error);
+    setInputPinPopUp(false);
+  }
+};
+
+
+
 
 
   const handleSuccess = () => {
@@ -160,6 +274,8 @@ const [text, setText] =useState(false);
   };
 
   const { isDarkMode } = useContext(ContextProvider);
+
+ 
   return (
     <DashBoardLayout>
       <div
@@ -208,9 +324,16 @@ const [text, setText] =useState(false);
               type="number"
               value={inputValue}
               onChange={handleInputChange}
-              className="w-[100%] outline-none text-[10px] lg:text-[16px] leading-[20.8px  font-[600]  text-[#000]"
+              className="w-[100%] outline-none text-[10px] lg:text-[16px] bg-transparent placeholder:text-[#7C7C7C] font-[600] text-[#7C7C7C]"
               placeholder="Amount to Redeem"
             />{" "}
+              {/* {!text ? <p>Amount to Redeem</p> : <div
+              onChange={handleInputChange}
+              type="number"
+              >&#8358;{inputValue}
+                
+                </div>} */}
+        
           </div>
           <div className="h-[30px] md:h-[40px] lg:h-[60px] w-[15%] md:w-[8%] gap-2 lg:gap-4 flex flex-row px-3 py-2 bg-primary items-center   ">
             <div>
@@ -233,22 +356,29 @@ const [text, setText] =useState(false);
         </div>
         <div className="flex flex-col items-center mt-[8px] md:mt-[8px] lg:mt-[20px] text-[#7C7C7C] lg:text-[16px] leading-[20.8px] gap-2 lg:gap-4 font-[500] text-[7px] md:text-[9.2px] ">
           <div className="border-[1px] border-slate-200 px-1 py-0 rounded-sm">
-            Minimum 100 PTS
+            Minimum 1000 PTS
           </div>
           <div className="border-[1px] border-slate-200 pl-1 pr-3 py-0 rounded-sm">
-            Available Points Balance: {userPoints}
+            Available Points Balance: {isLoading ? "Loading..." : userPoints}
           </div>
+            {/* I aded this new line to it */}
+  <div className="border-[1px] border-slate-200 pl-1 pr-3 py-0 rounded-sm">
+    Transaction Points: {isLoading ? "Loading..." : transactionPoints}
+  </div>
+  <div className="border-[1px] border-slate-200 pl-1 pr-3 py-0 rounded-sm">
+    Referral Points: {isLoading ? "Loading..." : referralPoints}
+  </div>
         </div>
         <div className="mt-[7px] flex flex-row lg:mt-[20px]">
           <div className="border-[1px] w-[85%] md:w-[92%]  text-[10px] lg:text-[16px] h-[30px] md:h-[40px] font-[600] text-[#7C7C7C] lg:h-[50px] px-2 py-0 pt-2 md:pt-3 lg:pt-4 border-slate-200">
-            {/* <input
+            <input
               type="number"
               readOnly
               value={outputValue}
-              className=" w-[100%] outline-none text-[10px] lg:text-[16px] leading-[20.8px] font-[600] text-[#000]"
+                className="w-[100%] outline-none text-[10px] lg:text-[16px] bg-transparent placeholder:text-[#7C7C7C] font-[600] text-[#7C7C7C]"
               placeholder="Amount to Receive"
-            />{" "} */}
-            {!text ? <p>Amount to Receive</p> : <div>&#8358;{outputValue}</div>}
+            />{" "}
+           {/* {!text ? <p>Amount to Receive</p> : <div>&#8358;{outputValue}</div>} */}
           </div>
           <div className="h-[30px] md:h-[40px] lg:h-[50px] w-[15%] md:w-[8%] gap-2 lg:gap-4 flex flex-row px-3 py-2 bg-primary items-center   ">
             <div>
@@ -311,8 +441,9 @@ const [text, setText] =useState(false);
           <div
             onClick={handleProceed}
             className={` ${
-              (inputValue.length < 3 ? "bg-[#0008]" : "bg-[#04177f]",
-              outputValue.length < 3 ? "bg-[#0008]" : "bg-[#04177f]")
+               parseInt(inputValue) >= 1000 ? "bg-[#04177f]" : "bg-[#0008]"
+              // (inputValue.length < 1000 ? "bg-[#0008]" : "bg-[#04177f]",
+              // outputValue.length < 1000 ? "bg-[#0008]" : "bg-[#04177f]")
             } text-[12px] mt-[50px] md:mt-[40px] md:w-fit lg:px-12 lg:text-[16px] lg:px md:py-1 md:rounded-md md:px-6 cursor-pointer py-3 rounded-md font-[600] text-center text-white`}
           >
             Proceed
@@ -531,8 +662,7 @@ const [text, setText] =useState(false);
                   <img className="w-[16px] h-[16px]" src={icon4} alt="/" />
                 </div>
                 <p className="text-[10px] md:text-[14px]  lg:text-[16px]">
-                  Available Balance{" "}
-                  <span className="text-[#0003]">(&#8358;50,000.00)</span>
+                 Available Balance: {isLoading ? "Loading..." : userPoints}
                 </p>
               </div>
               <img
@@ -606,13 +736,13 @@ const [text, setText] =useState(false);
               </p>
             </div>
             <button
-              disabled={inputPin.length !== 4 ? true : false}
-              onClick={handleSuccess}
+              disabled={inputPin.length !== 4 || isLoading}
+              onClick={handleRedeemPoints}
               className={`${
-                inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
+                inputPin.length !== 4 || isLoading ? "bg-[#0008]" : "bg-[#04177f]"
               } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
             >
-              Redeem
+              {isLoading ? "Processing..." : "Redeem"}
             </button>
           </div>
         </Modal>
@@ -653,13 +783,13 @@ const [text, setText] =useState(false);
             <p className="text-[8px] text-[#0008] text-center mb-2 md:text-[14px] lg:text-[12px]">
               You have successfully redeemed{" "}
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">
-                {inputValue}.00
+                {isLoading ? "Loading..." : redeemedPoints}
               </span>{" "}
-              Points to <br></br>
+              Points<br></br>
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">
-                &#8358;{outputValue}{" "}
+                &#8358;{isLoading ? "Loading..." : redeemedPoints}{" "}
               </span>
-              from your PTS balance to{" "}
+              from your PTS balance{" "}
             </p>
 
             <div className="flex flex-col gap-2 lg:gap-4">
@@ -669,7 +799,7 @@ const [text, setText] =useState(false);
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#0008]">Amount To Redeem</p>
-                <span>{outputValue} PTS</span>
+                <span>₦ {isLoading ? "Loading..." : amountRedeemed} PTS</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#0008]">Account To Receive</p>
@@ -679,15 +809,18 @@ const [text, setText] =useState(false);
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#0008]">Redeem Rate</p>
                 <span>1 PTS - 1 NGN</span>
+                {/* <span>{isLoading ? "Loading..." : rateRedeemed}</span>
+               */}
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className="text-[#0008]">Transfaction fee</p>
-                <span>&#8358;{transferFee}.00</span>
+                {/* <span>&#8358;{transferFee}.00</span> */}
+                <span>{isLoading ? "Loading..." : transactionId}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                 <p className="text-[#0008]">Order Number</p>
-                <span>122555556464564</span>
+                <span>{isLoading ? "Loading..." : orderId}</span>
               </div>
             </div>
 
