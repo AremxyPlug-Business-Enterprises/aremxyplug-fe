@@ -400,9 +400,9 @@ const SelectRecipient = () => {
           </div>
           <div className={`${styles.mainGrid} mt-[5%]`}>
             <div className={styles.mainGridCol}>
-              <div className="border rounded-[5px] h-[25px] flex justify-between items-center py-1 px-3 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]">
+              <div className="border rounded-[5px] h-[25px] flex justify-between items-center py-1 px-3 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[7C7C7C]">
                 <input
-                  className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
+                  className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px] bg-transparent placeholder:text-[7C7C7C]"
                   type="text"
                   placeholder="Name Or Phone Number"
                   value={searchQuery}
