@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useRef } from "react";
 import { ContextProvider } from "../../../../Context";
 import { DashBoardLayout } from "../../../Layout/DashBoardLayout";
 import { Link } from "react-router-dom";
@@ -7,8 +7,10 @@ import styles from "../../TransferComponent/transfer.module.css";
 import styled from "../../../../AirTimePage/AirTime.module.css";
 import { Modal } from "../../../../Screens/Modal/Modal";
 import Joi from "joi";
-
-const AremxyAddUser = () => {
+import {GetFunction, PostFunction, HandleUserSession } from "../../../../ApiCollection.jsx/ApiBuck";
+import { Loader } from "../../../../Loader/Loader";
+import { GetLocalStorage } from "../../../../LocalStorage/LocalStorage";
+const AremxyAddUser = (Data) => {
   const { toggleSideBar } = useContext(ContextProvider);
 
   const [userPhoneNumber, setUserPhoneNumber] = useState("");
@@ -18,7 +20,14 @@ const AremxyAddUser = () => {
   const [showList, setShowList] = useState(false);
   const [save, setSave] = useState(false);
   const [errors, setErrors] = useState({});
-
+ const [errorMessage, setErrorMessage]  = useState("")
+ const [verifiedUser, setVerifiedUser] = useState(false);
+ const [fetchedResponse, setFetchedResponse] = useState({});
+ const [loading, setLoading] = useState(false);
+ const [sessionModal, setSessionModal] = useState(false);
+ const [transferValue, setTransferValue] = useState("");
+ const [recipientResponse, setRecipientResponse] = useState({})
+ Data = GetLocalStorage()
   const firmTransferSchema = Joi.object({
     mainCountry: Joi.string().required(),
     userPhoneNumber: Joi.string()
@@ -118,6 +127,137 @@ const AremxyAddUser = () => {
     setSave(false);
     setConfirm(true);
   };
+
+
+
+  //Confirming user through the function
+     const testEmail = new RegExp(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]/)
+  const testUsername = new RegExp( /^[a-zA-Z0-9_]{3,20}$/);
+  const GetUserDetails =async(value, transferIdentity)=> {
+
+  if(((transferIdentity === "email" && value !== Data?.UserEmail) ||( transferIdentity === "username" && Data?.aremxyUsername !== value) )
+    && value?.length > 2 ){
+    const SuccessHandler =()=> {
+  setVerifiedUser(true);
+  setErrorMessage("");
+    }
+    const FailedHandler= async(Error)=> {
+     if(Error === "Server error" ){
+     //  setVerificationPinError(true);
+      setErrorMessage("Account does not exist");
+      setVerifiedUser(false)
+      setFetchedResponse({})
+          }else if(Error  === "Network error" || Error === "User error"){
+           setErrorMessage("Kindly check your internet connection.");
+              setVerifiedUser(false);
+          }else if(Error  === "Bad request"){
+        setErrorMessage("Account does not exist.")
+           setVerifiedUser(false)
+             setFetchedResponse({})
+        }else if(Error === "unauthorised"){
+       await GetFunction(`search?${transferIdentity}=${value}`,
+        setLoading, 
+        SuccessHandler, ()=> {
+          setSessionModal(true);
+        }, setFetchedResponse);
+        }else if(Error === undefined){
+         setErrorMessage("Your internet connection is quite unstable.")
+            setVerifiedUser(false)
+        }
+          else{
+          setErrorMessage("An unexpected error occured, please try again later.")
+           setVerifiedUser(false)
+        }
+        setTimeout(()=> {
+    if(errorMessage?.length > 1 && value?.length < 1){
+      setErrorMessage("");
+    }
+  }, 1500)
+    }
+    await GetFunction(`search?${transferIdentity}=${value}`,
+    ()=> {
+      console.log("loading")
+    },
+       SuccessHandler,
+        FailedHandler,
+         setFetchedResponse);
+  }else if(value === Data?.aremxyUsername || value === Data?.UserEmail){
+   setErrorMessage(`${value} is your transfer identity, you can only send to other aremxyplug wallet.`)
+    setVerifiedUser(false);
+  }}
+   const timer = useRef()
+    
+  // console.log(timer);
+  const HandleIdentifyCredentials = async(value)=> {
+  
+  const TestingTransferIdentify = async(transferIdentity)=> {
+  if(value?.length < 3){
+    setTimeout(()=> {
+      setErrorMessage("");
+      setVerifiedUser(false);
+      setFetchedResponse({})
+    },1000)
+    // setErrorMessage("");
+  
+  }else if(testEmail.test(value) && value?.endsWith(".com") && value?.length > 7 ){
+     setErrorMessage("")
+     setVerifiedUser(false);
+   transferIdentity = "email";
+  }else if(testUsername.test(value) === true && value?.length > 2 && value?.includes("@")=== false ){
+  setErrorMessage("");
+   transferIdentity = "username";
+  }else if(testEmail.test(value) === true && 
+  testUsername.test(value) === false && value?.endsWith(".com") === false
+   && value?.length > 7){
+       setVerifiedUser(false);
+    setErrorMessage(`Your email address does not include the ${`${".com"}`} extension `)
+  setFetchedResponse({})
+  transferIdentity = null;
+  }else if(testEmail.test(value) === false && 
+  testUsername.test(value) === false && value?.endsWith(".com") === true
+   && value?.length > 7){
+    setErrorMessage("Your email address is not valid.")
+      transferIdentity = null;
+     setFetchedResponse({})
+  
+   }else{
+    if(value?.length > 2) {
+         setVerifiedUser(false)
+        setErrorMessage("Your transfer Identity is neither a recognized email nor an username.")
+        setFetchedResponse({})
+    }else{
+      setErrorMessage("")
+         setVerifiedUser(false)
+         setFetchedResponse({})
+    }
+   }
+  // console.log(identityMessage);
+  //console.log(transferIdentity)
+  
+  GetUserDetails(value, transferIdentity);
+  }
+  TestingTransferIdentify();
+  }
+
+  const AddRecipientPostFunction = async()=> {
+    const SuccessHandler =()=> {
+      console.log("Successful")
+    }
+    const body ={
+      
+    }
+    const FailedHandler =async(ErrorType)=> {
+      if(ErrorType === "unauthorised"){
+        await PostFunction("bank-recipients", setLoading,body ,
+      SuccessHandler, FailedHandler, setRecipientResponse
+    )
+      }
+    }
+    await PostFunction("bank-recipients", setLoading,body ,
+      SuccessHandler, FailedHandler, setRecipientResponse
+    )
+
+  }
 
   return (
     <DashBoardLayout>
@@ -263,9 +403,14 @@ const AremxyAddUser = () => {
                 <input
                   name="emailUsername"
                   onChange={(e) => {
-                    setEmailUserName(e.target.value);
+                    setTransferValue(e.target.value)
+           if(timer.current) clearTimeout(timer.current)   
+                timer.current = setTimeout(()=> {
+                HandleIdentifyCredentials(e.target.value);
+                    
+  },500)
                   }}
-                  value={emailUsername}
+                  value={transferValue}
                   className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
                   type="text"
                 />
@@ -275,11 +420,18 @@ const AremxyAddUser = () => {
                   alt="dropdown"
                 />
               </div>
-              {errors.emailUsername && (
-                <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                  {errors.emailUsername}
-                </div>
-              )}
+              {errorMessage?.length > 1 && (
+            <p className={`text-[12px] text-red-500 italic
+               lg:text-[14px] `}>
+              {errorMessage}
+            </p>
+          )}
+          {verifiedUser === true  && errorMessage === "" ? (
+             <p className={`text-[12px] text-green-500 italic
+               lg:text-[14px]  `}>
+             Verified User
+            </p>
+          ) : ""}
             </div>
 
             {/* ======================Phone Number================== */}
@@ -297,7 +449,10 @@ const AremxyAddUser = () => {
                     setUserPhoneNumber(numericValue);
                   }}
                   name="userPhoneNumber"
-                  value={userPhoneNumber}
+                  value={fetchedResponse?.data?.data?.userDetails?.phone !== undefined ?
+                fetchedResponse?.data?.data?.userDetails?.phone : ""}
+                  maxLength={11}
+              readOnly
                   className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
                   type="number"
                 />
@@ -446,6 +601,14 @@ const AremxyAddUser = () => {
                 </div>
               </div>
             </Modal>
+          )}
+          {loading && (
+            <Modal>
+           <Loader/>
+            </Modal>
+          )}
+          {sessionModal && (
+            <HandleUserSession/>
           )}
         </div>
         <div className={style.help}>
