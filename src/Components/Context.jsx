@@ -254,6 +254,7 @@ export const Context = ({ children }) => {
       userName,
       email,
       phoneNumber,
+       IVcode,
       password,
       confirmPassword,
       checkbox,
@@ -294,7 +295,7 @@ export const Context = ({ children }) => {
           fullname: fullName,
           username: userName,
           phone_number: phoneNumber,
-          // iv_code : IVCode,
+          iv_code : IVcode,
           email: email,
           password: password,
           country: country,
@@ -401,7 +402,7 @@ export const Context = ({ children }) => {
   const [showList, setShowList] = useState(false);
   const [selected, setSelected] = useState(false);
   const [selectedCurr, setSelectedCurr] = useState(false);
-  const [amtToTransfer, setAmtToTransfer] = useState("");
+  const [amtToTransfer, setAmtToTransfer] = useState(0);
   const [confirmationPopUp, setConfirmationPopUp] = useState(false);
   const [inputPinPopUp, setInputPinPopUp] = useState(false);
   const [transactSuccessPopUp, setTransactSuccessPopUp] = useState(false);
@@ -411,6 +412,11 @@ export const Context = ({ children }) => {
   const [inputPin, setInputPin] = useState("");
   const textRef = useRef(null);
   const transferFee = 50;
+  const [messageTransfer, setMessageTransfer] = useState("");
+  const [transferAmount,setTransferAmount] = useState(0);
+   const [otherInputPinPopUp, setOtherInputPinPopUp] = useState(false);
+   const [transferResponse, setTransferResponse] = useState({});
+  
 
   const [isVisible, setIsVisible] = useState(true);
 
@@ -1122,7 +1128,7 @@ export const Context = ({ children }) => {
   const [methodPayment, setMethodPayment] = useState(false);
   const [methodImage, setMethodImage] = useState(arrowDown);
   const [tvWalletBalance, setTvWalletBalance] = useState("");
-  const [decoderType, setDecoderType] = useState("");
+  const [decoderType, setDecoderType] = useState("GOtv");
   const [decoderActive, setDecoderActive] = useState(false);
 
   //==========GOTV===========
@@ -1151,7 +1157,7 @@ export const Context = ({ children }) => {
   const [dstvEmail, setDstvEmail] = useState();
   const [packageDstv, setPackageDstv] = useState("");
   const [dstvSmartCard, setDstvSmartCard] = useState("");
-  const [dstvDecoderType, setDstvDecoderType] = useState("");
+  const [dstvDecoderType, setDstvDecoderType] = useState("DStv");
   const [dstvMobileNumber, setDstvMobileNumber] = useState("");
   const [dstvSubscriptionResponse, setDstvSubscriptionResponse] = useState({});
   const [dstvOrderId, setDstvOrderId] = useState("");
@@ -1161,6 +1167,7 @@ export const Context = ({ children }) => {
   const [dstvWalletBalance, setDstvWalletBalance] = useState("");
   const [purchaseDstvErrorType, setPurchaseDstvErrorType] = useState("");
   const [dstvCardName, setDstvCardName] = useState("");
+  const [dstvFlagResult, setDstvFlagResult] = useState("");
 
   //=========SHOWMAX===========
   const [selectedOptionShowmax, setSelectedOptionShowmax] = useState("");
@@ -1173,14 +1180,17 @@ export const Context = ({ children }) => {
   const [showMaxEmail, setShowMaxEmail] = useState("");
   const [packageShowMax, setPackageShowMax] = useState("");
   const [showMaxSmartCard, setShowMaxSmartCard] = useState("");
-  const [showMaxDecoderType, setShowMaxDecoderType] = useState("");
+  const [showMaxDecoderType, setShowMaxDecoderType] = useState("Showmax");
   const [showMaxSubscriptionResponse, setShowMaxSubscriptionResponse] =
     useState({});
+    const [showMaxFlagResult, setShowMaxFlagResult] = useState("");
   const [showMaxOrderId, setShowMaxOrderId] = useState("");
   const [showMaxTransactionId, setShowMaxTransactionId] = useState("");
   const [showMaxDescription, setShowMaxDescription] = useState("");
   const [showMaxMobileNumber, setShowMaxMobileNumber] = useState("");
   const [showMaxWalletBalance, setShowMaxWalletBalance] = useState("");
+  const [showMaxCardName, setShowMaxCardName] = useState("");
+   const [purchaseShowMaxErrorType, setPurchaseShowMaxErrorType] = useState("")
 
   //=========STARTIMES===========
   const [selectedOptionStarTimes, setSelectedOptionStarTimes] = useState("");
@@ -1193,7 +1203,7 @@ export const Context = ({ children }) => {
   const [starTimesEmail, setStarTimesEmail] = useState("");
   const [packageStarTimes, setPackageStarTimes] = useState("");
   const [starTimesSmartCard, setStarTimesSmartCard] = useState("");
-  const [starTimesDecoderType, setStarTimesDecoderType] = useState("");
+  const [starTimesDecoderType, setStarTimesDecoderType] = useState("StarTimes");
   const [starTimesMobileNumber, setStarTimesMobileNumber] = useState("");
   const [starTimesSubscriptionResponse, setStarTimesSubscriptionResponse] =
     useState({});
@@ -1201,7 +1211,9 @@ export const Context = ({ children }) => {
   const [starTimesTransactionId, setStarTimesTransactionId] = useState("");
   const [starTimesDescription, setStarTimesDescription] = useState("");
   const [starTimesWalletBalance, setStarTimesWalletBalance] = useState("");
-
+  const [starTimesFlagResult, setStarTimesFlagResult] = useState("");
+  const [starTimesCardName, setStarTimesCardName] = useState("");
+   const [purchaseStarTimesErrorType, setPurchaseStarTimesErrorType] = useState("")
   //============= EDUCATION PINS ========================
   //===============WAEC PINS================
   const [quantityResult, setQuantityResult] = useState("");
@@ -1303,6 +1315,8 @@ export const Context = ({ children }) => {
   const [idPostalCode, setIdPostalCode] = useState("");
   const [bvnNumber, setBvnNumber] = useState("");
   const [bvnVerifyImage, setBvnVerifyImage] = useState(NotVerifiedIcon);
+   const [idDateOfBirth, setIdDateOfBirth] = useState("");
+    const [genderResult, setGenderResult] = useState("");
 
   const [bvnStatus, setBvnStatus] = useState("Not Verified");
   const [dashLoading, setDashLoading] = useState(false);
@@ -1315,6 +1329,7 @@ export const Context = ({ children }) => {
   const [bvnCountryImage, setBvnCountryImage] = useState(null);
   const [verificationReason, setVerificationReason] = useState("");
   const [verificationResponse, setVerificationResponse] = useState({});
+
 
   //========== BUSINESS KYC =============
   const [businessPopUp, setBusinessPopUp] = useState(false);
@@ -1581,6 +1596,10 @@ export const Context = ({ children }) => {
     handleClickOutside,
     toggleVisibility,
     isVisible,
+    transferAmount,
+    setTransferAmount,
+    messageTransfer,
+     setMessageTransfer,
 
     // ==================Aremxyplug pages==============
     mainTransferErrors,
@@ -1592,6 +1611,10 @@ export const Context = ({ children }) => {
     emailPhoneNumberConfirmation,
     setEmailPhoneNumberConfirmation,
     ProceedToMainTransfer,
+    otherInputPinPopUp,
+     setOtherInputPinPopUp,
+     transferResponse,
+     setTransferResponse,
 
     // ==================GLobal Transfer==============
     otherBanksConfirmation,
@@ -2302,6 +2325,8 @@ export const Context = ({ children }) => {
     setPurchaseDstvErrorType,
     dstvCardName,
     setDstvCardName,
+    setDstvFlagResult,
+    dstvFlagResult,
     //=======SHOWMAX
     confirmShowmaxPopup,
     setConfirmShowmaxPopup,
@@ -2337,6 +2362,12 @@ export const Context = ({ children }) => {
     setShowMaxDescription,
     showMaxWalletBalance,
     setShowMaxWalletBalance,
+    showMaxFlagResult,
+    setShowMaxFlagResult,
+    showMaxCardName,
+    setShowMaxCardName,
+    purchaseShowMaxErrorType,
+     setPurchaseShowMaxErrorType,
 
     //=======STARTIMES
     confirmStarTimesPopup,
@@ -2373,6 +2404,12 @@ export const Context = ({ children }) => {
     setStarTimesDescription,
     starTimesWalletBalance,
     setStarTimesWalletBalance,
+    starTimesFlagResult,
+    setStarTimesFlagResult,
+    starTimesCardName,
+    setStarTimesCardName,
+    purchaseStarTimesErrorType,
+     setPurchaseStarTimesErrorType,
 
     //====== EDUCATION PINS
     //=======WAEC PINS
@@ -2589,6 +2626,10 @@ export const Context = ({ children }) => {
     setVerificationResponse,
     transactionResponse,
     setTransactionResponse,
+    idDateOfBirth,
+     setIdDateOfBirth,
+     genderResult,
+      setGenderResult,
 
     //========== Business PopUp =======
     businessPopUp,

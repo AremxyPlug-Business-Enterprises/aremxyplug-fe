@@ -40,7 +40,7 @@ export default function SalesSummaryPage ()  {
     const [selected, setSelected] = useState("NGN");
     const [methodImage, setMethodImage] = useState(flagpage);
     const [methodBalance, setMethodBalance] = useState(false);
- 
+      const [totalOutFlow, setTotalOutFlow] = useState('')
          const { isDarkMode, toggleSideBar } =
   useContext(ContextProvider);
     // const toggleDropdown1 = () => { setIsOpen1(true); };
@@ -50,11 +50,16 @@ export default function SalesSummaryPage ()  {
     //  const toggleDropdown3 = () => { setIsOpen3(true); setIsOpen2(false); setIsOpen4(false); setIsOpen1(false); };
 // 
     //   const toggleDropdown4 = () => { setIsOpen4(true);  setIsOpen3(false); setIsOpen2(false);setIsOpen1(false); };
-
+// console.log(totalOutFlow);
 
     const [calender, setCalender] = useState(false);   
 
-
+// let balance = 0;
+// //console.log(balance)
+// for(let i = 0; i < salesResponse?.length ; i ++){
+//    balance += salesResponse[i]?.tota_amount
+// }
+// console.log(balance);
 
 
       const [selectedProduct, setSelectedProduct] = useState('Filter by product');
@@ -617,8 +622,14 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
         </div>
         {/* {salesResponse?.data?.data?.data} */}
          {salesResponse?.data?.data?.data?.data !== undefined && salesResponse?.data?.data?.data?.data?.length > 1 ? (
-            salesResponse?.data?.data?.data?.data.map((item)=> (
-               <div className=" justify-between md:w-full 
+           salesResponse?.data?.data?.data?.data.map((item, index)=>{
+          if(index < salesResponse?.data?.data?.data?.data?.length ){
+          //   balance += item?.total_amount;
+           // setTotalOutFlow(balance);
+            }
+
+            return (
+            <div className=" justify-between md:w-full 
         w-full h-[25px] lg:pr-0 pl-[8.67px] pr-[1.33px] 
     lg:w-full lg:pl-[23px] 
      lg:h-[42px] md:h-[24.06px]  md:pl-[14.90px] md:pr-[2.29px]
@@ -633,11 +644,16 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
       <p className={`text-[10px] font-[500] leading-[16px] text-center`}>{item?.quantity}</p>
       </div>
        <div className={`w-[33.33%] flex  justify-center items-center h-full`}>
-      <p className={`text-[10px] font-[500] leading-[16px]`}>{item?.total_amount}</p>
+      <p className={`text-[10px] font-[500] leading-[16px]`}>{item?.total_amount !== null ||
+      item?.total_amount !== undefined || item?.total_amount !== "" ? 
+      item?.total_amount?.toLocaleString("en-NG", {
+        style : "currency",
+        currency : "NGN"
+      }) : ""}</p>
       </div>
  
     </div>
-            ))) :(
+)})) :(
         <img className="lg:w-full lg:h-[456px] flex self-center w-[" src={NoRecordImage} alt="No record found"/> 
             )}
    
@@ -656,7 +672,7 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
 <div className=' '>
 <footer className="
  flex  justify-center   text-center gap-[20px] 
- mt-[370px] mb-[20px] md:mt-[580px] lg:mb-[30px]  
+ mt-[50px] mb-[20px] md:mt-[580px] lg:mb-[30px]  
   z-index-2 onset-[500px] lg:mt-[760px]">
             <p className="text-[8px] md:text-[12px] lg:text-[12px]  font-[500] leading-[9.1px] mt-[5px] lg:mt-[13px]">
               You need help?

@@ -20,7 +20,8 @@ import axios from "axios";
 import { Loader } from "../../Loader/Loader";
 import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 import idSuccess from "../ProfileImages/user-tick.svg";
-import countryImage from "../../EducationPins/imagesEducation/Nigeriaflag.svg"
+import countryImage from "../../EducationPins/imagesEducation/Nigeriaflag.svg";
+import { HandleUserSession } from "../../ApiCollection.jsx/ApiBuck";
 
 export default function IdVerification(Data) {
   const { verificationOpen } = useContext(ContextProvider);
@@ -40,6 +41,7 @@ export default function IdVerification(Data) {
     useContext(ContextProvider);
   const [idDropDown, setIdDropDown] = useState(false);
   const { idAddress, setIdAddress } = useContext(ContextProvider);
+  const [sessionModal, setSessionModal] = useState(false);
   // const {idState, setIdState} = useContext(ContextProvider);
   const { 
     // idCountry, 
@@ -52,14 +54,14 @@ export default function IdVerification(Data) {
   const [idBackView, setIdBackView] = useState(false);
   const [idPopVerified, setIdPopVerified] = useState(false);
   const [idCustomerQuery, setIdCustomerQuery] = useState(false);
-  const [idDateOfBirth, setIdDateOfBirth] = useState("");
+  const {idDateOfBirth, setIdDateOfBirth}= useContext(ContextProvider);
   const [loading, setLoading] = useState(false);
   const { toggleSideBar, customerDetail } = useContext(ContextProvider);
   const { full_name } = customerDetail;
 
   // Genders
   const genderInfo = ["Male", "Female", "Others.."];
-  const [genderResult, setGenderResult] = useState("");
+  const {genderResult, setGenderResult} = useContext(ContextProvider);
   const chooseGender = () => {
     setDropDownGender(!dropDownGender);
     document.querySelector(".genderDrop").classList.toggle("DropIt");
@@ -94,15 +96,7 @@ export default function IdVerification(Data) {
       addId ? "" : "Your ID must be inputed and must be 11 digits"
     );
   };
-  //CUSTOM VALIDITY FOR LGA
-  //  const validLGA = (e) => {
-  //   const addLGA = e.target.value;
-  //  e.target.setCustomValidity(addLGA ? '' : 'This is required to proceed');
-  // }
-
-  //Function to inform a user that account has previously been created
-  // and set the following functions as stated below
-
+  
   const IdFunctionState = async (
     url,
     data,
@@ -118,7 +112,7 @@ export default function IdVerification(Data) {
     if (idButtonState === "Verify" && navigator.onLine) {
       url = "https://aremxyplug.onrender.com/api/v1/verify";
       buttonStateSuccess = "Verified";
-      ErrorMessage = "NIN Name Mismatch or Network failure";
+      ErrorMessage = "NIN Name Mismatch or Network Failure";
       PendingImageFxn = () => setVerifyImage(Pending);
       PendingText = () => setIdStatus("Pending");
       verifyIdImage = () => setVerifyImage(idSuccess);
@@ -172,10 +166,9 @@ export default function IdVerification(Data) {
       // idCountry
     ) {
       setLoading(true);
-
+        setErrorSubmit(false);
       console.log("getToken", getToken);
-
-      // console.log(data)
+     // console.log(data)
       try {
         if (idButtonState === "Verify") {
           setErrorSubmit(false);
@@ -188,28 +181,30 @@ export default function IdVerification(Data) {
             Authorization: authToken || getToken,
           },
         });
-        if (response.status === 201 || 200) {
+        if (response.status === 201 || response.status === 200) {
           setIdNumber(idNumber);
           verifyIdImage();
           statusId();
           verifyPopId();
           setIdButtonState(buttonStateSuccess);
           localStorage.setItem("idVerification", "true");
-          localStorage.setItem("bvnVerification", "true")
+          localStorage.setItem("bvnVerification", "true");
         }
       } catch (error) {
         if(error && (error.response === undefined)){
-          alert("Your network is quite unstable.")
-        } else if (error.status === 401 || error.status === 400) {
+          alert("Your network is quite unstable.");
+        } else if (error.response.status === 400) {
           alert(ErrorMessage);
           console.log(`ERROR : ${error}`);
-
-          setVerifyImage(NotVerifiedIcon);
+         setVerifyImage(NotVerifiedIcon);
           setIdStatus("Not Verified");
-        } else if (error.status === 500) {
+         // alert("Please check your ID Number and try again.")
+        } else if (error.response.status === 500) {
           alert("SERVER_ERROR, Try again some other time.");
           setIdStatus("Not Verified");
           setVerifyImage(NotVerifiedIcon);
+        }else if( error.response.status === 401){
+         setSessionModal(true);
         }else {
           alert("Check your internet connection.")
         }
@@ -232,8 +227,8 @@ export default function IdVerification(Data) {
   }
     // eslint-disable-next-line
   }, [Data]);
-  console.log(Data);
-
+ // console.log(Data);
+console.log( verificationResponse?.data?.data?.address)
   
 
   return (
@@ -404,7 +399,8 @@ export default function IdVerification(Data) {
                         isDarkMode ? "text-slate-50" : ""
                     }`}
                     >
-                      {genderResult}
+                      {(Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false")
+                       && verificationResponse?.data?.data?.gender === undefined ? genderResult : verificationResponse?.data?.data?.gender}
                     </h2>
                     <img
                       src={ArrowDown}
@@ -414,10 +410,19 @@ export default function IdVerification(Data) {
                   </div>
                   {dropDownGender && (
                     <div
-                      className={`absolute lg:top-[90px] md:top-[60px] top-[70px] z-[5] flex flex-col w-[100%] ${
-                        isDarkMode ? "bg-black border border-white" : "bg-white"
-                      }`}
-                    >
+                      className={`absolute lg:top-[90px] md:top-[60px] top-[70px] 
+          z-[5] flex flex-col w-[100%]
+            ${
+                    isDarkMode
+                      ? "bg-black border-white rounded-[7px] text-white"
+                      : "text-[#7C7C7C] bg-white rounded-br-[7px] rounded-bl-[7px] lg:rounded-br-[14px] lg:rounded-bl-[14px]"
+                  }
+                  ${
+                    toggleSideBar
+                      ? "lg:w-[31.5%] lg:top-[100.5%]"
+                      : "lg:w-[38.5%] lg:top-[105.3%]"
+                  }  shadow-xl border w-full lg:w-full  flex flex-col divide-y absolute top-20`}>
+
                       {genderInfo.map((info) => {
                         return (
                           <h2
@@ -428,7 +433,10 @@ export default function IdVerification(Data) {
                                 .querySelector(".genderDrop")
                                 .classList.remove("DropIt");
                             }}
-                            className={`font-medium text-[#7C7C7C] text-[12px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] md:py-[20px] py-[15px] pl-[10px] lg:pl-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] md:shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)] cursor-pointer ${
+                            className = {`py-[18px] md:py-[14px]  font-normal px-2 flex
+                         items-center gap-[5px] text-[12px] md:text-[14px] 
+                         lg:text-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
+                          transition-all duration-300 hover:bg-slate-50 ${
                               isDarkMode
                                 ? "bg-black text-white border-b border-white hover:bg-slate-800"
                                 : "bg-white"
@@ -462,13 +470,15 @@ export default function IdVerification(Data) {
                     }}>
                   <input
 
-                    value={idDateOfBirth}
+                    value={(Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false")
+                       && verificationResponse?.data?.data?.dob === undefined ? idDateOfBirth : verificationResponse?.data?.data?.dob}
                     ref={dateInputRef}
                     onChange={(e) => {
                       // const dobValue = dateInputRef.current ? dateInputRef.current.value : "";
                       // setIdDateOfBirth(dobValue);
+                      if(Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false"){
                       setIdDateOfBirth(e.target.value);
-                      
+                      }
                     }}
                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
                          sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px]
@@ -506,9 +516,12 @@ export default function IdVerification(Data) {
                     House Address
                   </h2>
                   <input
-                    value={idAddress}
+                    value={(Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false")
+                       && verificationResponse?.data?.data?.address === undefined ? idAddress : verificationResponse?.data?.data?.address}
                     onChange={(e) => {
+                      if(Data.ConfirmId === "false" || Data.ConfirmBvn === "false"){
                       setIdAddress(e.target.value);
+                      }
                     }}
                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
                          sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px]
@@ -518,6 +531,7 @@ export default function IdVerification(Data) {
     md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer
      outline-0 border-[0.24px] lg:border-[0.4px] w-full 
      h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C]
+     ${ verificationResponse?.data?.data?.address === undefined && (Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false" ) ? "" : "uppercase"}
       px-[11px] md:px-[6px] lg:px-[10px] text-[#000] self-center  ${
       isDarkMode
         ? "bg-black text-white border border-white"
@@ -545,7 +559,9 @@ export default function IdVerification(Data) {
                     const numbersOnly = e.target.value.replace(/\D/g, "");
                     e.target.value = numbersOnly;
                   }}
-                  value={idPostalCode}
+                  value={(Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false")
+                       && verificationResponse?.data?.data?.postalcode === undefined ? idPostalCode : (Data?.ConfirmId === "true" || Data?.ConfirmBvn === "true") && 
+                       verificationResponse?.data?.data?.postalcode === undefined && (Data?.ConfirmId === "true" || Data?.ConfirmBvn === "true") ? "NO POSTAL CODE" : verificationResponse?.data?.data?.postalcode}
                   onChange={(e) => {
                     setIdPostalCode(e.target.value);
                   }}
@@ -613,7 +629,20 @@ export default function IdVerification(Data) {
       </div>
       {idDropDown  && (
         <div 
-        className=' absolute lg:top-[90px] md:top-[60px] top-[70px] z-[5] flex flex-col w-[100%]'>
+        className={`absolute lg:top-[90px] md:top-[60px] top-[70px] 
+          z-[5] flex flex-col w-[100%]
+            ${
+                    isDarkMode
+                      ? "bg-black border-white rounded-[7px] text-white"
+                      : "text-[#7C7C7C] bg-white rounded-br-[7px] rounded-bl-[7px] lg:rounded-br-[14px] lg:rounded-bl-[14px]"
+                  }
+                  ${
+                    toggleSideBar
+                      ? "lg:w-[31.5%] lg:top-[100.5%]"
+                      : "lg:w-[38.5%] lg:top-[105.3%]"
+                  }  shadow-xl border w-full lg:w-full  flex flex-col 
+                  divide-y absolute top-20`}>
+
       {idTypes.map(info => {
         return (
           <div 
@@ -646,13 +675,19 @@ export default function IdVerification(Data) {
               // });
                 document.querySelector('.idDrop').classList.remove('DropIt');
       }}
-        className ={`font-[500] px-2 flex justify-between text-[#7C7C7C] text-[8px] leading-[10.4px]
-            lg:text-[16px] lg:leading-[20.8px] md:py-[20px] py-[15px] pl-[10px]
-           lg:pl-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] md:shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)] 
-            ${isDarkMode ?  "border-y-[0.5px] border-x-[0.6px] border-white" : "boder-none"} 
-           cursor-pointer ${info.Status  === "Inactive" && !isDarkMode  ? "bg-gray-300 cursor-not-allowed" : 
-            info.Status === "Inactive" && isDarkMode ? "bg-black" : info.Status === "Active" && !isDarkMode ? "bg-white" : "bg-black" } 
-           `}>
+          className={`py-[18px] md:py-[14px]  font-normal px-2 flex
+                         items-center gap-[5px] text-[12px] md:text-[14px] 
+                         lg:text-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
+                          transition-all duration-300 hover:bg-slate-50
+                       ${
+                         isDarkMode
+                           ? "text-white hover:bg-slate-800 bg-black"
+                           : "text-[#7E7E7E]"
+                       } ${
+                        info.idType === "National ID"
+                          ? "cursor-pointer"
+                          : "cursor-not-allowed opacity-50"
+                      }`}>
             <h2 className={`font-[500] text-[#7C7C7C] text-[8px] leading-[10.4px]
             lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>{info.idType}</h2>
             <p
@@ -680,7 +715,10 @@ export default function IdVerification(Data) {
       const numbersOnly = e.target.value.replace(/\D/g, '');
       e.target.value = numbersOnly;
     })}
-    value={  (idStatus === "Verified" || Data.ConfirmId === "true") ? `${idNumber?.slice(0,4)}*******` : idNumber}
+    value={  (verificationResponse?.data?.data?.nin !== undefined && Data.ConfirmBvn === "true")
+                        ? `${idNumber?.slice(0, 4)}*******`
+                        : verificationResponse?.data?.data?.nin === undefined  && (Data?.ConfirmId === "true" || Data?.ConfirmBvn === "true")
+                         ? "NO ID" :  idNumber}
     
     onChange={(e) => {
       setIdNumber(e.target.value);
@@ -716,14 +754,12 @@ export default function IdVerification(Data) {
   //    onClick={()=> {
   //    setIdFrontView(true);
   //  }} 
-    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px]  sm:p-3 sm:text-lg flex  lg:py-[14px] py-[8.771px] pr-[20.785px] pl-[20px]
-     lg:pr-[28px] lg:pl-[16px] md:gap-[14px] gap-[8.21px]
-    border-[0.4px] border-[solid] border-[#9C9C9C] cursor-pointer'>
-   <h2 className='font-[600] text-[#7E7E7E]  leading-[14.4px] 
-   lg:text-[16px] lg:leading-[20.8px] ${idResult === "National ID" ? "bg-gray-300" :"bg-white"}  `}>
-  <h2 className='font-[600] text-[#7E7E7E] text-[11px] leading-[14.4px] 
-   lg:text-[16px] lg:leading-[20.8px]'>
-   Upload Front View
+   className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px]  sm:p-3 sm:text-lg flex py-[8.771px] pr-[20.785px] pl-[20px]
+  lg:py-[14px] lg:pr-[28px] lg:pl-[16px] gap-[8.21px] md:gap-[14px]
+border-[0.4px]  border-[#7E7E7E] opacity-50 cursor-pointer ${isDarkMode ? "bg-black  border-white" : "bg-white border-[#7E7E7E]"}`}>
+   <h2 className={`font-[600] text-gray-400 text-[11px] leading-[14.4px] 
+   lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white": "text-gray-400"}`}>
+  Upload Front View
    </h2>
    
    <img src={UploadDoc} alt="" 
@@ -739,9 +775,9 @@ export default function IdVerification(Data) {
 //    }}
  className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]  md:p-0 text-[12px]  sm:p-3 sm:text-lg flex py-[8.771px] pr-[20.785px] pl-[20px]
   lg:py-[14px] lg:pr-[28px] lg:pl-[16px] gap-[8.21px] md:gap-[14px]
-border-[0.4px] border-[solid] border-[#9C9C9C] cursor-pointer ${idResult === "National ID" ? "bg-gray-300" : "bg-white"}`}>
-   <h2 className='font-[600] text-[#7E7E7E] text-[11px] leading-[14.4px] 
-   lg:text-[16px] lg:leading-[20.8px]'>
+border-[0.4px]  border-[#7E7E7E] opacity-50 cursor-pointer ${isDarkMode ? "bg-black  border-white" : "bg-white border-[#7E7E7E]"}`}>
+   <h2 className={`font-[600] text-gray-400 text-[11px] leading-[14.4px] 
+   lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white": "text-gray-400"}`}>
    Upload Back View
    </h2>
    <img src={UploadDoc} alt="" 
@@ -989,6 +1025,9 @@ Confirming your identity ensures that the person accessing the account is indeed
             </Modal>
           )}
         </div>
+      )}
+      {sessionModal && (
+        <HandleUserSession/>
       )}
       {loading && (
         <Modal>

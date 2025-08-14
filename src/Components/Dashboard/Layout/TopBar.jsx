@@ -27,7 +27,7 @@ export const TopBar = () => {
     <div
       className={` ${
         toggleSideBar ? "sticky top-0 " : "sticky top-0"
-      } z-40 flex  border-b-[2px]  border-gray-200 w-[100%]
+      } z-40 flex  border-b-[2px]  border-gray-200  w-[100%]
         md:justify-between  py-[4%] lg:gap-[20%] gap-[20px]
       lg:py-[2%]  lg:pl-[10%] lg:pr-[5%] px-[3%]  
       ${
@@ -46,10 +46,10 @@ export const TopBar = () => {
       />
         <div
           className={`${
-            isDarkMode ? "border border-[#fff]" : "bg-gray-200 "
+            isDarkMode ? "border border-[#fff]" : "bg-gray-300"
           } cursor-pointer flex justify-between  items-center px-[2%] w-[60%] 
           h-[30px] border-[0.5px] rounded-[10px] md:h-[33.8px]
-           md:w-[202px] lg:border-[1.5px] 
+           md:w-[202px] lg:border-[1.5px]  opacity-50
           lg:rounded-[10px] lg:w-[358px] lg:h-[60px]`}
         >
           <div className={`flex justify-center border-gray-300 py-1 items-center

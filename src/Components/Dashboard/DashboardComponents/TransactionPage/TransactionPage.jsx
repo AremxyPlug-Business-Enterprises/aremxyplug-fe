@@ -130,14 +130,14 @@ const TransactionPage = () => {
     setShowStatus(false);
   };
 
- const filteredTransactions = transactionResponse?.data?.data?.data?.transactions.filter((transaction) => {
+ const filteredTransactions = transactionResponse?.data?.data?.data?.transactions !== null ? transactionResponse?.data?.data?.data?.transactions.filter((transaction) => {
   if(selectedStatus === "" || selectedStatus === "All Transactions"){
       return transaction
     }else{
       return transaction.status === selectedStatus;
     }
    
-  });
+  }) : [];
  
   const chooseStatus = ["All Transactions", "Delivered", "Failed", "Pending", "Refunded"];
 
@@ -147,17 +147,17 @@ const symbolValue = selected === "USD" ? "$" : selected === "AUD" ?
 
 //Function handling filtering the transactionResponse based on the 
 //selected categpry by the user
-function filterBySelectCategory(categoryByFlowtype, categoryByProduct){
-  transactionResponse?.data?.data?.data?.transactions?.filter(filterData=> {
-    if(filterData?.flow_type === categoryByFlowtype){
-      return filterData?.flow_type === categoryByFlowtype
-    }else if(filterData?.product === categoryByProduct){
-   return filterData?.product === categoryByProduct;
-    }else{
-      return []
-    }
-  })
-}
+// function filterBySelectCategory(categoryByFlowtype, categoryByProduct){
+//   transactionResponse?.data?.data?.data?.transactions?.filter(filterData=> {
+//     if(filterData?.flow_type === categoryByFlowtype){
+//       return filterData?.flow_type === categoryByFlowtype
+//     }else if(filterData?.product === categoryByProduct){
+//    return filterData?.product === categoryByProduct;
+//     }else{
+//       return []
+//     }
+//   })
+// }
 
 
   return (
@@ -1225,7 +1225,7 @@ function filterBySelectCategory(categoryByFlowtype, categoryByProduct){
                 </Link>
               </div>
               ))) : (
-                ((filteredTransactions && filteredTransactions?.length < 1)|| transactionResponse?.data?.data?.data?.transactions?.length < 1 ) ? (
+                (( filteredTransactions?.length < 1)|| transactionResponse?.data?.data?.data?.transactions?.length < 1 || transactionResponse?.data?.data?.data?.transactions === null ) ? (
               <img className="lg:w-full lg:h-[456px] flex self-center w-[" src={NoRecordImage} alt="No record found"/> 
               ) : 
               transactionHistoryError === "Network error"  ? (

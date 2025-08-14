@@ -25,9 +25,10 @@ import { GetFunction } from "../ApiCollection.jsx/ApiBuck";
 import { Modal } from "../Screens/Modal/Modal";
 import { BalanceLoading } from "../Loader/Loader";
 import { HandleUserSession } from "../../Components/ApiCollection.jsx/ApiBuck";
+import { GetLocalStorage } from "../LocalStorage/LocalStorage";
 
 const Showmax = () => {
-
+const Data = GetLocalStorage()
   const {
     inputPin,
     setInputPin,
@@ -70,7 +71,11 @@ setShowMaxSubscriptionResponse,
 showMaxMobileNumber, 
 setShowMaxMobileNumber,
     newBalance,
-    setNewBalance
+    setNewBalance,
+    setShowMaxCardName,
+    setShowMaxFlagResult,
+    showMaxFlagResult,
+    toggleSideBar
   } = useContext(ContextProvider)
  const [isLoading, setIsLoading] = useState(false)
       const [failedPopup, setFailedPopup] = useState(false);
@@ -162,7 +167,7 @@ setShowMaxMobileNumber,
      const showMaxOptionalPlan = showMaxData?.length < 1 && fetchedShowMaxPlans.status === 200 ? fetchedShowMaxPlans.data.data.data : showMaxData;
             useEffect(()=> {
              if(fetchedShowMaxPlans.status === 200 || fetchedShowMaxPlans.status === 201){
-            setShowMaxData(fetchedShowMaxPlans.data.data.data);
+            setShowMaxData(fetchedShowMaxPlans?.data?.data?.data);
             }else if(fetchedShowMaxPlans.status === undefined){
              const RetrieveGotvPlans = async()=> {
                 const SuccessHandler = ()=> {
@@ -182,7 +187,11 @@ setShowMaxMobileNumber,
           }
           }
             
-       await GetFunction(`products/tvsub/showmax`, setIsLoading, SuccessHandler, failedHandler, setFetchedStarTimesPlans);
+       await GetFunction(`products/tvsub/showmax`, 
+        setIsLoading,
+         SuccessHandler,
+          failedHandler,
+           setFetchedStarTimesPlans);
       
         }
       RetrieveGotvPlans()
@@ -206,14 +215,22 @@ setShowMaxMobileNumber,
                               setPassDataBalance)
                         }
                         }
-                        await GetFunction("balance", setIsLoading, SuccessHandler, FailedHandler,setPassDataBalance)
+                        await GetFunction("balance",
+                           setIsLoading,
+                            SuccessHandler, 
+                            FailedHandler,
+                            setPassDataBalance)
                           } 
                            // Simulate async data loading
-                          if(newBalance === "" || newBalance === null || newBalance === undefined){
+                          if((newBalance === "" || newBalance === null || newBalance === undefined)
+                          && Data?.ConfirmAcc === "true"){
                               GetBalance();
                               if(GetBalance){
-                               setNewBalance(passDataBalance?.data ? passDataBalance.data.data.data.balance : "");
+                               setNewBalance(passDataBalance?.data?.data?.data !== undefined
+                                 ? passDataBalance?.data?.data?.data?.balance : "");
                               }
+                            }else{
+                              console.log("Create an account to access this feature")
                             }
            //eslint-disable-next-line             
             },[])
@@ -291,7 +308,7 @@ setShowMaxMobileNumber,
     // }
   };
 
-  const { flagResult, setFlagResult } = useContext(ContextProvider);
+
   const { methodPayment, setMethodPayment } = useContext(ContextProvider);
   const { showMaxWalletBalance,
  setShowMaxWalletBalance } = useContext(ContextProvider);
@@ -303,15 +320,24 @@ setShowMaxMobileNumber,
     document.querySelector('.methodDrop').classList.toggle('DropIt');
   }
 
-  const updateBalance = passDataBalance?.data?.data  ? passDataBalance.data.data.data.balance : "";
+  const updateBalance = passDataBalance?.data?.data?.data !== undefined  ? passDataBalance.data?.data?.data?.balance : "";
+   const updateBalanceToNumber = Number( updateBalance);
+  const newBalanceToNumber = Number(newBalance)
   const methodOptions= [
-    { method: 'NGN Wallet',  balance: newBalance === "" || newBalance === null || newBalance === undefined  ? `(${updateBalance})` : `(${newBalance})`,
+    { method: 'NGN Wallet',  balance:
+       newBalance === "" || newBalance === null || newBalance === undefined  ? `(${updateBalanceToNumber?.toLocaleString("en-NG",{
+             style : "currency",
+             currency : "NGN"
+            })})` : `(${ newBalanceToNumber?.toLocaleString("en-NG",{
+             style : "currency",
+             currency : "NGN"
+            }) })`,
      flag: nigerianFlag, id: 1 },
-    { method: 'USD Wallet ', balance: '(0.00)', flag: americaFlag, id: 2 },
-    { method: 'EUR Wallet', balance: '(0.00)', flag: britainFlag, id: 3 },
-    { method: 'GBP Wallet', balance: '(0.00)', flag: euroFlag, id: 4 },
-    { method: 'AUD Wallet', balance: '(0.00)', flag: austriaFlag, id: 5 },
-    { method: 'KES Wallet', balance: '(0.00)', flag: kenyaFlag, id: 6 }
+    { method: 'USD Wallet ', balance: '($0.00)', flag: americaFlag, id: 2 },
+       { method: 'EUR Wallet', balance: '(€0.00)', flag: britainFlag, id: 3 },
+       { method: 'GBP Wallet', balance: '(£0.00)', flag: euroFlag, id: 4 },
+       { method: 'AUD Wallet', balance: '(AU$0.00)', flag: austriaFlag, id: 5 },
+       { method: 'KES Wallet', balance: '(KSh0.00)', flag: kenyaFlag, id: 6 }
   ]
 
   function packageDropdown() {
@@ -339,9 +365,10 @@ setShowMaxMobileNumber,
               decoder_type : showMaxDecoderType.toLowerCase(),
              iuc_number : UserTvSubscription
            }
-           const SuccessHandler = ()=> {
-            console.log("Succesfully verified tv subscription account.");
+      const SuccessHandler = (response)=> {
+      // console.log("Succesfully verified tv subscription account.");
      setShowMaxSmartCard(UserTvSubscription);
+     setShowMaxCardName(response?.data?.data?.data?.name);
    }
    const FailedHandler = async(ErrorType)=> {
     if(ErrorType === "unauthorised"){
@@ -359,7 +386,7 @@ setShowMaxMobileNumber,
    }
            
            const bodyToJson = JSON.stringify(body);
-      if(UserTvSubscription?.length === 10 && 
+      if(UserTvSubscription?.length === 11 && 
        (UserTvSubscription !== "" && 
          UserTvSubscription !== null && 
          UserTvSubscription !== undefined)){
@@ -448,22 +475,90 @@ setShowMaxMobileNumber,
         );
       };
     
-      const setFailedConfig =async(ErrorType)=> {
-        if(ErrorType === "unauthorised"){
-       await VerifyTransPin(
-        inputPin,
-       (ErrorType)=> {
-        if(ErrorType === "unauthorised"){
-          return setSessionModal(true)
-}      
- },
-        setIsLoading,
-        setErrorMessage,
+     const setFailedConfig= async(ErrorType)=> {
+          if(ErrorType === "unauthorised"){
+            //The concept behind this code : A user session is regulated by tokens,
+            // the moment we notice it expires we try to get the token for the user before
+            // a transaction completed(i.e we get it during a transaction process), when unauthorised
+            //we get the necessary tokens, then re-run the transaction, there are different errors that 
+            //could occur, when re-running such as: it could return same unauthorised errorType,
+            //a server error and even network connection issue or an unexpected error
+            //hence, the reason we account for other types of errors even while re-running,
+            //due to the inpredictability of the output of the transaction.
+        await VerifyTransPin(
+          inputPin,
+           async(ErrorType)=> {
+            if(ErrorType === "unauthorised"){
+              return setSessionModal(true)
+            }else if(ErrorType === "Server error"){
+             await VerifyTransPin(
+          inputPin,
+          (ErrorType)=> {
+            if(ErrorType === "Server error"){
+            alert("Failed to process your request, try again some other time")
+            }else if(ErrorType === "Network error" || ErrorType === "User error"){
+              alert("Kindly check your internet connection.")
+            }else{
+              alert("Failed to process your request, try some other time.")
+            }
+          },
+          setIsLoading,
+          setErrorMessage,
         ShowmaxHandler,
-     
-      );
-        }
+       );
+            }
+           },
+          setIsLoading,
+          setErrorMessage,
+        ShowmaxHandler,
+       );
+       //Handling of user error or network error for the general
+       //  conditional statement under the setPinFailed
+      }else if(ErrorType === "Server error"){
+        //The server could return a 500 then be successful
+        //  on next call, so let us try twice.
+         await VerifyTransPin(
+          inputPin,
+          async(ErrorType)=> {
+    if(ErrorType === "Server error"){
+     alert("Failed to process your request try some other time.")
+    }else if(ErrorType === "unauthorised"){
+    // Error When "Server error" occured on first try then the server notices 
+    // an "unauthorised" ErrorType.
+       await VerifyTransPin(
+          inputPin,
+           (ErrorType)=> {
+            //handling of ErrorTypes after unauthorisation occurs in server error re-try
+            if(ErrorType === "unauthorised"){
+              return setSessionModal(true);
+            }else if(ErrorType === "Server error"){
+              alert("The server is currently experiencing a downtime, try again some other time.")
+            }else if(ErrorType === "User error" || ErrorType === "Network error"){
+              alert("Kindly check your internet connection")
+            }
+           },
+          setIsLoading,
+          setErrorMessage,
+      ShowmaxHandler,
+       );
+       //End of the "unauthorised" ErrorType handling on "server error"
+       //  ErrorType re-run.
+    
+    }else if(ErrorType === "User error" || ErrorType === "Network error"){
+      //A network error occured  during trying to re-try the code on server error
+      alert("Kindly check your internet connection");
+    }
+          },
+          setIsLoading,
+          setErrorMessage,
+        ShowmaxHandler,
+       );
+           //The general error message on an "Network error, User error" ErrorType
+          }else if( ErrorType === "User error"
+        || ErrorType === "Network error" ){
+      alert("Kindly check your internet connection")
       }
+        }
       await VerifyTransPin(
         inputPin,
        setFailedConfig,
@@ -481,7 +576,7 @@ setShowMaxMobileNumber,
    setShowMaxAmount("");
    setPackageShowMax("");
    setShowMaxDecoderType("")
-    setFlagResult("");
+    setShowMaxFlagResult("");
     setShowMaxWalletBalance("");
     setCardName("");
      setSelectedOptionShowmax("")
@@ -496,7 +591,7 @@ setShowMaxMobileNumber,
    setShowMaxAmount("");
    setPackageShowMax("");
    setShowMaxDecoderType("")
-    setFlagResult("");
+    setShowMaxFlagResult("");
     setShowMaxWalletBalance("");
     setCardName("");
      setSelectedOptionShowmax("")
@@ -619,24 +714,25 @@ setShowMaxMobileNumber,
                 <ul className="dropdown-options z-[2] absolute top-[100%] w-full h-[300px] overflow-y-scroll bg-white cursor-pointer">
                   {showMaxOptionalPlan.map((option, index) => (
                     <li
-                      className={`pb-[20px] md:pb-[14px] pt-[20px] md:pt-[14px] font-weight-bold text-[15px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500] text-[#7C7C7C]  
+                    className={`pb-[20px] pt-[20px] md:pb-[14px] 
+                        md:pt-[14px] font-weight-bold text-[14px] leading-[10.4px] 
+                        md:py-[15px] py-[8px] pl-[10px] font-[500] 
                       md:text-[13.227px] md:leading-[17.195px] 
-                      shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] 
-                      lg:text-[16px] lg:leading-[20.8px] cursor-pointer hover:bg-[#EDEAEA] dropdownCSS 
-                       ${
-      isDarkMode
-        ? "bg-black text-white"
-        : "bg-white text-black"
-    }`}
+                      shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
+                      lg:text-[16px] lg:leading-[20.8px] cursor-pointer  dropdownCSS ${
+                        isDarkMode 
+                          ? "bg-black text-white border border-white" 
+                          : "hover:bg-[#EDEAEA] border-[#9C9C9C]  bg-white text-[#7C7C7C] "
+                      }`}
                       key={index}
                       onClick={() =>{
                          handleOptionClickShowmax()
-                         setShowMaxAmount(option.Amount)
-                         setSelectedOptionShowmax(option.PackageName)
-                         setPackageShowMax(option.Package);
+                         setShowMaxAmount(option?.Amount)
+                         setSelectedOptionShowmax(option?.PackageName)
+                         setPackageShowMax(option?.Package);
                         }}
                     >
-                      {option.PackageName}
+                      {option?.PackageName}
                     </li>
                   ))}
                 </ul>
@@ -651,8 +747,10 @@ setShowMaxMobileNumber,
               <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] md:font-[600] font-[400]">
                 Smart Card / IUC Number</label>
               <input type="tel"
+              maxLength={11}
               onInput={(e =>{
-            const numericValue = e.target.value.replace(/\D/g, '');
+                
+                     const numericValue = e.target.value.replace(/\D/g, '');
                     e.target.value = numericValue
                 })}
                 onChange={handleSmartCard} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
@@ -720,12 +818,20 @@ setShowMaxMobileNumber,
               <label htmlFor="Email" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] font-[400] md:font-[600]">
                 Email</label>
               <input value={showMaxEmail}
-              type="email" onChange={handleTvEmail} placeholder="example@gmail.com" required className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[14px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[600] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] self-center ${
+              type="email" onChange={handleTvEmail}
+                placeholder="example@gmail.com" 
+              
+              required 
+              className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] 
+                md:p-0 text-[14px]  sm:p-3 sm:text-lg flex justify-between 
+                pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400]  
+                leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px]
+     md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
       isDarkMode 
       ? "bg-black text-white border border-white" 
-      : "border-[#9C9C9C] text-[#7C7C7C] hover:bg-[#EDEAEA]"
-  }`}  />
+      : "hover:bg-[#EDEAEA] border-[#9C9C9C] text-[#7C7C7C] "
+  }`}   />
              {errors.showMaxEmail && <p className="text-[#F95252] text-[13.4px] md:text-[12px] lg:text-[14px] font-[400] italic">
                 {errors.showMaxEmail}</p>}
             </div>
@@ -746,7 +852,10 @@ setShowMaxMobileNumber,
         ? "bg-black text-white border border-white" 
         : "border-[#9C9C9C] text-[#7C7C7C] hover:bg-[#EDEAEA]"
     }`}
-                value={'₦'+ showMaxAmount}
+                value={(showMaxAmount !== undefined || showMaxAmount !== null) ? showMaxAmount?.toLocaleString("en-Ng", {
+                  style : "currency",
+                  currency : "NGN"
+                }) :  "₦"}
               />
 
             </div>
@@ -760,24 +869,49 @@ setShowMaxMobileNumber,
       : "border-[#9C9C9C]"
   }`} >
                 <p className='font-[400] text-[12px] leading-[10.4px] md:text-[12px] md:leading-[12.206px] lg:text-[16px] text-[#7C7C7C] lg:leading-[20.8px] cursor-pointer'>
-                    {`${flagResult} ${" "} ${showMaxWalletBalance}`}
+                    {`${showMaxFlagResult} ${" "} ${showMaxWalletBalance}`}
                 </p>
                 <img className='methodDrop h-[16px] w-[14px] md:h-[14.038px] md:w-[14.038px] lg:h-[24px] lg:w-[24px]'
                   src={methodImage} alt="" />
               </div>
               {methodPayment && (
-                <div className='absolute top-[102%] z-0 flex flex-col w-[100%] bg-white cursor-pointer '>
+                <div className={`absolute top-[102%] z-0 flex flex-col w-[100%]
+                 bg-white cursor-pointer 
+                   ${
+                    isDarkMode
+                      ? "bg-black border-white rounded-[7px] text-white"
+                      : "text-[#7C7C7C] bg-white rounded-br-[7px] rounded-bl-[7px] lg:rounded-br-[14px] lg:rounded-bl-[14px]"
+                  }
+                  ${
+                    toggleSideBar
+                      ? "lg:w-[31.5%] lg:top-[100.5%]"
+                      : "lg:w-[38.5%] lg:top-[105.3%]"
+                  }  shadow-xl border w-full lg:w-full  flex flex-col divide-y absolute top-20`}>
 
                   {(methodOptions.map(methodOption => {
                     return (
                       <div
                         onClick={(e => {
                          
-                          setFlagResult(methodOption.id === 1 ? methodOption.method : (flagResult === "NGN Wallet" && methodOption.id !== 1 ) ? "NGN Wallet" : "");
-                          setShowMaxWalletBalance(methodOption.id === 1   ? 
-                            methodOption.balance : flagResult === "NGN Wallet" ?
-                            ( newBalance === "" || newBalance === null ? `(${updateBalance})` :
-                               `(${newBalance})`) : "");
+                          setShowMaxFlagResult(methodOption.id === 1 ? methodOption.method : (showMaxFlagResult === "NGN Wallet" && methodOption.id !== 1 ) ? "NGN Wallet" : "");
+                          setShowMaxWalletBalance(methodOption.id === 1 && showMaxWalletBalance === ""? 
+                                                                                    newBalance === "" || newBalance === null || newBalance === undefined
+                                                              ? `(${updateBalance?.length > 1 ? updateBalanceToNumber?.toLocaleString("en-NG", {
+                                                                   style : "currency",
+                                                                   currency : "NGN"
+                                                              }) : ""})`
+                                                              : `(${newBalance?.length > 1 ? newBalanceToNumber?.toLocaleString("en-NG", {
+                                                                style : "currency",
+                                                                currency : "NGN"
+                                                              }) : ""})` : showMaxFlagResult === "NGN Wallet"  ?  newBalance === "" || newBalance === null || newBalance === undefined
+                                                              ? `(${updateBalance?.length > 1 ? updateBalanceToNumber?.toLocaleString("en-NG", {
+                                                                   style : "currency",
+                                                                   currency : "NGN"
+                                                              }) : ""})`
+                                                              : `(${newBalance?.length > 1 ? newBalanceToNumber?.toLocaleString("en-NG", {
+                                                                style : "currency",
+                                                                currency : "NGN"
+                                                              }) : ""})` : "");
                           setMethodImage(methodOption.id === 1 ? methodOption.flag : methodImage);
                                 setMethodPayment(false);
                                setMethodPayment(()=> {
@@ -790,27 +924,25 @@ setShowMaxMobileNumber,
                             }
                           });
                         })}
-                        className={`pb-[20px] md:pb-0 pt-[20px] md:pt-0 font-weight-bold 
-                          text-[14px] flex gap-[10px] lg:py-[15px] py-[10px] pl-[10px]
-        cursor-pointer items-center 
-        shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] 
-         ${methodOption.id  !== 1 && !isDarkMode  ? "bg-gray-300 cursor-not-allowed" : 
-            methodOption.id !== 1 && isDarkMode ? "bg-black" : methodOption.id === 1 && !isDarkMode ? "bg-white" : "bg-black" }`}
+                       className={`py-[18px] md:py-[14px] font-normal px-2 flex
+                         items-center gap-[5px] text-[12px] md:text-[14px] 
+                         lg:text-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
+                          transition-all duration-300 hover:bg-slate-50
+                       ${
+                         isDarkMode
+                           ? "text-white hover:bg-slate-800 bg-black "
+                           : "text-[#7E7E7E]"
+                       } ${
+                        methodOption.method === "NGN Wallet"
+                          ? "cursor-pointer"
+                          : "cursor-not-allowed opacity-50"
+                      }`}
                         key={methodOption.id}>
 
                         <img className='md:h-[29.27px]  h-[14.27px]' src={methodOption.flag} alt="" />
 
-                        <h2
-                          className={`text-[13px] leading-[10.4px]
-               font-[500]  
-         md:text-[13.227px] md:leading-[17.195px] 
-         lg:text-[16px] lg:leading-[20.8px] self-center cursor-pointer  
-          ${isDarkMode 
-          ? "bg-black text-white" 
-          : "text-[#7C7C7C]"
-      }`} >
-                          {methodOption.method + ' ' + methodOption.balance}
-                        </h2>
+                       {methodOption.method + ' ' + methodOption.balance}
+                       
                       </div>
 
                     )
@@ -825,9 +957,9 @@ setShowMaxMobileNumber,
         </div>
 
         <button onClick={handleShowmax}
-          disabled={showMaxMobileNumber.length !== 11 || !userVerifiedName || !showMaxEmail || !showMaxSmartCard || !showMaxDecoderType || !selectedOptionShowmax}
+          disabled={showMaxMobileNumber.length !== 11 || !userVerifiedName || !showMaxEmail|| !showMaxDecoderType || !selectedOptionShowmax || !showMaxFlagResult}
           className={`
-             ${showMaxMobileNumber.length !== 11 || !userVerifiedName|| !showMaxEmail || !showMaxSmartCard || !showMaxDecoderType || !selectedOptionShowmax || !flagResult
+             ${showMaxMobileNumber.length !== 11 || !userVerifiedName|| !showMaxEmail || !showMaxDecoderType || !selectedOptionShowmax || !showMaxFlagResult
               ? "bg-[#63616188] "
               : "bg-primary"
             }

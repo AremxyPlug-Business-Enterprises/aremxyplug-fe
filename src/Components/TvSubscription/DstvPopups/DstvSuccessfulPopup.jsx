@@ -13,10 +13,11 @@ import { Link } from "react-router-dom";
      setDstvSuccessful,
      toggleSideBar,
      dstvMobileNumber,
-     flagResult,
+   
      dstvSmartCard,
      selectedOptionDstv,
      dstvEmail,
+     dstvFlagResult,
      isDarkMode
   } = useContext(ContextProvider)
 
@@ -83,7 +84,8 @@ import { Link } from "react-router-dom";
             text-center md:text-[20px] md:my-[3%] lg:text-[14px] lg:my-[2%] ${isDarkMode ? "text-white" : "text-[#000]"}`}
             >Subscription Successful</p>
             <img
-              className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[70px] lg:h-[70px]"
+              className="w-[50px] h-[50px] mx-auto mb-[2%]
+               lg:w-[70px] lg:h-[70px]"
               src="./Gif/checkMarkGif.gif"
               alt="/"
             />
@@ -94,7 +96,7 @@ import { Link } from "react-router-dom";
                   <span className={` ${isDarkMode? "text-white" : "text-black"} font-bold 
                    md:text-[16px] lg:text-[14px]`}>{valueWithoutTilde}</span>&nbsp;
                   From Your {" "}
-                  {flagResult} {" "} to
+                  {dstvFlagResult} {" "} to
             </p>
             <div className="flex mt-4 flex-col gap-2 lg:gap-4">
             <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between 
@@ -133,7 +135,7 @@ import { Link } from "react-router-dom";
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto
                  justify-between font-[500] lg:text-[15px]">
                     <span className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Payment Method</span>
-                    <span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>{flagResult}</span>
+                    <span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>{dstvFlagResult}</span>
                 </div>
               
             </div>

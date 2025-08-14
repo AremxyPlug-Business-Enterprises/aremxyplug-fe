@@ -16,7 +16,9 @@ export default function ProfileSettingsMain(Data) {
   const { profilePage, setProfilePage } = useContext(ContextProvider);
   const { verificationOpen, setVerificationOpen } = useContext(ContextProvider);
   const { setBusinessPopUp } = useContext(ContextProvider);
-  const { authenticationOpen, setAuthenticationOpen } =
+  const { authenticationOpen, setAuthenticationOpen,
+     
+   } =
     useContext(ContextProvider);
   const { bvnVerificationOpen, setBvnVerificationOpen } =
     useContext(ContextProvider);
@@ -24,7 +26,7 @@ export default function ProfileSettingsMain(Data) {
   const { idVerificationOpen, setIdVerificationOpen } =
     useContext(ContextProvider);
     const {setVerificationReason} = useContext(ContextProvider);
-    const { setVerificationResponse} = useContext(ContextProvider);
+    const {verificationResponse, setVerificationResponse} = useContext(ContextProvider);
     const [sessionModal, setSessionModal] = useState(false);
 
   const location = useLocation();
@@ -55,19 +57,19 @@ export default function ProfileSettingsMain(Data) {
 
   const QuickCheckVerification = async()=> {
      
-    if(!navigator.onLine) return  setVerificationReason(`${idVerificationOpen === true ? "Nin" : bvnVerificationOpen === true ? "Bvn" : ""} retrieval failed: internet connection error`)
+    if(!navigator.onLine) return  setVerificationReason(`${idVerificationOpen === true ? "Nin" : bvnVerificationOpen === true ? "Bvn" : "Nin"} retrieval failed: internet connection error`)
     const path ="check-verification";
-    const SuccessHandler = ()=> {
+    const SuccessHandler = (response)=> {
       console.log("Successful");
     }
     const FailedHandler = async(ErrorType)=> {
       
-      if(ErrorType === "User error"){
-        setVerificationReason(`${idVerificationOpen === true ? "Nin" : bvnVerificationOpen === true ? "Bvn" : ""} retrieval failed due to unstable connection`)
+      if(ErrorType === "User error" || ErrorType === "Network error"){
+        setVerificationReason(`${idVerificationOpen === true ? "Nin" : bvnVerificationOpen === true ? "Bvn" : "Nin"} retrieval failed due to unstable connection`)
       }else if(ErrorType === "Server error"){
-        setVerificationReason(`${idVerificationOpen === true ? "Nin" : bvnVerificationOpen === true ? "Bvn" : ""} retrieval failed try some other time`)
+        setVerificationReason(`${idVerificationOpen === true ? "Nin" : bvnVerificationOpen === true ? "Bvn" : "Nin"} retrieval failed try some other time`)
       }else if(ErrorType === undefined){
-      setVerificationReason(`${idVerificationOpen === true ? "Nin" : bvnVerificationOpen === true ? "Bvn" : ""} retrieval failed: internet connection error`)
+      setVerificationReason(`${idVerificationOpen === true ? "Nin" : bvnVerificationOpen === true ? "Bvn" : "Nin"} retrieval failed: internet connection error`)
       }else if(ErrorType === "unauthorised"){
         await GetFunction(path, 
       setLoading, 
@@ -81,6 +83,7 @@ export default function ProfileSettingsMain(Data) {
       setVerificationResponse)
       }
     }
+  console.log(verificationResponse?.data?.data?.address);
     const setLoading=(Value)=> {
   console.log(Value)
     }
@@ -96,9 +99,16 @@ export default function ProfileSettingsMain(Data) {
   Data = GetLocalStorage();
   useEffect(() => {
     ValueRef.current = Data;
+    if(Data?.ConfirmId === "true"  || Data?.ConfirmBvn === "true"){
     QuickCheckVerification();
+    }
     //eslint-disable-next-line
   }, [idVerificationOpen,bvnVerificationOpen]);
+  window.addEventListener("online", ()=> {
+       if(Data?.ConfirmId === "true"  || Data?.ConfirmBvn === "true"){
+    QuickCheckVerification();
+    }
+  })
 
   return (
     <DashBoardLayout>

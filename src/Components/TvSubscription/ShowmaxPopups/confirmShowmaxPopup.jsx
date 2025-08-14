@@ -65,6 +65,10 @@ const ConfirmShowmaxPopup = ({userVerifiedName}) => {
       {confirmShowmaxPopup &&
         (
           <Modal >
+  <div className={`w-full flex justify-center h-full 
+             py-[30px] px-[15px] lg:px-[0px] lg:items-center
+              items-end`}>
+
 
             <div 
               className={`${styles.transferMoneyPop} ${
@@ -174,6 +178,7 @@ const ConfirmShowmaxPopup = ({userVerifiedName}) => {
               >
                 Confirmed
               </button>
+            </div>
             </div>
           </Modal>
         )}

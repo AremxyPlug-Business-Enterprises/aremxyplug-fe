@@ -21,7 +21,7 @@ import arrowRight from "../../../Components/EducationPins/imagesEducation/educat
     dstvSmartCard,
     //cardName,
     methodImage,
-    flagResult,
+    dstvFlagResult,
     dstvAmount,
     newBalance,
     isDarkMode
@@ -87,18 +87,20 @@ const [balanceStatus,setBalanceStatus] = useState("")
             lg:my-[2%] lg:text-[16px]">
               Confirm Transaction</p>
               <div className={`text-[10px] font-semibold text-center mb-2
-               md:text-[12px] lg:text-[14px] mx-2 ${isDarkMode ? "text-white" : "text-black"}`}>
+               md:text-[12px] lg:text-[14px] mx-2 
+               ${isDarkMode ? "text-white" : "text-black"}`}>
                   You are about to purchase&nbsp;
                   <span className={`font-extrabold text-[10px] md:text-[16px]
                      lg:text-[12px] ${isDarkMode ? "text-white" : "text-black"}`}>{valueWithoutTilde}</span>&nbsp;
                 from your {" "}
-                {flagResult} {" "} to
+                {dstvFlagResult} {" "} to
                 </div>
             
             <div className="flex flex-col gap-3 mt-5 md:mt-6 lg:mt-7">
          <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
          justify-between font-[500] lg:text-[16px]">
-                    <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Decoder Type</span>
+                    <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+                      Decoder Type</span>
                     <span className={`${isDarkMode ? "text-white" : "text-black"}`}>Dstv</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto
@@ -137,7 +139,7 @@ const [balanceStatus,setBalanceStatus] = useState("")
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto
                  justify-between font-[500] lg:text-[16px]">
                     <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Payment Method</span>
-                    <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{flagResult}</span>
+                    <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{dstvFlagResult}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between
                  font-[500] lg:text-[16px]">
@@ -167,7 +169,7 @@ const [balanceStatus,setBalanceStatus] = useState("")
                         lg:leading-[22px]  lg:text-[16px] font-[500] ${isDarkMode ? "text-white" : "text-black"}`}>
                     Available Balance {"  "} 
                      </p>
-                     <span className={`${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+                     <span className={`font-medium ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
                       {`(${updateBalance !== "" ? updateBalance?.toLocaleString("en-NG", {
                         style : "currency",
                         currency : "NGN"
