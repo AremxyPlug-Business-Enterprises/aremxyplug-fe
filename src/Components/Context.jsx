@@ -254,6 +254,7 @@ export const Context = ({ children }) => {
       userName,
       email,
       phoneNumber,
+       IVcode,
       password,
       confirmPassword,
       checkbox,
@@ -294,7 +295,7 @@ export const Context = ({ children }) => {
           fullname: fullName,
           username: userName,
           phone_number: phoneNumber,
-          // iv_code : IVCode,
+          iv_code : IVcode,
           email: email,
           password: password,
           country: country,
@@ -401,7 +402,7 @@ export const Context = ({ children }) => {
   const [showList, setShowList] = useState(false);
   const [selected, setSelected] = useState(false);
   const [selectedCurr, setSelectedCurr] = useState(false);
-  const [amtToTransfer, setAmtToTransfer] = useState("");
+  const [amtToTransfer, setAmtToTransfer] = useState(0);
   const [confirmationPopUp, setConfirmationPopUp] = useState(false);
   const [inputPinPopUp, setInputPinPopUp] = useState(false);
   const [transactSuccessPopUp, setTransactSuccessPopUp] = useState(false);
@@ -411,6 +412,11 @@ export const Context = ({ children }) => {
   const [inputPin, setInputPin] = useState("");
   const textRef = useRef(null);
   const transferFee = 50;
+  const [messageTransfer, setMessageTransfer] = useState("");
+  const [transferAmount,setTransferAmount] = useState(0);
+   const [otherInputPinPopUp, setOtherInputPinPopUp] = useState(false);
+   const [transferResponse, setTransferResponse] = useState({});
+  
 
   const [isVisible, setIsVisible] = useState(true);
 
@@ -1590,6 +1596,10 @@ export const Context = ({ children }) => {
     handleClickOutside,
     toggleVisibility,
     isVisible,
+    transferAmount,
+    setTransferAmount,
+    messageTransfer,
+     setMessageTransfer,
 
     // ==================Aremxyplug pages==============
     mainTransferErrors,
@@ -1601,6 +1611,10 @@ export const Context = ({ children }) => {
     emailPhoneNumberConfirmation,
     setEmailPhoneNumberConfirmation,
     ProceedToMainTransfer,
+    otherInputPinPopUp,
+     setOtherInputPinPopUp,
+     transferResponse,
+     setTransferResponse,
 
     // ==================GLobal Transfer==============
     otherBanksConfirmation,
