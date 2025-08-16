@@ -9,7 +9,7 @@ import facebook from "../Referrals/referralImage/facebookRefer.svg";
 import twitter from "../Referrals/referralImage/twitterRefer.svg";
 import rightArrow from "../Referrals/referralImage/rightArrowRefer.svg";
 import arrowDown from "../Referrals/referralImage/arrow-down.svg";
-import NoRecordImage from "../Add&SelectRecipient/RecipientImages/NoRecordImage.svg"
+import NoRecordImage from "../Add&SelectRecipient/RecipientImages/NoRecordImage.svg";
 import { Link } from "react-router-dom/dist/react-router-dom.development";
 import { useState, useEffect, useRef } from "react";
 import "../../App.css";
@@ -113,10 +113,7 @@ export default function Referral() {
       await handleReferredUsers();
     };
     fetchReferredUsers();
-  }
-  , []);
-
-
+  }, []);
 
   const handleReferredUsers = async () => {
     const Path = "extra/referral/referred-users";
@@ -134,7 +131,7 @@ export default function Referral() {
           (ErrorType) => {
             if (ErrorType === "unauthorised") {
               setSessionModal(true);
-            } 
+            }
           },
           setReferralResponds
         );
@@ -150,19 +147,20 @@ export default function Referral() {
           },
           setReferredUsersResponse
         );
+      }
     };
-  };
-  await GetFunction(
+    await GetFunction(
       Path,
       setIsLoading,
       successHandler,
       FailedHandler,
       setReferredUsersResponse
     );
-}
+  };
 
-const referredUsers =referredUsersResponse? referredUsersResponse?.data?.data?.referrals : [];
-
+  const referredUsers = referredUsersResponse
+    ? referredUsersResponse?.data?.data?.referrals
+    : [];
 
   return (
     <DashBoardLayout>
@@ -358,7 +356,7 @@ const referredUsers =referredUsersResponse? referredUsersResponse?.data?.data?.r
               </div>
               <h2 className="font-style font-medium text-[10px] text-center leading-[15px] lg:text-base lg:leading-6">
                 {/* 100 */}
-                {referredUsers?.length}
+                {referredUsers?.length || 0}
               </h2>
             </div>
             {/* box-2 */}
@@ -376,7 +374,10 @@ const referredUsers =referredUsersResponse? referredUsersResponse?.data?.data?.r
               </div>
               <h2 className="font-style font-medium text-[10px] text-center leading-[15px] lg:text-base lg:leading-6">
                 {/* 70 */}
-                {referredUsers?.filter(user => user.is_active === true).length}
+                {
+                  referredUsers?.filter((user) => user.is_active === true)
+                    .length || 0
+                }
               </h2>
             </div>
             {/* box-3 */}
@@ -394,7 +395,10 @@ const referredUsers =referredUsersResponse? referredUsersResponse?.data?.data?.r
               </div>
               <h2 className="font-style font-medium text-[10px] text-center leading-[15px] lg:text-base lg:leading-6">
                 {/* 30 */}
-                {referredUsers?.filter(user => user.is_active === false).length}
+                {
+                  referredUsers?.filter((user) => user.is_active === false)
+                    .length || 0
+                }
               </h2>
             </div>
           </div>
@@ -403,62 +407,77 @@ const referredUsers =referredUsersResponse? referredUsersResponse?.data?.data?.r
           {/* ANALYSIS STATUS FOR MOBILE SCREENS */}
           <div className="md:hidden flex flex-col p-5 border-x-[1.2px] border-[#7C7C7C] border-opacity-[25%] mb-[50px]  shadow-md">
             {/* analysis 1 */}
-            {referredUsers?.length > 0 ? (referredUsers?.map((user) => (
-              
-              <div key={user.user_id} className="flex justify-between pb-[31.5px] border-b border-b-[black] border-opacity-[20%]">
-              {/* left */}
-              <div className="flex flex-col gap-[7.648px]">
-                <h2 className="font-semibold text-[9.167px] leading-[11.167px]">
-                  {/* Habib Kamaldeen */}
-                  {user.full_name}
-                </h2>
-                <h2 className="font-semibold text-[9.167px] leading-[11.167px]">
-                  Aremxyplug
-                </h2>
-                <p className="font-semibold text-[#7C7C7C] text-[9.167px] leading-[11.167px]">
-                  {/* aremxyplug */}
-                  {user.referred_id}
-                </p>
-              </div>
-              {/* rightSide */}
-              <div className="flex flex-col gap-[11.473px]">
-                <p
-                  className={`font-semibold self-end text-[9.167px] leading-[11.167px] cursor-pointer py-[2.122px] px-[4.245px] rounded-[1.22px]
-                    ${user.is_active === true ? "bg-[#97E8B9]" : "bg-[#FDCECE]"} `}
+            {referredUsers?.length > 0 ? (
+              referredUsers?.map((user) => (
+                <div
+                  key={user.user_id}
+                  className="flex justify-between py-[31.5px] border-b border-b-[black] border-opacity-[20%]"
                 >
-                  {/* Active */}
-                  {user.is_active === true ? "Active" : "Inactive"}
-                </p>
-                <p className="font-medium text-[10px] text-[#7C7C7C] leading-[13px]">
-                  <span className="block">
-                    {/* May 21st, 2023, */}
-                    {new Date(user.referred_at).toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })}
-                    </span>
-                  <span className="block">
-                    {/* 07:21:00pm */}
-                    {new Date(user.referred_at).toLocaleTimeString("en-US", {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                      second: "2-digit",
-                      hour12: true,
-                    })}
-
-                  </span>
-                </p>
-              </div>
-            </div>
-            ))):
-            <div className='flex justify-center '>
-              <img src={NoRecordImage} alt="" 
-                  className='lg:w-[517px] lg:h-[456px]'/>
+                  {/* left */}
+                  <div className="flex flex-col gap-[7.648px]">
+                    <h2 className="font-semibold text-[9.167px] leading-[11.167px]">
+                      {/* Habib Kamaldeen */}
+                      {user.full_name}
+                    </h2>
+                    <h2 className="font-semibold text-[9.167px] leading-[11.167px]">
+                      {/* Aremxyplug */}
+                      {user.username}
+                    </h2>
+                    <p className="font-semibold text-[#7C7C7C] text-[9.167px] leading-[11.167px]">
+                      {/* aremxyplug */}
+                      {user.referred_id}
+                    </p>
                   </div>
-                  }
+                  {/* rightSide */}
+                  <div className="flex flex-col gap-[11.473px]">
+                    <p
+                      className={`font-semibold self-end text-[9.167px] leading-[11.167px] cursor-pointer py-[2.122px] px-[4.245px] rounded-[1.22px]
+                    ${
+                      user.is_active === true ? "bg-[#97E8B9]" : "bg-[#FDCECE]"
+                    } `}
+                    >
+                      {/* Active */}
+                      {user.is_active === true ? "Active" : "Inactive"}
+                    </p>
+                    <p className="font-medium text-[10px] text-[#7C7C7C] leading-[13px]">
+                      <span className="block">
+                        {/* May 21st, 2023, */}
+                        {new Date(user.referred_at).toLocaleDateString(
+                          "en-US",
+                          {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                          }
+                        )}
+                        ,
+                      </span>
+                      <span className="block">
+                        {/* 07:21:00pm */}
+                        {new Date(user.referred_at).toLocaleTimeString(
+                          "en-US",
+                          {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            second: "2-digit",
+                            hour12: true,
+                          }
+                        )}
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="flex justify-center ">
+                <img
+                  src={NoRecordImage}
+                  alt=""
+                  className="lg:w-[517px] lg:h-[456px]"
+                />
+              </div>
+            )}
 
-            
             {/* VIEW ALL TRANSACTIONS */}
             {/* <div className="flex py-[21px] justify-center">
               <p className="font-medium text-[10px] text-[#707070] leading-[13px] ">
@@ -485,101 +504,104 @@ const referredUsers =referredUsersResponse? referredUsersResponse?.data?.data?.r
             className="Refer hidden md:flex 
    "
           >
-            <table
-              className="mt-[0px] lg:h-[700px] md:h-[401.04px] md:shadow-lg border-collapse font-[inter] "
-            >
+            <table className="mt-[0px] relative lg:h-[700px] md:h-[401.04px] md:shadow-lg border-collapse font-[inter] ">
               {/* HEADER ROW */}
 
-              <tr
-                className="flex w-full md:pl-[16.038px] md:pr-[15.473px] lg:pl-[28px] lg:pr-[27px]  md:gap-[36.67px] md:pt-[6.316px] md:pb-[5.746px] lg:gap-[64px] lg:pt-[11px] lg:pb-[10px] bg-[#CED9FF]"
-              >
-                <th
-                  className="text-left lg:text-base lg:leading-[20.8px] w-1/5 md:text-[9.167px] md:leading-[11.917px] border-none"
-                >
+              <tr className="flex w-full md:pl-[16.038px] md:pr-[15.473px] lg:pl-[28px] lg:pr-[27px]  md:gap-[36.67px] md:pt-[6.316px] md:pb-[5.746px] lg:gap-[64px] lg:pt-[11px] lg:pb-[10px] bg-[#CED9FF]">
+                <th className="text-left lg:text-base lg:leading-[20.8px] w-1/5 md:text-[9.167px] md:leading-[11.917px] border-none">
                   Date/Time
                 </th>
-                <th
-                  className="text-left w-1/5 md:text-[9.167px] md:leading-[11.917px] lg:text-base lg:leading-[20.8px] border-none"
-                >
+                <th className="text-left w-1/5 md:text-[9.167px] md:leading-[11.917px] lg:text-base lg:leading-[20.8px] border-none">
                   Name
                 </th>
-                <th
-                  className="text-left w-1/5 md:text-[9.167px] md:leading-[11.917px] lg:text-base lg:leading-[20.8px] border-none"
-                >
+                <th className="text-left w-1/5 md:text-[9.167px] md:leading-[11.917px] lg:text-base lg:leading-[20.8px] border-none">
                   UserName
                 </th>
-                <th
-                  className="text-left w-1/5 md:text-[9.167px] md:leading-[11.917px] lg:text-base lg:leading-[20.8px] border-none"
-                >
+                <th className="text-left w-1/5 md:text-[9.167px] md:leading-[11.917px] lg:text-base lg:leading-[20.8px] border-none">
                   ReferralID
                 </th>
-                <th
-                  className="text-left w-1/5  md:text-[9.167px] md:leading-[11.917px] lg:text-base lg:leading-[20.8px] border-none"
-                >
+                <th className="text-left w-1/5  md:text-[9.167px] md:leading-[11.917px] lg:text-base lg:leading-[20.8px] border-none">
                   Status
                 </th>
               </tr>
               {/* ROW ONE */}
-              <div
-                className="flex flex-col md:pl-[16.038px] md:pr-[15.473px] lg:pl-[28px] lg:pr-[27px] "
-              >
-                <tr
-                  className="flex w-full border-b-[1.5px] border-[#000000] border-opacity-[20%] md:gap-[36.67px] lg:gap-[64px]"
-                >
-                  <td
-                    className="w-1/5 lg:pt-[30.5px] lg:pb-[28.5px] md:pt-[17.51px] md:pb-[16.36px] p-[0px]"
-                  >
-                    <p
-                      className=" text-left font-semibold leading-[20.8px] border-none md:text-[9.167px] md:leading-[11.917px] lg:text-base lg:leading-[20.8px]"
+              {referredUsers?.length > 0 ? (
+                referredUsers?.map((user) => (
+                  <div className="flex flex-col md:pl-[16.038px] md:pr-[15.473px] lg:pl-[28px] lg:pr-[27px] ">
+                    <tr className="flex w-full border-b-[1.5px] border-[#000000] border-opacity-[20%] md:gap-[40px] lg:gap-[70px]"
+                    // md:gap-[36.67px]
                     >
-                      <span className="md:block">May 21, 2023,</span>
-                      <span className="md:block">07:21:00pm</span>
-                    </p>
-                  </td>
-                  <td className="w-1/5 lg:pt-[30.5px] lg:pb-[28.5px] md:pt-[17.51px] md:pb-[16.36px] p-[0px]">
-                    <p
-                      className="lg:text-base text-left font-semibold lg:leading-[20.8px] md:text-[9.167px] md:leading-[11.917px] "
-                    >
-                      <span className="md:block">Habib</span>
-                      <span className="md:block">Kamaldeen</span>
-                    </p>
-                  </td>
-                  <td
-                    className="w-1/5 pt-[30.5px] lg:pt-[30.5px] lg:pb-[28.5px] md:pt-[17.51px] md:pb-[16.36px] p-[0px]"
-                  >
-                    <p
-                      className="lg:text-base text-left font-semibold lg:leading-[20.8px] md:text-[9.167px] md:leading-[11.917px]"
-                    >
-                      Aremxyplug
-                    </p>
-                  </td>
-                  <td
-                    className="w-1/5 flex-start md:pt-[17.51px] md:pb-[16.36px] lg:pt-[30.5px] lg:pb-[28.5px] p-[0px]"
-                  >
-                    <p
-                      className="lg:text-base text-left font-semibold lg:leading-[20.8px] md:text-[9.167px] md:leading-[11.917px]"
-                    >
-                      aremxyplug
-                    </p>
-                  </td>
-                  <td
-                    className="w-1/5 flex justify-start items-start md:pt-[17.51px] md:pb-[16.36px] lg:pt-[30.5px] lg:pb-[28.5px] p-[0px]"
-                  >
-                    <p
-                      className="lg:text-base text-left font-semibold lg:leading-[20.8px] py-[4px] px-[12px] bg-[#CED9FF] md:text-[9.167px] md:leading-[11.917px] md:rounded-[3.438px]"
-                    >
-                      Active
-                    </p>
-                  </td>
-                </tr>
-                
-              </div>
+                      <td className="w-1/5 lg:pt-[30.5px] lg:pb-[28.5px] md:pt-[17.51px] md:pb-[16.36px] p-[0px]">
+                        <p className=" text-left font-semibold leading-[20.8px] border-none md:text-[9.167px] md:leading-[11.917px] lg:text-base lg:leading-[20.8px]">
+                          <span className="md:block">
+                            {new Date(user.referred_at).toLocaleDateString(
+                              "en-US",
+                              {
+                                year: "numeric",
+                                month: "long",
+                                day: "numeric",
+                              }
+                            )}
+                            ,
+                          </span>
+                          <span className="md:block">
+                            {new Date(user.referred_at).toLocaleTimeString(
+                              "en-US",
+                              {
+                                hour: "2-digit",
+                                minute: "2-digit",
+                                second: "2-digit",
+                                hour12: true,
+                              }
+                            )}
+                          </span>
+                        </p>
+                      </td>
+                      <td className="w-1/5 lg:pt-[30.5px] lg:pb-[28.5px] md:pt-[17.51px] md:pb-[16.36px] p-[0px]">
+                        <p className="lg:text-base text-left font-semibold lg:leading-[20.8px] md:text-[9.167px] md:leading-[11.917px] ">
+                          <span className="md:block">
+                            {/* Habib */}
+                            {user.full_name}
+                          </span>
+                          {/* <span className="md:block">Kamaldeen</span> */}
+                        </p>
+                      </td>
+                      <td className="w-1/5 pt-[30.5px] lg:pt-[30.5px] lg:pb-[28.5px] md:pt-[17.51px] md:pb-[16.36px] p-[0px]">
+                        <p className="lg:text-base text-left font-semibold lg:leading-[20.8px] md:text-[9.167px] md:leading-[11.917px]">
+                          {/* Aremxyplug */}
+                          {user.username}
+                        </p>
+                      </td>
+                      <td className="w-1/5 flex-start md:pt-[17.51px] md:pb-[16.36px] lg:pt-[30.5px] lg:pb-[28.5px] p-[0px]">
+                        <p className="lg:text-base text-left font-semibold lg:leading-[20.8px] md:text-[9.167px] md:leading-[11.917px]">
+                          {/* aremxyplug */}
+                          {user.referred_id}
+                        </p>
+                      </td>
+                      <td className="w-1/5 flex justify-start items-start md:pt-[17.51px] md:pb-[16.36px] lg:pt-[30.5px] lg:pb-[28.5px] p-[0px]">
+                        <p className={`lg:text-base text-left font-semibold lg:leading-[20.8px] py-[4px] px-[12px] bg-[#CED9FF] md:text-[9.167px] md:leading-[11.917px] md:rounded-[3.438px] ${
+                      user.is_active === true ? "bg-[#CED9FF]" : "bg-[#FDCECE]"
+                    }`}>
+                          {/* Active */}
+                          {user.is_active === true ? "Active" : "Inactive"}
+                        </p>
+                      </td>
+                    </tr>
+                  </div>
+                ))
+              ) : (
+                <div className="flex justify-center ">
+                  <img
+                    src={NoRecordImage}
+                    alt=""
+                    className="lg:w-[517px] lg:h-[456px]"
+                  />
+                </div>
+              )}
 
               {/* CONTACT US */}
-              <div className="flex md:gap-[14.896px] py-[20.865px] justify-center px-[8.594px]">
-                <p
-                  className="font-medium self-center  lg:text-xs lg:leading-[16.6px]  md:text-[8.875px] text-[#707070] md:leading-[12.938px]"
-                >
+              <div className="flex mt-10 md:gap-[14.896px] py-[20.865px] justify-center absolute bottom-3 left-[45%] px-[8.594px]">
+                <p className="font-medium self-center  lg:text-xs lg:leading-[16.6px]  md:text-[8.875px] text-[#707070] md:leading-[12.938px]">
                   You need help?
                 </p>
                 <Link
@@ -603,9 +625,6 @@ const referredUsers =referredUsersResponse? referredUsersResponse?.data?.data?.r
     </DashBoardLayout>
   );
 }
-
-
-
 
 // {/* analysis2 */}
 //             <div
@@ -871,14 +890,14 @@ const referredUsers =referredUsersResponse? referredUsersResponse?.data?.data?.r
 //     lg:pt-[30.5px] lg:pb-[28.5px] p-[0px]"
 //                   >
 //                     <p
-//                       className="lg:text-base text-left font-semibold lg:leading-[20.8px] 
+//                       className="lg:text-base text-left font-semibold lg:leading-[20.8px]
 //     md:text-[9.167px] md:leading-[11.917px]"
 //                     >
 //                       aremxyplug
 //                     </p>
 //                   </td>
 //                   <td
-//                     className="w-1/5 flex justify-start items-start 
+//                     className="w-1/5 flex justify-start items-start
 //       md:pt-[17.51px] md:pb-[16.36px] lg:pt-[30.5px] lg:pb-[28.5px] p-[0px]"
 //                   >
 //                     <p
@@ -936,14 +955,14 @@ const referredUsers =referredUsersResponse? referredUsersResponse?.data?.data?.r
 //     lg:pt-[30.5px] lg:pb-[28.5px] p-[0px]"
 //                   >
 //                     <p
-//                       className="lg:text-base text-left font-semibold lg:leading-[20.8px] 
+//                       className="lg:text-base text-left font-semibold lg:leading-[20.8px]
 //     md:text-[9.167px] md:leading-[11.917px]"
 //                     >
 //                       aremxyplug
 //                     </p>
 //                   </td>
 //                   <td
-//                     className="w-1/5 flex justify-start items-start   
+//                     className="w-1/5 flex justify-start items-start
 //      md:pt-[17.51px] md:pb-[16.36] lg:pt-[30.5px] lg:pb-[28.5px] p-[0px]"
 //                   >
 //                     <p
@@ -974,7 +993,7 @@ const referredUsers =referredUsersResponse? referredUsersResponse?.data?.data?.r
 //                     </p>
 //                   </td>
 //                   <td
-//                     className="w-1/5   md:pt-[17.51px] md:pb-[16.36px] 
+//                     className="w-1/5   md:pt-[17.51px] md:pb-[16.36px]
 //               lg:pt-[30.5px] lg:pb-[28.5px] p-[0px]"
 //                   >
 //                     <p
@@ -1001,7 +1020,7 @@ const referredUsers =referredUsersResponse? referredUsersResponse?.data?.data?.r
 //     lg:pt-[30.5px] lg:pb-[28.5px] p-[0px]"
 //                   >
 //                     <p
-//                       className="lg:text-base text-left font-semibold lg:leading-[20.8px] 
+//                       className="lg:text-base text-left font-semibold lg:leading-[20.8px]
 //     md:text-[9.167px] md:leading-[11.917px]"
 //                     >
 //                       aremxyplug
@@ -1066,7 +1085,7 @@ const referredUsers =referredUsersResponse? referredUsersResponse?.data?.data?.r
 //     lg:pt-[30.5px] lg:pb-[28.5px] p-[0px]"
 //                   >
 //                     <p
-//                       className="lg:text-base text-left font-semibold leading-[20.8px] 
+//                       className="lg:text-base text-left font-semibold leading-[20.8px]
 //     md:text-[9.167px] md:leading-[11.917px]"
 //                     >
 //                       aremxyplug
@@ -1127,7 +1146,7 @@ const referredUsers =referredUsersResponse? referredUsersResponse?.data?.data?.r
 //     lg:pt-[30.5px] lg:pb-[28.5px] p-[0px]"
 //                   >
 //                     <p
-//                       className="lg:text-base text-left font-semibold lg:leading-[20.8px] 
+//                       className="lg:text-base text-left font-semibold lg:leading-[20.8px]
 //     md:text-[9.167px] md:leading-[11.917px] "
 //                     >
 //                       aremxyplug
