@@ -21,8 +21,8 @@ export default function ToAremxyMain(Data) {
     selected,
     setSelected,
     toggleSideBar,
-    amtToTransfer,
-    setAmtToTransfer,
+   // amtToTransfer,
+   // setAmtToTransfer,
     mainCountry,
     setMainCountry,
     setEmailPhoneNumberConfirmation,
@@ -88,10 +88,10 @@ Data = GetLocalStorage();
       flag: require("../../../../Dashboard/DashboardComponents/flagsImages/kenyaFlag.png"),
     },
   ];
-   const testEmail = new RegExp(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]/)
+   const testEmail = new RegExp(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]/);
 const testUsername = new RegExp( /^[a-zA-Z0-9_]{3,20}$/);
-const GetUserDetails =async(value, transferIdentity)=> {
 
+const GetUserDetails = async(value, transferIdentity)=> {
 if(((transferIdentity === "email" && value !== Data?.UserEmail) ||( transferIdentity === "username" && Data?.aremxyUsername !== value) )
   && value?.length > 2 ){
   const SuccessHandler =()=> {
@@ -110,8 +110,8 @@ setErrorMessage("");
             setVerifiedUser(false);
         }else if(Error  === "Bad request"){
       setErrorMessage("Account does not exist.")
-         setVerifiedUser(false)
-           setFetchedResponse({})
+         setVerifiedUser(false);
+           setFetchedResponse({});
       }else if(Error === "unauthorised"){
      await GetFunction(`search?${transferIdentity}=${value}`,
       setLoading, 
@@ -420,7 +420,9 @@ const GetBalance = async () => {
                   : "lg:w-full lg:top-[105.3%]"
               }  ${
                 styles.countryDropDown
-              } rounded-b-[7px] shadow-xl bg-[#fff] border lg:rounded-b-[14px] absolute left-0 top-[3.5rem] lg:top-1 z-[3] w-full `}
+              } rounded-b-[7px] shadow-xl bg-[#fff] border 
+              lg:rounded-b-[14px] absolute left-0 top-[3.5rem] 
+              lg:top-1 z-[3] w-full `}
             >
               {countryList.map((country) => (
                 <div
@@ -432,8 +434,7 @@ const GetBalance = async () => {
                       country.flag,
                       country.id,
                       country.code
-                    )
-                  }
+                    )}
                 >
                   <img
                     className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
@@ -594,7 +595,7 @@ const GetBalance = async () => {
               placeholder="Username29 / name@email.com"
               disabled={Data?.ConfirmAcc === "false"}
               className="text-[10px] w-[100%] h-[100%] outline-none 
-              lg:text-[14px] "
+              lg:text-[14px]"
               type="text"
             />
             <img

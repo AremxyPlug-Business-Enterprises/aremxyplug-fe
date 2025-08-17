@@ -78,7 +78,7 @@ let CheckSufficiency = amountToNumeric > updateBalance;
                 amountToNumeric?.toLocaleString("en-NG", {
                   style : "currency",
                   currency : "NGN"
-                }) : ""} {" "} to
+                }) : "₦"} {" "} to
                 </div>
 
             <div className="flex flex-col gap-3 mt-5 md:mt-6 lg:mt-7">
