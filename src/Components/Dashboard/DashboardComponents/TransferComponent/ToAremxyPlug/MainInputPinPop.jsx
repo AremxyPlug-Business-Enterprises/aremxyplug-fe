@@ -359,7 +359,6 @@ if(ErrorType === "Server error"){
       <AremxyMainSuccess
         transactSuccessToOtherBank={transactSuccessToOtherBank}
         setTransactSuccessToOtherBank={setTransactSuccessToOtherBank}
-        transferamount={transferAmount}
         emailUsername={fetchedResponse?.data?.data?.data?.userDetails?.username}
         userPhoneNumber={fetchedResponse?.data?.data?.data?.userDetails?.phone}
       />

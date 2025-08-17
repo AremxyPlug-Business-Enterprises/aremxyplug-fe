@@ -813,9 +813,12 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
               </p>
               <p
                 className="text-[#737373] font-[400] lg:font-[600] lg:text-[14px] text-[12px] cursor-pointer"
-                onClick={() => {
+                onClick={(e) => {
                   setCountdown2(60);
                   setSmsOrEmail("email");
+                 
+                 
+                
                 }}
               >
                 Use email address instead
