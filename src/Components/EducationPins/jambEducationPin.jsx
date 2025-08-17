@@ -246,21 +246,70 @@ export default function JambEducationPin() {
   const updateBalance = passDataBalance?.data?.data
     ? passDataBalance?.data?.data?.data?.balance
     : "";
+  const updateBalanceToNumber = Number(updateBalance);
+  const newBalanceToNumber = Number(newBalance);
+  const otherCurrencyBalance = 0.0;
   const jambMethodOptions = [
     {
       method: "NGN Wallet",
       balance:
         newBalance === "" || newBalance === null || newBalance === undefined
-          ? `(₦${updateBalance})`
-          : `(₦${newBalance})`,
+          ? `(${updateBalanceToNumber?.toLocaleString("en-NG", {
+              style: "currency",
+              currency: "NGN",
+            })})`
+          : `(${newBalanceToNumber?.toLocaleString("en-NG", {
+              style: "currency",
+              currency: "NGN",
+            })})`,
       flag: nigerianFlag,
       id: 1,
     },
-    { method: "USD Wallet ", balance: "(0.00)", flag: americaFlag, id: 2 },
-    { method: "EUR Wallet", balance: "(0.00)", flag: britainFlag, id: 3 },
-    { method: "GBP Wallet", balance: "(0.00)", flag: euroFlag, id: 4 },
-    { method: "AUD Wallet", balance: "(0.00)", flag: austriaFlag, id: 5 },
-    { method: "KES Wallet", balance: "(0.00)", flag: kenyaFlag, id: 6 },
+    {
+      method: "USD Currency",
+      balance: `(${otherCurrencyBalance?.toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD",
+      })})`,
+      flag: americaFlag,
+      id: 2,
+    },
+    {
+      method: "EUR Wallet",
+      balance: `(${otherCurrencyBalance?.toLocaleString("en-EU", {
+        style: "currency",
+        currency: "EUR",
+      })})`,
+      flag: britainFlag,
+      id: 3,
+    },
+    {
+      method: "GBP Wallet",
+      balance: `(${otherCurrencyBalance?.toLocaleString("en-GB", {
+        style: "currency",
+        currency: "GBP",
+      })})`,
+      flag: euroFlag,
+      id: 4,
+    },
+    {
+      method: "AUD Wallet",
+      balance: `(${otherCurrencyBalance?.toLocaleString("en", {
+        style: "currency",
+        currency: "AUD",
+      })})`,
+      flag: austriaFlag,
+      id: 5,
+    },
+    {
+      method: "KES Wallet",
+      balance: `(${otherCurrencyBalance?.toLocaleString("en-KE", {
+        style: "currency",
+        currency: "KES",
+      })})`,
+      flag: kenyaFlag,
+      id: 6,
+    },
   ];
 
   // CONFIRM EXAM TYPE

@@ -158,6 +158,9 @@ const BEDC = () => {
   const updateBalance = passDataBalance?.data?.data
     ? passDataBalance?.data?.data?.data?.balance
     : "";
+const updateBalanceToNumber = Number(updateBalance);
+  const newBalanceToNumber = Number(newBalance);
+  const otherCurrencyBalance = 0.0;
 
   const countryList = [
     {
@@ -165,43 +168,64 @@ const BEDC = () => {
       name: "NGN Wallet",
       balance:
         newBalance === "" || newBalance === null || newBalance === undefined
-          ? `(₦${updateBalance})`
-          : `(₦${newBalance})`,
+          ? `(${updateBalanceToNumber?.toLocaleString("en-NG", {
+              style: "currency",
+              currency: "NGN",
+            })})`
+          : `(${newBalanceToNumber?.toLocaleString("en-NG", {
+              style: "currency",
+              currency: "NGN",
+            })})`,
       code: "Nigerian NGN Wallet",
       flag: require("../ElectricitySubscription/Electricity-sub-images/nigeriaFlag.png"),
     },
     {
       id: 2,
       name: "USD Wallet. ",
-      balance: "(0.00)",
+      balance: `(${otherCurrencyBalance?.toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD",
+      })})`,
       code: "USD",
       flag: require("../ElectricitySubscription/Electricity-sub-images/americaFlag.png"),
     },
     {
       id: 3,
       name: " GBP Wallet. ",
-      balance: "(0.00)",
+      balance: `(${otherCurrencyBalance?.toLocaleString("en-GB", {
+        style: "currency",
+        currency: "GBP",
+      })})`,
       code: "GBP",
       flag: require("../ElectricitySubscription/Electricity-sub-images/ukFlag.png"),
     },
     {
       id: 4,
       name: "EUR Wallet. ",
-      balance: "(0.00)",
+      balance: `(${otherCurrencyBalance?.toLocaleString("en-EU", {
+        style: "currency",
+        currency: "EUR",
+      })})`,
       code: "EUR ",
       flag: require("../ElectricitySubscription/Electricity-sub-images/europeanFlag.png"),
     },
     {
       id: 5,
       name: "AUD Wallet. ",
-      balance: "(0.00)",
+      balance: `(${otherCurrencyBalance?.toLocaleString("en", {
+        style: "currency",
+        currency: "AUD",
+      })})`,
       code: "AUD",
       flag: require("../ElectricitySubscription/Electricity-sub-images/australiaFlag.png"),
     },
     {
       id: 6,
       name: "KES Wallet. ",
-      balance: "(0.00)",
+      balance: `(${otherCurrencyBalance?.toLocaleString("en-KE", {
+        style: "currency",
+        currency: "KES",
+      })})`,
       code: "KES",
       flag: require("../ElectricitySubscription/Electricity-sub-images/kenyaFlag.png"),
     },
