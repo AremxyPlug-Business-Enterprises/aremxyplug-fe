@@ -93,7 +93,7 @@ const TransactionPage = () => {
    
   useEffect(()=> {
     if(transactionResponse?.data?.data?.data === undefined){
- GetTransactionInformation()
+ GetTransactionInformation();
     }
     setSelected("NGN");
 
