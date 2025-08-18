@@ -326,22 +326,71 @@ export default function WaecEducationPin() {
   const updateBalance = passDataBalance?.data?.data
     ? passDataBalance?.data?.data?.data?.balance
     : "";
+  const updateBalanceToNumber = Number(updateBalance);
+  const newBalanceToNumber = Number(newBalance);
+  const otherCurrencyBalance = 0.0;
 
   const methodOptions = [
     {
       method: "NGN Wallet",
       balance:
         newBalance === "" || newBalance === null || newBalance === undefined
-          ? `(₦${updateBalance})`
-          : `(₦${newBalance})`,
+          ? `(${updateBalanceToNumber?.toLocaleString("en-NG", {
+              style: "currency",
+              currency: "NGN",
+            })})`
+          : `(${newBalanceToNumber?.toLocaleString("en-NG", {
+              style: "currency",
+              currency: "NGN",
+            })})`,
       flag: nigerianFlag,
       id: 1,
     },
-    { method: "USD Currency", balance: "(0.00)", flag: americaFlag, id: 2 },
-    { method: "EUR Wallet", balance: "(0.00)", flag: britainFlag, id: 3 },
-    { method: "GBP Wallet", balance: "(0.00)", flag: euroFlag, id: 4 },
-    { method: "AUD Wallet", balance: "(0.00)", flag: austriaFlag, id: 5 },
-    { method: "KES Wallet", balance: "(0.00)", flag: kenyaFlag, id: 6 },
+    {
+      method: "USD Currency",
+      balance: `(${otherCurrencyBalance?.toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD",
+      })})`,
+      flag: americaFlag,
+      id: 2,
+    },
+    {
+      method: "EUR Wallet",
+      balance: `(${otherCurrencyBalance?.toLocaleString("en-EU", {
+        style: "currency",
+        currency: "EUR",
+      })})`,
+      flag: britainFlag,
+      id: 3,
+    },
+    {
+      method: "GBP Wallet",
+      balance: `(${otherCurrencyBalance?.toLocaleString("en-GB", {
+        style: "currency",
+        currency: "GBP",
+      })})`,
+      flag: euroFlag,
+      id: 4,
+    },
+    {
+      method: "AUD Wallet",
+      balance: `(${otherCurrencyBalance?.toLocaleString("en", {
+        style: "currency",
+        currency: "AUD",
+      })})`,
+      flag: austriaFlag,
+      id: 5,
+    },
+    {
+      method: "KES Wallet",
+      balance: `(${otherCurrencyBalance?.toLocaleString("en-KE", {
+        style: "currency",
+        currency: "KES",
+      })})`,
+      flag: kenyaFlag,
+      id: 6,
+    },
   ];
 
   // CONFIRM EXAM TYPE
@@ -1241,13 +1290,15 @@ export default function WaecEducationPin() {
                           <div className="flex gap-[10px] items-center font-medium">
                             <p
                               className={`text-xs md:text-sm leading-[20px] lg:leading-[22px]  lg:text-base ${
-                          isDarkMode ? "text-white" : "text-black"
-                        }`}
+                                isDarkMode ? "text-white" : "text-black"
+                              }`}
                             >
                               Available Balance {"  "}
                             </p>
                             <span
-                            className={`${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}
+                              className={`${
+                                isDarkMode ? "text-white" : "text-[#7C7C7C]"
+                              }`}
                             >
                               {walletBalance !== "" ? walletBalance : "₦"}
                             </span>
@@ -1487,9 +1538,7 @@ export default function WaecEducationPin() {
             {/* CONFIRM TRANSACTION */}
             {educationConfirm && (
               <Modal>
-                <div
-                  className="flex items-end justify-center lg:items-center lg:justify-center w-[100%] lg:px-[0px] rounded-[10px] h-[100%] px-[15px]"
-                >
+                <div className="flex items-end justify-center lg:items-center lg:justify-center w-[100%] lg:px-[0px] rounded-[10px] h-[100%] px-[15px]">
                   <div
                     // className={`confirm2 ${styles.inputPin} ${
                     //   toggleSideBar
@@ -1527,8 +1576,7 @@ export default function WaecEducationPin() {
                     {/* <p className="text-[10px] md:text-base lg:text-[18px] font-extrabold text-center my-[8%] lg:my-[%]"> */}
                     <div className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
                     <div className="flex flex-col w-full justify-center py-[15px] lg:py-[0px] h-[100%] gap-[15px] ">
-                      <p
-                        className="font-extrabold text-xs leading-[16px] pb-[20px] md:text-[10px] lg:text-base text-center">
+                      <p className="font-extrabold text-xs leading-[16px] pb-[20px] md:text-[10px] lg:text-base text-center">
                         Input PIN to complete transaction
                       </p>
                       <div
@@ -1806,9 +1854,7 @@ export default function WaecEducationPin() {
                           >
                             Order Number
                           </span>
-                          <span className="">
-                            {waecOrderId}
-                          </span>
+                          <span className="">{waecOrderId}</span>
                         </div>
                       </div>
                     </div>
@@ -1988,7 +2034,11 @@ export default function WaecEducationPin() {
               >
                 An unexpected error has occurred, please try again.
               </p> */}
-              <p className={`text-sm mb-8 ${isDarkMode ? "text-white":"text-gray-600"}`}>
+              <p
+                className={`text-sm mb-8 ${
+                  isDarkMode ? "text-white" : "text-gray-600"
+                }`}
+              >
                 {purchaseEduErrorType}
               </p>
               {/* <div
@@ -2023,7 +2073,9 @@ export default function WaecEducationPin() {
                   // className={`bg-[#ffffff] border w-[111px] border-[#0003] flex justify-center items-center text-center cursor-pointer text-xs font-extrabold h-[40px] rounded-[6px] md:w-[150px] md:rounded-[8px] md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%] ${
                   //   isDarkMode ? "text-black" : "text-black"
                   // }`}
-                  className={`w-[50%] max-w-xs mx-auto border py-2  rounded-md font-medium transition-colors ${isDarkMode ?"bg-black hover:bg-slate-800 ":"bg-white"}`}
+                  className={`w-[50%] max-w-xs mx-auto border py-2  rounded-md font-medium transition-colors ${
+                    isDarkMode ? "bg-black hover:bg-slate-800 " : "bg-white"
+                  }`}
                 >
                   Receipt
                 </Link>

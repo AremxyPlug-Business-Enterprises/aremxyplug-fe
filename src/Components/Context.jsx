@@ -295,7 +295,7 @@ export const Context = ({ children }) => {
           fullname: fullName,
           username: userName,
           phone_number: phoneNumber,
-          iv_code : IVcode,
+          invitation_code : IVcode,
           email: email,
           password: password,
           country: country,
