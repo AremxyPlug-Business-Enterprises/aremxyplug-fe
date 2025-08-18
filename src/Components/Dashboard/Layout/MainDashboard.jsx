@@ -112,35 +112,7 @@ if((clickedoption === "NGN")){
     return;
   };
 
-  //Connectio check Code
   
-  //   const [networkType, setNetworkType] = useState('');
-  //   const [downlink, setDownlink] = useState('');
-  //   const [rtt, setRtt] = useState('');
-  
-  //   useEffect(() => {
-  //     const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-  // console.log(connection)
-  //     if (connection) {
-  //       setNetworkType(connection.effectiveType);
-  //       setDownlink(connection.downlink);
-  //       setRtt(connection.rtt);
-  
-  //       const handleConnectionChange = () => {
-  //         setNetworkType(connection.effectiveType);
-  //         setDownlink(connection.downlink);
-  //         setRtt(connection.rtt);
-  //       };
-  //       connection.addEventListener('change', handleConnectionChange);
-
-  //       return () => {
-  //         connection.removeEventListener('change', handleConnectionChange);
-  //       };
-  //     }
-  //     //eslint-disable-next-line
-  //   }, []);
-  
-
 
   //Generating an account in the dashboard
   const GenerateVirtualAccount = async(AuthUsed)=>{
@@ -233,7 +205,7 @@ if((clickedoption === "NGN")){
         })
            if(response){
             console.log(response)
-          if(response.status && (response.status === 200 || 201)){
+          if(response.status && (response.status === 200 || response.status === 201)){
              setBalanceValue("");
            const checkBal =  response?.data?.data?.data?.balance;
            console.log(checkBal);

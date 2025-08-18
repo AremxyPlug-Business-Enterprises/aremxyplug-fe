@@ -367,13 +367,13 @@ export const PostFunction = async (
    }catch(error){
         if(error && error.response === undefined){
      alert("Kindly check your internet connection")
-      functionAtFailed("Network error")
+      functionAtFailed("Network error");
       }  else  if(error && error.response.status === 400){
        functionAtFailed("Bad request");
           if(functionAtFailed) {
             setFetchedResponse(error?.response?.data?.data)
               console.log(error?.response?.data?.data)
-            alert("Invalid request")
+           // alert("Invalid request")
          }
         
     }else if(error && error.response.status === 404){

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useRef } from "react";
 import { ContextProvider } from "../../../../Context";
 import { DashBoardLayout } from "../../../Layout/DashBoardLayout";
 import { Link } from "react-router-dom";
@@ -7,59 +7,68 @@ import styles from "../../TransferComponent/transfer.module.css";
 import styled from "../../../../AirTimePage/AirTime.module.css";
 import { Modal } from "../../../../Screens/Modal/Modal";
 import Joi from "joi";
-
-const AremxyAddUser = () => {
+import {GetFunction, PostFunction, HandleUserSession } from "../../../../ApiCollection.jsx/ApiBuck";
+import { Loader } from "../../../../Loader/Loader";
+import { GetLocalStorage } from "../../../../LocalStorage/LocalStorage";
+const AremxyAddUser = (Data) => {
   const { toggleSideBar } = useContext(ContextProvider);
 
   const [userPhoneNumber, setUserPhoneNumber] = useState("");
-  const [emailUsername, setEmailUserName] = useState("");
+//  const [emailUsername, setEmailUserName] = useState("");
   const [mainCountry, setMainCountry] = useState("");
   const [selected, setSelected] = useState(false);
   const [showList, setShowList] = useState(false);
   const [save, setSave] = useState(false);
   const [errors, setErrors] = useState({});
+ const [errorMessage, setErrorMessage]  = useState("")
+ const [verifiedUser, setVerifiedUser] = useState(false);
+ const [fetchedResponse, setFetchedResponse] = useState({});
+ const [loading, setLoading] = useState(false);
+ const [sessionModal, setSessionModal] = useState(false);
+ const [transferValue, setTransferValue] = useState("");
+ const [recipientResponse, setRecipientResponse] = useState({})
+ Data = GetLocalStorage()
+  // const firmTransferSchema = Joi.object({
+  //   mainCountry: Joi.string().required(),
+  //   userPhoneNumber: Joi.string()
+  //     .pattern(new RegExp(/^\d{11}$/)) // Exactly 10 digits, you can adjust as needed
+  //     .required()
+  //     .max(11)
+  //     .messages({
+  //       "string.pattern.base": "Phone number should be 11 digits",
+  //       "any.max": "Phone number should be at most 11 digits",
+  //     }),
+  //   emailUsername: Joi.alternatives()
+  //     .try(
+  //       Joi.string()
+  //         .lowercase()
+  //         .email({ tlds: { allow: false } }),
+  //       Joi.string().alphanum().min(5).max(10)
+  //     )
+  //     .required(),
+  // });
 
-  const firmTransferSchema = Joi.object({
-    mainCountry: Joi.string().required(),
-    userPhoneNumber: Joi.string()
-      .pattern(new RegExp(/^\d{11}$/)) // Exactly 10 digits, you can adjust as needed
-      .required()
-      .max(11)
-      .messages({
-        "string.pattern.base": "Phone number should be 11 digits",
-        "any.max": "Phone number should be at most 11 digits",
-      }),
-    emailUsername: Joi.alternatives()
-      .try(
-        Joi.string()
-          .lowercase()
-          .email({ tlds: { allow: false } }),
-        Joi.string().alphanum().min(5).max(10)
-      )
-      .required(),
-  });
+  // const handleSave = (e) => {
+  //   e.preventDefault();
 
-  const handleSave = (e) => {
-    e.preventDefault();
+  //   const { error } = firmTransferSchema.validate({
+  //     emailUsername,
+  //     userPhoneNumber,
+  //     mainCountry,
+  //   });
 
-    const { error } = firmTransferSchema.validate({
-      emailUsername,
-      userPhoneNumber,
-      mainCountry,
-    });
-
-    if (error) {
-      setErrors(
-        error.details.reduce((acc, curr) => {
-          acc[curr.path[0]] = curr.message;
-          return acc;
-        }, {})
-      );
-    } else {
-      setSave(true);
-      setErrors({});
-    }
-  };
+  //   if (error) {
+  //     setErrors(
+  //       error.details.reduce((acc, curr) => {
+  //         acc[curr.path[0]] = curr.message;
+  //         return acc;
+  //       }, {})
+  //     );
+  //   } else {
+  //     setSave(true);
+  //     setErrors({});
+  //   }
+  // };
 
   const countryList = [
     {
@@ -119,33 +128,199 @@ const AremxyAddUser = () => {
     setConfirm(true);
   };
 
+
+
+  //Confirming user through the function
+     const testEmail = new RegExp(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]/)
+  const testUsername = new RegExp( /^[a-zA-Z0-9_]{3,20}$/);
+  const GetUserDetails =async(value, transferIdentity)=> {
+  if(((transferIdentity === "email" 
+    && value !== Data?.UserEmail) ||( transferIdentity === "username" && Data?.aremxyUsername !== value) )
+    && value?.length > 2 ){
+    const SuccessHandler =()=> {
+  setVerifiedUser(true);
+  setErrorMessage("");
+    }
+    const FailedHandler= async(Error)=> {
+     if(Error === "Server error" ){
+     //  setVerificationPinError(true);
+      setErrorMessage("Account does not exist");
+      setVerifiedUser(false);
+      setFetchedResponse({});
+          }else if(Error  === "Network error" || Error === "User error"){
+           setErrorMessage("Kindly Check your internet connection.");
+              setVerifiedUser(false);
+          }else if(Error  === "Bad request"){
+        setErrorMessage("Account does not exist.")
+           setVerifiedUser(false);
+             setFetchedResponse({});
+        }else if(Error === "unauthorised"){
+       await GetFunction(`search?${transferIdentity}=${value}`,
+        setLoading, 
+        SuccessHandler, ()=> {
+          setSessionModal(true);
+        }, setFetchedResponse);
+        }else if(Error === undefined){
+         setErrorMessage("Your internet connection is quite unstable.")
+            setVerifiedUser(false)
+        }
+          else{
+          setErrorMessage("An unexpected error occured, please try again later.")
+           setVerifiedUser(false)
+        }
+        setTimeout(()=> {
+    if(errorMessage?.length > 1 && value?.length < 1){
+      setErrorMessage("");
+    }
+  }, 1500)
+    }
+    await GetFunction(`search?${transferIdentity}=${value}`,
+    ()=> {
+      console.log("loading")
+    },
+       SuccessHandler,
+        FailedHandler,
+         setFetchedResponse);
+  }else if(value === Data?.aremxyUsername || value === Data?.UserEmail){
+   setErrorMessage(`${value} is your transfer identity, you can only send to other aremxyplug wallet.`)
+    setVerifiedUser(false);
+  }}
+   const timer = useRef()
+    
+  // console.log(timer);
+  const HandleIdentifyCredentials = async(value)=> {
+  
+  const TestingTransferIdentify = async(transferIdentity)=> {
+  if(value?.length < 3){
+    setTimeout(()=> {
+      setErrorMessage("");
+      setVerifiedUser(false);
+      setFetchedResponse({})
+    },1000)
+    // setErrorMessage("");
+  
+  }else if(testEmail.test(value) && value?.endsWith(".com") && value?.length > 7 ){
+     setErrorMessage("")
+     setVerifiedUser(false);
+   transferIdentity = "email";
+  }else if(testUsername.test(value) === true && value?.length > 2 && value?.includes("@")=== false ){
+  setErrorMessage("");
+   transferIdentity = "username";
+  }else if(testEmail.test(value) === true && 
+  testUsername.test(value) === false && value?.endsWith(".com") === false
+   && value?.length > 7){
+       setVerifiedUser(false);
+    setErrorMessage(`Your email address does not include the ${`${".com"}`} extension `)
+  setFetchedResponse({})
+  transferIdentity = null;
+  }else if(testEmail.test(value) === false && 
+  testUsername.test(value) === false && value?.endsWith(".com") === true
+   && value?.length > 7){
+    setErrorMessage("Your email address is not valid.")
+      transferIdentity = null;
+     setFetchedResponse({})
+  
+   }else{
+    if(value?.length > 2) {
+         setVerifiedUser(false)
+        setErrorMessage("Your transfer Identity is neither a recognized email nor an username.")
+        setFetchedResponse({})
+    }else{
+      setErrorMessage("")
+         setVerifiedUser(false)
+         setFetchedResponse({})
+    }
+   }
+  // console.log(identityMessage);
+  //console.log(transferIdentity)
+  
+  GetUserDetails(value, transferIdentity);
+  }
+  TestingTransferIdentify();
+  }
+
+  const AddRecipientPostFunction = async()=> {
+     //Recipient fUllname
+    const recipientFullname = fetchedResponse?.data?.data?.userDetails?.full_name !== undefined 
+    || fetchedResponse?.data?.data?.userDetails?.full_name !== null 
+    ? fetchedResponse?.data?.data?.userDetails?.full_name : "";
+// Recipient Email
+      const recipientEmail= fetchedResponse?.data?.data?.userDetails?.email !== undefined 
+    || fetchedResponse?.data?.data?.userDetails?.email !== null 
+    ? fetchedResponse?.data?.data?.userDetails?.email : "";
+  //Recipient Phone Number
+    const recipientPhone = fetchedResponse?.data?.data?.userDetails?.phone !== undefined 
+    || fetchedResponse?.data?.data?.userDetails?.phone !== null 
+    ? fetchedResponse?.data?.data?.userDetails?.phone: "";
+ // Recipient Username
+    const recipientUsername = fetchedResponse?.data?.data?.userDetails?.username !== undefined 
+    || fetchedResponse?.data?.data?.userDetails?.username !== null 
+    ? fetchedResponse?.data?.data?.userDetails?.username : "";
+
+    const SuccessHandler =()=> {
+     handleConfirm();
+    }
+    const body ={
+      username : recipientUsername,
+      email : recipientEmail,
+      phone : recipientPhone,
+      fullName : recipientFullname
+    }
+    const FailedHandler =async(ErrorType)=> {
+      if(ErrorType === "unauthorised"){
+        await PostFunction("bank-recipient", setLoading,body ,
+      SuccessHandler, (ErrorType)=> {
+        if(ErrorType === "unauthorised"){
+          setSessionModal(true)
+        }
+}, setRecipientResponse
+    )
+      }else if(ErrorType === "Network error" || ErrorType === "User error"){
+     alert("Kindly check your internet connection");
+    }else {
+      alert("An unexpected error has occured, please try again later.")
+    }
+   }
+   await PostFunction("bank-recipient", setLoading,body,
+      SuccessHandler, FailedHandler, setRecipientResponse
+    )
+}
+
   return (
     <DashBoardLayout>
       <div className={style.AirtimeTops}>
         <div className={style.airtimeTop}>
-          <div
-            style={{
-              background: "#B4BEFA",
-            }}
-            className="w-full mb-[0px] lg:mb-[20px] h-[90px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] flex px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px]"
-          >
-            <div className="py-[13px] lg:pb-[40px] ">
-              <h2 className="text-[10px] md:text-[13.75px] font-bold mb-3 lg:text-[24px] lg:mb-4">
-                TRANSFER MONEY TO AREMXYPLUG USER.
-              </h2>
-              <h2 className="text-[7px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px] mb-3">
-                Transfer money from your wallets to any AremxyPlug user wallets
-                for free, no any hidden fee, enjoy!!!
-              </h2>
-            </div>
-            <div className="w-[100px] h-[66px] lg:w-[230px] lg:h-[150px]">
-              <img
-                src="./Images/transferImages/flying-coin-notes.png"
-                alt=""
-                className="h-full w-full"
-              />
-            </div>
-          </div>
+         <div
+                   style={{
+                     background:
+                       "#B4BEFA",
+                   }}
+                  className="min-h-[90px] py-[15px] lg:h-[196px] 
+                    md:h-[112.29px] rounded-[6.6px] md:rounded-[11.46px] 
+                    lg:rounded-[20px] mx-auto  flex gap-6 justify-between
+                     px-[16.51px] md:px-[28.65px] lg:px-[50px]"
+                 >
+                   <div  className="py-[9.57px] md:py-[16.61px] 
+                                   align-middle self-center flex flex-col gap-1.5 w-[70%]">
+                     <h2 className="text-[11px] leading-[13px] lg:leading-[30px]
+                                        lg:text-[24px] md:text-[13.75px] font-semibold">
+                       TRANSFER MONEY TO AREMXYPLUG USER.
+                     </h2>
+                     <p className="text-[10px] leading-[13px] lg:leading-[25px]
+                                        lg:text-[20px] md:text-[11.46px]">
+                       Transfer money from your wallets to any 
+                       AremxyPlug user wallets for free, no any hidden fee,
+                        enjoy!!!
+                     </p>
+                   </div>
+                   <div className="w-[100px] h-[66px] lg:w-[230px] lg:h-[150px]">
+                     <img
+                       src="./Images/transferImages/flying-coin-notes.png"
+                       alt=""
+                       className="h-full w-full"
+                     />
+                   </div>
+                 </div>
           <div className="flex text-[#7c7c7c] text-[10px] leading-[26px] items-center gap-[8px] md:text-[12px] lg:text-[20px]">
             <p>Add a user details to save as recipient</p>
             <img
@@ -171,14 +346,14 @@ const AremxyAddUser = () => {
                 className="font-[500] text-[10px] leading-[15px] md:text-[9.389px] md:leading-[12.206px] 
                 lg:text-[16px] lg:leading-[20.8px]"
               >
-                Habib Kamaldeen
+                {Data?.UserFullName}
               </p>
               <p
                 className="font-[500] text-[#7C7C7C] text-[10px] leading-[15px]
                 md:text-[7.042px] md:leading-[9.154px]
                 lg:text-[12px] lg:leading-[15.6px]"
               >
-                habib@aremxyplug.com
+               {Data?.UserEmail}
               </p>
             </div>
           </div>
@@ -262,10 +437,16 @@ const AremxyAddUser = () => {
               <div className="flex justify-between items-center font-[500] py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px]">
                 <input
                   name="emailUsername"
+                   disabled={Data?.ConfirmAcc === "false"}
                   onChange={(e) => {
-                    setEmailUserName(e.target.value);
+                    setTransferValue(e.target.value)
+           if(timer.current) clearTimeout(timer.current)   
+                timer.current = setTimeout(()=> {
+                HandleIdentifyCredentials(e.target.value);
+                    
+  },500)
                   }}
-                  value={emailUsername}
+                  value={transferValue}
                   className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
                   type="text"
                 />
@@ -275,11 +456,18 @@ const AremxyAddUser = () => {
                   alt="dropdown"
                 />
               </div>
-              {errors.emailUsername && (
-                <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                  {errors.emailUsername}
-                </div>
-              )}
+              {errorMessage?.length > 1 && (
+            <p className={`text-[12px] text-red-500 italic
+               lg:text-[14px] `}>
+              {errorMessage}
+            </p>
+          )}
+          {verifiedUser === true  && errorMessage === "" ? (
+             <p className={`text-[12px] text-green-500 italic
+               lg:text-[14px]  `}>
+             Verified User
+            </p>
+          ) : ""}
             </div>
 
             {/* ======================Phone Number================== */}
@@ -297,7 +485,10 @@ const AremxyAddUser = () => {
                     setUserPhoneNumber(numericValue);
                   }}
                   name="userPhoneNumber"
-                  value={userPhoneNumber}
+                  value={fetchedResponse?.data?.data?.userDetails?.phone !== undefined ?
+                fetchedResponse?.data?.data?.userDetails?.phone : ""}
+                  maxLength={11}
+              readOnly
                   className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
                   type="number"
                 />
@@ -356,20 +547,21 @@ const AremxyAddUser = () => {
                   </div>
                   <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                     <p className="text-[#0008]">Customer Name</p>
-                    <span>Habib Kamaldeen</span>
+                    <span>{fetchedResponse?.data?.data?.userDetails?.full_name}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                     <p className="text-[#0008]">Email or Username</p>
-                    <span>{emailUsername}</span>
+                    <span>{transferValue}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                     <p className="text-[#0008]">Phone Number</p>
-                    <span>{userPhoneNumber}</span>
+                    <span>{fetchedResponse?.data?.data?.userDetails?.phone !== undefined ?
+               `+${fetchedResponse?.data?.data?.userDetails?.phone}` : ""}</span>
                   </div>
                 </div>
 
                 <button
-                  onClick={handleConfirm}
+                  onClick={AddRecipientPostFunction}
                   className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:mt-[8%]`}
                 >
                   Confirmed
@@ -419,9 +611,11 @@ const AremxyAddUser = () => {
           <div className={style.containFlex3}>
             <button
               className={`${
-                userPhoneNumber.length < 11 ? "bg-[#0008]" : "bg-[#04177f]"
+                fetchedResponse?.data?.data?.userDetails?.username === undefined ? "bg-[#0008]" : "bg-[#04177f]"
               } w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
-              onClick={handleSave}
+              onClick={()=> {
+                setSave(true);
+              }}
             >
               Save User
             </button>
@@ -446,6 +640,14 @@ const AremxyAddUser = () => {
                 </div>
               </div>
             </Modal>
+          )}
+          {loading && (
+            <Modal>
+           <Loader/>
+            </Modal>
+          )}
+          {sessionModal && (
+            <HandleUserSession/>
           )}
         </div>
         <div className={style.help}>
