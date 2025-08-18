@@ -1358,6 +1358,12 @@ export const Context = ({ children }) => {
   //The transactionResponse for getting user past transactions details
   const [transactionResponse, setTransactionResponse] = useState({});
 
+//point redeem state
+  const [amountRedeemed, setAmountRedeemed] = useState(0);
+  const [rateRedeemed, setRateRedeemed] = useState(0);
+  const [ transactionId,  setTransactionId] = useState(0);
+  const [ orderId,  setOrderId] = useState(0);
+
   const hold = {
     tvSubscriptionResponse,
     setTvSubscriptionResponse,
@@ -1789,6 +1795,15 @@ export const Context = ({ children }) => {
     setRealInputValue,
     realoutputValue,
     setRealOutputValue,
+
+    amountRedeemed, 
+    setAmountRedeemed,
+    rateRedeemed, 
+    setRateRedeemed,
+    transactionId,
+     setTransactionId,
+    orderId, 
+    setOrderId,
 
     //electricity subscription
     // ikedc

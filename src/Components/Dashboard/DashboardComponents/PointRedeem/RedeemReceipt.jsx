@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useContext, useRef } from "react";
 import { ContextProvider } from "../../../Context";
 import styles from "../TransferComponent/transfer.module.css"
@@ -12,16 +12,46 @@ export const RedeemReceipt = () => {
     toggleSideBar,
     isDarkMode,
     date,
-   
-    inputValue,
+    //  amountRedeemed,
+    //   setAmountRedeemed,
+    // rateRedeemed, 
+    // setRateRedeemed,
+    // transactionId, 
+    // setTransactionId,
+    // orderId, 
+    // setOrderId,
+     inputValue,
     outputValue,
-    setInputValue,
-    setoutputValue,
+       setRealInputValue,
+           setRealOutputValue,
   } = useContext(ContextProvider);
 
+    const [redeemResponse, setRedeemResponse] = useState(null);
+  const [amountRedeemed, setAmountRedeemed] = useState(0);
+  const [rateRedeemed, setRateRedeemed] = useState(0);
+  const [transactionId, setTransactionId] = useState("");
+  const [orderId, setOrderId] = useState("");
+  const [transactionProduct, setTransactionProduct] = useState("");
+  const [transactionDescription, setTransactionDescription] = useState("");
+
+
+
+   useEffect(() => {
+    if (redeemResponse && redeemResponse.status === 200) {
+      const data = redeemResponse.data.data;
+      setAmountRedeemed(data.amount_redeemed);
+      setRateRedeemed(data.redeemed_rate);
+      setTransactionId(data.transaction_id);
+      setOrderId(data.order_id);
+      setTransactionProduct(data.transaction_product);
+      setTransactionDescription(data.transaction_description);
+    }
+  }, [redeemResponse]);
+  
   const handleClear = () =>{
-    setInputValue('');
-    setoutputValue('');
+    setRealInputValue('');
+    setRealOutputValue('');
+    // setText(true);
   }
 
   const contentRef = useRef(null);
@@ -58,15 +88,15 @@ export const RedeemReceipt = () => {
   return (
     <DashBoardLayout>
       <div className="flex flex-col gap-[35px] lg:gap-[85px]">
-        <div
+         <div
           className={` ${styles.receipt} ${
             toggleSideBar ? "" : "lg:w-[880px] "
-          } w-full lg:mx-auto`}
+          } w-full lg:mx-auto  ${isDarkMode ? "border border-white" : ""}` } 
         >
           <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
             <Link onClick={handleClear} to="/point-redeem">
               <img
-                className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[29px]"
+                 className=" w-[15px] h-[10px] md:w-[24px] md:h-[15px] lg:w-[42px] lg:h-[25px]"
                 src="/Images/login/arpLogo.png"
                 alt=""
               />
@@ -75,7 +105,7 @@ export const RedeemReceipt = () => {
               {" "}
               <img
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
-                src="/Images/transferImages/close-circle.png"
+               src="/Images/transferImages/close-circle.png"
                 alt=""
               />
             </Link>
@@ -83,8 +113,9 @@ export const RedeemReceipt = () => {
           <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
           <div ref={contentRef}>
             {" "}
-            <h3 className="font-extrabold text-[12px] my-[2%] text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
-              Transaction Receipt
+           <h3 className="font-extrabold text-[12px] my-[2%] 
+            text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
+            Transaction Receipt
             </h3>
             <div className="w-full flex justify-center ">
               <img
@@ -93,10 +124,15 @@ export const RedeemReceipt = () => {
                 alt="/"
               />
             </div>
-            <h3 className="font-extrabold text-[12px] mt-[2%] text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
-              Redeem Successful on
+            <h3 className={`font-extrabold text-[12px]  mt-[2%] text-center 
+            md:text-[20px] md:my-[7px] lg:text-[16px] lg:my-[10px]
+            ${isDarkMode ? "text-white" : "text-black"}
+          `}> 
+            Redeem Successful on
             </h3>
-            <span className="text-[8px] text-[#0008] pt-1 font-extrabold flex justify-center items-center">
+            <span className={`text-[8px] text-[#0008] pt-1 font-extrabold flex justify-center items-center
+            ${isDarkMode ? "text-white" : "text-black"}`}
+            >
               {date.toLocaleDateString(undefined, {
                 year: "numeric",
                 month: "long",
@@ -119,7 +155,8 @@ export const RedeemReceipt = () => {
               {/* ========================Recipient Info================== */}
               <div className="flex flex-col gap-[3px] w-[90%] mx-auto lg:gap-[5px]">
                 <div className="flex gap-[5px] items-center text-[10px] lg:text-[16px] font-extrabold">
-                  <p>Wallet Info</p>
+                    <p className= {`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
+                 Wallet Info</p>
                   <img
                     className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
                     src="./Images/dashboardImages/arrowright.png"
@@ -127,21 +164,22 @@ export const RedeemReceipt = () => {
                   />
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Wallet Type</p>
-                  <span>Nigerian NGN Wallet</span>
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Wallet Type</p>
+                  <span className={` ${isDarkMode ? "text-white": "text-black"}`}>Nigerian NGN Wallet</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Amount Redeemed</p>
-                  <span>{inputValue} PTS</span>
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Amount Redeemed</p>
+                    <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{amountRedeemed ? amountRedeemed : "0.00"} PTS</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Account Received</p>
-                  <span>&#8358;{outputValue}.00</span>
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Account Received</p>
+                   <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>&#8358;{amountRedeemed ? amountRedeemed : "0.00"} </span>
                 </div>
                
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Redeem Rate </p>
-                  <span>1 PTS ~ 1 NGN</span>
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Redeem Rate </p>
+                  <span className={` ${isDarkMode ? "text-white": "text-black"}`}>{rateRedeemed ? rateRedeemed : "1 PTS ~ 1 NGN"}</span>
+                  {/* <span className={` ${isDarkMode ? "text-white": "text-black"}`}>1 PTS ~ 1 NGN</span> */}
                 </div>
                 
               </div>
@@ -151,7 +189,7 @@ export const RedeemReceipt = () => {
               {/* ===================Transaction Info==================== */}
               <div className="flex flex-col gap-[3px] w-[90%] mx-auto lg:gap-[5px]">
                 <div className="flex gap-[5px] items-center text-[10px] lg:text-[16px] font-extrabold">
-                  <p>Transaction Info</p>
+                  <p  className={` ${isDarkMode ? "text-white": "text-black"}`}>Transaction Info</p>
                   <img
                     className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
                     src="./Images/dashboardImages/arrowright.png"
@@ -159,30 +197,42 @@ export const RedeemReceipt = () => {
                   />
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Product</p>
-                  <span>Point Redeem</span>
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Product</p>
+                  <span className={` ${isDarkMode ? "text-white": "text-black"}`}>{transactionProduct ? transactionProduct : "Point Redeem"}</span>
+                  {/* <span className={` ${isDarkMode ? "text-white": "text-black"}`}>Point Redeem</span> */}
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Description</p>
-                  <span>MTN 10,000.00 </span>
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Description</p>
+                  <span className={` ${isDarkMode ? "text-white": "text-black"}`}>{transactionDescription ? transactionDescription : "Points redeemed for rewards"} </span>
+                  {/* <span className={` ${isDarkMode ? "text-white": "text-black"}`}>Points redeemed for rewards </span> */}
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Completion Time</p>
-                  <span>Instantly</span>
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Completion Time</p>
+                  <span className={` ${isDarkMode ? "text-white": "text-black"}`}>Instantly</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Order Number</p>
-                  <span>1256478999</span>
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Order Number</p>
+                  <span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>{orderId ? orderId : "1256478999"}</span>
+                  {/* <span className={` ${isDarkMode ? "text-white": "text-black"}`}>1256478999</span> */}
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Transaction ID</p>
-                  <span>0331njokdhtf55</span>
+               <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>{transactionId ? transactionId : "0331njokdhtf55"}</p>
+<span className={` ${isDarkMode ? "text-white": "text-black"}`}>
+  {transactionId ? transactionId : "0331njokdhtf55"}
+</span>
+ {/* <span className={` ${isDarkMode ? "text-white": "text-black"}`}>0331njokdhtf55</span> */}
                 </div>
                 
               </div>
             </div>
-            <div className="rounded-[8px] bg-[#E2F3FF] mx-4 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]">
-              <p className="text-[8px] text-center mx-auto w-[200px] md:text-[14px] md:w-[80%] lg:text-[16px]">
+            <div className={`bg-[#F2FAFF] w-[90%]   mx-auto p-[8px] my-5 flex justify-between 
+        items-center md:p-[9px] lg:p-[10px] rounded-[5px] lg:rounded-[10px]
+         ${
+                isDarkMode ? "bg-slate-800 " : "bg-[#F2FAFF]"
+              }`}>
+              <p className={`text-[10px] leading-[13px] text-center
+             md:text-[14px] md:leading-[18px] lg:text-[14px]  font-semibold 
+             ${isDarkMode ? "text-white" : "text-black"}`}>
                 Earn free points on every successful transactions, redeem your
                 earned points to real money, withdrawn to your bank account
                 instantly.
@@ -203,7 +253,9 @@ export const RedeemReceipt = () => {
               onClick={() => {
                 handleSaveAsPDFClick();
               }}
-              className={`bg-[#ffffff] border-[1px] w-[111px] border-[#0003] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+               className={`bg-[#ffffff]   border-[1px] w-[111px] border-[#0003] flex justify-center items-center 
+                mx-auto cursor-pointer text-[12px] font-extrabold  ${isDarkMode ? " bg-black border-1 border-white" : " bg-[#ffffff]"}
+                h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
             >
               Save as PDF
             </button>

@@ -19,7 +19,8 @@ import { AiFillEye } from "react-icons/ai";
 import OtpInput from "react-otp-input";
 import Joi from "joi";
 // import axios from 'axios';
-import { GetFunction, PostFunction } from "../../../../Components/ApiCollection.jsx/ApiBuck";
+import { GetFunction, HandleUserSession, PostFunction, VerifyTransPin } from "../../../../Components/ApiCollection.jsx/ApiBuck";
+import { Loader } from "../../../Loader/Loader";
 
 
 const PointRedeem = () => {
@@ -34,6 +35,8 @@ const PointRedeem = () => {
            realoutputValue,
            setRealInputValue,
            setRealOutputValue,
+            errorMessage,
+           setErrorMessage,
    } = useContext(ContextProvider);
   
 const [text, setText] =useState(false);
@@ -55,6 +58,7 @@ const [referralPoints, setReferralPoints] = useState(0);
   const [rateRedeemed, setRateRedeemed] = useState(0);
   const [ transactionId,  setTransactionId] = useState(0);
   const [ orderId,  setOrderId] = useState(0);
+const [sessionModal, setSessionModal] = useState(false);
 
   const handleInputChange = (event) => {
     const newValue = event.target.value;
@@ -124,8 +128,6 @@ const [referralPoints, setReferralPoints] = useState(0);
    
     const  successHandler = () => {
       // console.log("fetch points succefully");
-      console.log(fetchedResponse?.data?.data?.point?.total_points);
-
     const total = fetchedResponse?.data?.data?.point?.total_points;
     const trxPoints = fetchedResponse?.data?.data?.point?.transaction_points ?? 0;
     const referralPts = fetchedResponse?.data?.data?.point?.referral_points ?? 0;
@@ -143,6 +145,7 @@ const [referralPoints, setReferralPoints] = useState(0);
    
   }, []);
 
+  
   
   const handleProceed = (e) => {
     e.preventDefault();
@@ -169,57 +172,62 @@ const [referralPoints, setReferralPoints] = useState(0);
   };
 
 
-const handleRedeemPoints = async (e) => {
-  e.preventDefault();
-  
+
+
+// const handleRedeemPoints = async (e) => {
+//   e.preventDefault();
+const VerifyPinHandler = async () => {
+  const RedeemPointsHandler = async () => {
+    const Path = "extra/point";
+    const payload = { points: parseInt(inputValue) };
+    const payloadJson = JSON.stringify(payload);
+
+    // console.log( payloadJson)
   // Validate input
-  if (!inputValue || parseInt(inputValue) < 1000) {
-    alert("Minimum redemption is 1000 points");
-    return;
-  }
+  // if (!inputValue || parseInt(inputValue) < 1000) {
+  //   alert("Minimum redemption is 1000 points");
+  //   return;
+  // }
 
-  if (parseInt(inputValue) > userPoints) {
-    console.error("You don't have enough points for this redemption");
-    return;
-  }
-
-  const payload = {
-    points: parseInt(inputValue)
-  };
+  // if (parseInt(inputValue) > userPoints) {
+  //   console.error("You don't have enough points for this redemption");
+  //   return;
+  // }
 
   const successHandler = () => {
-      //console.log("Full API Response:", fetchedResponse); 
   const redemptionData = fetchedResponse.data?.data || fetchedResponse.data;
  //console.log("Redemption data:", redemptionData);
 
 
    // redeemed points value
-  const points = redemptionData.points_redeemed || parseInt(inputValue);
-  const amount = redemptionData.amount_redeemed || parseInt(inputValue);
-  const rate = redemptionData.redeemed_rate || parseInt(inputValue);
-  const trans = redemptionData.transaction_id || parseInt(inputValue);
-  const order = redemptionData.transaction_description || parseInt(inputValue);
-  setRedeemedPoints(points);
-  setAmountRedeemed(amount);
-   setRateRedeemed(rate);
-  setTransactionId(trans);
-  setOrderId(order);
+   const points = redemptionData.points_redeemed || parseInt(inputValue);
+    const amount = redemptionData.amount_redeemed || parseInt(inputValue);
+    const rate = redemptionData.redeemed_rate || parseInt(inputValue);
+    const trans = redemptionData.transaction_id || parseInt(inputValue);
+    const order = redemptionData.transaction_description || parseInt(inputValue);
 
-     // Calculat and update the user's remaining points
-    const redeemedPoints = parseInt(inputValue);
-    const newPointsBalance = userPoints - redeemedPoints;
-    setUserPoints(newPointsBalance);
-    
-    // Update state
-  setUserPoints(prev => prev - points);
-    
+    setRedeemedPoints(points);
+    setAmountRedeemed(amount);
+    setRateRedeemed(rate);
+    setTransactionId(trans);
+    setOrderId(order);
+
+ //Calculat and update the user's remaining points
+    // const redeemedPoints = parseInt(inputValue);
+    // const newPointsBalance = userPoints - redeemedPoints;
+    // setUserPoints(newPointsBalance);
+
+// Update state
+  //setUserPoints(prev => prev - points); 
+  //backend point update
+    setUserPoints(redemptionData.remaining_points ?? userPoints);
+
     // success popup
      setRedeemResponse(redemptionData);
     setSuccessPopup(true);
     setInputPinPopUp(false);
     setProceed(false);
-    
-    // Clear input values
+    setInputPin("");
     setInputValue("");
     setOutputValue("");
 
@@ -227,34 +235,80 @@ const handleRedeemPoints = async (e) => {
     // console.log(`Successfully redeemed ${redeemedPoints}`);
   };
 
- const failedHandler = (error) => {
-    console.error("Redemption failed:", error);
-    setInputPinPopUp(false);
     
-    if (error.response) {
-      alert("Failed to redeem points");
+    // Failure handler for redemption
+    const failedHandler = (ErrorType) => {
+      if (ErrorType === "unauthorised") {
+        setSessionModal(true);
+      } else if (ErrorType === "Server error") {
+        alert("Server Error: Redemption Failed");
+      } else if (ErrorType === "Network error" || ErrorType === "User error") {
+        alert("Network Error: Redemption Failed");
+      } else {
+        alert("An Unexpected error has occurred");
+      }
+      setInputPinPopUp(false);
+      setInputPin("");
+    };
+
+    // Validation
+    if (!inputValue || parseInt(inputValue) < 1000) {
+      alert("Minimum redemption is 1000 points");
+      return;
+    }
+    if (parseInt(inputValue) > userPoints) {
+      alert("You don't have enough points");
+      return;
+    }
+
+    // Make redemption API call
+    await PostFunction(Path, setLoading, payloadJson, successHandler, failedHandler, setFetchedResponse);
+  };
+
+
+//if VerifyTransPin fails
+  const setFailedConfig = (ErrorType, errorResponse) => {
+      const serverMessage = errorResponse?.data?.data;
+
+  if (serverMessage?.startsWith("PIN blocked")) {
+    alert(`Your PIN is blocked. Try again after: ${serverMessage.split("until ")[1]}`);
+    return;
+  }
+    if (ErrorType === "unauthorised") {
+      setSessionModal(true);
+    } else if (ErrorType === "Server error") {
+      alert("Server error while verifying PIN");
+    } else if (ErrorType === "Network error" || ErrorType === "User error") {
+      alert("Check your internet connection");
     } else {
-      alert("Network error - Please try again");
+      alert("PIN verification failed");
     }
   };
 
-  try {
-    console.log("Attempting to redeem points...");
-    await PostFunction(
-      "extra/point", 
-      setLoading, 
-      payload, 
-      successHandler, 
-      failedHandler, 
-      setFetchedResponse
-    );
-  } catch (error) {
-    console.error("Unexpected error in handleRedeemPoints:", error);
-    setInputPinPopUp(false);
-  }
+  // Verify PIN and Redeem if it is successful
+await VerifyTransPin(
+  inputPin, 
+  (ErrorType) => {
+    if (ErrorType === "unauthorised") {
+      setSessionModal(true);
+    } else if (ErrorType === "Server error") {
+      alert("Server error while verifying PIN");
+    } else if (ErrorType === "Network error" || ErrorType === "User error") {
+      alert("Check your internet connection");
+    } else if (ErrorType === "incorrect pin") {
+      alert("Incorrect PIN entered");
+    } else {
+      alert("PIN verification failed");
+    }
+  },
+  setLoading,
+  setErrorMessage,
+  RedeemPointsHandler
+);
 };
 
 
+// console.log("Verifying PIN:", inputPin);
 
 
 
@@ -355,9 +409,11 @@ const handleRedeemPoints = async (e) => {
           </div>
         </div>
         <div className="flex flex-col items-center mt-[8px] md:mt-[8px] lg:mt-[20px] text-[#7C7C7C] lg:text-[16px] leading-[20.8px] gap-2 lg:gap-4 font-[500] text-[7px] md:text-[9.2px] ">
+          {/* <div className="flex flex-row justify-between gap-[7.7vw]"> */}
           <div className="border-[1px] border-slate-200 px-1 py-0 rounded-sm">
             Minimum 1000 PTS
           </div>
+          
           <div className="border-[1px] border-slate-200 pl-1 pr-3 py-0 rounded-sm">
             Available Points Balance: {isLoading ? "Loading..." : userPoints}
           </div>
@@ -367,6 +423,7 @@ const handleRedeemPoints = async (e) => {
   </div>
   <div className="border-[1px] border-slate-200 pl-1 pr-3 py-0 rounded-sm">
     Referral Points: {isLoading ? "Loading..." : referralPoints}
+  {/* </div> */}
   </div>
         </div>
         <div className="mt-[7px] flex flex-row lg:mt-[20px]">
@@ -407,7 +464,13 @@ const handleRedeemPoints = async (e) => {
               {" "}
               <img src={icon1} className="lg:w-[20px] md:w-[11px] " alt="" />
             </div>
-            <div>1 PTS ~ 1 NGN</div>
+            <div><span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>
+  {isLoading
+    ? "Loading..."
+    : rateRedeemed && rateRedeemed !== 0
+      ? rateRedeemed
+      : "1 PTS - 1 NGN"}
+</span></div>
           </div>
           <div className="flex flex-row items-center gap-1">
             <div>
@@ -538,7 +601,13 @@ const handleRedeemPoints = async (e) => {
                         alt=""
                       />
                     </div>
-                    <div>1 PTS ~ 1 NGN</div>
+                    <div><span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>
+  {isLoading
+    ? "Loading..."
+    : rateRedeemed && rateRedeemed !== 0
+      ? rateRedeemed
+      : "1 PTS - 1 NGN"}
+</span></div>
                   </div>
                 </div>
                 <div className="font-bold flex mt-8 text-[#000] text-[10px] leading-[130%] items-center  gap-[8px]  md:text-[12px] lg:text-[15px]">
@@ -596,74 +665,94 @@ const handleRedeemPoints = async (e) => {
       {/* Confirmation Transaction Popup */}
       {proceed && (
         <Modal>
-          <div
+                       <div className={`w-full flex justify-center h-full 
+             py-[30px] px-[15px] lg:px-[0px] lg:items-center
+              items-end`}>
+            <div 
+            className={` bvnQuery lg:rounded-[12px] rounded-[10px] 
+              h-[520px] ${ toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+              } w-[100%] md:w-[60%] overflow-auto  ${isDarkMode ? "bg-black text-white border rounded-[10px] border-white": "bg-white text-black"} `}
+          >
+          {/* <div
             className={`${styles.aremxyMoneyPop} ${
               toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
             } w-[90%] md:w-[60%] overflow-auto`}
-          >
-            <img
-              onClick={() => setProceed(false)}
-              className="absolute right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px]"
-              src="/Images/transferImages/close-circle.png"
-              alt=""
-            />
-            <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
+          > */}
+         <div className="flex justify-end lg:py-[10px] pr-2 py-[7px] relative">
+  <img
+    onClick={() => setProceed(false)}
+    className="w-[25px] h-[25px] md:w-[35px] md:h-[35px] lg:w-[26px] lg:h-[26px] cursor-pointer"
+    src="/Images/transferImages/close-circle.png"
+    alt="Close"
+  />
+</div>
+          
+  <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]"/>
+          <div className="mx-auto">
             <h2 className="text-[12px] my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
               Confirm Transaction
             </h2>
-            <p className="text-[10px] text-[#000] pt-[20px] text-center mb-2 md:text-[12px] lg:text-[14px]">
+            <p className={`text-[10px] text-[#000] pt-[20px] text-center mb-2 md:text-[12px] lg:text-[14px]
+            ${isDarkMode ? "text-white" : "text-black"}`}>
               You are about to redeem{" "}
-              <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]">
-                {inputValue}.00{" "}
+              <span className={`text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]
+             ${isDarkMode ? "text-white" : "text-black"}`}> {isLoading ? "Loading..." : amountRedeemed}.00{" "}
               </span>{" "}
-              Points to <br></br>
-              <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]">
+              Points<br></br>
+              {/* <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]">
                 {outputValue}{" "}
-              </span>
+              </span> */}
               from your PTS balance to{" "}
             </p>
-
+</div>
             <div className="flex flex-col gap-3 pt-[10px]">
               <div className="flex text-[10px] md:text-[14px] pt-[10px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#0008]">Wallet Type</p>
-                <span>Nigeria NGN Wallet</span>
+                <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Wallet Type</p>
+                <span className={`${isDarkMode ? "text-white" : "text-black"}`}>Nigeria NGN Wallet</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#0008]">Amount To Redeem</p>
-                <span>{outputValue} PTS</span>
+                <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Amount To Redeem</p>
+                <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>  ₦ {isLoading ? "Loading..." : amountRedeemed} PTS</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#0008]">Account To Receive</p>
-                <span>&#8358;{inputValue} </span>
-              </div>
-
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#0008]">Redeem Rate</p>
-                <span>1 PTS - 1 NGN</span>
+                <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Account To Receive</p>
+                <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>&#8358; {isLoading ? "Loading..." : amountRedeemed} PTS </span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#0008]">Transfaction fee</p>
-                <span>&#8358;{transferFee}.00</span>
+                <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Redeem Rate</p>
+                <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>1 PTS - 1 NGN</span>
+              </div>
+
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Transfaction fee</p>
+                <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>&#8358;{transferFee}.00</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#0008]">Completion Time</p>
-                <span>Instantly</span>
+                <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`} >Completion Time</p>
+                <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>Instantly</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#0008]">Points Earned</p>
+                <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Points Earned</p>
                 <span className="text-[#00AA48]">{pointsEarned}</span>
               </div>
             </div>
 
-            <div  className="bg-[#0001] h-[45px] my-5 flex justify-between items-center px-[4%]">
+     
+        <div className={`bg-[#F6F7F7] w-[95%] h-auto my-5 lg:my-8 flex py-[7px] 
+        justify-between items-center px-[4%] mx-auto rounded-[10px]  
+        ${isDarkMode ? "bg-black border rounded-[10px]  border-white" : "bg-[#F6F7F7] "}`}>
               <div className="flex gap-2 items-center">
-                <div className="bg-white rounded-full h-[27px] w-[27px] flex justify-center items-center">
-                  <img className="w-[16px] h-[16px]" src={icon4} alt="/" />
+                  <div className="flex gap-[10px] justify-center items-center">
+                  <img className="w-[16px] h-[16px] bg-white" src={icon4} alt="/" />
                 </div>
-                <p className="text-[10px] md:text-[14px]  lg:text-[16px]">
+  <div className="flex gap-[10px] items-center">
+                        <p className={`text-[12px] md:text-[14px] leading-[20px] 
+                        lg:leading-[22px]  lg:text-[16px] font-[500] ${isDarkMode ? "text-white" : "text-black"}`}>
+                    
                  Available Balance: {isLoading ? "Loading..." : userPoints}
                 </p>
+              </div>
               </div>
               <img
                 className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
@@ -673,10 +762,14 @@ const handleRedeemPoints = async (e) => {
             </div>
             <button
               onClick={handleSwitch}
-              className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
-            >
+              className={`bg-[#04177f] my-[5%] w-[90%] flex 
+                justify-center items-center mx-auto cursor-pointer 
+                text-[14px] font-extrabold h-[50px] text-white rounded-[6px]
+                 md:w-[25%] md:rounded-[8px] lg:rounded-[12px] md:text-[16px]
+                 lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:my-[2%] `}>
               Confirmed
             </button>
+          </div>
           </div>
         </Modal>
       )}
@@ -684,17 +777,22 @@ const handleRedeemPoints = async (e) => {
       {/* Input pin pop up */}
       {InputPinPopUp && (
         <Modal>
-          <div
-            className={`${styles.inputPin} ${
-              toggleSideBar ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]" : "lg:w-[40%]"
-            } md:w-[55%] w-[90%]`}
-          >
-            <img
-              onClick={handle}
-              className="absolute right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px]"
-              src="/Images/transferImages/close-circle.png"
-              alt=""
-            />
+          <div className="flex items-end justify-center
+             lg:items-center lg:justify-center 
+   w-[100%] lg:px-[0px] rounded-[10px] h-[100%] px-[15px]">
+        <div className={`  flex flex-col lg:mb-[0px]  mb-[50px]  '
+         lg:h-[350px] overflow-scroll h-[300px] bvnQuery  ${
+                      toggleSideBar ? "md:w-[45%] lg:w-[40%]  " : "lg:w-[40%]"
+                    } md:w-[55%] w-full   ${isDarkMode ? "text-white bg-black border-[1px] border-white rounded-[10px]" : "text-black bg-white rounded-[10px]"}`}
+            >
+            <div className="pr-3 lg:pr-2 py-[5px] flex justify-end">
+  <img
+    onClick={handle}
+    className="w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px] cursor-pointer"
+    src="/Images/transferImages/close-circle.png"
+    alt="Close"
+  />
+</div>
             <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
             <p className="text-[9px] md:text-[16px] font-extrabold text-center my-[10%] lg:my-[%]">
               Input PIN to complete transaction
@@ -735,15 +833,27 @@ const handleRedeemPoints = async (e) => {
                 Forgot Pin ?
               </p>
             </div>
+       {errorMessage && (
+              <p className="font-bold text-[14px]  lg:text-[16px] md:font-[500] 
+              text-center leading-[18px] lg:leading-[20px]   text-red-600">
+                 Incorrect Pin
+              </p>
+            ) 
+            }
+  <div className="flex flex-col gap-[10px] px-[20px]" >
+           
             <button
               disabled={inputPin.length !== 4 || isLoading}
-              onClick={handleRedeemPoints}
+              onClick={VerifyPinHandler}
               className={`${
-                inputPin.length !== 4 || isLoading ? "bg-[#0008]" : "bg-[#04177f]"
+                 inputPin.length !== 4 && !isDarkMode ? "bg-[#0008]" : 
+                 inputPin.length !== 4 && isDarkMode ? "bg-gray-300" : "bg-[#04177f]"
               } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
             >
               {isLoading ? "Processing..." : "Redeem"}
             </button>
+          </div>
+          </div>
           </div>
         </Modal>
       )}
@@ -751,22 +861,25 @@ const handleRedeemPoints = async (e) => {
       {/* Redeem Successful Popup */}
       {successPopup && (
         <Modal>
-          <div
-            className={`${styles.successfulTwo} ${
-              toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-            } md:w-[45%] w-[90%] overflow-auto`}
-          >
-            <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
-              <img
+   <div className={`w-full flex justify-center h-full 
+             py-[30px] px-[15px] lg:items-center
+              items-end`}>
+           <div className={` bvnQuery lg:rounded-[12px] rounded-[10px] 
+              h-[520px] ${ toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+              } w-[100%] md:w-[60%] overflow-auto  ${isDarkMode ? "bg-black text-white border rounded-[10px] border-white": "bg-white text-black"} `}>
+        <div className="flex justify-between items-center 
+        mx-[3%] my-[2%] md:my-[1%]">
+        <div>
+             <img
                 onClick={() => setSuccessPopup(false)}
-                className=" w-[18px]   md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[25px]"
+                className=" w-[15px] h-[15px] md:w-[24px] md:h-[15px] lg:w-[42px] lg:h-[25px]"
                 src="/Images/login/arpLogo.png"
                 alt=""
               />
-
+            </div>   
               <img
                 onClick={() => setSuccessPopup(false)}
-                className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
+                className=" w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px] cursor-pointer"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
               />
@@ -780,52 +893,70 @@ const handleRedeemPoints = async (e) => {
               src="./Gif/checkMarkGif.gif"
               alt="/"
             />
-            <p className="text-[8px] text-[#0008] text-center mb-2 md:text-[14px] lg:text-[12px]">
+            <p className={`text-[8px] text-[#0008] text-center mb-2 md:text-[14px] lg:text-[12px]
+               ${isDarkMode ? "text-white" : "text-black" }
+              `}>
               You have successfully redeemed{" "}
-              <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">
+              <span className={` ${isDarkMode? "text-white" : "text-black"} text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]`}>
                 {isLoading ? "Loading..." : redeemedPoints}
               </span>{" "}
               Points<br></br>
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">
                 &#8358;{isLoading ? "Loading..." : redeemedPoints}{" "}
               </span>
-              from your PTS balance{" "}
+              from your PTS balance{" "} to
             </p>
 
             <div className="flex flex-col gap-2 lg:gap-4">
               <div className="flex text-[10px] md:text-[14px] pt-[10px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#0008]">Wallet Type</p>
-                <span>Nigeria NGN Wallet</span>
+                <p className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"} text-[#0008]`}>Wallet Type</p>
+                <span className={`${isDarkMode ? "text-white" : "text-black"}`}>Nigeria NGN Wallet</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#0008]">Amount To Redeem</p>
-                <span>₦ {isLoading ? "Loading..." : amountRedeemed} PTS</span>
+                <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"} text-[#0008]`}>Amount To Redeem</p>
+                <span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>₦ {isLoading ? "Loading..." : amountRedeemed} PTS</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#0008]">Account To Receive</p>
-                <span>&#8358;{inputValue}</span>
-              </div>
-
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#0008]">Redeem Rate</p>
-                <span>1 PTS - 1 NGN</span>
-                {/* <span>{isLoading ? "Loading..." : rateRedeemed}</span>
-               */}
+                <p className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"} text-[#0008]`}>Account To Receive</p>
+                <span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>&#8358; {isLoading ? "Loading..." : amountRedeemed}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#0008]">Transfaction fee</p>
+                <p className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}text-[#0008]`}>Redeem Rate</p>
+                <span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>
+  {/* {isLoading
+    ? "Loading..."
+    : rateRedeemed && rateRedeemed !== 0
+      ? rateRedeemed
+      : "1 PTS - 1 NGN"} */}
+      1 PTS - 1 NGN
+</span>
+              </div>
+
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                <p className={`  ${isDarkMode ? "text-white" : "text-[#0008]"}`}>Transfaction fee</p>
                 {/* <span>&#8358;{transferFee}.00</span> */}
-                <span>{isLoading ? "Loading..." : transactionId}</span>
+                <span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>{transferFee}.00</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[14px]">
-                <p className="text-[#0008]">Order Number</p>
-                <span>{isLoading ? "Loading..." : orderId}</span>
+                <p className= {`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Order Number</p>
+                <span className={`  ${isDarkMode ? "text-white" : "text-black"}
+                `}>
+                  1256478999
+                  {/* {isLoading ? "Loading..." : orderId && orderId !== 0 ? orderId : "1256478999"} */}
+
+                  </span>
               </div>
             </div>
 
-            <div className="bg-[#F2FAFF] mx-10 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]">
-              <p className="text-[6px] text-center mx-auto w-[171px] md:text-[14px] md:w-[80%] lg:text-[14px]">
+            <div className={`bg-[#F2FAFF] w-[90%]   mx-auto p-[8px] my-5 flex justify-between 
+        items-center md:p-[9px] lg:p-[10px] rounded-[5px] lg:rounded-[10px]
+              ${
+                isDarkMode ? "bg-slate-800 " : "bg-[#F2FAFF]"
+              }`}>
+              <p className={`text-[10px] leading-[13px] text-center
+             md:text-[14px] md:leading-[18px] lg:text-[14px]  font-semibold 
+             ${isDarkMode ? "text-white" : "text-black"}`}>
               The redeem has been sent successfully. Please check the correspondent wallet to view the value.
               </p>
             </div>
@@ -850,8 +981,18 @@ const handleRedeemPoints = async (e) => {
               </Link>
             </div>
           </div>
+          </div>
         </Modal>
       )}
+               {isLoading && (
+                    <Modal>
+                        <Loader/>
+         
+                    </Modal>
+               ) } 
+               {sessionModal && (
+                <HandleUserSession/>
+               )}
     </DashBoardLayout>
   );
 };
