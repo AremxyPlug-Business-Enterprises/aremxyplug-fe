@@ -6,12 +6,15 @@ import { ContextProvider } from "../../../Context";
 import { DashBoardLayout } from "../../Layout/DashBoardLayout";
 import styles from "../../DashboardComponents/component.module.css";
 import { Modal } from "../../../Screens/Modal/Modal";
+import CurrencyConversionModal from "../../../CurrencyConversion/CurrencyConversionModal";
 
 export const WithdrawPage = () => {
   const { isDarkMode, toggleSideBar } = useContext(ContextProvider);
   const [activeBtn, setActiveBtn] = useState([true, false]);
   const [fiatWithdrawal, setFiatWithdrawal] = useState(true);
   const [cryptoWithdrawal, setCryptoWithdrawal] = useState(false);
+  const [toMyAccount, setToMyAccount] = useState(false);
+  const [toOtherBanks, setToOtherBanks] = useState(false);
   const [paymentLink, setPaymentLink] = useState(false);
   const [scanQR, setScanQR] = useState(false);
 
@@ -91,7 +94,12 @@ export const WithdrawPage = () => {
           {/* =================Trasnfer buttons==================== */}
           {fiatWithdrawal && (
             <div className="mt-[10%] flex flex-col gap-[20px] md:mt-[8%] md:gap-[30px]">
-              <Link to="/withdraw-to-account">
+              <Link
+                // to="/withdraw-to-account"
+                onClick={() => {
+                  setToMyAccount(true);
+                }}
+              >
                 <div
                   className={`${isDarkMode ? "border" : "bg-[#fff]"} ${
                     styles.toMyAcct
@@ -121,7 +129,20 @@ export const WithdrawPage = () => {
                   />
                 </div>
               </Link>
-              <Link to="/withdraw-to-other-banks">
+              {toMyAccount && (
+                <CurrencyConversionModal
+                  title="Withdraw To My Account"
+                  image="./Images/wallet/comingSoon.png"
+                  onClick={() => setToMyAccount(false)}
+                  tag="This Feature is Currently Not Available."
+                />
+              )}
+              <Link
+                // to="/withdraw-to-other-banks"
+                onClick={() => {
+                  setToOtherBanks(true);
+                }}
+              >
                 {" "}
                 <div
                   className={`${isDarkMode ? "border" : "bg-[#fff]"} ${
@@ -150,6 +171,14 @@ export const WithdrawPage = () => {
                   />
                 </div>
               </Link>
+              {toOtherBanks && (
+                <CurrencyConversionModal
+                  title="Withdraw To Other Banks"
+                  image="./Images/wallet/comingSoon.png"
+                  onClick={() => setToOtherBanks(false)}
+                  tag="This Feature is Currently Not Available."
+                />
+              )}
               <div
                 onClick={() => {
                   setPaymentLink(true);

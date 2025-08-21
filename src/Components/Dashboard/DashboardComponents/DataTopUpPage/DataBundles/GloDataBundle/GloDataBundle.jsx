@@ -25,16 +25,17 @@ import Joi from "joi";
 import airtimestyles from "../../../../../AirTimePage/AirtimeVtu.module.css";
 import Failed from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/Failed.svg";
 import axiosInstance from "../../../../../ApiCollection.jsx/apiClient";
-import { HandleUserSession, VerifyTransPin } from "../../../../../ApiCollection.jsx/ApiBuck";
+import {
+  HandleUserSession,
+  VerifyTransPin,
+} from "../../../../../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../../../../../Loader/Loader";
 import { GetFunction } from "../../../../../ApiCollection.jsx/ApiBuck";
 
-
-
-
 const GloDataBundle = () => {
   const { isDarkMode, newBalance } = useContext(ContextProvider);
-  const { selectedOptionGlo,
+  const {
+    selectedOptionGlo,
     setSelectedOptionGlo,
     recipientPhoneNumberGlo,
     setRecipientPhoneNumberGlo,
@@ -46,15 +47,15 @@ const GloDataBundle = () => {
     setWalletNameGlo,
     // selectedNetworkProductGlo,
     //  setSelectedNetworkProductGlo,
-       selectedProductGlo,
+    selectedProductGlo,
     setSelectedProductGlo,
-     toggleSideBar,
+    toggleSideBar,
     inputPin,
     setInputPin,
     // inputPinHandler,
     toggleVisibility,
     isVisible,
-    setNewBalance
+    setNewBalance,
   } = useContext(ContextProvider);
 
   const [showProductList, setShowProductList] = useState(false);
@@ -80,77 +81,89 @@ const GloDataBundle = () => {
   const [loadingPlans, setLoadingPlans] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [success, setSuccess] = useState(false);
-  
-  const [errorMessage, setErrorMessage] = useState("");
-const [balanceStatus,setBalanceStatus ] = useState("");
- const [selectPlanWarn, setSelectPlanWarn] = useState(false);
-  const [selectProductWarn, setSelectProductWarn] = useState(false);
-   let balanceStringToNum = Number(newBalance);
-   const [passDataBalance, setPassDataBalance] = useState({});
-   const [gloReceiptInfo, setGloReceiptInfo] = useState("");
-   const [sessionModal, setSessionModal]= useState(false);
 
-              let gloDataAmount = Number(selectedAmountGlo.replace(/\D/g, ""));
-              let updateBalance = passDataBalance?.data ? passDataBalance?.data?.data?.data?.balance : "";
-              const cleanUpBalanceToNumeric = Number(updateBalance.replace(/\D/, ""));
-             let CheckSufficiency =  gloDataAmount > (newBalance === "" || newBalance === null) ? cleanUpBalanceToNumeric : balanceStringToNum;
-             
+  const [errorMessage, setErrorMessage] = useState("");
+  const [balanceStatus, setBalanceStatus] = useState("");
+  const [selectPlanWarn, setSelectPlanWarn] = useState(false);
+  const [selectProductWarn, setSelectProductWarn] = useState(false);
+  let balanceStringToNum = Number(newBalance);
+  const [passDataBalance, setPassDataBalance] = useState({});
+  const [gloReceiptInfo, setGloReceiptInfo] = useState("");
+  const [sessionModal, setSessionModal] = useState(false);
+
+  let gloDataAmount = Number(selectedAmountGlo.replace(/\D/g, ""));
+  let updateBalance = passDataBalance?.data
+    ? passDataBalance?.data?.data?.data?.balance
+    : "";
+  const cleanUpBalanceToNumeric = Number(updateBalance.replace(/\D/, ""));
+  let CheckSufficiency =
+    gloDataAmount > (newBalance === "" || newBalance === null)
+      ? cleanUpBalanceToNumeric
+      : balanceStringToNum;
+
   useEffect(() => {
     const fetchProducts = async () => {
       setLoadingProducts(true);
       try {
-        const response = await axiosInstance.get(
-          '/products/telecom/list/2'
-        );
-        if(response.status === 201 || response.status ===  200){
+        const response = await axiosInstance.get("/products/telecom/list/2");
+        if (response.status === 201 || response.status === 200) {
           setProducts(response?.data?.data?.products || []);
-     }
+        }
       } catch (error) {
         console.error("Error fetching products:", error);
-           if(error && error.response === undefined){
-             alert("Check your internet Connection, then reload the page.")
-          } else if(error && error.response.status === 400){
-             alert("Service for glo is currently not available, Try again later.")
-          }else if(error && error?.response?.status === 401){
-           if(error.response.headers["x-new-auth-token"] || error.response.headers.get("x-new-auth-token")){
-         setLoading(true)
-         const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
-        
-         if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
-           const setAuthorisedToken = localStorage.setItem("authorisedLogin", newToken);
-           if(setAuthorisedToken){
-            await inputPinHandler()
-           }
-            }else{
-    const setGetToken = localStorage.setItem("getToken", newToken);
-      if(setGetToken){
-        await inputPinHandler();
-      }
-      }
-        }else{
-          return setSessionModal(true)
-        }
-          }else if(error && error.response.status === 500){
-             alert("Service for glo is currently not available, Try again later.")
+        if (error && error.response === undefined) {
+          alert("Check your internet Connection, then reload the page.");
+        } else if (error && error.response.status === 400) {
+          alert("Service for glo is currently not available, Try again later.");
+        } else if (error && error?.response?.status === 401) {
+          if (
+            error.response.headers["x-new-auth-token"] ||
+            error.response.headers.get("x-new-auth-token")
+          ) {
+            setLoading(true);
+            const newToken =
+              error.response.headers.get("x-new-auth-token") ||
+              error.response.headers["x-new-auth-token"];
+
+            if (
+              newToken !== "" &&
+              localStorage.getItem("authorisedLogin") === "true"
+            ) {
+              const setAuthorisedToken = localStorage.setItem(
+                "authorisedLogin",
+                newToken
+              );
+              if (setAuthorisedToken) {
+                await inputPinHandler();
+              }
+            } else {
+              const setGetToken = localStorage.setItem("getToken", newToken);
+              if (setGetToken) {
+                await inputPinHandler();
+              }
+            }
+          } else {
+            return setSessionModal(true);
           }
+        } else if (error && error.response.status === 500) {
+          alert("Service for glo is currently not available, Try again later.");
+        }
       } finally {
         setLoadingProducts(false);
       }
     };
 
     fetchProducts();
-   const HandleBalanceStatus = ()=> {
-              if(CheckSufficiency){
-               setBalanceStatus("Insufficient fund")
-              }else{
-                setBalanceStatus("");
-               }
-            }
+    const HandleBalanceStatus = () => {
+      if (CheckSufficiency) {
+        setBalanceStatus("Insufficient fund");
+      } else {
+        setBalanceStatus("");
+      }
+    };
 
-            HandleBalanceStatus()
-
-          },[CheckSufficiency])
-
+    HandleBalanceStatus();
+  }, [CheckSufficiency]);
 
   // Fetch plans when product is selected
   const fetchPlans = async (productId) => {
@@ -159,61 +172,76 @@ const [balanceStatus,setBalanceStatus ] = useState("");
       const response = await axiosInstance.get(
         `/products/telecom/${productId}`
       );
-        if(response.status === 200){
-      setProductPlans(response?.data?.data?.plans || []);
-      if(response && (response?.data?.data?.plan === null || response?.data?.data?.length < 1 )){
-            setSelectProductWarn(true);
+      if (response.status === 200) {
+        setProductPlans(response?.data?.data?.plans || []);
+        if (
+          response &&
+          (response?.data?.data?.plan === null ||
+            response?.data?.data?.length < 1)
+        ) {
+          setSelectProductWarn(true);
         }
-        }
+      }
     } catch (error) {
-
       console.error("Error fetching plans:", error);
-       if(error && error.response === undefined){
-             alert("Your internet connection is quite unstable.")
-        }else if(error && (error.response.status ===  401)){
-          if(error.response.headers["x-new-auth-token"] || error.response.headers.get("x-new-auth-token")){
-         setLoading(true)
-         const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
-        
-         if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
-           const setAuthorisedToken = localStorage.setItem("authorisedLogin", newToken);
-           if(setAuthorisedToken){
-            await inputPinHandler()
-           }
-            }else{
-    const setGetToken = localStorage.setItem("getToken", newToken);
-      if(setGetToken){
-        await inputPinHandler();
-      }
-      }
-        }else{
-          return setSessionModal(true)
+      if (error && error.response === undefined) {
+        alert("Your internet connection is quite unstable.");
+      } else if (error && error.response.status === 401) {
+        if (
+          error.response.headers["x-new-auth-token"] ||
+          error.response.headers.get("x-new-auth-token")
+        ) {
+          setLoading(true);
+          const newToken =
+            error.response.headers.get("x-new-auth-token") ||
+            error.response.headers["x-new-auth-token"];
+
+          if (
+            newToken !== "" &&
+            localStorage.getItem("authorisedLogin") === "true"
+          ) {
+            const setAuthorisedToken = localStorage.setItem(
+              "authorisedLogin",
+              newToken
+            );
+            if (setAuthorisedToken) {
+              await inputPinHandler();
+            }
+          } else {
+            const setGetToken = localStorage.setItem("getToken", newToken);
+            if (setGetToken) {
+              await inputPinHandler();
+            }
+          }
+        } else {
+          return setSessionModal(true);
         }
-      }else if(error && error.response.status ===  400){
+      } else if (error && error.response.status === 400) {
         setSelectProductWarn(true);
-      }else if(error && error.response.status ===  500){
-       setSelectProductWarn(true);
-      }else {
-        alert("Check your internet connection.")
+      } else if (error && error.response.status === 500) {
+        setSelectProductWarn(true);
+      } else {
+        alert("Check your internet connection.");
       }
-      
     } finally {
       setLoadingPlans(false);
     }
   };
 
   const handleSelectProduct = (product) => {
-    if(!navigator.onLine) return alert("Check your internet connection.")
-    if(navigator.onLine){
-    setSelectedProductGlo(`${product.Plan_Type}`);
-    setShowProductList(false);
-    fetchPlans(product.Product_ID);
-    setShowOptionList(true); // Show options after selecting a product
+    if (!navigator.onLine) return alert("Check your internet connection.");
+    if (navigator.onLine) {
+      setSelectedProductGlo(`${product.Plan_Type}`);
+      setShowProductList(false);
+      fetchPlans(product.Product_ID);
+      setShowOptionList(true); // Show options after selecting a product
     }
   };
 
   const handleSelectOption = (plan) => {
-    setSelectedOptionGlo(`${plan?.Size} ~ ${plan?.Validity} ~ ₦${plan?.Amount}`);
+    setSelectedOptionGlo(
+      `${plan?.Size} ~ ${plan?.Validity} ~ ₦${plan?.Amount}`
+    );
     setSelectedAmountGlo(`₦${plan?.Amount}`);
     setGloReceiptInfo(plan?.PlanType + " " + plan?.Size);
     setSelectedPlan(plan);
@@ -235,13 +263,13 @@ const [balanceStatus,setBalanceStatus ] = useState("");
   };
 
   const handleSelectPayment = (code, flag, amount, id) => {
-     if(code === "NGN" && id ===1){
-    setWalletNameGlo(code);
-    setImage(flag);
-    setPaymentAmount(amount);
-    setShowPayment(false);
-    setPaymentSelected(true);
-     }
+    if (code === "NGN" && id === 1) {
+      setWalletNameGlo(code);
+      setImage(flag);
+      setPaymentAmount(amount);
+      setShowPayment(false);
+      setPaymentSelected(true);
+    }
   };
 
   const countryList = [
@@ -250,102 +278,171 @@ const [balanceStatus,setBalanceStatus ] = useState("");
       name: "Nigeria",
       code: "NGN",
       flag: require("../DataBundles-Images/ng.svg").default,
-      amount: newBalance === "" || newBalance === null ? updateBalance : newBalance,
-      status : "Active"
+      amount:
+        newBalance === "" || newBalance === null
+          ? `${
+              cleanUpBalanceToNumeric > 1
+                ? cleanUpBalanceToNumeric?.toLocaleString("en-NG", {
+                    style: "currency",
+                    currency: "NGN",
+                  })
+                : "₦"
+            }`
+          : `${
+              balanceStringToNum > 1
+                ? balanceStringToNum?.toLocaleString("en-NG", {
+                    style: "currency",
+                    currency: "NGN",
+                  })
+                : "₦"
+            }`,
+      status: "Active",
     },
     {
       id: 2,
       name: "United States",
       code: "USD",
       flag: require("../DataBundles-Images/us.svg").default,
-      amount: 0,
-      status : "Inactive"
+      amount: 0?.toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD",
+      }),
+      status: "Inactive",
     },
     {
       id: 3,
       name: "United Kingdom",
       code: "GBP",
       flag: require("../DataBundles-Images/gb.svg").default,
-      amount: 0,
-      status : "Inactive"
+      amount: 0?.toLocaleString("en-GB", {
+        style: "currency",
+        currency: "GBP",
+      }),
+      status: "Inactive",
     },
     {
       id: 4,
       name: "European Union",
       code: "EUR",
       flag: require("../DataBundles-Images/eu.svg").default,
-      amount: 0,
-      status : "Inactive"
+      amount: 0?.toLocaleString("en-EU", {
+        style: "currency",
+        currency: "EUR",
+      }),
+      status: "Inactive",
     },
     {
       id: 5,
       name: "Australia",
       code: "AUD",
       flag: require("../DataBundles-Images/au.svg").default,
-      amount: 0,
-      status : "Inactive"
+      amount: 0?.toLocaleString("en", {
+        style: "currency",
+        currency: "AUD",
+      }),
+      status: "Inactive",
     },
     {
       id: 6,
       name: "Kenya",
       code: "KSH",
       flag: require("../DataBundles-Images/ke.svg").default,
-      amount: 0,
-      status : "Inactive"
+      amount: 0?.toLocaleString("en-KE", {
+        style: "currency",
+        currency: "KES",
+      }),
+      status: "Inactive",
     },
   ];
 
-   useEffect(() => {
-     const GetBalance =   async()=> {
-         const SuccessHandler = ()=> {
-       //alert("Successful");
-  console.log("successfully retrieved balance");
-  //alert("Successful")
-    }
-   const FailedHandler = async(ErrorType)=> {
-     if(ErrorType === "unauthorised"){
-      await GetFunction("balance", setLoading, SuccessHandler, (ErrorType)=> {
-       if(ErrorType === "unauthorised"){
-        setSessionModal(true)
-       }
-      })
-     }
-   }
-   await GetFunction("balance", setLoading, SuccessHandler, FailedHandler,setPassDataBalance)
-     } 
-      // Simulate async data loading
-     
-      if(newBalance === "" || newBalance === null || newBalance === undefined){
-         GetBalance();
-         if(GetBalance){
-          setNewBalance(passDataBalance?.data?.data?.data ? passDataBalance?.data?.data?.data?.balance : "");
-         }
+  useEffect(() => {
+    const GetBalance = async () => {
+      const SuccessHandler = () => {
+        //alert("Successful");
+        console.log("successfully retrieved balance");
+        //alert("Successful")
+      };
+      const FailedHandler = async (ErrorType) => {
+        if (ErrorType === "unauthorised") {
+          await GetFunction(
+            "balance",
+            setLoading,
+            SuccessHandler,
+            (ErrorType) => {
+              if (ErrorType === "unauthorised") {
+                setSessionModal(true);
+              }
+            }
+          );
+        }
+      };
+      await GetFunction(
+        "balance",
+        setLoading,
+        SuccessHandler,
+        FailedHandler,
+        setPassDataBalance
+      );
+    };
+    // Simulate async data loading
+
+    if (newBalance === "" || newBalance === null || newBalance === undefined) {
+      GetBalance();
+      if (GetBalance) {
+        setNewBalance(
+          passDataBalance?.data?.data?.data
+            ? passDataBalance?.data?.data?.data?.balance
+            : ""
+        );
       }
-     //eslint-disable-next-line
-    }, []);
+    }
+    //eslint-disable-next-line
+  }, []);
   const Payment = ({ code, flag, amount, onClick, paymentMethod }) => {
-     return (
-       <div
+    return (
+      <div
         className={`font-[500] flex px-2  gap-[10px] text-[#7C7C7C] text-[8px] leading-[10.4px]
              lg:text-[16px] lg:leading-[20.8px] md:py-[20px] py-[15px] pl-[10px]
             lg:pl-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] md:shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)] 
-             ${isDarkMode ?  "border-y-[0.5px] border-x-[0.6px] border-white" : "boder-none"} 
-            cursor-pointer ${paymentMethod  === "Inactive" && !isDarkMode  ? "bg-gray-300 cursor-not-allowed" : 
-             paymentMethod === "Inactive" && isDarkMode ? "bg-black" : paymentMethod === "Active" && !isDarkMode ? "bg-white" : "bg-black" } 
-            `} onClick={onClick}>
-         <div className={` ${airtimestyles.netImage}`}>
-           <img src={flag} alt="" className={airtimestyles.NoImage} />
-         </div>
-         <h2 className={`font-[500] text-[#7C7C7C] text-[12px] leading-[16.4px]
-             lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>{code}</h2>
-         <p className={`font-[500] text-[#7C7C7C] text-[12px] leading-[16.4px]
-             lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
-           Wallet({amount.toLocaleString()})
-         </p>
-       </div>
-     );
-   };
- 
+             ${
+               isDarkMode
+                 ? "border-y-[0.5px] border-x-[0.6px] border-white"
+                 : "boder-none"
+             } 
+            cursor-pointer ${
+              paymentMethod === "Inactive" && !isDarkMode
+                ? "bg-gray-300 cursor-not-allowed"
+                : paymentMethod === "Inactive" && isDarkMode
+                ? "bg-black"
+                : paymentMethod === "Active" && !isDarkMode
+                ? "bg-white"
+                : "bg-black"
+            } 
+            `}
+        onClick={onClick}
+      >
+        <div className={` ${airtimestyles.netImage}`}>
+          <img src={flag} alt="" className={airtimestyles.NoImage} />
+        </div>
+        <h2
+          className={`font-[500] text-[#7C7C7C] text-[12px] leading-[16.4px]
+             lg:text-[16px] lg:leading-[20.8px] ${
+               isDarkMode ? "text-white" : "text-[#7C7C7C]"
+             }`}
+        >
+          {code}
+        </h2>
+        <p
+          className={`font-[500] text-[#7C7C7C] text-[12px] leading-[16.4px]
+             lg:text-[16px] lg:leading-[20.8px] ${
+               isDarkMode ? "text-white" : "text-[#7C7C7C]"
+             }`}
+        >
+          Wallet({amount.toLocaleString()})
+        </p>
+      </div>
+    );
+  };
 
   const handleConfirm = () => {
     setProceed(false);
@@ -366,7 +463,7 @@ const [balanceStatus,setBalanceStatus ] = useState("");
   // }
 
   const schema = Joi.object({
-    recipientPhoneNumberGlo : Joi.string()
+    recipientPhoneNumberGlo: Joi.string()
       .pattern(new RegExp(/^\d{11,}/))
       .required()
       .messages({
@@ -378,7 +475,6 @@ const [balanceStatus,setBalanceStatus ] = useState("");
 
   const GloRegex =
     /^(234|0)(705[0-9]|805[0-9]|807[0-9]|811[0-9]|815[0-9]|905[0-9]|915[0-9])\d{6}$/;
-
 
   const validatePhoneNumber = (phoneNumber) => {
     if (!phoneNumber) {
@@ -416,18 +512,21 @@ const [balanceStatus,setBalanceStatus ] = useState("");
 
     function validateNigerianNumberByNetwork(number) {
       const networks = {
-        'GLO': ['0705', '0805', '0807', '0811', '0815', '0905', '0915'],
+        GLO: ["0705", "0805", "0807", "0811", "0815", "0905", "0915"],
       };
 
       for (let network in networks) {
         for (let prefix of networks[network]) {
-          if (number.startsWith(prefix) && number.length === prefix.length + 7) {
+          if (
+            number.startsWith(prefix) &&
+            number.length === prefix.length + 7
+          ) {
             return network;
           }
         }
       }
 
-      return 'Unknown network';
+      return "Unknown network";
     }
 
     const { error } = schema.validate({
@@ -441,17 +540,17 @@ const [balanceStatus,setBalanceStatus ] = useState("");
           return acc;
         }, {})
       );
-    } else if (validateNigerianNumberByNetwork(recipientPhoneNumberGlo) !== 'GLO') {
+    } else if (
+      validateNigerianNumberByNetwork(recipientPhoneNumberGlo) !== "GLO"
+    ) {
       setErrors({
-        recipientPhoneNumber:
-          `Invalid GLO number. Please enter a valid GLO number.`,
+        recipientPhoneNumber: `Invalid GLO number. Please enter a valid GLO number.`,
       });
     } else {
       setProceed(true);
       setErrors({});
     }
   };
-
 
   const handleRecipientNameChange = (e) => {
     setRecipientNamesGlo(e.target.value);
@@ -464,7 +563,6 @@ const [balanceStatus,setBalanceStatus ] = useState("");
   const [glopurchaseStatus, setGloPurchaseStatus] = useState(null); // State to hold purchase status
 
   const inputPinHandler = async () => {
-
     async function buyData(network, mobileNumber, plan, name) {
       // Add validation for selected plan
       if (!selectedPlan) {
@@ -472,10 +570,10 @@ const [balanceStatus,setBalanceStatus ] = useState("");
         return;
       }
 
-      console.log(selectedPlan)
-      console.log(selectedPlan.PlanID)
+      console.log(selectedPlan);
+      console.log(selectedPlan.PlanID);
 
-      const path = '/data';
+      const path = "/data";
 
       const data = {
         network,
@@ -484,12 +582,10 @@ const [balanceStatus,setBalanceStatus ] = useState("");
         name,
       };
 
+      setLoading(true);
 
-      setLoading(true)
-
-
-      console.log(data)
-      console.log("its me")
+      console.log(data);
+      console.log("its me");
 
       try {
         setLoading(true);
@@ -507,75 +603,88 @@ const [balanceStatus,setBalanceStatus ] = useState("");
 
         setGloRefNumber(resData?.reference_number);
         console.log(resData?.reference_number);
-       setGloOrderID(resData?.order_id)
+        setGloOrderID(resData?.order_id);
 
         // No `order_id`, using `id` instead
-     
-
-      
 
         setGloDescription(`${resData?.network} - ${resData?.plan_name}`); // Fabricated description
-         if (response.statusCode === 200) {
-      // Success response
-      setTransactSuccessPopUp(true); // Show success popup
-      setConfirm(false);
-      setInputPin("")
-    } 
+        if (response.statusCode === 200) {
+          // Success response
+          setTransactSuccessPopUp(true); // Show success popup
+          setConfirm(false);
+          setInputPin("");
+        }
 
         return { statusCode: response.status, data: response.data };
         // console.log(response.data);
       } catch (error) {
         console.error(error);
-        if(error && error.response === undefined){
-          alert("Your internet connection is quite unstable")
-        }else if(error && error.response.status  === 404){
-        alert("Check your internet connection")
-        }else if(error && error.response.status  === 401){
-        if(error.response.headers["x-new-auth-token"] || error.response.headers.get("x-new-auth-token")){
-         setLoading(true)
-         const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
-        
-         if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
-           const setAuthorisedToken = localStorage.setItem("authorisedLogin", newToken);
-           if(setAuthorisedToken){
-            await inputPinHandler()
-           }
-            }else{
-    const setGetToken = localStorage.setItem("getToken", newToken);
-      if(setGetToken){
-        await inputPinHandler();
-      }
-      }
-        }else{
-          return setSessionModal(true)
+        if (error && error.response === undefined) {
+          alert("Your internet connection is quite unstable");
+        } else if (error && error.response.status === 404) {
+          alert("Check your internet connection");
+        } else if (error && error.response.status === 401) {
+          if (
+            error.response.headers["x-new-auth-token"] ||
+            error.response.headers.get("x-new-auth-token")
+          ) {
+            setLoading(true);
+            const newToken =
+              error.response.headers.get("x-new-auth-token") ||
+              error.response.headers["x-new-auth-token"];
+
+            if (
+              newToken !== "" &&
+              localStorage.getItem("authorisedLogin") === "true"
+            ) {
+              const setAuthorisedToken = localStorage.setItem(
+                "authorisedLogin",
+                newToken
+              );
+              if (setAuthorisedToken) {
+                await inputPinHandler();
+              }
+            } else {
+              const setGetToken = localStorage.setItem("getToken", newToken);
+              if (setGetToken) {
+                await inputPinHandler();
+              }
+            }
+          } else {
+            return setSessionModal(true);
+          }
+        } else if (error && error?.response?.status === 400) {
+          setGloPurchaseStatus(true); // Show failure popup
+          setConfirm(false);
+          setInputPin("");
+        } else if (
+          error &&
+          (error?.response?.status === 500 || error?.response?.status === 400)
+        ) {
+          setGloPurchaseStatus(true); // Show failure popup
+          setConfirm(false);
+          setInputPin("");
+        } else if (error && error?.response?.status === 401) {
+          setSessionModal(true);
+        } else {
+          alert(
+            "An error has occurred, kindly check your internet connection."
+          );
         }
-        }else if(error && error?.response?.status === 400){
-           setGloPurchaseStatus(true); // Show failure popup
-      setConfirm(false);
-      setInputPin("");
-        } else if(error && (error?.response?.status === 500|| error?.response?.status === 400)){
-        setGloPurchaseStatus(true); // Show failure popup
-      setConfirm(false)
-      setInputPin("");
-        } else if(error && error?.response?.status === 401){
-         setSessionModal(true)
-        }else {
-          alert("An error has occurred, kindly check your internet connection.")
-        }
-      }finally{
+      } finally {
         setLoading(false);
       }
     }
- // usage
-     await buyData(
+    // usage
+    await buyData(
       2, // Network ID for MTN
       inputValue, // Use inputValue instead of recipientPhoneNumber
       selectedPlan.PlanID,
       recipientNamesGlo
     );
-   };
+  };
 
-    const DoneChangeHandler = () => {
+  const DoneChangeHandler = () => {
     setSelectedProductGlo("");
     setSelectedOptionGlo(false);
     setSelectedAmountGlo("");
@@ -585,21 +694,23 @@ const [balanceStatus,setBalanceStatus ] = useState("");
     setGloPurchaseStatus(null);
     setRecipientPhoneNumberGlo("");
     setInputValue("");
- };
+  };
 
   return (
     <DashBoardLayout>
       <div
-        className={`bg-[#FFF] relative lg:ml-[20px] 2xl:ml-0 ${isDarkMode
-          ? "bg-[#000] text-[#fff] border-[#fff]"
-          : "bg-[#ffffff] text-[#000] "
-          } flex flex-col justify-between h-full`}
-      >
-        <section
-          className={`md:px-[0px] ${isDarkMode
+        className={`bg-[#FFF] relative lg:ml-[20px] 2xl:ml-0 ${
+          isDarkMode
             ? "bg-[#000] text-[#fff] border-[#fff]"
             : "bg-[#ffffff] text-[#000] "
-            }`}
+        } flex flex-col justify-between h-full`}
+      >
+        <section
+          className={`md:px-[0px] ${
+            isDarkMode
+              ? "bg-[#000] text-[#fff] border-[#fff]"
+              : "bg-[#ffffff] text-[#000] "
+          }`}
         >
           <div
             id="DataBundle"
@@ -628,11 +739,13 @@ const [balanceStatus,setBalanceStatus ] = useState("");
           {/* =========================Select/Add Recipient===================== */}
 
           <div className="flex gap-[10%] mt-[40px] md:w-full md:justify-between md:gap-[10%] ">
-            <div className={`w-full flex items-center justify-between border text-[10px] md:py-[15px] md:w-[50%] rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]
-                    ${isDarkMode
-                ? "bg-black text-white border !border-white"
-                : "border border-[#0003]"
-              }`}
+            <div
+              className={`w-full flex items-center justify-between border text-[10px] md:py-[15px] md:w-[50%] rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]
+                    ${
+                      isDarkMode
+                        ? "bg-black text-white border !border-white"
+                        : "border border-[#0003]"
+                    }`}
             >
               <Link
                 to="/DataBundleSelectRecipient"
@@ -647,11 +760,13 @@ const [balanceStatus,setBalanceStatus ] = useState("");
                 />
               </Link>
             </div>
-            <div className={`w-full flex items-center justify-between border text-[10px] md:py-[15px] md:w-[40%] md:mr-[9%]  rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]
-                      ${isDarkMode
-                ? "bg-black text-white border !border-white"
-                : "border border-[#0003]"
-              }`}
+            <div
+              className={`w-full flex items-center justify-between border text-[10px] md:py-[15px] md:w-[40%] md:mr-[9%]  rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]
+                      ${
+                        isDarkMode
+                          ? "bg-black text-white border !border-white"
+                          : "border border-[#0003]"
+                      }`}
             >
               <Link
                 to="/DataBundleAddRecipient"
@@ -717,8 +832,9 @@ const [balanceStatus,setBalanceStatus ] = useState("");
             <Modal>
               (
               <div
-                className={`code ${toggleSideBar ? "code1" : "code01"
-                  } overflow-auto w-[90%]`}
+                className={`code ${
+                  toggleSideBar ? "code1" : "code01"
+                } overflow-auto w-[90%]`}
               >
                 <img
                   onClick={() => setCodes(false)}
@@ -767,9 +883,11 @@ const [balanceStatus,setBalanceStatus ] = useState("");
 
           <div className="grid grid-cols-1 mt-[25px] md:grid-cols-2 gap-y-[20px] md:gap-x-[58.68px] lg:gap-x-[100px] md:gap-y-[15px] lg:gap-y-[25px] pb-[30px] lg:py-[30px] md:mt-[20px]">
             <div className="flex flex-col lg:gap-[12px] gap-[7px]">
-              <h2 className={`lg:text-[18px] lg:leading-[24px] mb-1 text-[14px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${isDarkMode
-                ? "!text-[#7E7E7E]" : "text-[#7E7E7E]"
-                }`}>
+              <h2
+                className={`lg:text-[18px] lg:leading-[24px] mb-1 text-[14px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
+                  isDarkMode ? "!text-[#7E7E7E]" : "text-[#7E7E7E]"
+                }`}
+              >
                 Select Product
               </h2>
               <div
@@ -777,8 +895,8 @@ const [balanceStatus,setBalanceStatus ] = useState("");
                  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
                    leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
                 lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
-                  isDarkMode 
-                    ? "bg-black text-white border border-white" 
+                  isDarkMode
+                    ? "bg-black text-white border border-white"
                     : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
                 } 
 
@@ -795,61 +913,65 @@ const [balanceStatus,setBalanceStatus ] = useState("");
                   <img src={arrowDown} alt="" className="w-full h-full" />
                 </button>
               </div>
-               <div className="relative">
-              {showProductList && (
-                <div className={`border md:rounded-[10px] text-[10px] md:text-[12px]
+              <div className="relative">
+                {showProductList && (
+                  <div
+                    className={`border md:rounded-[10px] text-[10px] md:text-[12px]
                  lg:text-[16px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF]
                  bvnQuery shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
                    ${products.length > 5 ? "overflow-y-scroll h-[300px]" : ""}
-                  z-[10]`}>
-                  {loadingProducts ? (
-                    <div>Loading products...</div>
-                  ) : (
-                    products.map((product) => (
-                      <div
-                        key={product.Product_ID}
-                        className={`font-[400] text-[13px] leading-[18px] cursor-pointer border-b-[0.5px] text-[#7C7C7C]
+                  z-[10]`}
+                  >
+                    {loadingProducts ? (
+                      <div>Loading products...</div>
+                    ) : (
+                      products.map((product) => (
+                        <div
+                          key={product.Product_ID}
+                          className={`font-[400] text-[13px] leading-[18px] cursor-pointer border-b-[0.5px] text-[#7C7C7C]
                            md:text-[12px] lg:text-[16px] lg:leading-[20px] md:rounded-[0px] lg:mt-2 py-[15px] lg:py-[20px]
-                           pl-[5px] ${selectedProductGlo === product.Plan_Type ? "" : ""}
-                          ${isDarkMode
-                            ? "bg-black text-white"
-                            : ""
-                          }
+                           pl-[5px] ${
+                             selectedProductGlo === product.Plan_Type ? "" : ""
+                           }
+                          ${isDarkMode ? "bg-black text-white" : ""}
                           `}
-                        onClick={() => {
-                          handleSelectProduct(product);
-                          console.log(product)
-                          setSelectPlanWarn(false);
-                          setShowOptionList(false);
-                          if(product.plan === null){
-                            setSelectProductWarn(true)
-                          }else {
-                            setSelectProductWarn(false);
-                          }
-                        }}
-                      >
-                        {`${product.Plan_Type}`}
-                      </div>
-                    ))
-                  )}
-                </div>
-              )}
+                          onClick={() => {
+                            handleSelectProduct(product);
+                            console.log(product);
+                            setSelectPlanWarn(false);
+                            setShowOptionList(false);
+                            if (product.plan === null) {
+                              setSelectProductWarn(true);
+                            } else {
+                              setSelectProductWarn(false);
+                            }
+                          }}
+                        >
+                          {`${product.Plan_Type}`}
+                        </div>
+                      ))
+                    )}
+                  </div>
+                )}
               </div>
-               {selectProductWarn && (
-                    <p className="absolute text-red-500 p-[10px] bg-white  
+              {selectProductWarn && (
+                <p
+                  className="absolute text-red-500 p-[10px] bg-white  
                     text-left font-[500] text-[14px] border-[1px]  border-gray-300 
                      rounded-[10px] lg:rounded-[20px]
-            leading-[18px] lg:text-[16px] lg:leading-[22px]">
-                Plans unavailable,kindly select another glo product.
-                    </p>
-                  )}
-                  
+            leading-[18px] lg:text-[16px] lg:leading-[22px]"
+                >
+                  Plans unavailable,kindly select another glo product.
+                </p>
+              )}
             </div>
 
             <div className="flex flex-col lg:gap-[12px] gap-[7px]">
-              <h2 className={`lg:text-[18px] md:text-[12px] lg:leading-[24px] mb-1 text-[14px] md:font-[600] font-[400] leading-[12px] ${isDarkMode
-                ? "!text-[#7E7E7E]" : "!text-black"
-                }`}>
+              <h2
+                className={`lg:text-[18px] md:text-[12px] lg:leading-[24px] mb-1 text-[14px] md:font-[600] font-[400] leading-[12px] ${
+                  isDarkMode ? "!text-[#7E7E7E]" : "!text-black"
+                }`}
+              >
                 Select Plan
               </h2>
               <div
@@ -857,18 +979,17 @@ const [balanceStatus,setBalanceStatus ] = useState("");
                  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
                    leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
                 lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
-                  isDarkMode 
-                    ? "bg-black text-white border border-white" 
+                  isDarkMode
+                    ? "bg-black text-white border border-white"
                     : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
                 }`}
                 onClick={() => {
-                  if(selectedProductGlo.length > 1){
-                  setShowProductList(false);
-                  setShowOptionList(!showOptionList);
-                  setSelectPlanWarn(false);
-                  }else {
+                  if (selectedProductGlo.length > 1) {
+                    setShowProductList(false);
+                    setShowOptionList(!showOptionList);
+                    setSelectPlanWarn(false);
+                  } else {
                     setSelectPlanWarn(true);
-                     
                   }
                 }}
               >
@@ -879,56 +1000,75 @@ const [balanceStatus,setBalanceStatus ] = useState("");
                   <img src={arrowDown} alt="" className="w-full h-full" />
                 </button>
               </div>
-        
-        <div className="relative">
-              {showOptionList && (
-                <div className={`border md:rounded-[10px] lg:mt-2  
+
+              <div className="relative">
+                {showOptionList && (
+                  <div
+                    className={`border md:rounded-[10px] lg:mt-2  
                    bvnQuery shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
-                   ${productPlans.length > 5 ? "overflow-y-scroll h-[300px]" : ""}
+                   ${
+                     productPlans.length > 5
+                       ? "overflow-y-scroll h-[300px]"
+                       : ""
+                   }
                   rounded-[4px] absolute w-full bg-[#FFF] z-[100]
-                        ${isDarkMode
-                    ? "bg-black text-white border !border-white"
-                    : "border border-[#0003]"
-                  }
-  `}>
-                  {loadingPlans ? (
-                    <div>Loading plans...</div>
-                  ) : (
-                    productPlans.map((plan) => (
-                      <div
-                        key={plan.PlanID}
-                        className={`
+                        ${
+                          isDarkMode
+                            ? "bg-black text-white border !border-white"
+                            : "border border-[#0003]"
+                        }
+  `}
+                  >
+                    {loadingPlans ? (
+                      <div>Loading plans...</div>
+                    ) : (
+                      productPlans.map((plan) => (
+                        <div
+                          key={plan.PlanID}
+                          className={`
                             font-[400] text-[13px] leading-[18px] lg:leading-[20px] cursor-pointer 
                            border-b-[0.5px] md:rounded-[0px] text-[#7C7C7C] 
                            md:text-[12px] lg:text-[16px] lg:mt-2 py-[15px] lg:py-[20px]
-                            pl-[5px] ${selectedOptionGlo === plan.PlanID ? "bg-gray-200" : ""
-                          }
-                                                ${isDarkMode
-                            ? "bg-black text-white "
-                            : ""
-                          }
+                            pl-[5px] ${
+                              selectedOptionGlo === plan.PlanID
+                                ? "bg-gray-200"
+                                : ""
+                            }
+                                                ${
+                                                  isDarkMode
+                                                    ? "bg-black text-white "
+                                                    : ""
+                                                }
                                              `}
-                        onClick={() => handleSelectOption(plan)}
-                      >
-                        {`${plan.PlanType} ${plan.Size}  (₦${plan.Amount}) ~ ${plan.Validity ? plan.Validity.toUpperCase() : ""}`}
-                      </div>
-                    ))
-                  )}
-                </div>
-              )}
-                  {selectPlanWarn && (
-            <p className ="text-red-500 absolute text-left font-[500] text-[14px] 
-            leading-[18px] lg:text-[16px] lg:leading-[22px]">
-              Select a product
-            </p>
-            )}
-            </div>
+                          onClick={() => handleSelectOption(plan)}
+                        >
+                          {`${plan.PlanType} ${plan.Size}  (₦${
+                            plan.Amount
+                          }) ~ ${
+                            plan.Validity ? plan.Validity.toUpperCase() : ""
+                          }`}
+                        </div>
+                      ))
+                    )}
+                  </div>
+                )}
+                {selectPlanWarn && (
+                  <p
+                    className="text-red-500 absolute text-left font-[500] text-[14px] 
+            leading-[18px] lg:text-[16px] lg:leading-[22px]"
+                  >
+                    Select a product
+                  </p>
+                )}
+              </div>
             </div>
 
             <div className="flex flex-col lg:gap-[12px] gap-[7px]">
-              <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${isDarkMode
-                ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
-                }`}>
+              <h2
+                className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
+                  isDarkMode ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                }`}
+              >
                 Phone Number{" "}
                 <span className="text-[#04177F]">
                   <Link to="/DataBundleSelectRecipient">
@@ -943,11 +1083,10 @@ const [balanceStatus,setBalanceStatus ] = useState("");
                  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
                    leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
                 lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
-                  isDarkMode 
-                    ? "bg-black text-white border border-white" 
+                  isDarkMode
+                    ? "bg-black text-white border border-white"
                     : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
                 }`}
-
                   placeholder="11 digits phone number"
                   value={inputValue}
                   onChange={(event) => {
@@ -972,9 +1111,11 @@ const [balanceStatus,setBalanceStatus ] = useState("");
             </div>
 
             <div className="flex flex-col lg:gap-[12px] gap-[7px]">
-              <h2 className={`text-[14px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${isDarkMode
-                ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
-                }`}>
+              <h2
+                className={`text-[14px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
+                  isDarkMode ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                }`}
+              >
                 Recipient Name<span className="text-[#7C7C7C]">(optional)</span>{" "}
               </h2>
               <div className="relative mt-[5px]">
@@ -984,8 +1125,8 @@ const [balanceStatus,setBalanceStatus ] = useState("");
                  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
                    leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
                 lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
-                  isDarkMode 
-                    ? "bg-black text-white border border-white" 
+                  isDarkMode
+                    ? "bg-black text-white border border-white"
                     : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
                 }
   `}
@@ -1004,9 +1145,11 @@ const [balanceStatus,setBalanceStatus ] = useState("");
             </div>
 
             <div className="flex flex-col lg:gap-[12px] gap-[7px]">
-              <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${isDarkMode
-                ? "!text-[#7E7E7E]" : "text-black"
-                }`}>
+              <h2
+                className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
+                  isDarkMode ? "!text-[#7E7E7E]" : "text-black"
+                }`}
+              >
                 Amount
               </h2>
               <div className="relative mt-[5px]">
@@ -1016,8 +1159,8 @@ const [balanceStatus,setBalanceStatus ] = useState("");
                  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
                    leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
                 lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
-                  isDarkMode 
-                    ? "bg-black text-white border border-white" 
+                  isDarkMode
+                    ? "bg-black text-white border border-white"
                     : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
                 }
   `}
@@ -1030,24 +1173,27 @@ const [balanceStatus,setBalanceStatus ] = useState("");
               </div>
             </div>
 
-            <div className ="flex flex-col lg:gap-[12px] gap-[7px]">
+            <div className="flex flex-col lg:gap-[12px] gap-[7px]">
               <div onClick={handleShowPayment}>
-                <h2 className={`lg:text-[18px] mt-[5px] lg:leading-[24px] mb-2 text-[15px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${isDarkMode
-                  ? "!text-[#7E7E7E]" : "!text-black"
-                  }`}>
+                <h2
+                  className={`lg:text-[18px] mt-[5px] lg:leading-[24px] mb-2 text-[15px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
+                    isDarkMode ? "!text-[#7E7E7E]" : "!text-black"
+                  }`}
+                >
                   Payment Method
                 </h2>
-                <div className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.8px]
+                <div
+                  className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.8px]
                  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
                    leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
                 lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] 
                 lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] 
                 lg:pl-[10px]  items-center cursor-pointer outline-0
                  border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
-                  isDarkMode 
-                    ? "bg-black text-white border border-white" 
-                    : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
-                }
+                   isDarkMode
+                     ? "bg-black text-white border border-white"
+                     : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
+                 }
   `}
                 >
                   {paymentSelected ? (
@@ -1089,38 +1235,39 @@ const [balanceStatus,setBalanceStatus ] = useState("");
                   )}
                 </div>
               </div>
-               <div className="relative">
-              {showPayment && (
-                <div
-                  className={`pb-[13px] w-full md:pb-[6px] pt-[13px] md:pt-[6px] font-weight-bold text-[15px] 
+              <div className="relative">
+                {showPayment && (
+                  <div
+                    className={`pb-[13px] w-full md:pb-[6px] pt-[13px] md:pt-[6px] font-weight-bold text-[15px] 
                     border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute 
-                          ${isDarkMode
-                      ? "bg-black text-white border !border-white"
-                      : "border border-[#0003]"
-                    }
+                          ${
+                            isDarkMode
+                              ? "bg-black text-white border !border-white"
+                              : "border border-[#0003]"
+                          }
                    bg-[#FFF] z-[100]`}
-                >
-                  {countryList.map((country) => (
-                    <Payment
-                      key={country.id}
-                      flag={country.flag}
-                      code={country.code}
-                      amount={country.amount}
-                      onClick={() =>
-                        handleSelectPayment(
-                          country.code,
-                          country.flag,
-                          country.amount,
-                          country.id
-                        )
-                  }
-                  paymentMethod={country.status}
-                    />
-                  ))}
-                </div>
-              )}
+                  >
+                    {countryList.map((country) => (
+                      <Payment
+                        key={country.id}
+                        flag={country.flag}
+                        code={country.code}
+                        amount={country.amount}
+                        onClick={() =>
+                          handleSelectPayment(
+                            country.code,
+                            country.flag,
+                            country.amount,
+                            country.id
+                          )
+                        }
+                        paymentMethod={country.status}
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
           </div>
 
           <div className="flex items-center gap-2 lg:mt-[30px]">
@@ -1143,15 +1290,16 @@ const [balanceStatus,setBalanceStatus ] = useState("");
 
           {loading && (
             <Modal>
-              <Loader/>
+              <Loader />
             </Modal>
           )}
 
           {proceed && (
             <Modal>
               <div
-                className={`${isDarkMode ? "border bg-[#000]" : "bg-[#fff]"} ${toggleSideBar ? "confirm01" : "confirm"
-                  } grow pt-[10px] pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:overflow-auto`}
+                className={`${isDarkMode ? "border bg-[#000]" : "bg-[#fff]"} ${
+                  toggleSideBar ? "confirm01" : "confirm"
+                } grow pt-[10px] pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:overflow-auto`}
               >
                 <div className="w-full flex justify-end border-b-[6px] border-primary px-[12px] md:h-[25px] lg:border-b-[10px] lg:mt-[20px]">
                   <img
@@ -1168,8 +1316,10 @@ const [balanceStatus,setBalanceStatus ] = useState("");
                   </h2>
                   <h2 className="lg:text-[16px] md:text-[12px] md:px-[30px] lg:leading-[24px] text-[10px] leading-[12px] text-center mt-[26px] mx-[10px] mb-[20px]">
                     You are about to purchase{" "}
-                    <span className="font-[400]">{selectedProductGlo + " " + selectedOptionGlo}</span> from
-                    your {walletNameGlo + " Wallet"} to
+                    <span className="font-[400]">
+                      {selectedProductGlo + " " + selectedOptionGlo}
+                    </span>{" "}
+                    from your {walletNameGlo + " Wallet"} to
                   </h2>
 
                   <div className="flex flex-col gap-[15px] px-[20px] mt-[50px] md:gap-[25px]">
@@ -1208,7 +1358,7 @@ const [balanceStatus,setBalanceStatus ] = useState("");
                       </h2>
                       <div className="flex gap-1">
                         <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          { selectedProductGlo + " " + selectedOptionGlo}
+                          {selectedProductGlo + " " + selectedOptionGlo}
                         </h2>
                       </div>
                     </div>
@@ -1267,47 +1417,76 @@ const [balanceStatus,setBalanceStatus ] = useState("");
                         </h2>
                       </div>
                     </div>
-                      <div className="flex text-[10px] md:text-[14px] w-[100%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className="text-[#0008]">Points Earned</span>
-                    <span className="text-[#2ED173]">+2.00</span>
-                  </div>
+                    <div className="flex text-[10px] md:text-[14px] w-[100%] mx-auto justify-between font-semibold lg:text-[16px]">
+                      <span className="text-[#0008]">Points Earned</span>
+                      <span className="text-[#2ED173]">+2.00</span>
+                    </div>
 
-                    <div className="bg-[#F6F7F7] w-[95%] h-auto my-5 lg:my-8 flex py-[7px] 
-                                                             justify-between items-center px-[4%] mx-auto rounded-[10px]">
-                                                                     <div className="flex flex-col gap-2  ">
-                                                                       <div className="flex gap-[10px] justify-center items-center">
-                                                                         <img
-                                                                           className="w-[16px] h-[16px] bg-white"
-                                                                           src={image}
-                                                                           alt="/"
-                                                                         />
-                                                                         <div className="flex gap-[10px] items-center">
-                                                                             <p className="text-[12px] md:text-[14px] leading-[20px] lg:leading-[22px]  lg:text-[16px] font-[500]">
-                                                                         Available Balance {"  "} 
-                                                                          </p>
-                                                                          <span className="text-black">
-                                                                           {`(${newBalance === "" || newBalance ===  null ? updateBalance : newBalance  })`}
-                                                                         </span>
-                                                                         </div>
-                                                                       </div>
-                                                                     <span className="text-gray-500 text-[14px] font-[400] leading-[20px]
-                                                                          lg:text-[16px] lg:leading-[22px] text-left">
-                                                                            {balanceStatus}
-                                                                            </span>
-                                                                     </div>
-                                                     
-                                                                     <img
-                                                                       src={Select}
-                                                                       alt=""
-                                                                       className="w-[12px] h-[12px] md:w-[50px] md:h-[20px] lg:w-[80px] lg:h-[30px]"
-                                                                     />
-                                                                   </div>
+                    <div
+                      className="bg-[#F6F7F7] w-[95%] h-auto my-5 lg:my-8 flex py-[7px] 
+                                                             justify-between items-center px-[4%] mx-auto rounded-[10px]"
+                    >
+                      <div className="flex flex-col gap-2  ">
+                        <div className="flex gap-[10px] justify-center items-center">
+                          <img
+                            className="w-[16px] h-[16px] bg-white"
+                            src={image}
+                            alt="/"
+                          />
+                          <div className="flex gap-[10px] items-center">
+                            <p className="text-[12px] md:text-[14px] leading-[20px] lg:leading-[22px]  lg:text-[16px] font-[500]">
+                              Available Balance {"  "}
+                            </p>
+                            <span className="text-black">
+                              {`(${
+                                newBalance === "" || newBalance === null
+                                  ? `${
+                                      cleanUpBalanceToNumeric > 1
+                                        ? cleanUpBalanceToNumeric?.toLocaleString(
+                                            "en-NG",
+                                            {
+                                              style: "currency",
+                                              currency: "NGN",
+                                            }
+                                          )
+                                        : "₦"
+                                    }`
+                                  : `${
+                                      balanceStringToNum > 1
+                                        ? balanceStringToNum?.toLocaleString(
+                                            "en-NG",
+                                            {
+                                              style: "currency",
+                                              currency: "NGN",
+                                            }
+                                          )
+                                        : "₦"
+                                    }`
+                              })`}
+                            </span>
+                          </div>
+                        </div>
+                        <span
+                          className="text-gray-500 text-[14px] font-[400] leading-[20px]
+                                                                          lg:text-[16px] lg:leading-[22px] text-left"
+                        >
+                          {balanceStatus}
+                        </span>
+                      </div>
+
+                      <img
+                        src={Select}
+                        alt=""
+                        className="w-[12px] h-[12px] md:w-[50px] md:h-[20px] lg:w-[80px] lg:h-[30px]"
+                      />
+                    </div>
 
                     <div className="flex items-center justify-center">
-                      <button disabled ={CheckSufficiency}
+                      <button
+                        disabled={CheckSufficiency}
                         className={`w-full md:w-fit  text-white rounded-md px-[28px] text-[10px] md:text-[12px] 
                           leading-[15px] lg:text-[16px] lg:leading-[24px] py-[15px] md:py-[10px]
-                          ${CheckSufficiency ? "bg-gray-400" : "bg-primary" }`}
+                          ${CheckSufficiency ? "bg-gray-400" : "bg-primary"}`}
                         onClick={() => {
                           handleConfirm();
                         }}
@@ -1324,8 +1503,9 @@ const [balanceStatus,setBalanceStatus ] = useState("");
           {confirm && (
             <Modal>
               <div
-                className={` ${toggleSideBar ? "confirm02" : "confirm2"
-                  } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
+                className={` ${
+                  toggleSideBar ? "confirm02" : "confirm2"
+                } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
               >
                 <div className="flex justify-end px-2">
                   <img
@@ -1344,28 +1524,22 @@ const [balanceStatus,setBalanceStatus ] = useState("");
                   <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
                     <div className=" flex justify-center items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
                       {" "}
-                      {isVisible ? (
-                        <OtpInput
-                          value={inputPin}
-                          inputType="tel"
-                          onChange={setInputPin}
-                          numInputs={4}
-                          shouldAutoFocus={true}
-                          inputStyle={{
-                            color: "#403f3f",
-                            width: 30,
-                            height: 30,
-                            borderRadius: 3,
-                          }}
-                          renderInput={(props) => (
-                            <input {...props} className="inputOTP mx-[3px]" />
-                          )}
-                        />
-                      ) : (
-                        <div className="text-[24px] md:text-[24px] mt-1">
-                          * * * *{" "}
-                        </div>
-                      )}
+                      <OtpInput
+                        value={inputPin}
+                        inputType={!isVisible ? "tel" : "password"}
+                        onChange={setInputPin}
+                        numInputs={4}
+                        shouldAutoFocus={true}
+                        inputStyle={{
+                          color: "#403f3f",
+                          width: 30,
+                          height: 30,
+                          borderRadius: 3,
+                        }}
+                        renderInput={(props) => (
+                          <input {...props} className="inputOTP mx-[3px]" />
+                        )}
+                      />
                       <div
                         className="text-[#0003] text-[13px] md:text-3xl"
                         onClick={toggleVisibility}
@@ -1377,8 +1551,10 @@ const [balanceStatus,setBalanceStatus ] = useState("");
                       Forgot Pin ?
                     </p>
                     {errorMessage && (
-                      <p className ="text-center text-[14px] text-red-500 lg:text-[16px]
-                       font-[500] leading-[18px] lg:leading-[20px]">
+                      <p
+                        className="text-center text-[14px] text-red-500 lg:text-[16px]
+                       font-[500] leading-[18px] lg:leading-[20px]"
+                      >
                         Incorrect pin
                       </p>
                     )}
@@ -1388,37 +1564,38 @@ const [balanceStatus,setBalanceStatus ] = useState("");
                 <button
                   onClick={() => {
                     console.log("inputPin", inputPin);
-                      const GloHandler =  () => {
+                    const GloHandler = () => {
                       inputPinHandler(); // Proceed with purchase
+                    };
+                    const setFailed = async (ErrorType) => {
+                      if (ErrorType === "unauthorised") {
+                        await VerifyTransPin(
+                          inputPin,
+                          setSuccess,
+                          (ErrorType) => {
+                            if (ErrorType === "unauthorised") {
+                              return setSessionModal(true);
+                            }
+                          },
+                          setLoading,
+                          setErrorMessage,
+                          GloHandler
+                        );
                       }
-                      const setFailed = async(ErrorType)=> {
-                        if(ErrorType === "unauthorised"){
-                         await  VerifyTransPin(
-                      inputPin,
-                      setSuccess,
-                      (ErrorType)=> {
-                        if(ErrorType === "unauthorised"){
-                          return setSessionModal(true)
-                        }
-                      },
-                      setLoading,
-                      setErrorMessage,
-                    GloHandler
-                    );
-                        }
-                      }
+                    };
                     VerifyTransPin(
                       inputPin,
                       setSuccess,
                       setFailed,
                       setLoading,
                       setErrorMessage,
-                    GloHandler
+                      GloHandler
                     );
                   }}
                   disabled={inputPin.length !== 4}
-                  className={`${inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
-                    } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                  className={`${
+                    inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
+                  } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
                 >
                   Purchase
                 </button>
@@ -1426,18 +1603,18 @@ const [balanceStatus,setBalanceStatus ] = useState("");
             </Modal>
           )}
 
-
           {glopurchaseStatus && (
             <Modal>
               <div
-                className={` ${toggleSideBar ? "confirm02" : "confirm2"
-                  } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px] my-[20px]
+                className={` ${
+                  toggleSideBar ? "confirm02" : "confirm2"
+                } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px] my-[20px]
                   h-[200px] overflow-y-scroll md:overflow-y-auto md:h-auto`}
               >
-               
-
-                <hr className="h-[8px] bg-[#04177f] lg:mt-[30px] border-none  
-                md:mt-[2%] mt-[30px] md:h-[10px]" />
+                <hr
+                  className="h-[8px] bg-[#04177f] lg:mt-[30px] border-none  
+                md:mt-[2%] mt-[30px] md:h-[10px]"
+                />
                 <div className="md:mt-[15%] lg:mt-[10%]">
                   <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[8%] md:my-[5%] lg:my-[3%]">
                     Transaction Failed
@@ -1460,7 +1637,8 @@ const [balanceStatus,setBalanceStatus ] = useState("");
                     Done
                   </button>
 
-                  <Link to="/GloFailedReceipt"
+                  <Link
+                    to="/GloFailedReceipt"
                     state={{
                       networkName: "GLO",
                       selectedProduct: selectedProductGlo,
@@ -1473,8 +1651,9 @@ const [balanceStatus,setBalanceStatus ] = useState("");
                       glorefNumber: glorefNumber,
                       gloorderID: gloorderID,
                       glodescription: glodescription,
-                      gloReceiptinfo : gloReceiptInfo
-}} >
+                      gloReceiptinfo: gloReceiptInfo,
+                    }}
+                  >
                     <button
                       onClick={() => {
                         // e.preventDefault();
@@ -1494,8 +1673,9 @@ const [balanceStatus,setBalanceStatus ] = useState("");
             <Modal>
               {/* <TransactFailedPopUp/> */}
               <div
-                className={`${toggleSideBar ? "confirm01 w-[90%]" : "confirm w-[90%]"
-                  } bg-white rounded-[12px] md:my-auto mx-auto overflow-auto lg:mx-auto lg:my-auto`}
+                className={`${
+                  toggleSideBar ? "confirm01 w-[90%]" : "confirm w-[90%]"
+                } bg-white rounded-[12px] md:my-auto mx-auto overflow-auto lg:mx-auto lg:my-auto`}
               >
                 <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
                   <img
@@ -1532,7 +1712,7 @@ const [balanceStatus,setBalanceStatus ] = useState("");
                   <p className="text-[8px] text-[#0008] text-center mb-2 md:text-[14px] lg:text-[12px]">
                     You have successfully purchased{" "}
                     <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">
-                      { selectedProductGlo + " " + selectedOptionGlo}{" "}
+                      {selectedProductGlo + " " + selectedOptionGlo}{" "}
                     </span>
                     from your {walletNameGlo + " Wallet"} to{" "}
                   </p>
@@ -1572,7 +1752,7 @@ const [balanceStatus,setBalanceStatus ] = useState("");
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                         { selectedProductGlo  + " " + selectedOptionGlo}
+                        {selectedProductGlo + " " + selectedOptionGlo}
                       </h2>
                     </div>
                   </div>
@@ -1654,7 +1834,8 @@ const [balanceStatus,setBalanceStatus ] = useState("");
                     </button>
                   </Link>
 
-                  <Link to="/GloReceipt"
+                  <Link
+                    to="/GloReceipt"
                     state={{
                       selectedProduct: selectedProductGlo,
                       inputValue: inputValue,
@@ -1666,9 +1847,9 @@ const [balanceStatus,setBalanceStatus ] = useState("");
                       glorefNumber: glorefNumber,
                       gloorderID: gloorderID,
                       glodescription: glodescription,
-                      gloReceiptInfo : gloReceiptInfo
-                    }}>
-
+                      gloReceiptInfo: gloReceiptInfo,
+                    }}
+                  >
                     <button
                       onClick={handleReceipt}
                       className={`border-[1px] w-[100px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-[400] h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[12px] lg:w-[163px] lg:h-[38px] lg:my-[2%] md:px-[60px] md:h-[30px]`}
@@ -1681,19 +1862,17 @@ const [balanceStatus,setBalanceStatus ] = useState("");
             </Modal>
           )}
 
-        
-          
-
           <div className="py-[30px] lg:py-[60px] mt-10">
             <button
-              className={`w-full md:w-fit text-white rounded-md px-[28px] text-[10px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[400] leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px] ${!selectedProductGlo ||
+              className={`w-full md:w-fit text-white rounded-md px-[28px] text-[10px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[400] leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px] ${
+                !selectedProductGlo ||
                 !selectedOptionGlo ||
                 !inputValue ||
                 !selectedAmountGlo ||
                 !paymentSelected
-                ? "bg-[#63616188] cursor-not-allowed"
-                : "bg-primary"
-                }`}
+                  ? "bg-[#63616188] cursor-not-allowed"
+                  : "bg-primary"
+              }`}
               onClick={handleProceed}
               disabled={
                 !selectedProductGlo ||
@@ -1710,31 +1889,32 @@ const [balanceStatus,setBalanceStatus ] = useState("");
 
         {/* =======================FOOTER=================================== */}
         <div
-          className={`${isDarkMode ? "bg-black text-white flex gap-[15px] justify-center items-center  pb-[25%] md:pb-[12%] lg:pb-0 py-[40%]" :
-             "flex gap-[15px] justify-center items-center mt-[100%] pb-[25%] md:pb-[12%] md:mt-[40%] lg:mt-[40%] lg:pb-0"
-            } `}
+          className={`${
+            isDarkMode
+              ? "bg-black text-white flex gap-[15px] justify-center items-center  pb-[25%] md:pb-[12%] lg:pb-0 py-[40%]"
+              : "flex gap-[15px] justify-center items-center mt-[100%] pb-[25%] md:pb-[12%] md:mt-[40%] lg:mt-[40%] lg:pb-0"
+          } `}
         >
           <div className="text-[10px] md:text-[12px] lg:text-[14px]">
             You need help ?
           </div>
           <Link to="/ContactUs">
             <div
-              className={`${isDarkMode ? "border bg-[#04177f]" : "bg-[#04177f]"
-                } text-[10px] p-1 text-white rounded-[8px] lg:text-[18px]`}
+              className={`${
+                isDarkMode ? "border bg-[#04177f]" : "bg-[#04177f]"
+              } text-[10px] p-1 text-white rounded-[8px] lg:text-[18px]`}
             >
               Contact Us
             </div>
           </Link>
         </div>
       </div>
-        {loading && (
-            <Modal>
-              <Loader/>
-            </Modal>
-          )}
-          {sessionModal && (
-            <HandleUserSession/>
-          )}
+      {loading && (
+        <Modal>
+          <Loader />
+        </Modal>
+      )}
+      {sessionModal && <HandleUserSession />}
     </DashBoardLayout>
   );
 };

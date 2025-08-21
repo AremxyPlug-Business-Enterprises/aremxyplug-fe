@@ -163,77 +163,77 @@ const EKEDC = () => {
     ? passDataBalance?.data?.data?.data?.balance
     : "";
   const updateBalanceToNumber = Number(updateBalance);
-    const newBalanceToNumber = Number(newBalance);
-    const otherCurrencyBalance = 0.0;
-  
-    const countryList = [
-      {
-        id: 1,
-        name: "NGN Wallet",
-        balance:
-          newBalance === "" || newBalance === null || newBalance === undefined
-            ? `(${updateBalanceToNumber?.toLocaleString("en-NG", {
-                style: "currency",
-                currency: "NGN",
-              })})`
-            : `(${newBalanceToNumber?.toLocaleString("en-NG", {
-                style: "currency",
-                currency: "NGN",
-              })})`,
-        code: "Nigerian NGN Wallet",
-        flag: require("../ElectricitySubscription/Electricity-sub-images/nigeriaFlag.png"),
-      },
-      {
-        id: 2,
-        name: "USD Wallet. ",
-        balance: `(${otherCurrencyBalance?.toLocaleString("en-US", {
-          style: "currency",
-          currency: "USD",
-        })})`,
-        code: "USD",
-        flag: require("../ElectricitySubscription/Electricity-sub-images/americaFlag.png"),
-      },
-      {
-        id: 3,
-        name: " GBP Wallet. ",
-        balance: `(${otherCurrencyBalance?.toLocaleString("en-GB", {
-          style: "currency",
-          currency: "GBP",
-        })})`,
-        code: "GBP",
-        flag: require("../ElectricitySubscription/Electricity-sub-images/ukFlag.png"),
-      },
-      {
-        id: 4,
-        name: "EUR Wallet. ",
-        balance: `(${otherCurrencyBalance?.toLocaleString("en-EU", {
-          style: "currency",
-          currency: "EUR",
-        })})`,
-        code: "EUR ",
-        flag: require("../ElectricitySubscription/Electricity-sub-images/europeanFlag.png"),
-      },
-      {
-        id: 5,
-        name: "AUD Wallet. ",
-        balance: `(${otherCurrencyBalance?.toLocaleString("en", {
-          style: "currency",
-          currency: "AUD",
-        })})`,
-        code: "AUD",
-        flag: require("../ElectricitySubscription/Electricity-sub-images/australiaFlag.png"),
-      },
-      {
-        id: 6,
-        name: "KES Wallet. ",
-        balance: `(${otherCurrencyBalance?.toLocaleString("en-KE", {
-          style: "currency",
-          currency: "KES",
-        })})`,
-        code: "KES",
-        flag: require("../ElectricitySubscription/Electricity-sub-images/kenyaFlag.png"),
-      },
-    ];
+  const newBalanceToNumber = Number(newBalance);
+  const otherCurrencyBalance = 0.0;
+
+  const countryList = [
+    {
+      id: 1,
+      name: "NGN Wallet",
+      balance:
+        newBalance === "" || newBalance === null || newBalance === undefined
+          ? `(${updateBalanceToNumber?.toLocaleString("en-NG", {
+              style: "currency",
+              currency: "NGN",
+            })})`
+          : `(${newBalanceToNumber?.toLocaleString("en-NG", {
+              style: "currency",
+              currency: "NGN",
+            })})`,
+      code: "Nigerian NGN Wallet",
+      flag: require("../ElectricitySubscription/Electricity-sub-images/nigeriaFlag.png"),
+    },
+    {
+      id: 2,
+      name: "USD Wallet. ",
+      balance: `(${otherCurrencyBalance?.toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD",
+      })})`,
+      code: "USD",
+      flag: require("../ElectricitySubscription/Electricity-sub-images/americaFlag.png"),
+    },
+    {
+      id: 3,
+      name: " GBP Wallet. ",
+      balance: `(${otherCurrencyBalance?.toLocaleString("en-GB", {
+        style: "currency",
+        currency: "GBP",
+      })})`,
+      code: "GBP",
+      flag: require("../ElectricitySubscription/Electricity-sub-images/ukFlag.png"),
+    },
+    {
+      id: 4,
+      name: "EUR Wallet. ",
+      balance: `(${otherCurrencyBalance?.toLocaleString("en-EU", {
+        style: "currency",
+        currency: "EUR",
+      })})`,
+      code: "EUR ",
+      flag: require("../ElectricitySubscription/Electricity-sub-images/europeanFlag.png"),
+    },
+    {
+      id: 5,
+      name: "AUD Wallet. ",
+      balance: `(${otherCurrencyBalance?.toLocaleString("en", {
+        style: "currency",
+        currency: "AUD",
+      })})`,
+      code: "AUD",
+      flag: require("../ElectricitySubscription/Electricity-sub-images/australiaFlag.png"),
+    },
+    {
+      id: 6,
+      name: "KES Wallet. ",
+      balance: `(${otherCurrencyBalance?.toLocaleString("en-KE", {
+        style: "currency",
+        currency: "KES",
+      })})`,
+      code: "KES",
+      flag: require("../ElectricitySubscription/Electricity-sub-images/kenyaFlag.png"),
+    },
+  ];
 
   const [errors, setErrors] = useState({});
   const [proceed, setProceed] = useState(false);
@@ -624,6 +624,7 @@ const EKEDC = () => {
   const handleSwitch = () => {
     setInputPinPopUp(true);
     setProceed(false);
+    setInputPin("");
   };
 
   const [isFocused, setIsFocused] = useState(false);
@@ -1359,40 +1360,34 @@ const EKEDC = () => {
                 </p>
                 <div className="flex flex-col items-center lg:gap-[0px] gap-[5px] font-extrabold">
                   <div className="flex items-center gap-2.5">
-                    {isVisible ? (
-                      <OtpInput
-                        value={inputPin}
-                        inputType="tel"
-                        onChange={setInputPin}
-                        numInputs={4}
-                        shouldAutoFocus={true}
-                        inputStyle={{
-                          color: isDarkMode ? "#ffffff" : "#000000",
-                          fontWeight: 700,
-                          borderRadius: 4,
-                          height: "35px",
-                          width: "35px",
-                          backgroundColor: isDarkMode ? "black" : "white",
-                          border: isDarkMode
-                            ? "1px solid white"
-                            : "1px solid #ccc",
-                        }}
-                        renderInput={(props) => (
-                          <input
-                            {...props}
-                            className={`inputOTP mx-[2px] ${
-                              isFocused ? "focused" : ""
-                            }`}
-                            onFocus={handleFocus}
-                            onBlur={handleBlur}
-                          />
-                        )}
-                      />
-                    ) : (
-                      <div className="text-[24px] md:text-[24px] mt-1">
-                        * * * *
-                      </div>
-                    )}
+                    <OtpInput
+                      value={inputPin}
+                      inputType={!isVisible ? "tel" : "password"}
+                      onChange={setInputPin}
+                      numInputs={4}
+                      shouldAutoFocus={true}
+                      inputStyle={{
+                        color: isDarkMode ? "#ffffff" : "#000000",
+                        fontWeight: 700,
+                        borderRadius: 4,
+                        height: "35px",
+                        width: "35px",
+                        backgroundColor: isDarkMode ? "black" : "white",
+                        border: isDarkMode
+                          ? "1px solid white"
+                          : "1px solid #ccc",
+                      }}
+                      renderInput={(props) => (
+                        <input
+                          {...props}
+                          className={`inputOTP mx-[2px] ${
+                            isFocused ? "focused" : ""
+                          }`}
+                          onFocus={handleFocus}
+                          onBlur={handleBlur}
+                        />
+                      )}
+                    />
                     <div className="text-[#0003] " onClick={toggleVisibility}>
                       {isVisible ? (
                         <AiFillEye className="w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]" />

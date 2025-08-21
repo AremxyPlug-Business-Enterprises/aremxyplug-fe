@@ -14,7 +14,7 @@ import { MainInputPinPop } from "./MainInputPinPop";
 // import { useNavigate } from "react-router-dom";
 
 export default function ToAremxyMain(Data) {
-//  identityMessage ="hello"
+  //  identityMessage ="hello"
   const {
     showList,
     setShowList,
@@ -33,23 +33,23 @@ export default function ToAremxyMain(Data) {
     messageTransfer,
     setMessageTransfer,
     transferAmount,
-    setTransferAmount
+    setTransferAmount,
   } = useContext(ContextProvider);
 
   const [addToRecipient, SetAddToRecipient] = useState(false);
   const [saveToFavorite, setSaveTofavorite] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [transferValue, setTransferValue] = useState("")
+  const [transferValue, setTransferValue] = useState("");
   const [loading, setLoading] = useState(false);
-  const [sessionModal, setSessionModal] = useState(false) 
+  const [sessionModal, setSessionModal] = useState(false);
   const [fetchedResponse, setFetchedResponse] = useState({});
   const [verifiedUser, setVerifiedUser] = useState(false);
-  const [passDataBalance, setPassDataBalance] = useState({})
-  
-    //const [errors, setErrors] = useState({});
+  const [passDataBalance, setPassDataBalance] = useState({});
 
-Data = GetLocalStorage();
-//console.log(Data?.UserEmail);
+  //const [errors, setErrors] = useState({});
+
+  Data = GetLocalStorage();
+  //console.log(Data?.UserEmail);
   const countryList = [
     {
       id: 1,
@@ -88,141 +88,166 @@ Data = GetLocalStorage();
       flag: require("../../../../Dashboard/DashboardComponents/flagsImages/kenyaFlag.png"),
     },
   ];
-   const testEmail = new RegExp(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]/)
-const testUsername = new RegExp( /^[a-zA-Z0-9_]{3,20}$/);
-const GetUserDetails =async(value, transferIdentity)=> {
+  const testEmail = new RegExp(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]/);
+  const testUsername = new RegExp(/^[a-zA-Z0-9_]{3,20}$/);
+  const GetUserDetails = async (value, transferIdentity) => {
+    if (
+      ((transferIdentity === "email" && value !== Data?.UserEmail) ||
+        (transferIdentity === "username" && Data?.aremxyUsername !== value)) &&
+      value?.length > 2
+    ) {
+      const SuccessHandler = () => {
+        setVerifiedUser(true);
+        setErrorMessage("");
+      };
+      const FailedHandler = async (Error) => {
+        if (Error === "Server error") {
+          //  setVerificationPinError(true);
+          setErrorMessage("Account does not exist");
+          setVerifiedUser(false);
+          setFetchedResponse({});
+        } else if (Error === "Network error" || Error === "User error") {
+          setErrorMessage("Kindly check your internet connection.");
+          setVerifiedUser(false);
+        } else if (Error === "Bad request") {
+          setErrorMessage("Account does not exist.");
+          setVerifiedUser(false);
+          setFetchedResponse({});
+        } else if (Error === "unauthorised") {
+          await GetFunction(
+            `search?${transferIdentity}=${value}`,
+            setLoading,
+            SuccessHandler,
+            () => {
+              setSessionModal(true);
+            },
+            setFetchedResponse
+          );
+        } else if (Error === undefined) {
+          setErrorMessage("Your internet connection is quite unstable.");
+          setVerifiedUser(false);
+        } else {
+          setErrorMessage(
+            "An unexpected error occured, please try again later."
+          );
+          setVerifiedUser(false);
+        }
+        setTimeout(() => {
+          if (errorMessage?.length > 1 && value?.length < 1) {
+            setErrorMessage("");
+          }
+        }, 1500);
+      };
+      await GetFunction(
+        `search?${transferIdentity}=${value}`,
+        setLoading,
+        SuccessHandler,
+        FailedHandler,
+        setFetchedResponse
+      );
+    } else if (value === Data?.aremxyUsername || value === Data?.UserEmail) {
+      setErrorMessage(
+        `${value} is your transfer identity, you can only send to other aremxyplug wallet.`
+      );
+      setVerifiedUser(false);
+    }
+  };
+  const timer = useRef();
 
-if(((transferIdentity === "email" && value !== Data?.UserEmail) ||( transferIdentity === "username" && Data?.aremxyUsername !== value) )
-  && value?.length > 2 ){
-  const SuccessHandler =()=> {
-setVerifiedUser(true);
-setErrorMessage("");
-  }
-  const FailedHandler= async(Error)=> {
-  
-        if(Error === "Server error" ){
-   //  setVerificationPinError(true);
-    setErrorMessage("Account does not exist");
-    setVerifiedUser(false)
-    setFetchedResponse({})
-        }else if(Error  === "Network error" || Error === "User error"){
-         setErrorMessage("Kindly check your internet connection.");
-            setVerifiedUser(false);
-        }else if(Error  === "Bad request"){
-      setErrorMessage("Account does not exist.")
-         setVerifiedUser(false)
-           setFetchedResponse({})
-      }else if(Error === "unauthorised"){
-     await GetFunction(`search?${transferIdentity}=${value}`,
-      setLoading, 
-      SuccessHandler, ()=> {
-        setSessionModal(true);
-      }, setFetchedResponse);
-      }else if(Error === undefined){
-       setErrorMessage("Your internet connection is quite unstable.")
-          setVerifiedUser(false)
+  // console.log(timer);
+  const HandleIdentifyCredentials = async (value) => {
+    const TestingTransferIdentify = async (transferIdentity) => {
+      if (value?.length < 3) {
+        setTimeout(() => {
+          setErrorMessage("");
+          setVerifiedUser(false);
+        }, 1000);
+        // setErrorMessage("");
+      } else if (
+        testEmail.test(value) &&
+        value?.endsWith(".com") &&
+        value?.length > 7
+      ) {
+        setErrorMessage("");
+        setVerifiedUser(false);
+        transferIdentity = "email";
+      } else if (
+        testUsername.test(value) === true &&
+        value?.length > 2 &&
+        value?.includes("@") === false
+      ) {
+        setErrorMessage("");
+        transferIdentity = "username";
+      } else if (
+        testEmail.test(value) === true &&
+        testUsername.test(value) === false &&
+        value?.endsWith(".com") === false &&
+        value?.length > 7
+      ) {
+        setVerifiedUser(false);
+        setErrorMessage(
+          `Your email address does not include the ${`${".com"}`} extension `
+        );
+        setFetchedResponse({});
+        transferIdentity = null;
+      } else if (
+        testEmail.test(value) === false &&
+        testUsername.test(value) === false &&
+        value?.endsWith(".com") === true &&
+        value?.length > 7
+      ) {
+        setErrorMessage("Your email address is not valid.");
+        transferIdentity = null;
+        setFetchedResponse({});
+      } else {
+        if (value?.length > 2) {
+          setVerifiedUser(false);
+          setErrorMessage(
+            "Your transfer Identity is neither a recognized email nor an username."
+          );
+          setFetchedResponse({});
+        } else {
+          setErrorMessage("");
+          setVerifiedUser(false);
+          setFetchedResponse({});
+        }
       }
-        else{
-        setErrorMessage("An unexpected error occured, please try again later.")
-         setVerifiedUser(false)
-      }
-      setTimeout(()=> {
-  if(errorMessage?.length > 1 && value?.length < 1){
-    setErrorMessage("");
-  }
-}, 1500)
-  }
-  await GetFunction(`search?${transferIdentity}=${value}`,
-    setLoading,
-     SuccessHandler,
-      FailedHandler,
-       setFetchedResponse);
-}else if(value === Data?.aremxyUsername || value === Data?.UserEmail){
- setErrorMessage(`${value} is your transfer identity, you can only send to other aremxyplug wallet.`)
-  setVerifiedUser(false);
-}}
- const timer = useRef()
-  
-// console.log(timer);
-const HandleIdentifyCredentials = async(value)=> {
-const TestingTransferIdentify = async(transferIdentity)=> {
-if(value?.length < 3){
-  setTimeout(()=> {
-    setErrorMessage("");
-    setVerifiedUser(false);
-  },1000)
-  // setErrorMessage("");
+      // console.log(identityMessage);
+      //console.log(transferIdentity)
 
-}else if(testEmail.test(value) && value?.endsWith(".com") && value?.length > 7 ){
-   setErrorMessage("")
-   setVerifiedUser(false);
- transferIdentity = "email";
-}else if(testUsername.test(value) === true && value?.length > 2 && value?.includes("@")=== false ){
-setErrorMessage("");
- transferIdentity = "username";
-}else if(testEmail.test(value) === true && 
-testUsername.test(value) === false && value?.endsWith(".com") === false
- && value?.length > 7){
-     setVerifiedUser(false);
-  setErrorMessage(`Your email address does not include the ${`${".com"}`} extension `)
-setFetchedResponse({})
-transferIdentity = null;
-}else if(testEmail.test(value) === false && 
-testUsername.test(value) === false && value?.endsWith(".com") === true
- && value?.length > 7){
-  setErrorMessage("Your email address is not valid.")
-    transferIdentity = null;
-   setFetchedResponse({})
- }else{
-  if(value?.length > 2) {
-       setVerifiedUser(false)
-      setErrorMessage("Your transfer Identity is neither a recognized email nor an username.")
-      setFetchedResponse({})
-  }else{
-    setErrorMessage("")
-       setVerifiedUser(false)
-       setFetchedResponse({})
-  } }
-// console.log(identityMessage);
-//console.log(transferIdentity)
+      GetUserDetails(value, transferIdentity);
+    };
+    TestingTransferIdentify();
+  };
+  //console.log(timer)
+  const ProceedTransfer = () => {
+    if (
+      fetchedResponse?.data?.data?.userDetails?.phone &&
+      transferValue?.length > 1 &&
+      transferAmount?.toString()?.length > 1
+    ) {
+      setEmailPhoneNumberConfirmation(true);
+    }
+  };
 
-GetUserDetails(value, transferIdentity);
-}
-TestingTransferIdentify();
+  // const  HandleAmountFormat=(amount)=> {
+  //   const RequireNumericChange = Number(amount)
+  //   if(RequireNumericChange !== null || RequireNumericChange!== undefined ||RequireNumericChange!== ""){
+  // return RequireNumericChange?.toLocaleString("en-NG", {
+  //   style : "currency",
+  //   currency : "NGN"
+  // })
+  //   }else {
+  //     return amount
+  //   }
+  // }
 
-}
-//console.log(timer)
-const ProceedTransfer =()=> {
-  if(fetchedResponse?.data?.data?.userDetails?.phone 
-    && transferValue?.length > 1
-  && transferAmount?.toString()?.length >  1){
-    setEmailPhoneNumberConfirmation(true)
-  }
-}
-
-// const  HandleAmountFormat=(amount)=> {
-//   const RequireNumericChange = Number(amount)
-//   if(RequireNumericChange !== null || RequireNumericChange!== undefined ||RequireNumericChange!== ""){
-// return RequireNumericChange?.toLocaleString("en-NG", {
-//   style : "currency",
-//   currency : "NGN"
-// })
-//   }else {
-//     return amount
-//   }
-// }
-
-//Verification Pin handler to help verify users pin
-//then carry transaction if verified successfully'
-
-
-
+  //Verification Pin handler to help verify users pin
+  //then carry transaction if verified successfully'
 
   const [flag, setFlag] = useState("");
   const [countryCode, setCountryCode] = useState("");
   const [currencyAvailable, setCurrencyAvailable] = useState(false);
-
-  
 
   const handleCountryClick = (name, flag, id, code) => {
     setFlag(flag);
@@ -235,14 +260,9 @@ const ProceedTransfer =()=> {
 
   const refresh = () => window.location.reload(true);
 
-
-
-
-
-//console.log(timer)
-  useEffect(()=> {
-    
-const GetBalance = async () => {
+  //console.log(timer)
+  useEffect(() => {
+    const GetBalance = async () => {
       const SuccessHandler = () => {
         //alert("Successful");
         console.log("successfully retrieved balance");
@@ -256,94 +276,129 @@ const GetBalance = async () => {
             SuccessHandler,
             //Handling the error Use Cases of the Unauthorised inside
             // of the statement.
-            async(ErrorType) => {
+            async (ErrorType) => {
               if (ErrorType === "unauthorised") {
                 return setSessionModal(false);
-              }else if(ErrorType === "Server error"){
-                  await GetFunction(
-        "balance",
-        setLoading,
-        SuccessHandler,
-       async(ErrorType)=> {
-        if(ErrorType === "Server error"){
-          alert("Failed to retrieve the balance.")
-        }else if(ErrorType === "Network error" || ErrorType === "User error"){
-              alert("Kindly check your internet connection to retrieve balance.")
-        }else {
-          alert("An unexpected error has occured on attempt to retrieve balance.")
-        }
-       },
-        setPassDataBalance
-      );
-       }else if(ErrorType === "Network error" || ErrorType === "User error"){
-           alert("Kindly check your internet connection to retrieve balance")
-       }else {
-        alert("An unexpected error has occured on attempt to retrieve the balance")
-       }
+              } else if (ErrorType === "Server error") {
+                await GetFunction(
+                  "balance",
+                  setLoading,
+                  SuccessHandler,
+                  async (ErrorType) => {
+                    if (ErrorType === "Server error") {
+                      alert("Failed to retrieve the balance.");
+                    } else if (
+                      ErrorType === "Network error" ||
+                      ErrorType === "User error"
+                    ) {
+                      alert(
+                        "Kindly check your internet connection to retrieve balance."
+                      );
+                    } else {
+                      alert(
+                        "An unexpected error has occured on attempt to retrieve balance."
+                      );
+                    }
+                  },
+                  setPassDataBalance
+                );
+              } else if (
+                ErrorType === "Network error" ||
+                ErrorType === "User error"
+              ) {
+                alert(
+                  "Kindly check your internet connection to retrieve balance"
+                );
+              } else {
+                alert(
+                  "An unexpected error has occured on attempt to retrieve the balance"
+                );
+              }
             },
-             setPassDataBalance
+            setPassDataBalance
           );
-        }else if(ErrorType === "Server error"){
-            await GetFunction(
-        "balance",
-        setLoading,
-        SuccessHandler,
-       async(ErrorType)=> {
-         if(ErrorType === "unauthorised"){
-            await GetFunction(
-        "balance",
-        setLoading,
-        SuccessHandler,
-        async(ErrorType)=> {
-          if(ErrorType === "unauthorised"){
-            return setSessionModal(false);
-          }else if(ErrorType === "Server error"){
-               await GetFunction(
-        "balance",
-        setLoading,
-        SuccessHandler,
-       async(ErrorType)=> {
-        //if Statements
-      //We run again cause the previous one was interrupted by 401
-      //Let us re-run server error
-      if(ErrorType === "Server error"){
-        alert("Failed to retrieve the balance")
-      }else if(ErrorType === "unauthorised"){
-        return sessionModal(true)
-      }else if(ErrorType === "Network error" || ErrorType === "User error"){
-       alert("Kindly check your internet connection to retrieve balance")
-      }else{
-        alert("An Unexpected error occured in attempt to retrieve balance")
-      }
-
-       },
-        setPassDataBalance
-      );
-          }else if(ErrorType === "Network error" || ErrorType === "User error"){
-            alert("Kindly check your internet connection to retrieve the balance")
-          }else{
-            alert("An Unexpected error occured in attempt to retrieve balance")
-          }
-        },
-        setPassDataBalance
-      );
-    }
-          else if(ErrorType === "Network error" || ErrorType === "User error"){
-            //The operation was interrupted by a network error
-            alert("Kindly check your internet connection to retrieve balance.")
-         }else {
-          //An alien error has occured with the re-run of the "Server error" ErrorType
-          alert("An unexpected error occured in attempt to retrieve the balance.")
-         }
-       },
-        setPassDataBalance
-      );
-        }else if(ErrorType === "Network error" || ErrorType === "User error"){
-
-        }else{
-          alert("An unexpected error occured in attempt to retrieve balance.")
+        } else if (ErrorType === "Server error") {
+          await GetFunction(
+            "balance",
+            setLoading,
+            SuccessHandler,
+            async (ErrorType) => {
+              if (ErrorType === "unauthorised") {
+                await GetFunction(
+                  "balance",
+                  setLoading,
+                  SuccessHandler,
+                  async (ErrorType) => {
+                    if (ErrorType === "unauthorised") {
+                      return setSessionModal(false);
+                    } else if (ErrorType === "Server error") {
+                      await GetFunction(
+                        "balance",
+                        setLoading,
+                        SuccessHandler,
+                        async (ErrorType) => {
+                          //if Statements
+                          //We run again cause the previous one was interrupted by 401
+                          //Let us re-run server error
+                          if (ErrorType === "Server error") {
+                            alert("Failed to retrieve the balance");
+                          } else if (ErrorType === "unauthorised") {
+                            return sessionModal(true);
+                          } else if (
+                            ErrorType === "Network error" ||
+                            ErrorType === "User error"
+                          ) {
+                            alert(
+                              "Kindly check your internet connection to retrieve balance"
+                            );
+                          } else {
+                            alert(
+                              "An Unexpected error occured in attempt to retrieve balance"
+                            );
+                          }
+                        },
+                        setPassDataBalance
+                      );
+                    } else if (
+                      ErrorType === "Network error" ||
+                      ErrorType === "User error"
+                    ) {
+                      alert(
+                        "Kindly check your internet connection to retrieve the balance"
+                      );
+                    } else {
+                      alert(
+                        "An Unexpected error occured in attempt to retrieve balance"
+                      );
+                    }
+                  },
+                  setPassDataBalance
+                );
+              } else if (
+                ErrorType === "Network error" ||
+                ErrorType === "User error"
+              ) {
+                //The operation was interrupted by a network error
+                alert(
+                  "Kindly check your internet connection to retrieve balance."
+                );
+              } else {
+                //An alien error has occured with the re-run of the "Server error" ErrorType
+                alert(
+                  "An unexpected error occured in attempt to retrieve the balance."
+                );
+              }
+            },
+            setPassDataBalance
+          );
+        } else if (
+          ErrorType === "Network error" ||
+          ErrorType === "User error"
+        ) {
+        } else {
+          alert("An unexpected error occured in attempt to retrieve balance.");
         }
-      }
+      };
       await GetFunction(
         "balance",
         setLoading,
@@ -352,34 +407,42 @@ const GetBalance = async () => {
         setPassDataBalance
       );
     };
-                     // Simulate async data loading
-                    if((newBalance === "" ||
-       newBalance === null ||
-        newBalance === undefined) && Data?.ConfirmAcc === "true"){
-                        GetBalance();
-                        if(GetBalance){
-                         setNewBalance(passDataBalance?.data?.data?.data !== undefined
-                           ? passDataBalance?.data?.data?.data?.balance : "");
-                        }
-                      }else{
-                        console.log("Create an account to access this feature.")
-    
-                      }
-                      //eslint-disable-next-line
-  }, [])
-//  console.log(amtToTransfer)
+    // Simulate async data loading
+    if (
+      (newBalance === "" || newBalance === null || newBalance === undefined) &&
+      Data?.ConfirmAcc === "true"
+    ) {
+      GetBalance();
+      if (GetBalance) {
+        setNewBalance(
+          passDataBalance?.data?.data?.data !== undefined
+            ? passDataBalance?.data?.data?.data?.balance
+            : ""
+        );
+      }
+    } else {
+      console.log("Create an account to access this feature.");
+    }
+    //eslint-disable-next-line
+  }, []);
+  //  console.log(amtToTransfer)
+  const updateBalance = passDataBalance?.data?.data?.data?.balance;
+  const updateBalanceToNumber = Number(updateBalance);
+  const newBalanceToNumber = Number(newBalance);
   return (
-    <div className="flex flex-col gap-[20px] 
-    lg:gap-x-[40px] w-full">
-      <div className="flex flex-col gap-[15px] 
-      md:flex-row lg:gap-[30px]">
+    <div
+      className="flex flex-col gap-[20px] 
+    lg:gap-x-[40px] w-full"
+    >
+      <div
+        className="flex flex-col gap-[15px] 
+      md:flex-row lg:gap-[30px]"
+      >
         {/* =====================Country========================= */}
         {/* <div className={styles.inputBox}> */}
         <div className="flex flex-col md:w-[50%] w-full md:gap-[10px] gap-[5.868px] relative">
           {/* <p className="text-[10px] font-extrabold md:text-[14px] lg:text-[20px]"> */}
-          <p
-            className="font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px]"
-          >
+          <p className="font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px]">
             Select Country
           </p>
           <div
@@ -450,7 +513,6 @@ const GetBalance = async () => {
         {/* =======================Currency============================ */}
         {/* <div className={styles.inputBox}> */}
         <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]">
-          
           <p
             // className="text-[10px] font-extrabold md:text-[14px] lg:text-[20px]"
             className="font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] 
@@ -498,12 +560,14 @@ const GetBalance = async () => {
         </div>
         <div className="w-full">
           <Link to="/aremxy-add-user">
-            <div className="flex justify-between items-center
+            <div
+              className="flex justify-between items-center
              font-[500] py-[10.33px] pl-[5.867px] md:py-[9.257px] 
              md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] pr-1
               lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px]
                border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px]
-                rounded-md md:rounded-[10px]">
+                rounded-md md:rounded-[10px]"
+            >
               <p>Add User</p>
               <img
                 className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
@@ -549,7 +613,7 @@ const GetBalance = async () => {
               className="font-[500] text-[10px] leading-[15px] md:text-[9.389px] md:leading-[12.206px] 
               lg:text-[16px] lg:leading-[20.8px]"
             >
-             {Data?.UserFullName}
+              {Data?.UserFullName}
             </p>
             <p
               className="font-[500] text-[#7C7C7C] text-[10px] leading-[15px]
@@ -562,157 +626,179 @@ const GetBalance = async () => {
         </div>
       </div>
 
-        {/* <div className={` ${styles.inputBox}`}> 
+      {/* <div className={` ${styles.inputBox}`}> 
       <div className="flex flex-col gap-[15px] md:flex-row lg:gap-[30px]">
         *
       */}
 
-      <div className='flex flex-col lg:gap-[25px] gap-[20px]  w-[100%] mb-[50px]'>
-      <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-full">
-        <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]">
-          <p className="font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px]">
-            Email or Username
-          </p>
+      <div className="flex flex-col lg:gap-[25px] gap-[20px]  w-[100%] mb-[50px]">
+        <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-full">
+          <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]">
+            <p className="font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px]">
+              Email or Username
+            </p>
             <div
-    //           className="h-[25px] flex justify-between items-center font-[500] py-[10.33px] pl-[5.867px]
-    // md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px]
+              //           className="h-[25px] flex justify-between items-center font-[500] py-[10.33px] pl-[5.867px]
+              // md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px]
               // text-[8px] leading-[10.4px] border-[#9C9C9C] border-[solid] lg:text-[16px] lg:leading-[20.8px] rounded-[10px]"
-              className='flex justify-between items-center font-[500]
-               py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px]'
+              className="flex justify-between items-center font-[500]
+               py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px]"
             >
-            <input
-              onChange={(e)=> {
-                setTransferValue(e.target.value)
-           if(timer.current) clearTimeout(timer.current)   
-                timer.current = setTimeout(()=> {
-                HandleIdentifyCredentials(e.target.value);
-                    
-  },500)
-  }}
-             
-              value={transferValue}
-              placeholder="Username29 / name@email.com"
-              disabled={Data?.ConfirmAcc === "false"}
-              className="text-[10px] w-[100%] h-[100%] outline-none 
+              <input
+                onChange={(e) => {
+                  setTransferValue(e.target.value);
+                  if (timer.current) clearTimeout(timer.current);
+                  timer.current = setTimeout(() => {
+                    HandleIdentifyCredentials(e.target.value);
+                  }, 500);
+                }}
+                value={transferValue}
+                placeholder="Username29 / name@email.com"
+                disabled={Data?.ConfirmAcc === "false"}
+                className="text-[10px] w-[100%] h-[100%] outline-none 
               lg:text-[14px] "
-              type="text"
-            />
-            <img
-              className=" h-[13.3px] w-[13.3px] lg:w-[24px] lg:h-[24px] "
-              src="/Images/transferImages/frame.png"
-              alt="dropdown"
-            />
+                type="text"
+              />
+              <img
+                className=" h-[13.3px] w-[13.3px] lg:w-[24px] lg:h-[24px] "
+                src="/Images/transferImages/frame.png"
+                alt="dropdown"
+              />
+            </div>
+            {errorMessage?.length > 1 && (
+              <p
+                className={`text-[12px] text-red-500 italic
+               lg:text-[14px] `}
+              >
+                {errorMessage}
+              </p>
+            )}
+            {verifiedUser === true && errorMessage === "" ? (
+              <p
+                className={`text-[12px] text-green-500 italic
+               lg:text-[14px]  `}
+              >
+                Verified User
+              </p>
+            ) : (
+              ""
+            )}
           </div>
-          {errorMessage?.length > 1 && (
-            <p className={`text-[12px] text-red-500 italic
-               lg:text-[14px] `}>
-              {errorMessage}
+
+          {/* ======================Phone Number================== */}
+          {/* <div className={styles.inputBox}> */}
+          <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]">
+            <p
+              // className="text-[10px] font-extrabold md:text-[14px] lg:text-[20px]"
+              className="font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px]"
+            >
+              Phone Number
             </p>
-          )}
-          {verifiedUser === true  && errorMessage === "" ? (
-             <p className={`text-[12px] text-green-500 italic
-               lg:text-[14px]  `}>
-             Verified User
-            </p>
-          ) : ""}
-         
-        
+            <div
+              // className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]"
+              className="flex justify-between items-center font-[500] py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px]"
+            >
+              <input
+                onChange={handleMainInputChange}
+                name="userPhoneNumber"
+                maxLength={11}
+                readOnly
+                value={
+                  fetchedResponse?.data?.data?.userDetails?.phone !== undefined
+                    ? fetchedResponse?.data?.data?.userDetails?.phone
+                    : ""
+                }
+                className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
+                type="number"
+              />
+              <img
+                className=" h-[13.3px] w-[13.3px] lg:w-[24px] lg:h-[24px] "
+                src="/Images/transferImages/call.png"
+                alt="dropdown"
+              />
+            </div>
+            {mainTransferErrors.userPhoneNumber && (
+              <div className="text-[12px] text-red-500 italic lg:text-[14px]">
+                {mainTransferErrors.userPhoneNumber}
+              </div>
+            )}
+          </div>
         </div>
 
-        {/* ======================Phone Number================== */}
-        {/* <div className={styles.inputBox}> */}
-        <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]">
-          <p
-            // className="text-[10px] font-extrabold md:text-[14px] lg:text-[20px]"
-            className="font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px]"
-          >
-            Phone Number
-          </p>
-          <div
-            // className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]"
-            className="flex justify-between items-center font-[500] py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px]"
-          >
-            <input
-              onChange={handleMainInputChange}
-              name="userPhoneNumber"
-              maxLength={11}
-              readOnly
-              value={fetchedResponse?.data?.data?.userDetails?.phone !== undefined ?
-                fetchedResponse?.data?.data?.userDetails?.phone : "" }
-              className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px]"
-              type="number"
-            />
-            <img
-              className=" h-[13.3px] w-[13.3px] lg:w-[24px] lg:h-[24px] "
-              src="/Images/transferImages/call.png"
-              alt="dropdown"
-            />
-          </div>
-          {mainTransferErrors.userPhoneNumber && (
-            <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-              {mainTransferErrors.userPhoneNumber}
-            </div>
-          )}
-          </div>
-          </div>
-
         {/* =========================Amount To Transfer==================== */}
-        
+
         <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%] ">
-            <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px] ">
+          <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px] ">
             <p className="font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px]">
-          {/* <p className="text-[10px] font-extrabold md:text-[16px] lg:text-[20px]"> */}
-            Amount To Transfer
-          </p>
-          <div className="flex justify-between items-center font-[500]
+              {/* <p className="text-[10px] font-extrabold md:text-[16px] lg:text-[20px]"> */}
+              Amount To Transfer
+            </p>
+            <div
+              className="flex justify-between items-center font-[500]
            py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px]
             md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] 
             lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px]
              border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] 
-             rounded-md md:rounded-[10px]">
-            <span className="text-gray-500">&#8358;</span>
-            <input
-              onChange={(e)=> {
-       console.log(e.target.value)
-       setTransferAmount(e.target.value);
-        
-              }}
-              type="number"
-              className="text-[10px] w-[100%] h-[100%]
+             rounded-md md:rounded-[10px]"
+            >
+              <span className="text-gray-500">&#8358;</span>
+              <input
+                onChange={(e) => {
+                  console.log(e.target.value);
+                  setTransferAmount(e.target.value);
+                }}
+                type="number"
+                className="text-[10px] w-[100%] h-[100%]
                outline-none lg:text-[14px]"
               />
-            <img
-              className=" h-[13.3px] w-[13.3px] lg:w-[24px] lg:h-[24px]"
-              src="/Images/transferImages/cycle.png"
-              alt="dropdown"
-            />
-          </div>
-          {mainTransferErrors.amtToTransfer && (
-            <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-              {mainTransferErrors.amtToTransfer}
+              <img
+                className=" h-[13.3px] w-[13.3px] lg:w-[24px] lg:h-[24px]"
+                src="/Images/transferImages/cycle.png"
+                alt="dropdown"
+              />
             </div>
-          )}
+            {mainTransferErrors.amtToTransfer && (
+              <div className="text-[12px] text-red-500 italic lg:text-[14px]">
+                {mainTransferErrors.amtToTransfer}
+              </div>
+            )}
           </div>
 
-        {/* ===========================Available Balance===================== */}
-           
-            <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]">
-          <p className="font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px]">
-            Available Balance
-          </p>
-          <div className="flex justify-between items-center font-[500] py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px]">
-            <p className="text-[8px] text-[#0008] md:text-[14px] lg:text-[16px]">
-              &#8358;{(newBalance === "" || newBalance=== undefined) ? Number(passDataBalance?.data?.data?.data?.balance) : newBalance }
+          {/* ===========================Available Balance===================== */}
+
+          <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]">
+            <p className="font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px]">
+              Available Balance
             </p>
-            <img
-              className=" h-[13.3px] w-[13.3px] lg:w-[24px] lg:h-[24px] "
-              src="/Images/transferImages/nigeria.png"
-              alt="dropdown"
-            />
+            <div className="flex justify-between items-center font-[500] py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px]">
+              <p className="text-[8px] text-[#0008] md:text-[14px] lg:text-[16px]">
+                &#8358;
+                {newBalance === "" || newBalance === undefined
+                  ? `${
+                      updateBalance?.length > 1
+                        ? updateBalanceToNumber?.toLocaleString("en-NG", {
+                            style: "currency",
+                            currency: "NGN",
+                          })
+                        : ""
+                    }`
+                  : `${
+                      newBalance?.length > 1
+                        ? newBalanceToNumber?.toLocaleString("en-Ng", {
+                            style: "currency",
+                            currency: "NGN",
+                          })
+                        : ""
+                    }`}
+              </p>
+              <img
+                className=" h-[13.3px] w-[13.3px] lg:w-[24px] lg:h-[24px] "
+                src="/Images/transferImages/nigeria.png"
+                alt="dropdown"
+              />
+            </div>
           </div>
         </div>
-        
-       </div>
 
         {/* =============================Message======================= */}
         <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px] ">
@@ -724,13 +810,13 @@ const GetBalance = async () => {
           </p>
           <textarea
             placeholder="Optional"
-            onChange={(e)=> setMessageTransfer(e.target.value)}
+            onChange={(e) => setMessageTransfer(e.target.value)}
             value={messageTransfer}
             className="outline-none h-[80px] flex flex-col justify-between p-[1%] md:h-[100px] md:text-[14px] md:rounded-[8px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md lg:h-[120px] "
           ></textarea>
         </div>
       </div>
-        
+
       {/* =========================Add to recipient ? ======================= */}
       <div className="flex gap-[10px]">
         <div className="flex items-center gap-[10px]">
@@ -771,10 +857,9 @@ const GetBalance = async () => {
         </div>
       </div>
       <button
-        onClick={()=> 
-         ProceedTransfer()}
+        onClick={() => ProceedTransfer()}
         className={`${
-          transferAmount?.toString()?.length <  1 ? "bg-[#0008]" : "bg-[#04177f]"
+          transferAmount?.toString()?.length < 1 ? "bg-[#0008]" : "bg-[#04177f]"
         } my-[5%] w-full flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px]
          md:w-[25%] md:rounded-[8px] md:text-[20px] 
          lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
@@ -802,16 +887,14 @@ const GetBalance = async () => {
           </div>
         </Modal>
       )}
-      <ToConfirmAremxyMain transferValue={transferValue} 
-      transferPhone={fetchedResponse?.data?.data?.userDetails?.phone} 
-      passDataBalance = {passDataBalance}/>
-      <MainInputPinPop fetchedResponse={fetchedResponse}/>
-      {loading && (
-        <Loader/>
-      )}
-      {sessionModal && (
-     <HandleUserSession/>
-      )}
+      <ToConfirmAremxyMain
+        transferValue={transferValue}
+        transferPhone={fetchedResponse?.data?.data?.userDetails?.phone}
+        passDataBalance={passDataBalance}
+      />
+      <MainInputPinPop fetchedResponse={fetchedResponse} />
+      {loading && <Loader />}
+      {sessionModal && <HandleUserSession />}
     </div>
   );
 }

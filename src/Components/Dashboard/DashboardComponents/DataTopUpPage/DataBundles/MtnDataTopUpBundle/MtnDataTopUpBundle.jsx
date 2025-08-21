@@ -26,22 +26,24 @@ import Failed from "./MtnDataTopUpBundleImages/Failed.svg";
 import axiosInstance from "../../../../../ApiCollection.jsx/apiClient";
 import { VerifyTransPin } from "../../../../../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../../../../../Loader/Loader";
-import { GetFunction, HandleUserSession } from "../../../../../ApiCollection.jsx/ApiBuck";
-
-
-
+import {
+  GetFunction,
+  HandleUserSession,
+} from "../../../../../ApiCollection.jsx/ApiBuck";
 
 const MtnDataTopUpBundle = () => {
-
-const { isDarkMode, newBalance, setNewBalance } = useContext(ContextProvider);
-  const {selectedOptionMtn, setSelectedOptionMtn} = useContext(ContextProvider);
-  const {selectedProductMtn, setSelectedProductMtn } = useContext(ContextProvider);
-  const {recipientPhoneNumberMtn, setRecipientPhoneNumberMtn} =
+  const { isDarkMode, newBalance, setNewBalance } = useContext(ContextProvider);
+  const { selectedOptionMtn, setSelectedOptionMtn } =
     useContext(ContextProvider);
-  const {selectedAmountMtn, setSelectedAmountMtn} = useContext(ContextProvider);
-  const {recipientNamesMtn, setRecipientNamesMtn} = useContext(ContextProvider);
-  const {walletNameMtn, setWalletNameMtn} = useContext(ContextProvider);
- 
+  const { selectedProductMtn, setSelectedProductMtn } =
+    useContext(ContextProvider);
+  const { recipientPhoneNumberMtn, setRecipientPhoneNumberMtn } =
+    useContext(ContextProvider);
+  const { selectedAmountMtn, setSelectedAmountMtn } =
+    useContext(ContextProvider);
+  const { recipientNamesMtn, setRecipientNamesMtn } =
+    useContext(ContextProvider);
+  const { walletNameMtn, setWalletNameMtn } = useContext(ContextProvider);
 
   const [showProductList, setShowProductList] = useState(false);
   const [showOptionList, setShowOptionList] = useState(false);
@@ -62,243 +64,297 @@ const { isDarkMode, newBalance, setNewBalance } = useContext(ContextProvider);
   const [loadingPlans, setLoadingPlans] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
- const [balanceStatus,setBalanceStatus ] = useState("")
+  const [balanceStatus, setBalanceStatus] = useState("");
 
   const [selectPlanWarn, setSelectPlanWarn] = useState(false);
   const [selectProductWarn, setSelectProductWarn] = useState(false);
   const [passDataBalance, setPassDataBalance] = useState({});
-  const [mtnReceiptInfo,setMtnReceiptInfo ] = useState("");
-  const [sessionModal, setSessionModal] = useState(false)
+  const [mtnReceiptInfo, setMtnReceiptInfo] = useState("");
+  const [sessionModal, setSessionModal] = useState(false);
 
-  
-  
+  let balanceStringToNum = Number(newBalance);
 
-   let balanceStringToNum = Number(newBalance);
+  let mtnDataAmount = Number(selectedAmountMtn?.replace(/\D/g, ""));
+  const updateBalance = passDataBalance?.data
+    ? passDataBalance?.data?.data?.data?.balance
+    : "";
+  const cleanUpBalanceToNumericOnly = Number(updateBalance?.replace(/\D/g, ""));
+  let CheckSufficiency =
+    mtnDataAmount >
+    (newBalance === "" || newBalance === null
+      ? cleanUpBalanceToNumericOnly
+      : balanceStringToNum);
 
-              let mtnDataAmount = Number(selectedAmountMtn?.replace(/\D/g, ""));
-              const updateBalance = passDataBalance?.data ?  passDataBalance?.data?.data?.data?.balance : "";
-              const cleanUpBalanceToNumericOnly = Number(updateBalance?.replace(/\D/g, ""));
-             let CheckSufficiency =  mtnDataAmount > (newBalance === "" || newBalance === null ? cleanUpBalanceToNumericOnly : balanceStringToNum);
-           
-useEffect(() => {
+  useEffect(() => {
     const fetchProducts = async () => {
-     setLoadingProducts(true);
+      setLoadingProducts(true);
       try {
-        const response = await axiosInstance.get(
-          `/products/telecom/list/1`
-        );
-        if(response === undefined){
+        const response = await axiosInstance.get(`/products/telecom/list/1`);
+        if (response === undefined) {
           alert("Check your internet Connection");
-        }else if(response.status === 201 || 200){
+        } else if (response.status === 201 || 200) {
           setProducts(response?.data?.data?.products || []);
-
         }
       } catch (error) {
         console.error("Error fetching products:", error);
-          if(error && error.response === undefined){
-             alert("Check your internet Connection, then reload the page.")
-          } else if(error && error.response.status === 400){
-             alert("Service for mtn is currently not available, Try again later.")
-          }else if(error && error.response.status === 401){
-             if(error.response.headers["x-new-auth-token"] || error.response.headers.get("x-new-auth-token")){
-         setLoading(true)
-         const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
-        
-         if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
-           localStorage.setItem("authorisedLogin", newToken);
-           if(localStorage.getItem("authorisedLogin")?.length > 1){
-           await fetchProducts();
-           }
-            }else{
-     localStorage.setItem("getToken", newToken);
-      if(localStorage.getItem("authorisedLogin")?.length > 1){
-        await fetchProducts();
-      }
-      }
-        }else{
-          return setSessionModal(true)
-        }
-          }else if(error && error?.response?.status === 500){
-             alert("Service for mtn is currently not available, Try again later.")
+        if (error && error.response === undefined) {
+          alert("Check your internet Connection, then reload the page.");
+        } else if (error && error.response.status === 400) {
+          alert("Service for mtn is currently not available, Try again later.");
+        } else if (error && error.response.status === 401) {
+          if (
+            error.response.headers["x-new-auth-token"] ||
+            error.response.headers.get("x-new-auth-token")
+          ) {
+            setLoading(true);
+            const newToken =
+              error.response.headers.get("x-new-auth-token") ||
+              error.response.headers["x-new-auth-token"];
+
+            if (
+              newToken !== "" &&
+              localStorage.getItem("authorisedLogin") === "true"
+            ) {
+              localStorage.setItem("authorisedLogin", newToken);
+              if (localStorage.getItem("authorisedLogin")?.length > 1) {
+                await fetchProducts();
+              }
+            } else {
+              localStorage.setItem("getToken", newToken);
+              if (localStorage.getItem("authorisedLogin")?.length > 1) {
+                await fetchProducts();
+              }
+            }
+          } else {
+            return setSessionModal(true);
           }
+        } else if (error && error?.response?.status === 500) {
+          alert("Service for mtn is currently not available, Try again later.");
+        }
       } finally {
         setLoadingProducts(false);
-      
       }
-    
     };
 
     fetchProducts();
-        const HandleBalanceStatus = ()=> {
-              if(CheckSufficiency){
-               setBalanceStatus("Insufficient fund")
-              }else{
-                setBalanceStatus("");
-               }
-            }
+    const HandleBalanceStatus = () => {
+      if (CheckSufficiency) {
+        setBalanceStatus("Insufficient fund");
+      } else {
+        setBalanceStatus("");
+      }
+    };
 
-            HandleBalanceStatus()
+    HandleBalanceStatus();
+  }, [CheckSufficiency]);
 
-          },[CheckSufficiency])
-            
-//console.log(fetchedBalance);
+  //console.log(fetchedBalance);
 
   // Fetch plans when product is selected
   const fetchPlans = async (productId) => {
     setLoadingPlans(true);
-   
+
     try {
       setLoadingPlans(true);
       const response = await axiosInstance.get(
         `/products/telecom/${productId}`
       );
-      
-      if(response.status === 201 || 200){
+
+      if (response.status === 201 || 200) {
         setProductPlans(response.data.data.plans || []);
-       if(response?.data?.data?.plans === null || response?.data?.data?.length < 1){
+        if (
+          response?.data?.data?.plans === null ||
+          response?.data?.data?.length < 1
+        ) {
           setSelectProductWarn(true);
         }
       }
     } catch (error) {
       console.error("Error fetching plans:", error);
-        if(error && error.response === undefined){
-             alert("Your internet connection is quite unstable.")
-        }else if(error && (error.response.status ===  401)){
-        if(error.response.headers["x-new-auth-token"] || error.response.headers.get("x-new-auth-token")){
-         setLoading(true)
-         const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
-        
-         if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
-           localStorage.setItem("authorisedLogin", newToken);
-           if( localStorage.getItem("authorisedLogin")?.length > 1){
-            await fetchPlans()
-           }
-            }else{
-    localStorage.setItem("getToken", newToken);
-      if(localStorage.getItem("getToken")?.length > 1){
-        await fetchPlans();
-      }
-      }
-        }else{
-          return setSessionModal(true)
+      if (error && error.response === undefined) {
+        alert("Your internet connection is quite unstable.");
+      } else if (error && error.response.status === 401) {
+        if (
+          error.response.headers["x-new-auth-token"] ||
+          error.response.headers.get("x-new-auth-token")
+        ) {
+          setLoading(true);
+          const newToken =
+            error.response.headers.get("x-new-auth-token") ||
+            error.response.headers["x-new-auth-token"];
+
+          if (
+            newToken !== "" &&
+            localStorage.getItem("authorisedLogin") === "true"
+          ) {
+            localStorage.setItem("authorisedLogin", newToken);
+            if (localStorage.getItem("authorisedLogin")?.length > 1) {
+              await fetchPlans();
+            }
+          } else {
+            localStorage.setItem("getToken", newToken);
+            if (localStorage.getItem("getToken")?.length > 1) {
+              await fetchPlans();
+            }
+          }
+        } else {
+          return setSessionModal(true);
         }
-      }else if(error && error.response.status ===  400){
+      } else if (error && error.response.status === 400) {
         setSelectProductWarn(true);
-      }else if(error && error.response.status ===  500){
-       setSelectProductWarn(true);
+      } else if (error && error.response.status === 500) {
+        setSelectProductWarn(true);
       }
-    
     } finally {
       setLoadingPlans(false);
     }
   };
 
-
   const handleSelectProduct = (product) => {
-    if(!navigator.onLine) return alert("Check your internet connection.")
-    if(navigator.onLine){
-    setSelectedProductMtn(`${product.Plan_Type}`);
-    setShowProductList(false);
-    fetchPlans(product.Product_ID);
+    if (!navigator.onLine) return alert("Check your internet connection.");
+    if (navigator.onLine) {
+      setSelectedProductMtn(`${product.Plan_Type}`);
+      setShowProductList(false);
+      fetchPlans(product.Product_ID);
     }
   };
 
   const handleSelectOption = (plan) => {
-    setSelectedOptionMtn(` ${plan?.Size} (₦${plan?.Amount}) ~ ${plan?.Validity ? plan?.Validity.toUpperCase() : ""} `);
-   setMtnReceiptInfo(plan?.PlanType + " " + plan?.Size);
+    setSelectedOptionMtn(
+      ` ${plan?.Size} (₦${plan?.Amount}) ~ ${
+        plan?.Validity ? plan?.Validity.toUpperCase() : ""
+      } `
+    );
+    setMtnReceiptInfo(plan?.PlanType + " " + plan?.Size);
     setSelectedAmountMtn(`₦${plan?.Amount}`);
     setSelectedPlan(plan);
     setShowOptionList(false);
     setShowProductList(false);
-  }
- 
+  };
+
   const countryList = [
-  {
-    id: 1,
-    name: "Nigeria",
-    code: "NGN",
-    flag: require("../DataBundles-Images/ng.svg").default,
-    amount: (newBalance === "" || newBalance === null) ? updateBalance : newBalance,
-     status : "Active"
-  },
-  {
-    id: 2,
-    name: "United States",
-    code: "USD",
-    flag: require("../DataBundles-Images/us.svg").default,
-    amount: 0,
-    status : "Inactive"
-  },
-  {
-    id: 3,
-    name: "United Kingdom",
-    code: "GBP",
-    flag: require("../DataBundles-Images/gb.svg").default,
-    amount: 0,
-     status : "Inactive"
-  },
-  {
-    id: 4,
-    name: "European Union",
-    code: "EUR",
-    flag: require("../DataBundles-Images/eu.svg").default,
-    amount: 0,
-     status : "Inactive"
-  },
-  {
-    id: 5,
-    name: "Australia",
-    code: "AUD",
-    flag: require("../DataBundles-Images/au.svg").default,
-    amount: 0,
-     status : "Inactive"
-  },
-  {
-    id: 6,
-    name: "Kenya",
-    code: "KSH",
-    flag: require("../DataBundles-Images/ke.svg").default,
-    amount: 0,
-     status : "Inactive"
-  },
-];
+    {
+      id: 1,
+      name: "Nigeria",
+      code: "NGN",
+      flag: require("../DataBundles-Images/ng.svg").default,
+      amount:
+        newBalance === "" || newBalance === null
+          ? `${
+              cleanUpBalanceToNumericOnly > 1
+                ? cleanUpBalanceToNumericOnly?.toLocaleString("en-NG", {
+                    style: "currency",
+                    currency: "NGN",
+                  })
+                : "₦"
+            }`
+          : `${
+              balanceStringToNum > 1
+                ? balanceStringToNum?.toLocaleString("en-NG", {
+                    style: "currency",
+                    currency: "NGN",
+                  })
+                : "₦"
+            }`,
+      status: "Active",
+    },
+    {
+      id: 2,
+      name: "United States",
+      code: "USD",
+      flag: require("../DataBundles-Images/us.svg").default,
+      amount: 0?.toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD",
+      }),
+      status: "Inactive",
+    },
+    {
+      id: 3,
+      name: "United Kingdom",
+      code: "GBP",
+      flag: require("../DataBundles-Images/gb.svg").default,
+      amount: 0?.toLocaleString("en-GB", {
+        style: "currency",
+        currency: "GBP",
+      }),
+      status: "Inactive",
+    },
+    {
+      id: 4,
+      name: "European Union",
+      code: "EUR",
+      flag: require("../DataBundles-Images/eu.svg").default,
+      amount: 0?.toLocaleString("en-EU", {
+        style: "currency",
+        currency: "EUR",
+      }),
+      status: "Inactive",
+    },
+    {
+      id: 5,
+      name: "Australia",
+      code: "AUD",
+      flag: require("../DataBundles-Images/au.svg").default,
+      amount: 0?.toLocaleString("en", {
+        style: "currency",
+        currency: "AUD",
+      }),
+      status: "Inactive",
+    },
+    {
+      id: 6,
+      name: "Kenya",
+      code: "KSH",
+      flag: require("../DataBundles-Images/ke.svg").default,
+      amount: 0?.toLocaleString("en-KE", {
+        style: "currency",
+        currency: "KES",
+      }),
+      status: "Inactive",
+    },
+  ];
 
   useEffect(() => {
-   const GetBalance =   async()=> {
-       const SuccessHandler = ()=> {
-     //alert("Successful");
-console.log("successfully retrieved balance");
-//alert("Successful")
-  }
- const FailedHandler = async(ErrorType)=> {
-  if(ErrorType === "unauthoriesed"){
-    await GetFunction("balance", 
-      setLoading, 
-      SuccessHandler, 
-     (ErrorType)=> {
-       if(ErrorType === "unauthorised"){
-        setSessionModal(true)
-       }
-     },
-      setPassDataBalance)
-  }
- }
- await GetFunction("balance", 
-  setLoading,
-   SuccessHandler, 
-   FailedHandler,
-   setPassDataBalance)
-   } 
+    const GetBalance = async () => {
+      const SuccessHandler = () => {
+        //alert("Successful");
+        console.log("successfully retrieved balance");
+        //alert("Successful")
+      };
+      const FailedHandler = async (ErrorType) => {
+        if (ErrorType === "unauthoriesed") {
+          await GetFunction(
+            "balance",
+            setLoading,
+            SuccessHandler,
+            (ErrorType) => {
+              if (ErrorType === "unauthorised") {
+                setSessionModal(true);
+              }
+            },
+            setPassDataBalance
+          );
+        }
+      };
+      await GetFunction(
+        "balance",
+        setLoading,
+        SuccessHandler,
+        FailedHandler,
+        setPassDataBalance
+      );
+    };
     // Simulate async data loading
-   
-    if(newBalance === "" || newBalance === null || newBalance === undefined){
-       GetBalance();
-       console.log(passDataBalance);
-       if(GetBalance && passDataBalance?.data){
+
+    if (newBalance === "" || newBalance === null || newBalance === undefined) {
+      GetBalance();
+      console.log(passDataBalance);
+      if (GetBalance && passDataBalance?.data) {
         setNewBalance(passDataBalance?.data?.data?.data?.balance);
-       }
+      }
     }
-   //eslint-disable-next-line
+    //eslint-disable-next-line
   }, []);
   //console.log(passDataBalance.data.data.data.balance);
   const handleCodes = () => {
@@ -315,32 +371,55 @@ console.log("successfully retrieved balance");
   };
 
   const handleSelectPayment = (code, flag, amount, id) => {
-    if(code === "NGN" && id === 1){
-    setWalletNameMtn(code);
-    setImage(flag);
-    setPaymentAmount(amount);
-    setShowPayment(false);
-    setPaymentSelected(true);
+    if (code === "NGN" && id === 1) {
+      setWalletNameMtn(code);
+      setImage(flag);
+      setPaymentAmount(amount);
+      setShowPayment(false);
+      setPaymentSelected(true);
     }
   };
 
   const Payment = ({ code, flag, amount, onClick, paymentMethod }) => {
     return (
       <div
-       className={`font-[500] w-full flex px-2  gap-[10px] text-[#7C7C7C] text-[8px] leading-[10.4px]
+        className={`font-[500] w-full flex px-2  gap-[10px] text-[#7C7C7C] text-[8px] leading-[10.4px]
             lg:text-[16px] lg:leading-[20.8px] md:py-[20px] py-[15px] pl-[10px]
            lg:pl-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] md:shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)] 
-            ${isDarkMode ?  "border-y-[0.5px] border-x-[0.6px] border-white" : "boder-none"} 
-           cursor-pointer ${paymentMethod  === "Inactive" && !isDarkMode  ? "bg-gray-300 cursor-not-allowed" : 
-            paymentMethod === "Inactive" && isDarkMode ? "bg-black" : paymentMethod === "Active" && !isDarkMode ? "bg-white" : "bg-black" } 
-           `} onClick={onClick}>
+            ${
+              isDarkMode
+                ? "border-y-[0.5px] border-x-[0.6px] border-white"
+                : "boder-none"
+            } 
+           cursor-pointer ${
+             paymentMethod === "Inactive" && !isDarkMode
+               ? "bg-gray-300 cursor-not-allowed"
+               : paymentMethod === "Inactive" && isDarkMode
+               ? "bg-black"
+               : paymentMethod === "Active" && !isDarkMode
+               ? "bg-white"
+               : "bg-black"
+           } 
+           `}
+        onClick={onClick}
+      >
         <div className={` ${airtimestyles.netImage}`}>
           <img src={flag} alt="" className={airtimestyles.NoImage} />
         </div>
-        <h2 className={`font-[500] text-[#7C7C7C] text-[12px] leading-[16.4px]
-            lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>{code}</h2>
-        <p className={`font-[500] text-[#7C7C7C] text-[12px] leading-[16.4px]
-            lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+        <h2
+          className={`font-[500] text-[#7C7C7C] text-[12px] leading-[16.4px]
+            lg:text-[16px] lg:leading-[20.8px] ${
+              isDarkMode ? "text-white" : "text-[#7C7C7C]"
+            }`}
+        >
+          {code}
+        </h2>
+        <p
+          className={`font-[500] text-[#7C7C7C] text-[12px] leading-[16.4px]
+            lg:text-[16px] lg:leading-[20.8px] ${
+              isDarkMode ? "text-white" : "text-[#7C7C7C]"
+            }`}
+        >
           Wallet({amount.toLocaleString()})
         </p>
       </div>
@@ -383,10 +462,9 @@ console.log("successfully retrieved balance");
       }),
   });
 
-const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState("");
 
   // const proceedToShowReceipt = purchaseStatus === "paid" || purchaseStatus === "failed";
-
 
   const mtnRegex =
     /^(234|0)(703[0-9]|704[0-9]|706[0-9]|810[0-9]|813[0-9]|814[0-9]|816[0-9]|901[0-9]|903[0-9]|906[0-9]|913[0-9]|916[0-9])\d{6}$/;
@@ -398,13 +476,11 @@ const [inputValue, setInputValue] = useState("");
 
     if (!mtnRegex.test(inputValue)) {
       return "Invalid MTN number. Please enter a valid MTN number.";
-
     }
-    console.log("its me")
+    console.log("its me");
 
     return null;
   };
-
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -426,28 +502,43 @@ const [inputValue, setInputValue] = useState("");
   };
 
   const handleProceed = (e) => {
-
-    console.log(recipientPhoneNumberMtn)
-    console.log(inputValue)
-
-
+    console.log(recipientPhoneNumberMtn);
+    console.log(inputValue);
 
     e.preventDefault();
 
     function validateNigerianNumberByNetwork(inputValue) {
       const networks = {
-        'MTN': ['0703', '0704', '0814', '0706', '0803', '0806', '0810', '0813', '0814', '0816', '0903', '0906', '0913', '0916'],
+        MTN: [
+          "0703",
+          "0704",
+          "0814",
+          "0706",
+          "0803",
+          "0806",
+          "0810",
+          "0813",
+          "0814",
+          "0816",
+          "0903",
+          "0906",
+          "0913",
+          "0916",
+        ],
       };
 
       for (let network in networks) {
         for (let prefix of networks[network]) {
-          if (inputValue.startsWith(prefix) && inputValue.length === prefix.length + 7) {
+          if (
+            inputValue.startsWith(prefix) &&
+            inputValue.length === prefix.length + 7
+          ) {
             return network;
           }
         }
       }
 
-      return 'Unknown network';
+      return "Unknown network";
     }
 
     const { error } = schema.validate({
@@ -461,13 +552,13 @@ const [inputValue, setInputValue] = useState("");
           return acc;
         }, {})
       );
-    } else if (validateNigerianNumberByNetwork(recipientPhoneNumberMtn) !== 'MTN') {
+    } else if (
+      validateNigerianNumberByNetwork(recipientPhoneNumberMtn) !== "MTN"
+    ) {
       setErrors({
-        recipientPhoneNumber:
-          `Invalid MTN number. Please enter a valid MTN number.`,
-
+        recipientPhoneNumber: `Invalid MTN number. Please enter a valid MTN number.`,
       });
-      console.log("its me 2")
+      console.log("its me 2");
     } else {
       setProceed(true);
       setErrors({});
@@ -480,12 +571,10 @@ const [inputValue, setInputValue] = useState("");
 
   // console.log("confirm:", confirm);
 
-
   const [mtntransactionID, setMtnTransactionID] = useState("");
   const [mtnOrderID, setMtnOrderID] = useState("");
   const [mtnrefNumber, setMtnRefNumber] = useState("");
   const [mtndescription, setMtnDescription] = useState("");
-
 
   const handleReceipt = () => {
     setTransactSuccessPopUp(false);
@@ -493,7 +582,6 @@ const [inputValue, setInputValue] = useState("");
   };
   const inputPinHandler = async () => {
     async function buyData(network, mobileNumber, planID, name) {
-   
       // Add validation for selected plan
       if (!selectedPlan) {
         console.error("No plan selected");
@@ -503,7 +591,7 @@ const [inputValue, setInputValue] = useState("");
       // console.log(selectedPlan)
       // console.log(selectedPlan.PlanID)
 
-      const path = '/data';
+      const path = "/data";
 
       const data = {
         network,
@@ -512,65 +600,70 @@ const [inputValue, setInputValue] = useState("");
         name,
       };
 
+      setLoading(true);
 
-      setLoading(true)
-
-
-      console.log(data)
-      console.log("its me")
+      console.log(data);
+      console.log("its me");
 
       try {
         setLoading(true);
         const response = await axiosInstance.post(path, data);
-  const resData = response?.data?.data?.data; // Accessing the nested `data` object
-console.log(resData);
-         setMtnTransactionID(resData?.transaction_id);
- setMtnRefNumber(resData?.reference_number);
- setMtnOrderID(resData?.order_id); // No `order_id`, using `id` instead
-       setMtnDescription(`${resData?.network} - ${resData?.plan_name}`); // Fabricated description
-if (response.statusCode === 200 || 201) {
-      // Success response
-      setTransactSuccessPopUp(true); 
-      setInputPin("");
-         setConfirm(false);
-      console.log(response);
+        const resData = response?.data?.data?.data; // Accessing the nested `data` object
+        console.log(resData);
+        setMtnTransactionID(resData?.transaction_id);
+        setMtnRefNumber(resData?.reference_number);
+        setMtnOrderID(resData?.order_id); // No `order_id`, using `id` instead
+        setMtnDescription(`${resData?.network} - ${resData?.plan_name}`); // Fabricated description
+        if (response.statusCode === 200 || 201) {
+          // Success response
+          setTransactSuccessPopUp(true);
+          setInputPin("");
+          setConfirm(false);
+          console.log(response);
           return { statusCode: response.status, data: response.data };
-   
-    } 
-} catch (error) {
-        console.error(error);
-        if(error && error.response === undefined){
-             alert("Your internet connection is quite unstable.");
-          }else if(error && (error.response.status === 500 || error.response.status === 400 )){
-              setPurchaseStatus(true); // Show failure popup
-           setConfirm(false);
-      setInputPin("");
-
-      }else if(error && error.response.status === 401){
-     if(error.response.headers["x-new-auth-token"] || error.response.headers.get("x-new-auth-token")){
-         setLoading(true)
-         const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
-        
-         if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
-           localStorage.setItem("authorisedLogin", newToken);
-           if( localStorage.getItem("authorisedLogin")?.length > 1){
-            await inputPinHandler()
-           }
-            }else{
-     localStorage.setItem("getToken", newToken);
-      if(localStorage.getItem("getToken")?.length > 1){
-        await inputPinHandler();
-      }
-      }
-        }else{
-          return setSessionModal(true)
         }
-      }
-      else{
-        alert("Check your internet connection");
-      }
-      
-      }finally{
+      } catch (error) {
+        console.error(error);
+        if (error && error.response === undefined) {
+          alert("Your internet connection is quite unstable.");
+        } else if (
+          error &&
+          (error.response.status === 500 || error.response.status === 400)
+        ) {
+          setPurchaseStatus(true); // Show failure popup
+          setConfirm(false);
+          setInputPin("");
+        } else if (error && error.response.status === 401) {
+          if (
+            error.response.headers["x-new-auth-token"] ||
+            error.response.headers.get("x-new-auth-token")
+          ) {
+            setLoading(true);
+            const newToken =
+              error.response.headers.get("x-new-auth-token") ||
+              error.response.headers["x-new-auth-token"];
+
+            if (
+              newToken !== "" &&
+              localStorage.getItem("authorisedLogin") === "true"
+            ) {
+              localStorage.setItem("authorisedLogin", newToken);
+              if (localStorage.getItem("authorisedLogin")?.length > 1) {
+                await inputPinHandler();
+              }
+            } else {
+              localStorage.setItem("getToken", newToken);
+              if (localStorage.getItem("getToken")?.length > 1) {
+                await inputPinHandler();
+              }
+            }
+          } else {
+            return setSessionModal(true);
+          }
+        } else {
+          alert("Check your internet connection");
+        }
+      } finally {
         setLoading(false);
       }
     }
@@ -582,10 +675,9 @@ if (response.statusCode === 200 || 201) {
       selectedPlan.PlanID,
       recipientNamesMtn
     );
+  };
 
-  }
-
-   const doneChangeHandler = () => {
+  const doneChangeHandler = () => {
     setSelectedProductMtn("");
     setSelectedOptionMtn(false);
     setSelectedAmountMtn("");
@@ -595,24 +687,23 @@ if (response.statusCode === 200 || 201) {
     setPurchaseStatus(null);
     setRecipientPhoneNumberMtn("");
     setInputValue("");
- };
-
-   
-   
+  };
 
   return (
     <DashBoardLayout>
       <div
-        className={`bg-[#FFF] relative lg:ml-[20px] 2xl:ml-0 ${isDarkMode
-          ? "bg-[#000] text-[#fff] border-[#fff]"
-          : "bg-[#ffffff] text-[#000] "
-          } flex flex-col justify-between h-full`}
-      >
-        <section
-          className={`md:px-[0px] ${isDarkMode
+        className={`bg-[#FFF] relative lg:ml-[20px] 2xl:ml-0 ${
+          isDarkMode
             ? "bg-[#000] text-[#fff] border-[#fff]"
             : "bg-[#ffffff] text-[#000] "
-            }`}
+        } flex flex-col justify-between h-full`}
+      >
+        <section
+          className={`md:px-[0px] ${
+            isDarkMode
+              ? "bg-[#000] text-[#fff] border-[#fff]"
+              : "bg-[#ffffff] text-[#000] "
+          }`}
         >
           <div
             id="DataBundle"
@@ -623,10 +714,14 @@ if (response.statusCode === 200 || 201) {
                flex justify-between items-center lg:ml-[-20px] 
                lg:w-[102%] 2xl:w-full 2xl:ml-0"
           >
-            <div className="w-[100%] pt-[19px]
-             lg:pt-[20px] pl-[8.5px] md:pl-[9px]">
-              <p className="text-[11px] mb-2 font-bold uppercase 
-              w-[100%] md:text-[16px] md:w-[70%] lg:w-[70%] lg:text-[20px] 2xl:w-[80%] 2xl:text-[24px] lg:mb-4">
+            <div
+              className="w-[100%] pt-[19px]
+             lg:pt-[20px] pl-[8.5px] md:pl-[9px]"
+            >
+              <p
+                className="text-[11px] mb-2 font-bold uppercase 
+              w-[100%] md:text-[16px] md:w-[70%] lg:w-[70%] lg:text-[20px] 2xl:w-[80%] 2xl:text-[24px] lg:mb-4"
+              >
                 DATA BUNDLES, AFFORDABLE AND AUTOMATED.
               </p>
               <p className="text-[10px] font-[400] leading-[13.4px] mb-4 md:text-[10px] md:leading-[12.2px] w-[90%] md:w-[75%] lg:w-[75%] 2xl:w-[85%] 2xl:mt-[5px] lg:mt-[20px] lg:text-[16px] lg:leading-[26px] 2xl:text-[20px] lg:mb-[20px]">
@@ -648,10 +743,13 @@ if (response.statusCode === 200 || 201) {
           {/* =========================Select/Add Recipient===================== */}
 
           <div className="flex gap-[10%] mt-[40px] md:w-full md:justify-between md:gap-[10%] ">
-            <div className={`w-full flex items-center justify-between border text-[12px] md:py-[15px] md:w-[50%] rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003] ${isDarkMode
-              ? "bg-black text-white border !border-white"
-              : "border border-[#0003]"
-              }`}>
+            <div
+              className={`w-full flex items-center justify-between border text-[12px] md:py-[15px] md:w-[50%] rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003] ${
+                isDarkMode
+                  ? "bg-black text-white border !border-white"
+                  : "border border-[#0003]"
+              }`}
+            >
               <Link
                 to="/DataBundleSelectRecipient"
                 style={{ display: "inline-flex", width: "100%" }}
@@ -665,11 +763,13 @@ if (response.statusCode === 200 || 201) {
                 />
               </Link>
             </div>
-            <div className={`w-full flex items-center justify-between border text-[12px] md:py-[15px] md:w-[40%] md:mr-[9%]  rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]
-               ${isDarkMode
-                ? "bg-black text-white border !border-white "
-                : "border border-[#0003]"
-              }`}
+            <div
+              className={`w-full flex items-center justify-between border text-[12px] md:py-[15px] md:w-[40%] md:mr-[9%]  rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]
+               ${
+                 isDarkMode
+                   ? "bg-black text-white border !border-white "
+                   : "border border-[#0003]"
+               }`}
             >
               <Link
                 to="/DataBundleAddRecipient"
@@ -735,8 +835,9 @@ if (response.statusCode === 200 || 201) {
             <Modal>
               (
               <div
-                className={`code ${toggleSideBar ? "code1" : "code01"
-                  } overflow-auto w-[90%]`}
+                className={`code ${
+                  toggleSideBar ? "code1" : "code01"
+                } overflow-auto w-[90%]`}
               >
                 <img
                   onClick={() => setCodes(false)}
@@ -801,13 +902,17 @@ if (response.statusCode === 200 || 201) {
 
           {/* =========================PRODUCTS============================== */}
 
-          <div className="grid grid-cols-1 mt-[25px] md:grid-cols-2 gap-y-[20px]
-           md:gap-x-[58.68px] lg:gap-x-[100px] md:gap-y-[15px] lg:gap-y-[25px] pb-[30px] lg:py-[30px] md:mt-[20px]">
+          <div
+            className="grid grid-cols-1 mt-[25px] md:grid-cols-2 gap-y-[20px]
+           md:gap-x-[58.68px] lg:gap-x-[100px] md:gap-y-[15px] lg:gap-y-[25px] pb-[30px] lg:py-[30px] md:mt-[20px]"
+          >
             <div className=" flex flex-col lg:gap-[12px] gap-[7px]">
-              <h2 className={`lg:text-[18px] lg:leading-[24px]
-               text-[14px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${isDarkMode
-                ? "!text-[#7E7E7E]" : "!text-black"
-                }`}>
+              <h2
+                className={`lg:text-[18px] lg:leading-[24px]
+               text-[14px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
+                 isDarkMode ? "!text-[#7E7E7E]" : "!text-black"
+               }`}
+              >
                 Select Product
               </h2>
               <div
@@ -820,102 +925,108 @@ if (response.statusCode === 200 || 201) {
                  lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 
                  border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] 
                  md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
-                  isDarkMode 
-                    ? "bg-black text-white border border-white" 
-                    : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
-                 } ` }
-
+                   isDarkMode
+                     ? "bg-black text-white border border-white"
+                     : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
+                 } `}
                 onClick={() => {
                   setShowOptionList(false);
                   setShowProductList(!showProductList);
-                 
                 }}
               >
-                <h2 className="text-[12px] font-[400] leading-[12px] 
-                capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                <h2
+                  className="text-[12px] font-[400] leading-[12px] 
+                capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]"
+                >
                   {selectedProductMtn}
                 </h2>
                 <button className="lg:w-6 lg:h-6 w-[12px] h-[12px]">
                   <img src={arrowDown} alt="" className="w-full h-full" />
                 </button>
               </div>
-            <div className="relative">
-              {showProductList && (
-                <div className={`border md:rounded-[10px] text-[10px] 
+              <div className="relative">
+                {showProductList && (
+                  <div
+                    className={`border md:rounded-[10px] text-[10px] 
                    bvnQuery shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
-                  md:text-[12px] ${products.length > 5 ? "h-[300px] overflow-y-scroll" : ""}  
-                lg:text-[16px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[10]`}>
-                  {loadingProducts  ? (
-                    <div>Loading products...</div>
-                  ) : (
-                    products.map((product) => (
-                      <div
-                        key={product.Product_ID}
-                        className={`  font-weight-bold text-[13px] leading-[18px] lg:leading-[20px]
+                  md:text-[12px] ${
+                    products.length > 5 ? "h-[300px] overflow-y-scroll" : ""
+                  }  
+                lg:text-[16px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[10]`}
+                  >
+                    {loadingProducts ? (
+                      <div>Loading products...</div>
+                    ) : (
+                      products.map((product) => (
+                        <div
+                          key={product.Product_ID}
+                          className={`  font-weight-bold text-[13px] leading-[18px] lg:leading-[20px]
                           font-[400] cursor-pointer border-b-[0.5px] text-[#7C7C7C] md:text-[12px] 
-                           lg:text-[16px]  md:rounded-[0px] lg:mt-2 lg:py-[20px] py-[15px]  pl-[5px] ${selectedProductMtn === product.Plan_Type ? "" : ""}
-                          ${isDarkMode
-                            ? "bg-black text-white "
-                            : ""
-                          }
+                           lg:text-[16px]  md:rounded-[0px] lg:mt-2 lg:py-[20px] py-[15px]  pl-[5px] ${
+                             selectedProductMtn === product.Plan_Type ? "" : ""
+                           }
+                          ${isDarkMode ? "bg-black text-white " : ""}
                           `}
-                        onClick={() => {
-                          handleSelectProduct(product);
-                          console.log(product)
-                          setSelectPlanWarn(false);
-                          setShowOptionList(false);
-                          if(product.plan === null){
-                            setSelectProductWarn(true)
-                          }else {
-                            setSelectProductWarn(false);
-                          }
-                        }}
-                      >
-                        {`${product.Plan_Type}`}
-                      </div>
-                    )))}
+                          onClick={() => {
+                            handleSelectProduct(product);
+                            console.log(product);
+                            setSelectPlanWarn(false);
+                            setShowOptionList(false);
+                            if (product.plan === null) {
+                              setSelectProductWarn(true);
+                            } else {
+                              setSelectProductWarn(false);
+                            }
+                          }}
+                        >
+                          {`${product.Plan_Type}`}
+                        </div>
+                      ))
+                    )}
                   </div>
-                  )}
-                  {selectProductWarn && (
-                    <p className="absolute text-red-500 p-[10px] bg-white  
+                )}
+                {selectProductWarn && (
+                  <p
+                    className="absolute text-red-500 p-[10px] bg-white  
                     text-left font-[500] text-[14px] border-[1px]  border-gray-300 
                      rounded-[10px] lg:rounded-[20px]
-            leading-[18px] lg:text-[16px] lg:leading-[22px]">
-                 Plans unavailable,kindly select another mtn product.
-                    </p>
-                  )}
-            </div>
+            leading-[18px] lg:text-[16px] lg:leading-[22px]"
+                  >
+                    Plans unavailable,kindly select another mtn product.
+                  </p>
+                )}
+              </div>
             </div>
 
             <div className=" flex flex-col lg:gap-[12px] gap-[7px]">
-              <h2 className={`lg:text-[18px] md:text-[12px] lg:leading-[24px] mb-1 text-[14px] md:font-[600] font-[400] leading-[12px] ${isDarkMode
-                ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
-                }`}>
+              <h2
+                className={`lg:text-[18px] md:text-[12px] lg:leading-[24px] mb-1 text-[14px] md:font-[600] font-[400] leading-[12px] ${
+                  isDarkMode ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                }`}
+              >
                 Select Plan
               </h2>
-          
+
               <div
                 className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.8px]
                  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
                    leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
                 lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
-                  isDarkMode 
-                    ? "bg-black text-white border border-white" 
+                  isDarkMode
+                    ? "bg-black text-white border border-white"
                     : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
                 }
   `}
                 onClick={() => {
-                  if(selectedProductMtn.length > 1){
-                  setShowProductList(false);
-                  setShowOptionList(!showOptionList);
-                  setSelectPlanWarn(false);
-                  }else {
+                  if (selectedProductMtn.length > 1) {
+                    setShowProductList(false);
+                    setShowOptionList(!showOptionList);
+                    setSelectPlanWarn(false);
+                  } else {
                     setSelectPlanWarn(true);
-                     
                   }
                 }}
               >
-                
                 <h2 className="text-[12px] font-[400] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
                   {selectedOptionMtn}
                 </h2>
@@ -923,60 +1034,72 @@ if (response.statusCode === 200 || 201) {
                   <img src={arrowDown} alt="" className="w-full h-full" />
                 </button>
               </div>
-               
-            
-       <div className="relative">
-              {(showOptionList && selectedProductMtn.length > 1 ) && (
-                <div className={`text-[12px] absolute  border md:rounded-[10px] 
+
+              <div className="relative">
+                {showOptionList && selectedProductMtn.length > 1 && (
+                  <div
+                    className={`text-[12px] absolute  border md:rounded-[10px] 
                    bvnQuery shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
-                   ${productPlans.length > 5 ? `h-[300px] overflow-y-scroll`  : ""}
+                   ${
+                     productPlans.length > 5
+                       ? `h-[300px] overflow-y-scroll`
+                       : ""
+                   }
                    lg:mt-2 rounded-[4px]  w-full bg-[#FFF] z-[100]
-                  ${isDarkMode
-                    ? "bg-black text-white border !border-white"
-                    : "border border-[#0003]"
+                  ${
+                    isDarkMode
+                      ? "bg-black text-white border !border-white"
+                      : "border border-[#0003]"
                   }
-  `}>
-                  {loadingPlans  ? (
-                    <div>Loading plans...</div>
-                  ) : (
-                    productPlans.map((plan) => (
-                      <div
-                        key={plan.PlanID}
-                        className={` 
+  `}
+                  >
+                    {loadingPlans ? (
+                      <div>Loading plans...</div>
+                    ) : (
+                      productPlans.map((plan) => (
+                        <div
+                          key={plan.PlanID}
+                          className={` 
                           font-[400] text-[13px] leading-[18px] lg:leading-[20px] cursor-pointer border-b-[0.5px] 
                           md:rounded-[0px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] lg:mt-2 py-[15px] lg:py-[20px]
-                           pl-[5px] ${selectedOptionMtn === plan.PlanID ? "bg-gray-200" : ""
-                          }
-                         ${isDarkMode
-                            ? "bg-black text-white"
-                            : ""
-                          }
+                           pl-[5px] ${
+                             selectedOptionMtn === plan.PlanID
+                               ? "bg-gray-200"
+                               : ""
+                           }
+                         ${isDarkMode ? "bg-black text-white" : ""}
                       `}
-                        onClick={() => {
-                    handleSelectOption(plan);
-                   }}
-                      >
-                        {`${plan.PlanType} ${plan.Size} (₦${plan.Amount}) ~ ${plan.Validity ? plan.Validity.toUpperCase() : ""} `}
-                      </div>
-                    ))
-                  )}
-                </div>
-              )}
-              {selectPlanWarn && (
-            <p className ="text-red-500 absolute text-left font-[500] text-[14px] 
-            leading-[18px] lg:text-[16px] lg:leading-[22px]">
-              Select a product
-            </p>
-            )}
+                          onClick={() => {
+                            handleSelectOption(plan);
+                          }}
+                        >
+                          {`${plan.PlanType} ${plan.Size} (₦${plan.Amount}) ~ ${
+                            plan.Validity ? plan.Validity.toUpperCase() : ""
+                          } `}
+                        </div>
+                      ))
+                    )}
+                  </div>
+                )}
+                {selectPlanWarn && (
+                  <p
+                    className="text-red-500 absolute text-left font-[500] text-[14px] 
+            leading-[18px] lg:text-[16px] lg:leading-[22px]"
+                  >
+                    Select a product
+                  </p>
+                )}
               </div>
             </div>
             {/* the container for to hold the plan selected when clicked on in the dropdown*/}
 
             <div className="flex flex-col lg:gap-[12px] gap-[7px]">
-              <h2 className={`text-[15px] md:font-[600] font-[400] 
-              md:text-[12px] lg:text-[18px] ${isDarkMode
-                ? "!text-[#7E7E7E]" : "!text-black"
-                }`}>
+              <h2
+                className={`text-[15px] md:font-[600] font-[400] 
+              md:text-[12px] lg:text-[18px] ${
+                isDarkMode ? "!text-[#7E7E7E]" : "!text-black"
+              }`}
+              >
                 Phone Number{" "}
                 <span className="text-[#04177F]">
                   <Link to="/DataBundleSelectRecipient">
@@ -991,8 +1114,8 @@ if (response.statusCode === 200 || 201) {
                  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
                    leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
                 lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
-                  isDarkMode 
-                    ? "bg-black text-white border border-white" 
+                  isDarkMode
+                    ? "bg-black text-white border border-white"
                     : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
                 }
   `}
@@ -1020,9 +1143,11 @@ if (response.statusCode === 200 || 201) {
             </div>
 
             <div className="flex flex-col lg:gap-[12px] gap-[7px]">
-              <h2 className={`text-[15px] font-[400] md:text-[12px] lg:text-[18px] ${isDarkMode
-                ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
-                }`}>
+              <h2
+                className={`text-[15px] font-[400] md:text-[12px] lg:text-[18px] ${
+                  isDarkMode ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                }`}
+              >
                 Recipient Name<span className="text-[#7C7C7C]">(optional)</span>{" "}
               </h2>
               <div className="relative mt-[5px]">
@@ -1032,8 +1157,8 @@ if (response.statusCode === 200 || 201) {
                  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
                    leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
                 lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
-                  isDarkMode 
-                    ? "bg-black text-white border border-white" 
+                  isDarkMode
+                    ? "bg-black text-white border border-white"
                     : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
                 }
   `}
@@ -1052,9 +1177,11 @@ if (response.statusCode === 200 || 201) {
             </div>
 
             <div className="flex flex-col lg:gap-[12px] gap-[7px]">
-              <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${isDarkMode
-                ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
-                }`}>
+              <h2
+                className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
+                  isDarkMode ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                }`}
+              >
                 Amount
               </h2>
               <div className="relative mt-[5px]">
@@ -1064,8 +1191,8 @@ if (response.statusCode === 200 || 201) {
                  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
                    leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
                 lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
-                  isDarkMode 
-                    ? "bg-black text-white border border-white" 
+                  isDarkMode
+                    ? "bg-black text-white border border-white"
                     : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
                 }
   `}
@@ -1081,17 +1208,20 @@ if (response.statusCode === 200 || 201) {
 
             <div className="flex flex-col lg:gap-[12px] gap-[7px]">
               <div onClick={handleShowPayment}>
-                <h2 className={`lg:text-[18px] mt-[5px] lg:leading-[24px] mb-2 text-[15px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${isDarkMode
-                  ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
-                  }`}>
+                <h2
+                  className={`lg:text-[18px] mt-[5px] lg:leading-[24px] mb-2 text-[15px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
+                    isDarkMode ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                  }`}
+                >
                   Payment Method
                 </h2>
-                <div className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.8px]
+                <div
+                  className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.8px]
                  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
                    leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
                 lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
-                  isDarkMode 
-                    ? "bg-black text-white border border-white" 
+                  isDarkMode
+                    ? "bg-black text-white border border-white"
                     : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
                 }
                   
@@ -1101,7 +1231,6 @@ if (response.statusCode === 200 || 201) {
                     <li
                       onClick={handleShowPayment}
                       className={airtimestyles.labelInput}
-
                     >
                       <h2 className="text-[#7C7C7C]">{walletNameMtn}</h2>
                       <h2 className="text-[#7C7C7C]">
@@ -1119,11 +1248,7 @@ if (response.statusCode === 200 || 201) {
                   {paymentSelected ? (
                     <button
                       className={`rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[15px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px] 
-                         ${isDarkMode
-                          ? "bg-black text-white"
-                          : ""
-                        }`}
-
+                         ${isDarkMode ? "bg-black text-white" : ""}`}
                       onClick={handleShowPayment}
                     >
                       <img
@@ -1142,41 +1267,36 @@ if (response.statusCode === 200 || 201) {
                   )}
                 </div>
               </div>
-              <div className="relative"> 
-              {showPayment && (
-                <div
-                  className={`pb-[16px] w-full pt-[16px] md:pb-[6px] md:pt-[6px]
+              <div className="relative">
+                {showPayment && (
+                  <div
+                    className={`pb-[16px] w-full pt-[16px] md:pb-[6px] md:pt-[6px]
                      font-[400] text-[15px] border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute
-                      ${isDarkMode
-                      ? "bg-black text-white"
-                      : "text-white"
-                    }
+                      ${isDarkMode ? "bg-black text-white" : "text-white"}
                    bg-[#FFF] z-[100] font-weight-bold text-[15px]
                 
                   `}
-                >
-                  {countryList.map((country) => (
-                    <Payment
-                      key={country.id}
-                      flag={country.flag}
-                      code={country.code}
-                      amount={country.amount}
-                      onClick={() =>
-                        handleSelectPayment(
-                          country.code,
-                          country.flag,
-                          country.amount,
-                          country.id
-                        )
-                      }
-                      paymentMethod={country.status}
-                    />
-
-                  ))}
-
-                </div>
-              )}
-           </div>
+                  >
+                    {countryList.map((country) => (
+                      <Payment
+                        key={country.id}
+                        flag={country.flag}
+                        code={country.code}
+                        amount={country.amount}
+                        onClick={() =>
+                          handleSelectPayment(
+                            country.code,
+                            country.flag,
+                            country.amount,
+                            country.id
+                          )
+                        }
+                        paymentMethod={country.status}
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
@@ -1198,14 +1318,14 @@ if (response.statusCode === 200 || 201) {
 
           {/* ================Proceed=================== */}
 
-         
-
           {proceed && (
             <Modal>
               <div
-                className={`scroll-bar ${isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
-                  } ${toggleSideBar ? "confirm01" : "confirm"
-                  } grow pt-[10px] pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto mb-[20px] md:my-auto md:overflow-auto`}
+                className={`scroll-bar ${
+                  isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
+                } ${
+                  toggleSideBar ? "confirm01" : "confirm"
+                } grow pt-[10px] pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto mb-[20px] md:my-auto md:overflow-auto`}
               >
                 <div className="w-full flex justify-end border-b-[6px] border-primary px-[12px] md:h-[25px] lg:border-b-[10px] lg:mt-[20px]">
                   <img
@@ -1222,8 +1342,10 @@ if (response.statusCode === 200 || 201) {
                   </h2>
                   <h2 className="lg:text-[16px] md:text-[12px] md:px-[30px] lg:leading-[24px] text-[10px] leading-[12px] text-center mt-[26px] mx-[10px] mb-[20px]">
                     You are about to purchase{" "}
-                    <span className="font-bold">{selectedProductMtn + " " + selectedOptionMtn}</span> from
-                    your {walletNameMtn + " Wallet"} to
+                    <span className="font-bold">
+                      {selectedProductMtn + " " + selectedOptionMtn}
+                    </span>{" "}
+                    from your {walletNameMtn + " Wallet"} to
                   </h2>
 
                   <div className="flex flex-col gap-[15px] px-[20px] mt-[50px] md:gap-[25px]">
@@ -1321,48 +1443,78 @@ if (response.statusCode === 200 || 201) {
                         </h2>
                       </div>
                     </div>
-                      <div className="flex text-[10px] md:text-[14px] w-[100%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className="text-[#0008]">Points Earned</span>
-                    <span className="text-[#2ED173]">+2.00</span>
-                  </div>
+                    <div className="flex text-[10px] md:text-[14px] w-[100%] mx-auto justify-between font-semibold lg:text-[16px]">
+                      <span className="text-[#0008]">Points Earned</span>
+                      <span className="text-[#2ED173]">+2.00</span>
+                    </div>
 
-                     <div className="bg-[#F6F7F7] w-[95%] h-auto  lg:my-8 flex py-[7px] 
-                           justify-between items-center px-[4%] mx-auto rounded-[10px]">
-                                   <div className="flex flex-col gap-2  ">
-                                     <div className="flex gap-[10px] justify-center items-center">
-                                       <img
-                                         className="w-[16px] h-[16px] bg-white"
-                                         src={image}
-                                         alt="/"
-                                       />
-                                       <div className="flex gap-[10px] items-center">
-                                           <p className="text-[12px] md:text-[14px] leading-[20px] lg:leading-[22px]  lg:text-[16px] font-[500]">
-                                       Available Balance {"  "} 
-                                        </p>
-                                        <span className="text-black">
-                                         {`(${(newBalance === ""|| newBalance === null) ? updateBalance: newBalance})`}
-                                       </span>
-                                       </div>
-                                     </div>
-                                   <span className="text-gray-500 text-[14px] font-[400] leading-[20px]
-                                        lg:text-[16px] lg:leading-[22px] text-left">
-                                          {balanceStatus}
-                                          </span>
-                                   </div>
-                   
-                                   <img
-                                     src={Select}
-                                     alt=""
-                                     className="w-[12px] h-[12px] md:w-[50px] md:h-[20px] lg:w-[80px] lg:h-[30px]"
-                                   />
-                                 </div>
+                    <div
+                      className="bg-[#F6F7F7] w-[95%] h-auto  lg:my-8 flex py-[7px] 
+                           justify-between items-center px-[4%] mx-auto rounded-[10px]"
+                    >
+                      <div className="flex flex-col gap-2  ">
+                        <div className="flex gap-[10px] justify-center items-center">
+                          <img
+                            className="w-[16px] h-[16px] bg-white"
+                            src={image}
+                            alt="/"
+                          />
+                          <div className="flex gap-[10px] items-center">
+                            <p className="text-[12px] md:text-[14px] leading-[20px] lg:leading-[22px]  lg:text-[16px] font-[500]">
+                              Available Balance {"  "}
+                            </p>
+                            <span className="text-black">
+                              {`(${
+                                newBalance === "" || newBalance === null
+                                  ? `${
+                                      cleanUpBalanceToNumericOnly > 1
+                                        ? cleanUpBalanceToNumericOnly?.toLocaleString(
+                                            "en-NG",
+                                            {
+                                              style: "currency",
+                                              currency: "NGN",
+                                            }
+                                          )
+                                        : "₦"
+                                    }`
+                                  : `${
+                                      balanceStringToNum > 1
+                                        ? balanceStringToNum?.toLocaleString(
+                                            "en-NG",
+                                            {
+                                              style: "currency",
+                                              currency: "NGN",
+                                            }
+                                          )
+                                        : "₦"
+                                    }`
+                              })`}
+                            </span>
+                          </div>
+                        </div>
+                        <span
+                          className="text-gray-500 text-[14px] font-[400] leading-[20px]
+                                        lg:text-[16px] lg:leading-[22px] text-left"
+                        >
+                          {balanceStatus}
+                        </span>
+                      </div>
+
+                      <img
+                        src={Select}
+                        alt=""
+                        className="w-[12px] h-[12px] md:w-[50px] md:h-[20px] lg:w-[80px] lg:h-[30px]"
+                      />
+                    </div>
 
                     <div className="flex items-center justify-center">
                       <button
-                      disabled ={CheckSufficiency}
+                        disabled={CheckSufficiency}
                         className={`w-full md:w-fit text-white rounded-md px-[28px] 
                         text-[10px] md:text-[12px] leading-[15px] lg:text-[16px] lg:leading-[24px]
-                         py-[15px] md:py-[10px]  ${CheckSufficiency ? "bg-gray-400" : "bg-primary"} `}
+                         py-[15px] md:py-[10px]  ${
+                           CheckSufficiency ? "bg-gray-400" : "bg-primary"
+                         } `}
                         onClick={() => {
                           handleConfirm();
                         }}
@@ -1379,8 +1531,9 @@ if (response.statusCode === 200 || 201) {
           {purchaseStatus && (
             <Modal>
               <div
-                className={` ${toggleSideBar ? "confirm02" : "confirm2"
-                  } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px] my-[20px]
+                className={` ${
+                  toggleSideBar ? "confirm02" : "confirm2"
+                } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px] my-[20px]
                   h-[200px] overflow-y-scroll md:overflow-y-auto md:h-auto `}
               >
                 {/* <div className="flex justify-end px-2">
@@ -1392,8 +1545,10 @@ if (response.statusCode === 200 || 201) {
                   />
                 </div> */}
 
-                <hr className="h-[8px] bg-[#04177f] lg:mt-[30px] border-none  
-                md:mt-[2%] mt-[30px] md:h-[10px]" />
+                <hr
+                  className="h-[8px] bg-[#04177f] lg:mt-[30px] border-none  
+                md:mt-[2%] mt-[30px] md:h-[10px]"
+                />
                 <div className="md:mt-[15%] lg:mt-[10%]">
                   <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[8%] md:my-[5%] lg:my-[3%]">
                     Transaction Failed
@@ -1411,14 +1566,15 @@ if (response.statusCode === 200 || 201) {
                     onClick={(e) => {
                       // e.preventDefault();
                       // setTransaction(false);
-                     doneChangeHandler()
+                      doneChangeHandler();
                     }}
                     className="bg-[#04177f] my-[%] w-[100px] cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[%] md:rounded-[8px] md:text-[16px] lg:w-[px] lg:h-[38px] lg:my-[2%]"
                   >
                     Done
                   </button>
 
-                  <Link to="/MtnFailedReceipt"
+                  <Link
+                    to="/MtnFailedReceipt"
                     state={{
                       networkName: "MTN",
                       selectedProduct: selectedProductMtn,
@@ -1431,9 +1587,8 @@ if (response.statusCode === 200 || 201) {
                       mtnrefNumber: mtnrefNumber,
                       mtnorderID: mtnOrderID,
                       mtndescription: mtndescription,
-                      mtnReceiptInfo : mtnReceiptInfo
+                      mtnReceiptInfo: mtnReceiptInfo,
                     }}
-
                   >
                     <button
                       onClick={() => {
@@ -1455,8 +1610,9 @@ if (response.statusCode === 200 || 201) {
           {confirm && (
             <Modal>
               <div
-                className={` ${toggleSideBar ? "confirm02" : "confirm2"
-                  } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto  rounded-[12px]
+                className={` ${
+                  toggleSideBar ? "confirm02" : "confirm2"
+                } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto  rounded-[12px]
                    my-[20px] h-[200px]  overflow-y-scroll md:overflow-y-auto`}
               >
                 <div className="flex justify-end px-2">
@@ -1475,29 +1631,22 @@ if (response.statusCode === 200 || 201) {
                   </p>
                   <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
                     <div className=" flex justify-center items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
-                      {" "}
-                      {isVisible ? (
-                        <OtpInput
-                          value={inputPin}
-                          inputType="tel"
-                          onChange={setInputPin}
-                          numInputs={4}
-                          shouldAutoFocus={true}
-                          inputStyle={{
-                            color: "#403f3f",
-                            width: 30,
-                            height: 30,
-                            borderRadius: 3,
-                          }}
-                          renderInput={(props) => (
-                            <input {...props} className="inputOTP mx-[3px]" />
-                          )}
-                        />
-                      ) : (
-                        <div className="text-[24px] md:text-[24px] mt-1">
-                          * * * *{" "}
-                        </div>
-                      )}
+                      <OtpInput
+                        value={inputPin}
+                        inputType={!isVisible ? "tel" : "password"}
+                        onChange={setInputPin}
+                        numInputs={4}
+                        shouldAutoFocus={true}
+                        inputStyle={{
+                          color: "#403f3f",
+                          width: 30,
+                          height: 30,
+                          borderRadius: 3,
+                        }}
+                        renderInput={(props) => (
+                          <input {...props} className="inputOTP mx-[3px]" />
+                        )}
+                      />
                       <div
                         className="text-[#0003] text-[13px] md:text-3xl"
                         onClick={toggleVisibility}
@@ -1510,8 +1659,8 @@ if (response.statusCode === 200 || 201) {
                     </p>
                   </div>
                   {errorMessage && (
-                  <p className = "text-[14px] font-[500] text-red-500 text-center leading-[14px]"> 
-                    Incorrect pin
+                    <p className="text-[14px] font-[500] text-red-500 text-center leading-[14px]">
+                      Incorrect pin
                     </p>
                   )}
                 </div>
@@ -1519,38 +1668,39 @@ if (response.statusCode === 200 || 201) {
                 <button
                   onClick={(e) => {
                     console.log("inputPin", inputPin);
-                   const DataHandler =  () => {
-                     // Close modal on PIN success
-                        inputPinHandler(); // Proceed with purchase
-                      }
-                      const setFailed =(ErrorType)=> {
-                        if(ErrorType=== "unauthorised"){
+                    const DataHandler = () => {
+                      // Close modal on PIN success
+                      inputPinHandler(); // Proceed with purchase
+                    };
+                    const setFailed = (ErrorType) => {
+                      if (ErrorType === "unauthorised") {
                         VerifyTransPin(
-                      inputPin,
-                      (ErrorType)=> {
-                        if(ErrorType === "unauthorised"){
-                          return setSessionModal(true)
-                        }
-                      },
-                      setLoading,
-                      setErrorMessage,
-                     DataHandler
-                    );
-                        }
+                          inputPin,
+                          (ErrorType) => {
+                            if (ErrorType === "unauthorised") {
+                              return setSessionModal(true);
+                            }
+                          },
+                          setLoading,
+                          setErrorMessage,
+                          DataHandler
+                        );
                       }
-                      //Run the function to check user's pin
-                      // and proceed with purchase
+                    };
+                    //Run the function to check user's pin
+                    // and proceed with purchase
                     VerifyTransPin(
                       inputPin,
                       setFailed,
                       setLoading,
                       setErrorMessage,
-                     DataHandler
+                      DataHandler
                     );
                   }}
                   disabled={inputPin.length !== 4}
-                  className={`${inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
-                    } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                  className={`${
+                    inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
+                  } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
                 >
                   Purchase
                 </button>
@@ -1562,8 +1712,9 @@ if (response.statusCode === 200 || 201) {
             <Modal>
               {/* <DataBundleFailedPopUp/> */}
               <div
-                className={`scroll-bar ${toggleSideBar ? "confirm01 w-[90%]" : "confirm w-[90%]"
-                  } bg-white rounded-[12px] md:my-auto mx-auto overflow-auto lg:mx-auto lg:my-auto`}
+                className={`scroll-bar ${
+                  toggleSideBar ? "confirm01 w-[90%]" : "confirm w-[90%]"
+                } bg-white rounded-[12px] md:my-auto mx-auto overflow-auto lg:mx-auto lg:my-auto`}
               >
                 <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
                   <img
@@ -1629,7 +1780,7 @@ if (response.statusCode === 200 || 201) {
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          {selectedProductMtn}
+                        {selectedProductMtn}
                       </h2>
                     </div>
                   </div>
@@ -1701,18 +1852,19 @@ if (response.statusCode === 200 || 201) {
                   </div>
                 </div>
 
-                <div className="w-full h-auto my-10 flex
+                <div
+                  className="w-full h-auto my-10 flex
                  justify-center items-center 
-                 md:rounded-[15px] ">
+                 md:rounded-[15px] "
+                >
                   <div className="bg-[#F2FAFF] h-full w-[80%] p-[10px] rounded-[10px] lg:rounded-[20px]">
-                     <p className="text-[10px] text-center  md:text-[12px] lg:text-[14px]">
-                    The data purchase has been sent successfully to the
-                    recipient phone number. Please kindly engage the recipient
-                    to check his/her balance to confirm the value. You can
-                    contact us for any further assistance.
-                  </p>
+                    <p className="text-[10px] text-center  md:text-[12px] lg:text-[14px]">
+                      The data purchase has been sent successfully to the
+                      recipient phone number. Please kindly engage the recipient
+                      to check his/her balance to confirm the value. You can
+                      contact us for any further assistance.
+                    </p>
                   </div>
-            
                 </div>
                 <div className="flex w-full justify-center mx-auto px-[50px] items-center gap-[5%] md:gap-[10%] mt-[30px] md:w-[50%] lg:gap-[10%] lg:mx-auto  lg:my-[5%] md:mt-[40px]">
                   <Link to="/MtnDataTopUpBundle">
@@ -1727,19 +1879,22 @@ if (response.statusCode === 200 || 201) {
                     </button>
                   </Link>
 
-                  <Link to="/MtnReceipt" state={{
-                    selectedProduct: selectedProductMtn,
-                    inputValue: inputValue,
-                    recipientPhoneNumber: recipientPhoneNumberMtn,
-                    selectedOption: selectedOptionMtn,
-                    recipientNames: recipientNamesMtn,
-                    selectedAmount: selectedAmountMtn,
-                    mtntransactionID: mtntransactionID,
-                    mtnrefNumber: mtnrefNumber,
-                    mtnorderID: mtnOrderID,
-                    mtndescription: mtndescription,
-                    mtnReceiptInfo : mtnReceiptInfo
-                  }}>
+                  <Link
+                    to="/MtnReceipt"
+                    state={{
+                      selectedProduct: selectedProductMtn,
+                      inputValue: inputValue,
+                      recipientPhoneNumber: recipientPhoneNumberMtn,
+                      selectedOption: selectedOptionMtn,
+                      recipientNames: recipientNamesMtn,
+                      selectedAmount: selectedAmountMtn,
+                      mtntransactionID: mtntransactionID,
+                      mtnrefNumber: mtnrefNumber,
+                      mtnorderID: mtnOrderID,
+                      mtndescription: mtndescription,
+                      mtnReceiptInfo: mtnReceiptInfo,
+                    }}
+                  >
                     <button
                       onClick={handleReceipt}
                       className={`border-[1px] w-[100px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-[400] h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[12px] lg:w-[163px] lg:h-[38px] lg:my-[2%] md:px-[60px] md:h-[30px]`}
@@ -1752,23 +1907,20 @@ if (response.statusCode === 200 || 201) {
             </Modal>
           )}
 
-         
-
-        
-
           <div className="py-[30px] lg:py-[60px] mt-10">
             <button
               className={`w-full md:w-fit text-white rounded-md px-[28px] 
                 text-[10px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[400] 
                 leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px]
-                 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px] ${!selectedProductMtn ||
-                !selectedOptionMtn ||
-                !inputValue ||
-                !selectedAmountMtn ||
-                !paymentSelected
-                ? "bg-[#63616188] cursor-not-allowed"
-                : "bg-primary"
-                }`}
+                 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px] ${
+                   !selectedProductMtn ||
+                   !selectedOptionMtn ||
+                   !inputValue ||
+                   !selectedAmountMtn ||
+                   !paymentSelected
+                     ? "bg-[#63616188] cursor-not-allowed"
+                     : "bg-primary"
+                 }`}
               onClick={handleProceed}
               disabled={
                 !selectedProductMtn ||
@@ -1784,19 +1936,24 @@ if (response.statusCode === 200 || 201) {
         </section>
         {/* =======================FOOTER=================================== */}
         <div
-          className={`${isDarkMode ? "bg-black text-white flex gap-[15px] justify-center items-center  pb-[25%] md:pb-[12%] lg:pb-0 py-[40%]" : "flex gap-[15px] justify-center items-center mt-[100%] pb-[25%] md:pb-[12%] md:mt-[40%] lg:mt-[40%] lg:pb-0"
-            }  `}
+          className={`${
+            isDarkMode
+              ? "bg-black text-white flex gap-[15px] justify-center items-center  pb-[25%] md:pb-[12%] lg:pb-0 py-[40%]"
+              : "flex gap-[15px] justify-center items-center mt-[100%] pb-[25%] md:pb-[12%] md:mt-[40%] lg:mt-[40%] lg:pb-0"
+          }  `}
         >
-          <div className={`text-[10px] md:text-[12px] lg:text-[14px]
-            ${isDarkMode ? "text-white" : "text-black"
-            }
-            `}>
+          <div
+            className={`text-[10px] md:text-[12px] lg:text-[14px]
+            ${isDarkMode ? "text-white" : "text-black"}
+            `}
+          >
             You need help ?
           </div>
           <Link to="/ContactUs">
             <div
-              className={`${isDarkMode ? "text-white bg-[#04177f]" : "bg-[#04177f]"
-                } text-[10px] p-1 text-white rounded-[8px] lg:text-[18px]`}
+              className={`${
+                isDarkMode ? "text-white bg-[#04177f]" : "bg-[#04177f]"
+              } text-[10px] p-1 text-white rounded-[8px] lg:text-[18px]`}
             >
               Contact Us
             </div>
@@ -1805,12 +1962,10 @@ if (response.statusCode === 200 || 201) {
       </div>
       {loading && (
         <Modal>
-          <Loader/>
+          <Loader />
         </Modal>
       )}
-      {sessionModal && (
-        <HandleUserSession/>
-      )}
+      {sessionModal && <HandleUserSession />}
     </DashBoardLayout>
   );
 };
