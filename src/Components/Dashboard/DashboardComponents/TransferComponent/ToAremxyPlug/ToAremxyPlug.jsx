@@ -46,7 +46,9 @@ const ToAremxyPlug = () => {
         </div>
         <div className={style.help}>
                 <h2>You need help?</h2>
-                <Link to={`/ContactUs`} className={style.btnContact}>Contact Us</Link>
+                <Link to={`/ContactUs`} className={style.btnContact}>
+                Contact Us
+                </Link>
         </div>
       </div>
     </DashBoardLayout>

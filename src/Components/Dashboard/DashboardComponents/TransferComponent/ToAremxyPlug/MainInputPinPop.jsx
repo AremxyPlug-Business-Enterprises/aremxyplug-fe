@@ -13,7 +13,8 @@ import { Loader } from "../../../../Loader/Loader";
 import { Link } from "react-router-dom";
 
 export const MainInputPinPop = ({fetchedResponse}) => {
-  const { toggleSideBar,
+  const {
+     toggleSideBar,
      toggleVisibility,
       isVisible, 
        otherInputPinPopUp,
@@ -28,13 +29,12 @@ export const MainInputPinPop = ({fetchedResponse}) => {
     useContext(ContextProvider);
 
   const [inputPin, setInputPin] = useState("");
-  const [transactSuccessToOtherBank, setTransactSuccessToOtherBank] =
-    useState(false);
+  const [transactSuccessToOtherBank, setTransactSuccessToOtherBank] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [sessionModal, setSessionModal] = useState(false);
     const [errorMessage, setErrorMessage] = useState(false);
     const [transferErrorType, setTransferErrorType] = useState("");
-    const [failedPopup, setFailedPopup] = useState(false)
+    const [failedPopup, setFailedPopup] = useState(false);
   
 
      const [isFocused, setIsFocused] = useState(false);
@@ -54,9 +54,9 @@ export const MainInputPinPop = ({fetchedResponse}) => {
 
   const VerifyPinHandler = async () => {
     //Recipient fUllname
-    const recipentFullname = fetchedResponse?.data?.data?.userDetails?.fullname !== undefined 
-    || fetchedResponse?.data?.data?.userDetails?.fullname !== null 
-    ? fetchedResponse?.data?.data?.userDetails?.fullname : "";
+    const recipentFullname = fetchedResponse?.data?.data?.userDetails?.full_name !== undefined 
+    || fetchedResponse?.data?.data?.userDetails?.full_name !== null 
+    ? fetchedResponse?.data?.data?.userDetails?.full_name : "";
 // Recipient Email
       const recipientEmail= fetchedResponse?.data?.data?.userDetails?.email !== undefined 
     || fetchedResponse?.data?.data?.userDetails?.email !== null 
@@ -82,7 +82,7 @@ const requestData = {
 
       const Path = "bank/trf-aremxy";
       const successHandler = () =>{
-      transactSuccessToOtherBank(true);
+      setTransactSuccessToOtherBank(true);
         setOtherInputPinPopUp(false);
           setInputPin("")
       //  handleReceivedData()
@@ -98,7 +98,7 @@ const requestData = {
         successHandler,
         (ErrorType)=> {
           if(ErrorType === "unauthorised"){
-            return setSessionModal(true)
+            return setSessionModal(true);
           }
         },
         setTransferResponse
@@ -359,7 +359,6 @@ if(ErrorType === "Server error"){
       <AremxyMainSuccess
         transactSuccessToOtherBank={transactSuccessToOtherBank}
         setTransactSuccessToOtherBank={setTransactSuccessToOtherBank}
-        transferamount={transferAmount}
         emailUsername={fetchedResponse?.data?.data?.data?.userDetails?.username}
         userPhoneNumber={fetchedResponse?.data?.data?.data?.userDetails?.phone}
       />

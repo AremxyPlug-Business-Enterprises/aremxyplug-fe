@@ -205,7 +205,7 @@ if((clickedoption === "NGN")){
         })
            if(response){
             console.log(response)
-          if(response.status && (response.status === 200 || 201)){
+          if(response.status && (response.status === 200 || response.status === 201)){
              setBalanceValue("");
            const checkBal =  response?.data?.data?.data?.balance;
            console.log(checkBal);
