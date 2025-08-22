@@ -656,6 +656,7 @@ const AEDC = () => {
   const handleSwitch = () => {
     setInputPinPopUp(true);
     setProceed(false);
+    setInputPin("");
   };
 
   const [isFocused, setIsFocused] = useState(false);
@@ -1472,10 +1473,9 @@ const AEDC = () => {
                     // className=" flex justify-center  ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]"
                     className="flex items-center gap-2.5"
                   >
-                    {isVisible ? (
                       <OtpInput
                         value={inputPin}
-                        inputType="tel"
+                         inputType={!isVisible ? "tel" : "password"}
                         onChange={setInputPin}
                         numInputs={4}
                         shouldAutoFocus={true}
@@ -1506,11 +1506,6 @@ const AEDC = () => {
                           />
                         )}
                       />
-                    ) : (
-                      <div className="text-[24px] md:text-[24px] mt-1">
-                        * * * *
-                      </div>
-                    )}
                     <div className="text-[#0003]" onClick={toggleVisibility}>
                       {isVisible ? (
                         <AiFillEye className="w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]" />

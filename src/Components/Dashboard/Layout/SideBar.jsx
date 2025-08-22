@@ -6,24 +6,28 @@ import styles from "./Dashboard.module.css";
 import { RemoveLocalStorage } from "../../LocalStorage/LocalStorage";
 import { useNavigate } from "react-router-dom";
 
+export const SideBar = ({ fullname, userId, BvnVerify, NinVerify }) => {
+  const {
+    setToggleSideBar,
+    isDarkMode,
+    handleClickOutside,
+    customerDetail,
+    setUserStatus,
+  } = useContext(ContextProvider);
 
-export const SideBar = ({fullname, userId, BvnVerify, NinVerify}) => {
-  const { setToggleSideBar, isDarkMode, handleClickOutside, customerDetail,setUserStatus } =
-    useContext(ContextProvider);
-   
-    const {full_name, id} = customerDetail;
-    
-    const navigate= useNavigate()
-  const RemoveLocalStorageKeys=()=> {
-     RemoveLocalStorage();
+  const { full_name, id } = customerDetail;
+
+  const navigate = useNavigate();
+  const RemoveLocalStorageKeys = () => {
+    RemoveLocalStorage();
     setUserStatus(false);
-  const navigateLogin =()=>  navigate("/Login", {replace : true})
-  navigateLogin()
-  if(navigateLogin){
-    window.location.reload()
-  }
-  console.log(window.location);
-  }
+    const navigateLogin = () => navigate("/Login", { replace: true });
+    navigateLogin();
+    if (navigateLogin) {
+      window.location.reload();
+    }
+    console.log(window.location);
+  };
   const [dropDownOpen, setDropDownOpen] = useState({
     dropdown1: false,
     dropdown2: false,
@@ -51,7 +55,7 @@ export const SideBar = ({fullname, userId, BvnVerify, NinVerify}) => {
       document.removeEventListener("click", handleClickOutside);
     };
   });
-return (
+  return (
     <div
       className={`${styles.sidebar}  fixed overflow-auto ${
         isDarkMode ? "bg-[#000] border" : " bg-[#04177f]"
@@ -70,7 +74,8 @@ return (
               isDarkMode
                 ? "border-b-[0.3px]"
                 : "border-b-[0.3px] border-b-[#fff]"
-            } flex w-[100%] gap-[45px] h-[13.97px] justify-center items-center mx-auto py-[13%] md:gap-[55px] lg:py-[15%] `}
+            } flex w-[100%] gap-[45px] h-[5.7rem] justify-center items-center mx-auto md:gap-[55px] `}
+            // h-[13.97px] lg:py-[15%] py-[13%]
           >
             <img
               className="w-[59px] h-[10.23px] md:h-[10px] md:w-[67px] lg:w-[125px] lg:h-[25px]"
@@ -84,7 +89,7 @@ return (
               alt="Menu"
             />
           </div>
-          
+
           <div className="px-[5%] pt-[5%] ">
             {/* ======Profile picture and name======== */}
             <div className="sticky top-0">
@@ -96,19 +101,29 @@ return (
                 />
                 <div className="flex flex-col gap-[3px] justify-center mt-[4%]">
                   <p className="text-[8px] font-semibold md:text-[14px] lg:text-[14px]">
-                 {full_name ? full_name : fullname }
+                    {full_name ? full_name : fullname}
                   </p>
                   <p className="text-[8px] font-semibold md:text-[14px] lg:text-[14px] ">
-                    UID: {id ? id : userId} 
+                    UID: {id ? id : userId}
                   </p>
                   <div className="flex gap-[3px] lg:gap-[5px]">
-                    <div className={`px-[4px] py-[1px] font-[600] lg:font-[700] text-[10px]
-                      md:text-[10px] lg:text-[12px] lg:rounded-[2px] ${BvnVerify === "true" || NinVerify === "true"  ? "text-green-600" : "text-red-600"}`}>
-                      {BvnVerify === "true" || NinVerify === "true"  ? "Verified" : "UnVerified"}
+                    <div
+                      className={`px-[4px] py-[1px] font-[600] lg:font-[700] text-[10px]
+                      md:text-[10px] lg:text-[12px] rounded-[2px] ${
+                        BvnVerify === "true" || NinVerify === "true"
+                          ? "text-white bg-[#B4B4B4]"
+                          : "text-red-600"
+                      }`}
+                    >
+                      {BvnVerify === "true" || NinVerify === "true"
+                        ? "Verified"
+                        : "UnVerified"}
                     </div>
-                    <div className=" px-[4px] py-[1px] font-[600] lg:font-[700] text-[10px]
-                     text-white md:text-[10px] lg:text-[12px] lg:rounded-[2px]">
-                      KYCed
+                    <div
+                      className=" px-[4px] py-[1px] bg-[#B4B4B4] font-[600] lg:font-[700] text-[10px] text-white md:text-[10px] lg:text-[12px] rounded-[2px]"
+                    >
+                      {/* KYCed */}
+                      Regular
                     </div>
                   </div>
                 </div>
@@ -263,12 +278,12 @@ return (
                     </Link>
                     <Link to="/TvSubscription">
                       <li className="flex gap-[5%] hover:underline text-[#fff] pt-1 pb-1 font-medium md:text-[11px] lg:pt-[6%] lg:pb-[6%] lg:pl-[%] lg:text-[14px] ">
-                      <img
-                        className="w-[8.5px] h-[8.5px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
-                        src="./Images/dashboardImages/sideArrow.png"
-                        alt="/"
-                      />
-                      <div>Tv Subscription</div>
+                        <img
+                          className="w-[8.5px] h-[8.5px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
+                          src="./Images/dashboardImages/sideArrow.png"
+                          alt="/"
+                        />
+                        <div>Tv Subscription</div>
                       </li>
                     </Link>
                     <Link to="/electricity-subscription">
@@ -282,14 +297,14 @@ return (
                       </li>
                     </Link>
                     <Link to="/airtime-conversion">
-                    <li className="flex gap-[5%] hover:underline text-[#fff] pt-1 pb-1 font-medium md:text-[11px] lg:pt-[6%] lg:pb-[6%] lg:pl-[%] lg:text-[14px] ">
-                      <img
-                        className="w-[8.5px] h-[8.5px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
-                        src="./Images/dashboardImages/sideArrow.png"
-                        alt="/"
-                      />
-                      <div>Airtime Conversion</div>
-                    </li>
+                      <li className="flex gap-[5%] hover:underline text-[#fff] pt-1 pb-1 font-medium md:text-[11px] lg:pt-[6%] lg:pb-[6%] lg:pl-[%] lg:text-[14px] ">
+                        <img
+                          className="w-[8.5px] h-[8.5px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
+                          src="./Images/dashboardImages/sideArrow.png"
+                          alt="/"
+                        />
+                        <div>Airtime Conversion</div>
+                      </li>
                     </Link>
                     <li className="flex gap-[5%] hover:underline text-[#fff] pt-1 pb-1 font-medium md:text-[11px] lg:pt-[6%] lg:pb-[6%] lg:pl-[%] lg:text-[14px] ">
                       <img
@@ -370,18 +385,18 @@ return (
                         <div>Money Transfer</div>
                       </li>
                     </Link>
-                    
+
                     <Link to="/CardPayment">
-                    <li className="flex gap-[5%] hover:underline text-[#fff] pt-1 pb-1 font-medium md:text-[11px] lg:pt-[6%] lg:pb-[6%] lg:pl-[%] lg:text-[14px] ">
-                      <img
-                        className="w-[8.5px] h-[8.5px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
-                        src="./Images/dashboardImages/sideArrow.png"
-                        alt="/"
-                      />
-                      <div>Card Payments</div>
-                    </li>
+                      <li className="flex gap-[5%] hover:underline text-[#fff] pt-1 pb-1 font-medium md:text-[11px] lg:pt-[6%] lg:pb-[6%] lg:pl-[%] lg:text-[14px] ">
+                        <img
+                          className="w-[8.5px] h-[8.5px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
+                          src="./Images/dashboardImages/sideArrow.png"
+                          alt="/"
+                        />
+                        <div>Card Payments</div>
+                      </li>
                     </Link>
-                    <Link to='/To-other-banks'>
+                    <Link to="/To-other-banks">
                       <li className="flex gap-[5%] hover:underline text-[#fff] pt-1 pb-1 font-medium md:text-[11.5px] lg:pt-[6%] lg:pb-[6%] lg:pl-[%] lg:text-[14px] ">
                         <img
                           className="w-[8.5px] h-[8.5px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
@@ -511,7 +526,10 @@ return (
                   </Link>
                 </div>
                 <div
-                  onClick={() => dropHandler("dropdown5")}
+                  onClick={() => {
+                    dropHandler("dropdown5");
+                    navigate("/AccountUpgrade");
+                  }}
                   className="flex justify-between"
                 >
                   <div className="flex gap-[3.4px] items-center cursor-pointer lg:gap-[11px]">
@@ -595,7 +613,7 @@ return (
         <p
           className={`${styles.logouttxt} cursor-pointer text-[7px] md:text-[7px] lg:text-[14px]`}
         >
-          <div onClick={()=> RemoveLocalStorageKeys()}>Logout</div>
+          <div onClick={() => RemoveLocalStorageKeys()}>Logout</div>
         </p>
       </div>
     </div>

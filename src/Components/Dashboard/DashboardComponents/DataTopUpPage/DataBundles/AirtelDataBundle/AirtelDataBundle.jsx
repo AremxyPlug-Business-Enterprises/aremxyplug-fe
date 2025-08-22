@@ -25,18 +25,22 @@ import Joi from "joi";
 import airtimestyles from "../../../../../AirTimePage/AirtimeVtu.module.css";
 import Failed from "./../MtnDataTopUpBundle/MtnDataTopUpBundleImages/Failed.svg";
 import axiosInstance from "../../../../../ApiCollection.jsx/apiClient";
-import { GetFunction, VerifyTransPin } from "../../../../../ApiCollection.jsx/ApiBuck";
+import {
+  GetFunction,
+  VerifyTransPin,
+} from "../../../../../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../../../../../Loader/Loader";
 import { HandleUserSession } from "../../../../../ApiCollection.jsx/ApiBuck";
 
 const AirtelDataBundle = () => {
-  const { isDarkMode, newBalance , setNewBalance} = useContext(ContextProvider);
- const {selectedOptionAirtel,
+  const { isDarkMode, newBalance, setNewBalance } = useContext(ContextProvider);
+  const {
+    selectedOptionAirtel,
     setSelectedOptionAirtel,
- //  selectedNetworkProductAirtel,
-   selectedProductAirtel,
-   setSelectedProductAirtel,
-  //  setSelectedNetworkProductAirtel,
+    //  selectedNetworkProductAirtel,
+    selectedProductAirtel,
+    setSelectedProductAirtel,
+    //  setSelectedNetworkProductAirtel,
     recipientPhoneNumberAirtel,
     setRecipientPhoneNumberAirtel,
     selectedAmountAirtel,
@@ -45,12 +49,13 @@ const AirtelDataBundle = () => {
     setRecipientNamesAirtel,
     walletNameAirtel,
     setWalletNameAirtel,
-  toggleSideBar,
+    toggleSideBar,
     inputPin,
     setInputPin,
     // inputPinHandler,
     toggleVisibility,
-    isVisible, } = useContext(ContextProvider)
+    isVisible,
+  } = useContext(ContextProvider);
 
   const [showProductList, setShowProductList] = useState(false);
   const [showOptionList, setShowOptionList] = useState(false);
@@ -64,7 +69,7 @@ const AirtelDataBundle = () => {
   const [image, setImage] = useState("");
   const [paymentAmount, setPaymentAmount] = useState("");
   const [codes, setCodes] = useState(false);
- 
+
   const [loading, setLoading] = useState("");
   const [airtelpurchaseStatus, setAirtelPurchaseStatus] = useState(null); // State to hold purchase status
   const [products, setProducts] = useState([]);
@@ -73,77 +78,90 @@ const AirtelDataBundle = () => {
   const [loadingPlans, setLoadingPlans] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null);
 
- 
   const [errorMessage, setErrorMessage] = useState("");
- const [balanceStatus,setBalanceStatus ] = useState("");
- const [selectProductWarn, setSelectProductWarn] = useState("") ;
- const [selectPlanWarn, setSelectPlanWarn] = useState("");
- const [passDataBalance, setPassDataBalance] = useState({});
- const [airtelReceiptInfo, setAirtelReceiptInfo] = useState("");
- const [sessionModal, setSessionModal] = useState(false)
-   let balanceStringToNum = Number(newBalance);
+  const [balanceStatus, setBalanceStatus] = useState("");
+  const [selectProductWarn, setSelectProductWarn] = useState("");
+  const [selectPlanWarn, setSelectPlanWarn] = useState("");
+  const [passDataBalance, setPassDataBalance] = useState({});
+  const [airtelReceiptInfo, setAirtelReceiptInfo] = useState("");
+  const [sessionModal, setSessionModal] = useState(false);
+  let balanceStringToNum = Number(newBalance);
 
-
-              let airtelDataAmount = Number(selectedAmountAirtel?.replace(/\D/g, ""));
-           const updateBalance = passDataBalance?.data ?  passDataBalance?.data?.data?.data?.balance : "";
-              const cleanUpBalanceToNumericOnly = Number(updateBalance?.replace(/\D/g, ""));
-             let CheckSufficiency =  airtelDataAmount > (newBalance === "" || newBalance === null ? cleanUpBalanceToNumericOnly : balanceStringToNum);
+  let airtelDataAmount = Number(selectedAmountAirtel?.replace(/\D/g, ""));
+  const updateBalance = passDataBalance?.data
+    ? passDataBalance?.data?.data?.data?.balance
+    : "";
+  const cleanUpBalanceToNumericOnly = Number(updateBalance?.replace(/\D/g, ""));
+  let CheckSufficiency =
+    airtelDataAmount >
+    (newBalance === "" || newBalance === null
+      ? cleanUpBalanceToNumericOnly
+      : balanceStringToNum);
   useEffect(() => {
     const fetchProducts = async () => {
       setLoadingProducts(true);
       try {
-        const response = await axiosInstance?.get(
-          '/products/telecom/list/4'
-        );
+        const response = await axiosInstance?.get("/products/telecom/list/4");
         setProducts(response.data.data.products || []);
       } catch (error) {
         console.error("Error fetching products:", error);
-         if(error && error.response === undefined){
-             alert("Check your internet Connection, then reload the page.")
-          } else if(error && error.response.status === 400){
-             alert("Service for airtel is currently not available, Try again later.")
-          }else if(error && error.response.status === 500){
-             alert("Service for airtel is currently not available, Try again later.")
-          }else if(error && error.response.status === 401){
-         if(error?.response?.headers["x-new-auth-token"] || error?.response?.headers?.get("x-new-auth-token")){
-         setLoading(true)
-         const newToken = error?.response?.headers?.get("x-new-auth-token") || error?.response?.headers["x-new-auth-token"];
-        
-         if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
-          localStorage.setItem("authorisedLogin", newToken);
-            if (localStorage.getItem("authorisedLogin")?.length > 1){
-            await fetchProducts()
-           }
-            }else{
-    localStorage.setItem("getToken", newToken);
-      if( localStorage.getItem("getToken")?.length > 1){
-        await fetchProducts();
-      }
-      }
-        }else{
-          return setSessionModal(true)
-        }
-          }else{
-            alert("Error occured: Kindly check your network connection.")
+        if (error && error.response === undefined) {
+          alert("Check your internet Connection, then reload the page.");
+        } else if (error && error.response.status === 400) {
+          alert(
+            "Service for airtel is currently not available, Try again later."
+          );
+        } else if (error && error.response.status === 500) {
+          alert(
+            "Service for airtel is currently not available, Try again later."
+          );
+        } else if (error && error.response.status === 401) {
+          if (
+            error?.response?.headers["x-new-auth-token"] ||
+            error?.response?.headers?.get("x-new-auth-token")
+          ) {
+            setLoading(true);
+            const newToken =
+              error?.response?.headers?.get("x-new-auth-token") ||
+              error?.response?.headers["x-new-auth-token"];
+
+            if (
+              newToken !== "" &&
+              localStorage.getItem("authorisedLogin") === "true"
+            ) {
+              localStorage.setItem("authorisedLogin", newToken);
+              if (localStorage.getItem("authorisedLogin")?.length > 1) {
+                await fetchProducts();
+              }
+            } else {
+              localStorage.setItem("getToken", newToken);
+              if (localStorage.getItem("getToken")?.length > 1) {
+                await fetchProducts();
+              }
+            }
+          } else {
+            return setSessionModal(true);
           }
+        } else {
+          alert("Error occured: Kindly check your network connection.");
+        }
       } finally {
         setLoadingProducts(false);
       }
     };
 
     fetchProducts();
-      const HandleBalanceStatus = ()=> {
-              if(CheckSufficiency){
-               setBalanceStatus("Insufficient fund")
-              }else{
-                setBalanceStatus("");
-               }
-            }
+    const HandleBalanceStatus = () => {
+      if (CheckSufficiency) {
+        setBalanceStatus("Insufficient fund");
+      } else {
+        setBalanceStatus("");
+      }
+    };
 
-            HandleBalanceStatus()
-
-          },[CheckSufficiency])
-console.log(airtelDataAmount, balanceStringToNum)
+    HandleBalanceStatus();
+  }, [CheckSufficiency]);
+  console.log(airtelDataAmount, balanceStringToNum);
   // Fetch plans when product is selected
   const fetchPlans = async (productId) => {
     setLoadingPlans(true);
@@ -151,68 +169,76 @@ console.log(airtelDataAmount, balanceStringToNum)
       const response = await axiosInstance.get(
         `/products/telecom/${productId}`
       );
-      if(response && ( response.status === 200 || 201)){
-      setProductPlans(response?.data?.data?.plans || []);
-      if(response?.data?.data?.plans === null){
-        setSelectProductWarn(true);
-      }else {
-        setSelectProductWarn(false)
-      }
+      if (response && (response.status === 200 || 201)) {
+        setProductPlans(response?.data?.data?.plans || []);
+        if (response?.data?.data?.plans === null) {
+          setSelectProductWarn(true);
+        } else {
+          setSelectProductWarn(false);
+        }
       }
     } catch (error) {
       console.error("Error fetching plans:", error);
-       if(error && error.response === undefined){
-             alert("Your internet connection is quite unstable.")
-        }else if(error && (error.response.status ===  401)){
-       if(error?.response?.headers["x-new-auth-token"] || error?.response?.headers?.get("x-new-auth-token")){
-         setLoading(true)
-         const newToken = error.response?.headers?.get("x-new-auth-token") ||error?.response?.headers["x-new-auth-token"];
-        
-         if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
-          localStorage.setItem("authorisedLogin", newToken);
-           if(localStorage.getItem("authorisedLogin")?.length > 1){
-            await fetchPlans()
-           }
-            }else{
-    localStorage.setItem("getToken", newToken);
-      if(localStorage.getItem("getToken")?.length > 1){
-        await fetchPlans();
-      }
-      }
-        }else{
-          return setSessionModal(true)
+      if (error && error.response === undefined) {
+        alert("Your internet connection is quite unstable.");
+      } else if (error && error.response.status === 401) {
+        if (
+          error?.response?.headers["x-new-auth-token"] ||
+          error?.response?.headers?.get("x-new-auth-token")
+        ) {
+          setLoading(true);
+          const newToken =
+            error.response?.headers?.get("x-new-auth-token") ||
+            error?.response?.headers["x-new-auth-token"];
+
+          if (
+            newToken !== "" &&
+            localStorage.getItem("authorisedLogin") === "true"
+          ) {
+            localStorage.setItem("authorisedLogin", newToken);
+            if (localStorage.getItem("authorisedLogin")?.length > 1) {
+              await fetchPlans();
+            }
+          } else {
+            localStorage.setItem("getToken", newToken);
+            if (localStorage.getItem("getToken")?.length > 1) {
+              await fetchPlans();
+            }
+          }
+        } else {
+          return setSessionModal(true);
         }
-      }else if(error && error.response.status ===  400){
+      } else if (error && error.response.status === 400) {
         setSelectProductWarn(true);
-      }else if(error && error.response.status ===  500){
-       setSelectProductWarn(true);
-      }else {
-        alert("Check your internet connection.")
+      } else if (error && error.response.status === 500) {
+        setSelectProductWarn(true);
+      } else {
+        alert("Check your internet connection.");
       }
     } finally {
       setLoadingPlans(false);
     }
   };
 
-  const handleSelectProduct = (product) => { 
-    if(!navigator.onLine) return alert("Check your internet connection.");
-    if(navigator.onLine){
-    setSelectedProductAirtel(`${product?.Plan_Type}`);
-    setShowProductList(false);
-    fetchPlans(product?.Product_ID);
+  const handleSelectProduct = (product) => {
+    if (!navigator.onLine) return alert("Check your internet connection.");
+    if (navigator.onLine) {
+      setSelectedProductAirtel(`${product?.Plan_Type}`);
+      setShowProductList(false);
+      fetchPlans(product?.Product_ID);
     }
   };
 
   const handleSelectOption = (plan) => {
-    setSelectedOptionAirtel(`${plan?.Size} ~ ${plan?.Validity} ~ ₦${plan?.Amount}`);
-    setAirtelReceiptInfo(plan?.PlanType +" " + plan?.Size)
+    setSelectedOptionAirtel(
+      `${plan?.Size} ~ ${plan?.Validity} ~ ₦${plan?.Amount}`
+    );
+    setAirtelReceiptInfo(plan?.PlanType + " " + plan?.Size);
     setSelectedAmountAirtel(`₦${plan?.Amount}`);
     setSelectedPlan(plan);
     setShowOptionList(false);
     setShowProductList(false);
   };
-
-
 
   const handleCodes = () => {
     setCodes(false);
@@ -228,12 +254,12 @@ console.log(airtelDataAmount, balanceStringToNum)
   };
 
   const handleSelectPayment = (code, flag, amount, id) => {
-    if(code === "NGN" && id === 1){
-    setWalletNameAirtel(code);
-    setImage(flag);
-    setPaymentAmount(amount);
-    setShowPayment(false);
-    setPaymentSelected(true);
+    if (code === "NGN" && id === 1) {
+      setWalletNameAirtel(code);
+      setImage(flag);
+      setPaymentAmount(amount);
+      setShowPayment(false);
+      setPaymentSelected(true);
     }
   };
 
@@ -243,111 +269,173 @@ console.log(airtelDataAmount, balanceStringToNum)
       name: "Nigeria",
       code: "NGN",
       flag: require("../DataBundles-Images/ng.svg").default,
-      amount: (newBalance === "" || newBalance === null) ? updateBalance : newBalance,
-      status : "Active"
+      amount:
+        newBalance === "" || newBalance === null
+          ? `${
+              cleanUpBalanceToNumericOnly > 1
+                ? cleanUpBalanceToNumericOnly?.toLocaleString("en-NG", {
+                    style: "currency",
+                    currency: "NGN",
+                  })
+                : "₦"
+            }`
+          : `${
+              balanceStringToNum > 1
+                ? balanceStringToNum?.toLocaleString("en-NG", {
+                    style: "currency",
+                    currency: "NGN",
+                  })
+                : "₦"
+            }`,
+      status: "Active",
     },
     {
       id: 2,
       name: "United States",
       code: "USD",
       flag: require("../DataBundles-Images/us.svg").default,
-      amount: 0,
-      status : "Inactive"
+      amount: 0?.toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD",
+      }),
+      status: "Inactive",
     },
     {
       id: 3,
       name: "United Kingdom",
       code: "GBP",
       flag: require("../DataBundles-Images/gb.svg").default,
-      amount: 0,
-      status : "Inactive"
+      amount: 0?.toLocaleString("en-GB", {
+        style: "currency",
+        currency: "GBP",
+      }),
+      status: "Inactive",
     },
     {
       id: 4,
       name: "European Union",
       code: "EUR",
       flag: require("../DataBundles-Images/eu.svg").default,
-      amount: 0,
-      status : "Inactive"
+      amount: 0?.toLocaleString("en-EU", {
+        style: "currency",
+        currency: "EUR",
+      }),
+      status: "Inactive",
     },
     {
       id: 5,
       name: "Australia",
       code: "AUD",
       flag: require("../DataBundles-Images/au.svg").default,
-      amount: 0,
-      status : "Inactive"
+      amount: 0?.toLocaleString("en", {
+        style: "currency",
+        currency: "AUD",
+      }),
+      status: "Inactive",
     },
     {
       id: 6,
       name: "Kenya",
       code: "KSH",
       flag: require("../DataBundles-Images/ke.svg").default,
-      amount: 0,
-      status : "Inactive"
+      amount: 0?.toLocaleString("en-KE", {
+        style: "currency",
+        currency: "KES",
+      }),
+      status: "Inactive",
     },
   ];
 
   const Payment = ({ code, flag, amount, onClick, paymentMethod }) => {
-       return (
-         <div
-          className={`font-[500] flex px-2  gap-[10px] text-[#7C7C7C] text-[8px] leading-[10.4px]
+    return (
+      <div
+        className={`font-[500] flex px-2  gap-[10px] text-[#7C7C7C] text-[8px] leading-[10.4px]
                lg:text-[16px] lg:leading-[20.8px] md:py-[20px] py-[15px] pl-[10px]
               lg:pl-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] md:shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)] 
-               ${isDarkMode ?  "border-y-[0.5px] border-x-[0.6px] border-white" : "boder-none"} 
-              cursor-pointer ${paymentMethod  === "Inactive" && !isDarkMode  ? "bg-gray-300 cursor-not-allowed" : 
-               paymentMethod === "Inactive" && isDarkMode ? "bg-black" : paymentMethod === "Active" && !isDarkMode ? "bg-white" : "bg-black" } 
-              `} onClick={onClick}>
-           <div className={` ${airtimestyles.netImage}`}>
-             <img src={flag} alt="" className={airtimestyles.NoImage} />
-           </div>
-           <h2 className={`font-[500] text-[#7C7C7C] text-[12px] leading-[16.4px]
-               lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>{code}</h2>
-           <p className={`font-[500] text-[#7C7C7C] text-[12px] leading-[16.4px]
-               lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
-             Wallet({amount.toLocaleString()})
-           </p>
-         </div>
-       );
-     };
-  
-      useEffect(() => {
-          const GetBalance =   async()=> {
-              const SuccessHandler = ()=> {
-            //alert("Successful");
-       console.log("successfully retrieved balance");
-       //alert("Successful")
-         }
-        const FailedHandler = async(ErrorType)=> {
-         if(ErrorType === "unauthorised"){
-       await GetFunction("balance", 
-        setLoading, SuccessHandler,
-        (ErrorType)=> {
-         if(ErrorType === "unauthorised"){
-          return setSessionModal(true);
-         }
-        },
-         setPassDataBalance)
-         }
-        }
-            await GetFunction("balance",  setLoading, SuccessHandler, FailedHandler,
-         setPassDataBalance)
-          } 
-           // Simulate async data loading
-          
-           if(newBalance === "" || newBalance === null || newBalance === undefined){
-              GetBalance();
-              if(GetBalance){
-               setNewBalance(passDataBalance?.data ? passDataBalance?.data?.data?.data?.balance : "");
+               ${
+                 isDarkMode
+                   ? "border-y-[0.5px] border-x-[0.6px] border-white"
+                   : "boder-none"
+               } 
+              cursor-pointer ${
+                paymentMethod === "Inactive" && !isDarkMode
+                  ? "bg-gray-300 cursor-not-allowed"
+                  : paymentMethod === "Inactive" && isDarkMode
+                  ? "bg-black"
+                  : paymentMethod === "Active" && !isDarkMode
+                  ? "bg-white"
+                  : "bg-black"
+              } 
+              `}
+        onClick={onClick}
+      >
+        <div className={` ${airtimestyles.netImage}`}>
+          <img src={flag} alt="" className={airtimestyles.NoImage} />
+        </div>
+        <h2
+          className={`font-[500] text-[#7C7C7C] text-[12px] leading-[16.4px]
+               lg:text-[16px] lg:leading-[20.8px] ${
+                 isDarkMode ? "text-white" : "text-[#7C7C7C]"
+               }`}
+        >
+          {code}
+        </h2>
+        <p
+          className={`font-[500] text-[#7C7C7C] text-[12px] leading-[16.4px]
+               lg:text-[16px] lg:leading-[20.8px] ${
+                 isDarkMode ? "text-white" : "text-[#7C7C7C]"
+               }`}
+        >
+          Wallet({amount.toLocaleString()})
+        </p>
+      </div>
+    );
+  };
+
+  useEffect(() => {
+    const GetBalance = async () => {
+      const SuccessHandler = () => {
+        //alert("Successful");
+        console.log("successfully retrieved balance");
+        //alert("Successful")
+      };
+      const FailedHandler = async (ErrorType) => {
+        if (ErrorType === "unauthorised") {
+          await GetFunction(
+            "balance",
+            setLoading,
+            SuccessHandler,
+            (ErrorType) => {
+              if (ErrorType === "unauthorised") {
+                return setSessionModal(true);
               }
-           }
-          //eslint-disable-next-line
-         }, []);
-    
-        
-  
+            },
+            setPassDataBalance
+          );
+        }
+      };
+      await GetFunction(
+        "balance",
+        setLoading,
+        SuccessHandler,
+        FailedHandler,
+        setPassDataBalance
+      );
+    };
+    // Simulate async data loading
 
-
+    if (newBalance === "" || newBalance === null || newBalance === undefined) {
+      GetBalance();
+      if (GetBalance) {
+        setNewBalance(
+          passDataBalance?.data
+            ? passDataBalance?.data?.data?.data?.balance
+            : ""
+        );
+      }
+    }
+    //eslint-disable-next-line
+  }, []);
 
   const handleConfirm = () => {
     setProceed(false);
@@ -364,7 +452,7 @@ console.log(airtelDataAmount, balanceStringToNum)
   const [inputValue, setInputValue] = useState("");
 
   const schema = Joi.object({
-    recipientPhoneNumberAirtel : Joi.string()
+    recipientPhoneNumberAirtel: Joi.string()
       .pattern(new RegExp(/^\d{11,}/))
       .required()
       .messages({
@@ -374,7 +462,6 @@ console.log(airtelDataAmount, balanceStringToNum)
 
   const airtelRegex =
     /^(234|0)(802[0-9]|701[0-9]|708[0-9]|808[0-9]|812[0-9]|901[0-9]|902[0-9]|904[0-9]|907[0-9]|912[0-9]|911[0-9])\d{6}$/;
-
 
   const validatePhoneNumber = (phoneNumber) => {
     if (!phoneNumber) {
@@ -387,7 +474,6 @@ console.log(airtelDataAmount, balanceStringToNum)
 
     return null; // No error
   };
-
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -408,25 +494,38 @@ console.log(airtelDataAmount, balanceStringToNum)
     }
   };
 
-
-
   const handleProceed = (e) => {
     e.preventDefault();
 
     function validateNigerianNumberByNetwork(number) {
       const networks = {
-        'AIRTEL': ['0701', '0708', '0802', '0808', '0812', '0901', '0902', '0904', '0907', '0912', '0911'],
+        AIRTEL: [
+          "0701",
+          "0708",
+          "0802",
+          "0808",
+          "0812",
+          "0901",
+          "0902",
+          "0904",
+          "0907",
+          "0912",
+          "0911",
+        ],
       };
 
       for (let network in networks) {
         for (let prefix of networks[network]) {
-          if (number.startsWith(prefix) && number.length === prefix.length + 7) {
+          if (
+            number.startsWith(prefix) &&
+            number.length === prefix.length + 7
+          ) {
             return network;
           }
         }
       }
 
-      return 'Unknown network';
+      return "Unknown network";
     }
 
     const { error } = schema.validate({
@@ -440,20 +539,17 @@ console.log(airtelDataAmount, balanceStringToNum)
           return acc;
         }, {})
       );
-    } else if (validateNigerianNumberByNetwork(recipientPhoneNumberAirtel) !== 'AIRTEL') {
+    } else if (
+      validateNigerianNumberByNetwork(recipientPhoneNumberAirtel) !== "AIRTEL"
+    ) {
       setErrors({
-        recipientPhoneNumberAirtel:
-          `Invalid AIRTEL number. Please enter a valid AIRTEL number.`,
+        recipientPhoneNumberAirtel: `Invalid AIRTEL number. Please enter a valid AIRTEL number.`,
       });
     } else {
       setProceed(true);
       setErrors({});
     }
   };
-
-
-
-
 
   const handleRecipientNameChange = (e) => {
     setRecipientNamesAirtel(e.target.value);
@@ -465,7 +561,6 @@ console.log(airtelDataAmount, balanceStringToNum)
 
   // console.log("confirm:", confirm);
 
-
   const [airtelTransactionID, setAirtelTransactionID] = useState("");
   const [airtelOrderID, setAirtelOrderID] = useState("");
   const [airtelrefNumber, setAirtelRefNumber] = useState("");
@@ -473,17 +568,16 @@ console.log(airtelDataAmount, balanceStringToNum)
 
   const inputPinHandler = async () => {
     async function buyData(network, mobileNumber, planID, name) {
-
       // Add validation for selected plan
       if (!selectedPlan) {
         console.error("No plan selected");
         return;
       }
 
-      console.log(selectedPlan)
-      console.log(selectedPlan.PlanID)
+      console.log(selectedPlan);
+      console.log(selectedPlan.PlanID);
 
-      const path = '/data';
+      const path = "/data";
 
       const data = {
         network,
@@ -492,80 +586,88 @@ console.log(airtelDataAmount, balanceStringToNum)
         name,
       };
 
+      setLoading(true);
 
-      setLoading(true)
-
-
-      console.log(data)
-      console.log("its me")
+      console.log(data);
+      console.log("its me");
 
       try {
-      setLoading(true)
+        setLoading(true);
 
         const response = await axiosInstance.post(path, data);
-      //  console.log(response.data);
+        //  console.log(response.data);
         console.log(response.status);
 
         const resData = response?.data?.data?.data; // Accessing the nested `data` object
-     console.log(resData);
+        console.log(resData);
         console.log(response?.status);
-       setAirtelTransactionID(resData?.transaction_id);
-       setAirtelRefNumber(resData?.reference_number);
-       setAirtelOrderID(resData?.order_id); // No `order_id`, using `id` instead
-       if (response.statusCode === 200) {
-      // Success response
-      setTransactSuccessPopUp(true); // Show success popup
-      setConfirm(false);
-      setInputPin("")
-     return { statusCode: response?.status, data: response?.data };
+        setAirtelTransactionID(resData?.transaction_id);
+        setAirtelRefNumber(resData?.reference_number);
+        setAirtelOrderID(resData?.order_id); // No `order_id`, using `id` instead
+        if (response.statusCode === 200) {
+          // Success response
+          setTransactSuccessPopUp(true); // Show success popup
+          setConfirm(false);
+          setInputPin("");
+          return { statusCode: response?.status, data: response?.data };
         }
         // console.log(response.data);
       } catch (error) {
-        if(error && error.response === undefined){
-             alert("Your internet connection is quite unstable.");
-          }else if(error && (error.response.status === 500 || error.response.status === 400 )){
-              setAirtelPurchaseStatus(true); // Show failure popup
-           setConfirm(false);
-      setInputPin("");
-      
-     // alert("I am the problem");
-      }else if(error && error.response.status === 401){
-    if(error?.response?.headers["x-new-auth-token"] || error?.response?.headers?.get("x-new-auth-token")){
-         setLoading(true)
-         const newToken = error?.response?.headers?.get("x-new-auth-token") || error?.response?.headers["x-new-auth-token"];
-        
-         if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
-         localStorage.setItem("authorisedLogin", newToken);
-           if( localStorage.getItem("authorisedLogin")?.length > 1){
-            await inputPinHandler()
-           }
-            }else{
-localStorage.setItem("getToken", newToken);
-      if(localStorage.getItem("getToken")?.length > 1){
-        await inputPinHandler();
-      }
-      }
-        }else{
-          return setSessionModal(true)
+        if (error && error.response === undefined) {
+          alert("Your internet connection is quite unstable.");
+        } else if (
+          error &&
+          (error.response.status === 500 || error.response.status === 400)
+        ) {
+          setAirtelPurchaseStatus(true); // Show failure popup
+          setConfirm(false);
+          setInputPin("");
+
+          // alert("I am the problem");
+        } else if (error && error.response.status === 401) {
+          if (
+            error?.response?.headers["x-new-auth-token"] ||
+            error?.response?.headers?.get("x-new-auth-token")
+          ) {
+            setLoading(true);
+            const newToken =
+              error?.response?.headers?.get("x-new-auth-token") ||
+              error?.response?.headers["x-new-auth-token"];
+
+            if (
+              newToken !== "" &&
+              localStorage.getItem("authorisedLogin") === "true"
+            ) {
+              localStorage.setItem("authorisedLogin", newToken);
+              if (localStorage.getItem("authorisedLogin")?.length > 1) {
+                await inputPinHandler();
+              }
+            } else {
+              localStorage.setItem("getToken", newToken);
+              if (localStorage.getItem("getToken")?.length > 1) {
+                await inputPinHandler();
+              }
+            }
+          } else {
+            return setSessionModal(true);
+          }
+        } else {
+          alert("Check your internet connection");
         }
-      }
-      else{
-        alert("Check your internet connection");
-      }
         return { statusCode: error.response.status, data: null };
-      }finally {
-        setLoading(false)
+      } finally {
+        setLoading(false);
       }
     }
 
     // usage
-     await buyData(
+    await buyData(
       4, // Network ID for MTN
       inputValue, // Use inputValue instead of recipientPhoneNumber
       selectedPlan.PlanID,
       recipientNamesAirtel
     );
- };
+  };
 
   const DoneChangeHandler = () => {
     setSelectedProductAirtel("");
@@ -577,21 +679,23 @@ localStorage.setItem("getToken", newToken);
     setAirtelPurchaseStatus(null);
     setRecipientPhoneNumberAirtel("");
     setInputValue("");
- };
+  };
 
   return (
     <DashBoardLayout>
       <div
-        className={`bg-[#FFF] relative lg:ml-[20px] 2xl:ml-0 ${isDarkMode
-          ? "bg-[#000] text-[#fff] border-[#fff]"
-          : "bg-[#ffffff] text-[#000] "
-          } flex flex-col justify-between h-full`}
-      >
-        <section
-          className={`md:px-[0px] ${isDarkMode
+        className={`bg-[#FFF] relative lg:ml-[20px] 2xl:ml-0 ${
+          isDarkMode
             ? "bg-[#000] text-[#fff] border-[#fff]"
             : "bg-[#ffffff] text-[#000] "
-            }`}
+        } flex flex-col justify-between h-full`}
+      >
+        <section
+          className={`md:px-[0px] ${
+            isDarkMode
+              ? "bg-[#000] text-[#fff] border-[#fff]"
+              : "bg-[#ffffff] text-[#000] "
+          }`}
         >
           <div
             id="DataBundle"
@@ -620,11 +724,14 @@ localStorage.setItem("getToken", newToken);
           {/* =========================Select/Add Recipient===================== */}
 
           <div className="flex gap-[10%] mt-[40px] md:w-full md:justify-between md:gap-[10%] ">
-            <div className={`w-full flex items-center justify-between border text-[10px] md:py-[15px] md:w-[50%] rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003] 
-              ${isDarkMode
-                ? "bg-black text-white border !border-white"
-                : "border border-[#0003]"
-              }`}>
+            <div
+              className={`w-full flex items-center justify-between border text-[10px] md:py-[15px] md:w-[50%] rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003] 
+              ${
+                isDarkMode
+                  ? "bg-black text-white border !border-white"
+                  : "border border-[#0003]"
+              }`}
+            >
               <Link
                 to="/DataBundleSelectRecipient"
                 style={{ display: "inline-flex", width: "100%" }}
@@ -638,11 +745,14 @@ localStorage.setItem("getToken", newToken);
                 />
               </Link>
             </div>
-            <div className={`w-full flex items-center justify-between border text-[10px] md:py-[15px] md:w-[40%] md:mr-[9%]  rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003] 
-          ${isDarkMode
-                ? "bg-black text-white border !border-white"
-                : "border border-[#0003]"
-              }`}>
+            <div
+              className={`w-full flex items-center justify-between border text-[10px] md:py-[15px] md:w-[40%] md:mr-[9%]  rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003] 
+          ${
+            isDarkMode
+              ? "bg-black text-white border !border-white"
+              : "border border-[#0003]"
+          }`}
+            >
               <Link
                 to="/DataBundleAddRecipient"
                 style={{ display: "inline-flex", width: "100%" }}
@@ -708,8 +818,9 @@ localStorage.setItem("getToken", newToken);
             <Modal>
               (
               <div
-                className={`code ${toggleSideBar ? "code1" : "code01"
-                  } overflow-auto w-[90%]`}
+                className={`code ${
+                  toggleSideBar ? "code1" : "code01"
+                } overflow-auto w-[90%]`}
               >
                 <img
                   onClick={() => setCodes(false)}
@@ -758,9 +869,11 @@ localStorage.setItem("getToken", newToken);
 
           <div className="grid grid-cols-1 mt-[25px] md:grid-cols-2 gap-y-[20px] md:gap-x-[58.68px] lg:gap-x-[100px] md:gap-y-[15px] lg:gap-y-[25px] pb-[30px] lg:py-[30px] md:mt-[20px]">
             <div className="flex flex-col lg:gap-[14px] gap-[7px]">
-              <h2 className={`lg:text-[18px] lg:leading-[24px] mb-1 text-[15px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${isDarkMode
-                ? "!text-[#7E7E7E]" : "!text-black"
-                }`}>
+              <h2
+                className={`lg:text-[18px] lg:leading-[24px] mb-1 text-[15px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
+                  isDarkMode ? "!text-[#7E7E7E]" : "!text-black"
+                }`}
+              >
                 Select Product
               </h2>
               <div
@@ -768,8 +881,8 @@ localStorage.setItem("getToken", newToken);
                  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
                    leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
                 lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
-                  isDarkMode 
-                    ? "bg-black text-white border border-white" 
+                  isDarkMode
+                    ? "bg-black text-white border border-white"
                     : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
                 }
   `}
@@ -786,63 +899,70 @@ localStorage.setItem("getToken", newToken);
                 </button>
               </div>
               <div className="relative">
-              {showProductList && (
-                <div className={` text-[16px] md:text-[12px]  bvnQuery
+                {showProductList && (
+                  <div
+                    className={` text-[16px] md:text-[12px]  bvnQuery
                   shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] 
-                  ${products.length > 5 ?  "overflow-y-scroll h-[300px]" : ""}
+                  ${products.length > 5 ? "overflow-y-scroll h-[300px]" : ""}
                    lg:text-[16px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[10]
-                  ${isDarkMode
-                    ? "bg-black text-white border !border-white"
-                    : " border-[1px] border-gray-300 md:rounded-[10px]  rounded-[5px]"
+                  ${
+                    isDarkMode
+                      ? "bg-black text-white border !border-white"
+                      : " border-[1px] border-gray-300 md:rounded-[10px]  rounded-[5px]"
                   }
-                `}>
-                  {loadingProducts ? (
-                    <div>Loading products...</div>
-                  ) : (
-                    products.map((product) => (
-                      <div
-                        key={product.Product_ID}
-                        className={`font-[400] text-[13px] leading-[18px] lg:leading-[20px] cursor-pointer border-b-[0.5px]
+                `}
+                  >
+                    {loadingProducts ? (
+                      <div>Loading products...</div>
+                    ) : (
+                      products.map((product) => (
+                        <div
+                          key={product.Product_ID}
+                          className={`font-[400] text-[13px] leading-[18px] lg:leading-[20px] cursor-pointer border-b-[0.5px]
                            text-[#7C7C7C] md:text-[12px] lg:text-[16px]  md:rounded-[0px]
-                            lg:mt-2 py-[15px] lg:py-[20px] pl-[5px] ${selectedProductAirtel === product.Plan_Type ? "" : ""}
-                          ${isDarkMode
-                            ? "bg-black text-white"
-                            : ""
-                          }
+                            lg:mt-2 py-[15px] lg:py-[20px] pl-[5px] ${
+                              selectedProductAirtel === product.Plan_Type
+                                ? ""
+                                : ""
+                            }
+                          ${isDarkMode ? "bg-black text-white" : ""}
                           `}
-                        onClick={() => {
-                          handleSelectProduct(product);
-                          setSelectPlanWarn(false);
+                          onClick={() => {
+                            handleSelectProduct(product);
+                            setSelectPlanWarn(false);
 
-                          if(product.plan === null){
-                         setShowOptionList(false);
-                       }else{
-                        setShowOptionList(true);
-                       }
-                        }}
-                      >
-                        {`${product.Plan_Type}`}
-                      </div>
-                    ))
-                  )}
-                </div>
-              )}
-              {selectProductWarn && (
-               <p className="absolute text-red-500 p-[10px] bg-white  
+                            if (product.plan === null) {
+                              setShowOptionList(false);
+                            } else {
+                              setShowOptionList(true);
+                            }
+                          }}
+                        >
+                          {`${product.Plan_Type}`}
+                        </div>
+                      ))
+                    )}
+                  </div>
+                )}
+                {selectProductWarn && (
+                  <p
+                    className="absolute text-red-500 p-[10px] bg-white  
                     text-left font-[500] text-[14px] border-[1px]  border-gray-300 
                      rounded-[10px] lg:rounded-[20px]
-            leading-[18px] lg:text-[16px] lg:leading-[22px]">
-           Plans unavailable,kindly select another airtel product.
-            </p>
-              )}
+            leading-[18px] lg:text-[16px] lg:leading-[22px]"
+                  >
+                    Plans unavailable,kindly select another airtel product.
+                  </p>
+                )}
+              </div>
             </div>
-            </div>
-           
 
             <div className="flex flex-col lg:gap-[14px] gap-[7px]">
-              <h2 className={`lg:text-[18px] md:text-[14px] lg:leading-[24px] mb-1 text-[16px] md:font-[600] font-[400] leading-[12px] ${isDarkMode
-                ? "!text-[#7E7E7E]" : "!text-black"
-                }`}>
+              <h2
+                className={`lg:text-[18px] md:text-[14px] lg:leading-[24px] mb-1 text-[16px] md:font-[600] font-[400] leading-[12px] ${
+                  isDarkMode ? "!text-[#7E7E7E]" : "!text-black"
+                }`}
+              >
                 Select Plan
               </h2>
               <div
@@ -850,80 +970,97 @@ localStorage.setItem("getToken", newToken);
                  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
                    leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
                 lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
-                  isDarkMode 
-                    ? "bg-black text-white border border-white" 
+                  isDarkMode
+                    ? "bg-black text-white border border-white"
                     : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
                 }
   `}
                 onClick={() => {
-                  if(selectedProductAirtel.length > 1){
+                  if (selectedProductAirtel.length > 1) {
                     setShowOptionList(!showOptionList);
                     setSelectPlanWarn(false);
-                      }else{
-                   setSelectPlanWarn(true);
+                  } else {
+                    setSelectPlanWarn(true);
                   }
-                }
-                }
+                }}
               >
-                <h2 className="text-[12px] font-[400] leading-[12px] 
+                <h2
+                  className="text-[12px] font-[400] leading-[12px] 
                 capitalize md:text-[9.17px] md:leading-[11.92px] 
-                lg:text-[16px] lg:leading-[24px]">
+                lg:text-[16px] lg:leading-[24px]"
+                >
                   {selectedOptionAirtel}
                 </h2>
                 <button className="lg:w-6 lg:h-6 w-[11px] h-[12px]">
                   <img src={arrowDown} alt="" className="w-full h-full" />
                 </button>
               </div>
-          <div className="relative ">
-              {showOptionList && (
-                <div className={`border md:rounded-[10px] lg:mt-2 bvnQuery rounded-[4px]
+              <div className="relative ">
+                {showOptionList && (
+                  <div
+                    className={`border md:rounded-[10px] lg:mt-2 bvnQuery rounded-[4px]
                   shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
-                   absolute w-full bg-[#FFF] z-[100] ${productPlans.length > 5 ? "h-[300px] overflow-y-scroll" : ""}
-                  ${isDarkMode
-                    ? "bg-black text-white border !border-white"
-                    : "border border-[#0003]"
+                   absolute w-full bg-[#FFF] z-[100] ${
+                     productPlans.length > 5
+                       ? "h-[300px] overflow-y-scroll"
+                       : ""
+                   }
+                  ${
+                    isDarkMode
+                      ? "bg-black text-white border !border-white"
+                      : "border border-[#0003]"
                   }
-                `}>
-                  {loadingPlans ? (
-                    <div>Loading plans...</div>
-                  ) : (
-                    productPlans.map((plan) => (
-                      <div
-                        key={plan.PlanID}
-                        className={`font-[400]
+                `}
+                  >
+                    {loadingPlans ? (
+                      <div>Loading plans...</div>
+                    ) : (
+                      productPlans.map((plan) => (
+                        <div
+                          key={plan.PlanID}
+                          className={`font-[400]
                            text-[13px] leading-[18px] lg:leading-[20px] cursor-pointer border-b-[0.5px] md:rounded-[0px]
                             text-[#7C7C7C] md:text-[12px] lg:text-[16px] lg:mt-2 py-[15px] lg:py-[20px]
-                              pl-[5px] ${selectedOptionAirtel === plan.PlanID ? "bg-gray-200" : ""
-                          }
-                                                 ${isDarkMode
-                            ? "bg-black text-white "
-                            : ""
-                          }
+                              pl-[5px] ${
+                                selectedOptionAirtel === plan.PlanID
+                                  ? "bg-gray-200"
+                                  : ""
+                              }
+                                                 ${
+                                                   isDarkMode
+                                                     ? "bg-black text-white "
+                                                     : ""
+                                                 }
                                               `}
-                        onClick={() => {
-                          handleSelectOption(plan);
-                    }}
-                      >
-                       {`${plan.PlanType} ${plan.Size} (₦${plan.Amount}) ~ ${plan.Validity ? plan.Validity.toUpperCase() : ""}`} 
-                      </div>
-                    ))
-                  )}
-                </div>
-                
-              )}
-              {selectPlanWarn && (
-               <p className="text-red-500 absolute text-left font-[500] text-[14px] 
-            leading-[20px] lg:text-[16px] lg:leading-[22px]">
-         Select Product
-            </p>
-              )}
+                          onClick={() => {
+                            handleSelectOption(plan);
+                          }}
+                        >
+                          {`${plan.PlanType} ${plan.Size} (₦${plan.Amount}) ~ ${
+                            plan.Validity ? plan.Validity.toUpperCase() : ""
+                          }`}
+                        </div>
+                      ))
+                    )}
+                  </div>
+                )}
+                {selectPlanWarn && (
+                  <p
+                    className="text-red-500 absolute text-left font-[500] text-[14px] 
+            leading-[20px] lg:text-[16px] lg:leading-[22px]"
+                  >
+                    Select Product
+                  </p>
+                )}
               </div>
             </div>
 
             <div className="flex flex-col lg:gap-[14px] gap-[7px]">
-              <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${isDarkMode
-                ? "!text-[#7E7E7E]" : "!text-black"
-                }`}>
+              <h2
+                className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
+                  isDarkMode ? "!text-[#7E7E7E]" : "!text-black"
+                }`}
+              >
                 Phone Number{" "}
                 <span className="text-[#04177F]">
                   <Link to="/DataBundleSelectRecipient">
@@ -938,8 +1075,8 @@ localStorage.setItem("getToken", newToken);
                  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
                    leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
                 lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
-                  isDarkMode 
-                    ? "bg-black text-white border border-white" 
+                  isDarkMode
+                    ? "bg-black text-white border border-white"
                     : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
                 }
   `}
@@ -963,13 +1100,14 @@ localStorage.setItem("getToken", newToken);
                   {errors.recipientPhoneNumberAirtel}
                 </div>
               )}
-
             </div>
 
             <div className="flex flex-col lg:gap-[14px] gap-[7px]">
-              <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${isDarkMode
-                ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
-                }`}>
+              <h2
+                className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
+                  isDarkMode ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                }`}
+              >
                 Recipient Name<span className="text-[#7C7C7C]">(optional)</span>{" "}
               </h2>
               <div className="relative mt-[5px]">
@@ -979,8 +1117,8 @@ localStorage.setItem("getToken", newToken);
                  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
                    leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
                 lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
-                  isDarkMode 
-                    ? "bg-black text-white border border-white" 
+                  isDarkMode
+                    ? "bg-black text-white border border-white"
                     : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
                 }
   `}
@@ -999,9 +1137,11 @@ localStorage.setItem("getToken", newToken);
             </div>
 
             <div className="flex flex-col lg:gap-[14px] gap-[7px]">
-              <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${isDarkMode
-                ? "!text-[#7E7E7E]" : "!text-[#7E7E7E]"
-                }`}>
+              <h2
+                className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
+                  isDarkMode ? "!text-[#7E7E7E]" : "!text-[#7E7E7E]"
+                }`}
+              >
                 Amount
               </h2>
               <div className="relative mt-[5px]">
@@ -1011,14 +1151,13 @@ localStorage.setItem("getToken", newToken);
                  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
                    leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
                 lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
-                  isDarkMode 
-                    ? "bg-black text-white border border-white" 
+                  isDarkMode
+                    ? "bg-black text-white border border-white"
                     : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
                 }
   `}
                   // placeholder="&#8358;100"
                   value={`${selectedAmountAirtel}`}
-    
                 />
                 <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                   <img src={Amount} alt="" className="lg:w-[100%] lg:h-[68%]" />
@@ -1028,22 +1167,26 @@ localStorage.setItem("getToken", newToken);
 
             <div>
               <div onClick={handleShowPayment}>
-                <h2 className={`lg:text-[18px] mt-[5px] lg:leading-[24px] 
+                <h2
+                  className={`lg:text-[18px] mt-[5px] lg:leading-[24px] 
                 mb-2 text-[15px] md:text-[12px] md:font-[600]
-                 font-[400] leading-[12px] ${isDarkMode
-                  ? "!text-[#7E7E7E]" : "text-[#7E7E7E]"
-                  }`}>
+                 font-[400] leading-[12px] ${
+                   isDarkMode ? "!text-[#7E7E7E]" : "text-[#7E7E7E]"
+                 }`}
+                >
                   Payment Method
                 </h2>
-                <div className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.8px]
+                <div
+                  className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.8px]
                  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] 
                  pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
                 lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
-                  isDarkMode 
-                    ? "bg-black text-white border border-white" 
+                  isDarkMode
+                    ? "bg-black text-white border border-white"
                     : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
                 }
-  `}>
+  `}
+                >
                   {paymentSelected ? (
                     <li
                       onClick={handleShowPayment}
@@ -1083,37 +1226,37 @@ localStorage.setItem("getToken", newToken);
                   )}
                 </div>
               </div>
-            <div className= "relative">
-
-              {showPayment && (
-                <div
-                  className={`pb-[14px] w-full md:pb-[6px] pt-[14px] md:pt-[6px] font-weight-bold
+              <div className="relative">
+                {showPayment && (
+                  <div
+                    className={`pb-[14px] w-full md:pb-[6px] pt-[14px] md:pt-[6px] font-weight-bold
                      text-[13px] border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute
-                       ${isDarkMode
-                      ? "bg-black text-white border !border-white"
-                      : "border border-[#0003]"
-                    }
+                       ${
+                         isDarkMode
+                           ? "bg-black text-white border !border-white"
+                           : "border border-[#0003]"
+                       }
                  bg-[#FFF] z-[100]  `}
-                >
-                  {countryList.map((country) => (
-                    <Payment
-                      key={country.id}
-                      flag={country.flag}
-                      code={country.code}
-                      amount={country.amount}
-                      onClick={() =>
-                        handleSelectPayment(
-                          country.code,
-                          country.flag,
-                          country.amount, 
-                          country.id
-                        )
-                      }
-                 paymentMethod={country.status}
-                    />
-                  ))}
-                </div>
-              )}
+                  >
+                    {countryList.map((country) => (
+                      <Payment
+                        key={country.id}
+                        flag={country.flag}
+                        code={country.code}
+                        amount={country.amount}
+                        onClick={() =>
+                          handleSelectPayment(
+                            country.code,
+                            country.flag,
+                            country.amount,
+                            country.id
+                          )
+                        }
+                        paymentMethod={country.status}
+                      />
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -1136,14 +1279,14 @@ localStorage.setItem("getToken", newToken);
 
           {/* ================Proceed=================== */}
 
-        
-
           {proceed && (
             <Modal>
               <div
-                className={`scroll-bar ${isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
-                  } ${toggleSideBar ? "confirm01" : "confirm"
-                  } grow pt-[10px] pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative 
+                className={`scroll-bar ${
+                  isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
+                } ${
+                  toggleSideBar ? "confirm01" : "confirm"
+                } grow pt-[10px] pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative 
                 md:rounded-[11.5px] md:mx-auto md:my-auto md:overflow-auto`}
               >
                 <div className="w-full flex justify-end border-b-[6px] border-primary px-[12px] md:h-[25px] lg:border-b-[10px] lg:mt-[20px]">
@@ -1161,8 +1304,10 @@ localStorage.setItem("getToken", newToken);
                   </h2>
                   <h2 className="lg:text-[16px] md:text-[12px] md:px-[30px] lg:leading-[24px] text-[10px] leading-[12px] text-center mt-[26px] mx-[10px] mb-[20px]">
                     You are about to purchase{" "}
-                  <span className="font-bold">{selectedProductAirtel + " " + selectedOptionAirtel}</span> from
-                    your {walletNameAirtel + " Wallet"} to
+                    <span className="font-bold">
+                      {selectedProductAirtel + " " + selectedOptionAirtel}
+                    </span>{" "}
+                    from your {walletNameAirtel + " Wallet"} to
                   </h2>
 
                   <div className="flex flex-col gap-[15px] px-[20px] mt-[50px] md:gap-[25px]">
@@ -1200,8 +1345,10 @@ localStorage.setItem("getToken", newToken);
                         Plan
                       </h2>
                       <div className="flex gap-1">
-                        <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px]
-                         md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                        <h2
+                          className="text-[10px] leading-[12px] capitalize md:text-[12px]
+                         md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]"
+                        >
                           {selectedProductAirtel + " " + selectedOptionAirtel}
                         </h2>
                       </div>
@@ -1261,46 +1408,77 @@ localStorage.setItem("getToken", newToken);
                         </h2>
                       </div>
                     </div>
-                      <div className="flex text-[10px] md:text-[14px] w-[100%] mx-auto justify-between font-semibold lg:text-[16px]">
-                    <span className="text-[#0008]">Points Earned</span>
-                    <span className="text-[#2ED173]">+2.00</span>
-                  </div>
+                    <div className="flex text-[10px] md:text-[14px] w-[100%] mx-auto justify-between font-semibold lg:text-[16px]">
+                      <span className="text-[#0008]">Points Earned</span>
+                      <span className="text-[#2ED173]">+2.00</span>
+                    </div>
 
-                      <div className="bg-[#F6F7F7] w-[95%] h-auto my-5 lg:my-8 flex py-[7px] 
-                                             justify-between items-center px-[4%] mx-auto rounded-[10px]">
-                                                     <div className="flex flex-col gap-2  ">
-                                                       <div className="flex gap-[10px] justify-center items-center">
-                                                         <img
-                                                           className="w-[16px] h-[16px] bg-white"
-                                                           src={image}
-                                                           alt="/"
-                                                         />
-                                                         <div className="flex gap-[10px] items-center">
-                                                             <p className="text-[12px] md:text-[14px] leading-[20px] lg:leading-[22px]  lg:text-[16px] font-[500]">
-                                                         Available Balance {"  "} 
-                                                          </p>
-                                                          <span className="text-black">
-                                                           {`(${newBalance === "" || newBalance === null ? updateBalance : newBalance})`}
-                                                         </span>
-                                                         </div>
-                                                       </div>
-                                                     <span className="text-gray-500 text-[14px] font-[400] leading-[20px]
-                                                          lg:text-[16px] lg:leading-[22px] text-left">
-                                                            {balanceStatus}
-                                                            </span>
-                                                     </div>
-                                     
-                                                     <img
-                                                       src={Select}
-                                                       alt=""
-                                                       className="w-[12px] h-[12px] md:w-[50px] md:h-[20px] lg:w-[80px] lg:h-[30px]"
-                                                     />
-                                                   </div>
+                    <div
+                      className="bg-[#F6F7F7] w-[95%] h-auto my-5 lg:my-8 flex py-[7px] 
+                                             justify-between items-center px-[4%] mx-auto rounded-[10px]"
+                    >
+                      <div className="flex flex-col gap-2  ">
+                        <div className="flex gap-[10px] justify-center items-center">
+                          <img
+                            className="w-[16px] h-[16px] bg-white"
+                            src={image}
+                            alt="/"
+                          />
+                          <div className="flex gap-[10px] items-center">
+                            <p className="text-[12px] md:text-[14px] leading-[20px] lg:leading-[22px]  lg:text-[16px] font-[500]">
+                              Available Balance {"  "}
+                            </p>
+                            <span className="text-black">
+                              {`(${
+                                newBalance === "" || newBalance === null
+                                  ? `${
+                                      cleanUpBalanceToNumericOnly > 1
+                                        ? cleanUpBalanceToNumericOnly?.toLocaleString(
+                                            "en-NG",
+                                            {
+                                              style: "currency",
+                                              currency: "NGN",
+                                            }
+                                          )
+                                        : "₦"
+                                    }`
+                                  : `${
+                                      balanceStringToNum > 1
+                                        ? balanceStringToNum?.toLocaleString(
+                                            "en-NG",
+                                            {
+                                              style: "currency",
+                                              currency: "NGN",
+                                            }
+                                          )
+                                        : "₦"
+                                    }`
+                              })`}
+                            </span>
+                          </div>
+                        </div>
+                        <span
+                          className="text-gray-500 text-[14px] font-[400] leading-[20px]
+                                                          lg:text-[16px] lg:leading-[22px] text-left"
+                        >
+                          {balanceStatus}
+                        </span>
+                      </div>
+
+                      <img
+                        src={Select}
+                        alt=""
+                        className="w-[12px] h-[12px] md:w-[50px] md:h-[20px] lg:w-[80px] lg:h-[30px]"
+                      />
+                    </div>
 
                     <div className="flex items-center justify-center">
-                      <button disabled={CheckSufficiency}
-                        className= {`w-full md:w-fit  text-white rounded-md px-[28px] text-[10px] md:text-[12px] leading-[15px]
-                           lg:text-[16px] lg:leading-[24px] py-[15px] md:py-[10px] ${CheckSufficiency ? "bg-gray-400" :" bg-primary"}  `}
+                      <button
+                        disabled={CheckSufficiency}
+                        className={`w-full md:w-fit  text-white rounded-md px-[28px] text-[10px] md:text-[12px] leading-[15px]
+                           lg:text-[16px] lg:leading-[24px] py-[15px] md:py-[10px] ${
+                             CheckSufficiency ? "bg-gray-400" : " bg-primary"
+                           }  `}
                         onClick={() => {
                           handleConfirm();
                         }}
@@ -1314,18 +1492,18 @@ localStorage.setItem("getToken", newToken);
             </Modal>
           )}
 
-
           {airtelpurchaseStatus && (
             <Modal>
               <div
-                className={` ${toggleSideBar ? "confirm02" : "confirm2"
-                  } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px] my-[20px]
+                className={` ${
+                  toggleSideBar ? "confirm02" : "confirm2"
+                } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px] my-[20px]
                   h-[200px] overflow-y-scroll md:overflow-y-auto md:h-auto`}
               >
-               
-
-                <hr className="h-[8px] bg-[#04177f] lg:mt-[30px] border-none  
-                md:mt-[2%] mt-[30px] md:h-[10px]" />
+                <hr
+                  className="h-[8px] bg-[#04177f] lg:mt-[30px] border-none  
+                md:mt-[2%] mt-[30px] md:h-[10px]"
+                />
                 <div className="md:mt-[15%] lg:mt-[10%]">
                   <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[8%] md:my-[5%] lg:my-[3%]">
                     Transaction Failed
@@ -1341,14 +1519,15 @@ localStorage.setItem("getToken", newToken);
                 <div className="flex justify-center items-center gap-[20px]">
                   <button
                     onClick={(e) => {
-                     DoneChangeHandler()
+                      DoneChangeHandler();
                     }}
                     className="bg-[#04177f] my-[%] w-[100px] cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[%] md:rounded-[8px] md:text-[16px] lg:w-[px] lg:h-[38px] lg:my-[2%]"
                   >
                     Done
                   </button>
 
-                  <Link to="/AirtelFailedReceipt"
+                  <Link
+                    to="/AirtelFailedReceipt"
                     state={{
                       networkName: "AIRTEL",
                       selectedProduct: selectedProductAirtel,
@@ -1358,8 +1537,8 @@ localStorage.setItem("getToken", newToken);
                       airtelrefNumber: airtelrefNumber,
                       airtelorderID: airtelOrderID,
                       airteldescription: airtelDescription,
-                       airtelReceiptInfo : airtelReceiptInfo,
-                       inputValue : inputValue
+                      airtelReceiptInfo: airtelReceiptInfo,
+                      inputValue: inputValue,
                     }}
                   >
                     <button
@@ -1382,8 +1561,9 @@ localStorage.setItem("getToken", newToken);
           {confirm && (
             <Modal>
               <div
-                className={` ${toggleSideBar ? "confirm02" : "confirm2"
-                  } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
+                className={` ${
+                  toggleSideBar ? "confirm02" : "confirm2"
+                } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
               >
                 <div className="flex justify-end px-2">
                   <img
@@ -1401,32 +1581,25 @@ localStorage.setItem("getToken", newToken);
                   </p>
                   <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
                     <div className=" flex justify-center items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
-                      {" "}
-                      {isVisible ? (
-                        <OtpInput
-                          value={inputPin}
-                          inputType="tel"
-                          onChange={(pin) => {
-                            setInputPin(pin);
-                            console.log("PIN being entered:", pin);
-                          }}
-                          numInputs={4}
-                          shouldAutoFocus={true}
-                          inputStyle={{
-                            color: "#403f3f",
-                            width: 30,
-                            height: 30,
-                            borderRadius: 3,
-                          }}
-                          renderInput={(props) => (
-                            <input {...props} className="inputOTP mx-[3px]" />
-                          )}
-                        />
-                      ) : (
-                        <div className="text-[24px] md:text-[24px] mt-1">
-                          * * * *{" "}
-                        </div>
-                      )}
+                      <OtpInput
+                        value={inputPin}
+                        inputType={!isVisible ? "tel" : "password"}
+                        onChange={(pin) => {
+                          setInputPin(pin);
+                          console.log("PIN being entered:", pin);
+                        }}
+                        numInputs={4}
+                        shouldAutoFocus={true}
+                        inputStyle={{
+                          color: "#403f3f",
+                          width: 30,
+                          height: 30,
+                          borderRadius: 3,
+                        }}
+                        renderInput={(props) => (
+                          <input {...props} className="inputOTP mx-[3px]" />
+                        )}
+                      />
                       <div
                         className="text-[#0003] text-[13px] md:text-3xl"
                         onClick={toggleVisibility}
@@ -1438,8 +1611,10 @@ localStorage.setItem("getToken", newToken);
                       Forgot Pin ?
                     </p>
                     {errorMessage && (
-                      <p className ="text-center text-[14px] text-red-500 lg:text-[16px]
-                       font-[500] leading-[18px] lg:leading-[20px]">
+                      <p
+                        className="text-center text-[14px] text-red-500 lg:text-[16px]
+                       font-[500] leading-[18px] lg:leading-[20px]"
+                      >
                         Incorrect pin
                       </p>
                     )}
@@ -1449,26 +1624,26 @@ localStorage.setItem("getToken", newToken);
                 <button
                   onClick={() => {
                     console.log("inputPin", inputPin);
-                    const AirtelDataHandler =   () => {
-                        setConfirm(false); // Close modal on PIN success
-                        inputPinHandler(); // Proceed with purchase
+                    const AirtelDataHandler = () => {
+                      setConfirm(false); // Close modal on PIN success
+                      inputPinHandler(); // Proceed with purchase
+                    };
+                    const setFailed = async (ErrorType) => {
+                      if (ErrorType === "unauthorised") {
+                        VerifyTransPin(
+                          inputPin,
+                          (ErrorType) => {
+                            if (ErrorType === "unauthorised") {
+                              return setSessionModal(true);
+                            }
+                          },
+                          setLoading,
+                          setErrorMessage,
+                          AirtelDataHandler
+                        );
                       }
-             const setFailed =async(ErrorType)=> {
-               if(ErrorType === "unauthorised"){
-                  VerifyTransPin(
-                      inputPin,
-                      (ErrorType)=> {
-                        if(ErrorType ==="unauthorised"){
-                          return setSessionModal(true)
-                        }
-                      },
-                      setLoading,
-                      setErrorMessage,
-                      AirtelDataHandler
-                    );
-               }
-             }
-                      //Function to verify the pin and handle the purchase of users
+                    };
+                    //Function to verify the pin and handle the purchase of users
                     VerifyTransPin(
                       inputPin,
                       setFailed,
@@ -1478,8 +1653,9 @@ localStorage.setItem("getToken", newToken);
                     );
                   }}
                   disabled={inputPin.length !== 4}
-                  className={`${inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
-                    } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                  className={`${
+                    inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
+                  } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
                 >
                   Purchase
                 </button>
@@ -1491,8 +1667,9 @@ localStorage.setItem("getToken", newToken);
             <Modal>
               {/* <TransactFailedPopUp/> */}
               <div
-                className={` scroll-bar ${toggleSideBar ? "confirm01 w-[90%]" : "confirm w-[90%]"
-                  } bg-white rounded-[12px] md:my-auto mx-auto overflow-auto lg:mx-auto lg:my-auto`}
+                className={` scroll-bar ${
+                  toggleSideBar ? "confirm01 w-[90%]" : "confirm w-[90%]"
+                } bg-white rounded-[12px] md:my-auto mx-auto overflow-auto lg:mx-auto lg:my-auto`}
               >
                 <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
                   <img
@@ -1546,8 +1723,10 @@ localStorage.setItem("getToken", newToken);
                           className="w-full h-full object-cover"
                         />
                       </div>
-                      <h2 className="text-[10px] leading-[12px]
-                       capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                      <h2
+                        className="text-[10px] leading-[12px]
+                       capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]"
+                      >
                         AIRTEL
                       </h2>
                     </div>
@@ -1570,7 +1749,7 @@ localStorage.setItem("getToken", newToken);
                     </h2>
                     <div className="flex gap-1">
                       <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                       {selectedProductAirtel + " " + selectedOptionAirtel}
+                        {selectedProductAirtel + " " + selectedOptionAirtel}
                       </h2>
                     </div>
                   </div>
@@ -1652,7 +1831,8 @@ localStorage.setItem("getToken", newToken);
                     </button>
                   </Link>
 
-                  <Link to="/AirtelReceipt"
+                  <Link
+                    to="/AirtelReceipt"
                     state={{
                       selectedProduct: selectedProductAirtel,
                       inputValue: inputValue,
@@ -1663,8 +1843,9 @@ localStorage.setItem("getToken", newToken);
                       airtelrefNumber: airtelrefNumber,
                       airtelorderID: airtelOrderID,
                       airteldescription: airtelDescription,
-                      airtelReceiptInfo : airtelReceiptInfo
-                    }}>
+                      airtelReceiptInfo: airtelReceiptInfo,
+                    }}
+                  >
                     <button
                       onClick={handleReceipt}
                       className={`border-[1px] w-[100px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-[600] h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[12px] lg:w-[163px] lg:h-[38px] lg:my-[2%] md:px-[60px] md:h-[30px]`}
@@ -1677,22 +1858,21 @@ localStorage.setItem("getToken", newToken);
             </Modal>
           )}
 
-
-         
-        <div className="py-[30px] lg:py-[60px] mt-10">
+          <div className="py-[30px] lg:py-[60px] mt-10">
             <button
               className={`w-full md:w-fit text-white rounded-md px-[28px] text-[10px] md:px-[30px] 
                 md:py-[10px] md:text-[13px] md:font-[600] leading-[15px] lg:text-[16px]
                  lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] 
-                 lg:leading-[24px] py-[15px] ${!selectedProductAirtel ||
-                !selectedOptionAirtel ||
-                !inputValue ||
-                !selectedAmountAirtel ||
-                !paymentSelected ||
-                !validatePhoneNumber
-                ? "bg-[#63616188] cursor-not-allowed"
-                : "bg-primary"
-                }`}
+                 lg:leading-[24px] py-[15px] ${
+                   !selectedProductAirtel ||
+                   !selectedOptionAirtel ||
+                   !inputValue ||
+                   !selectedAmountAirtel ||
+                   !paymentSelected ||
+                   !validatePhoneNumber
+                     ? "bg-[#63616188] cursor-not-allowed"
+                     : "bg-primary"
+                 }`}
               onClick={handleProceed}
               disabled={
                 !selectedProductAirtel ||
@@ -1710,31 +1890,32 @@ localStorage.setItem("getToken", newToken);
 
         {/* =======================FOOTER=================================== */}
         <div
-          className={`${isDarkMode ? "bg-black text-white flex gap-[15px] justify-center items-center  pb-[25%] md:pb-[12%] lg:pb-0 py-[40%]" : 
-            "flex gap-[15px] justify-center items-center mt-[100%] pb-[25%] md:pb-[12%] md:mt-[40%] lg:mt-[40%] lg:pb-0"
-            } `}
+          className={`${
+            isDarkMode
+              ? "bg-black text-white flex gap-[15px] justify-center items-center  pb-[25%] md:pb-[12%] lg:pb-0 py-[40%]"
+              : "flex gap-[15px] justify-center items-center mt-[100%] pb-[25%] md:pb-[12%] md:mt-[40%] lg:mt-[40%] lg:pb-0"
+          } `}
         >
           <div className="text-[10px] md:text-[12px] lg:text-[14px]">
             You need help ?
           </div>
           <Link to="/ContactUs">
             <div
-              className={`${isDarkMode ? "border" : "bg-[#04177f]"
-                } text-[10px] p-1 text-white rounded-[8px] lg:text-[18px]`}
+              className={`${
+                isDarkMode ? "border" : "bg-[#04177f]"
+              } text-[10px] p-1 text-white rounded-[8px] lg:text-[18px]`}
             >
               Contact Us
             </div>
           </Link>
         </div>
       </div>
-        {loading && (
-            <Modal>
-              <Loader/>
-            </Modal>
-          )}
-          {sessionModal && (
-            <HandleUserSession/>
-          )}
+      {loading && (
+        <Modal>
+          <Loader />
+        </Modal>
+      )}
+      {sessionModal && <HandleUserSession />}
     </DashBoardLayout>
   );
 };

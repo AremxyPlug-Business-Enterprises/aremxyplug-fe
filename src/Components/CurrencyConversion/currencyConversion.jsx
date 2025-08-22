@@ -12,10 +12,13 @@ import { Modal } from "../Screens/Modal/Modal";
 import mwFeature from "./Images/MW-feature.svg";
 import cryptoFeature from "./Images/cryptofeature.svg";
 import styles from "../AirTimePage/AirTime.module.css";
+import CurrencyConversionModal from "./CurrencyConversionModal";
 
 const CurrencyConversion = () => {
   const [modalOne, setModalOne] = useState(false);
   const [modalTwo, setModalTwo] = useState(false);
+  const [showFiatPopUp, setShowFiatPopUp] = useState(false);
+  const [showAirtimePopUp, setShowAirtimePopUp] = useState(false);
 
   const handleModalOne = () => {
     setModalOne(true);
@@ -68,7 +71,12 @@ const CurrencyConversion = () => {
                   className="flex flex-col gap-[19px] lg:gap-[40px] md:gap-[28px]"
                 >
                   {/* fiat conversion */}
-                  <Link to="/fiat">
+                  <Link
+                    // to="/fiat"
+                    onClick={() => {
+                      setShowFiatPopUp(true);
+                    }}
+                  >
                     <div className="conversionLists cursor-pointer flex pl-[5px] pr-[14px] md:pr-[28px] lg:pr-[45px] md:pl-[8.59px] lg:pl-[15px] justify-between  mx-auto py-[7px] md:py-[9px] lg:py-[15px] rounded-[4px] md:rounded-[6.88px] lg:rounded-[12px]">
                       <div className="flex gap-2 self-center">
                         <img
@@ -94,6 +102,14 @@ const CurrencyConversion = () => {
                       </div>
                     </div>
                   </Link>
+                  {showFiatPopUp && (
+                    <CurrencyConversionModal
+                      title="Fiat Conversion"
+                      image="./Images/wallet/comingSoon.png"
+                      onClick={() => setShowFiatPopUp(false)}
+                      tag="This Feature is Currently Not Available."
+                    />
+                  )}
                   {/* crypto conversion */}
                   <div>
                     <div
@@ -219,7 +235,12 @@ const CurrencyConversion = () => {
                   )}{" "}
                   {/* airtime conversion */}
                   <div>
-                    <Link to="/airtime-conversion">
+                    <Link
+                      // to="/airtime-conversion"
+                      onClick={() => {
+                        setShowAirtimePopUp(true);
+                      }}
+                    >
                       <div className="conversionLists cursor-pointer flex pl-[5px] pr-[14px] md:pr-[28px] lg:pr-[45px] md:pl-[8.59px] lg:pl-[15px] justify-between  mx-auto py-[7px] md:py-[9px] lg:py-[15px] rounded-[4px] md:rounded-[6.88px] lg:rounded-[12px]">
                         <div className="flex gap-2 self-center">
                           <img
@@ -247,6 +268,14 @@ const CurrencyConversion = () => {
                       </div>
                     </Link>
                   </div>
+                  {showAirtimePopUp && (
+                    <CurrencyConversionModal
+                      title="Airtime Conversion"
+                      image="./Images/wallet/comingSoon.png"
+                      onClick={() => setShowAirtimePopUp(false)}
+                      tag="This Feature is Currently Not Available."
+                    />
+                  )}
                   {/* points redeemed */}
                   <Link to="/point-redeem">
                     <div className="conversionLists cursor-pointer flex pl-[5px] pr-[14px] md:pr-[28px] lg:pr-[45px] md:pl-[8.59px] lg:pl-[15px] justify-between  mx-auto py-[7px] md:py-[9px] lg:py-[15px] rounded-[4px] md:rounded-[6.88px] lg:rounded-[12px]">

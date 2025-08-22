@@ -1197,6 +1197,7 @@ export default function NabtebEducationPins() {
                       }`}
                       onClick={() => {
                         confirmButton();
+                        setInputPin("");
                       }}
                       disabled={CheckSufficiency}
                     >
@@ -1238,10 +1239,9 @@ export default function NabtebEducationPins() {
                       <div className="flex flex-col items-center lg:gap-[0px] gap-[5px] font-extrabold">
                         <div className="flex items-center gap-2.5">
                           {" "}
-                          {isVisible ? (
                             <OtpInput
                               value={inputPin}
-                              inputType="tel"
+                              inputType={!isVisible ? "tel" : "password"}
                               onChange={setInputPin}
                               numInputs={4}
                               shouldAutoFocus={true}
@@ -1267,11 +1267,6 @@ export default function NabtebEducationPins() {
                                 />
                               )}
                             />
-                          ) : (
-                            <div className="text-[24px] md:text-[24px] mt-1">
-                              * * * *{" "}
-                            </div>
-                          )}
                           <div
                             className="text-[#0003]"
                             onClick={toggleVisibility}
