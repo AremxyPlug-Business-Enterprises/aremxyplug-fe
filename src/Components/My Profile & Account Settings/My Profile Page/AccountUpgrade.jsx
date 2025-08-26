@@ -30,7 +30,7 @@ const AccountUpgrade = () => {
         <div className="grid gap-[20px] md:grid-cols-2">
           <div className={`${toggleSideBar ? "md:h-[%]" : "md:h-full" } px-[0px] border-[1px] w-full  h-full rounded-tr-[10px] rounded-tl-[10px] rounded-br-[10px] rounded-bl-[10px]`}>
             <div className="top rounded-tr-[10px] h-[20%] rounded-tl-[10px] mx-auto text-center md:pt-[%] md:pb-[20%] lg:pb-[%] font-semibold">
-              <p className="text-[10px] md:text-[14px] lg:text-[18px] pt-[5%]">Level 1 : End User</p>
+              <p className="text-[10px] md:text-[14px] lg:text-[18px] pt-[5%]">Level 1 : Regular</p>
               <button className="mt-[5%] text-[#FFFFFF] bg-[#04177F] rounded-[5px] px-[15px] py-[7.5px] md:px-[10px] md:py-[5px] text-[8px] md:text-[10px] lg:text-[12px]">
                 Current Level
               </button>
@@ -74,7 +74,7 @@ const AccountUpgrade = () => {
 
           <div className={`${toggleSideBar ? "md:h-[%]" : "md:h-full" } px-[0px] border-[1px] w-full  h-full rounded-tr-[10px] rounded-tl-[10px] rounded-br-[10px] rounded-bl-[10px]`}>
             <div className="top1 rounded-tr-[10px] h-[20%] rounded-tl-[10px] pt-[10%] pb-[5%] mx-auto text-center md:pt-[10%] font-semibold">
-              <p className="text-[10px] md:text-[14px] lg:text-[18px]">Level 2 : Verified User</p>
+              <p className="text-[10px] md:text-[14px] lg:text-[18px]">Level 2 : Merchant</p>
             </div>
 
             <div className={`bottom ${toggleSideBar ? "md:text-[10px] md:pt-[%] " : "md:text-[14px]"} border-[1px] h-[80%] mb-[15%] md:mb-[-60%] lg:mb-[-3%] text-center md:text-start md:pl-[20px] text-[10px] lg:text-[18px] rounded-br-[10px] rounded-bl-[10px]`}>

@@ -24,9 +24,11 @@ import Smile1 from "../DataBundles/DataBundles-Images/Smile1.svg";
 import Spectranet1 from "../DataBundles/DataBundles-Images/Spectranet1.svg";
 import DataBalance2 from "../DataBundles/DataBundles-Images/DataBalance2.svg";
 import { Modal } from "../../../../Screens/Modal/Modal";
+import BulkDataPopUp from "../DataTopUp-Images/BulkDataPopUp.svg"
 
 const DataBundlesPage = () => {
-  const { isDarkMode,  
+  const {
+    isDarkMode,
     setSelectedOptionMtn,
     setSelectedProductMtn,
     setSelectedProductAirtel,
@@ -36,73 +38,80 @@ const DataBundlesPage = () => {
     setRecipientNamesMtn,
     setRecipientPhoneNumberMtn,
     setWalletNameMtn,
-     setSelectedOptionAirtel,
+    setSelectedOptionAirtel,
     setSelectedAmountAirtel,
     setRecipientNamesAirtel,
     setRecipientPhoneNumberAirtel,
-     setWalletNameAirtel,
-     setSelectedOptionGlo,
+    setWalletNameAirtel,
+    setSelectedOptionGlo,
     setSelectedAmountGlo,
     setRecipientNamesGlo,
     setRecipientPhoneNumberGlo,
-   setWalletNameGlo,
-     setSelectedOptionEtisalat,
+    setWalletNameGlo,
+    setSelectedOptionEtisalat,
     setSelectedAmountEtisalat,
     setRecipientNamesEtisalat,
     setRecipientPhoneNumberEtisalat,
-     setWalletNameEtisalat,
-     toggleSideBar,
+    setWalletNameEtisalat,
+    toggleSideBar,
     setAccountId,
     setEmailId,
- } = useContext(ContextProvider);
+  } = useContext(ContextProvider);
 
   const [codes, setCodes] = useState(false);
+  const [smilePopup, setSmilePopup] = useState(false);
+  const [spectraPopup, setSpectraPopup] = useState(false);
 
-  
+  const showSmilePopup = () => {
+    setSmilePopup(true);
+  };
+  const showSpectraPopup = () => {
+    setSpectraPopup(true);
+  };
 
-   const handleChangeMtn = () => {
+  const handleChangeMtn = () => {
     setSelectedOptionMtn("");
     setSelectedAmountMtn("");
     setRecipientNamesMtn("");
     setRecipientPhoneNumberMtn("");
     setWalletNameMtn("");
-    setSelectedProductMtn("")
+    setSelectedProductMtn("");
     setAccountId("");
     setEmailId("");
-   };
+  };
 
-   const handleChangeAirtel = ()=> {
-     setSelectedOptionAirtel("");
+  const handleChangeAirtel = () => {
+    setSelectedOptionAirtel("");
     setSelectedAmountAirtel("");
     setRecipientNamesAirtel("");
     setRecipientPhoneNumberAirtel("");
     setWalletNameAirtel("");
-    setSelectedProductAirtel("")
-   }
+    setSelectedProductAirtel("");
+  };
 
-   const handleChangeGlo = ()=> {
-     setSelectedOptionGlo("");
+  const handleChangeGlo = () => {
+    setSelectedOptionGlo("");
     setSelectedAmountGlo("");
     setRecipientNamesGlo("");
     setRecipientPhoneNumberGlo("");
     setWalletNameGlo("");
-    setSelectedProductGlo("")
-   }
+    setSelectedProductGlo("");
+  };
 
-   const handleChangeEtisalat = ()=> {
-     setSelectedOptionEtisalat("");
+  const handleChangeEtisalat = () => {
+    setSelectedOptionEtisalat("");
     setSelectedAmountEtisalat("");
     setRecipientNamesEtisalat("");
     setRecipientPhoneNumberEtisalat("");
     setWalletNameEtisalat("");
-    setSelectedProductEtisalat("")
-   }
+    setSelectedProductEtisalat("");
+  };
 
   const handleCodes = () => {
     setCodes(false);
     setCodes(true);
   };
-  
+
   return (
     <DashBoardLayout>
       <div
@@ -120,35 +129,39 @@ const DataBundlesPage = () => {
           }`}
         >
           <div
-                    id="DataBundle"
-                    className="w-full min-h-[90px] gap-[5px] md:h-[112.29px] lg:h-[196px]
+            id="DataBundle"
+            className="w-full min-h-[90px] gap-[5px] md:h-[112.29px] lg:h-[196px]
                      md:rounded-[11.5px] rounded-[7px]
                      md:mt-[-1px] px-[10px] lg:gap-[50px] 
                       lg:px-[30px] lg:rounded-[20px] lg:py-[20px] 
                        flex justify-between items-center lg:ml-[-20px] 
                        lg:w-[102%] 2xl:w-full 2xl:ml-0"
-                  >
-                    <div className="w-[100%] pt-[19px]
-                     lg:pt-[20px] pl-[8.5px] md:pl-[9px]">
-                      <p className="text-[11px] mb-2 font-bold uppercase 
-                      w-[100%] md:text-[16px] md:w-[70%] lg:w-[70%] lg:text-[20px] 2xl:w-[80%] 2xl:text-[24px] lg:mb-4">
-                        DATA BUNDLES, AFFORDABLE AND AUTOMATED.
-                      </p>
-                      <p className="text-[10px] font-[400] leading-[13.4px] mb-4 md:text-[10px] md:leading-[12.2px] w-[90%] md:w-[75%] lg:w-[75%] 2xl:w-[85%] 2xl:mt-[5px] lg:mt-[20px] lg:text-[16px] lg:leading-[26px] 2xl:text-[20px] lg:mb-[20px]">
-                        Top up your mobile sim with our automated data bundles directly
-                        from network providers, enjoy discounts without any hassle or
-                        hidden fee.
-                      </p>
-                    </div>
-        
-                    <div className="w-[91px] h-[66px] lg:w-[199px] lg:h-[199px] lg:mt-[40px]">
-                      <img
-                        src={DataBundle}
-                        alt=""
-                        className="w-[55.482px] h-full md:w-[98px] md:h-[px] lg:w-[166.447px] lg:h-[150px]"
-                      />
-                    </div>
-                  </div>
+          >
+            <div
+              className="w-[100%] pt-[19px]
+                     lg:pt-[20px] pl-[8.5px] md:pl-[9px]"
+            >
+              <p
+                className="text-[11px] mb-2 font-bold uppercase 
+                      w-[100%] md:text-[16px] md:w-[70%] lg:w-[70%] lg:text-[20px] 2xl:w-[80%] 2xl:text-[24px] lg:mb-4"
+              >
+                DATA BUNDLES, AFFORDABLE AND AUTOMATED.
+              </p>
+              <p className="text-[10px] font-[400] leading-[13.4px] mb-4 md:text-[10px] md:leading-[12.2px] w-[90%] md:w-[75%] lg:w-[75%] 2xl:w-[85%] 2xl:mt-[5px] lg:mt-[20px] lg:text-[16px] lg:leading-[26px] 2xl:text-[20px] lg:mb-[20px]">
+                Top up your mobile sim with our automated data bundles directly
+                from network providers, enjoy discounts without any hassle or
+                hidden fee.
+              </p>
+            </div>
+
+            <div className="w-[91px] h-[66px] lg:w-[199px] lg:h-[199px] lg:mt-[40px]">
+              <img
+                src={DataBundle}
+                alt=""
+                className="w-[55.482px] h-full md:w-[98px] md:h-[px] lg:w-[166.447px] lg:h-[150px]"
+              />
+            </div>
+          </div>
 
           {/* =========================Select/Add Recipient===================== */}
           <div className="flex gap-[10%] md:gap-[8%] lg:gap-[7%] mt-[40px] lg:mt-[60px]">
@@ -206,7 +219,7 @@ const DataBundlesPage = () => {
             </div>
             <div className="hidden md:w-1/2 md:block"></div>
           </div>
-          
+
           <div className="flex items-center my-[10%] gap-[8px] md:my-[5%] md:text-[18px] lg:text-[20px]">
             <p className="text-[#7c7c7c] text-[10px] leading-[130%] md:text-[12px] lg:text-[16px] 2xl:text-[20px]">
               Select Network Type
@@ -289,11 +302,13 @@ const DataBundlesPage = () => {
               </div>
             </Link>
 
-            <Link to="/SmileDataBundle">
+            <Link
+              // to="/SmileDataBundle"
+              onClick={showSmilePopup}
+            >
               <div
                 id="Network"
                 className="rounded-[4px] relative flex flex-col justify-center items-center"
-              
               >
                 <img src={Smile} alt="" className="w-full" />
                 <img
@@ -304,11 +319,13 @@ const DataBundlesPage = () => {
               </div>
             </Link>
 
-            <Link to="/SpectranetDataBundle">
+            <Link
+              // to="/SpectranetDataBundle"
+              onClick={showSpectraPopup}
+            >
               <div
                 id="Network"
                 className="rounded-[4px] relative flex flex-col justify-center items-center"
-              
               >
                 <img src={Spectranet} alt="" className="w-full" />
                 <img
@@ -319,15 +336,100 @@ const DataBundlesPage = () => {
               </div>
             </Link>
           </div>
-          
+
+          {smilePopup && (
+            <Modal>
+              <div
+                className={`${
+                  toggleSideBar ? "datapopup011" : "datapopup1 datapopup2 "
+                } bg-white `}
+              >
+                <div
+                  className={`${isDarkMode ? "bg-[#000]" : "bg-[]"}
+            flex flex-col justify-center z-[100] lg:ml-[10px] items-center`}
+                >
+                  <div>
+                    <p className="text-[10px] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[3%]">
+                      Smile Data Bundle
+                    </p>
+                    <p className="text-[10px] md:text-[16px] font-[600] text-[#04177F] lg:text-[16px]">
+                      This Feature is Currently Not Available.
+                    </p>
+                  </div>
+                  <img
+                    src={BulkDataPopUp}
+                    alt=""
+                    className="img2 mobile-desktop mx-auto mt-[20px] md:mt-[5%] md:w-[30%] md:h-[70%] md:mx-auto w-[143px] h-[100px] lg:w-[300px] lg:h-[200px] lg:mx-auto lg:mt-[8%] 2xl:mt-[5%] 2xl:mx-auto"
+                  />
+                </div>
+                <div className="mobile-desktop mt-[20px] flex flex-col gap-[5px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
+                  <p className="text-[8px] font-extrabold text-end float-right ml-[60%] md:ml-[70%] md:text-[12px] mt-[10px] lg:text-[13px] 2xl:text-[15px]">
+                    Coming Soon...
+                  </p>
+                  <button
+                    className={` ${
+                      isDarkMode ? "border" : "bg-[#04177f] "
+                    } cursor-pointer text-white text-[10px] h-[40px] rounded-[5px] md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[25%] lg:mx-auto`}
+                    onClick={()=>{
+                      setSmilePopup(false)
+                    }}
+                  >
+                    Okay
+                  </button>
+                </div>
+              </div>
+            </Modal>
+          )}
+          {spectraPopup && (
+            <Modal>
+              <div
+                className={`${
+                  toggleSideBar ? "datapopup011" : "datapopup1 datapopup2 "
+                } bg-white `}
+              >
+                <div
+                  className={`${isDarkMode ? "bg-[#000]" : "bg-[]"}
+            flex flex-col justify-center z-[100] lg:ml-[10px] items-center`}
+                >
+                  <div>
+                    <p className="text-[10px] text-center pt-[5%] font-extrabold md:text-[16px] lg:text-[25px] lg:pt-[3%]">
+                      Spectranet Data Bundle
+                    </p>
+                    <p className="text-[10px] md:text-[16px] font-[600] text-[#04177F] lg:text-[16px]">
+                      This Feature is Currently Not Available.
+                    </p>
+                  </div>
+                  <img
+                    src={BulkDataPopUp}
+                    alt=""
+                    className="img2 mobile-desktop mx-auto mt-[20px] md:mt-[5%] md:w-[30%] md:h-[70%] md:mx-auto w-[143px] h-[100px] lg:w-[300px] lg:h-[200px] lg:mx-auto lg:mt-[8%] 2xl:mt-[5%] 2xl:mx-auto"
+                  />
+                </div>
+                <div className="mobile-desktop mt-[20px] flex flex-col gap-[5px] pb-[5%] 2xl:mt-[1%] lg:mt-[1%] md:mt-[5%] md:pr-[10px]">
+                  <p className="text-[8px] font-extrabold text-end float-right ml-[60%] md:ml-[70%] md:text-[12px] mt-[10px] lg:text-[13px] 2xl:text-[15px]">
+                    Coming Soon...
+                  </p>
+                  <button
+                    className={` ${
+                      isDarkMode ? "border" : "bg-[#04177f] "
+                    } cursor-pointer text-white text-[10px] h-[40px] rounded-[5px] md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[25%] lg:mx-auto`}
+                    onClick={()=>{
+                      setSpectraPopup(false)
+                    }}
+                  >
+                    Okay
+                  </button>
+                </div>
+              </div>
+            </Modal>
+          )}
+
           {codes && (
             <Modal>
               (
               <div
                 className={`code ${
-                  toggleSideBar
-                    ? "code1"
-                    : "code01"
+                  toggleSideBar ? "code1" : "code01"
                 } overflow-auto w-[90%]`}
               >
                 <img
@@ -422,26 +524,27 @@ const DataBundlesPage = () => {
               )
             </Modal>
           )}
-          
         </section>
         <div
-            className={`${
-              isDarkMode ? "bg-black text-white flex gap-[15px] justify-center items-center  pb-[25%] md:pb-[12%] lg:pb-0 py-[40%]" : "flex gap-[15px] justify-center items-center mt-[100%] pb-[25%] md:pb-[2%] md:mt-[40%] lg:mt-[40%] lg:pb-0"
-            } `}
-          >
-            <div className="text-[10px] md:text-[12px] lg:text-[14px]">
-              You need help ?
-            </div>
-            <Link to="/ContactUs">
-              <div
-                className={`${
-                  isDarkMode ? "bg-[#04177f]" : "bg-[#04177f]"
-                } text-[10px] p-1 text-white rounded-[8px] lg:text-[18px]`}
-              >
-                Contact Us
-              </div>
-            </Link>
+          className={`${
+            isDarkMode
+              ? "bg-black text-white flex gap-[15px] justify-center items-center  pb-[25%] md:pb-[12%] lg:pb-0 py-[40%]"
+              : "flex gap-[15px] justify-center items-center mt-[100%] pb-[25%] md:pb-[2%] md:mt-[40%] lg:mt-[40%] lg:pb-0"
+          } `}
+        >
+          <div className="text-[10px] md:text-[12px] lg:text-[14px]">
+            You need help ?
           </div>
+          <Link to="/ContactUs">
+            <div
+              className={`${
+                isDarkMode ? "bg-[#04177f]" : "bg-[#04177f]"
+              } text-[10px] p-1 text-white rounded-[8px] lg:text-[18px]`}
+            >
+              Contact Us
+            </div>
+          </Link>
+        </div>
       </div>
     </DashBoardLayout>
   );

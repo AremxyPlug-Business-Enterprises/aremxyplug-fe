@@ -158,7 +158,7 @@ const BEDC = () => {
   const updateBalance = passDataBalance?.data?.data
     ? passDataBalance?.data?.data?.data?.balance
     : "";
-const updateBalanceToNumber = Number(updateBalance);
+  const updateBalanceToNumber = Number(updateBalance);
   const newBalanceToNumber = Number(newBalance);
   const otherCurrencyBalance = 0.0;
 
@@ -597,6 +597,7 @@ const updateBalanceToNumber = Number(updateBalance);
   const handleSwitch = () => {
     setInputPinPopUp(true);
     setProceed(false);
+    setInputPin("");
   };
 
   const [isFocused, setIsFocused] = useState(false);
@@ -1329,40 +1330,34 @@ const updateBalanceToNumber = Number(updateBalance);
                 </p>
                 <div className="flex flex-col items-center lg:gap-[0px] gap-[5px] font-extrabold">
                   <div className="flex items-center gap-2.5">
-                    {isVisible ? (
-                      <OtpInput
-                        value={inputPin}
-                        inputType="tel"
-                        onChange={setInputPin}
-                        numInputs={4}
-                        shouldAutoFocus={true}
-                        inputStyle={{
-                          color: isDarkMode ? "#ffffff" : "#000000",
-                          fontWeight: 700,
-                          borderRadius: 4,
-                          height: "35px",
-                          width: "35px",
-                          backgroundColor: isDarkMode ? "black" : "white",
-                          border: isDarkMode
-                            ? "1px solid white"
-                            : "1px solid #ccc",
-                        }}
-                        renderInput={(props) => (
-                          <input
-                            {...props}
-                            className={`inputOTP mx-[2px] ${
-                              isFocused ? "focused" : ""
-                            }`}
-                            onFocus={handleFocus}
-                            onBlur={handleBlur}
-                          />
-                        )}
-                      />
-                    ) : (
-                      <div className="text-[24px] md:text-[24px] mt-1">
-                        * * * *
-                      </div>
-                    )}
+                    <OtpInput
+                      value={inputPin}
+                      inputType={!isVisible ? "tel" : "password"}
+                      onChange={setInputPin}
+                      numInputs={4}
+                      shouldAutoFocus={true}
+                      inputStyle={{
+                        color: isDarkMode ? "#ffffff" : "#000000",
+                        fontWeight: 700,
+                        borderRadius: 4,
+                        height: "35px",
+                        width: "35px",
+                        backgroundColor: isDarkMode ? "black" : "white",
+                        border: isDarkMode
+                          ? "1px solid white"
+                          : "1px solid #ccc",
+                      }}
+                      renderInput={(props) => (
+                        <input
+                          {...props}
+                          className={`inputOTP mx-[2px] ${
+                            isFocused ? "focused" : ""
+                          }`}
+                          onFocus={handleFocus}
+                          onBlur={handleBlur}
+                        />
+                      )}
+                    />
                     <div className="text-[#0003] " onClick={toggleVisibility}>
                       {isVisible ? (
                         <AiFillEye className="w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]" />

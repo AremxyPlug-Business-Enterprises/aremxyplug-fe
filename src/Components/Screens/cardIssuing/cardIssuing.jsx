@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import "./cardIssuing.css";
 import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
 import Bluebutton from "../../bluebutton/Bluebutton";
 import { Link } from "react-router-dom";
+import CurrencyConversionModal from "../../CurrencyConversion/CurrencyConversionModal";
 
 export const primaryColor = "#04177F";
 
@@ -157,6 +158,10 @@ const items = [
 
 function CardIssuing() {
   // const [activeSlide, setActiveSlide] = useState(null);
+  const [showPopup, setShowPopup] = useState(false)
+  const handleShowPopup = () => {
+    setShowPopup(!showPopup)
+  }
 
   return (
     <>
@@ -269,8 +274,16 @@ function CardIssuing() {
         </div> */}
 
         <div className="flex justify-center my-14">
-          <Bluebutton text="Get Your Card Now" />
+          <Bluebutton text="Get Your Card Now" onClick={handleShowPopup} />
         </div>
+        {showPopup && (
+          <CurrencyConversionModal
+            title="Card Issuing"
+            image="./Images/wallet/comingSoon.png"
+            onClick={() => setShowPopup(false)}
+            tag="This Feature is Currently Not Available."
+          />
+        )}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-y-8 sm:gap-y-14 lg:gap-y-20  md:gap-x-14 lg:gap-x-20">
           <div
             className="card_activation_boxshadow2 bg-[#fff] w rounded sm:rounded-md md:rounded-lg lg:rounded-lg border-[1px] border-[#92ABFE] p-4 h-[400px] md:h-[500px]   lg:h-[630px] 

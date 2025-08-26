@@ -37,28 +37,29 @@ export const RecentTransaction = ({transactionResponse, transactionHistoryError,
             isDarkMode ? "border" : ""
           } flex items-center gap-[1px] px-[2px] rounded-[3px] md:px-[8px]`}
         >
-          <div className={`text-[#04177f]`}>Filter by Date </div>
+          <div className={`text-[#04177f] md:text-[9.16px] md:font-semibold lg:text-base lg:font-extrabold`}>Filter by Date </div>
           <img
             className="w-[15px] h-[15px] md:w-[17px] md:h-[17px] lg:w-[20px] lg:h-[20px]"
             src="./Images/dashboardImages/dateImg.png"
             alt=""
           />
         </div>
-        <Link to="/TransactionPage">
+        <div className="flex justify-between gap-[10.3px] md:gap-[17.75px] lg:gap-[31px]">
+          <Link to="/TransactionPage">
           {" "}
           <div
             className={`${
               isDarkMode ? "border" : "bg-[#04177f]"
-            } text-white rounded-[7px] px-[5px] py-[5px] flex items-center md:rounded-[11px] md:px-[7px] md:py-[8px] lg:rounded-[13px] lg:py-[10px] lg:px-[18px]`}
+            } text-white md:w-[5.83375rem] lg:w-[10.1875rem] rounded-[7px] px-[5px] py-[5px] flex items-center justify-center md:rounded-[10px] md:px-[7px] md:py-[8px] lg:rounded-[13px] lg:py-[10px] lg:px-[18px] md:text-[9.16px] md:font-semibold lg:text-base lg:font-extrabold `}
           >
-            Transactions
+            <span>Transactions</span>
           </div>
         </Link>
         <Link to="/wallet-summary">
           <div
             className={`${
               isDarkMode ? "border" : "bg-[#04177f]"
-            } text-white rounded-[7px] px-[5px] py-[5px] md:rounded-[11px] md:px-[9px] md:py-[8px] lg:rounded-[13px] lg:py-[10px] lg:px-[19px]`}
+            } text-white rounded-[7px] px-[5px] py-[5px] md:rounded-[10px] md:px-[9px] md:py-[8px] lg:rounded-[13px] lg:py-[10px] lg:px-[19px] md:text-[9.16px] md:font-semibold lg:text-base lg:font-extrabold`}
           >
             Wallet Summary
           </div>
@@ -67,11 +68,12 @@ export const RecentTransaction = ({transactionResponse, transactionHistoryError,
           <div
             className={`${
               isDarkMode ? "border" : "bg-[#04177f]"
-            } text-white rounded-[7px] px-[5px] py-[5px] md:rounded-[11px] md:px-[9px] md:py-[8px] lg:rounded-[13px] lg:py-[10px] lg:px-[19px]`}
+            } text-white md:w-[5.83375rem] lg:w-[10.1875rem] rounded-[7px] px-[5px] py-[5px] flex items-center justify-center md:rounded-[10px] md:px-[7px] md:py-[8px] lg:rounded-[13px] lg:py-[10px] lg:px-[18px] md:text-[9.16px] md:font-semibold lg:text-base lg:font-extrabold`}
           >
             Sales Summary
           </div>
         </Link>
+        </div>
       </div>
 
       {calender && <Calender />}

@@ -26,18 +26,20 @@ export const TopBar = () => {
   return (
     <div
       className={` ${
-        toggleSideBar ? "sticky top-0 " : "sticky top-0"
+        toggleSideBar ? "sticky top-0 pl-[17%] md:pl-[9rem]  " : "sticky top-0"
       } z-40 flex  border-b-[2px]  border-gray-200  w-[100%]
-        md:justify-between  py-[4%] lg:gap-[20%] gap-[20px]
-      lg:py-[2%]  lg:pl-[10%] lg:pr-[5%] px-[3%]  
+        justify-between h-[5.75rem] lg:gap-[20%] gap-[20px]
+        lg:pl-[8%] lg:pr-[5%] px-[3%]  
       ${
         isDarkMode
           ? "bg-black border-b-[1px] border-b-[#fff]"
           : "bg-white border-gray-100"
       } `}
+      // lg:py-[2%] lg:pl-[10%] py-[4%]
     >
-      <div className="flex justify-between w-[50%]
-       lg:w-[50%] gap-[20px] lg:gap-[100px]">
+      <div className="flex justify-between  my-auto gap-[20px] lg:gap-[100px]"
+      // w-[50%] lg:w-[50%]
+      >
       <img
         onClick={toggleTrueFalse}
         className="cursor-pointer w-[30px] h-[30px] mr-[5%] md:h-[30.9px] md:w-[30.9px] lg:h-[52px] lg:w-[52px]"
@@ -46,22 +48,19 @@ export const TopBar = () => {
       />
         <div
           className={`${
-            isDarkMode ? "border border-[#fff]" : "bg-gray-300"
-          } cursor-pointer flex justify-between  items-center px-[2%] w-[60%] 
-          h-[30px] border-[0.5px] rounded-[10px] md:h-[33.8px]
-           md:w-[202px] lg:border-[1.5px]  opacity-50
-          lg:rounded-[10px] lg:w-[358px] lg:h-[60px]`}
+            isDarkMode ? "border border-[#fff]" : "border-[#0000004D]"
+          } cursor-pointer flex justify-between items-center px-[2%] w-[8rem]  border-[0.5px] rounded-[3.47px] md:rounded-[10px] md:h-[33.8px] md:w-[202px] lg:border-[1.5px]  opacity-50 lg:rounded-[10px] lg:w-[358px] lg:h-[60px]`}
+          // bg-gray-300 w-[60%]
         >
-          <div className={`flex justify-center border-gray-300 py-1 items-center
-           gap-[3px] lg:gap-[7px] `}>
+          <div className={`flex justify-center py-1 items-center gap-[3px] lg:gap-[7px] `}
+          // border-gray-300
+          >
             <img
-              className="w-[15px] h-[15px] md:h-[15.75px]
-               md:w-[15.75] lg:h-[24px] lg:w-[24px]"
+              className="w-[15px] h-[15px] md:h-[15.75px] md:w-[15.75] lg:h-[24px] lg:w-[24px]"
               src="./Images/dashboardImages/largeprofile.png"
               alt="/"
             />
-            <p className="text-[10px] leading-[12px] font-[400] md:text-[14px] 
-            lg:text-[16px] lg:font-[500]">
+            <p className="text-[10px] leading-[12px] font-[400] md:text-[14px] lg:text-[16px] lg:font-[500]">
               Switch Account
             </p>
           </div>
@@ -82,16 +81,16 @@ export const TopBar = () => {
           Dashboard
         </p> */}
 
-        <div className="flex justify-between w-[50%]
-          items-center">
+        <div className="flex justify-between items-center gap-4"
+        //  w-[50%]
+        >
           
-          <div className="cursor-pointer flex items-center font-[500] text-[12px] 
-          md:text-[13.8px] lg:text-[12px] lg:font-extrabold gap-[3px] md:gap-[6px]">
+          <div className="cursor-pointer flex items-center font-[500] text-[12px] md:text-[13.8px] lg:text-[12px] lg:font-extrabold gap-[3px] md:gap-[6px]">
             <p>Light</p>
             <DarkModeToggle />
             <p>Dark</p>
           </div>
-          <div className="flex gap-[10px]">
+          <div className="flex items-center gap-[10px]">
           <Link className=" w-[30px] h-[30px] md:w-[10px] md:h-[16px]
            lg:w-[28px] lg:h-[28px]" to="/notifications">
             <img className="cursor-pointer w-[100%]"
@@ -104,7 +103,7 @@ export const TopBar = () => {
 
           <img
             onClick={toggleTrueFalse2}
-            className="cursor-pointer w-[30px] h-[27px] md:w-[40px] md:h-[20px] rounded-[2.3px] lg:w-[65px] lg:h-[34px]"
+            className="cursor-pointer w-[2.3rem] h-[27px] md:w-[40px] md:h-[20px] rounded-[2.3px] lg:w-[65px] lg:h-[34px]"
             src="./Images/dashboardImages/largedoor.png"
             alt="notification"
           />

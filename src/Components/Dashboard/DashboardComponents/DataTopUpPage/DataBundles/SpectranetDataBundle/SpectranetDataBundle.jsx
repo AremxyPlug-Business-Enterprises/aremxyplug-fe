@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { DashBoardLayout } from "../../../../Layout/DashBoardLayout";
 import { ContextProvider } from "../../../../../Context";
@@ -26,10 +26,12 @@ import airtimestyles from "../../../../../AirTimePage/AirtimeVtu.module.css";
 import EmailId from "../SmileDataBundle/SmileDataBundleImages/EmailId.svg";
 import { SpectranetReceipt } from "./SpectranetReceipt";
 import NumberOfPins from "./SpectranetDataBundleImages/NumberOfPins.svg";
+import { GetFunction, HandleUserSession } from "../../../../../ApiCollection.jsx/ApiBuck";
+import { Loader } from "../../../../../Loader/Loader";
 // import { DataBundleFailedPopUp } from "../../../TransferComponent/PopUps/TransactionFailedPopUp";
 
 const SpectranetDataBundle = () => {
-  const { isDarkMode } = useContext(ContextProvider);
+  const { isDarkMode, newBalance, setNewBalance } = useContext(ContextProvider);
   const { selectedOption, setSelectedOption } = useContext(ContextProvider);
   const { selectedNetworkProduct, setSelectedNetworkProduct } =
     useContext(ContextProvider);
@@ -77,50 +79,134 @@ const SpectranetDataBundle = () => {
     setPaymentSelected(true);
   };
 
-  const countryList = [
-    {
-      id: 1,
-      name: "Nigeria",
-      code: "NGN",
-      flag: require("../DataBundles-Images/ng.svg").default,
-      amount: 50000,
-    },
-    {
-      id: 2,
-      name: "United States",
-      code: "USD",
-      flag: require("../DataBundles-Images/us.svg").default,
-      amount: 0,
-    },
-    {
-      id: 3,
-      name: "United Kingdom",
-      code: "GBP",
-      flag: require("../DataBundles-Images/gb.svg").default,
-      amount: 0,
-    },
-    {
-      id: 4,
-      name: "European Union",
-      code: "EUR",
-      flag: require("../DataBundles-Images/eu.svg").default,
-      amount: 0,
-    },
-    {
-      id: 5,
-      name: "Australia",
-      code: "AUD",
-      flag: require("../DataBundles-Images/au.svg").default,
-      amount: 0,
-    },
-    {
-      id: 6,
-      name: "Kenya",
-      code: "KSH",
-      flag: require("../DataBundles-Images/ke.svg").default,
-      amount: 0,
-    },
-  ];
+ const [loading, setLoading] = useState(false);
+   const [passDataBalance, setPassDataBalance] = useState({});
+   const [sessionModal, setSessionModal] = useState(false);
+ 
+   useEffect(() => {
+     const GetBalance = async () => {
+       const SuccessHandler = () => {
+         //alert("Successful");
+         console.log("successfully retrieved balance");
+         //alert("Successful")
+       };
+       const FailedHandler = async (ErrorType) => {
+         if (ErrorType === "unauthoriesed") {
+           await GetFunction(
+             "balance",
+             setLoading,
+             SuccessHandler,
+             (ErrorType) => {
+               if (ErrorType === "unauthorised") {
+                 setSessionModal(true);
+               }
+             },
+             setPassDataBalance
+           );
+         }
+       };
+       await GetFunction(
+         "balance",
+         setLoading,
+         SuccessHandler,
+         FailedHandler,
+         setPassDataBalance
+       );
+     };
+     // Simulate async data loading
+ 
+     if (newBalance === "" || newBalance === null || newBalance === undefined) {
+       GetBalance();
+       if (GetBalance && passDataBalance?.data) {
+         setNewBalance(passDataBalance?.data?.data?.data?.balance);
+       }
+     }
+     //eslint-disable-next-line
+   }, []);
+ 
+   const updateBalance = passDataBalance?.data
+     ? passDataBalance?.data?.data?.data?.balance
+     : "";
+ 
+   const cleanUpBalanceToNumericOnly = Number(updateBalance);
+   let balanceStringToNum = Number(newBalance);
+ 
+   const countryList = [
+     {
+       id: 1,
+       name: "Nigeria",
+       code: "NGN",
+       flag: require("../DataBundles-Images/ng.svg").default,
+       amount:
+         newBalance === "" || newBalance === null
+           ? `${
+              cleanUpBalanceToNumericOnly > 1
+                ? cleanUpBalanceToNumericOnly?.toLocaleString("en-NG", {
+                    style: "currency",
+                    currency: "NGN",
+                  })
+                : "₦"
+            }`
+          : `${
+              balanceStringToNum > 1
+                ? balanceStringToNum?.toLocaleString("en-NG", {
+                    style: "currency",
+                    currency: "NGN",
+                  })
+                : "₦"
+            }`,
+     },
+     {
+       id: 2,
+       name: "United States",
+       code: "USD",
+       flag: require("../DataBundles-Images/us.svg").default,
+       amount: 0?.toLocaleString("en-US", {
+         style: "currency",
+         currency: "USD",
+       }),
+     },
+     {
+       id: 3,
+       name: "United Kingdom",
+       code: "GBP",
+       flag: require("../DataBundles-Images/gb.svg").default,
+       amount: 0?.toLocaleString("en-GB", {
+         style: "currency",
+         currency: "GBP",
+       }),
+     },
+     {
+       id: 4,
+       name: "European Union",
+       code: "EUR",
+       flag: require("../DataBundles-Images/eu.svg").default,
+       amount: 0?.toLocaleString("en-EU", {
+         style: "currency",
+         currency: "EUR",
+       }),
+     },
+     {
+       id: 5,
+       name: "Australia",
+       code: "AUD",
+       flag: require("../DataBundles-Images/au.svg").default,
+       amount: 0?.toLocaleString("en", {
+         style: "currency",
+         currency: "AUD",
+       }),
+     },
+     {
+       id: 6,
+       name: "Kenya",
+       code: "KSH",
+       flag: require("../DataBundles-Images/ke.svg").default,
+       amount: 0?.toLocaleString("en-KE", {
+         style: "currency",
+         currency: "KES",
+       }),
+     },
+   ];
 
   const Payment = ({ code, flag, amount, onClick }) => {
       return (
@@ -131,7 +217,7 @@ const SpectranetDataBundle = () => {
           </div>
           <h2 className={airtimestyles.netName}>{code}</h2>
           <h2 className={airtimestyles.netName}>
-            Wallet({amount.toLocaleString()}.00)
+            Wallet({amount.toLocaleString()})
           </h2>
         </div>
       );
@@ -733,7 +819,7 @@ const SpectranetDataBundle = () => {
                     >
                       <h2 className="text-[#7C7C7C]">{walletName}</h2>
                       <h2 className="text-[#7C7C7C]">
-                        Wallet ({paymentAmount.toLocaleString()}.00)
+                        Wallet ({paymentAmount})
                       </h2>
                     </li>
                   ) : (
@@ -990,7 +1076,7 @@ const SpectranetDataBundle = () => {
                         <p className="text-[10px] md:text-[14px]  lg:text-[16px]">
                           Available Balance{" "}
                           <span className="text-[#0003]">
-                            ( {walletName + paymentAmount}.00 )
+                            ( {walletName + paymentAmount} )
                           </span>
                         </p>
                       </div>
@@ -1041,10 +1127,9 @@ const SpectranetDataBundle = () => {
                   <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
                     <div className=" flex justify-center items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
                       {" "}
-                      {isVisible ? (
                         <OtpInput
                           value={inputPin}
-                          inputType="tel"
+                          inputType={!isVisible ?"tel":"password"}
                           onChange={setInputPin}
                           numInputs={4}
                           shouldAutoFocus={true}
@@ -1058,11 +1143,6 @@ const SpectranetDataBundle = () => {
                             <input {...props} className="inputOTP mx-[3px]" />
                           )}
                         />
-                      ) : (
-                        <div className="text-[24px] md:text-[24px] mt-1">
-                          * * * *{" "}
-                        </div>
-                      )}
                       <div
                         className="text-[#0003] text-[13px] md:text-3xl"
                         onClick={toggleVisibility}
@@ -1355,6 +1435,12 @@ const SpectranetDataBundle = () => {
           </Link>
         </div>
       </div>
+      {loading && (
+              <Modal>
+                <Loader />
+              </Modal>
+            )}
+            {sessionModal && <HandleUserSession />}
     </DashBoardLayout>
   );
 };
