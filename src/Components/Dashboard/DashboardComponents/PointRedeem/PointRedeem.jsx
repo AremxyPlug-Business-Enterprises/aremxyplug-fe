@@ -230,6 +230,7 @@ const VerifyPinHandler = async () => {
   // const redemptionData = fetchedResponse?.data?.data?.data || {};
   // console.log("Redemption Data:", redemptionData);
 
+  //const redemptionData = response?.data?.data?.data || {};
   const redemptionData = response?.data?.data?.data;
     if (!redemptionData || !redemptionData.remaining_points) {
     alert("Redemption failed: invalid server response");
