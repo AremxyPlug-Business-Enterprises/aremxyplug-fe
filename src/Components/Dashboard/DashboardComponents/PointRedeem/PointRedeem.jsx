@@ -24,10 +24,11 @@ import { Loader } from "../../../Loader/Loader";
 
 
 const PointRedeem = () => {
-  const { toggleSideBar, transferFee, toggleVisibility, isVisible } =
-    useContext(ContextProvider);
+ 
 
-  const { inputValue,
+  const { 
+    toggleSideBar, transferFee, toggleVisibility, isVisible,
+    inputValue,
            setInputValue, 
            outputValue, 
            setOutputValue, 
@@ -37,10 +38,38 @@ const PointRedeem = () => {
            setRealOutputValue,
             errorMessage,
            setErrorMessage,
+           redeemResponse, setRedeemResponse,
+           isRedeeming, setIsRedeeming,
+           redeemedPoints, setRedeemedPoints,
+           rateRedeemed, setRateRedeemed,
+           transactionId,  setTransactionId,
+           orderId,  setOrderId,
+          amountRedeemed, setAmountRedeemed,
+          transactionProduct, setTransactionProduct,
+          transactionDescription, setTransactionDescription,
+
+          authenticationOpen,
    } = useContext(ContextProvider);
+   
+
+
+    const [isFocused, setIsFocused] = useState(false);
+         const handleFocus = () => {
+           setIsFocused(true);
+         };
+       
+         const handleBlur = () => {
+           setIsFocused(false);
+         };
+   
+         const cancelInputGotv = () => {
+           setInputPinPopUp(false);
+           window.location.reload();
+         }
   
+
 const [text, setText] =useState(false);
-  const [userPoints, setUserPoints] = useState(0);
+  // const [userPoints, setUserPoints] = useState(0);
    const [transactionInfo, setTransactionInfo] = useState(null);
   const [isLoading, setLoading] = useState(false);
   const [fetchedResponse, setFetchedResponse] = useState({});
@@ -49,15 +78,18 @@ const [text, setText] =useState(false);
   const [proceed, setProceed] = useState(false);
    const [successPopup, setSuccessPopup] = useState(false);
   const [errors, setErrors] = useState({});
+  
+const [userPoints, setUserPoints] = useState(0);
  const [transactionPoints, setTransactionPoints] = useState(0);
 const [referralPoints, setReferralPoints] = useState(0);
-  const [redeemResponse, setRedeemResponse] = useState(null);
-  const [isRedeeming, setIsRedeeming] = useState(false);
-  const [redeemedPoints, setRedeemedPoints] = useState(0);
-  const [amountRedeemed, setAmountRedeemed] = useState(0);
-  const [rateRedeemed, setRateRedeemed] = useState(0);
-  const [ transactionId,  setTransactionId] = useState(0);
-  const [ orderId,  setOrderId] = useState(0);
+//   const [redeemResponse, setRedeemResponse] = useState(null);
+//   const [isRedeeming, setIsRedeeming] = useState(false);
+//   const [redeemedPoints, setRedeemedPoints] = useState(0);
+//   const [rateRedeemed, setRateRedeemed] = useState(0);
+//   const [ transactionId,  setTransactionId] = useState(0);
+//   const [ orderId,  setOrderId] = useState(0);
+// const [amountRedeemed, setAmountRedeemed] = useState(0);
+
 const [sessionModal, setSessionModal] = useState(false);
 
   const handleInputChange = (event) => {
@@ -126,12 +158,12 @@ const [sessionModal, setSessionModal] = useState(false);
     //Fetch Points
   useEffect(() => {
    
-    const  successHandler = () => {
-      // console.log("fetch points succefully");
-    const total = fetchedResponse?.data?.data?.point?.total_points;
-    const trxPoints = fetchedResponse?.data?.data?.point?.transaction_points ?? 0;
-    const referralPts = fetchedResponse?.data?.data?.point?.referral_points ?? 0;
-
+    const  successHandler = (response) => {
+     if (!response?.data?.data) return;
+     // console.log("fetch points succefully");
+    const total = response?.data?.data?.point?.total_points;
+    const trxPoints = response?.data?.data?.point?.transaction_points ?? 0;
+    const referralPts = response?.data?.data?.point?.referral_points ?? 0;
     setUserPoints(total);
     setTransactionPoints(trxPoints);
     setReferralPoints(referralPts);
@@ -176,67 +208,54 @@ const [sessionModal, setSessionModal] = useState(false);
 
 // const handleRedeemPoints = async (e) => {
 //   e.preventDefault();
+// ...existing code...
+
 const VerifyPinHandler = async () => {
   const RedeemPointsHandler = async () => {
     const Path = "extra/point";
     const payload = { points: parseInt(inputValue) };
     const payloadJson = JSON.stringify(payload);
 
-    // console.log( payloadJson)
-  // Validate input
-  // if (!inputValue || parseInt(inputValue) < 1000) {
-  //   alert("Minimum redemption is 1000 points");
-  //   return;
-  // }
+    // Validate input
+    if (!inputValue || parseInt(inputValue) < 1000) {
+      alert("Minimum redemption is 1000 points");
+      return;
+    }
+    if (parseInt(inputValue) > userPoints) {
+      alert("You don't have enough points");
+      return;
+    }
+    const successHandler = (response) => {
+    //const redemptionData = fetchedResponse.data?.data || fetchedResponse.data;
+  // const redemptionData = fetchedResponse?.data?.data?.data || {};
+  // console.log("Redemption Data:", redemptionData);
 
-  // if (parseInt(inputValue) > userPoints) {
-  //   console.error("You don't have enough points for this redemption");
-  //   return;
-  // }
+  //const redemptionData = response?.data?.data?.data || {};
+  const redemptionData = response?.data?.data?.data;
+    if (!redemptionData || !redemptionData.remaining_points) {
+    alert("Redemption failed: invalid server response");
+    return;
+  }
+    setAmountRedeemed(redemptionData.amount_redeemed ?? 0);
+//console.log("Setting Amount Redeemed", redemptionData.amount_redeemed);
+  setRateRedeemed(redemptionData.redeemed_rate ?? "1 PTS - 1 NGN");
+  setTransactionId(redemptionData.transaction_id ?? "");
+  setOrderId(redemptionData.order_id ?? "");
+  setUserPoints(redemptionData.remaining_points ?? userPoints);
+  setUserPoints(redemptionData.remaining_points ?? userPoints);
+   setTransactionProduct(redemptionData.transaction_product ?? userPoints);
+    setTransactionDescription(redemptionData.transaction_description ?? userPoints);
 
-  const successHandler = () => {
-  const redemptionData = fetchedResponse.data?.data || fetchedResponse.data;
- //console.log("Redemption data:", redemptionData);
+      setRedeemResponse(redemptionData);
+      setSuccessPopup(true);
+      setInputPinPopUp(false);
+      setProceed(false);
+      setInputPin("");
+      setInputValue("");
+      setOutputValue("");
+      refreshPoints();
+    };
 
-
-   // redeemed points value
-   const points = redemptionData.points_redeemed || parseInt(inputValue);
-    const amount = redemptionData.amount_redeemed || parseInt(inputValue);
-    const rate = redemptionData.redeemed_rate || parseInt(inputValue);
-    const trans = redemptionData.transaction_id || parseInt(inputValue);
-    const order = redemptionData.transaction_description || parseInt(inputValue);
-
-    setRedeemedPoints(points);
-    setAmountRedeemed(amount);
-    setRateRedeemed(rate);
-    setTransactionId(trans);
-    setOrderId(order);
-
- //Calculat and update the user's remaining points
-    // const redeemedPoints = parseInt(inputValue);
-    // const newPointsBalance = userPoints - redeemedPoints;
-    // setUserPoints(newPointsBalance);
-
-// Update state
-  //setUserPoints(prev => prev - points); 
-  //backend point update
-    setUserPoints(redemptionData.remaining_points ?? userPoints);
-
-    // success popup
-     setRedeemResponse(redemptionData);
-    setSuccessPopup(true);
-    setInputPinPopUp(false);
-    setProceed(false);
-    setInputPin("");
-    setInputValue("");
-    setOutputValue("");
-
-     
-    // console.log(`Successfully redeemed ${redeemedPoints}`);
-  };
-
-    
-    // Failure handler for redemption
     const failedHandler = (ErrorType) => {
       if (ErrorType === "unauthorised") {
         setSessionModal(true);
@@ -251,60 +270,39 @@ const VerifyPinHandler = async () => {
       setInputPin("");
     };
 
-    // Validation
-    if (!inputValue || parseInt(inputValue) < 1000) {
-      alert("Minimum redemption is 1000 points");
-      return;
-    }
-    if (parseInt(inputValue) > userPoints) {
-      alert("You don't have enough points");
-      return;
-    }
-
-    // Make redemption API call
     await PostFunction(Path, setLoading, payloadJson, successHandler, failedHandler, setFetchedResponse);
   };
 
+  const refreshPoints = () => {
+  GetFunction("extra/point", setLoading, (res) => {
+    const total = res?.data?.data?.point?.total_points;
+    setUserPoints(total ?? 0);
+  }, (err) => {
+    console.error("Failed to refresh points", err);
+  }, setFetchedResponse);
+};
 
-//if VerifyTransPin fails
-  const setFailedConfig = (ErrorType, errorResponse) => {
-      const serverMessage = errorResponse?.data?.data;
 
-  if (serverMessage?.startsWith("PIN blocked")) {
-    alert(`Your PIN is blocked. Try again after: ${serverMessage.split("until ")[1]}`);
-    return;
-  }
-    if (ErrorType === "unauthorised") {
-      setSessionModal(true);
-    } else if (ErrorType === "Server error") {
-      alert("Server error while verifying PIN");
-    } else if (ErrorType === "Network error" || ErrorType === "User error") {
-      alert("Check your internet connection");
-    } else {
-      alert("PIN verification failed");
-    }
-  };
-
-  // Verify PIN and Redeem if it is successful
-await VerifyTransPin(
-  inputPin, 
-  (ErrorType) => {
-    if (ErrorType === "unauthorised") {
-      setSessionModal(true);
-    } else if (ErrorType === "Server error") {
-      alert("Server error while verifying PIN");
-    } else if (ErrorType === "Network error" || ErrorType === "User error") {
-      alert("Check your internet connection");
-    } else if (ErrorType === "incorrect pin") {
-      alert("Incorrect PIN entered");
-    } else {
-      alert("PIN verification failed");
-    }
-  },
-  setLoading,
-  setErrorMessage,
-  RedeemPointsHandler
-);
+  // ...existing VerifyTransPin logic...
+  await VerifyTransPin(
+    inputPin,
+    (ErrorType) => {
+      if (ErrorType === "unauthorised") {
+        setSessionModal(true);
+      } else if (ErrorType === "Server error") {
+        alert("Server error while verifying PIN");
+      } else if (ErrorType === "Network error" || ErrorType === "User error") {
+        alert("Check your internet connection");
+      } else if (ErrorType === "incorrect pin") {
+        alert("Incorrect PIN entered");
+      } else {
+        alert("PIN verification failed");
+      }
+    },
+    setLoading,
+    setErrorMessage,
+    RedeemPointsHandler
+  );
 };
 
 
@@ -696,7 +694,7 @@ await VerifyTransPin(
             ${isDarkMode ? "text-white" : "text-black"}`}>
               You are about to redeem{" "}
               <span className={`text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]
-             ${isDarkMode ? "text-white" : "text-black"}`}> {isLoading ? "Loading..." : amountRedeemed}.00{" "}
+             ${isDarkMode ? "text-white" : "text-black"}`}>   {isLoading ? "Loading..." : inputValue}.00 PTS{" "}
               </span>{" "}
               Points<br></br>
               {/* <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]">
@@ -712,11 +710,11 @@ await VerifyTransPin(
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Amount To Redeem</p>
-                <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>  ₦ {isLoading ? "Loading..." : amountRedeemed} PTS</span>
+                <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>   {isLoading ? "Loading..." : inputValue} PTS</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Account To Receive</p>
-                <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>&#8358; {isLoading ? "Loading..." : amountRedeemed} PTS </span>
+                <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{isLoading ? "Loading..." : inputValue}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -726,7 +724,8 @@ await VerifyTransPin(
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Transfaction fee</p>
-                <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>&#8358;{transferFee}.00</span>
+                <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>0</span>
+                {/* <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>&#8358;{transferFee}.00</span> */}
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`} >Completion Time</p>
@@ -776,84 +775,143 @@ await VerifyTransPin(
 
       {/* Input pin pop up */}
       {InputPinPopUp && (
-        <Modal>
-          <div className="flex items-end justify-center
-             lg:items-center lg:justify-center 
-   w-[100%] lg:px-[0px] rounded-[10px] h-[100%] px-[15px]">
-        <div className={`  flex flex-col lg:mb-[0px]  mb-[50px]  '
-         lg:h-[350px] overflow-scroll h-[300px] bvnQuery  ${
-                      toggleSideBar ? "md:w-[45%] lg:w-[40%]  " : "lg:w-[40%]"
-                    } md:w-[55%] w-full   ${isDarkMode ? "text-white bg-black border-[1px] border-white rounded-[10px]" : "text-black bg-white rounded-[10px]"}`}
+  <Modal>
+          <div className="flex items-end justify-center lg:items-center lg:justify-center w-[100%] lg:px-[0px] rounded-[10px] h-[100%] px-[15px]">
+            <div
+              // className={`${
+              //   isDarkMode
+              //     ? "bg-black absolute pt-4 h-[250px] shrink-0 rounded-lg shadow border border-white md:h-[350px] w-[481.25px] md:bottom-auto md:top-auto lg:h-[450px] lg:rounded-[20px] "
+              //     : styles.inputPin
+              // }
+              //    ${
+              //      toggleSideBar
+              //        ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]"
+              //        : "lg:w-[40%]"
+              //    } md:w-[55%] w-[90%] `}
+              className={`flex flex-col lg:mb-[0px] mb-[50px] lg:h-[350px] overflow-scroll h-[300px] bvnQuery ${
+                toggleSideBar ? "md:w-[45%] lg:w-[40%]  " : "lg:w-[40%]"
+              } md:w-[55%] w-full ${
+                isDarkMode
+                  ? "text-white bg-black border border-white rounded-[10px]"
+                  : "text-black bg-white rounded-[10px]"
+              }`}
             >
-            <div className="pr-3 lg:pr-2 py-[5px] flex justify-end">
-  <img
-    onClick={handle}
-    className="w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px] cursor-pointer"
-    src="/Images/transferImages/close-circle.png"
-    alt="Close"
-  />
-</div>
-            <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px]" />
-            <p className="text-[9px] md:text-[16px] font-extrabold text-center my-[10%] lg:my-[%]">
-              Input PIN to complete transaction
-            </p>
-            <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[8%]">
-              <div className=" flex justify-center items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
-                {" "}
-                {isVisible ? (
-                  <OtpInput
-                    value={inputPin}
-                    inputType="tel"
-                    onChange={setInputPin}
-                    numInputs={4}
-                    shouldAutoFocus={true}
-                    inputStyle={{
-                      color: "#403f3f",
-                      width: 30,
-                      height: 30,
-                      borderRadius: 3,
-                    }}
-                    renderInput={(props) => (
-                      <input {...props} className="inputOTP mx-[3px]" />
-                    )}
-                  />
-                ) : (
-                  <div className="text-[24px] md:text-[24px] mt-1">
-                    * * * *{" "}
-                  </div>
-                )}
+              <div className="pr-3 lg:pr-2 py-[5px] flex justify-end">
+                <img
+                  onClick={handle}
+                  // className={`absolute right-2 w-[18px] h-[18px] my-[1%] md:w-5 md:h-5 lg:w-[25px] lg:h-[25px] ${
+                  //   isDarkMode ? "my-7" : ""
+                  // }`}
+                  className="w-[25px] h-[25px] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px]"
+                  src="/Images/transferImages/close-circle.png"
+                  alt=""
+                />
+              </div>
+              <hr
+                // className={`h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[6%] md:h-[10px] ${
+                //   isDarkMode ? "md:mt-10" : ""
+                // }`}
+                className="h-[6px] bg-[#04177f] border-none md:h-[10px]"
+              />
+              {/* <p className="text-xs md:text-base font-extrabold text-center my-[10%] lg:my-[%] "> */}
+              <div className="flex flex-col w-full justify-center py-[15px] lg:py-[0px] h-[100%] gap-[15px] ">
+                <p className="font-extrabold text-xs leading-[16px] pb-[20px] md:text-[10px] lg:text-base text-center">
+                  Input PIN to complete transaction
+                </p>
                 <div
-                  className="text-[#0003] text-xl md:text-3xl"
-                  onClick={toggleVisibility}
+                  // className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[8%]"
+                  className="flex flex-col items-center lg:gap-[0px] gap-[5px] font-extrabold"
                 >
-                  {isVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
+                  <div
+                    // className=" flex justify-center  ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]"
+                    className="flex items-center gap-2.5"
+                  >
+                    {isVisible ? (
+                      <OtpInput
+                        value={inputPin}
+                        inputType="tel"
+                        onChange={setInputPin}
+                        numInputs={4}
+                        shouldAutoFocus={true}
+                        inputStyle={{
+                          // color: isDarkMode ? "#ffffff" : "#403f3f",
+                          color: isDarkMode ? "#ffffff" : "#000000",
+                          // width: 30,
+                          // height: 30,
+                          // borderRadius: 3,
+                          fontWeight: 700,
+                          borderRadius: 4,
+                          height: "35px",
+                          width: "35px",
+                          backgroundColor: isDarkMode ? "black" : "white",
+                          border: isDarkMode
+                            ? "1px solid white"
+                            : "1px solid #ccc",
+                        }}
+                        renderInput={(props) => (
+                          <input
+                            {...props}
+                            // className="inputOTP mx-[3px]"
+                            className={`inputOTP mx-[2px] ${
+                              isFocused ? "focused" : ""
+                            }`}
+                            onFocus={handleFocus}
+                            onBlur={handleBlur}
+                          />
+                        )}
+                      />
+                    ) : (
+                      <div className="text-[24px] md:text-[24px] mt-1">
+                        * * * *
+                      </div>
+                    )}
+                    <div className="text-[#0003]" onClick={toggleVisibility}>
+                      {isVisible ? (
+                        <AiFillEye className="w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]" />
+                      ) : (
+                        <AiFillEyeInvisible className="w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]" />
+                      )}
+                    </div>
+                  </div>
+                  <Link
+                    to={{
+                      pathname: "/ProfileSettingMain",
+                      state: authenticationOpen,
+                    }}
+                    className="text-[10px] leading-[14px] font-extrabold md:text-xs my-2 text-[#04177f]"
+                    // className="text-[10px] md:text-xs text-[#04177f]"
+                  >
+                    Forgot Pin ?
+                  </Link>
+                </div>
+                {errorMessage && (
+                  <p className="font-bold text-sm  lg:text-base md:font-medium text-center leading-[18px] lg:leading-[20px] text-red-600">
+                    Incorrect Pin
+                  </p>
+                )}
+
+                <div className="flex flex-col gap-[10px] px-[20px]">
+                  <button
+                    disabled={inputPin.length !== 4 ? true : false}
+                    onClick={VerifyPinHandler}
+                    // className={`${
+                    //   inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
+                    // } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%] ${
+                    //   isDarkMode ? "border border-white" : ""
+                    // }`}
+                    className={`${
+                      inputPin.length !== 4 && !isDarkMode
+                        ? "bg-[#0008]"
+                        : inputPin.length !== 4 && isDarkMode
+                        ? "bg-gray-300"
+                        : "bg-[#04177f]"
+                    }  w-full  md:w-[94px] lg:w-[163px] flex justify-center items-center mx-auto cursor-pointer text-xs md:text-[10px] lg:text-base font-extrabold h-[50px] lg:h-[38px] md:h-[22px] text-white rounded-[6px] md:rounded-[6.88px] lg:rounded-[12px]`}
+                  >
+                    Purchase
+                  </button>
                 </div>
               </div>
-              <p className="text-[8px] md:text-[12px] text-[#04177f]">
-                Forgot Pin ?
-              </p>
             </div>
-       {errorMessage && (
-              <p className="font-bold text-[14px]  lg:text-[16px] md:font-[500] 
-              text-center leading-[18px] lg:leading-[20px]   text-red-600">
-                 Incorrect Pin
-              </p>
-            ) 
-            }
-  <div className="flex flex-col gap-[10px] px-[20px]" >
-           
-            <button
-              disabled={inputPin.length !== 4 || isLoading}
-              onClick={VerifyPinHandler}
-              className={`${
-                 inputPin.length !== 4 && !isDarkMode ? "bg-[#0008]" : 
-                 inputPin.length !== 4 && isDarkMode ? "bg-gray-300" : "bg-[#04177f]"
-              } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
-            >
-              {isLoading ? "Processing..." : "Redeem"}
-            </button>
-          </div>
-          </div>
           </div>
         </Modal>
       )}
@@ -898,11 +956,11 @@ await VerifyTransPin(
               `}>
               You have successfully redeemed{" "}
               <span className={` ${isDarkMode? "text-white" : "text-black"} text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]`}>
-                {isLoading ? "Loading..." : redeemedPoints}
+                   {isLoading ? "Loading..." : amountRedeemed} .00 PTS
               </span>{" "}
               Points<br></br>
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">
-                &#8358;{isLoading ? "Loading..." : redeemedPoints}{" "}
+                {amountRedeemed}{" "}
               </span>
               from your PTS balance{" "} to
             </p>
@@ -914,27 +972,22 @@ await VerifyTransPin(
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"} text-[#0008]`}>Amount To Redeem</p>
-                <span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>₦ {isLoading ? "Loading..." : amountRedeemed} PTS</span>
+                <span className={`  ${isDarkMode ? "text-white" : "text-black"}`}> {isLoading ? "Loading..." : amountRedeemed} PTS</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"} text-[#0008]`}>Account To Receive</p>
-                <span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>&#8358; {isLoading ? "Loading..." : amountRedeemed}</span>
+                <span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>{isLoading ? "Loading..." : amountRedeemed}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}text-[#0008]`}>Redeem Rate</p>
                 <span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>
-  {/* {isLoading
-    ? "Loading..."
-    : rateRedeemed && rateRedeemed !== 0
-      ? rateRedeemed
-      : "1 PTS - 1 NGN"} */}
-      1 PTS - 1 NGN
+                 {isLoading ? "Loading..." : rateRedeemed}
 </span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className={`  ${isDarkMode ? "text-white" : "text-[#0008]"}`}>Transfaction fee</p>
+                <p className={`  ${isDarkMode ? "text-white" : "text-[#0008]"}`}>Transaction fee</p>
                 {/* <span>&#8358;{transferFee}.00</span> */}
                 <span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>{transferFee}.00</span>
               </div>
@@ -942,9 +995,7 @@ await VerifyTransPin(
                 <p className= {`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Order Number</p>
                 <span className={`  ${isDarkMode ? "text-white" : "text-black"}
                 `}>
-                  1256478999
-                  {/* {isLoading ? "Loading..." : orderId && orderId !== 0 ? orderId : "1256478999"} */}
-
+                          {isLoading ? "Loading..." : orderId}
                   </span>
               </div>
             </div>
