@@ -22,6 +22,7 @@ function Bluebutton({ ...props }) {
       style={{
         backgroundColor: primaryColor,
       }}
+      onClick={props.onClick}
     >
       <p> {props.text}</p>
     </div>

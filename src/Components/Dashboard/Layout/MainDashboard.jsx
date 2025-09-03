@@ -22,7 +22,12 @@ import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 import { CheckVirtualAcc, HandleUserSession } from "../../ApiCollection.jsx/ApiBuck";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { GetFunction} from "../../../Components/ApiCollection.jsx/ApiBuck";
 export const MainDashboard = (Data) => {
+    const [isLoading, setLoading] = useState(false);
+    const [fetchedResponse, setFetchedResponse] = useState({});
+    const [userPoints, setUserPoints] = useState(0);
+
 
   const { setHideNavbar, toggleSideBar, isDarkMode,
     dashLoading, bankNameState, accountNameState, accountNumberState,
@@ -302,6 +307,25 @@ window.addEventListener("online", ()=> {
     GenerateAccountBalance();
   }
 })
+
+  //Fetch Points
+   useEffect(() => {
+    
+     const  successHandler = (response) => {
+        if (!response?.data?.data) return;
+        // console.log("fetch points succefully");
+     const total = response?.data?.data?.point?.total_points;
+    console.log("fetch points succefully", total);
+     setUserPoints(total);
+     };
+     const FailedHandler = (error) => {
+       console.error("Failed to fetch points:", error);
+     };
+ 
+    
+       GetFunction("extra/point", setLoading,  successHandler, FailedHandler, setFetchedResponse)
+    
+   }, []);
       
 return (
     <div className="h-[150%]">
@@ -318,8 +342,9 @@ return (
         )}
         <div
           className={`${
-            toggleSideBar ? "lg:w-[73.5%] lg:float-right" : ""
+            toggleSideBar ? "lg:w-[73.5%] lg:float-right pl-[8.7rem] md:pl-[10.5rem] lg:pl-0" : ""
           } w-[] mx-[5%] mt-[8%] lg:mt-[3%] h-[150%] mb-[5%]`}
+          // md:mt-[3%]
         >
           {/* ==============HERO SECTION========== */}
           <Swiper
@@ -533,9 +558,10 @@ return (
                       ******
                     </span>
                   ) : (
-                    <span className="flex items-center text-[19px] leading-normal lg:text-[37px]">
-                      0.00
-                    </span>
+                     <span className="flex items-center text-[19px] leading-normal lg:text-[37px]">
+                    {userPoints}
+                     </span>
+            
                   )}
                   <div onClick={visibilityHandler} className=" text-[#92ABFE]">
                     {visible ? (
@@ -611,7 +637,7 @@ return (
                       : "bg-[#92ABFE2E]"
                   } `}
                 >
-                  Points
+                   Points
                 </div>
               </div>
             </div>

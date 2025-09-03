@@ -1329,6 +1329,7 @@ export default function WaecEducationPin() {
                       // w-full md:w-fit text-white rounded-md px-[28px] text-[10px] md:text-xs leading-[15px] lg:text-base lg:leading-6 py-[15px] md:py-[10px] font-extrabold
                       onClick={() => {
                         confirmButton();
+                        setInputPin("");
                       }}
                       disabled={CheckSufficiency}
                     >
@@ -1587,45 +1588,37 @@ export default function WaecEducationPin() {
                           // className=" flex justify-center items-center ml-[5%] gap-2.5 md:ml-[5%] md:gap-[30px]"
                           className=" flex items-center gap-2.5"
                         >
-                          {" "}
-                          {isVisible ? (
-                            // <div className="flex flex-col gap-y-1">
-                            <OtpInput
-                              value={inputPin}
-                              inputType="tel"
-                              onChange={setInputPin}
-                              numInputs={4}
-                              shouldAutoFocus={true}
-                              inputStyle={{
-                                color: isDarkMode ? "#ffffff" : "#000000",
-                                fontSize: "14px",
-                                // width: 30,
-                                // height: 30,
-                                // borderRadius: 3,
-                                fontWeight: 700,
-                                borderRadius: 4,
-                                height: "35px",
-                                width: "35px",
-                                backgroundColor: isDarkMode ? "black" : "white",
-                                border: isDarkMode
-                                  ? "1px solid white"
-                                  : "1px solid #ccc",
-                              }}
-                              renderInput={(props) => (
-                                <input
-                                  {...props}
-                                  className={`inputOTP mx-[2px] 
+                          <OtpInput
+                            value={inputPin}
+                            inputType={!isVisible ? "tel" : "password"}
+                            onChange={setInputPin}
+                            numInputs={4}
+                            shouldAutoFocus={true}
+                            inputStyle={{
+                              color: isDarkMode ? "#ffffff" : "#000000",
+                              fontSize: "14px",
+                              // width: 30,
+                              // height: 30,
+                              // borderRadius: 3,
+                              fontWeight: 700,
+                              borderRadius: 4,
+                              height: "35px",
+                              width: "35px",
+                              backgroundColor: isDarkMode ? "black" : "white",
+                              border: isDarkMode
+                                ? "1px solid white"
+                                : "1px solid #ccc",
+                            }}
+                            renderInput={(props) => (
+                              <input
+                                {...props}
+                                className={`inputOTP mx-[2px] 
                         ${isFocused ? "focused" : ""}`}
-                                  onFocus={handleFocus}
-                                  onBlur={handleBlur}
-                                />
-                              )}
-                            />
-                          ) : (
-                            <div className="text-[24px] md:text-[24px] mt-1">
-                              * * * *{" "}
-                            </div>
-                          )}
+                                onFocus={handleFocus}
+                                onBlur={handleBlur}
+                              />
+                            )}
+                          />
                           <div
                             // className="text-[#0003] text-xl md:text-3xl"
                             className="text-[#0003]"

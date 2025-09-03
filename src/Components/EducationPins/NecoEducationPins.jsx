@@ -1214,6 +1214,7 @@ export default function NecoEducationPins() {
                       }`}
                       onClick={() => {
                         confirmButton();
+                        setInputPin("");
                       }}
                       disabled={CheckSufficiency}
                     >
@@ -1253,12 +1254,13 @@ export default function NecoEducationPins() {
                         Input PIN to complete transaction
                       </p>
                       <div className="flex flex-col items-center lg:gap-[0px] gap-[5px] font-extrabold">
+                  {/* dashboard(bg-color), acct upgrade(end user- regular, merchant), card issuing(click on get ur card now-show the pop up this feature is coming soon), data topup, data bundle(smile and spectranet- onclick(popup- this feature is currently unavailable), login(wen it shows the verification code has been sent there shld be the X to close d pop up, wen u switch from email to login the request for d email 4 e.g shld be made without waiting for the 60 secs to elapse)), payments(international payments onclick-popup- this feature is currently unavailable ), conversion(only  wat is avaible is points redeem), all withdrawals shld be currently unavailable, display the balance anywhere there is balance, the bg for hero section gradient alongside navbar, replicate using figma for everywhere including sidebar */}
                         <div className="flex items-center gap-2.5">
                           {" "}
-                          {isVisible ? (
                             <OtpInput
                               value={inputPin}
-                              inputType="tel"
+                              // inputType="tel"
+                              inputType={!isVisible ? "tel":"password"}
                               onChange={setInputPin}
                               numInputs={4}
                               shouldAutoFocus={true}
@@ -1285,11 +1287,6 @@ export default function NecoEducationPins() {
                                 />
                               )}
                             />
-                          ) : (
-                            <div className="text-[24px] md:text-[24px] mt-1">
-                              * * * *{" "}
-                            </div>
-                          )}
                           <div
                             className="text-[#0003]"
                             onClick={toggleVisibility}

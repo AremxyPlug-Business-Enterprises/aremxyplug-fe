@@ -1,5 +1,5 @@
 import React from "react";
-import { useState , useEffect} from "react";
+import { useState, useEffect } from "react";
 import { DashBoardLayout } from "../../../../Layout/DashBoardLayout";
 import { ContextProvider } from "../../../../../Context";
 import { useContext } from "react";
@@ -26,6 +26,11 @@ import airtimestyles from "../../../../../AirTimePage/AirtimeVtu.module.css";
 import AccountID from "../SmileDataBundle/SmileDataBundleImages/AccountId.svg";
 import { SmileReceipt } from "./SmileReceipt";
 import EmailId from "./SmileDataBundleImages/EmailId.svg";
+import {
+  GetFunction,
+  HandleUserSession,
+} from "../../../../../ApiCollection.jsx/ApiBuck";
+import { Loader } from "../../../../../Loader/Loader";
 // import { DataBundleFailedPopUp } from "../../../TransferComponent/PopUps/TransactionFailedPopUp";
 
 const SmileDataBundle = () => {
@@ -39,7 +44,8 @@ const SmileDataBundle = () => {
   const { recipientNames, setRecipientNames } = useContext(ContextProvider);
   const { walletName, setWalletName } = useContext(ContextProvider);
   const { accountId, setAccountId } = useContext(ContextProvider);
-  const { emailId, setEmailId, newBalance } = useContext(ContextProvider);
+  const { emailId, setEmailId, newBalance, setNewBalance } =
+    useContext(ContextProvider);
 
   const [showProductList, setShowProductList] = useState(false);
   const [showOptionList, setShowOptionList] = useState(false);
@@ -54,26 +60,9 @@ const SmileDataBundle = () => {
   const [paymentAmount, setPaymentAmount] = useState("");
   const [accountIdInputColor, setAccountIdInputColor] = useState("#92ABFE2E");
   const [input, setInput] = useState("");
-  const [balanceStatus,setBalanceStatus ] = useState("")
+  const [balanceStatus, setBalanceStatus] = useState("");
   const [emailError, setEmailError] = useState("");
- let balanceStringToNum = Number(newBalance);
 
-              let smileDataAmount = Number(selectedAmount);
-             let CheckSufficiency =  smileDataAmount > balanceStringToNum;
-
-  useEffect(()=> {
-   
-   const HandleBalanceStatus = ()=> {
-              if(CheckSufficiency){
-               setBalanceStatus("Insufficient fund")
-              }else{
-                setBalanceStatus("");
-               }
-            }
-
-            HandleBalanceStatus()
-
-          },[CheckSufficiency])
   // const [codes, setCodes] = useState(false);
 
   const points = "+2.00";
@@ -99,66 +88,171 @@ const SmileDataBundle = () => {
     setPaymentSelected(true);
   };
 
+  const [loading, setLoading] = useState(false);
+  const [passDataBalance, setPassDataBalance] = useState({});
+  const [sessionModal, setSessionModal] = useState(false);
+
+  useEffect(() => {
+    const GetBalance = async () => {
+      const SuccessHandler = () => {
+        //alert("Successful");
+        console.log("successfully retrieved balance");
+        //alert("Successful")
+      };
+      const FailedHandler = async (ErrorType) => {
+        if (ErrorType === "unauthoriesed") {
+          await GetFunction(
+            "balance",
+            setLoading,
+            SuccessHandler,
+            (ErrorType) => {
+              if (ErrorType === "unauthorised") {
+                setSessionModal(true);
+              }
+            },
+            setPassDataBalance
+          );
+        }
+      };
+      await GetFunction(
+        "balance",
+        setLoading,
+        SuccessHandler,
+        FailedHandler,
+        setPassDataBalance
+      );
+    };
+    // Simulate async data loading
+
+    if (newBalance === "" || newBalance === null || newBalance === undefined) {
+      GetBalance();
+      if (GetBalance && passDataBalance?.data) {
+        setNewBalance(passDataBalance?.data?.data?.data?.balance);
+      }
+    }
+    //eslint-disable-next-line
+  }, []);
+
+  const updateBalance = passDataBalance?.data
+    ? passDataBalance?.data?.data?.data?.balance
+    : "";
+
+  const cleanUpBalanceToNumericOnly = Number(updateBalance);
+  let balanceStringToNum = Number(newBalance);
+
   const countryList = [
     {
       id: 1,
       name: "Nigeria",
       code: "NGN",
       flag: require("../DataBundles-Images/ng.svg").default,
-      amount: newBalance,
-    },
+      amount:
+         newBalance === "" || newBalance === null
+           ? `${
+              cleanUpBalanceToNumericOnly > 1
+                ? cleanUpBalanceToNumericOnly?.toLocaleString("en-NG", {
+                    style: "currency",
+                    currency: "NGN",
+                  })
+                : "₦"
+            }`
+          : `${
+              balanceStringToNum > 1
+                ? balanceStringToNum?.toLocaleString("en-NG", {
+                    style: "currency",
+                    currency: "NGN",
+                  })
+                : "₦"
+            }`,
+     },
     {
       id: 2,
       name: "United States",
       code: "USD",
       flag: require("../DataBundles-Images/us.svg").default,
-      amount: 0,
+      amount: 0?.toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD",
+      }),
     },
     {
       id: 3,
       name: "United Kingdom",
       code: "GBP",
       flag: require("../DataBundles-Images/gb.svg").default,
-      amount: 0,
+      amount: 0?.toLocaleString("en-GB", {
+        style: "currency",
+        currency: "GBP",
+      }),
     },
     {
       id: 4,
       name: "European Union",
       code: "EUR",
       flag: require("../DataBundles-Images/eu.svg").default,
-      amount: 0,
+      amount: 0?.toLocaleString("en-EU", {
+        style: "currency",
+        currency: "EUR",
+      }),
     },
     {
       id: 5,
       name: "Australia",
       code: "AUD",
       flag: require("../DataBundles-Images/au.svg").default,
-      amount: 0,
+      amount: 0?.toLocaleString("en", {
+        style: "currency",
+        currency: "AUD",
+      }),
     },
     {
       id: 6,
       name: "Kenya",
       code: "KSH",
       flag: require("../DataBundles-Images/ke.svg").default,
-      amount: 0,
+      amount: 0?.toLocaleString("en-KE", {
+        style: "currency",
+        currency: "KES",
+      }),
     },
   ];
 
- const Payment = ({ code, flag, amount, onClick }) => {
-     return (
-       <div className={`py-[10px]  border-[0.5px] border-y-gray-200 flex items-center
-        gap-[10px] pl-[7px] text-black`} onClick={onClick}>
-         <div className={` ${airtimestyles.netImage}`}>
-           <img src={flag} alt="" className={airtimestyles.NoImage} />
-         </div>
-         <h2 className={airtimestyles.netName}>{code}</h2>
-         <h2 className={airtimestyles.netName}>
-           Wallet({amount.toLocaleString()}.00)
-         </h2>
-       </div>
-     );
-   };
- 
+  let smileDataAmount = Number(selectedAmount);
+  let CheckSufficiency =
+    smileDataAmount >
+    (newBalance === "" || newBalance === null
+      ? cleanUpBalanceToNumericOnly
+      : balanceStringToNum);
+
+  useEffect(() => {
+    const HandleBalanceStatus = () => {
+      if (CheckSufficiency) {
+        setBalanceStatus("Insufficient fund");
+      } else {
+        setBalanceStatus("");
+      }
+    };
+
+    HandleBalanceStatus();
+  }, [CheckSufficiency]);
+
+  const Payment = ({ code, flag, amount, onClick }) => {
+    return (
+      <div
+        className={`py-[10px]  border-[0.5px] border-y-gray-200 flex items-center
+        gap-[10px] pl-[7px] text-black`}
+        onClick={onClick}
+      >
+        <div className={` ${airtimestyles.netImage}`}>
+          <img src={flag} alt="" className={airtimestyles.NoImage} />
+        </div>
+        <h2 className={airtimestyles.netName}>{code}</h2>
+        <h2 className={airtimestyles.netName}>
+          Wallet({amount.toLocaleString()})
+        </h2>
+      </div>
+    );
+  };
 
   const {
     toggleSideBar,
@@ -510,12 +604,14 @@ const SmileDataBundle = () => {
           {/* =========================Select/Add Recipient===================== */}
 
           <div className="flex gap-[10%] mt-[40px] md:w-full md:justify-between md:gap-[10%] ">
-            <div className={`w-full flex items-center justify-between border text-[10px] md:py-[15px] md:w-[50%] rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]
+            <div
+              className={`w-full flex items-center justify-between border text-[10px] md:py-[15px] md:w-[50%] rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]
             ${
-                isDarkMode
-                  ? "bg-black text-white border !border-white"
-                  : "border border-[#0003]"
-              }`}>
+              isDarkMode
+                ? "bg-black text-white border !border-white"
+                : "border border-[#0003]"
+            }`}
+            >
               <Link
                 to="/DataBundleSelectRecipient"
                 style={{ display: "inline-flex", width: "100%" }}
@@ -529,12 +625,14 @@ const SmileDataBundle = () => {
                 />
               </Link>
             </div>
-            <div className={`w-full flex items-center justify-between border text-[10px] md:py-[15px] md:w-[40%] md:mr-[9%]  rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]
+            <div
+              className={`w-full flex items-center justify-between border text-[10px] md:py-[15px] md:w-[40%] md:mr-[9%]  rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]
             ${
-                isDarkMode
-                  ? "bg-black text-white border !border-white"
-                  : "border border-[#0003]"
-              }`}>
+              isDarkMode
+                ? "bg-black text-white border !border-white"
+                : "border border-[#0003]"
+            }`}
+            >
               <Link
                 to="/DataBundleAddRecipient"
                 style={{ display: "inline-flex", width: "100%" }}
@@ -599,19 +697,20 @@ const SmileDataBundle = () => {
 
           <div className="grid grid-cols-1 mt-[25px] md:grid-cols-2 gap-y-[20px] md:gap-x-[58.68px] lg:gap-x-[100px] md:gap-y-[15px] lg:gap-y-[25px] pb-[30px] lg:py-[30px] md:mt-[20px]">
             <div className="relative">
-              <h2 className={`lg:text-[18px] lg:leading-[24px] mb-1 text-[14px] md:text-[14px] md:font-[600] font-[400] leading-[12px] ${
-                                            isDarkMode 
-                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
-                                          }`}>
+              <h2
+                className={`lg:text-[18px] lg:leading-[24px] mb-1 text-[14px] md:text-[14px] md:font-[600] font-[400] leading-[12px] ${
+                  isDarkMode ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                }`}
+              >
                 Select Product
               </h2>
               <div
                 className={`mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between
                 ${
-      isDarkMode
-        ? "bg-black text-white border !border-white"
-        : "border border-[#0003]"
-    }
+                  isDarkMode
+                    ? "bg-black text-white border !border-white"
+                    : "border border-[#0003]"
+                }
   `}
                 onClick={() => setShowProductList(!showProductList)}
               >
@@ -623,23 +722,21 @@ const SmileDataBundle = () => {
                 </button>
               </div>
               {showProductList && (
-                <div className={`border md:rounded-[10px] text-[10px] md:text-[12px] lg:text-[16px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[10]
+                <div
+                  className={`border md:rounded-[10px] text-[10px] md:text-[12px] lg:text-[16px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[10]
                   ${
                     isDarkMode
                       ? "bg-black text-white border !border-white"
                       : "border border-[#0003]"
                   }
-                `}>
+                `}
+                >
                   {productList.map((item) => (
                     <div
                       key={item.name}
                       className={`pb-[17px] md:pb-[6px] pt-[17px] md:pt-[6px] font-weight-bold text-[14px] cursor-pointer border-b-[0.5px] text-[#7C7C7C] md:text-[12px] lg:text-[16px]  md:rounded-[0px] lg:mt-2 py-[4px] text-[10px] pl-[5px] ${
                         selectedNetworkProduct === item.name ? "bg-white" : ""
-                      }${
-                        isDarkMode
-                          ? "bg-black text-white"
-                          : "text-black"
-                      }
+                      }${isDarkMode ? "bg-black text-white" : "text-black"}
                     `}
                       onClick={() => handleSelectProduct(item.name)}
                     >
@@ -651,19 +748,20 @@ const SmileDataBundle = () => {
             </div>
 
             <div className="relative">
-              <h2 className={`lg:text-[18px] md:text-[14px] lg:leading-[24px] mb-1 text-[14px] md:font-[600] font-[400] leading-[12px] ${
-                                            isDarkMode 
-                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
-                                          }`}>
+              <h2
+                className={`lg:text-[18px] md:text-[14px] lg:leading-[24px] mb-1 text-[14px] md:font-[600] font-[400] leading-[12px] ${
+                  isDarkMode ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                }`}
+              >
                 Select Plan
               </h2>
               <div
                 className={`mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between 
                 ${
-      isDarkMode
-        ? "bg-black text-white border !border-white"
-        : "border border-[#0003]"
-    }
+                  isDarkMode
+                    ? "bg-black text-white border !border-white"
+                    : "border border-[#0003]"
+                }
   `}
                 onClick={() => setShowOptionList(!showOptionList)}
               >
@@ -676,12 +774,14 @@ const SmileDataBundle = () => {
               </div>
 
               {showOptionList && (
-                <div className={`border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[100] ${
-                  isDarkMode
-                    ? "bg-black text-white border !border-white"
-                    : "border border-[#0003]"
-                }
-              `}>
+                <div
+                  className={`border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[100] ${
+                    isDarkMode
+                      ? "bg-black text-white border !border-white"
+                      : "border border-[#0003]"
+                  }
+              `}
+                >
                   {productList
                     .find((item) => item.name === selectedNetworkProduct)
                     ?.options.map((optionItem, index) => {
@@ -726,10 +826,10 @@ const SmileDataBundle = () => {
                 type="text"
                 className={`mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 p-4 sm:p-3 input border w-full h-[30px] bg-[#92ABFE2E] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-center text-[13px]  font-[400] leading-[12px] md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px] text-start custom-placeholder
                 ${
-      isDarkMode
-        ? "bg-black text-white border !border-white"
-        : "border border-[#0003] text-[#7C7C7C]"
-    }
+                  isDarkMode
+                    ? "bg-black text-white border !border-white"
+                    : "border border-[#0003] text-[#7C7C7C]"
+                }
   `}
                 placeholder="Registered Email or Smile Account ID"
                 value={input}
@@ -757,10 +857,11 @@ const SmileDataBundle = () => {
             </div>
 
             <div className="">
-              <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
-                                            isDarkMode 
-                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
-                                          }`}>
+              <h2
+                className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
+                  isDarkMode ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                }`}
+              >
                 Account ID{" "}
               </h2>
               <div className="relative mt-[5px]">
@@ -768,10 +869,10 @@ const SmileDataBundle = () => {
                   type="text"
                   className={`mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] lg:text-[16px] font-[400] focus:outline-none lg:h-[51px]
                    ${
-      isDarkMode
-        ? "bg-black text-white border !border-white"
-        : "border border-[#0003]"
-    }
+                     isDarkMode
+                       ? "bg-black text-white border !border-white"
+                       : "border border-[#0003]"
+                   }
   `}
                   placeholder=""
                   value={showAccountId ? accountId : ""}
@@ -798,10 +899,11 @@ const SmileDataBundle = () => {
             </div>
 
             <div className="">
-              <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
-                                            isDarkMode 
-                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
-                                          }`}>
+              <h2
+                className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
+                  isDarkMode ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                }`}
+              >
                 Email ID{" "}
               </h2>
               <div className="relative mt-[5px]">
@@ -809,10 +911,10 @@ const SmileDataBundle = () => {
                   type="text"
                   className={`mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] lg:text-[16px] font-[400] focus:outline-none lg:h-[51px]
                    ${
-      isDarkMode
-        ? "bg-black text-white border !border-white"
-        : "border border-[#0003]"
-    }
+                     isDarkMode
+                       ? "bg-black text-white border !border-white"
+                       : "border border-[#0003]"
+                   }
   `}
                   placeholder=""
                   value={emailId}
@@ -834,26 +936,27 @@ const SmileDataBundle = () => {
             </div>
 
             <div className="">
-              <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
-                                            isDarkMode 
-                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
-                                          }`}>
+              <h2
+                className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
+                  isDarkMode ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                }`}
+              >
                 Phone Number{" "}
                 <span className="text-[#04177F]">
                   <Link to="/DataBundleSelectRecipient">
                     (Select Recipient)
                   </Link>
-                  </span>{" "}
+                </span>{" "}
               </h2>
               <div className="relative mt-[5px]">
                 <input
                   type="number"
                   className={`mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] lg:text-[16px] font-[400] focus:outline-none lg:h-[51px]
                    ${
-      isDarkMode
-        ? "bg-black text-white border !border-white"
-        : "border border-[#0003]"
-    }
+                     isDarkMode
+                       ? "bg-black text-white border !border-white"
+                       : "border border-[#0003]"
+                   }
   `}
                   placeholder=""
                   value={inputValue}
@@ -878,10 +981,11 @@ const SmileDataBundle = () => {
             </div>
 
             <div className="">
-              <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
-                                            isDarkMode 
-                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
-                                          }`}>
+              <h2
+                className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
+                  isDarkMode ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                }`}
+              >
                 Recipient Name<span className="text-[#7C7C7C]">(optional)</span>{" "}
               </h2>
               <div className="relative mt-[5px]">
@@ -889,10 +993,10 @@ const SmileDataBundle = () => {
                   type="text"
                   className={`mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px]
                    ${
-      isDarkMode
-        ? "bg-black text-white border !border-white"
-        : "border border-[#0003]"
-    }
+                     isDarkMode
+                       ? "bg-black text-white border !border-white"
+                       : "border border-[#0003]"
+                   }
   `}
                   placeholder=""
                   value={recipientNames}
@@ -909,10 +1013,11 @@ const SmileDataBundle = () => {
             </div>
 
             <div className="">
-              <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
-                                            isDarkMode 
-                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
-                                          }`}>
+              <h2
+                className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
+                  isDarkMode ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                }`}
+              >
                 Amount
               </h2>
               <div className="relative mt-[5px]">
@@ -920,10 +1025,10 @@ const SmileDataBundle = () => {
                   type="text"
                   className={`mt-1 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input border w-full h-8 px-4 rounded-md text-[10px] font-[400] focus:outline-none lg:h-[51px] lg:text-[16px]
                    ${
-      isDarkMode
-        ? "bg-black text-white border !border-white"
-        : "border border-[#0003]"
-    }
+                     isDarkMode
+                       ? "bg-black text-white border !border-white"
+                       : "border border-[#0003]"
+                   }
   `}
                   // placeholder="&#8358;100"
                   value={`${selectedAmount}`}
@@ -941,19 +1046,22 @@ const SmileDataBundle = () => {
 
             <div>
               <div onClick={handleShowPayment}>
-                <h2 className={`lg:text-[18px] mt-[5px] lg:leading-[24px] mb-2 text-[15px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
-                                            isDarkMode 
-                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
-                                          }`}>
+                <h2
+                  className={`lg:text-[18px] mt-[5px] lg:leading-[24px] mb-2 text-[15px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
+                    isDarkMode ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                  }`}
+                >
                   Payment Method
                 </h2>
-                <div className={`mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input flex justify-between items-center border w-full h-8 px-2 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px]
+                <div
+                  className={`mt-2 md:mt-0 border md:border-[0.4px] rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] p-4 sm:p-3 sm:text-lg input flex justify-between items-center border w-full h-8 px-2 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px]
               ${
                 isDarkMode
                   ? "bg-black text-white border !border-white"
                   : "border border-[#0003]"
               }
-            `}>
+            `}
+                >
                   {paymentSelected ? (
                     <li
                       onClick={handleShowPayment}
@@ -961,7 +1069,7 @@ const SmileDataBundle = () => {
                     >
                       <h2 className="text-[#7C7C7C]">{walletName}</h2>
                       <h2 className="text-[#7C7C7C]">
-                        Wallet ({paymentAmount.toLocaleString()}.00)
+                        Wallet ({paymentAmount})
                       </h2>
                     </li>
                   ) : (
@@ -1002,10 +1110,10 @@ const SmileDataBundle = () => {
                         : "border border-[#0003]"
                     }
                 ${
-                    toggleSideBar
-                      ? "w-full md:w-[44.5%] lg:w-[45%] 2xl:w-[46%]"
-                      : "w-full md:w-[46%] 2xl:w-[46.5%]"
-                  } bg-[#FFF] z-[100]`}
+                  toggleSideBar
+                    ? "w-full md:w-[44.5%] lg:w-[45%] 2xl:w-[46%]"
+                    : "w-full md:w-[46%] 2xl:w-[46.5%]"
+                } bg-[#FFF] z-[100]`}
                 >
                   {countryList.map((country) => (
                     <Payment
@@ -1202,42 +1310,68 @@ const SmileDataBundle = () => {
                       </div>
                     </div>
 
-                      <div className="bg-[#F6F7F7] w-[95%] h-auto my-5 lg:my-8 flex py-[7px] 
-                                                               justify-between items-center px-[4%] mx-auto rounded-[10px]">
-                                                                       <div className="flex flex-col gap-2  ">
-                                                                         <div className="flex gap-[10px] justify-center items-center">
-                                                                           <img
-                                                                             className="w-[16px] h-[16px] bg-white"
-                                                                             src={image}
-                                                                             alt="/"
-                                                                           />
-                                                                           <div className="flex gap-[10px] items-center">
-                                                                               <p className="text-[12px] md:text-[14px] leading-[20px] lg:leading-[22px]  lg:text-[16px] font-[500]">
-                                                                           Available Balance {"  "} 
-                                                                            </p>
-                                                                            <span className="text-[#0003]">
-                                                                             {`(${newBalance})`}
-                                                                           </span>
-                                                                           </div>
-                                                                         </div>
-                                                                       <span className="text-gray-500 text-[14px] font-[400] leading-[20px]
-                                                                            lg:text-[16px] lg:leading-[22px] text-left">
-                                                                              {balanceStatus}
-                                                                              </span>
-                                                                       </div>
-                                                       
-                                                                       <img
-                                                                         src={Select}
-                                                                         alt=""
-                                                                         className="w-[12px] h-[12px] md:w-[50px] md:h-[20px] lg:w-[80px] lg:h-[30px]"
-                                                                       />
-                                                                     </div>
+                    <div
+                      className="bg-[#F6F7F7] w-[95%] h-auto my-5 lg:my-8 flex py-[7px] 
+                                                               justify-between items-center px-[4%] mx-auto rounded-[10px]"
+                    >
+                      <div className="flex flex-col gap-2  ">
+                        <div className="flex gap-[10px] justify-center items-center">
+                          <img
+                            className="w-[16px] h-[16px] bg-white"
+                            src={image}
+                            alt="/"
+                          />
+                          <div className="flex gap-[10px] items-center">
+                            <p className="text-[12px] md:text-[14px] leading-[20px] lg:leading-[22px]  lg:text-[16px] font-[500]">
+                              Available Balance {"  "}
+                            </p>
+                            <span className="text-black">
+                              {`(${
+                                newBalance === "" || newBalance === null
+                                  ? `${
+                                      cleanUpBalanceToNumericOnly > 1
+                                        ? cleanUpBalanceToNumericOnly?.toLocaleString(
+                                            "en-NG",
+                                            {
+                                              style: "currency",
+                                              currency: "NGN",
+                                            }
+                                          )
+                                        : "₦"
+                                    }`
+                                  : `${
+                                      balanceStringToNum > 1
+                                        ? balanceStringToNum?.toLocaleString(
+                                            "en-NG",
+                                            {
+                                              style: "currency",
+                                              currency: "NGN",
+                                            }
+                                          )
+                                        : "₦"
+                                    }`
+                              })`}
+                            </span>
+                          </div>
+                        </div>
+                        <span className="text-gray-500 text-[14px] font-[400] leading-[20px] lg:text-[16px] lg:leading-[22px] text-left">
+                          {balanceStatus}
+                        </span>
+                      </div>
+
+                      <img
+                        src={Select}
+                        alt=""
+                        className="w-[12px] h-[12px] md:w-[50px] md:h-[20px] lg:w-[80px] lg:h-[30px]"
+                      />
+                    </div>
 
                     <div className="flex items-center justify-center">
-                      <button disabled={CheckSufficiency}
+                      <button
+                        disabled={CheckSufficiency}
                         className={`w-full md:w-fit bg-primary text-white rounded-md px-[28px] text-[10px] md:text-[12px] 
                           leading-[15px] lg:text-[16px] lg:leading-[24px] py-[15px] md:py-[10px]
-                            ${CheckSufficiency ? "bg-gray-400" : "bg-primary" }`}
+                            ${CheckSufficiency ? "bg-gray-400" : "bg-primary"}`}
                         onClick={() => {
                           handleConfirm();
                         }}
@@ -1274,11 +1408,9 @@ const SmileDataBundle = () => {
                   </p>
                   <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
                     <div className=" flex justify-center items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
-                      {" "}
-                      {isVisible ? (
                         <OtpInput
                           value={inputPin}
-                          inputType="tel"
+                          inputType={!isVisible ?"tel":"password"}
                           onChange={setInputPin}
                           numInputs={4}
                           shouldAutoFocus={true}
@@ -1292,11 +1424,6 @@ const SmileDataBundle = () => {
                             <input {...props} className="inputOTP mx-[3px]" />
                           )}
                         />
-                      ) : (
-                        <div className="text-[24px] md:text-[24px] mt-1">
-                          * * * *{" "}
-                        </div>
-                      )}
                       <div
                         className="text-[#0003] text-[13px] md:text-3xl"
                         onClick={toggleVisibility}
@@ -1569,7 +1696,9 @@ const SmileDataBundle = () => {
         {/* =======================FOOTER=================================== */}
         <div
           className={`${
-            isDarkMode ? "bg-black text-white flex gap-[15px] justify-center items-center  pb-[25%] md:pb-[12%] lg:pb-0 py-[40%]" : "flex gap-[15px] justify-center items-center mt-[100%] pb-[25%] md:pb-[12%] md:mt-[40%] lg:mt-[40%] lg:pb-0"
+            isDarkMode
+              ? "bg-black text-white flex gap-[15px] justify-center items-center  pb-[25%] md:pb-[12%] lg:pb-0 py-[40%]"
+              : "flex gap-[15px] justify-center items-center mt-[100%] pb-[25%] md:pb-[12%] md:mt-[40%] lg:mt-[40%] lg:pb-0"
           } `}
         >
           <div className="text-[10px] md:text-[12px] lg:text-[14px]">
@@ -1586,6 +1715,12 @@ const SmileDataBundle = () => {
           </Link>
         </div>
       </div>
+      {loading && (
+        <Modal>
+          <Loader />
+        </Modal>
+      )}
+      {sessionModal && <HandleUserSession />}
     </DashBoardLayout>
   );
 };

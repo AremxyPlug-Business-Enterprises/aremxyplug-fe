@@ -1044,7 +1044,7 @@ const AirtimeVtu = () => {
                                 </div>
                                 {/* <div className="relative"> */}
                                 {showPayment &&
-                                    <div className={`mt-[14px]
+                                    <div className={`mt-[7px]
                                                  ${
                       isDarkMode
                         ? "bg-black border-white rounded-[7px] text-white"

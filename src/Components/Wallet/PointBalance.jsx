@@ -5,8 +5,45 @@ import { BsEyeFill } from 'react-icons/bs'
 import FaqCard from './FaqCard';
 import './faq.css'
 import { Link } from 'react-router-dom';
+import { GetFunction} from "../../Components/ApiCollection.jsx/ApiBuck";
+import { useEffect } from 'react';
+
+import { ContextProvider } from "../Context";
+import { useContext, useRef } from "react";
 
 const PointBalance = () => {
+      const [isLoading, setLoading] = useState(false);
+      const [fetchedResponse, setFetchedResponse] = useState({});
+   
+const [userPoints, setUserPoints] = useState(0);
+ const [transactionPoints, setTransactionPoints] = useState(0);
+const [referralPoints, setReferralPoints] = useState(0);
+
+
+       
+    //Fetch Points
+   useEffect(() => {
+    
+     const  successHandler = (response) => {
+        if (!response?.data?.data) return;
+        // console.log("fetch points succefully");
+     const total = response?.data?.data?.point?.total_points;
+     const trxPoints = response?.data?.data?.point?.transaction_points ?? 0;
+     const referralPts = response?.data?.data?.point?.referral_points ?? 0;
+      console.log("fetch points succefully", total);
+     setUserPoints(total);
+     setTransactionPoints(trxPoints);
+     setReferralPoints(referralPts);
+     };
+     const FailedHandler = (error) => {
+       console.error("Failed to fetch points:", error);
+     };
+ 
+    
+       GetFunction("extra/point", setLoading,  successHandler, FailedHandler, setFetchedResponse)
+    
+   }, []);
+
   const [clicked, setClicked] = useState(true);
   const [refPoints, setRefPoints] = useState(false);
   const [transPoints, setTransPoints] = useState(false);
@@ -62,7 +99,7 @@ const PointBalance = () => {
                     <div className='rounded-[5px] md:rounded-[8px] md:p-2 px-[3px] py-2 bg-[#ced9ff] lg:rounded-[12px] lg:py-4 flex flex-col justify-between'>
                         <h2 className='text-center text-[8.5px] leading-[13.5px] lg:text-[16px] lg:leading-[24px]'>Total Transaction Points</h2>
                         <div className='flex gap-2 items-center justify-center mt-1 lg:mt-5'>
-                        { refPoints ? <h2 className='text-[8.5px] leading-[13.5px] lg:text-[16px] lg:leading-[24px]'>10,000.00</h2> : <h2 className='text-[8.5px] leading-[13.5px] lg:text-[16px] lg:leading-[24px] mt-1'>******</h2>}
+                        { refPoints ? <h2 className='text-[8.5px] leading-[13.5px] lg:text-[16px] lg:leading-[24px]'>{transactionPoints}</h2> : <h2 className='text-[8.5px] leading-[13.5px] lg:text-[16px] lg:leading-[24px] mt-1'>******</h2>}
                             <BsEyeFill className='text-[10px] lg:text-[17px] lg:leading-[25.5px] text-[#92abfe] cursor-pointer' onClick={()=>setRefPoints(!refPoints)}/>
                         </div>
                         <div className='text-center mt-2 lg:mt-7'>
@@ -72,7 +109,7 @@ const PointBalance = () => {
                     <div className='rounded-[5px] md:rounded-[8px] md:p-2 px-[3px] py-2 bg-[#ffe7c9] lg:rounded-[12px] lg:py-4 flex flex-col justify-between'>
                         <h2 className='text-center text-[8.5px] leading-[13.5px] lg:text-[16px] lg:leading-[24px]'>Total Referral Points</h2>
                         <div className='flex gap-2 items-center justify-center mt-1 lg:mt-5'>
-                        {transPoints ? <h2 className='text-[8.5px] leading-[13.5px] lg:text-[16px] lg:leading-[24px]'>10,000.00</h2> : <h2 className='text-[8.5px] leading-[13.5px] lg:text-[16px] lg:leading-[24px] mt-1'>******</h2>}
+                        {transPoints ? <h2 className='text-[8.5px] leading-[13.5px] lg:text-[16px] lg:leading-[24px]'>{referralPoints}</h2> : <h2 className='text-[8.5px] leading-[13.5px] lg:text-[16px] lg:leading-[24px] mt-1'>******</h2>}
                             <BsEyeFill className='text-[10px] lg:text-[17px] lg:leading-[25.5px] text-[#92abfe] cursor-pointer' onClick={()=>setTransPoints(!transPoints)}/>
                         </div>
                         <div className='text-center mt-2 lg:mt-7'>
@@ -85,7 +122,7 @@ const PointBalance = () => {
                     <div className='rounded-[5px] md:rounded-[8px] md:p-2 px-[3px] py-2 bg-[#a5ffcb] lg:py-4 lg:rounded-[12px] flex flex-col justify-between'>
                         <h2 className='text-center text-[8.5px] leading-[13.5px] lg:text-[16px] lg:leading-[24px]'>Total Earned Points</h2>
                         <div className='flex gap-2 items-center justify-center mt-1 lg:mt-5'>
-                            {earnPoints ? <h2 className='text-[8.5px] leading-[13.5px] lg:text-[16px] lg:leading-[24px]'>10,000.00</h2> : <h2 className='text-[8.5px] leading-[13.5px] lg:text-[16px] lg:leading-[24px] mt-1'>******</h2>}
+                            {earnPoints ? <h2 className='text-[8.5px] leading-[13.5px] lg:text-[16px] lg:leading-[24px]'>{isLoading ? "Loading..." : userPoints}</h2> : <h2 className='text-[8.5px] leading-[13.5px] lg:text-[16px] lg:leading-[24px] mt-1'>******</h2>}
                             <BsEyeFill className='text-[10px] text-[#92abfe] lg:text-[17px] lg:leading-[25.5px] cursor-pointer' onClick={()=>setEarnPoints(!earnPoints)}/>
                         </div>
 

@@ -19,6 +19,7 @@ import {
 } from "../../Components/ApiCollection.jsx/ApiBuck";
 import { Loader } from "../Loader/Loader";
 import { Modal } from "../Screens/Modal/Modal";
+// import { set } from "core-js/core/dict";
 
 export default function Referral() {
   //  const [copyTextOne, setCopyTextOne] = useState('');
@@ -28,6 +29,9 @@ export default function Referral() {
 
   const [referralResponds, setReferralResponds] = useState({});
   const [referredUsersResponse, setReferredUsersResponse] = useState({});
+  const [totalUsers, setTotalUsers] = useState(0);
+  const [activeUsers, setActiveUsers] = useState(0);
+  const [inactiveUsers, setInactiveUsers] = useState(0);
 
   const referralLink = localStorage.getItem(
     "ReferralLink",
@@ -113,6 +117,7 @@ export default function Referral() {
       await handleReferredUsers();
     };
     fetchReferredUsers();
+    //eslint-disable-next-line
   }, []);
 
   const handleReferredUsers = async () => {
@@ -120,6 +125,14 @@ export default function Referral() {
     const successHandler = (response) => {
       console.log("Referred Users:", response.data.data);
       console.log("Referred Use:", response.data.data.referrals);
+      const referredUsersResponse = response?.data?.data?.referrals;
+      setTotalUsers(referredUsersResponse?.length);
+      setActiveUsers(
+        referredUsersResponse?.filter((user) => user.is_active === true)?.length
+      );
+      setInactiveUsers(
+        referredUsersResponse?.filter((user) => user.is_active === false).length
+      );
     };
 
     const FailedHandler = async (ErrorType) => {
@@ -143,10 +156,22 @@ export default function Referral() {
           (ErrorType) => {
             if (ErrorType === "Server error") {
               alert("Failed to fetch referred users");
+              setTotalUsers("");
+              setActiveUsers("");
+              setInactiveUsers("");
             }
           },
           setReferredUsersResponse
         );
+      } else if (ErrorType === "User error") {
+        setTotalUsers("");
+        setActiveUsers("");
+        setInactiveUsers("");
+      } else {
+        // No referred users
+        setTotalUsers(0);
+        setActiveUsers(0);
+        setInactiveUsers(0);
       }
     };
     await GetFunction(
@@ -356,7 +381,7 @@ export default function Referral() {
               </div>
               <h2 className="font-style font-medium text-[10px] text-center leading-[15px] lg:text-base lg:leading-6">
                 {/* 100 */}
-                {referredUsers?.length || 0}
+                {totalUsers}
               </h2>
             </div>
             {/* box-2 */}
@@ -374,10 +399,7 @@ export default function Referral() {
               </div>
               <h2 className="font-style font-medium text-[10px] text-center leading-[15px] lg:text-base lg:leading-6">
                 {/* 70 */}
-                {
-                  referredUsers?.filter((user) => user.is_active === true)
-                    .length || 0
-                }
+                {activeUsers}
               </h2>
             </div>
             {/* box-3 */}
@@ -395,10 +417,7 @@ export default function Referral() {
               </div>
               <h2 className="font-style font-medium text-[10px] text-center leading-[15px] lg:text-base lg:leading-6">
                 {/* 30 */}
-                {
-                  referredUsers?.filter((user) => user.is_active === false)
-                    .length || 0
-                }
+                {inactiveUsers}
               </h2>
             </div>
           </div>
@@ -528,8 +547,9 @@ export default function Referral() {
               {referredUsers?.length > 0 ? (
                 referredUsers?.map((user) => (
                   <div className="flex flex-col md:pl-[16.038px] md:pr-[15.473px] lg:pl-[28px] lg:pr-[27px] ">
-                    <tr className="flex w-full border-b-[1.5px] border-[#000000] border-opacity-[20%] md:gap-[40px] lg:gap-[70px]"
-                    // md:gap-[36.67px]
+                    <tr
+                      className="flex w-full border-b-[1.5px] border-[#000000] border-opacity-[20%] md:gap-[40px] lg:gap-[70px]"
+                      // md:gap-[36.67px]
                     >
                       <td className="w-1/5 lg:pt-[30.5px] lg:pb-[28.5px] md:pt-[17.51px] md:pb-[16.36px] p-[0px]">
                         <p className=" text-left font-semibold leading-[20.8px] border-none md:text-[9.167px] md:leading-[11.917px] lg:text-base lg:leading-[20.8px]">
@@ -579,9 +599,13 @@ export default function Referral() {
                         </p>
                       </td>
                       <td className="w-1/5 flex justify-start items-start md:pt-[17.51px] md:pb-[16.36px] lg:pt-[30.5px] lg:pb-[28.5px] p-[0px]">
-                        <p className={`lg:text-base text-left font-semibold lg:leading-[20.8px] py-[4px] px-[12px] bg-[#CED9FF] md:text-[9.167px] md:leading-[11.917px] md:rounded-[3.438px] ${
-                      user.is_active === true ? "bg-[#CED9FF]" : "bg-[#FDCECE]"
-                    }`}>
+                        <p
+                          className={`lg:text-base text-left font-semibold lg:leading-[20.8px] py-[4px] px-[12px] bg-[#CED9FF] md:text-[9.167px] md:leading-[11.917px] md:rounded-[3.438px] ${
+                            user.is_active === true
+                              ? "bg-[#CED9FF]"
+                              : "bg-[#FDCECE]"
+                          }`}
+                        >
                           {/* Active */}
                           {user.is_active === true ? "Active" : "Inactive"}
                         </p>
