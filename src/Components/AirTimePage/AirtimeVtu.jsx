@@ -668,7 +668,7 @@ const AirtimeVtu = () => {
                         </div>
                          <div className="hidden md:w-[50%] md:block"></div>
                     </div>
-                    <div className="grid grid-cols-1 mt-[25px] md:grid-cols-2 gap-y-[20px] md:gap-x-[58.68px] lg:gap-x-[100px] md:gap-y-[15px] lg:gap-y-[25px] pb-[30px] lg:py-[30px] md:mt-[20px]">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-y-[20px] md:gap-x-[58.68px] lg:gap-x-[100px] md:gap-y-[15px] lg:gap-y-[25px]">
                     {/* <div className={styles.mainGrid}> */}
                         <div className="flex flex-col lg:gap-[14px] gap-[7px]">
                         {/* <div className={styles.mainGridCol}> */}
@@ -886,10 +886,13 @@ const AirtimeVtu = () => {
                                     </div>
                                 )}
                             </div>
-                        </div >
-                        <div className={styles.mainGridCol}>
-                            <div className='flex flex-col lg:gap-[14px] gap-[7px] mt-3 md:mt-5'>
-                                <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
+                        </div>
+                        </div>
+                        {/* <div className={styles.mainGridCol}>
+                            <div className='flex flex-col '> */}
+                             <div className='grid grid-cols-1 lg:gap-[9.5vw] gap-[7px] md:grid-cols-2 lg-grid-cols-2 '>
+                            <div className=''>
+                                <h2 className={` text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] mb-2 md:mb-4 ${
                                             isDarkMode 
                                               ? "!text-[#7c7c7c]" : "!text-[#7c7c7c]"
                                           }
@@ -920,8 +923,9 @@ const AirtimeVtu = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="flex flex-col lg:gap-[14px] gap-[7px] mt-8 md:mt-10">
-                                <h2 className={`text-[#7c7c7c] text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
+                            <div className='md:mt-0 mt-4'>
+                            {/* <div className="flex flex-col lg:gap-[14px] gap-[7px] mt-8 md:mt-10"> */}
+                                <h2 className={`text-[#7c7c7c] mb-2 md:mb-4 text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
                                             isDarkMode 
                                               ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
                                           }`}>Type Amount</h2>
@@ -965,9 +969,13 @@ const AirtimeVtu = () => {
                                 )}
                             </div>
                         </div>
-                        <div className={styles.mainGridCol}>
-                            <div className="flex flex-col lg:gap-[14px] gap-[6.6px] md:mt-4 mt-5">
-                                <h2 className={`text-[#7c7c7c] text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px]  ${
+
+
+                        {/* <div className={styles.mainGridCol}> */}
+                            {/* <div className="flex flex-col lg:gap-[14px] gap-[6.6px] md:mt-4 mt-5">  */}
+<div className='grid grid-cols-1 lg:gap-[9.5vw] gap-[7px] md:grid-cols-2 lg-grid-cols-2'>
+                            <div>
+                                <h2 className={`text-[#7c7c7c] text-[15px] mb-2 md:mb-4 md:font-[600] font-[400] md:text-[12px] lg:text-[18px]  ${
                                             isDarkMode 
                                               ? "!text-[#7c7c7c]" : "!text-[#7c7c7c]"
                                           }`}>Total Amount</h2>
@@ -998,9 +1006,11 @@ const AirtimeVtu = () => {
                                     </div>
                                 </div>
                             </div>
+
                             <div>
-                                <div className="flex flex-col lg:gap-[14px] gap-[7px] md:mt-10 mt-8">
-                                    <h2 className={`text-[#7c7c7c] text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px]  ${
+                            <div className='md:mt-0 mt-4'>
+                                {/* <div className="flex flex-col lg:gap-[14px] gap-[7px] md:mt-10 mt-8"> */}
+                                    <h2 className={`text-[#7c7c7c] text-[15px] mb-2 md:mb-4 md:font-[600] font-[400] md:text-[12px] lg:text-[18px]  ${
                                             isDarkMode 
                                               ? "!text-[#7c7c7c]" : "!text-[#7c7c7c]]"
                                           }`}>Payment Method</h2>
@@ -1044,7 +1054,7 @@ const AirtimeVtu = () => {
                                 </div>
                                 {/* <div className="relative"> */}
                                 {showPayment &&
-                                    <div className={`mt-[14px]
+                                    <div className={`mt-[7px]
                                                  ${
                       isDarkMode
                         ? "bg-black border-white rounded-[7px] text-white"
@@ -1087,7 +1097,7 @@ const AirtimeVtu = () => {
                                 }
                             </div>
                             </div>
-                        </div>
+                        {/* </div> */}
                     {/* </div> */}
                     <div className={styles.add}>
                         <h2 className='!text-[13px] md:!text-base'>Add to Recipient?</h2>

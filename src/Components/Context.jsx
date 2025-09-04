@@ -884,6 +884,16 @@ export const Context = ({ children }) => {
   const [outputValue, setOutputValue] = useState("");
   const [realinputValue, setRealInputValue] = useState("");
   const [realoutputValue, setRealOutputValue] = useState("");
+        const [userPoints, setUserPoints] = useState(0);
+          const [redeemResponse, setRedeemResponse] = useState(null);
+          const [isRedeeming, setIsRedeeming] = useState(false);
+          const [redeemedPoints, setRedeemedPoints] = useState(0);
+          const [rateRedeemed, setRateRedeemed] = useState(0);
+          const [ transactionId,  setTransactionId] = useState(0);
+          const [ orderId,  setOrderId] = useState(0);
+        const [amountRedeemed, setAmountRedeemed] = useState(0);
+           const [transactionProdect, setTransactionProdect] = useState(0);
+        const [transactionDescription, setTransactionDescription] = useState(0);
 
   //==============electricity subscrition===========
   // ikedc
@@ -1367,11 +1377,6 @@ export const Context = ({ children }) => {
   //The transactionResponse for getting user past transactions details
   const [transactionResponse, setTransactionResponse] = useState({});
 
-//point redeem state
-  const [amountRedeemed, setAmountRedeemed] = useState(0);
-  const [rateRedeemed, setRateRedeemed] = useState(0);
-  const [ transactionId,  setTransactionId] = useState(0);
-  const [ orderId,  setOrderId] = useState(0);
 
   const hold = {
     tvSubscriptionResponse,
@@ -1813,6 +1818,10 @@ export const Context = ({ children }) => {
     realoutputValue,
     setRealOutputValue,
 
+      transactionProdect, 
+      setTransactionProdect,
+      transactionDescription, 
+    setTransactionDescription,
     amountRedeemed, 
     setAmountRedeemed,
     rateRedeemed, 
@@ -1821,6 +1830,11 @@ export const Context = ({ children }) => {
      setTransactionId,
     orderId, 
     setOrderId,
+      setAmountRedeemed,
+  setRateRedeemed,
+  setTransactionId,
+  setUserPoints,
+  setRedeemResponse,
 
     //electricity subscription
     // ikedc
