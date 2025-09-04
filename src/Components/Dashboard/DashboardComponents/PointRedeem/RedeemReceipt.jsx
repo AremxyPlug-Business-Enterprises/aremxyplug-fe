@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import { useContext, useRef } from "react";
 import { ContextProvider } from "../../../Context";
 import styles from "../TransferComponent/transfer.module.css"
@@ -12,20 +11,16 @@ export const RedeemReceipt = () => {
     toggleSideBar,
     isDarkMode,
     date,
-  setAmountRedeemed,
-  setRateRedeemed,
-  setTransactionId,
-  setOrderId,
-  setUserPoints,
-  setRedeemResponse,
   amountRedeemed,
   rateRedeemed,
   transactionId,
   orderId,
-    transactionProduct, setTransactionProduct,
-    transactionDescription, setTransactionDescription,
+    transactionProduct, 
+    // setTransactionProduct,
+    transactionDescription, 
+    // setTransactionDescription,
   inputValue,
-  outputValue,
+  // outputValue,
   setRealInputValue,
   setRealOutputValue,
   isLoading,

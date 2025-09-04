@@ -25,7 +25,6 @@ import axios from "axios";
 import { GetFunction} from "../../../Components/ApiCollection.jsx/ApiBuck";
 export const MainDashboard = (Data) => {
     const [isLoading, setLoading] = useState(false);
-    const [fetchedResponse, setFetchedResponse] = useState({});
     const [userPoints, setUserPoints] = useState(0);
 
 
@@ -314,16 +313,16 @@ window.addEventListener("online", ()=> {
      const  successHandler = (response) => {
         if (!response?.data?.data) return;
         // console.log("fetch points succefully");
-     const total = response?.data?.data?.point?.total_points;
-    console.log("fetch points succefully", total);
-     setUserPoints(total);
+   const available = response?.data?.data?.point?.available_points ?? 0;
+    console.log("fetch points succefully", available);
+     setUserPoints(available);
      };
      const FailedHandler = (error) => {
        console.error("Failed to fetch points:", error);
      };
  
     
-       GetFunction("extra/point", setLoading,  successHandler, FailedHandler, setFetchedResponse)
+       GetFunction("extra/point", setLoading,  successHandler, FailedHandler)
     
    }, []);
       
