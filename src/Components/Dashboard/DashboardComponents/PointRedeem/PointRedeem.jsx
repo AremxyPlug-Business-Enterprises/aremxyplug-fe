@@ -262,7 +262,6 @@ const redemptionData = response?.data?.data?.data ?? response?.data?.data ?? res
 
   refreshPoints();
 };
-
     const failedHandler = (ErrorType) => {
       if (ErrorType === "unauthorised") {
         setSessionModal(true);
