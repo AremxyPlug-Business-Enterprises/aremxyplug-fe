@@ -263,37 +263,6 @@ const redemptionData = response?.data?.data?.data ?? response?.data?.data ?? res
   refreshPoints();
 };
 
-//     const successHandler = (response) => {
-//     //const redemptionData = fetchedResponse.data?.data || fetchedResponse.data;
-//   // const redemptionData = fetchedResponse?.data?.data?.data || {};
-//   // console.log("Redemption Data:", redemptionData);
-
-//   //const redemptionData = response?.data?.data?.data || {};
-//   const redemptionData = response?.data?.data?.data;
-//     if (!redemptionData || !redemptionData.remaining_points) {
-//     alert("Redemption failed: invalid server response");
-//     return;
-//   }
-//     setAmountRedeemed(redemptionData.amount_redeemed ?? 0);
-// console.log("Setting Amount Redeemed", redemptionData.amount_redeemed);
-//   setRateRedeemed(redemptionData.redeemed_rate ?? "1 PTS - 1 NGN");
-//   setTransactionId(redemptionData.transaction_id ?? "");
-//   setOrderId(redemptionData.order_id ?? "");
-//   setUserPoints(redemptionData.remaining_points ?? userPoints);
-//   setUserPoints(redemptionData.remaining_points ?? userPoints);
-//    setTransactionProduct(redemptionData.transaction_product ?? userPoints);
-//     setTransactionDescription(redemptionData.transaction_description ?? userPoints);
-
-//       setRedeemResponse(redemptionData);
-//       setSuccessPopup(true);
-//       setInputPinPopUp(false);
-//       setProceed(false);
-//       setInputPin("");
-//       setInputValue("");
-//       setOutputValue("");
-//       refreshPoints();
-//     };
-
     const failedHandler = (ErrorType) => {
       if (ErrorType === "unauthorised") {
         setSessionModal(true);
