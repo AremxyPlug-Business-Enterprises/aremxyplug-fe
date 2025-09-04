@@ -38,15 +38,19 @@ const PointRedeem = () => {
            setRealOutputValue,
             errorMessage,
            setErrorMessage,
-           redeemResponse, setRedeemResponse,
-           isRedeeming, setIsRedeeming,
-           redeemedPoints, setRedeemedPoints,
+          //  redeemResponse, 
+           setRedeemResponse,
+          //  isRedeeming, setIsRedeeming,
+          //  redeemedPoints, setRedeemedPoints,
            rateRedeemed, setRateRedeemed,
-           transactionId,  setTransactionId,
+          //  transactionId, 
+            setTransactionId,
            orderId,  setOrderId,
           amountRedeemed, setAmountRedeemed,
-          transactionProduct, setTransactionProduct,
-          transactionDescription, setTransactionDescription,
+          // transactionProduct,
+           setTransactionProduct,
+          // transactionDescription,
+           setTransactionDescription,
 
           authenticationOpen,
    } = useContext(ContextProvider);
@@ -62,15 +66,15 @@ const PointRedeem = () => {
            setIsFocused(false);
          };
    
-         const cancelInputGotv = () => {
-           setInputPinPopUp(false);
-           window.location.reload();
-         }
+        //  const cancelInputGotv = () => {
+        //    setInputPinPopUp(false);
+        //    window.location.reload();
+        //  }
   
 
 const [text, setText] =useState(false);
   // const [userPoints, setUserPoints] = useState(0);
-   const [transactionInfo, setTransactionInfo] = useState(null);
+  // const [transactionInfo, setTransactionInfo] = useState(null);
   const [isLoading, setLoading] = useState(false);
   const [fetchedResponse, setFetchedResponse] = useState({});
     const [InputPinPopUp, setInputPinPopUp] = useState(false);
@@ -80,8 +84,8 @@ const [text, setText] =useState(false);
   const [errors, setErrors] = useState({});
   
 const [userPoints, setUserPoints] = useState(0);
- const [transactionPoints, setTransactionPoints] = useState(0);
-const [referralPoints, setReferralPoints] = useState(0);
+//  const [transactionPoints, setTransactionPoints] = useState(0);
+// const [referralPoints, setReferralPoints] = useState(0);
 //   const [redeemResponse, setRedeemResponse] = useState(null);
 //   const [isRedeeming, setIsRedeeming] = useState(false);
 //   const [redeemedPoints, setRedeemedPoints] = useState(0);
@@ -161,12 +165,13 @@ const [sessionModal, setSessionModal] = useState(false);
     const  successHandler = (response) => {
      if (!response?.data?.data) return;
      // console.log("fetch points succefully");
-    const total = response?.data?.data?.point?.total_points;
-    const trxPoints = response?.data?.data?.point?.transaction_points ?? 0;
-    const referralPts = response?.data?.data?.point?.referral_points ?? 0;
-    setUserPoints(total);
-    setTransactionPoints(trxPoints);
-    setReferralPoints(referralPts);
+    //const total = response?.data?.data?.point?.total_points;
+    const available = response?.data?.data?.point?.available_points ?? 0;
+    // const trxPoints = response?.data?.data?.point?.transaction_points ?? 0;
+    // const referralPts = response?.data?.data?.point?.referral_points ?? 0;
+    setUserPoints(available);
+    // setTransactionPoints(trxPoints);
+    // setReferralPoints(referralPts);
     };
     const FailedHandler = (error) => {
       console.error("Failed to fetch points:", error);
@@ -225,37 +230,38 @@ const VerifyPinHandler = async () => {
       alert("You don't have enough points");
       return;
     }
-    const successHandler = (response) => {
-    //const redemptionData = fetchedResponse.data?.data || fetchedResponse.data;
-  // const redemptionData = fetchedResponse?.data?.data?.data || {};
-  // console.log("Redemption Data:", redemptionData);
 
-  //const redemptionData = response?.data?.data?.data || {};
-  const redemptionData = response?.data?.data?.data;
-    if (!redemptionData || !redemptionData.remaining_points) {
-    alert("Redemption failed: invalid server response");
+
+    const successHandler = (response) => {
+  console.log("Redemption Response:", response);
+
+  // Adjust response extraction
+const redemptionData = response?.data?.data?.data ?? response?.data?.data ?? response?.data ?? {};
+
+  if (!redemptionData || Object.keys(redemptionData).length === 0) {
+    setErrorMessage("Redemption failed: invalid server response");
     return;
   }
-    setAmountRedeemed(redemptionData.amount_redeemed ?? 0);
-//console.log("Setting Amount Redeemed", redemptionData.amount_redeemed);
+
+  setAmountRedeemed(redemptionData.amount_redeemed ?? 0);
+ console.log("Amount Redeemed", amountRedeemed);
   setRateRedeemed(redemptionData.redeemed_rate ?? "1 PTS - 1 NGN");
   setTransactionId(redemptionData.transaction_id ?? "");
   setOrderId(redemptionData.order_id ?? "");
   setUserPoints(redemptionData.remaining_points ?? userPoints);
-  setUserPoints(redemptionData.remaining_points ?? userPoints);
-   setTransactionProduct(redemptionData.transaction_product ?? userPoints);
-    setTransactionDescription(redemptionData.transaction_description ?? userPoints);
+  setTransactionProduct(redemptionData.transaction_product ?? "");
+  setTransactionDescription(redemptionData.transaction_description ?? "");
 
-      setRedeemResponse(redemptionData);
-      setSuccessPopup(true);
-      setInputPinPopUp(false);
-      setProceed(false);
-      setInputPin("");
-      setInputValue("");
-      setOutputValue("");
-      refreshPoints();
-    };
+  setRedeemResponse(redemptionData);
+  setSuccessPopup(true);
+  setInputPinPopUp(false);
+  setProceed(false);
+  setInputPin("");
+  setInputValue("");
+  setOutputValue("");
 
+  refreshPoints();
+};
     const failedHandler = (ErrorType) => {
       if (ErrorType === "unauthorised") {
         setSessionModal(true);
@@ -275,8 +281,8 @@ const VerifyPinHandler = async () => {
 
   const refreshPoints = () => {
   GetFunction("extra/point", setLoading, (res) => {
-    const total = res?.data?.data?.point?.total_points;
-    setUserPoints(total ?? 0);
+    const available = res?.data?.data?.point?.available_points ?? 0;
+    setUserPoints(available);
   }, (err) => {
     console.error("Failed to refresh points", err);
   }, setFetchedResponse);
@@ -416,13 +422,13 @@ const VerifyPinHandler = async () => {
             Available Points Balance: {isLoading ? "Loading..." : userPoints}
           </div>
             {/* I aded this new line to it */}
-  <div className="border-[1px] border-slate-200 pl-1 pr-3 py-0 rounded-sm">
+  {/* <div className="border-[1px] border-slate-200 pl-1 pr-3 py-0 rounded-sm">
     Transaction Points: {isLoading ? "Loading..." : transactionPoints}
-  </div>
-  <div className="border-[1px] border-slate-200 pl-1 pr-3 py-0 rounded-sm">
-    Referral Points: {isLoading ? "Loading..." : referralPoints}
+  </div> */}
+  {/* <div className="border-[1px] border-slate-200 pl-1 pr-3 py-0 rounded-sm">
+    Referral Points: {isLoading ? "Loading..." : referralPoints} */}
   {/* </div> */}
-  </div>
+  {/* </div> */}
         </div>
         <div className="mt-[7px] flex flex-row lg:mt-[20px]">
           <div className="border-[1px] w-[85%] md:w-[92%]  text-[10px] lg:text-[16px] h-[30px] md:h-[40px] font-[600] text-[#7C7C7C] lg:h-[50px] px-2 py-0 pt-2 md:pt-3 lg:pt-4 border-slate-200">
@@ -714,7 +720,7 @@ const VerifyPinHandler = async () => {
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Account To Receive</p>
-                <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{isLoading ? "Loading..." : inputValue}</span>
+                <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>&#8358;{isLoading ? "Loading..." : inputValue}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -724,7 +730,7 @@ const VerifyPinHandler = async () => {
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Transfaction fee</p>
-                <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>0</span>
+                <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>&#8358;0</span>
                 {/* <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>&#8358;{transferFee}.00</span> */}
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -826,45 +832,36 @@ const VerifyPinHandler = async () => {
                     // className=" flex justify-center  ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]"
                     className="flex items-center gap-2.5"
                   >
-                    {isVisible ? (
-                      <OtpInput
-                        value={inputPin}
-                        inputType="tel"
-                        onChange={setInputPin}
-                        numInputs={4}
-                        shouldAutoFocus={true}
-                        inputStyle={{
-                          // color: isDarkMode ? "#ffffff" : "#403f3f",
-                          color: isDarkMode ? "#ffffff" : "#000000",
-                          // width: 30,
-                          // height: 30,
-                          // borderRadius: 3,
-                          fontWeight: 700,
-                          borderRadius: 4,
-                          height: "35px",
-                          width: "35px",
-                          backgroundColor: isDarkMode ? "black" : "white",
-                          border: isDarkMode
-                            ? "1px solid white"
-                            : "1px solid #ccc",
-                        }}
-                        renderInput={(props) => (
-                          <input
-                            {...props}
-                            // className="inputOTP mx-[3px]"
-                            className={`inputOTP mx-[2px] ${
-                              isFocused ? "focused" : ""
-                            }`}
-                            onFocus={handleFocus}
-                            onBlur={handleBlur}
-                          />
-                        )}
-                      />
+        <OtpInput
+  value={inputPin}
+  inputType={isVisible ? "tel" : "password"}
+  onChange={setInputPin}
+  numInputs={4}
+  shouldAutoFocus={true}
+  inputStyle={{
+    color: isDarkMode ? "#ffffff" : "#000000",
+    fontWeight: 700,
+    borderRadius: 4,
+    height: "35px",
+    width: "35px",
+    backgroundColor: isDarkMode ? "black" : "white",
+    border: isDarkMode ? "1px solid white" : "1px solid #ccc",
+  }}
+  renderInput={(props) => (
+    <input
+      {...props}
+      className={`inputOTP mx-[2px] ${isFocused ? "focused" : ""}`}
+      onFocus={handleFocus}
+      onBlur={handleBlur}
+    />
+  )}
+/>
+{/* 
                     ) : (
                       <div className="text-[24px] md:text-[24px] mt-1">
                         * * * *
                       </div>
-                    )}
+                    )} */}
                     <div className="text-[#0003]" onClick={toggleVisibility}>
                       {isVisible ? (
                         <AiFillEye className="w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]" />
