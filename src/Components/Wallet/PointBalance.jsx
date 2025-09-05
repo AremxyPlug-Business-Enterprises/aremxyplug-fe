@@ -8,12 +8,10 @@ import { Link } from 'react-router-dom';
 import { GetFunction} from "../../Components/ApiCollection.jsx/ApiBuck";
 import { useEffect } from 'react';
 
-import { ContextProvider } from "../Context";
-import { useContext, useRef } from "react";
+
 
 const PointBalance = () => {
       const [isLoading, setLoading] = useState(false);
-      const [fetchedResponse, setFetchedResponse] = useState({});
    
 const [userPoints, setUserPoints] = useState(0);
  const [transactionPoints, setTransactionPoints] = useState(0);
@@ -27,7 +25,7 @@ const [referralPoints, setReferralPoints] = useState(0);
      const  successHandler = (response) => {
         if (!response?.data?.data) return;
         // console.log("fetch points succefully");
-     const total = response?.data?.data?.point?.total_points;
+     const total = response?.data?.data?.point?.earned_points ?? 0;
      const trxPoints = response?.data?.data?.point?.transaction_points ?? 0;
      const referralPts = response?.data?.data?.point?.referral_points ?? 0;
       console.log("fetch points succefully", total);
@@ -40,7 +38,7 @@ const [referralPoints, setReferralPoints] = useState(0);
      };
  
     
-       GetFunction("extra/point", setLoading,  successHandler, FailedHandler, setFetchedResponse)
+       GetFunction("extra/point", setLoading,  successHandler, FailedHandler)
     
    }, []);
 

@@ -4,7 +4,7 @@ import { ContextProvider } from "../../Context";
 import styles from "./component.module.css";
 import { Link } from "react-router-dom";
 const QuickFeatures = () => {
-  const { isDarkMode } = useContext(ContextProvider);
+  const { isDarkMode, toggleSideBar } = useContext(ContextProvider);
   return (
     <div className={styles.quickbody}>
       <div className="flex items-center gap-[10px]">
@@ -17,18 +17,24 @@ const QuickFeatures = () => {
           alt="/"
         />
       </div>
-      <div className={`${styles.quickgrid} grid grid-cols-5 gap-y-2 mt-[3%]`}>
-        <Link to="/airtime-topup"
-      className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
-              styles.feature
-            }`} >
-            <img
-              className="h-[25px] w-[25px] md:w-[] md:h-[] lg:h-[79px] lg:w-[79px]"
-              src="./Images/dashboardImages/feature1.png"
-              alt="/"
-            />
-            <p>Airtime Topup</p>
-       
+      <div
+        className={`
+          ${styles.quickgrid} grid grid-cols-5 gap-y-2 mt-[3%]`}
+      >
+        <Link
+          to="/airtime-topup"
+          className={`${isDarkMode ? " border text-white" : "bg-[#fff] "}
+          ${
+            styles.feature
+          }`}
+        >
+          <img
+            className={`h-[25px] w-[25px] md:w-[] md:h-[] lg:h-[79px] lg:w-[79px]
+           ${toggleSideBar ? "md:gap-x- lg:gap-x-0" : ""}`}
+            src="./Images/dashboardImages/feature1.png"
+            alt="/"
+          />
+          <p>Airtime Topup</p>
         </Link>
 
         <Link
@@ -45,18 +51,18 @@ const QuickFeatures = () => {
           />{" "}
           <p>Data Topup</p>
         </Link>
-        <Link to="/EducationPins"
-        className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
-              styles.feature
-            }`}
-          >
-            <img
-              className="h-[25px] w-[25px] md:w-[] md:h-[] lg:h-[85px] lg:w-[85px]"
-              src="./Images/dashboardImages/feature3.png"
-              alt="/"
-            />
-            <p>Education Pins</p>
-        
+        <Link
+          to="/EducationPins"
+          className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
+            styles.feature
+          }`}
+        >
+          <img
+            className="h-[25px] w-[25px] md:w-[] md:h-[] lg:h-[85px] lg:w-[85px]"
+            src="./Images/dashboardImages/feature3.png"
+            alt="/"
+          />
+          <p>Education Pins</p>
         </Link>
         <Link to="/TvSubscription">
           <div
@@ -72,23 +78,25 @@ const QuickFeatures = () => {
             <p>TV Subscriptions</p>
           </div>
         </Link>
-        <Link to="/electricity-subscription"
-         className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
-              styles.feature
-            }`}
-          >
-            <img
-              className="h-[25px] w-[25px] md:w-[] md:h-[] lg:h-[79px] lg:w-[79px]"
-              src="./Images/dashboardImages/feature5.png"
-              alt="/"
-            />
-            <p>Electricity Bills</p>
-          </Link>
-        <Link to="/payment-page"
-            className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
-              styles.feature
-            }`}
-          >
+        <Link
+          to="/electricity-subscription"
+          className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
+            styles.feature
+          }`}
+        >
+          <img
+            className="h-[25px] w-[25px] md:w-[] md:h-[] lg:h-[79px] lg:w-[79px]"
+            src="./Images/dashboardImages/feature5.png"
+            alt="/"
+          />
+          <p>Electricity Bills</p>
+        </Link>
+        <Link
+          to="/payment-page"
+          className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
+            styles.feature
+          }`}
+        >
           <img
             className="h-[25px] w-[25px] md:w-[] md:h-[] lg:h-[79px] lg:w-[79px]"
             src="./Images/dashboardImages/feature6.png"

@@ -240,8 +240,10 @@ export const WalletInOutFlows = ({className}) => {
 
           <div>
             <div
-              className={` flex w-full gap-[5px] h-[70px] lg:h-[100px] md:items-center 
-              lg:mt-[5%] lg:items-center my-[30px]`}>
+              className={` flex w-full gap-[5px] h-[70px] lg:h-[100px] items-center 
+              lg:mt-[5%] lg:items-center my-[30px]`}
+              // md:items-center
+              >
               <select
                 name="curr"
                 id="curr"

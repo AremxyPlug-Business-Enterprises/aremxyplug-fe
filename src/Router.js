@@ -120,6 +120,8 @@ import { PhedReceipt } from "./Components/Dashboard/DashboardComponents/Electric
 import ProfileSettingsMain from "./Components/My Profile & Account Settings/ProfileSettingsMain";
 import EditProfile from "./Components/My Profile & Account Settings/My Profile Page/EditProfile";
 import TransactionPage from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionPage";
+import { ElectricityTransSuccessReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/ElectricityTransSuccessReceipt";
+
 import { SuccessfullReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/SuccessfullReceipt";
 import { FailedReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/FailedReceipt";
 import { PendingReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/PendingReceipt";
@@ -183,6 +185,10 @@ import { PhedReceiptFailed } from "./Components/Dashboard/DashboardComponents/El
 import BvnVerification from "./Components/My Profile & Account Settings/Account Verification/BvnVerification";
 import AccountVerficationPage from "./Components/My Profile & Account Settings/Account Verification/AccountVerficationPage";
 import { ProtectedRoute } from "./Components/ProtectedRoute";
+import { ElectricityFailedReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/ElectricityFailedReceipt";
+import EduSuccessReceipt from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/EduSuccessReceipt";
+import { TvSubSuccessReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/Tv_SubSuccessReceipt";
+
 export const Router = () => {
   return (
     <div>
@@ -850,6 +856,26 @@ export const Router = () => {
         <Route path="/SuccessfullReceipt" element={
           <ProtectedRoute>
           <SuccessfullReceipt />
+          </ProtectedRoute>
+          } />
+        <Route path="/ElectricityTransSuccessReceipt" element={
+          <ProtectedRoute>
+          <ElectricityTransSuccessReceipt />
+          </ProtectedRoute>
+          } />
+        <Route path="/EduSuccessReceipt" element={
+          <ProtectedRoute>
+          <EduSuccessReceipt />
+          </ProtectedRoute>
+          } />
+        <Route path="/TvSubSuccessReceipt" element={
+          <ProtectedRoute>
+          <TvSubSuccessReceipt/>
+          </ProtectedRoute>
+          } />
+        <Route path="/ElectricityFailedReceipt" element={
+          <ProtectedRoute>
+          <ElectricityFailedReceipt />
           </ProtectedRoute>
           } />
         <Route path="/FailedReceipt" element={

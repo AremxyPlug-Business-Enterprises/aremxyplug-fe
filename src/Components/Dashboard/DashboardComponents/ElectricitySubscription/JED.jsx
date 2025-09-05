@@ -172,14 +172,22 @@ const JED = () => {
       name: "NGN Wallet",
       balance:
         newBalance === "" || newBalance === null || newBalance === undefined
-          ? `(${updateBalanceToNumber?.toLocaleString("en-NG", {
-              style: "currency",
-              currency: "NGN",
-            })})`
-          : `(${newBalanceToNumber?.toLocaleString("en-NG", {
-              style: "currency",
-              currency: "NGN",
-            })})`,
+          ? `(${
+              updateBalance > 1
+                ? updateBalanceToNumber?.toLocaleString("en-NG", {
+                    style: "currency",
+                    currency: "NGN",
+                  })
+                : ""
+            })`
+          : `(${
+              newBalance > 1
+                ? newBalanceToNumber?.toLocaleString("en-NG", {
+                    style: "currency",
+                    currency: "NGN",
+                  })
+                : ""
+            })`,
       code: "Nigerian NGN Wallet",
       flag: require("../ElectricitySubscription/Electricity-sub-images/nigeriaFlag.png"),
     },

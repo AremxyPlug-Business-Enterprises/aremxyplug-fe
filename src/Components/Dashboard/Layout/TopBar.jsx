@@ -47,8 +47,9 @@ export const TopBar = () => {
         alt="/harmburger"
       />
         <div
-          className={`${
-            isDarkMode ? "border border-[#fff]" : "border-[#0000004D]"
+          className={`
+            ${toggleSideBar ? "md:ml-5 lg:ml-0" : ""}
+            ${isDarkMode ? "border border-[#fff]" : "border-[#0000004D]"
           } cursor-pointer flex justify-between items-center px-[2%] w-[8rem]  border-[0.5px] rounded-[3.47px] md:rounded-[10px] md:h-[33.8px] md:w-[202px] lg:border-[1.5px]  opacity-50 lg:rounded-[10px] lg:w-[358px] lg:h-[60px]`}
           // bg-gray-300 w-[60%]
         >
