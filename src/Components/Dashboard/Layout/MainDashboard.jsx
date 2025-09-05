@@ -26,6 +26,7 @@ import { GetFunction} from "../../../Components/ApiCollection.jsx/ApiBuck";
 export const MainDashboard = (Data) => {
     const [isLoading, setLoading] = useState(false);
     const [userPoints, setUserPoints] = useState(0);
+    const [fetchedResponse, setFetchedResponse] = useState([]);
 
 
   const { setHideNavbar, toggleSideBar, isDarkMode,
@@ -322,7 +323,7 @@ window.addEventListener("online", ()=> {
      };
  
     
-       GetFunction("extra/point", setLoading,  successHandler, FailedHandler)
+       GetFunction("extra/point", setLoading,  successHandler, FailedHandler, setFetchedResponse)
     
    }, []);
       

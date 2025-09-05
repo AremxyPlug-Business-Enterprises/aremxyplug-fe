@@ -16,6 +16,7 @@ const PointBalance = () => {
 const [userPoints, setUserPoints] = useState(0);
  const [transactionPoints, setTransactionPoints] = useState(0);
 const [referralPoints, setReferralPoints] = useState(0);
+const [fetchedResponse, setFetchedResponse] = useState([]);
 
 
        
@@ -34,11 +35,11 @@ const [referralPoints, setReferralPoints] = useState(0);
      setReferralPoints(referralPts);
      };
      const FailedHandler = (error) => {
-       console.error("Failed to fetch points:", error);
+       console.error("Failed to fetch points,", error);
      };
  
     
-       GetFunction("extra/point", setLoading,  successHandler, FailedHandler)
+       GetFunction("extra/point", setLoading,  successHandler, FailedHandler, setFetchedResponse)
     
    }, []);
 

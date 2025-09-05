@@ -76,12 +76,12 @@ const [text, setText] =useState(false);
   // const [userPoints, setUserPoints] = useState(0);
   // const [transactionInfo, setTransactionInfo] = useState(null);
   const [isLoading, setLoading] = useState(false);
-  const [fetchedResponse, setFetchedResponse] = useState({});
     const [InputPinPopUp, setInputPinPopUp] = useState(false);
   const [inputPin, setInputPin] = useState("");
   const [proceed, setProceed] = useState(false);
    const [successPopup, setSuccessPopup] = useState(false);
   const [errors, setErrors] = useState({});
+  const [fetchedResponse, setFetchedResponse] = useState({});
   
 const [userPoints, setUserPoints] = useState(0);
 //  const [transactionPoints, setTransactionPoints] = useState(0);
@@ -233,26 +233,27 @@ const VerifyPinHandler = async () => {
 
 
     const successHandler = (response) => {
-  console.log("Redemption Response:", response);
+  // console.log("Redemption Response:", response);
 
-  // Adjust response extraction
-const redemptionData = response?.data?.data?.data ?? response?.data?.data ?? response?.data ?? {};
+  // response
+const redemptionData = response?.data?.data?.data;
 
   if (!redemptionData || Object.keys(redemptionData).length === 0) {
     setErrorMessage("Redemption failed: invalid server response");
     return;
   }
 
-  setAmountRedeemed(redemptionData.amount_redeemed ?? 0);
- console.log("Amount Redeemed", amountRedeemed);
-  setRateRedeemed(redemptionData.redeemed_rate ?? "1 PTS - 1 NGN");
-  setTransactionId(redemptionData.transaction_id ?? "");
-  setOrderId(redemptionData.order_id ?? "");
-  setUserPoints(redemptionData.remaining_points ?? userPoints);
-  setTransactionProduct(redemptionData.transaction_product ?? "");
-  setTransactionDescription(redemptionData.transaction_description ?? "");
+//   setAmountRedeemed(redemptionData?.amount_redeemed ?? 0);
 
-  setRedeemResponse(redemptionData);
+//  console.log("Amount Redeemed", amountRedeemed);
+//   setRateRedeemed(redemptionData.redeemed_rate ?? "1 PTS - 1 NGN");
+//   setTransactionId(redemptionData.transaction_id ?? "");
+//   setOrderId(redemptionData.order_id ?? "");
+//   setUserPoints(redemptionData.remaining_points ?? userPoints);
+//   setTransactionProduct(redemptionData.transaction_product ?? "");
+//   setTransactionDescription(redemptionData.transaction_description ?? "");
+
+//   setRedeemResponse(redemptionData);
   setSuccessPopup(true);
   setInputPinPopUp(false);
   setProceed(false);
@@ -262,19 +263,23 @@ const redemptionData = response?.data?.data?.data ?? response?.data?.data ?? res
 
   refreshPoints();
 };
-    const failedHandler = (ErrorType) => {
-      if (ErrorType === "unauthorised") {
-        setSessionModal(true);
-      } else if (ErrorType === "Server error") {
-        alert("Server Error: Redemption Failed");
-      } else if (ErrorType === "Network error" || ErrorType === "User error") {
-        alert("Network Error: Redemption Failed");
-      } else {
-        alert("An Unexpected error has occurred");
-      }
-      setInputPinPopUp(false);
-      setInputPin("");
-    };
+ const failedHandler = (ErrorType) => {
+  console.error("Redemption failed with error:", ErrorType);
+
+  if (ErrorType === "unauthorised") {
+    setSessionModal(true);
+  } else if (ErrorType === "Server error") {
+    alert("Server Error: Redemption Failed");
+  } else if (ErrorType === "Network error" || ErrorType === "User error") {
+    alert("Network Error: Redemption Failed");
+  } else {
+    alert("An Unexpected error has occurred");
+  }
+
+  setInputPinPopUp(false);
+  setInputPin("");
+};
+
 
     await PostFunction(Path, setLoading, payloadJson, successHandler, failedHandler, setFetchedResponse);
   };
@@ -283,13 +288,14 @@ const redemptionData = response?.data?.data?.data ?? response?.data?.data ?? res
   GetFunction("extra/point", setLoading, (res) => {
     const available = res?.data?.data?.point?.available_points ?? 0;
     setUserPoints(available);
+    
   }, (err) => {
     console.error("Failed to refresh points", err);
   }, setFetchedResponse);
 };
 
 
-  // ...existing VerifyTransPin logic...
+  // ...VerifyTransPin logic...
   await VerifyTransPin(
     inputPin,
     (ErrorType) => {
