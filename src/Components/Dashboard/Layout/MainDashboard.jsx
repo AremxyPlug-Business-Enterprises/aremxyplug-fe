@@ -340,18 +340,9 @@ return (
         )}
               {/* ==============TOP BAR========== */}
       <TopBar />
-
-        <div
-<<<<<<< HEAD
-          className={`${
-            toggleSideBar ? "lg:w-[73.5%] lg:float-right  md:pl-[12rem] lg:pl-0" : ""
-          } w-[] mx-[5%] mt-[8%] lg:mt-[3%] h-[150%] mb-[5%]`}
-          // md:mt-[3%] pl-[8.7rem]
-        >
-=======
+ <div
           className={`pt-[100px] ${toggleSideBar  ? "lg:w-[73%] lg:float-right" : ""}
          mx-[5%]  lg:mt-[3%] h-[150%] mb-[5%]`}>
->>>>>>> 52544494 (update)
           {/* ==============HERO SECTION========== */}
           <Swiper
             autoplay={{
