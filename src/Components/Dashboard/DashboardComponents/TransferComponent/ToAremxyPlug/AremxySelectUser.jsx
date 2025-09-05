@@ -663,9 +663,18 @@ const GetBalance = async () => {
 
             </div>    
 
-            <ul className={styled.localInter}>
-                <li className={activeTab === 'tab_1' ? active : inactive} onClick={handleTab1}>Users</li>
-                <li className={activeTab === 'tab_2' ? active : inactive} onClick={handleTab2}>Favorites</li>
+            <ul className='flex w-[100%] lg:gap-[25px] border-b-[2px]
+        border-[#D9D9D999]
+       '>
+                <li className={`w-1/2 md:py-[10px] py-[5.868px] font-medium text-center text-[12px] 
+                leading-[14px] lg:text-[20px] lg:leading-[30px]
+                   cursor-pointer ${activeTab === 'tab_1' ? active : inactive}`} onClick={handleTab1}>
+                Users
+                </li>
+                <li className={`w-1/2 md:py-[10px] py-[5.868px] font-medium text-center text-[12px]
+                 leading-[14px] lg:text-[20px] lg:leading-[30px]
+                 cursor-pointer ${activeTab === 'tab_2' ? active : inactive}`}
+                 onClick={handleTab2}>Favorites</li>
             </ul>
              <div className="">
                 { activeTab === 'tab_1'  && (
@@ -746,7 +755,7 @@ const GetBalance = async () => {
                 )}
                 { activeTab === 'tab_2' &&
                     <div className={styled.containAir}>
-                        {[0, 1, 2, 3].map((index) => (
+                        {[].map((index) => (
                         <div
                             key={index}
                             className="w-[100%] mx-auto flex justify-between border py-2 px-2 rounded-[10px] md:rounded-[10px] lg:py-2 lg:px-5"
@@ -1390,7 +1399,7 @@ const GetBalance = async () => {
            
         </div>
         </div>
-        <div className={style.help}>
+        <div className={`${style.help} mt-[20px]`}>
             <h2>You need help?</h2>
             <Link to={`/ContactUs`} className={style.btnContact}>Contact Us</Link>
         </div>

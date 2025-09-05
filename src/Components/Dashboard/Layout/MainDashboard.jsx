@@ -328,24 +328,30 @@ window.addEventListener("online", ()=> {
    }, []);
       
 return (
-    <div className="h-[150%]">
-      {/* ==============TOP BAR========== */}
-      <TopBar />
+    <div className="relative h-[150%] w-[100%]">
 
-      <div className="w-[100%] h-[200%]">
+      
         {/* ============SIDE BAR========= */}
         {toggleSideBar && (
-          <div className="absolute top-0 left-0 z-50">
+         <div className="absolute top-0 left-0 z-[50]">
             <SideBar fullname ={Data.UserFullName} userId ={Data.aremxyUserId}
             BvnVerify ={Data.ConfirmBvn} NinVerify={Data.ConfirmId}/>
-          </div>
+            </div>
         )}
+              {/* ==============TOP BAR========== */}
+      <TopBar />
+
         <div
+<<<<<<< HEAD
           className={`${
             toggleSideBar ? "lg:w-[73.5%] lg:float-right  md:pl-[12rem] lg:pl-0" : ""
           } w-[] mx-[5%] mt-[8%] lg:mt-[3%] h-[150%] mb-[5%]`}
           // md:mt-[3%] pl-[8.7rem]
         >
+=======
+          className={`pt-[100px] ${toggleSideBar  ? "lg:w-[73%] lg:float-right" : ""}
+         mx-[5%]  lg:mt-[3%] h-[150%] mb-[5%]`}>
+>>>>>>> 52544494 (update)
           {/* ==============HERO SECTION========== */}
           <Swiper
             autoplay={{
@@ -363,13 +369,16 @@ return (
           >
             <SwiperSlide>
               {" "}
-              <div className="w-[99%] min-h-[120px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] bg-[#FFC589] flex 
+              <div className="w-[99%]   min-h-[120px] md:h-[112.29px] lg:h-[196px] 
+              rounded-[7px] md:rounded-[11.5px] bg-[#FFC589] flex 
               px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px] ">
                 <div className="py-[20px] lg:py-[40px]">
-                  <h2 className="text-[11px] leading-[14px] md:text-[13.75px] font-bold mb-3 lg:text-[24px] lg:mb-4">
+                  <h2 className="text-[11px] leading-[14px] md:text-[13.75px]
+                   font-bold mb-3 lg:text-[24px] lg:mb-4">
                     Welcome TO AREMXYPLUG!
                   </h2>
-                  <h2 className="text-[10px] leading-[13px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px] mb-3">
+                  <h2 className="text-[10px] leading-[13px] md:text-[11.46px]
+                   lg:text-[20px] lg:leading-[26px] mb-3">
                     The most Reliable Platform for Telecom, Payments, and
                     Digital Services.
                   </h2>
@@ -940,7 +949,7 @@ return (
               </Link>
             </div>
           </div> 
-      </div>
+    
       {sessionModal && (
      <HandleUserSession/>
       )}

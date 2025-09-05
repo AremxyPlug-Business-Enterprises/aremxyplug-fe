@@ -29,7 +29,6 @@ const amountNumeric = Number(transferAmount)
   const handleTransactionSuccessReciept = () => {
     setTransactSuccessToOtherBank(false);
   };
-console.log(transferResponse?.data?.status);
   return (
     <div>
       {transactSuccessToOtherBank && (

@@ -33,7 +33,6 @@ export default function ToAremxyMain(Data) {
     setMainCountry,
     setEmailPhoneNumberConfirmation,
     mainTransferErrors,
-    handleMainInputChange,
     newBalance,
     setNewBalance,
     messageTransfer,
@@ -945,7 +944,7 @@ const GetBalance = async () => {
           className="relative flex flex-col h-full 
             gap-[3px] lg:gap-[5px] w-full ">
             <input
-              onChange={handleMainInputChange}
+            //  onChange={handleMainInputChange}
               name="userPhoneNumber"
               maxLength={11}
               readOnly
