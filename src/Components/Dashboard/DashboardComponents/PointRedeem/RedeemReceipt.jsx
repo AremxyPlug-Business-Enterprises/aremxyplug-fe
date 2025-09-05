@@ -20,6 +20,7 @@ export const RedeemReceipt = () => {
        pointOrderId,  
         pointAmountRedeemed, 
         pointTransactionProduct,
+         pointPointsRedeemed, 
        
   } = useContext(ContextProvider);
   
@@ -123,7 +124,7 @@ export const RedeemReceipt = () => {
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">
                 {isLoading ? "Loading..." : pointAmountRedeemed}.00 PTS
               </span>
-              from your PTS balance to{" "}
+                {" "}from your PTS balance to{" "}
             </p>
 
             <div className="flex flex-col gap-5">
@@ -148,7 +149,7 @@ export const RedeemReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Account Received</p>
-                   <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{isLoading ? "Loading..." : pointAmountRedeemed} </span>
+                   <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>&#8358;{isLoading ? "Loading..." : pointPointsRedeemed} </span>
                 </div>
                
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
