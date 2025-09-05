@@ -40,19 +40,20 @@ const PointRedeem = () => {
            setErrorMessage,
           //  redeemResponse, 
            setRedeemResponse,
-          //  isRedeeming, setIsRedeeming,
-          //  redeemedPoints, setRedeemedPoints,
-           rateRedeemed, setRateRedeemed,
-          //  transactionId, 
-            setTransactionId,
-           orderId,  setOrderId,
-          amountRedeemed, setAmountRedeemed,
-          // transactionProduct,
-           setTransactionProduct,
-          // transactionDescription,
-           setTransactionDescription,
-
+         
+        pointRateRedeemed,
+         setPointRateRedeemed,
+       
+        setPointTransactionId,
+       pointOrderId,  
+       setPointOrderId,
+        pointAmountRedeemed, 
+        setPointAmountRedeemed,
+         setPointTransactionProduct,
+        setPointTransactionDescription,
+         setPointFetchedResponse,
           authenticationOpen,
+          
    } = useContext(ContextProvider);
    
 
@@ -81,7 +82,7 @@ const [text, setText] =useState(false);
   const [proceed, setProceed] = useState(false);
    const [successPopup, setSuccessPopup] = useState(false);
   const [errors, setErrors] = useState({});
-  const [fetchedResponse, setFetchedResponse] = useState({});
+ const [pointPostResponse, setPointPostResponse ] = useState({});
   
 const [userPoints, setUserPoints] = useState(0);
 //  const [transactionPoints, setTransactionPoints] = useState(0);
@@ -174,12 +175,13 @@ const [sessionModal, setSessionModal] = useState(false);
     // setReferralPoints(referralPts);
     };
     const FailedHandler = (error) => {
-      console.error("Failed to fetch points:", error);
+      console.error("Failed to fetch points:", error);   
+         
     };
 
    
-      GetFunction("extra/point", setLoading,  successHandler, FailedHandler, setFetchedResponse)
-   
+      GetFunction("extra/point", setLoading,  successHandler, FailedHandler, setPointFetchedResponse)
+   //eslint-disable-next-line
   }, []);
 
   
@@ -233,8 +235,6 @@ const VerifyPinHandler = async () => {
 
 
     const successHandler = (response) => {
-  // console.log("Redemption Response:", response);
-
   // response
 const redemptionData = response?.data?.data?.data;
 
@@ -243,17 +243,20 @@ const redemptionData = response?.data?.data?.data;
     return;
   }
 
-//   setAmountRedeemed(redemptionData?.amount_redeemed ?? 0);
+   setPointAmountRedeemed(redemptionData.amount_redeemed ?? 0);
 
-//  console.log("Amount Redeemed", amountRedeemed);
-//   setRateRedeemed(redemptionData.redeemed_rate ?? "1 PTS - 1 NGN");
-//   setTransactionId(redemptionData.transaction_id ?? "");
-//   setOrderId(redemptionData.order_id ?? "");
-//   setUserPoints(redemptionData.remaining_points ?? userPoints);
-//   setTransactionProduct(redemptionData.transaction_product ?? "");
-//   setTransactionDescription(redemptionData.transaction_description ?? "");
+//  console.log("Amount Redeemed", pointAmountRedeemed);
+  setPointRateRedeemed(redemptionData.redeemed_rate ?? "1 PTS - 1 NGN");
+  setPointTransactionId(redemptionData.transaction_id ?? "");
+  setPointOrderId(redemptionData.order_id ?? "");
+  // setUserPoints(redemptionData.remaining_points ?? userPoints);
+  setPointTransactionProduct(redemptionData.transaction_product ?? "");
+  setPointTransactionDescription(redemptionData.transaction_description ?? "");
 
-//   setRedeemResponse(redemptionData);
+
+
+
+  //  setRedeemResponse(redemptionData);
   setSuccessPopup(true);
   setInputPinPopUp(false);
   setProceed(false);
@@ -263,6 +266,7 @@ const redemptionData = response?.data?.data?.data;
 
   refreshPoints();
 };
+
  const failedHandler = (ErrorType) => {
   console.error("Redemption failed with error:", ErrorType);
 
@@ -281,8 +285,9 @@ const redemptionData = response?.data?.data?.data;
 };
 
 
-    await PostFunction(Path, setLoading, payloadJson, successHandler, failedHandler, setFetchedResponse);
+    await PostFunction(Path, setLoading, payloadJson, successHandler, failedHandler, setPointPostResponse);
   };
+// console.log(pointPostResponse)
 
   const refreshPoints = () => {
   GetFunction("extra/point", setLoading, (res) => {
@@ -291,7 +296,7 @@ const redemptionData = response?.data?.data?.data;
     
   }, (err) => {
     console.error("Failed to refresh points", err);
-  }, setFetchedResponse);
+  }, setPointFetchedResponse);
 };
 
 
@@ -321,13 +326,7 @@ const redemptionData = response?.data?.data?.data;
 // console.log("Verifying PIN:", inputPin);
 
 
-
-  const handleSuccess = () => {
-    setSuccessPopup(true);
-    setInputPinPopUp(false);
-    setProceed(false);
-  };
-
+  
   const [realPop, setRealPop] = useState(false);
 
   const handleRealPop = () => {
@@ -477,8 +476,8 @@ const redemptionData = response?.data?.data?.data;
             <div><span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>
   {isLoading
     ? "Loading..."
-    : rateRedeemed && rateRedeemed !== 0
-      ? rateRedeemed
+    : pointRateRedeemed && pointRateRedeemed !== 0
+      ? pointRateRedeemed
       : "1 PTS - 1 NGN"}
 </span></div>
           </div>
@@ -614,8 +613,8 @@ const redemptionData = response?.data?.data?.data;
                     <div><span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>
   {isLoading
     ? "Loading..."
-    : rateRedeemed && rateRedeemed !== 0
-      ? rateRedeemed
+    : pointRateRedeemed && pointRateRedeemed !== 0
+      ? pointRateRedeemed
       : "1 PTS - 1 NGN"}
 </span></div>
                   </div>
@@ -959,11 +958,11 @@ const redemptionData = response?.data?.data?.data;
               `}>
               You have successfully redeemed{" "}
               <span className={` ${isDarkMode? "text-white" : "text-black"} text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]`}>
-                   {isLoading ? "Loading..." : amountRedeemed} .00 PTS
+                   {isLoading ? "Loading..." : pointAmountRedeemed} .00 PTS
               </span>{" "}
               Points<br></br>
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">
-                {amountRedeemed}{" "}
+                {pointAmountRedeemed}{" "}
               </span>
               from your PTS balance{" "} to
             </p>
@@ -975,17 +974,17 @@ const redemptionData = response?.data?.data?.data;
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"} text-[#0008]`}>Amount To Redeem</p>
-                <span className={`  ${isDarkMode ? "text-white" : "text-black"}`}> {isLoading ? "Loading..." : amountRedeemed} PTS</span>
+                <span className={`  ${isDarkMode ? "text-white" : "text-black"}`}> {isLoading ? "Loading..." : pointAmountRedeemed} PTS</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"} text-[#0008]`}>Account To Receive</p>
-                <span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>{isLoading ? "Loading..." : amountRedeemed}</span>
+                <span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>{isLoading ? "Loading..." : pointAmountRedeemed}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}text-[#0008]`}>Redeem Rate</p>
                 <span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>
-                 {isLoading ? "Loading..." : rateRedeemed}
+                 {isLoading ? "Loading..." : pointRateRedeemed}
 </span>
               </div>
 
@@ -998,7 +997,7 @@ const redemptionData = response?.data?.data?.data;
                 <p className= {`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Order Number</p>
                 <span className={`  ${isDarkMode ? "text-white" : "text-black"}
                 `}>
-                          {isLoading ? "Loading..." : orderId}
+                          {isLoading ? "Loading..." : pointOrderId}
                   </span>
               </div>
             </div>
