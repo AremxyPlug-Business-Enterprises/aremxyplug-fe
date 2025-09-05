@@ -16,8 +16,10 @@ export const SuccessfullReceipt = () => {
   const { 
     toggleSideBar,
     isDarkMode,
-    date, } =
-    useContext(ContextProvider);  
+    date, orderIdResponse } =
+    useContext(ContextProvider);
+    
+    console.log("orderIdResponse", orderIdResponse);
 
   const contentRef = useRef(null);
   const location = useLocation();
@@ -27,6 +29,7 @@ export const SuccessfullReceipt = () => {
   }
 
   const transaction = location.state.transaction;
+  console.log("transaction", transaction);
 
 
 

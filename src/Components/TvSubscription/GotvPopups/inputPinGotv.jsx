@@ -6,7 +6,7 @@ import { Modal } from "../../Screens/Modal/Modal";
 import { AiFillEye } from "react-icons/ai";
 import OtpInput from "react-otp-input";
 import { AiFillEyeInvisible } from "react-icons/ai";
-import styles from "../../Dashboard/DashboardComponents/TransferComponent/transfer.module.css";
+// import styles from "../../Dashboard/DashboardComponents/TransferComponent/transfer.module.css";
 import { Link } from "react-router-dom";
 
 
@@ -75,11 +75,9 @@ export const InputGotvPopup = ({VerifyPinHandler}) => {
             <div className="flex flex-col items-center lg:gap-[0px]
              gap-[5px] font-extrabold">
               <div className=" flex items-center  gap-[10px]">
-                {" "}
-                {isVisible ? (
                   <OtpInput
                     value={inputPin}
-                    inputType="tel"
+                    inputType={!isVisible ? "tel" : "password"}
                     onChange={setInputPin}
                     numInputs={4}
                     shouldAutoFocus={true}
@@ -99,11 +97,6 @@ export const InputGotvPopup = ({VerifyPinHandler}) => {
                       onBlur={handleBlur}/>
                     )}
                   />
-                ) : (
-                  <div className="text-[24px] md:text-[24px] mt-1">
-                    * * * *{" "}
-                  </div>
-                )}
                 <div
                   className="text-[#0003]"
                   onClick={toggleVisibility}

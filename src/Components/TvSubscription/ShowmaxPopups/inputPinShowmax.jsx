@@ -62,11 +62,9 @@ export const InputShowmaxPopup = ({VerifyPinHandler}) => {
             ">Input PIN to complete transaction</p>
             <div className="flex flex-col items-center gap-[1px] font-extrabold mb-[7%]">
               <div className=" flex items-center ml-[5%] md:ml-[5%] gap-[10px]">
-                {" "}
-                {isVisible ? (
                   <OtpInput
                     value={inputPin}
-                    inputType="tel"
+                    inputType={!isVisible ? "tel" : "password"}
                     onChange={setInputPin}
                     numInputs={4}
                     shouldAutoFocus={true}
@@ -85,11 +83,6 @@ export const InputShowmaxPopup = ({VerifyPinHandler}) => {
                       onBlur={handleBlur}/>
                     )}
                   />
-                ) : (
-                  <div className="text-[24px] md:text-[24px] mt-1">
-                    * * * *{" "}
-                  </div>
-                )}
                 <div
                   className="text-[#0003]"
                   onClick={toggleVisibility}

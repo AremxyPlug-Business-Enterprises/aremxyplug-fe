@@ -157,6 +157,7 @@ export default function NabtebEducationPins() {
   ];
 
   const getAmount = async function handleGetAmount() {
+    if (!navigator.online) alert("Kindly check your internet connection");
     const id = 3;
     const path = `products/edu/${id}`;
     const SuccessHandler = (response) => {
@@ -169,11 +170,31 @@ export default function NabtebEducationPins() {
       }
     };
 
-    const FailedHandler = (ErrorType) => {
+    const FailedHandler = async (ErrorType) => {
       if (ErrorType === "Server error") {
-        alert("Unable to get NABTEB PINS. Please try again later");
+        await GetFunction(
+          path,
+          setIsLoading,
+          SuccessHandler,
+          (ErrorType) => {
+            if (ErrorType === "Server error") {
+              alert("Unable to get NABTEB PINS. Please try again later");
+            }
+          },
+          setNabtebEduResponse
+        );
       } else if (ErrorType === "unauthorised") {
-        return setSessionModal(true);
+        await GetFunction(
+          path,
+          setIsLoading,
+          SuccessHandler,
+          (ErrorType) => {
+            if (ErrorType === "unauthorised") {
+              return setSessionModal(true);
+            }
+          },
+          setNabtebEduResponse
+        );
       }
     };
 
@@ -186,6 +207,7 @@ export default function NabtebEducationPins() {
     );
   };
   const GetBalance = async () => {
+    if (!navigator.online) alert("Kindly check your internet connection");
     const SuccessHandler = () => {
       console.log("successfully retrieved balance");
     };
@@ -269,67 +291,75 @@ export default function NabtebEducationPins() {
   const otherCurrencyBalance = 0.0;
 
   const nabtebMethodOptions = [
-      {
-        method: "NGN Wallet",
-        balance:
-          newBalance === "" || newBalance === null || newBalance === undefined
-            ? `(${updateBalanceToNumber?.toLocaleString("en-NG", {
-                style: "currency",
-                currency: "NGN",
-              })})`
-            : `(${newBalanceToNumber?.toLocaleString("en-NG", {
-                style: "currency",
-                currency: "NGN",
-              })})`,
-        flag: nigerianFlag,
-        id: 1,
-      },
-      {
-        method: "USD Currency",
-        balance: `(${otherCurrencyBalance?.toLocaleString("en-US", {
-          style: "currency",
-          currency: "USD",
-        })})`,
-        flag: americaFlag,
-        id: 2,
-      },
-      {
-        method: "EUR Wallet",
-        balance: `(${otherCurrencyBalance?.toLocaleString("en-EU", {
-          style: "currency",
-          currency: "EUR",
-        })})`,
-        flag: britainFlag,
-        id: 3,
-      },
-      {
-        method: "GBP Wallet",
-        balance: `(${otherCurrencyBalance?.toLocaleString("en-GB", {
-          style: "currency",
-          currency: "GBP",
-        })})`,
-        flag: euroFlag,
-        id: 4,
-      },
-      {
-        method: "AUD Wallet",
-        balance: `(${otherCurrencyBalance?.toLocaleString("en", {
-          style: "currency",
-          currency: "AUD",
-        })})`,
-        flag: austriaFlag,
-        id: 5,
-      },
-      {
-        method: "KES Wallet",
-        balance: `(${otherCurrencyBalance?.toLocaleString("en-KE", {
-          style: "currency",
-          currency: "KES",
-        })})`,
-        flag: kenyaFlag,
-        id: 6,
-      },
-    ];
+    {
+      method: "NGN Wallet",
+      balance:
+        newBalance === "" || newBalance === null || newBalance === undefined
+          ? `(${
+              updateBalance > 1
+                ? updateBalanceToNumber?.toLocaleString("en-NG", {
+                    style: "currency",
+                    currency: "NGN",
+                  })
+                : ""
+            })`
+          : `(${
+              newBalance > 1
+                ? newBalanceToNumber?.toLocaleString("en-NG", {
+                    style: "currency",
+                    currency: "NGN",
+                  })
+                : ""
+            })`,
+      flag: nigerianFlag,
+      id: 1,
+    },
+    {
+      method: "USD Currency",
+      balance: `(${otherCurrencyBalance?.toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD",
+      })})`,
+      flag: americaFlag,
+      id: 2,
+    },
+    {
+      method: "EUR Wallet",
+      balance: `(${otherCurrencyBalance?.toLocaleString("en-EU", {
+        style: "currency",
+        currency: "EUR",
+      })})`,
+      flag: britainFlag,
+      id: 3,
+    },
+    {
+      method: "GBP Wallet",
+      balance: `(${otherCurrencyBalance?.toLocaleString("en-GB", {
+        style: "currency",
+        currency: "GBP",
+      })})`,
+      flag: euroFlag,
+      id: 4,
+    },
+    {
+      method: "AUD Wallet",
+      balance: `(${otherCurrencyBalance?.toLocaleString("en", {
+        style: "currency",
+        currency: "AUD",
+      })})`,
+      flag: austriaFlag,
+      id: 5,
+    },
+    {
+      method: "KES Wallet",
+      balance: `(${otherCurrencyBalance?.toLocaleString("en-KE", {
+        style: "currency",
+        currency: "KES",
+      })})`,
+      flag: kenyaFlag,
+      id: 6,
+    },
+  ];
 
   // CONFIRM EXAM TYPE
   const nabtebExams = [
@@ -1171,7 +1201,11 @@ export default function NabtebEducationPins() {
                             >
                               Available Balance {"  "}
                             </p>
-                            <span className={`${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+                            <span
+                              className={`${
+                                isDarkMode ? "text-white" : "text-[#7C7C7C]"
+                              }`}
+                            >
                               {nabtebWalletBalance !== ""
                                 ? nabtebWalletBalance
                                 : "₦"}
@@ -1239,34 +1273,34 @@ export default function NabtebEducationPins() {
                       <div className="flex flex-col items-center lg:gap-[0px] gap-[5px] font-extrabold">
                         <div className="flex items-center gap-2.5">
                           {" "}
-                            <OtpInput
-                              value={inputPin}
-                              inputType={!isVisible ? "tel" : "password"}
-                              onChange={setInputPin}
-                              numInputs={4}
-                              shouldAutoFocus={true}
-                              inputStyle={{
-                                color: isDarkMode ? "#ffffff" : "#000000",
-                                fontWeight: 700,
-                                borderRadius: 4,
-                                height: "35px",
-                                width: "35px",
-                                backgroundColor: isDarkMode ? "black" : "white",
-                                border: isDarkMode
-                                  ? "1px solid white"
-                                  : "1px solid #ccc",
-                              }}
-                              renderInput={(props) => (
-                                <input
-                                  {...props}
-                                  className={`inputOTP mx-[2px] ${
-                                    isFocused ? "focused" : ""
-                                  }`}
-                                  onFocus={handleFocus}
-                                  onBlur={handleBlur}
-                                />
-                              )}
-                            />
+                          <OtpInput
+                            value={inputPin}
+                            inputType={!isVisible ? "tel" : "password"}
+                            onChange={setInputPin}
+                            numInputs={4}
+                            shouldAutoFocus={true}
+                            inputStyle={{
+                              color: isDarkMode ? "#ffffff" : "#000000",
+                              fontWeight: 700,
+                              borderRadius: 4,
+                              height: "35px",
+                              width: "35px",
+                              backgroundColor: isDarkMode ? "black" : "white",
+                              border: isDarkMode
+                                ? "1px solid white"
+                                : "1px solid #ccc",
+                            }}
+                            renderInput={(props) => (
+                              <input
+                                {...props}
+                                className={`inputOTP mx-[2px] ${
+                                  isFocused ? "focused" : ""
+                                }`}
+                                onFocus={handleFocus}
+                                onBlur={handleBlur}
+                              />
+                            )}
+                          />
                           <div
                             className="text-[#0003]"
                             onClick={toggleVisibility}
@@ -1621,15 +1655,14 @@ export default function NabtebEducationPins() {
           </Modal>
         )}
 
-        
         <div className="mt-[38rem] md:mt-[15rem]">
-        <div className={style.help}>
-          <h2>You need help?</h2>
-          <Link to={`/ContactUs`} className={style.btnContact}>
-            Contact Us
-          </Link>
+          <div className={style.help}>
+            <h2>You need help?</h2>
+            <Link to={`/ContactUs`} className={style.btnContact}>
+              Contact Us
+            </Link>
+          </div>
         </div>
-      </div>
       </div>
       {isLoading && (
         <Modal>

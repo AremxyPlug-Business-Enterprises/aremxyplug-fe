@@ -326,7 +326,7 @@ const TransactionHistory = ({
                   <div
                     className={`${
                       toggleSideBar
-                        ? "lg:text-[15px] md:gap-[%] md:text-[8.5px] "
+                        ? "lg:text-[15px] md:gap-[4%] lg:gap-0 md:text-[8.5px] "
                         : "lg:text-[15px] md:gap-[%] md:text-[10px] lg:md:gap-[%]"
                     }  hidden  font-semibold md:flex md:h-[60px] lg:h-[85px] md:justify-start md:px-[20px] md:items-center  md:mt-[20px] md:pb-[2%] border-b-[1px]`}
                   >
