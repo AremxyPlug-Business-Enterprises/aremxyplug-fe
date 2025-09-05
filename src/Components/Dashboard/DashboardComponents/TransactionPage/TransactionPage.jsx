@@ -9,14 +9,24 @@ import { Link } from "react-router-dom";
 import styles from "../component.module.css";
 import { Calender } from "../Calender";
 import "../DataTopUpPage/DataTopUp.css";
-import { GetFunction,HandleUserSession } from "../../../ApiCollection.jsx/ApiBuck";
+import {
+  GetFunction,
+  HandleUserSession,
+} from "../../../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../../../Loader/Loader";
 import NoRecordImage from "../../../Add&SelectRecipient/RecipientImages/NoRecordImage.svg";
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom";
+import { Modal } from "../../../Screens/Modal/Modal";
 
 const TransactionPage = () => {
-  const navigate = useNavigate()
-  const { isDarkMode, toggleSideBar } = useContext(ContextProvider);
+  const navigate = useNavigate();
+  const {
+    isDarkMode,
+    toggleSideBar,
+    setOrderIdResponse,
+    setElectricityTransErrorType,
+    orderIdResponse,
+  } = useContext(ContextProvider);
 
   const [showCategories, setShowCategories] = useState(false);
 
@@ -31,9 +41,10 @@ const TransactionPage = () => {
   const [activeCategory, setActiveCategory] = useState("");
 
   const [activeTab, setActiveTab] = useState("");
-  const {transactionResponse, setTransactionResponse} = useContext(ContextProvider);
-  const [loading,setLoading] = useState(false);
-  const [sessionModal,setSessionModal] = useState(false)
+  const { transactionResponse, setTransactionResponse } =
+    useContext(ContextProvider);
+  const [loading, setLoading] = useState(false);
+  const [sessionModal, setSessionModal] = useState(false);
   const [transactionHistoryError, setTransactionHistoryError] = useState("");
   const handleTabClick = (tab) => {
     setActiveTab((prevTab) => (prevTab === tab ? null : tab));
@@ -52,13 +63,12 @@ const TransactionPage = () => {
   const handleSelectedOption = (event) => {
     const clickedoption = event.target.value;
     setSelected(clickedoption);
-//     if(clickedoption){
-//      setSymbol(selected === "USD" ? "$" : selected === "AUD" ? 
-//  "AU$" : selected === "KES" ?   "KSh" : selected === "EUR" ? "€" : "")
-//     }
+    //     if(clickedoption){
+    //      setSymbol(selected === "USD" ? "$" : selected === "AUD" ?
+    //  "AU$" : selected === "KES" ?   "KSh" : selected === "EUR" ? "€" : "")
+    //     }
     return;
   };
-
 
   //Funcntio to help get the transaction details
   //  which include necessary query parameters for search
@@ -97,15 +107,13 @@ const TransactionPage = () => {
     }
     setSelected("NGN");
 
- //eslint-disable-next-line
- }, [])
- window.addEventListener("online", ()=> {
-   if(transactionHistoryError === "Network error"){
-    GetTransactionInformation();
-   }
- })
-
-    
+    //eslint-disable-next-line
+  }, []);
+  window.addEventListener("online", () => {
+    if (transactionHistoryError === "Network error") {
+      GetTransactionInformation();
+    }
+  });
 
   const getBackgroundColor = (status) => {
     if (status === "delivered" || status === "Successful") {
@@ -130,35 +138,129 @@ const TransactionPage = () => {
     setShowStatus(false);
   };
 
- const filteredTransactions = transactionResponse?.data?.data?.data?.transactions !== null ? transactionResponse?.data?.data?.data?.transactions.filter((transaction) => {
-  if(selectedStatus === "" || selectedStatus === "All Transactions"){
-      return transaction
-    }else{
-      return transaction.status === selectedStatus;
-    }
-   
-  }) : [];
- 
-  const chooseStatus = ["All Transactions", "Delivered", "Failed", "Pending", "Refunded"];
+  const filteredTransactions =
+    transactionResponse?.data?.data?.data?.transactions !== null
+      ? transactionResponse?.data?.data?.data?.transactions.filter(
+          (transaction) => {
+            if (
+              selectedStatus === "" ||
+              selectedStatus === "All Transactions"
+            ) {
+              return transaction;
+            } else {
+              return transaction.status === selectedStatus;
+            }
+          }
+        )
+      : [];
 
-const symbolValue = selected === "USD" ? "$" : selected === "AUD" ? 
- "AU$" : selected === "KES" ?   "KSh" : selected === "EUR" ? "€" : selected === "GBP" ? "£" : "₦";
+  const chooseStatus = [
+    "All Transactions",
+    "Delivered",
+    "Failed",
+    "Pending",
+    "Refunded",
+  ];
 
+  const symbolValue =
+    selected === "USD"
+      ? "$"
+      : selected === "AUD"
+      ? "AU$"
+      : selected === "KES"
+      ? "KSh"
+      : selected === "EUR"
+      ? "€"
+      : selected === "GBP"
+      ? "£"
+      : "₦";
 
-//Function handling filtering the transactionResponse based on the 
-//selected categpry by the user
-// function filterBySelectCategory(categoryByFlowtype, categoryByProduct){
-//   transactionResponse?.data?.data?.data?.transactions?.filter(filterData=> {
-//     if(filterData?.flow_type === categoryByFlowtype){
-//       return filterData?.flow_type === categoryByFlowtype
-//     }else if(filterData?.product === categoryByProduct){
-//    return filterData?.product === categoryByProduct;
-//     }else{
-//       return []
-//     }
-//   })
-// }
+      const [orderLoading, setOrderLoading] = useState(false)
 
+  const getTransactionByOrderId = async (orderId, product) => {
+    if (!orderId || !product) return;
+    const productType =
+      product === "Airtime Top-up"
+        ? "airtime"
+        : product === "Data Top-up"
+        ? "data"
+        // : product === "TV Subscription"
+        // ? "tv-sub"
+        : product === ""
+        ? "tv-sub"
+        : product === "Education Pins" || product === "Education E-Pins"
+        ? "edu"
+        : product === "Electricity Bills"
+        ? "electric-sub"
+        : product === "Virtual Account"
+        ? "deposit"
+        : product === "Money Transfer"
+        ? "transfer"
+        : "";
+
+    const path = `transactions/${orderId}?product=${productType}`;
+    let result;
+    const SuccessHandler = (response) => {
+      result = response;
+      console.log("Transaction fetched successfully");
+    };
+    const FailedHandler = async (ErrorType) => {
+      if (!navigator.online) alert("Kindly check your internet connection");
+      if (ErrorType === "unauthorised") {
+        await GetFunction(
+          path,
+          setOrderLoading,
+          SuccessHandler,
+          (ErrorType) => {
+            if (ErrorType === "unauthorised") {
+              setSessionModal(true);
+            }
+          },
+          setOrderIdResponse
+        );
+      } else if (ErrorType === "Server error") {
+        await GetFunction(
+          path,
+          setOrderLoading,
+          SuccessHandler,
+          (ErrorType) => {
+            if (ErrorType === "Server error") {
+              alert("A server error occured, please try again later");
+              setElectricityTransErrorType(
+                "Failed to process your request, try again some other time"
+              );
+            }
+          },
+          setOrderIdResponse
+        );
+      } else if (ErrorType === "Network error" || ErrorType === "User error") {
+        setElectricityTransErrorType("An internet connection error");
+      }
+    };
+
+    await GetFunction(
+      path,
+      setOrderLoading,
+      SuccessHandler,
+      FailedHandler,
+      setOrderIdResponse
+    );
+    return result;
+  };
+
+  //Function handling filtering the transactionResponse based on the
+  //selected categpry by the user
+  // function filterBySelectCategory(categoryByFlowtype, categoryByProduct){
+  //   transactionResponse?.data?.data?.data?.transactions?.filter(filterData=> {
+  //     if(filterData?.flow_type === categoryByFlowtype){
+  //       return filterData?.flow_type === categoryByFlowtype
+  //     }else if(filterData?.product === categoryByProduct){
+  //    return filterData?.product === categoryByProduct;
+  //     }else{
+  //       return []
+  //     }
+  //   })
+  // }
 
   return (
     <DashBoardLayout>
@@ -175,10 +277,14 @@ const symbolValue = selected === "USD" ? "$" : selected === "AUD" ?
             className="min-h-[90px] py-[15px] lg:h-[196px] md:h-[112.29px] rounded-[6.6px] md:rounded-[11.46px] lg:rounded-[20px] mx-auto  flex gap-6 justify-between
                  px-[16.51px] md:px-[28.65px] lg:px-[50px] mb-[30px] lg:mb-[40px]"
           >
-            <div className="py-[9.57px] md:py-[16.61px] align-middle self-center
-                 flex flex-col gap-1.5 w-[70%]">
-              <p className="text-[11px] leading-[14px]  lg:leading-[30px]
-                   lg:text-[24px] md:text-[13.75px] font-semibold">
+            <div
+              className="py-[9.57px] md:py-[16.61px] align-middle self-center
+                 flex flex-col gap-1.5 w-[70%]"
+            >
+              <p
+                className="text-[11px] leading-[14px]  lg:leading-[30px]
+                   lg:text-[24px] md:text-[13.75px] font-semibold"
+              >
                 MANAGE ALL YOUR TRANSACTIONS AT A TIME WITHOUT ANY HASSLE.
               </p>
               {/* <p className="text-[7px] font-[400] leading-[9px] mb-3 md:text-[9px] md:leading-[12.2px] w-[90%] md:w-[80%] lg:w-[75%] 2xl:w-[85%] 2xl:mt-[5px] lg:mt-[20px] lg:text-[16px] lg:leading-[26px] 2xl:text-[20px] lg:mb-[20px]">
@@ -199,12 +305,14 @@ const symbolValue = selected === "USD" ? "$" : selected === "AUD" ?
 
           <div className="flex flex-col gap-[20px] md:flex-row md:justify-between md:w-[90%]">
             <div className="relative  md:w-1/2">
-              <h2 className="text-[#7E7E7E] text-[14px] lg:text-[17px] md:text-[13px] '
-                      md:font-[600] font-[400]">
+              <h2
+                className="text-[#7E7E7E] text-[14px] lg:text-[17px] md:text-[13px] '
+                      md:font-[600] font-[400]"
+              >
                 Select Categories
               </h2>
               <div
-                  className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
+                className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
                          sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px]
                           pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
                           leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
@@ -216,6 +324,7 @@ const symbolValue = selected === "USD" ? "$" : selected === "AUD" ?
                 onClick={() => {
                   setShowCategories(!showCategories);
                   setShowStatus(false);
+                  setCalender(false);
                 }}
               >
                 <h2 className="text-[10px] font-[600] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
@@ -289,8 +398,10 @@ const symbolValue = selected === "USD" ? "$" : selected === "AUD" ?
 
                   <hr />
 
-                  <p className="text-[#7C7C7C] text-[10px] lg:text-[15px] 
-                  font-semibold pl-[5px] py-[7px]">
+                  <p
+                    className="text-[#7C7C7C] text-[10px] lg:text-[15px] 
+                  font-semibold pl-[5px] py-[7px]"
+                  >
                     Telecom
                   </p>
 
@@ -632,13 +743,15 @@ const symbolValue = selected === "USD" ? "$" : selected === "AUD" ?
             </div>
 
             <div className="relative  md:w-1/2">
-              <h2   className="text-[#7E7E7E] text-[14px] lg:text-[17px]
+              <h2
+                className="text-[#7E7E7E] text-[14px] lg:text-[17px]
                        md:text-[13px] 
-                      md:font-[600] font-[400]">
+                      md:font-[600] font-[400]"
+              >
                 Select Status
               </h2>
               <div
-               className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
+                className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
                          sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px]
                           pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
                           leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
@@ -650,11 +763,14 @@ const symbolValue = selected === "USD" ? "$" : selected === "AUD" ?
                 onClick={() => {
                   setShowStatus(!showStatus);
                   setShowCategories(false);
+                  setCalender(false);
                 }}
               >
-                <h2 className="text-[12px] font-[600]
+                <h2
+                  className="text-[12px] font-[600]
                  leading-[16px] capitalize md:text-[13.17px]
-                  md:leading-[16.92px] lg:text-[16px] lg:leading-[24px]">
+                  md:leading-[16.92px] lg:text-[16px] lg:leading-[24px]"
+                >
                   {selectedStatus}
                 </h2>
                 <button className="lg:w-6 lg:h-6 w-[11px] h-[11px]">
@@ -662,21 +778,26 @@ const symbolValue = selected === "USD" ? "$" : selected === "AUD" ?
                 </button>
               </div>
               {showStatus && (
-                 <div 
-               className={`absolute lg:top-[90px] md:top-[60px]  top-[74px]
+                <div
+                  className={`absolute lg:top-[90px] md:top-[60px]  top-[74px]
                  z-[2]  flex flex-col w-[100%] lg:h-225px md:h-[210px]  
           ${
             isDarkMode
               ? "bg-black text-white border border-white"
               : "hover:bg-[#EDEAEA]"
-          }`}>
-            {chooseStatus.map((status)=> (
-             <p onClick={() => {
-                      handleStatusFilter(status === "Delivered"? "delivered": status)
-                      setSelectedStatus(status === "Delivered" ? "delivered" : status)
-                    }
-                    }
-                   className={`pb-[20px] pt-[20px] md:pb-[14px] 
+          }`}
+                >
+                  {chooseStatus.map((status) => (
+                    <p
+                      onClick={() => {
+                        handleStatusFilter(
+                          status === "Delivered" ? "delivered" : status
+                        );
+                        setSelectedStatus(
+                          status === "Delivered" ? "delivered" : status
+                        );
+                      }}
+                      className={`pb-[20px] pt-[20px] md:pb-[14px] 
                                 md:pt-[14px] font-weight-bold text-[14px] leading-[18.4px] 
                                 md:py-[15px]
                                  py-[8px] pl-[10px] font-[500]  
@@ -686,128 +807,140 @@ const symbolValue = selected === "USD" ? "$" : selected === "AUD" ?
            isDarkMode
              ? "bg-black text-white border border-white"
              : "hover:bg-[#EDEAEA] bg-white text-[#7C7C7C]"
-         }`}>
-                              {status}
-                  </p>
-                  
-
-             ))} 
-               </div> 
+         }`}
+                    >
+                      {status}
+                    </p>
+                  ))}
+                </div>
               )}
             </div>
           </div>
 
-          <div className="flex justify-between items-center w-full 
+          <div
+            className="flex justify-between items-center w-full 
           py-[8px] px-[3px] gap-[5px] h-[50px] border-[1px] lg:border-[1.5px] mt-[30px]
-           border-gray-300 lg:border-gray-400 rounded-[5px]  lg:rounded-[15px] lg:h-[70px] ">
-            
-              <div
-                onClick={() => {
-                  setCalender((prev) => !prev);
-                }}
-                className={`cursor-pointer bg-gray-100  ${
-                  isDarkMode ? "border" : ""
-                } flex items-center gap-[1px] px-[1px]
-                 md:px-[8px] lg:rounded-[15px] rounded-[5px] w-[25%] h-full `}
+           border-gray-300 lg:border-gray-400 rounded-[5px]  lg:rounded-[15px] lg:h-[70px] "
+          >
+            <div
+              onClick={() => {
+                setCalender((prev) => !prev);
+              }}
+              // className={`cursor-pointer bg-gray-100  ${
+              //   isDarkMode ? "border" : ""
+              // } flex items-center gap-[1px] px-[1px]
+              //  md:px-[8px] lg:rounded-[15px] rounded-[5px] w-[25%] h-full `}
+              className={`cursor-pointer ${styles.filter} ${
+                isDarkMode ? "border" : ""
+              } flex items-center gap-[1px] px-[2px] py-1.5 rounded-[3px] md:px-[8px]`}
+            >
+              <p
+                // className={`text-[#04177f] text-[11px]
+                // leading-[14px] font-[500]
+                //   lg:text-[16px]`}
+                className={`text-[#04177f] md:text-[9.16px] md:font-semibold text-[8px] font-extrabold lg:text-base lg:font-extrabold`}
               >
-                <p className={`text-[#04177f] text-[11px] 
-                leading-[14px] font-[500] 
-                  lg:text-[16px]`}>
-                  Filter by Date{" "}
-                </p>
-                <img
-                  className="w-[15px] h-[15px] md:w-[17px] md:h-[17px] lg:w-[20px] lg:h-[20px]"
-                  src="./Images/dashboardImages/dateImg.png"
-                  alt=""
-                />
-              </div>
-              <div className={`w-[25%] flex flex-col md:flex-row md:gap-[5px]
+                Filter by Date{" "}
+              </p>
+              <img
+                className="w-[15px] h-[15px] md:w-[17px] md:h-[17px] lg:w-[20px] lg:h-[20px]"
+                src="./Images/dashboardImages/dateImg.png"
+                alt=""
+              />
+            </div>
+            <div
+              className={`w-[25%] flex flex-col md:flex-row md:gap-[5px]
                justify-center items-center
                rounded-[7px] h-full
                   md:rounded-[11px] md:py-[8px] ${
-                    isDarkMode ? "border" :  "bg-[#04177f]"
+                    isDarkMode ? "border" : "bg-[#04177f]"
                   }
-                  lg:rounded-[13px] lg:py-[10px] lg:px-[19px]`} onClick ={()=> {
-                    navigate("/wallet-summary")
-                  }}>
-                <p
-                  className={`text-white
+                  lg:rounded-[13px] lg:py-[10px] lg:px-[19px]`}
+              onClick={() => {
+                navigate("/wallet-summary");
+              }}
+            >
+              <p
+                className={`text-white
                   text-[10px] leading-[13px] font-[500]
                    lg:leading-[24px] lg:text-[12px] `}
-                >
-                  Wallet
-                </p>
-                <p
-                  className={` text-white
+              >
+                Wallet
+              </p>
+              <p
+                className={` text-white
                   text-[10px] leading-[13px] font-[500]
                    lg:leading-[24px] lg:text-[12px] `}
-                >
-                  Summary
-                </p>
-              </div>
-             
-                    
-            
-                <div
-                  className={`w-[25%] flex flex-col md:flex-row 
+              >
+                Summary
+              </p>
+            </div>
+
+            <div
+              className={`w-[25%] flex flex-col md:flex-row 
                     justify-center items-center md:gap-[5px]
                rounded-[7px] h-full
                   md:rounded-[11px] md:py-[8px] ${
-                    isDarkMode ? "border" :  "bg-[#04177f]"
+                    isDarkMode ? "border" : "bg-[#04177f]"
                   }
                   lg:rounded-[13px] lg:py-[10px] lg:px-[19px]`}
-                onClick={()=> {
-                  navigate("/sales-summary")
-                }}>
-                  <p
-                  className={`text-white
+              onClick={() => {
+                navigate("/sales-summary");
+              }}
+            >
+              <p
+                className={`text-white
                   text-[10px] leading-[13px]
                    lg:leading-[24px] lg:text-[12px] font-[500]`}
-                >
-                  Sales
-                </p>
-                <p
-                  className={`text-white
+              >
+                Sales
+              </p>
+              <p
+                className={`text-white
                   text-[10px] leading-[13px]
                    lg:leading-[24px] lg:text-[12px] font-[500] `}
-                >
-                  Summary
-                </p>
-                </div>
-              
-              <div
-               className={`w-[25%] flex flex-col justify-center items-center
+              >
+                Summary
+              </p>
+            </div>
+
+            <div
+              className={`w-[25%] flex flex-col justify-center items-center
                 md:flex-row md:gap-[5px]
                text-white rounded-[7px] h-full
                   md:rounded-[11px] md:py-[8px] ${
-                    isDarkMode ? "border" :  "bg-[#04177f]"
+                    isDarkMode ? "border" : "bg-[#04177f]"
                   }
                   lg:rounded-[13px] lg:py-[10px] lg:px-[19px]`}
-               >
-                <p  className={`text-white text-center
+            >
+              <p
+                className={`text-white text-center
                   text-[10px] leading-[13px]
                    lg:leading-[24px] lg:text-[12px] font-[500] `}
-                > Download Stat.</p>
-               
-                <img
-                  className="w-[10px] h-[10px] md:w-[15px] md:h-[15px] lg:w-[20px] lg:h-[20px]"
-                  src="./Images/dashboardImages/downloadicon.png"
-                  alt=""
-                />
-              </div>
-              {calender && (
-                <div className="absolute mt-[27px] md:mt-[40px] lg:mt-[55px] z-[1000] font-[400]">
-                  {" "}
-                  <Calender />{" "}
-                </div>
-              )}
+              >
+                {" "}
+                Download Stat.
+              </p>
+
+              <img
+                className="w-[10px] h-[10px] md:w-[15px] md:h-[15px] lg:w-[20px] lg:h-[20px]"
+                src="./Images/dashboardImages/downloadicon.png"
+                alt=""
+              />
             </div>
-          
+            {calender && (
+              <div className="absolute mt-[40px] md:mt-[40px] lg:mt-[55px] z-[1000] font-[400]">
+                {" "}
+                <Calender />{" "}
+              </div>
+            )}
+          </div>
 
           <div>
             <div
               className={` flex w-full gap-[5px] h-[70px] lg:h-[100px] md:items-center 
-              lg:mt-[5%] lg:items-center my-[30px]`}>
+              lg:mt-[5%] lg:items-center my-[30px]`}
+            >
               <select
                 name="curr"
                 id="curr"
@@ -825,16 +958,16 @@ const symbolValue = selected === "USD" ? "$" : selected === "AUD" ?
 
               <div
                 className={`w-[33.3%] rounded-[3px] lg:rounded-[5px] flex flex-col h-full justify-center items-center
-                   gap-[3px] ${
-                  isDarkMode ? "border " : " bg-[#D5F6E3]"
-                }   ${
+                   gap-[3px] ${isDarkMode ? "border " : " bg-[#D5F6E3]"}   ${
                   toggleSideBar ? "lg:text-[14px]" : "lg:text-[px]"
                 }`}
               >
                 <div className="flex gap-1  justify-center items-center  ">
-                  <p className={` text-[11px] text-center leading-[14px] font-[500] 
+                  <p
+                    className={` text-[11px] text-center leading-[14px] font-[500] 
                   lg:text-[18px] lg:leading-[24px]
-                    ${toggleSideBar ? "lg:text-[18px]" : ""}`}>
+                    ${toggleSideBar ? "lg:text-[18px]" : ""}`}
+                  >
                     Total Inflows
                   </p>
                   <img
@@ -843,25 +976,37 @@ const symbolValue = selected === "USD" ? "$" : selected === "AUD" ?
                     alt="dropdown"
                   />
                 </div>
-                <p className="text-center text-[10px] leading-[13px] font-[500] 
-                  lg:text-[18px] lg:leading-[24px]">
-                  {selected === "NGN" ?  transactionResponse?.data?.data?.data ?
-        transactionResponse?.data?.data?.data?.total_inflow?.toLocaleString("en-NG", {
-          style : "currency",
-          currency : "NGN"
-        }) :   "₦"  : `${symbolValue}0.00` }
+                <p
+                  className="text-center text-[10px] leading-[13px] font-[500] 
+                  lg:text-[18px] lg:leading-[24px]"
+                >
+                  {selected === "NGN"
+                    ? transactionResponse?.data?.data?.data
+                      ? transactionResponse?.data?.data?.data?.total_inflow?.toLocaleString(
+                          "en-NG",
+                          {
+                            style: "currency",
+                            currency: "NGN",
+                          }
+                        )
+                      : "₦"
+                    : `${symbolValue}0.00`}
                 </p>
               </div>
 
               <div
                 className={`w-[33.3%] rounded-[3px] lg:rounded-[5px]  flex flex-col h-full justify-center items-center
                    gap-[3px] ${
-                  isDarkMode ? "border " : " bg-[#92abfe81]"
-                }  text-[7px] md:text-[12px]`}
+                     isDarkMode ? "border " : " bg-[#92abfe81]"
+                   }  text-[7px] md:text-[12px]`}
               >
                 <div className="flex gap-1 justify-center items-center ">
-                  <p className={`  text-[11px] text-center leading-[14px] font-[500] 
-                  lg:text-[18px] lg:leading-[24px] ${toggleSideBar ? "lg:text-[18px]" : ""}`}>
+                  <p
+                    className={`  text-[11px] text-center leading-[14px] font-[500] 
+                  lg:text-[18px] lg:leading-[24px] ${
+                    toggleSideBar ? "lg:text-[18px]" : ""
+                  }`}
+                  >
                     Total Transactions{" "}
                   </p>
                   <img
@@ -870,22 +1015,32 @@ const symbolValue = selected === "USD" ? "$" : selected === "AUD" ?
                     alt="dropdown"
                   />
                 </div>
-                <p className="text-center  text-[10px] leading-[13px] font-[500] 
-                  lg:text-[18px] lg:leading-[24px]">{selected === "NGN" ? 
-                  transactionResponse?.data?.data?.data?.total_count
-                   || transactionResponse?.data?.status === 200  ?
-                    transactionResponse?.data?.data?.data?.total_count: "" : 0}  </p>
+                <p
+                  className="text-center  text-[10px] leading-[13px] font-[500] 
+                  lg:text-[18px] lg:leading-[24px]"
+                >
+                  {selected === "NGN"
+                    ? transactionResponse?.data?.data?.data?.total_count ||
+                      transactionResponse?.data?.status === 200
+                      ? transactionResponse?.data?.data?.data?.total_count
+                      : ""
+                    : 0}{" "}
+                </p>
               </div>
 
               <div
                 className={`w-[33.3%] rounded-[3px] lg:rounded-[5px] flex flex-col h-full justify-center items-center
                    gap-[3px] ${
-                  isDarkMode ? "border " : " bg-[#FDCECE]"
-                } text-[7px] md:text-[12px]`}
+                     isDarkMode ? "border " : " bg-[#FDCECE]"
+                   } text-[7px] md:text-[12px]`}
               >
                 <div className="flex gap-1 justify-center items-center">
-                  <p className={`text-[11px] text-center leading-[14px] font-[500] 
-                  lg:text-[18px] lg:leading-[24px] ${toggleSideBar ? "lg:text-[18px]" : ""}`}>
+                  <p
+                    className={`text-[11px] text-center leading-[14px] font-[500] 
+                  lg:text-[18px] lg:leading-[24px] ${
+                    toggleSideBar ? "lg:text-[18px]" : ""
+                  }`}
+                  >
                     Total Outflows
                   </p>
                   <img
@@ -894,13 +1049,21 @@ const symbolValue = selected === "USD" ? "$" : selected === "AUD" ?
                     alt="dropdown"
                   />
                 </div>
-                <p className="text-center  text-[10px] leading-[13px] font-[500] 
-                  lg:text-[18px] lg:leading-[24px]">
-                  {selected === "NGN"  ? transactionResponse?.data?.data?.data ?
-        transactionResponse?.data?.data?.data?.total_outflow?.toLocaleString("en-NG", {
-          style : "currency",
-          currency : "NGN"
-        }) :   "₦"  : `${symbolValue}0.00`}
+                <p
+                  className="text-center  text-[10px] leading-[13px] font-[500] 
+                  lg:text-[18px] lg:leading-[24px]"
+                >
+                  {selected === "NGN"
+                    ? transactionResponse?.data?.data?.data
+                      ? transactionResponse?.data?.data?.data?.total_outflow?.toLocaleString(
+                          "en-NG",
+                          {
+                            style: "currency",
+                            currency: "NGN",
+                          }
+                        )
+                      : "₦"
+                    : `${symbolValue}0.00`}
                 </p>
               </div>
             </div>
@@ -949,145 +1112,287 @@ const symbolValue = selected === "USD" ? "$" : selected === "AUD" ?
             <div
               className={`h-full md:hidden flex flex-col mt-9  w-full  border-x-[1.2px]
    my-[50px]  border-b-[1.2px] px-[20px] border-opacity-[25%] shadow-md
- ${isDarkMode ? "border-white": "border-gray-500 "}`}
+ ${isDarkMode ? "border-white" : "border-gray-500 "}`}
             >
               {loading === true ? (
-              <div className="h-[150px] flex items-center justify-center">
-          <Loader/>
-          </div>
-              ) : (
-          filteredTransactions && filteredTransactions?.length > 1 ? (
-     filteredTransactions?.map((transaction, index) => (
-                <div className={`${index < filteredTransactions?.length - 1 ? "border-b-[1px] border-gray-500 " : ""}`} 
-                key={index}>
-                  <Link
-                    to={`/${
-                      transaction.status === "delivered"
-                        ? "SuccessfullReceipt"
-                        : transaction.status === "Failed"
-                        ? "FailedReceipt"
-                        : transaction.status === "Pending"
-                        ? "PendingReceipt"
-                        : transaction.status === "Refunded"
-                        ? "RefundedReceipt"
-                        : transaction.status === "Cancelled"
-                        ? "CancelledReceipt"
+                <div className="h-[150px] flex items-center justify-center">
+                  <Loader />
+                </div>
+              ) : filteredTransactions && filteredTransactions?.length > 1 ? (
+                filteredTransactions?.map((transaction, index) => (
+                  <div
+                    className={`${
+                      index < filteredTransactions?.length - 1
+                        ? "border-b-[1px] border-gray-500 "
                         : ""
                     }`}
-                    state={{ transaction }}
+                    key={index}
                   >
-                     <div
-                                 key={index}
-                                 className="flex justify-between py-[20px]"
-                               >
-                                 <div className="flex flex-col gap-[7.648px]">
-                                   <h2 className={`font-medium  text-[9.167px] leading-[11.167px]
-                                    ${isDarkMode ? "text-white" : "text-neutral-500"}`}>
-                                     Order No : {transaction?.order_id}
-                                   </h2>
-                                   <h2 className={`font-medium text-black text-[9.167px] 
-                                   leading-[11.167px] ${isDarkMode ? "text-white" : "text-neutral-500"}`}>
-                                     Product : {transaction?.product}
-                                   </h2>
-                                   <p className={ `font-medium text-neutral-500 text-[9.167px] 
-                                   leading-[11.167px] ${isDarkMode ? "text-white" : "text-neutral-500"}`}>
-                                     Description : {transaction.description}
-                                   </p>
-           
-                                   <p className={`font-medium text-neutral-500  
-                                   text-[9.167px] leading-[11.167px] ${isDarkMode ? "text-white" : "text-neutral-500"}`}>
-                                     Amount : {transaction.amount ? transaction.amount?.toLocaleString("en-NG", {
-                                      style : "currency",
-                                      currency : "NGN"
-                                     }): ""}
-                                   </p>
-           
-                                   <div className="hidden">
-                                     <p className={`font-medium text-neutral-500 
-                                      text-[9.167px] leading-[11.167px] ${isDarkMode ?"text-white" : "text-neutral-500"  }`}>
-                                       Network : {transaction?.network}
-                                     </p>
-           
-                                     <p className="font-medium text-neutral-500  text-[9.167px] leading-[11.167px]">
-                                       recipientname : {transaction?.recipientname}
-                                     </p>
-           
-                                     <p className="font-medium text-neutral-500  text-[9.167px] leading-[11.167px]">
-                                       phonenumber : {transaction?.phonenumber}
-                                     </p>
-           
-                                     <p className="font-medium text-neutral-500  text-[9.167px] leading-[11.167px]">
-                                       wallet : {transaction?.wallet}
-                                     </p>
-                                   </div>
-                                 </div>
-                                 {/* rightSide */}
-                                 <div className="flex flex-col gap-[13.473px]">
-                                   <div className="flex flex-row justify-between gap-[5px] items-center">
-                                     <p className={`font-medium 
-                                    text-[9.167px] leading-[11.167px] cursor-pointer ${isDarkMode ? "text-white" : "text-neutral-500"}`}>
-                                       Status:{" "}
-                                     </p>
-                                     
-                                       <p
-                                         style={{
-                                           backgroundColor: getBackgroundColor(
-                                             transaction?.status
-                                           ),
-                                         }}
-                                         className="font-medium text-white self-center text-[9.167px] leading-[11.167px] cursor-pointer
+                    <div
+                      // to={`${
+                      //   ["delivered", "success", "Successful", ""].includes(
+                      //     transaction?.status
+                      //   )
+                      //     ? transaction?.product === "Electricity Bills"
+                      //       ? "/ElectricityTransSuccessReceipt"
+                      //       : "/SuccessfullReceipt"
+                      //     : transaction.status === "Failed"
+                      //     ? transaction?.product === "Electricity Bills"
+                      //       ? "/ElectricityFailedReceipt"
+                      //       : "/FailedReceipt"
+                      //     : transaction.status === "Pending"
+                      //     ? "/PendingReceipt"
+                      //     : transaction.status === "Refunded"
+                      //     ? "/RefundedReceipt"
+                      //     : transaction.status === "Cancelled"
+                      //     ? "/CancelledReceipt"
+                      //     : ""
+                      // }`}
+                      // state={{ transaction }}
+                      onClick={async () => {
+                        // window.scrollTo(0, 0);
+
+                        const response = await getTransactionByOrderId(
+                          transaction?.order_id,
+                          transaction?.product
+                        );
+
+                        const orderData = response?.data?.data?.data;
+                        console.log("resp", response?.data);
+                        console.log("orderData", orderData);
+
+                        
+                        if (["delivered", "success", "Successful", ""].includes(orderData?.status)) {
+                          navigate(
+                            transaction?.product === "Electricity Bills"
+                              ? "/ElectricityTransSuccessReceipt"
+                              : transaction?.product === "Education Pins" || transaction?.product === "Education E-Pins"
+                              ? "/EduSuccessReceipt"
+                              :transaction?.product === ""
+                              ? "/TvSubSuccessReceipt"
+                              : "/SuccessfullReceipt",
+                            { state: { orderData, transaction } }
+                          );
+
+                          // transaction?.product === "Education Pins"
+                        } else if (orderData?.status.toLowerCase() === "failed") {
+                          navigate(
+                            orderIdResponse?.product === "Electricity Bills"
+                              ? "/ElectricityFailedReceipt"
+                              : "/FailedReceipt",
+                            { state: { orderData, transaction } }
+                          );
+                        } else if (
+                          orderData?.status.toLowerCase() === "pending"
+                        ) {
+                          navigate("/PendingReceipt", {
+                            state: { orderData },
+                          });
+                        } else if (
+                          orderData?.status.toLowerCase() === "refunded"
+                        ) {
+                          navigate("/RefundedReceipt", {
+                            state: { orderData },
+                          });
+                        } else if (
+                          orderData?.status.toLowerCase() === "cancelled"
+                        ) {
+                          navigate("/CancelledReceipt", {
+                            state: { orderData },
+                          });
+                        } else {
+                          // alert("Transaction status unknown");
+                          navigate("/FailedReceipt", {
+                            state: { transaction },
+                          });
+                          console.log("orderid", orderIdResponse);
+                        }
+                      }}
+                      // else if (transaction.status === "Cancelled")
+                    >
+                      <div
+                        key={index}
+                        className="flex justify-between py-[20px]"
+                      >
+                        <div className="flex flex-col gap-[7.648px]">
+                          <h2
+                            className={`font-medium  text-[9.167px] leading-[11.167px]
+                                    ${
+                                      isDarkMode
+                                        ? "text-white"
+                                        : "text-neutral-500"
+                                    }`}
+                          >
+                            Order No : {transaction?.order_id}
+                          </h2>
+                          <h2
+                            className={`font-medium text-black text-[9.167px] 
+                                   leading-[11.167px] ${
+                                     isDarkMode
+                                       ? "text-white"
+                                       : "text-neutral-500"
+                                   }`}
+                          >
+                            Product : {transaction?.product}
+                          </h2>
+                          <p
+                            className={`font-medium text-neutral-500 text-[9.167px] 
+                                   leading-[11.167px] ${
+                                     isDarkMode
+                                       ? "text-white"
+                                       : "text-neutral-500"
+                                   }`}
+                          >
+                            Description : {transaction.description}
+                          </p>
+
+                          <p
+                            className={`font-medium text-neutral-500  
+                                   text-[9.167px] leading-[11.167px] ${
+                                     isDarkMode
+                                       ? "text-white"
+                                       : "text-neutral-500"
+                                   }`}
+                          >
+                            Amount :{" "}
+                            {transaction.amount
+                              ? transaction.amount?.toLocaleString("en-NG", {
+                                  style: "currency",
+                                  currency: "NGN",
+                                })
+                              : ""}
+                          </p>
+
+                          <div className="hidden">
+                            <p
+                              className={`font-medium text-neutral-500 
+                                      text-[9.167px] leading-[11.167px] ${
+                                        isDarkMode
+                                          ? "text-white"
+                                          : "text-neutral-500"
+                                      }`}
+                            >
+                              Network : {transaction?.network}
+                            </p>
+
+                            <p className="font-medium text-neutral-500  text-[9.167px] leading-[11.167px]">
+                              recipientname : {transaction?.recipientname}
+                            </p>
+
+                            <p className="font-medium text-neutral-500  text-[9.167px] leading-[11.167px]">
+                              phonenumber : {transaction?.phonenumber}
+                            </p>
+
+                            <p className="font-medium text-neutral-500  text-[9.167px] leading-[11.167px]">
+                              wallet : {transaction?.wallet}
+                            </p>
+                          </div>
+                        </div>
+                        {/* rightSide */}
+                        <div className="flex flex-col gap-[13.473px]">
+                          <div className="flex flex-row justify-between gap-[5px] items-center">
+                            <p
+                              className={`font-medium 
+                                    text-[9.167px] leading-[11.167px] cursor-pointer ${
+                                      isDarkMode
+                                        ? "text-white"
+                                        : "text-neutral-500"
+                                    }`}
+                            >
+                              Status:{" "}
+                            </p>
+
+                            <p
+                              style={{
+                                backgroundColor: getBackgroundColor(
+                                  transaction?.status
+                                ),
+                              }}
+                              className="font-medium text-white self-center text-[9.167px] leading-[11.167px] cursor-pointer
                              py-[2.122px] px-[4.245px]  rounded-sm"
-                                       >
-                                         {transaction?.status === "delivered" ? "Successful" : "unknown"}
-                                       </p>
-                                    
-                                   </div>
-           
-                                   <div className="flex flex-row">
-                                     <div>
-                                       <p className={`font-medium text-[10px] 
-                                        leading-[13px] ${isDarkMode ? "text-white" : "text-neutral-500"}`}>
-                                         <span className="block">Date & Time:</span>
-                                         <span className="block"> {transaction?.created_at?.slice(0,10)} </span>
-                                         <span className="block">{ transaction?.created_at?.slice(14,19)}</span>
-                                       </p>
-                                     </div>
-                                     <div className="w-[13.41px] mt-7 h-[12.06px]">
-                                       <img
-                                         className="w-[13.41px] h-[12.06px]"
-                                         src="./Images/dashboardImages/arrowright.png"
-                                         alt=""
-                                       />
-                                     </div>
-                                   </div>
-                                 </div>
-                               </div>
-                  </Link>
+                            >
+                              {transaction?.status === "delivered" ||
+                              "success" ||
+                              "Successful"
+                                ? "Successful"
+                                : "unknown"}
+                            </p>
+                          </div>
+
+                          <div className="flex flex-row">
+                            <div>
+                              <p
+                                className={`font-medium text-[10px] 
+                                        leading-[13px] ${
+                                          isDarkMode
+                                            ? "text-white"
+                                            : "text-neutral-500"
+                                        }`}
+                              >
+                                <span className="block">Date & Time:</span>
+                                <span className="block">
+                                  {" "}
+                                  {transaction?.created_at?.slice(0, 10)}{" "}
+                                </span>
+                                <span className="block">
+                                  {transaction?.created_at?.slice(14, 19)}
+                                </span>
+                              </p>
+                            </div>
+                            <div className="w-[13.41px] mt-7 h-[12.06px]">
+                              <img
+                                className="w-[13.41px] h-[12.06px]"
+                                src="./Images/dashboardImages/arrowright.png"
+                                alt=""
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              ) : (filteredTransactions && filteredTransactions?.length < 1) ||
+                transactionResponse?.data?.data?.data?.transactions?.length <
+                  1 ? (
+                <img
+                  className="lg:w-[517px] lg:h-[456px]"
+                  src={NoRecordImage}
+                  alt="No record found"
+                />
+              ) : transactionHistoryError === "Network error" ? (
+                <p
+                  className={`text-[20px] text-black font-[500] 
+                ${isDarkMode ? "text-white" : "text-black"}`}
+                >
+                  An internet connection error has occured, kindly check your
+                  internet connection.
+                </p>
+              ) : transactionHistoryError === "Server error" ? (
+                <p
+                  className={`text-[20px] text-black font-[500] 
+              ${isDarkMode ? "text-white" : "text-black"}`}
+                >
+                  Our server is currently facing a downtime, you would receive
+                  your transactions shortly.
+                </p>
+              ) : transactionHistoryError === "unauthorised" &&
+                transactionResponse?.data?.data?.data?.transactions ===
+                  undefined ? (
+                <div className="h-[150px] flex items-center justify-center">
+                  <Loader />
                 </div>
-              ))) : (
-                ((filteredTransactions && filteredTransactions?.length < 1)|| transactionResponse?.data?.data?.data?.transactions?.length < 1 ) ? (
-              <img className="lg:w-[517px] lg:h-[456px]" src={NoRecordImage} alt="No record found"/> 
-              ) : 
-              transactionHistoryError === "Network error"  ? (
-               <p className={`text-[20px] text-black font-[500] 
-                ${isDarkMode ? "text-white" : "text-black"}`}>
-        An internet connection error has occured,
-         kindly check your internet connection.
-               </p>
-       ):  transactionHistoryError === "Server error" ? (
-             <p className={`text-[20px] text-black font-[500] 
-              ${isDarkMode ? "text-white" : "text-black"}`}>
-            Our server is currently facing a downtime, you would receive your transactions shortly.     
-               </p>
-       ) : transactionHistoryError === "unauthorised" && transactionResponse?.data?.data?.data?.transactions === undefined ? (
-            <div className="h-[150px] flex items-center justify-center">
-          <Loader/>
-          </div>
-       ) : loading === false && transactionHistoryError === null  &&   <p className ={`text-[20px] text-black font-[500]
-        ${isDarkMode ? "text-white" : "text-black"}`}>
-        An Error has occured try again later.
-               </p>))}
-            
+              ) : (
+                loading === false &&
+                transactionHistoryError === null && (
+                  <p
+                    className={`text-[20px] text-black font-[500]
+        ${isDarkMode ? "text-white" : "text-black"}`}
+                  >
+                    An Error has occured try again later.
+                  </p>
+                )
+              )}
             </div>
           </div>
 
@@ -1122,159 +1427,232 @@ const symbolValue = selected === "USD" ? "$" : selected === "AUD" ?
               <div>Date & Time</div>
               <div>Status</div>
             </div>
-       {loading === true ? (
+            {loading === true ? (
               <div className="h-[150px] flex items-center justify-center">
-          <Loader/>
-          </div>
-              ) : (
-          filteredTransactions && filteredTransactions?.length > 1 ? (
-     filteredTransactions?.map((transaction, index) => (
-                 <div key={index}>
-                <Link
-                  to={`/${
-                    transaction.status === "delivered"
-                      ? "SuccessfullReceipt"
-                      : transaction.status === "Failed"
-                      ? "FailedReceipt"
-                      : transaction.status === "Pending"
-                      ? "PendingReceipt"
-                      : transaction.status === "Refunded"
-                      ? "RefundedReceipt"
-                      : transaction.status === "Cancelled"
-                      ? "CancelledReceipt"
-                      : "" // Add a default case or handle it as per your requirement
-                  }`}
-                  state={{ transaction }}
-                >
+                <Loader />
+              </div>
+            ) : filteredTransactions && filteredTransactions?.length > 1 ? (
+              filteredTransactions?.map((transaction, index) => (
+                <div key={index}>
                   <div
-                    className={`${
-                      toggleSideBar
-                        ? "lg:text-[15px] md:gap-[%] md:text-[8.5px] "
-                        : "lg:text-[15px] md:gap-[%] md:text-[10px] lg:md:gap-[%]"
-                    }  hidden  font-semibold md:flex md:h-[60px] lg:h-[85px] md:justify-start md:px-[20px] md:items-center  md:mt-[20px] md:pb-[2%] border-b-[1px]`}
+                    //to={`/${
+                      //transaction.status === "delivered"
+                        // ? "SuccessfullReceipt"
+                        // : transaction.status === "Failed"
+                        // ? "FailedReceipt"
+                        // : transaction.status === "Pending"
+                        // ? "PendingReceipt"
+                        // : transaction.status === "Refunded"
+                        // ? "RefundedReceipt"
+                        // : transaction.status === "Cancelled"
+                        // ? "CancelledReceipt"
+                        //: "" // Add a default case or handle it as per your requirement
+                    // }`}
+                    // state={{ transaction }}
+                     onClick={async () => {
+                        // window.scrollTo(0, 0);
+                        console.log("prod", transaction?.product)
+                        console.log("trans", transaction?.product)
+
+                        const response = await getTransactionByOrderId(
+                          transaction?.order_id,
+                          transaction?.product
+                        );
+
+                        const orderData = response?.data?.data?.data;
+                        console.log("resp", response?.data);
+                        console.log("orderData", orderData);
+
+                        
+                        if (["delivered", "success", "Successful", ""].includes(orderData?.status)) {
+                          navigate(
+                            transaction?.product === "Electricity Bills"
+                              ? "/ElectricityTransSuccessReceipt"
+                              : transaction?.product === "Education Pins" || transaction?.product === "Education E-Pins"
+                              ? "/EduSuccessReceipt"
+                              // :transaction?.product === ""
+                              // ? "/TvSubSuccessReceipt"
+                              : "/SuccessfullReceipt",
+                            { state: { orderData, transaction } }
+                          );
+
+                          // transaction?.product === "Education Pins"
+                        } else if (orderData?.status.toLowerCase() === "failed") {
+                          navigate(
+                            orderIdResponse?.product === "Electricity Bills"
+                              ? "/ElectricityFailedReceipt"
+                              : "/FailedReceipt",
+                            { state: { orderData, transaction } }
+                          );
+                        } else if (
+                          orderData?.status.toLowerCase() === "pending"
+                        ) {
+                          navigate("/PendingReceipt", {
+                            state: { orderData },
+                          });
+                        } else if (
+                          orderData?.status.toLowerCase() === "refunded"
+                        ) {
+                          navigate("/RefundedReceipt", {
+                            state: { orderData },
+                          });
+                        } else if (
+                          orderData?.status.toLowerCase() === "cancelled"
+                        ) {
+                          navigate("/CancelledReceipt", {
+                            state: { orderData },
+                          });
+                        } else {
+                          // alert("Transaction status unknown");
+                          navigate("/FailedReceipt", {
+                            state: { transaction },
+                          });
+                          console.log("orderid", orderIdResponse);
+                        }
+                      }}
                   >
                     <div
-                      className={`md:text-[#000000] ${
-                        toggleSideBar ? "md:w-[16.5%]" : "md:w-[17%]"
-                      }`}
-                    >
-                      {transaction?.product}
-                    </div>
-                    <div
-                      className={`md:text-[#7C7C7C] ${
-                        toggleSideBar ? "md:w-[18.5%]" : "md:w-[18.5%]"
-                      }`}
-                    >
-                      {transaction?.description}
-                    </div>
-                    <div
-                      className={`md:text-[#7C7C7C]  ${
-                        toggleSideBar ? "md:w-[16%]" : "md:w-[16%]"
-                      }`}
-                    >
-                      {transaction?.order_id}
-                    </div>
-                    <div
-                      className={`md:text-[#7C7C7C]  ${
-                        toggleSideBar ? "md:w-[16%]" : "md:w-[17%]"
-                      }`}
-                    >
-                     {transaction.amount ? transaction.amount?.toLocaleString("en-NG", {
-                                      style : "currency",
-                                      currency : "NGN"
-                                     }): ""}
-                    </div>
-
-                    <div
-                      className={`md:text-[#7C7C7C]  ${
-                        toggleSideBar ? "md:w-[16.5%] " : "md:w-[16.5%]"
-                      }`}
-                    >
-                      <span>{transaction?.created_at?.slice(0,10)}</span>
-                      <br />
-                      <span>{ transaction?.created_at?.slice(14,19)}</span>
-                    </div>
-
-                    <div
-                      className={`md:flex md:items-center md:justify-between md:text-center ${
+                      className={`${
                         toggleSideBar
-                          ? "md:gap-[7px] md:w-[17%]"
-                          : "md:gap-[10px] md:w-[14.5%]"
-                      }`}
+                          ? "lg:text-[15px] md:gap-[%] md:text-[8.5px] "
+                          : "lg:text-[15px] md:gap-[%] md:text-[10px] lg:md:gap-[%]"
+                      }  hidden  font-semibold md:flex md:h-[60px] lg:h-[85px] md:justify-start md:px-[20px] md:items-center  md:mt-[20px] md:pb-[2%] border-b-[1px]`}
                     >
                       <div
-                        style={{
-                          backgroundColor: getBackgroundColor(
-                            transaction.status
-                          ),
-                        }}
-                        className={`${
-                          toggleSideBar ? "md:w-[100%]" : "md:w-[100%]"
-                        } md:px-[10px] md:py-[5px] md:text-[#FFFFFF] md:rounded-[5px]`}
+                        className={`md:text-[#000000] ${
+                          toggleSideBar ? "md:w-[16.5%]" : "md:w-[17%]"
+                        }`}
                       >
-                        {" "}
-                        {transaction.status}
+                        {transaction?.product}
                       </div>
-                      <img
-                        className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
-                        src="./Images/dashboardImages/arrowright.png"
-                        alt="/"
-                      />
+                      <div
+                        className={`md:text-[#7C7C7C] ${
+                          toggleSideBar ? "md:w-[18.5%]" : "md:w-[18.5%]"
+                        }`}
+                      >
+                        {transaction?.description}
+                      </div>
+                      <div
+                        className={`md:text-[#7C7C7C]  ${
+                          toggleSideBar ? "md:w-[16%]" : "md:w-[16%]"
+                        }`}
+                      >
+                        {transaction?.order_id}
+                      </div>
+                      <div
+                        className={`md:text-[#7C7C7C]  ${
+                          toggleSideBar ? "md:w-[16%]" : "md:w-[17%]"
+                        }`}
+                      >
+                        {transaction.amount
+                          ? transaction.amount?.toLocaleString("en-NG", {
+                              style: "currency",
+                              currency: "NGN",
+                            })
+                          : ""}
+                      </div>
+
+                      <div
+                        className={`md:text-[#7C7C7C]  ${
+                          toggleSideBar ? "md:w-[16.5%] " : "md:w-[16.5%]"
+                        }`}
+                      >
+                        <span>{transaction?.created_at?.slice(0, 10)}</span>
+                        <br />
+                        <span>{transaction?.created_at?.slice(14, 19)}</span>
+                      </div>
+
+                      <div
+                        className={`md:flex md:items-center md:justify-between md:text-center ${
+                          toggleSideBar
+                            ? "md:gap-[7px] md:w-[17%]"
+                            : "md:gap-[10px] md:w-[14.5%]"
+                        }`}
+                      >
+                        <div
+                          style={{
+                            backgroundColor: getBackgroundColor(
+                              transaction.status
+                            ),
+                          }}
+                          className={`${
+                            toggleSideBar ? "md:w-[100%]" : "md:w-[100%]"
+                          } md:px-[10px] md:py-[5px] md:text-[#FFFFFF] md:rounded-[5px]`}
+                        >
+                          {" "}
+                          {transaction.status}
+                        </div>
+                        <img
+                          className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
+                          src="./Images/dashboardImages/arrowright.png"
+                          alt="/"
+                        />
+                      </div>
                     </div>
                   </div>
-                </Link>
-              </div>
-              ))) : (
-                (( filteredTransactions?.length < 1)|| transactionResponse?.data?.data?.data?.transactions?.length < 1 || transactionResponse?.data?.data?.data?.transactions === null ) ? (
-              <img className="lg:w-full lg:h-[456px] flex self-center w-[" src={NoRecordImage} alt="No record found"/> 
-              ) : 
-              transactionHistoryError === "Network error"  ? (
-               <p className={`text-[20px] text-black font-[500]`}>
-        An internet connection error has occured,
-         kindly check your internet connection.
-               </p>
-       ):  transactionHistoryError === "Server error" ? (
-             <p className={`text-[20px] text-black font-[500]`}>
-            Our server is currently facing a downtime, you would receive your transactions shortly.     
-               </p>
-       ) : transactionHistoryError === "unauthorised" && transactionResponse?.data?.data?.data?.transactions === undefined ? (
-            <div className="h-[150px] flex items-center justify-center">
-          <Loader/>
-          </div>
-       ) : loading === false && transactionHistoryError === null  &&   <p className ={`text-[20px] text-black font-[500]`}>
-        An Error has occured try again later.
-               </p>))}
-
-         
-           
-          </div>
-           <div
-              className={`w-full flex justify-center gap-[5px] py-[70px] lg:py-[0px]`}
-            >
-              <div className="flex gap-[15px] items-center md:mt-[40px]">
-                <div className="text-[8px] md:text-[12px] lg:text-[14px]">
-                  You need help ?
                 </div>
-                <Link to="/ContactUs">
-                  <div
-                    className={`${isDarkMode ? "border " : "bg-[#04177f]"} ${
-                      styles.contactus
-                    }`}
-                  >
-                    Contact Us
-                  </div>
-                </Link>
+              ))
+            ) : filteredTransactions?.length < 1 ||
+              transactionResponse?.data?.data?.data?.transactions?.length < 1 ||
+              transactionResponse?.data?.data?.data?.transactions === null ? (
+              <img
+                className="lg:w-full lg:h-[456px] flex self-center w-["
+                src={NoRecordImage}
+                alt="No record found"
+              />
+            ) : transactionHistoryError === "Network error" ? (
+              <p className={`text-[20px] text-black font-[500]`}>
+                An internet connection error has occured, kindly check your
+                internet connection.
+              </p>
+            ) : transactionHistoryError === "Server error" ? (
+              <p className={`text-[20px] text-black font-[500]`}>
+                Our server is currently facing a downtime, you would receive
+                your transactions shortly.
+              </p>
+            ) : transactionHistoryError === "unauthorised" &&
+              transactionResponse?.data?.data?.data?.transactions ===
+                undefined ? (
+              <div className="h-[150px] flex items-center justify-center">
+                <Loader />
               </div>
+            ) : (
+              loading === false &&
+              transactionHistoryError === null && (
+                <p className={`text-[20px] text-black font-[500]`}>
+                  An Error has occured try again later.
+                </p>
+              )
+            )}
+          </div>
+          <div
+            className={`w-full flex justify-center gap-[5px] py-[70px] lg:py-[0px]`}
+          >
+            <div className="flex gap-[15px] items-center md:mt-[40px]">
+              <div className="text-[8px] md:text-[12px] lg:text-[14px]">
+                You need help ?
+              </div>
+              <Link to="/ContactUs">
+                <div
+                  className={`${isDarkMode ? "border " : "bg-[#04177f]"} ${
+                    styles.contactus
+                  }`}
+                >
+                  Contact Us
+                </div>
+              </Link>
             </div>
+          </div>
         </section>
       </div>
-     
-      {sessionModal && (
-        <HandleUserSession/>
+      {orderLoading && (
+        <Modal>
+          <Loader />
+        </Modal>
       )}
+      {sessionModal && <HandleUserSession />}
     </DashBoardLayout>
   );
 };
 
 export default TransactionPage;
-  

@@ -231,6 +231,7 @@ export default function WaecEducationPin() {
   ];
 
   const getAmount = async function handleGetAmount() {
+    if (!navigator.online) alert("Kindly check your internet connection");
     const id = 1;
     const path = `products/edu/${id}`;
 
@@ -243,11 +244,31 @@ export default function WaecEducationPin() {
       }
     };
 
-    const FailedHandler = (ErrorType) => {
+    const FailedHandler = async (ErrorType) => {
       if (ErrorType === "Server error") {
-        alert("Unable to get WAEC PINS. Please try again later");
+        await GetFunction(
+          path,
+          setIsLoading,
+          SuccessHandler,
+          (ErrorType) => {
+            if (ErrorType === "Server error") {
+              alert("Unable to get WAEC PINS. Please try again later");
+            }
+          },
+          setEduResponse
+        );
       } else if (ErrorType === "unauthorised") {
-        return setSessionModal(true);
+        await GetFunction(
+          path,
+          setIsLoading,
+          SuccessHandler,
+          (ErrorType) => {
+            if (ErrorType === "unauthorised") {
+              return setSessionModal(true);
+            }
+          },
+          setEduResponse
+        );
       }
     };
 
@@ -260,6 +281,7 @@ export default function WaecEducationPin() {
     );
   };
   const GetBalance = async () => {
+    if (!navigator.online) alert("Kindly check your internet connection");
     const SuccessHandler = () => {
       console.log("successfully retrieved balance");
     };
@@ -335,14 +357,22 @@ export default function WaecEducationPin() {
       method: "NGN Wallet",
       balance:
         newBalance === "" || newBalance === null || newBalance === undefined
-          ? `(${updateBalanceToNumber?.toLocaleString("en-NG", {
-              style: "currency",
-              currency: "NGN",
-            })})`
-          : `(${newBalanceToNumber?.toLocaleString("en-NG", {
-              style: "currency",
-              currency: "NGN",
-            })})`,
+          ? `(${
+              updateBalance > 1
+                ? updateBalanceToNumber?.toLocaleString("en-NG", {
+                    style: "currency",
+                    currency: "NGN",
+                  })
+                : ""
+            })`
+          : `(${
+              newBalance > 1
+                ? newBalanceToNumber?.toLocaleString("en-NG", {
+                    style: "currency",
+                    currency: "NGN",
+                  })
+                : ""
+            })`,
       flag: nigerianFlag,
       id: 1,
     },

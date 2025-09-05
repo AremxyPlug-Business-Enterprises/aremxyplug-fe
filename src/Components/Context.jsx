@@ -169,8 +169,8 @@ export const Context = ({ children }) => {
   function changeHandler(e) {
     const { name, value, type, checked } = e.target;
     const inputValue = type === "checkbox" ? checked : value;
-    console.log(value)
-    console.log(name)
+    console.log(value);
+    console.log(name);
     setState({ ...state, [name]: inputValue });
   }
 
@@ -254,7 +254,7 @@ export const Context = ({ children }) => {
       userName,
       email,
       phoneNumber,
-       IVcode,
+      IVcode,
       password,
       confirmPassword,
       checkbox,
@@ -295,7 +295,7 @@ export const Context = ({ children }) => {
           fullname: fullName,
           username: userName,
           phone_number: phoneNumber,
-          invitation_code : IVcode,
+          invitation_code: IVcode,
           email: email,
           password: password,
           country: country,
@@ -413,10 +413,9 @@ export const Context = ({ children }) => {
   const textRef = useRef(null);
   const transferFee = 50;
   const [messageTransfer, setMessageTransfer] = useState("");
-  const [transferAmount,setTransferAmount] = useState(0);
-   const [otherInputPinPopUp, setOtherInputPinPopUp] = useState(false);
-   const [transferResponse, setTransferResponse] = useState({});
-  
+  const [transferAmount, setTransferAmount] = useState(0);
+  const [otherInputPinPopUp, setOtherInputPinPopUp] = useState(false);
+  const [transferResponse, setTransferResponse] = useState({});
 
   const [isVisible, setIsVisible] = useState(true);
 
@@ -1154,7 +1153,7 @@ export const Context = ({ children }) => {
   const [gotvRequestId, setGotvRequestId] = useState("");
   const [gotvDescription, setGotvDescription] = useState("");
   const [packageGotv, setPackageGotv] = useState("");
-  const [purchaseGotvErrorType, setPurchaseGotvErrorType] = useState("")
+  const [purchaseGotvErrorType, setPurchaseGotvErrorType] = useState("");
 
   //==========DSTV===========
   const [selectedOptionDstv, setSelectedOptionDstv] = useState("");
@@ -1193,14 +1192,14 @@ export const Context = ({ children }) => {
   const [showMaxDecoderType, setShowMaxDecoderType] = useState("Showmax");
   const [showMaxSubscriptionResponse, setShowMaxSubscriptionResponse] =
     useState({});
-    const [showMaxFlagResult, setShowMaxFlagResult] = useState("");
+  const [showMaxFlagResult, setShowMaxFlagResult] = useState("");
   const [showMaxOrderId, setShowMaxOrderId] = useState("");
   const [showMaxTransactionId, setShowMaxTransactionId] = useState("");
   const [showMaxDescription, setShowMaxDescription] = useState("");
   const [showMaxMobileNumber, setShowMaxMobileNumber] = useState("");
   const [showMaxWalletBalance, setShowMaxWalletBalance] = useState("");
   const [showMaxCardName, setShowMaxCardName] = useState("");
-   const [purchaseShowMaxErrorType, setPurchaseShowMaxErrorType] = useState("")
+  const [purchaseShowMaxErrorType, setPurchaseShowMaxErrorType] = useState("");
 
   //=========STARTIMES===========
   const [selectedOptionStarTimes, setSelectedOptionStarTimes] = useState("");
@@ -1223,7 +1222,8 @@ export const Context = ({ children }) => {
   const [starTimesWalletBalance, setStarTimesWalletBalance] = useState("");
   const [starTimesFlagResult, setStarTimesFlagResult] = useState("");
   const [starTimesCardName, setStarTimesCardName] = useState("");
-   const [purchaseStarTimesErrorType, setPurchaseStarTimesErrorType] = useState("")
+  const [purchaseStarTimesErrorType, setPurchaseStarTimesErrorType] =
+    useState("");
   //============= EDUCATION PINS ========================
   //===============WAEC PINS================
   const [quantityResult, setQuantityResult] = useState("");
@@ -1325,8 +1325,8 @@ export const Context = ({ children }) => {
   const [idPostalCode, setIdPostalCode] = useState("");
   const [bvnNumber, setBvnNumber] = useState("");
   const [bvnVerifyImage, setBvnVerifyImage] = useState(NotVerifiedIcon);
-   const [idDateOfBirth, setIdDateOfBirth] = useState("");
-    const [genderResult, setGenderResult] = useState("");
+  const [idDateOfBirth, setIdDateOfBirth] = useState("");
+  const [genderResult, setGenderResult] = useState("");
 
   const [bvnStatus, setBvnStatus] = useState("Not Verified");
   const [dashLoading, setDashLoading] = useState(false);
@@ -1339,7 +1339,6 @@ export const Context = ({ children }) => {
   const [bvnCountryImage, setBvnCountryImage] = useState(null);
   const [verificationReason, setVerificationReason] = useState("");
   const [verificationResponse, setVerificationResponse] = useState({});
-
 
   //========== BUSINESS KYC =============
   const [businessPopUp, setBusinessPopUp] = useState(false);
@@ -1376,6 +1375,11 @@ export const Context = ({ children }) => {
 
   //The transactionResponse for getting user past transactions details
   const [transactionResponse, setTransactionResponse] = useState({});
+  //The response for getting user transactions details by order id
+  const [orderIdResponse, setOrderIdResponse] = useState({});
+  const [updateDataBalance, setUpdateDataBalance] = useState({});
+  const [electricityTransErrorType, setElectricityTransErrorType] =
+    useState("");
 
 
   const hold = {
@@ -1610,7 +1614,7 @@ export const Context = ({ children }) => {
     transferAmount,
     setTransferAmount,
     messageTransfer,
-     setMessageTransfer,
+    setMessageTransfer,
 
     // ==================Aremxyplug pages==============
     mainTransferErrors,
@@ -1623,9 +1627,9 @@ export const Context = ({ children }) => {
     setEmailPhoneNumberConfirmation,
     ProceedToMainTransfer,
     otherInputPinPopUp,
-     setOtherInputPinPopUp,
-     transferResponse,
-     setTransferResponse,
+    setOtherInputPinPopUp,
+    transferResponse,
+    setTransferResponse,
 
     // ==================GLobal Transfer==============
     otherBanksConfirmation,
@@ -2310,7 +2314,7 @@ export const Context = ({ children }) => {
     setFetchedGotvPlans,
     packageGotv,
     setPackageGotv,
-    purchaseGotvErrorType, 
+    purchaseGotvErrorType,
     setPurchaseGotvErrorType,
 
     //=======DSTV
@@ -2396,7 +2400,7 @@ export const Context = ({ children }) => {
     showMaxCardName,
     setShowMaxCardName,
     purchaseShowMaxErrorType,
-     setPurchaseShowMaxErrorType,
+    setPurchaseShowMaxErrorType,
 
     //=======STARTIMES
     confirmStarTimesPopup,
@@ -2438,7 +2442,7 @@ export const Context = ({ children }) => {
     starTimesCardName,
     setStarTimesCardName,
     purchaseStarTimesErrorType,
-     setPurchaseStarTimesErrorType,
+    setPurchaseStarTimesErrorType,
 
     //====== EDUCATION PINS
     //=======WAEC PINS
@@ -2655,10 +2659,16 @@ export const Context = ({ children }) => {
     setVerificationResponse,
     transactionResponse,
     setTransactionResponse,
+    orderIdResponse,
+    setOrderIdResponse,
+    updateDataBalance,
+    setUpdateDataBalance,
+    electricityTransErrorType,
+    setElectricityTransErrorType,
     idDateOfBirth,
-     setIdDateOfBirth,
-     genderResult,
-      setGenderResult,
+    setIdDateOfBirth,
+    genderResult,
+    setGenderResult,
 
     //========== Business PopUp =======
     businessPopUp,

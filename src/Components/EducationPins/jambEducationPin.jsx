@@ -152,6 +152,7 @@ export default function JambEducationPin() {
     },
   ];
   const getAmount = async function handleGetAmount() {
+    if (!navigator.online) alert("Kindly check your internet connection");
     const id = 4;
     const path = `products/edu/${id}`;
     const SuccessHandler = (response) => {
@@ -163,11 +164,31 @@ export default function JambEducationPin() {
       }
     };
 
-    const FailedHandler = (ErrorType) => {
+    const FailedHandler = async (ErrorType) => {
       if (ErrorType === "Server error") {
-        alert("Unable to get Jamb PINS. Please try again later");
+        await GetFunction(
+          path,
+          setIsLoading,
+          SuccessHandler,
+          (ErrorType) => {
+            if (ErrorType === "Server error") {
+              alert("Unable to get JAMB PINS. Please try again later");
+            }
+          },
+          setJambEduResponse
+        );
       } else if (ErrorType === "unauthorised") {
-        return setSessionModal(true);
+        await GetFunction(
+          path,
+          setIsLoading,
+          SuccessHandler,
+          (ErrorType) => {
+            if (ErrorType === "unauthorised") {
+              return setSessionModal(true);
+            }
+          },
+          setJambEduResponse
+        );
       }
     };
 
@@ -180,6 +201,7 @@ export default function JambEducationPin() {
     );
   };
   const GetBalance = async () => {
+    if (!navigator.online) alert("Kindly check your internet connection");
     const SuccessHandler = () => {
       console.log("successfully retrieved balance");
     };
@@ -254,14 +276,22 @@ export default function JambEducationPin() {
       method: "NGN Wallet",
       balance:
         newBalance === "" || newBalance === null || newBalance === undefined
-          ? `(${updateBalanceToNumber?.toLocaleString("en-NG", {
-              style: "currency",
-              currency: "NGN",
-            })})`
-          : `(${newBalanceToNumber?.toLocaleString("en-NG", {
-              style: "currency",
-              currency: "NGN",
-            })})`,
+          ? `(${
+              updateBalance > 1
+                ? updateBalanceToNumber?.toLocaleString("en-NG", {
+                    style: "currency",
+                    currency: "NGN",
+                  })
+                : ""
+            })`
+          : `(${
+              newBalance > 1
+                ? newBalanceToNumber?.toLocaleString("en-NG", {
+                    style: "currency",
+                    currency: "NGN",
+                  })
+                : ""
+            })`,
       flag: nigerianFlag,
       id: 1,
     },
@@ -1139,7 +1169,11 @@ export default function JambEducationPin() {
                             >
                               Available Balance{" "}
                             </p>
-                            <span className={`${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+                            <span
+                              className={`${
+                                isDarkMode ? "text-white" : "text-[#7C7C7C]"
+                              }`}
+                            >
                               {jambWalletBalance !== ""
                                 ? jambWalletBalance
                                 : "₦"}
@@ -1168,7 +1202,7 @@ export default function JambEducationPin() {
                       }`}
                       onClick={() => {
                         confirmButton();
-                        setInputPin("")
+                        setInputPin("");
                       }}
                       disabled={CheckSufficiency}
                     >
@@ -1209,36 +1243,34 @@ export default function JambEducationPin() {
                         <div className="flex flex-col items-center lg:gap-[0px] gap-[5px] font-extrabold">
                           <div className="flex items-center gap-2.5">
                             {" "}
-                              <OtpInput
-                                value={inputPin}
-                                inputType="tel"
-                                onChange={setInputPin}
-                                numInputs={4}
-                                shouldAutoFocus={true}
-                                inputStyle={{
-                                  color: isDarkMode ? "#ffffff" : "#000000",
-                                  fontWeight: 700,
-                                  borderRadius: 4,
-                                  height: "35px",
-                                  width: "35px",
-                                  backgroundColor: isDarkMode
-                                    ? "black"
-                                    : "white",
-                                  border: isDarkMode
-                                    ? "1px solid white"
-                                    : "1px solid #ccc",
-                                }}
-                                renderInput={(props) => (
-                                  <input
-                                    {...props}
-                                    className={`inputOTP mx-[2px] ${
-                                      isFocused ? "focused" : ""
-                                    }`}
-                                    onFocus={handleFocus}
-                                    onBlur={handleBlur}
-                                  />
-                                )}
-                              />
+                            <OtpInput
+                              value={inputPin}
+                              inputType="tel"
+                              onChange={setInputPin}
+                              numInputs={4}
+                              shouldAutoFocus={true}
+                              inputStyle={{
+                                color: isDarkMode ? "#ffffff" : "#000000",
+                                fontWeight: 700,
+                                borderRadius: 4,
+                                height: "35px",
+                                width: "35px",
+                                backgroundColor: isDarkMode ? "black" : "white",
+                                border: isDarkMode
+                                  ? "1px solid white"
+                                  : "1px solid #ccc",
+                              }}
+                              renderInput={(props) => (
+                                <input
+                                  {...props}
+                                  className={`inputOTP mx-[2px] ${
+                                    isFocused ? "focused" : ""
+                                  }`}
+                                  onFocus={handleFocus}
+                                  onBlur={handleBlur}
+                                />
+                              )}
+                            />
                             <div
                               className="text-[#0003]"
                               onClick={toggleVisibility}
@@ -1594,13 +1626,13 @@ export default function JambEducationPin() {
         )}
 
         <div className="mt-[38rem] md:mt-[15rem]">
-        <div className={style.help}>
-          <h2>You need help?</h2>
-          <Link to={`/ContactUs`} className={style.btnContact}>
-            Contact Us
-          </Link>
+          <div className={style.help}>
+            <h2>You need help?</h2>
+            <Link to={`/ContactUs`} className={style.btnContact}>
+              Contact Us
+            </Link>
+          </div>
         </div>
-      </div>
       </div>
       {isLoading && (
         <Modal>

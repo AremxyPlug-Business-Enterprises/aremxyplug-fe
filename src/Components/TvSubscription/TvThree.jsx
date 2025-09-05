@@ -75,7 +75,7 @@ const Data = GetLocalStorage();
     setStarTimesMobileNumber,
     setFetchedStarTimesPlans,
     toggleSideBar,
-    purchaseStarTimesErrorType,
+    // purchaseStarTimesErrorType,
     setPurchaseStarTimesErrorType
     } = useContext(ContextProvider);
       

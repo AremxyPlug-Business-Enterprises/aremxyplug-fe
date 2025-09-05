@@ -158,6 +158,7 @@ export default function NecoEducationPins() {
   ];
 
   const getAmount = async function handleGetAmount() {
+    if (!navigator.online) alert("Kindly check your internet connection");
     const id = 2;
     const path = `products/edu/${id}`;
     const SuccessHandler = (response) => {
@@ -169,11 +170,31 @@ export default function NecoEducationPins() {
       }
     };
 
-    const FailedHandler = (ErrorType) => {
+    const FailedHandler = async (ErrorType) => {
       if (ErrorType === "Server error") {
-        alert("Unable to get NECO PINS. Please try again later");
+        await GetFunction(
+          path,
+          setIsLoading,
+          SuccessHandler,
+          (ErrorType) => {
+            if (ErrorType === "Server error") {
+              alert("Unable to get NECO PINS. Please try again later");
+            }
+          },
+          setNecoEduResponse
+        );
       } else if (ErrorType === "unauthorised") {
-        return setSessionModal(true);
+        await GetFunction(
+          path,
+          setIsLoading,
+          SuccessHandler,
+          (ErrorType) => {
+            if (ErrorType === "unauthorised") {
+              return setSessionModal(true);
+            }
+          },
+          setNecoEduResponse
+        );
       }
     };
 
@@ -186,6 +207,7 @@ export default function NecoEducationPins() {
     );
   };
   const GetBalance = async () => {
+    if (!navigator.online) alert("Kindly check your internet connection");
     const SuccessHandler = () => {
       console.log("successfully retrieved balance");
     };
@@ -258,14 +280,22 @@ export default function NecoEducationPins() {
       method: "NGN Wallet",
       balance:
         newBalance === "" || newBalance === null || newBalance === undefined
-          ? `(${updateBalanceToNumber?.toLocaleString("en-NG", {
-              style: "currency",
-              currency: "NGN",
-            })})`
-          : `(${newBalanceToNumber?.toLocaleString("en-NG", {
-              style: "currency",
-              currency: "NGN",
-            })})`,
+          ? `(${
+              updateBalance > 1
+                ? updateBalanceToNumber?.toLocaleString("en-NG", {
+                    style: "currency",
+                    currency: "NGN",
+                  })
+                : ""
+            })`
+          : `(${
+              newBalance > 1
+                ? newBalanceToNumber?.toLocaleString("en-NG", {
+                    style: "currency",
+                    currency: "NGN",
+                  })
+                : ""
+            })`,
       flag: nigerianFlag,
       id: 1,
     },
