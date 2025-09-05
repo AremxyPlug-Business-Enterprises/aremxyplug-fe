@@ -9,15 +9,18 @@ import styles from "../../../../AirTimePage/AirtimeVtu.module.css";
 export const AremxyMainSuccess = ({
   transactSuccessToOtherBank,
   setTransactSuccessToOtherBank,
+  emailUsername,
+  userPhoneNumber
 }) => {
   const {
     toggleSideBar,
-    transferFee,
-    amtToTransfer,
-    mainEmailUsername,
-    mainUserPhoneNumber,
+   
+    transferAmount,
+  
+    isDarkMode,
+    transferResponse
   } = useContext(ContextProvider);
-
+const amountNumeric = Number(transferAmount)
   const handleTransactionSuccessClose = () => {
     setTransactSuccessToOtherBank(false);
     window.location.reload();
@@ -26,18 +29,24 @@ export const AremxyMainSuccess = ({
   const handleTransactionSuccessReciept = () => {
     setTransactSuccessToOtherBank(false);
   };
-
+console.log(transferResponse);
   return (
     <div>
       {transactSuccessToOtherBank && (
         <Modal>
           {/* <TransactFailedPopUp/> */}
           <div
-            className={`${styles.successfulTwo} ${
-              toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-            } md:w-[45%] w-[90%]`}
+           className={`w-full flex justify-center h-full 
+             py-[30px] px-[15px] lg:items-center
+              items-end`}
           >
-            <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
+            <div  className={` bvnQuery lg:rounded-[12px] rounded-[10px] 
+              h-[520px] ${ toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+              } w-[100%] md:w-[60%] overflow-auto  ${isDarkMode ? "bg-black text-white border rounded-[10px] border-white": "bg-white text-black"} `}>
+           <div className="flex justify-between items-center 
+            mx-[3%] my-[2%] lg:my-[1%]">
+          
+          
               <img
                 onClick={() => setTransactSuccessToOtherBank(false)}
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[25px]"
@@ -51,71 +60,107 @@ export const AremxyMainSuccess = ({
                 src="/Images/transferImages/close-circle.png"
                 alt=""
               />
-            </div>
+              </div>
+         
             <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
-            <h2 className="text-[12px] my-[4%] text-center md:text-[20px] md:my-[3%] lg:text-[14px] lg:my-[2%]">
-              Transaction Successful
-            </h2>
+            <div className="">
+             <p className={`text-[12px] font-extrabold my-[4%] 
+            text-center md:text-[20px] md:my-[3%] lg:text-[14px] lg:my-[2%] ${isDarkMode ? "text-white" : "text-[#000]"}`}
+            >Transaction Successful</p>
             <img
-              className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[60px] lg:h-[60px]"
+              className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[70px] lg:h-[70px]"
               src="./Gif/checkMarkGif.gif"
               alt="/"
-            />
-            <p className="text-[8px] text-[#0008] text-center mb-2 md:text-[14px] lg:text-[12px]">
+                />
+            <p className={`font-semibold w-[97%] mx-auto text-[10px] text-center
+               mb-2 md:pb-2 lg:pb-3 md:text-[14px] lg:text-[14px]
+               ${isDarkMode ? "text-white" : "text-black" }`}>
               You have successfully transferred{" "}
-              <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">
-                &#8358;{amtToTransfer}.00{" "}
+              <span className="text-[#000] font-extrabold text-[10px] 
+              md:text-[16px] lg:text-[14px]">
+               {amountNumeric !== undefined || amountNumeric!== null ?
+                amountNumeric?.toLocaleString("en-NG", {
+                  style : "currency",
+                  currency : "NGN"
+                }) : "₦"}{" "}
               </span>
               from your NGN wallet to{" "}
             </p>
 
-            <div className="flex flex-col gap-2 lg:gap-4">
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[14px]">
-                <p className="text-[#0008]">Username or Email</p>
-                <span>{mainEmailUsername}</span>
+            <div className="flex mt-4 flex-col gap-2 lg:gap-4">
+              <div className="flex text-[10px] md:text-[14px]
+               w-[90%] mx-auto justify-between 
+            lg:text-[15px] font-[500]">
+                <p  className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Username or Email</p>
+                <span className={`${isDarkMode ? "text-white" : "text-black"}`}>{emailUsername}</span>
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[14px]">
-                <p className="text-[#0008]">Phone Number</p>
-                <span>{mainUserPhoneNumber}</span>
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between 
+            lg:text-[15px] font-[500]">
+                <p  className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Phone Number</p>
+                <span className={`${isDarkMode ? "text-white" : "text-black"}`}>{userPhoneNumber}</span>
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className="text-[#0008]">Transfaction fee</p>
-                <span>&#8358;{transferFee}.00</span>
+              <div className="flex text-[10px] md:text-[14px] w-[90%]
+               mx-auto justify-between 
+            lg:text-[15px] font-[500]">
+                <p className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Transfaction fee</p>
+                <span className={`${isDarkMode ? "text-white" : "text-black"}`}>&#8358;0.00</span>
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[14px]">
-                <p className="text-[#0008]">Order Number</p>
-                <span>122555556464564</span>
+              <div className="flex text-[10px] md:text-[14px] 
+              w-[90%] mx-auto justify-between 
+            lg:text-[15px] font-[500]">
+                <p  className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Order Number</p>
+                <span className={`${isDarkMode ? "text-white" : "text-black"}`}>122555556464564</span>
               </div>
-              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[14px]">
-                <p className="text-[#0008]">Transaction ID</p>
-                <span>0331njokdhtf55</span>
+              <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between 
+            lg:text-[15px] font-[500]">
+                <p  className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Transaction ID</p>
+                <span className={`${isDarkMode ? "text-white" : "text-black"}`}>0331njokdhtf55</span>
               </div>
             </div>
-
-            <div className="bg-[#F2FAFF] mx-10 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]">
-              <p className="text-[6px] text-center mx-auto w-[171px] md:text-[14px] md:w-[80%] lg:text-[14px]">
-              The transfer has been sent successfully. Please contact the recipient user to confirm the payment from his/her wallet.
-              </p>
-            </div>
-            <div className="flex w-[70%] mx-auto items-center gap-[5%] md:w-[60%] lg:my-[5%]">
+   </div>
+                  <div className={`bg-[#F2FAFF] w-[90%]   mx-auto p-[8px] my-5 flex justify-between 
+        items-center md:p-[9px] lg:p-[10px] rounded-[5px] lg:rounded-[10px]
+         ${
+                isDarkMode ? "bg-slate-800 " : "bg-[#F2FAFF]"
+              }`}>
+            <p className={`text-[10px] leading-[13px] text-center
+             md:text-[14px] md:leading-[18px] lg:text-[14px]  font-semibold 
+             ${isDarkMode ? "text-white" : "text-black"}`}>
+            The transfer has been sent successfully. Please contact the recipient user to confirm the payment from his/her wallet.
+            </p>
+        </div>
+            <div className="flex w-full justify-center items-center 
+        gap-[10px] pb-4 md:gap-[8.59px] lg:gap-[15px] md:pb-2">
               <button
                 onClick={handleTransactionSuccessClose}
-                className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+               className={`bg-[#04177f] w-[111px] lg:w-[200px] md:w-[99px]
+                   h-[40px] md:h-[24px] lg:h-[42px] lg:my-[2%] flex justify-center 
+                   items-center cursor-pointer text-[12px] md:text-[12px] lg:text-[16px]
+                    font-semibold text-white rounded-[6px] md:rounded-[7px] 
+                    lg:rounded-[12px]`}
               >
                 Done
               </button>
               <Link to="/to-aremxymain-receipt">
                 <button
                   onClick={handleTransactionSuccessReciept}
-                  className={`border-[1px] w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[110px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                   className={`border-[1px]  w-[111px] lg:w-[200px] md:w-[99px]
+                   h-[40px] md:h-[24px] lg:h-[42px] lg:my-[2%] flex justify-center
+                    items-center cursor-pointer text-[12px] md:text-[12px] lg:text-[16px]
+                     font-semibold rounded-[6px] md:rounded-[7px] lg:rounded-[12px]`}
                 >
+                
                   Receipt
                 </button>
               </Link>
             </div>
           </div>
+        </div>
+          
         </Modal>
       )}
     </div>
   );
 };
+
+            

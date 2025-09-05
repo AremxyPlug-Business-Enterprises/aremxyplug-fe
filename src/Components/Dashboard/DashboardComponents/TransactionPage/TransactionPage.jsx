@@ -72,51 +72,38 @@ const TransactionPage = () => {
 
   //Funcntio to help get the transaction details
   //  which include necessary query parameters for search
-  const GetTransactionInformation = async () => {
-    if (!navigator.onLine) return setTransactionHistoryError("Network error");
-    const path = "transactions";
-    const SuccessHandler = (response) => {
-      console.log("user transaction details fetched");
-      console.log("resp", response);
-    };
-    const FailedHandler = async (ErrorType) => {
-      if (ErrorType === "unauthorised") {
-        setTransactionHistoryError("unauthorised");
-        await GetFunction(
-          path,
-          setLoading,
-          SuccessHandler,
-          (ErrorType) => {
-            if (ErrorType === "unauthorised") {
-              setSessionModal(true);
-            }
-          },
-          setTransactionResponse
-        );
-      } else if (
-        ErrorType === "Network error" ||
-        ErrorType === "User error" ||
-        ErrorType === "Bad request"
-      ) {
-        setTransactionHistoryError("Network error");
-      } else if (ErrorType === "Server error") {
-        setTransactionHistoryError("Server error");
-      } else {
-        setTransactionHistoryError(null);
-      }
-    };
-    await GetFunction(
-      path,
-      setLoading,
-      SuccessHandler,
-      FailedHandler,
-      setTransactionResponse
-    );
-  };
+    const GetTransactionInformation = async()=> {
+      if(!navigator.onLine) return setTransactionHistoryError("Network error")
+      const path ="transactions"
+      const SuccessHandler =()=>{
+       console.log("user transaction details fetched")
+}
+      const FailedHandler = async(ErrorType)=> {
+    if(ErrorType === "unauthorised"){
+      setTransactionHistoryError("unauthorised");
+      await GetFunction(path, setLoading, SuccessHandler, (ErrorType)=> {
+        if(ErrorType === "unauthorised"){
+       setSessionModal(true);
+        }
+      }, setTransactionResponse)
+    }else if(ErrorType === "Network error" || ErrorType === "User error" || ErrorType === "Bad request"){
+     setTransactionHistoryError("Network error")
+    }else if(ErrorType === "Server error"){
+      setTransactionHistoryError("Server error")
+    }else {
+      setTransactionHistoryError(null)
+    }
+      }   
+      await GetFunction(path, 
+        setLoading, 
+        SuccessHandler,
+         FailedHandler,
+          setTransactionResponse)}
 
-  useEffect(() => {
-    if (transactionResponse?.data?.data?.data === undefined) {
-      GetTransactionInformation();
+   
+  useEffect(()=> {
+    if(transactionResponse?.data?.data?.data === undefined){
+ GetTransactionInformation();
     }
     setSelected("NGN");
 

@@ -17,10 +17,12 @@ export const AremxyMainReceipt = () => {
     mainEmailUsername,
     mainUserPhoneNumber,
     amtToTransfer,
+    transferAmount,
+    transferResponse
   } = useContext(ContextProvider);
 
   const contentRef = useRef(null);
-
+const amountNumeric = Number(transferAmount)
   // ===============Copy to Clipboard Function============
   const handleCopyClick = () => {
     const text = textRef.current.innerText;
@@ -118,7 +120,11 @@ export const AremxyMainReceipt = () => {
             <p className="text-[9px] text-[#0008] text-center my-2 md:text-[14px] lg:text-[14px]">
               You have successfully transferred{" "}
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[16px]">
-                &#8358;{amtToTransfer}.00{" "}
+             {amountNumeric !== undefined || amountNumeric!== null ?
+                amountNumeric?.toLocaleString("en-NG", {
+                  style : "currency",
+                  currency : "NGN"
+                }) : "₦"}{" "}
               </span>
               from your NGN wallet to{" "}
             </p>
@@ -135,11 +141,11 @@ export const AremxyMainReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Username or Email</p>
-                  <span>{mainEmailUsername}</span>
+                  <span>{transferResponse?.data?.username}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Phone Number</p>
-                  <span>{mainUserPhoneNumber}</span>
+                  <span>+{transferResponse?.data?.phone}</span>
                 </div>
               </div>
 
@@ -171,7 +177,7 @@ export const AremxyMainReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Product</p>
-                  <span>Money Transfer</span>
+                  <span>{transferResponse?.data?.transaction_product}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Description</p>
@@ -179,21 +185,21 @@ export const AremxyMainReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Message</p>
-                  <span>For Financial Use</span>
+                  <span>{transferResponse?.data?.message}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Order Number</p>
-                  <span>1256464564</span>
+                  <span>{transferResponse?.data?.order_id}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Transaction ID</p>
-                  <span>0331njokdhtf55</span>
+                  <span>{transferResponse?.data?.transaction_id}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between items-center lg:text-[16px]">
                   <p className="text-[#0008]">Session ID</p>
                   <div className="flex items-center">
                     <span ref={textRef}>
-                      1232455566664654 <br /> 1232455566664654
+                      {transferResponse?.data?.session_id}
                     </span>
                     <div
                       onClick={handleCopyClick}

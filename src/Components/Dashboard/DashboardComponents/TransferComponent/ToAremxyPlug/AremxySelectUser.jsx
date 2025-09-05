@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { ContextProvider } from "../../../../Context";
 import '../../../../../App.css';
 import style from "../../../../AirTimePage/AirtimeVtu.module.css";
@@ -11,9 +11,12 @@ import Delete from "../../../../AirTimePage/Images/Deleted.svg";
 import { Modal } from "../../../../Screens/Modal/Modal";
 import { Link } from 'react-router-dom';
 import Joi from "joi";
-
-export default function AremxySelectUser() {
-
+import { GetFunction, HandleUserSession} from "../../../../ApiCollection.jsx/ApiBuck";
+import { Loader} from "../../../../Loader/Loader";
+import NoRecordImage  from "../../../../Add&SelectRecipient/RecipientImages/NoRecordImage.svg";
+import { GetLocalStorage } from "../../../../LocalStorage/LocalStorage";
+export default function AremxySelectUser(Data) {
+Data = GetLocalStorage()
     const {
         showList,
         setShowList,
@@ -23,6 +26,7 @@ export default function AremxySelectUser() {
         mainCountry,
         setMainCountry,
         mainTransferErrors,
+        isDarkMode
       } = useContext(ContextProvider);
 
     const countryList = [
@@ -66,8 +70,8 @@ export default function AremxySelectUser() {
 
     const [flag, setFlag] = useState("");
     const [activeTab, setActiveTab] = useState('tab_1');
-    // const [showPopup, setShowPopup] = useState(false);
-    // const [activeImage, setActiveImage] = useState(null);
+    const [showPopup, setShowPopup] = useState(false);
+  const [activeImage, setActiveImage] = useState(null);
     const [deleted, setdeleted] = useState(false);
     const [edit, setEdit] = useState("");
     const [save, setSave] = useState(false);
@@ -82,8 +86,12 @@ export default function AremxySelectUser() {
     const [select, setSelect] = useState(false);
     const [showDrop, setShowDrop] = useState(false);
     const [currencyAvailable, setCurrencyAvailable] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [sessionModal, setSessionModal] =useState(false);
+    const [recipientResponse, setRecipientResponse] = useState([]);
     const active = styled.active;
     const inactive = styled.inactive;
+    const [searchSelectRecipient, setSearchSelectRecipient] = useState("")
 
     const handleTab1 =()=> {
         setActiveTab('tab_1')
@@ -111,42 +119,42 @@ export default function AremxySelectUser() {
         setCurrencyAvailable(id !== 1);
     };
 
-    // const handleRecipient = (index) => {
-    //     if (activeImage === index) {
-    //       // If the same image is clicked again, close the pop-up
-    //       setActiveImage(null);
-    //       setShowPopup(false);
-    //     } else {
-    //       setActiveImage(index);
-    //       setShowPopup(true);
-    //     }
-    // };
+    const handleRecipient = (index) => {
+        if (activeImage === index) {
+          // If the same image is clicked again, close the pop-up
+          setActiveImage(null);
+          setShowPopup(false);
+        } else {
+          setActiveImage(index);
+          setShowPopup(true);
+        }
+    };
 
     const handleConfirm = () => {
         setConfirm(true);
         setSave(false);
     };
 
-    // const handleDelete = () => {
-    //     setdeleted(true);
-    // };
+    const handleDelete = () => {
+        setdeleted(true);
+    };
     
     const handleSuccessDelete = () => {
         setSuccessDeleted(true);
         setdeleted(false);
     };
 
-    // const handleAdd = () => {
-    //     setAdd(true);
-    // }
+    const handleAdd = () => {
+        setAdd(true);
+    }
 
-    // const handleRemove = () => {
-    //     setRemove(true);
-    // }
+    const handleRemove = () => {
+        setRemove(true);
+    }
 
-    // const handleEdit = () => {
-    //     setEdit(true);
-    // };
+    const handleEdit = () => {
+        setEdit(true);
+    };
 
     const firmTransferSchema = Joi.object({
         mainCountry: Joi.string().required(),
@@ -191,34 +199,79 @@ export default function AremxySelectUser() {
         }
     };
 
-  return (
+    const GetRecipient = async()=> {
+      const SuccessHandler =()=> {
+     console.log("Success Recipients retrieved")
+      }
+      const FailedHandler =()=> {
+        console.log("Failed to fetch recipient")
+      }
+await GetFunction("bank-recipient", 
+setLoading, SuccessHandler,
+ FailedHandler, setRecipientResponse)
+    }
+    useEffect(()=> {
+   const fetchRecipient =async()=> {
+ await GetRecipient()
+    }
+    if(Data?.ConfirmAcc === "true"){
+    fetchRecipient();
+    }
+    //eslint-disable-next-line
+    }, [])
+const SearchFilter = (recipientResponse?.data?.data?.data !== undefined || recipientResponse?.data?.data?.data !== undefined) 
+? recipientResponse?.data?.data?.data?.filter(filterBySearch=> {
+   //console.log(filterBySearch.username?.includes(searchSelectRecipient))
+   
+
+  //console.log("Second Running");
+return (
+  filterBySearch?.username?.toLowerCase().includes(searchSelectRecipient?.toLowerCase()) ||
+  filterBySearch?.email?.toLowerCase().includes(searchSelectRecipient?.toLowerCase())
+)
+
+}): [];
+
+console.log(searchSelectRecipient);
+
+
+      return (
+      
 
   <DashBoardLayout>
         <div className={style.AirtimeTops}>
         <div className={style.airtimeTop}>
-            <div
-                style={{
-                background:
-                    "#B4BEFA",
-                }}
-                className="w-full mb-[10px] lg:mb-[10px] h-[90px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] flex px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px]"
-            >
-                <div className="py-[13px] lg:py-[40px] ">
-                <h2 className="text-[10px] md:text-[13.75px] font-bold mb-3 lg:text-[24px] lg:mb-4">
-                    TRANSFER MONEY TO AREMXYPLUG USER.
-                </h2>
-                <h2 className="text-[7px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px] mb-3">
-                    Transfer money from your wallets to any AremxyPlug user wallets for free, no any hidden fee, enjoy!!!
-                </h2>
-                </div>
-                <div className="w-[100px] h-[66px] lg:w-[230px] lg:h-[150px]">
-                <img
-                    src="./Images/transferImages/flying-coin-notes.png"
-                    alt=""
-                    className="h-full w-full"
-                />
-                </div>
-            </div>
+           <div
+                     style={{
+                       background:
+                         "#B4BEFA",
+                     }}
+                    className="min-h-[99px] py-[15px] lg:h-[196px] 
+                      md:h-[112.29px] rounded-[6.6px] md:rounded-[11.46px] 
+                      lg:rounded-[20px] mx-auto  flex gap-6 justify-between
+                       px-[16.51px] md:px-[28.65px] lg:px-[50px]"
+                   >
+                     <div  className="py-[9.57px] md:py-[16.61px] 
+                                     align-middle self-center flex flex-col gap-1.5 w-[70%]">
+                       <h2 className="text-[11px] leading-[13px] lg:leading-[30px]
+                                          lg:text-[24px] md:text-[13.75px] font-semibold">
+                         TRANSFER MONEY TO AREMXYPLUG USER.
+                       </h2>
+                       <p className="text-[10px] leading-[13px] lg:leading-[25px]
+                                          lg:text-[20px] md:text-[11.46px]">
+                         Transfer money from your wallets to any 
+                         AremxyPlug user wallets for free, no any hidden fee,
+                          enjoy!!!
+                       </p>
+                     </div>
+                     <div className="w-[100px] h-[66px] lg:w-[230px] lg:h-[150px]">
+                       <img
+                         src="./Images/transferImages/flying-coin-notes.png"
+                         alt=""
+                         className="h-full w-full"
+                       />
+                     </div>
+                   </div>
             <div className='flex md:gap-[10px] gap-[3.27px]'>
                 <h2 className='text-[#7C7C7C] font-[500] text-[9px] leading-[12px] lg:text-[20px] lg:leading-[30px]'>
                     Select the user account below
@@ -226,21 +279,33 @@ export default function AremxySelectUser() {
                 <img src={ArrowRight} alt="" 
                 className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
             </div>
-            <div className='relative md:w-[50%] w-[60%]  '>
-                <input type="text" className='focusSearch w-[100%] font-[500] text-[9px] leading-[12px]
-                lg:text-[16px] lg:leading-[20.8px] placeholder-[9px] placeholder:leading-[12px]
-                placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] lg:p-[10px] lg:pr-[20px] p-[5.868px] pr-[20px] md:border-[1px]
-                border-[0.338px]
-                border-[solid] border-[#7C7C7C] rounded-[4.052px] lg:rounded-[10px] focus:outline-none'
-                placeholder='Search Email or Username' />
+            <div className='relative md:w-[50%] w-[100%] h-[100%]  '>
+                <input type="text" 
+                className={`focusSearch mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]
+                         md:p-0 text-[13.8px] 
+                        sm:p-3 sm:text-lg flex justify-between pt-[8.803px] 
+                        pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+                   leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+                lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+                md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px]
+                 lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
+                  isDarkMode
+                    ? "bg-black text-white border border-white"
+                    : "border bg-white border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
+                }`}
+                placeholder='Search Email or Username'
+               
+                onChange={(e)=> {
+                  setSearchSelectRecipient(e.target.value);
+                }} />
                 <img 
                 onClick={(e) => {
                 document.querySelector('.focusSearch').focus();
                 console.log(e);
                 }}
                 src={SearchIcon} alt="" 
-                className='absolute md:top-[10px] md:right-[10px] top-[7.997px] right-[7.997px] 
-                lg:w-[20px] lg:h-[20px] h-[12px] w-[12px] cursor-pointer'/>
+                className='absolute md:top-[50%] md:right-[10px] top-[25%] right-[7.997px] 
+                lg:w-[20px] lg:h-[15px] h-[15px] w-[20px] cursor-pointer'/>
             </div>
             <div 
             // className='flex flex-col md:flex-row md:items-center lg:gap-[22px] gap-[20px] w-full'
@@ -336,10 +401,11 @@ export default function AremxySelectUser() {
                 <li className={activeTab === 'tab_1' ? active : inactive} onClick={handleTab1}>Users</li>
                 <li className={activeTab === 'tab_2' ? active : inactive} onClick={handleTab2}>Favorites</li>
             </ul>
-            {/* <div className="">
-                { activeTab === 'tab_1' &&
+             <div className="">
+                { activeTab === 'tab_1'  && (
                     <div className={styled.containAir}>
-                        {[0, 1, 2, 3].map((index) => (
+                      {SearchFilter?.length > 0 ? (
+                     SearchFilter?.map(( recipient,index) => (
                         <div
                             key={index}
                             className="w-[100%] mx-auto flex justify-between border py-2 px-2 rounded-[10px] md:rounded-[10px] lg:py-2 lg:px-5"
@@ -354,13 +420,13 @@ export default function AremxySelectUser() {
                                 <div className="flex flex-col my-auto gap-[1.67px] md:gap-[2.93px]">
                                     <p className='font-[500] text-[12px] leading-[15px] md:text-[9.389px] md:leading-[12.206px] 
                                     lg:text-[18px] lg:leading-[20.8px]'>
-                                        Habib Kamaldeen
+                                        {recipient?.full_name}
                                     </p>
                                     <h2 className="lg:text-[14px] font-medium lg:leading-6 md:text-[9px] text-[9px] text-[#7C7C7C]">
-                                        habib@aremxyplug.com
+                                        {recipient?.email?.slice(0,4)}********* {recipient?.email?.slice(recipient?.email?.length-10)}
                                     </h2>
                                     <p className="lg:text-[14px] lg:font-medium lg:leading-[21.07px] text-[#7C7C7C] text-[9px] font-semibold leading-3 md:text-[8px]">
-                                        0700000000
+                                      {recipient?.phone?.slice(0,5)}******
                                     </p>
                                 </div>
                             </div>
@@ -404,9 +470,14 @@ export default function AremxySelectUser() {
                             )}
                             </div>
                         </div>
-                        ))}
-                    </div>   
-                }
+                        ))) : (
+                           <div className='flex justify-center '>
+                            <img src={NoRecordImage} alt="" 
+                                className='lg:w-[517px] lg:h-[456px]'/>
+                                </div>
+                        )}
+                        </div>    
+                )}
                 { activeTab === 'tab_2' &&
                     <div className={styled.containAir}>
                         {[0, 1, 2, 3].map((index) => (
@@ -486,7 +557,7 @@ export default function AremxySelectUser() {
                         ))}
                     </div> 
                 }   
-            </div> */}
+            </div> 
             {add && (
               <Modal>
                 <div
@@ -1050,12 +1121,21 @@ export default function AremxySelectUser() {
                 </div>
               </Modal>
             )}
+           
         </div>
         <div className={style.help}>
             <h2>You need help?</h2>
             <Link to={`/ContactUs`} className={style.btnContact}>Contact Us</Link>
         </div>
       </div>
+       {sessionModal && (
+              <HandleUserSession/>
+            )}
+            {loading && (
+              <Modal>
+                <Loader/>
+              </Modal>
+            )}
   </DashBoardLayout>
        
   )

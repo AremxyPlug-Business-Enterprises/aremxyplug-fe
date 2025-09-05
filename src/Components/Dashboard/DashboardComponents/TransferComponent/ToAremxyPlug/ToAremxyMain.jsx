@@ -21,8 +21,8 @@ export default function ToAremxyMain(Data) {
     selected,
     setSelected,
     toggleSideBar,
-    amtToTransfer,
-    setAmtToTransfer,
+   // amtToTransfer,
+   // setAmtToTransfer,
     mainCountry,
     setMainCountry,
     setEmailPhoneNumberConfirmation,
@@ -483,7 +483,9 @@ export default function ToAremxyMain(Data) {
                   : "lg:w-full lg:top-[105.3%]"
               }  ${
                 styles.countryDropDown
-              } rounded-b-[7px] shadow-xl bg-[#fff] border lg:rounded-b-[14px] absolute left-0 top-[3.5rem] lg:top-1 z-[3] w-full `}
+              } rounded-b-[7px] shadow-xl bg-[#fff] border 
+              lg:rounded-b-[14px] absolute left-0 top-[3.5rem] 
+              lg:top-1 z-[3] w-full `}
             >
               {countryList.map((country) => (
                 <div
@@ -495,8 +497,7 @@ export default function ToAremxyMain(Data) {
                       country.flag,
                       country.id,
                       country.code
-                    )
-                  }
+                    )}
                 >
                   <img
                     className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"

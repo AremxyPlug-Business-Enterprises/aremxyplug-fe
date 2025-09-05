@@ -22,7 +22,11 @@ import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 import { CheckVirtualAcc, HandleUserSession } from "../../ApiCollection.jsx/ApiBuck";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { GetFunction} from "../../../Components/ApiCollection.jsx/ApiBuck";
 export const MainDashboard = (Data) => {
+    const [isLoading, setLoading] = useState(false);
+    const [userPoints, setUserPoints] = useState(0);
+
 
   const { setHideNavbar, toggleSideBar, isDarkMode,
     dashLoading, bankNameState, accountNameState, accountNumberState,
@@ -205,7 +209,7 @@ if((clickedoption === "NGN")){
         })
            if(response){
             console.log(response)
-          if(response.status && (response.status === 200 || 201)){
+          if(response.status && (response.status === 200 || response.status === 201)){
              setBalanceValue("");
            const checkBal =  response?.data?.data?.data?.balance;
            console.log(checkBal);
@@ -302,6 +306,25 @@ window.addEventListener("online", ()=> {
     GenerateAccountBalance();
   }
 })
+
+  //Fetch Points
+   useEffect(() => {
+    
+     const  successHandler = (response) => {
+        if (!response?.data?.data) return;
+        // console.log("fetch points succefully");
+   const available = response?.data?.data?.point?.available_points ?? 0;
+    console.log("fetch points succefully", available);
+     setUserPoints(available);
+     };
+     const FailedHandler = (error) => {
+       console.error("Failed to fetch points:", error);
+     };
+ 
+    
+       GetFunction("extra/point", setLoading,  successHandler, FailedHandler)
+    
+   }, []);
       
 return (
     <div className="h-[150%]">
@@ -534,9 +557,10 @@ return (
                       ******
                     </span>
                   ) : (
-                    <span className="flex items-center text-[19px] leading-normal lg:text-[37px]">
-                      0.00
-                    </span>
+                     <span className="flex items-center text-[19px] leading-normal lg:text-[37px]">
+                    {userPoints}
+                     </span>
+            
                   )}
                   <div onClick={visibilityHandler} className=" text-[#92ABFE]">
                     {visible ? (
@@ -612,7 +636,7 @@ return (
                       : "bg-[#92ABFE2E]"
                   } `}
                 >
-                  Points
+                   Points
                 </div>
               </div>
             </div>
