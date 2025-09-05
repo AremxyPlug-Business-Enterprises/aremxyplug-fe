@@ -11,19 +11,16 @@ export const RedeemReceipt = () => {
     toggleSideBar,
     isDarkMode,
     date,
-  amountRedeemed,
-  rateRedeemed,
-  transactionId,
-  orderId,
-    transactionProduct, 
-    // setTransactionProduct,
-    transactionDescription, 
-    // setTransactionDescription,
-  inputValue,
   // outputValue,
   setRealInputValue,
   setRealOutputValue,
   isLoading,
+        pointRateRedeemed,
+        pointTransactionId,  
+       pointOrderId,  
+        pointAmountRedeemed, 
+        pointTransactionProduct,
+       
   } = useContext(ContextProvider);
   
   const handleClear = () =>{
@@ -122,9 +119,9 @@ export const RedeemReceipt = () => {
               })}
             </span>
             <p className="text-[10px] font-medium pt-3 text-[#000] text-center mb-2 md:text-[14px] lg:text-[12px]">
-              You have successfully redeemed <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]" >{inputValue}.00{" "} </span> Points to <br></br>
+              You have successfully redeemed <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]" >{isLoading ? "Loading..." : pointAmountRedeemed}.00 {" "} </span> Points to <br></br>
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">
-                {isLoading ? "Loading..." : amountRedeemed}.00 PTS
+                {isLoading ? "Loading..." : pointAmountRedeemed}.00 PTS
               </span>
               from your PTS balance to{" "}
             </p>
@@ -147,16 +144,16 @@ export const RedeemReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Amount Redeemed</p>
-                    <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{isLoading ? "Loading..." : amountRedeemed} PTS</span>
+                    <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{isLoading ? "Loading..." : pointAmountRedeemed} PTS</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Account Received</p>
-                   <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{isLoading ? "Loading..." : amountRedeemed} </span>
+                   <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{isLoading ? "Loading..." : pointAmountRedeemed} </span>
                 </div>
                
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Redeem Rate </p>
-                  <span className={` ${isDarkMode ? "text-white": "text-black"}`}>{isLoading ? "Loading..." : rateRedeemed}</span>
+                  <span className={` ${isDarkMode ? "text-white": "text-black"}`}>{isLoading ? "Loading..." : pointRateRedeemed}</span>
                 </div>
                 
               </div>
@@ -175,11 +172,11 @@ export const RedeemReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Product</p>
-                 <span className={` ${isDarkMode ? "text-white": "text-black"}`}>{isLoading ? "Loading..." : transactionProduct}</span>
+                 <span className={` ${isDarkMode ? "text-white": "text-black"}`}>{isLoading ? "Loading..." : pointTransactionProduct}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Description</p>
-                 <span className={` ${isDarkMode ? "text-white": "text-black"}`}>{isLoading ? "Loading..." : transactionDescription} </span>
+                 <span className={` ${isDarkMode ? "text-white": "text-black"}`}>{isLoading ? "Loading..." : pointTransactionProduct} </span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Completion Time</p>
@@ -188,12 +185,12 @@ export const RedeemReceipt = () => {
                    <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className={`  ${isDarkMode ? "text-white" : "text-[#0008]"}`}>Transaction Id</p>
                 {/* <span>&#8358;{transferFee}.00</span> */}
-                <span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>{isLoading ? "Loading..." : transactionId}.00</span>
+                <span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>{isLoading ? "Loading..." : pointTransactionId}.00</span>
               </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Order Number</p>
               
-                  <span className={` ${isDarkMode ? "text-white": "text-black"}`}>{isLoading ? "Loading..." : orderId}</span>
+                  <span className={` ${isDarkMode ? "text-white": "text-black"}`}>{isLoading ? "Loading..." : pointOrderId}</span>
                 </div>
                 
               </div>

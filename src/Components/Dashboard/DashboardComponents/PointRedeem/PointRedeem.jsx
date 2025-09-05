@@ -40,19 +40,20 @@ const PointRedeem = () => {
            setErrorMessage,
           //  redeemResponse, 
            setRedeemResponse,
-          //  isRedeeming, setIsRedeeming,
-          //  redeemedPoints, setRedeemedPoints,
-           rateRedeemed, setRateRedeemed,
-          //  transactionId, 
-            setTransactionId,
-           orderId,  setOrderId,
-          amountRedeemed, setAmountRedeemed,
-          // transactionProduct,
-           setTransactionProduct,
-          // transactionDescription,
-           setTransactionDescription,
-
+         
+        pointRateRedeemed,
+         setPointRateRedeemed,
+       
+        setPointTransactionId,
+       pointOrderId,  
+       setPointOrderId,
+        pointAmountRedeemed, 
+        setPointAmountRedeemed,
+         setPointTransactionProduct,
+        setPointTransactionDescription,
+         setPointFetchedResponse,
           authenticationOpen,
+          
    } = useContext(ContextProvider);
    
 
@@ -76,12 +77,12 @@ const [text, setText] =useState(false);
   // const [userPoints, setUserPoints] = useState(0);
   // const [transactionInfo, setTransactionInfo] = useState(null);
   const [isLoading, setLoading] = useState(false);
-  const [fetchedResponse, setFetchedResponse] = useState({});
     const [InputPinPopUp, setInputPinPopUp] = useState(false);
   const [inputPin, setInputPin] = useState("");
   const [proceed, setProceed] = useState(false);
    const [successPopup, setSuccessPopup] = useState(false);
   const [errors, setErrors] = useState({});
+ const [pointPostResponse, setPointPostResponse ] = useState({});
   
 const [userPoints, setUserPoints] = useState(0);
 //  const [transactionPoints, setTransactionPoints] = useState(0);
@@ -174,12 +175,13 @@ const [sessionModal, setSessionModal] = useState(false);
     // setReferralPoints(referralPts);
     };
     const FailedHandler = (error) => {
-      console.error("Failed to fetch points:", error);
+      console.error("Failed to fetch points:", error);   
+         
     };
 
    
-      GetFunction("extra/point", setLoading,  successHandler, FailedHandler, setFetchedResponse)
-   
+      GetFunction("extra/point", setLoading,  successHandler, FailedHandler, setPointFetchedResponse)
+   //eslint-disable-next-line
   }, []);
 
   
@@ -233,26 +235,28 @@ const VerifyPinHandler = async () => {
 
 
     const successHandler = (response) => {
-  console.log("Redemption Response:", response);
-
-  // Adjust response extraction
-const redemptionData = response?.data?.data?.data ?? response?.data?.data ?? response?.data ?? {};
+  // response
+const redemptionData = response?.data?.data?.data;
 
   if (!redemptionData || Object.keys(redemptionData).length === 0) {
     setErrorMessage("Redemption failed: invalid server response");
     return;
   }
 
-  setAmountRedeemed(redemptionData.amount_redeemed ?? 0);
- console.log("Amount Redeemed", amountRedeemed);
-  setRateRedeemed(redemptionData.redeemed_rate ?? "1 PTS - 1 NGN");
-  setTransactionId(redemptionData.transaction_id ?? "");
-  setOrderId(redemptionData.order_id ?? "");
-  setUserPoints(redemptionData.remaining_points ?? userPoints);
-  setTransactionProduct(redemptionData.transaction_product ?? "");
-  setTransactionDescription(redemptionData.transaction_description ?? "");
+   setPointAmountRedeemed(redemptionData.amount_redeemed ?? 0);
 
-  setRedeemResponse(redemptionData);
+//  console.log("Amount Redeemed", pointAmountRedeemed);
+  setPointRateRedeemed(redemptionData.redeemed_rate ?? "1 PTS - 1 NGN");
+  setPointTransactionId(redemptionData.transaction_id ?? "");
+  setPointOrderId(redemptionData.order_id ?? "");
+  // setUserPoints(redemptionData.remaining_points ?? userPoints);
+  setPointTransactionProduct(redemptionData.transaction_product ?? "");
+  setPointTransactionDescription(redemptionData.transaction_description ?? "");
+
+
+
+
+  //  setRedeemResponse(redemptionData);
   setSuccessPopup(true);
   setInputPinPopUp(false);
   setProceed(false);
@@ -262,34 +266,41 @@ const redemptionData = response?.data?.data?.data ?? response?.data?.data ?? res
 
   refreshPoints();
 };
-    const failedHandler = (ErrorType) => {
-      if (ErrorType === "unauthorised") {
-        setSessionModal(true);
-      } else if (ErrorType === "Server error") {
-        alert("Server Error: Redemption Failed");
-      } else if (ErrorType === "Network error" || ErrorType === "User error") {
-        alert("Network Error: Redemption Failed");
-      } else {
-        alert("An Unexpected error has occurred");
-      }
-      setInputPinPopUp(false);
-      setInputPin("");
-    };
 
-    await PostFunction(Path, setLoading, payloadJson, successHandler, failedHandler, setFetchedResponse);
+ const failedHandler = (ErrorType) => {
+  console.error("Redemption failed with error:", ErrorType);
+
+  if (ErrorType === "unauthorised") {
+    setSessionModal(true);
+  } else if (ErrorType === "Server error") {
+    alert("Server Error: Redemption Failed");
+  } else if (ErrorType === "Network error" || ErrorType === "User error") {
+    alert("Network Error: Redemption Failed");
+  } else {
+    alert("An Unexpected error has occurred");
+  }
+
+  setInputPinPopUp(false);
+  setInputPin("");
+};
+
+
+    await PostFunction(Path, setLoading, payloadJson, successHandler, failedHandler, setPointPostResponse);
   };
+// console.log(pointPostResponse)
 
   const refreshPoints = () => {
   GetFunction("extra/point", setLoading, (res) => {
     const available = res?.data?.data?.point?.available_points ?? 0;
     setUserPoints(available);
+    
   }, (err) => {
     console.error("Failed to refresh points", err);
-  }, setFetchedResponse);
+  }, setPointFetchedResponse);
 };
 
 
-  // ...existing VerifyTransPin logic...
+  // ...VerifyTransPin logic...
   await VerifyTransPin(
     inputPin,
     (ErrorType) => {
@@ -315,13 +326,7 @@ const redemptionData = response?.data?.data?.data ?? response?.data?.data ?? res
 // console.log("Verifying PIN:", inputPin);
 
 
-
-  const handleSuccess = () => {
-    setSuccessPopup(true);
-    setInputPinPopUp(false);
-    setProceed(false);
-  };
-
+  
   const [realPop, setRealPop] = useState(false);
 
   const handleRealPop = () => {
@@ -471,8 +476,8 @@ const redemptionData = response?.data?.data?.data ?? response?.data?.data ?? res
             <div><span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>
   {isLoading
     ? "Loading..."
-    : rateRedeemed && rateRedeemed !== 0
-      ? rateRedeemed
+    : pointRateRedeemed && pointRateRedeemed !== 0
+      ? pointRateRedeemed
       : "1 PTS - 1 NGN"}
 </span></div>
           </div>
@@ -608,8 +613,8 @@ const redemptionData = response?.data?.data?.data ?? response?.data?.data ?? res
                     <div><span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>
   {isLoading
     ? "Loading..."
-    : rateRedeemed && rateRedeemed !== 0
-      ? rateRedeemed
+    : pointRateRedeemed && pointRateRedeemed !== 0
+      ? pointRateRedeemed
       : "1 PTS - 1 NGN"}
 </span></div>
                   </div>
@@ -953,11 +958,11 @@ const redemptionData = response?.data?.data?.data ?? response?.data?.data ?? res
               `}>
               You have successfully redeemed{" "}
               <span className={` ${isDarkMode? "text-white" : "text-black"} text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]`}>
-                   {isLoading ? "Loading..." : amountRedeemed} .00 PTS
+                   {isLoading ? "Loading..." : pointAmountRedeemed} .00 PTS
               </span>{" "}
               Points<br></br>
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">
-                {amountRedeemed}{" "}
+                {pointAmountRedeemed}{" "}
               </span>
               from your PTS balance{" "} to
             </p>
@@ -969,17 +974,17 @@ const redemptionData = response?.data?.data?.data ?? response?.data?.data ?? res
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"} text-[#0008]`}>Amount To Redeem</p>
-                <span className={`  ${isDarkMode ? "text-white" : "text-black"}`}> {isLoading ? "Loading..." : amountRedeemed} PTS</span>
+                <span className={`  ${isDarkMode ? "text-white" : "text-black"}`}> {isLoading ? "Loading..." : pointAmountRedeemed} PTS</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"} text-[#0008]`}>Account To Receive</p>
-                <span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>{isLoading ? "Loading..." : amountRedeemed}</span>
+                <span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>{isLoading ? "Loading..." : pointAmountRedeemed}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}text-[#0008]`}>Redeem Rate</p>
                 <span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>
-                 {isLoading ? "Loading..." : rateRedeemed}
+                 {isLoading ? "Loading..." : pointRateRedeemed}
 </span>
               </div>
 
@@ -992,7 +997,7 @@ const redemptionData = response?.data?.data?.data ?? response?.data?.data ?? res
                 <p className= {`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Order Number</p>
                 <span className={`  ${isDarkMode ? "text-white" : "text-black"}
                 `}>
-                          {isLoading ? "Loading..." : orderId}
+                          {isLoading ? "Loading..." : pointOrderId}
                   </span>
               </div>
             </div>

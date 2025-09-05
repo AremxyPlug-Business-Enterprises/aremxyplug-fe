@@ -883,16 +883,14 @@ export const Context = ({ children }) => {
   const [outputValue, setOutputValue] = useState("");
   const [realinputValue, setRealInputValue] = useState("");
   const [realoutputValue, setRealOutputValue] = useState("");
-        const [userPoints, setUserPoints] = useState(0);
-          const [redeemResponse, setRedeemResponse] = useState(null);
-          const [isRedeeming, setIsRedeeming] = useState(false);
-          const [redeemedPoints, setRedeemedPoints] = useState(0);
-          const [rateRedeemed, setRateRedeemed] = useState(0);
-          const [ transactionId,  setTransactionId] = useState(0);
-          const [ orderId,  setOrderId] = useState(0);
-        const [amountRedeemed, setAmountRedeemed] = useState(0);
-           const [transactionProdect, setTransactionProdect] = useState(0);
-        const [transactionDescription, setTransactionDescription] = useState(0);
+          const [pointRedeemedPoints, setPointRedeemedPoints] = useState(0);
+          const [pointRateRedeemed, setPointRateRedeemed] = useState(0);
+          const [ pointTransactionId,  setPointTransactionId] = useState(0);
+          const [ pointOrderId,  setPointOrderId] = useState(0);
+        const [pointAmountRedeemed, setPointAmountRedeemed] = useState(0);
+           const [pointTransactionProduct, setPointTransactionProduct] = useState(0);
+        const [pointTransactionDescription, setPointTransactionDescription] = useState(0);
+         const [pointFetchedResponse, setPointFetchedResponse ] = useState({});
 
   //==============electricity subscrition===========
   // ikedc
@@ -1821,24 +1819,23 @@ export const Context = ({ children }) => {
     setRealInputValue,
     realoutputValue,
     setRealOutputValue,
-
-      transactionProdect, 
-      setTransactionProdect,
-      transactionDescription, 
-    setTransactionDescription,
-    amountRedeemed, 
-    setAmountRedeemed,
-    rateRedeemed, 
-    setRateRedeemed,
-    transactionId,
-     setTransactionId,
-    orderId, 
-    setOrderId,
-      setAmountRedeemed,
-  setRateRedeemed,
-  setTransactionId,
-  setUserPoints,
-  setRedeemResponse,
+       pointRedeemedPoints,
+        setPointRedeemedPoints,
+        pointRateRedeemed,
+         setPointRateRedeemed,
+        pointTransactionId,  
+        setPointTransactionId,
+       pointOrderId,  
+       setPointOrderId,
+        pointAmountRedeemed, 
+        setPointAmountRedeemed,
+        pointTransactionProduct,
+         setPointTransactionProduct,
+        pointTransactionDescription, 
+        setPointTransactionDescription,
+        pointFetchedResponse,
+         setPointFetchedResponse,
+         
 
     //electricity subscription
     // ikedc
