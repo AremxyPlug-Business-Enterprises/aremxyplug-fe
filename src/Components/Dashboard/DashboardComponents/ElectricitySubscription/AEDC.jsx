@@ -230,14 +230,22 @@ const AEDC = () => {
       name: "NGN Wallet",
       balance:
         newBalance === "" || newBalance === null || newBalance === undefined
-          ? `(${updateBalanceToNumber?.toLocaleString("en-NG", {
-              style: "currency",
-              currency: "NGN",
-            })})`
-          : `(${newBalanceToNumber?.toLocaleString("en-NG", {
-              style: "currency",
-              currency: "NGN",
-            })})`,
+          ? `(${
+              updateBalance > 1
+                ? updateBalanceToNumber?.toLocaleString("en-NG", {
+                    style: "currency",
+                    currency: "NGN",
+                  })
+                : ""
+            })`
+          : `(${
+              newBalance > 1
+                ? newBalanceToNumber?.toLocaleString("en-NG", {
+                    style: "currency",
+                    currency: "NGN",
+                  })
+                : ""
+            })`,
       code: "Nigerian NGN Wallet",
       flag: require("../ElectricitySubscription/Electricity-sub-images/nigeriaFlag.png"),
     },
@@ -1473,39 +1481,39 @@ const AEDC = () => {
                     // className=" flex justify-center  ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]"
                     className="flex items-center gap-2.5"
                   >
-                      <OtpInput
-                        value={inputPin}
-                         inputType={!isVisible ? "tel" : "password"}
-                        onChange={setInputPin}
-                        numInputs={4}
-                        shouldAutoFocus={true}
-                        inputStyle={{
-                          // color: isDarkMode ? "#ffffff" : "#403f3f",
-                          color: isDarkMode ? "#ffffff" : "#000000",
-                          // width: 30,
-                          // height: 30,
-                          // borderRadius: 3,
-                          fontWeight: 700,
-                          borderRadius: 4,
-                          height: "35px",
-                          width: "35px",
-                          backgroundColor: isDarkMode ? "black" : "white",
-                          border: isDarkMode
-                            ? "1px solid white"
-                            : "1px solid #ccc",
-                        }}
-                        renderInput={(props) => (
-                          <input
-                            {...props}
-                            // className="inputOTP mx-[3px]"
-                            className={`inputOTP mx-[2px] ${
-                              isFocused ? "focused" : ""
-                            }`}
-                            onFocus={handleFocus}
-                            onBlur={handleBlur}
-                          />
-                        )}
-                      />
+                    <OtpInput
+                      value={inputPin}
+                      inputType={!isVisible ? "tel" : "password"}
+                      onChange={setInputPin}
+                      numInputs={4}
+                      shouldAutoFocus={true}
+                      inputStyle={{
+                        // color: isDarkMode ? "#ffffff" : "#403f3f",
+                        color: isDarkMode ? "#ffffff" : "#000000",
+                        // width: 30,
+                        // height: 30,
+                        // borderRadius: 3,
+                        fontWeight: 700,
+                        borderRadius: 4,
+                        height: "35px",
+                        width: "35px",
+                        backgroundColor: isDarkMode ? "black" : "white",
+                        border: isDarkMode
+                          ? "1px solid white"
+                          : "1px solid #ccc",
+                      }}
+                      renderInput={(props) => (
+                        <input
+                          {...props}
+                          // className="inputOTP mx-[3px]"
+                          className={`inputOTP mx-[2px] ${
+                            isFocused ? "focused" : ""
+                          }`}
+                          onFocus={handleFocus}
+                          onBlur={handleBlur}
+                        />
+                      )}
+                    />
                     <div className="text-[#0003]" onClick={toggleVisibility}>
                       {isVisible ? (
                         <AiFillEye className="w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]" />
