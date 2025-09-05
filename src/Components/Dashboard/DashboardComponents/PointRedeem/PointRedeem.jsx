@@ -262,15 +262,15 @@ const redemptionData = response?.data?.data?.data;
  const failedHandler = (ErrorType) => {
   console.error("Redemption failed with error:", ErrorType);
 
-  if (ErrorType === "unauthorised") {
-    setSessionModal(true);
-  } else if (ErrorType === "Server error") {
-    alert("Server Error: Redemption Failed");
-  } else if (ErrorType === "Network error" || ErrorType === "User error") {
-    alert("Network Error: Redemption Failed");
-  } else {
-    alert("An Unexpected error has occurred");
-  }
+     if (ErrorType === "unauthorised") {
+        setSessionModal(true);
+      } else if (ErrorType === "Server error") {
+        setErrorMessage("Server Error: Redemption Failed");
+      } else if (ErrorType === "Network error" || ErrorType === "User error") {
+        setErrorMessage("Network Error: Redemption Failed");
+      } else {
+        setErrorMessage("An Unexpected error has occurred");
+      }
 
   setInputPinPopUp(false);
   setInputPin("");
@@ -296,16 +296,16 @@ console.log(pointPostResponse)
   await VerifyTransPin(
     inputPin,
     (ErrorType) => {
-      if (ErrorType === "unauthorised") {
+    if (ErrorType === "unauthorised") {
         setSessionModal(true);
       } else if (ErrorType === "Server error") {
-        alert("Server error while verifying PIN");
+        setErrorMessage("Server error while verifying PIN");
       } else if (ErrorType === "Network error" || ErrorType === "User error") {
-        alert("Check your internet connection");
+        setErrorMessage("Check your internet connection");
       } else if (ErrorType === "incorrect pin") {
-        alert("Incorrect PIN entered");
+        setErrorMessage("Incorrect PIN entered");
       } else {
-        alert("PIN verification failed");
+        setErrorMessage("PIN verification failed");
       }
     },
     setLoading,
@@ -697,13 +697,13 @@ console.log(pointPostResponse)
             ${isDarkMode ? "text-white" : "text-black"}`}>
               You are about to redeem{" "}
               <span className={`text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]
-             ${isDarkMode ? "text-white" : "text-black"}`}>   {isLoading ? "Loading..." : inputValue}.00 PTS{" "}
+             ${isDarkMode ? "text-white" : "text-black"}`}>{isLoading ? "Loading..." : inputValue}.00{" "}
               </span>{" "}
-              Points<br></br>
-              {/* <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]">
-                {outputValue}{" "}
-              </span> */}
-              from your PTS balance to{" "}
+              Points to{" "}
+                <span className={`text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]
+             ${isDarkMode ? "text-white" : "text-black"}`}>&#8358;{isLoading ? "Loading..." : outputValue}.00{" "}
+              </span>{" "}
+              from your PTS balance to {" "}
             </p>
 </div>
             <div className="flex flex-col gap-3 pt-[10px]">
@@ -713,11 +713,11 @@ console.log(pointPostResponse)
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Amount To Redeem</p>
-                <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>   {isLoading ? "Loading..." : inputValue} PTS</span>
+                <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>   {isLoading ? "Loading..." : inputValue}.00 PTS</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Account To Receive</p>
-                <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>&#8358;{isLoading ? "Loading..." : inputValue}</span>
+                <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>&#8358;{isLoading ? "Loading..." : inputValue}.00</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
@@ -949,12 +949,12 @@ console.log(pointPostResponse)
                ${isDarkMode ? "text-white" : "text-black" }
               `}>
               You have successfully redeemed{" "}
-              <span className={` ${isDarkMode? "text-white" : "text-black"} text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]`}>
-                   {isLoading ? "Loading..." : pointAmountRedeemed} .00 PTS
+              <span className={` ${isDarkMode? "text-white" : "text-black"} text-[#000] font-extrabold text-[10px] md:text-[12px] lg:text-[14px]`}>
+                   {isLoading ? "Loading..." : pointAmountRedeemed} .00
               </span>{" "}
-              Points<br></br>
-              <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">
-                {pointAmountRedeemed}{" "}
+              Points to{" "}
+             <span className={` ${isDarkMode? "text-white" : "text-black"} text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]`}>
+                   &#8358;{isLoading ? "Loading..." : pointAmountRedeemed}.00<br></br>
               </span>
               from your PTS balance{" "} to
             </p>
