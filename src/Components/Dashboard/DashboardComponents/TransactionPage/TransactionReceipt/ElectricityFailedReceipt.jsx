@@ -7,7 +7,7 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 // import logo2 from "../ElectricitySubscription/Electricity-sub-images/AEDC1 1.svg";
 import { GetLocalStorage } from "../../../../LocalStorage/LocalStorage";
-import { formatDate } from "./ElectricityTransSuccessReceipt";
+import { formatDate } from "./ElectricityReceipt";
 
 export const ElectricityFailedReceipt = () => {
   const navigate = useNavigate();

@@ -8,6 +8,7 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import logo2 from "../ElectricitySubscription/Electricity-sub-images/pngaaa 1.svg";
 import { GetLocalStorage } from "../../../LocalStorage/LocalStorage";
+import { formatDate } from "../TransactionPage/TransactionReceipt/ElectricityReceipt";
 
 export const IkedcReceipt = () => {
   const navigate = useNavigate();
@@ -16,7 +17,8 @@ export const IkedcReceipt = () => {
   const {
     toggleSideBar,
     isDarkMode,
-    date,
+    // date,
+    ikedcFetchedResponse,
     ikedcVerifiedName,
     setIkedcVerifiedName,
     setSelectedIkedcMeterType,
@@ -165,7 +167,7 @@ export const IkedcReceipt = () => {
             <span
               className={`text-[11px] font-extrabold flex justify-center items-center `}
             >
-              {date.toLocaleDateString(undefined, {
+              {/* {date.toLocaleDateString(undefined, {
                 year: "numeric",
                 month: "long",
                 day: "numeric",
@@ -173,7 +175,8 @@ export const IkedcReceipt = () => {
                 minute: "numeric",
                 second: "numeric",
                 hour12: true,
-              })}
+              })} ikedcFetchedResponse?.data?.*/}
+              {formatDate(ikedcFetchedResponse?.data?.created_at)}
             </span>
             <p className="text-[10px] p-[5.729px] border-[0.573px] rounded-[6.302px] md:p-[5.868px] md:border-[0.578px] md:rounded-[6.455px]  lg:border lg:rounded-[11px] border-[#27AE60] leading-[15px] md:leading-[20px] text-[#27AE60] bg-[#D5F6E3] lg:p-2.5 text-center my-2 md:text-sm lg:text-base  lg:leading-6 font-medium md:mb-7">
               {/* ${isDarkMode ? "bg-black":""} */}

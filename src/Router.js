@@ -120,7 +120,7 @@ import { PhedReceipt } from "./Components/Dashboard/DashboardComponents/Electric
 import ProfileSettingsMain from "./Components/My Profile & Account Settings/ProfileSettingsMain";
 import EditProfile from "./Components/My Profile & Account Settings/My Profile Page/EditProfile";
 import TransactionPage from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionPage";
-import { ElectricityTransSuccessReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/ElectricityTransSuccessReceipt";
+import { ElectricityReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/ElectricityReceipt";
 
 import { SuccessfullReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/SuccessfullReceipt";
 import { FailedReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/FailedReceipt";
@@ -186,8 +186,12 @@ import BvnVerification from "./Components/My Profile & Account Settings/Account 
 import AccountVerficationPage from "./Components/My Profile & Account Settings/Account Verification/AccountVerficationPage";
 import { ProtectedRoute } from "./Components/ProtectedRoute";
 import { ElectricityFailedReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/ElectricityFailedReceipt";
-import EduSuccessReceipt from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/EduSuccessReceipt";
-import { TvSubSuccessReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/Tv_SubSuccessReceipt";
+import EduReceipt from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/EduReceipt";
+import { TvSubReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/Tv_SubReceipt";
+import { AirtimeTransReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/AirtimeTransReceipt";
+import { DataTransReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/DataTransReceipt";
+import { TransferReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/TransferReceipt";
+import { VirtualAccountReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/VirtualAccountReceipt";
 
 export const Router = () => {
   return (
@@ -858,19 +862,39 @@ export const Router = () => {
           <SuccessfullReceipt />
           </ProtectedRoute>
           } />
-        <Route path="/ElectricityTransSuccessReceipt" element={
+        <Route path="/ElectricityReceipt" element={
           <ProtectedRoute>
-          <ElectricityTransSuccessReceipt />
+          <ElectricityReceipt />
           </ProtectedRoute>
           } />
-        <Route path="/EduSuccessReceipt" element={
+        <Route path="/EduReceipt" element={
           <ProtectedRoute>
-          <EduSuccessReceipt />
+          <EduReceipt />
           </ProtectedRoute>
           } />
-        <Route path="/TvSubSuccessReceipt" element={
+        <Route path="/TvSubReceipt" element={
           <ProtectedRoute>
-          <TvSubSuccessReceipt/>
+          <TvSubReceipt/>
+          </ProtectedRoute>
+          } />
+        <Route path="/AirtimeTransReceipt" element={
+          <ProtectedRoute>
+          <AirtimeTransReceipt/>
+          </ProtectedRoute>
+          } />
+        <Route path="/DataTransReceipt" element={
+          <ProtectedRoute>
+          <DataTransReceipt/>
+          </ProtectedRoute>
+          } />
+        <Route path="/TransferReceipt" element={
+          <ProtectedRoute>
+          <TransferReceipt/>
+          </ProtectedRoute>
+          } />
+        <Route path="/VirtualAccountReceipt" element={
+          <ProtectedRoute>
+          <VirtualAccountReceipt/>
           </ProtectedRoute>
           } />
         <Route path="/ElectricityFailedReceipt" element={
