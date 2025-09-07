@@ -185,7 +185,6 @@ import { PhedReceiptFailed } from "./Components/Dashboard/DashboardComponents/El
 import BvnVerification from "./Components/My Profile & Account Settings/Account Verification/BvnVerification";
 import AccountVerficationPage from "./Components/My Profile & Account Settings/Account Verification/AccountVerficationPage";
 import { ProtectedRoute } from "./Components/ProtectedRoute";
-import { ElectricityFailedReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/ElectricityFailedReceipt";
 import EduReceipt from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/EduReceipt";
 import { TvSubReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/Tv_SubReceipt";
 import { AirtimeTransReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/AirtimeTransReceipt";
@@ -895,11 +894,6 @@ export const Router = () => {
         <Route path="/VirtualAccountReceipt" element={
           <ProtectedRoute>
           <VirtualAccountReceipt/>
-          </ProtectedRoute>
-          } />
-        <Route path="/ElectricityFailedReceipt" element={
-          <ProtectedRoute>
-          <ElectricityFailedReceipt />
           </ProtectedRoute>
           } />
         <Route path="/FailedReceipt" element={

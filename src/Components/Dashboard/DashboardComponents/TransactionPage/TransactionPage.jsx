@@ -1459,7 +1459,6 @@ const TransactionPage = () => {
                       const orderData = response?.data?.data?.data;
                       console.log("resp", response?.data);
                       console.log("orderData", orderData);
-
                       navigate(
                         transaction?.product === "Electricity Bills"
                           ? "/ElectricityReceipt"
