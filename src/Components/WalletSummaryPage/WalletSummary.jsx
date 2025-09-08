@@ -344,6 +344,26 @@ export default function WalletSummaryPage() {
     "Refunded",
     "Cancelled",
   ];
+
+  //=======Format Date ======
+  const FormatDate =(DateValue)=> {
+  if(!DateValue)  return "";
+  const date = new Date(DateValue);
+  return date?.toISOString()?.slice(0,10)
+
+}
+//======== Format Time ========
+const FormatTime =(DateValue)=> {
+  if(!DateValue) return ""
+  const date = new Date(DateValue);
+  const TimePart = date?.toLocaleTimeString("en-Us", {
+    hour : "numeric",
+    minute: "numeric",
+    second : "numeric",
+    hour12: true
+  })
+  return TimePart;
+}
   return (
     <DashBoardLayout>
       <>
@@ -938,10 +958,10 @@ export default function WalletSummaryPage() {
                                 <span className="block">Date & Time:</span>
                                 <span className="block">
                                   {" "}
-                                  {transaction?.created_at?.slice(0, 10)}{" "}
+                                   {FormatDate(transaction?.created_at)}{" "}
                                 </span>
                                 <span className="block">
-                                  {transaction?.created_at?.slice(14, 19)}
+                                   {FormatTime(transaction?.created_at)}{" "}
                                 </span>
                               </p>
                             </div>
@@ -1116,9 +1136,9 @@ export default function WalletSummaryPage() {
                           toggleSideBar ? "md:w-[16.5%] " : "md:w-[16.5%]"
                         }`}
                       >
-                        <span>{transaction?.created_at?.slice(0, 10)}</span>
+                        <span> {FormatDate(transaction?.created_at)}{" "}</span>
                         <br />
-                        <span>{transaction?.created_at?.slice(14, 19)}</span>
+                        <span> {FormatTime(transaction?.created_at)}{" "}</span>
                       </div>
 
                       <div

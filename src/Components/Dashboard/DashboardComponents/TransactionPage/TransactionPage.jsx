@@ -260,6 +260,29 @@ const TransactionPage = () => {
   };
 
 
+  //The formattting of the dates and times
+   function formatDate(isoString) {
+  if (!isoString) return "";
+
+  const date = new Date(isoString);
+
+return date?.toISOString()?.slice(0, 10);
+   
+  
+}
+
+   function formatTime(isoString) {
+  if (!isoString) return "";
+    const date = new Date(isoString);
+  const timePart = date.toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+    hour12: true,
+  });
+  return timePart;
+}
+
 
   return (
     <DashBoardLayout>
@@ -1317,10 +1340,10 @@ const TransactionPage = () => {
                                 <span className="block">Date & Time:</span>
                                 <span className="block">
                                   {" "}
-                                  {transaction?.created_at?.slice(0, 10)}{" "}
+                                  {formatDate(transaction?.created_at)}{" "}
                                 </span>
                                 <span className="block">
-                                  {transaction?.created_at?.slice(14, 19)}
+                                  {formatTime(transaction?.created_at)}{" "}
                                 </span>
                               </p>
                             </div>
@@ -1509,9 +1532,9 @@ const TransactionPage = () => {
                           toggleSideBar ? "md:w-[16.5%] " : "md:w-[16.5%]"
                         }`}
                       >
-                        <span>{transaction?.created_at?.slice(0, 10)}</span>
+                        <span>{formatDate(transaction?.created_at)}{" "}</span>
                         <br />
-                        <span>{transaction?.created_at?.slice(14, 19)}</span>
+                        <span>{formatTime(transaction?.created_at)}{" "}</span>
                       </div>
 
                       <div

@@ -1111,6 +1111,7 @@ const Data = GetLocalStorage();
                     {/* style={{ backgroundColor: smartCard.length !== 10 ? '#FFD8D8' : 'white' }} */}
                     <input
                       type="tel"
+                      placeholder="XXXXXXXXXX"
                       onChange={handleSmartCard}
                       onInput={(e) => {
                         const numericValue = e.target.value.replace(/\D/g, "");
@@ -1150,6 +1151,7 @@ const Data = GetLocalStorage();
                     </label>
                     <input
                       type="text"
+                       placeholder="Input card number to get verified name"
                       value={userVerifiedName}
                       readOnly
                       className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[13px] md:leading-[12.206px] 
@@ -1188,6 +1190,7 @@ const Data = GetLocalStorage();
                         }
                       }}
                       type="tel"
+                      placeholder="XXX XXXX XXXX"
                       maxLength={11}
                       className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[12.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[13px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
@@ -1247,6 +1250,7 @@ const Data = GetLocalStorage();
                     </label>
 
                     <input
+                    placeholder={"0.00"}
                       type="text"
                       className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]
                          md:p-0 text-[13.8px] 
