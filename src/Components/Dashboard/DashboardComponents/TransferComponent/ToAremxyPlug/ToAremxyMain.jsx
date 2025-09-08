@@ -17,6 +17,7 @@ import britainFlag from "../../../../Dashboard/DashboardComponents/flagsImages/u
 import audFlag from "../../../../Dashboard/DashboardComponents/flagsImages/australiaFlag.png";
 import euroFlag from "../../../DashboardComponents/flagsImages/europeanFlag.png";
 import currencyImage from  "../../../../EducationPins/imagesEducation/arrow-down.svg";
+import AremxySelectUser from "./AremxySelectUser";
 // import { useNavigate } from "react-router-dom";
 
 export default function ToAremxyMain(Data) {
@@ -54,6 +55,7 @@ export default function ToAremxyMain(Data) {
   const [currencyBalance,  setCurrencyBalance] = useState("");
   const [currencyImageState, setCurrencyImageState] = useState(currencyImage);
   const transferSetTime = useRef()
+  const [selectRecipientPopup, setSelectRecipientPopUp] = useState(false)
      //const [errors, setErrors] = useState({});
 
 Data = GetLocalStorage();
@@ -98,132 +100,7 @@ Data = GetLocalStorage();
     { method: "Australia", balance: "(AU$0.00)", flag: audFlag, id: 5 , code : ""},
     { method: "Kenya", balance: "(KSh0.00)", flag: kenyaFlag, id: 6, code : ""  },
   ];
-  // const testEmail = new RegExp(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]/);
-  // const testUsername = new RegExp(/^[a-zA-Z0-9_]{3,20}$/);
-  // const GetUserDetails = async (value, transferIdentity) => {
-  //   if (
-  //     ((transferIdentity === "email" && value !== Data?.UserEmail) ||
-  //       (transferIdentity === "username" && Data?.aremxyUsername !== value)) &&
-  //     value?.length > 2
-  //   ) {
-  //     const SuccessHandler = () => {
-  //       setVerifiedUser(true);
-  //       setErrorMessage("");
-  //     };
-  //     const FailedHandler = async (Error) => {
-  //       if (Error === "Server error") {
-  //         //  setVerificationPinError(true);
-  //         setErrorMessage("Account does not exist");
-  //         setVerifiedUser(false);
-  //         setFetchedResponse({});
-  //       } else if (Error === "Network error" || Error === "User error") {
-  //         setErrorMessage("Kindly check your internet connection.");
-  //         setVerifiedUser(false);
-  //       } else if (Error === "Bad request") {
-  //         setErrorMessage("Account does not exist.");
-  //         setVerifiedUser(false);
-  //         setFetchedResponse({});
-  //       } else if (Error === "unauthorised") {
-  //         await GetFunction(
-  //           `search?${transferIdentity}=${value}`,
-  //           setLoading,
-  //           SuccessHandler,
-  //           () => {
-  //             setSessionModal(true);
-  //           },
-  //           setFetchedResponse
-  //         );
-  //       } else if (Error === undefined) {
-  //         setErrorMessage("Your internet connection is quite unstable.");
-  //         setVerifiedUser(false);
-  //       } else {
-  //         setErrorMessage(
-  //           "An unexpected error occured, please try again later."
-  //         );
-  //         setVerifiedUser(false);
-  //       }
-  //       setTimeout(() => {
-  //         if (errorMessage?.length > 1 && value?.length < 1) {
-  //           setErrorMessage("");
-  //         }
-  //       }, 1500);
-  //     };
-  //     await GetFunction(
-  //       `search?${transferIdentity}=${value}`,
-  //       setLoading,
-  //       SuccessHandler,
-  //       FailedHandler,
-  //       setFetchedResponse
-  //     );
-  //   } else if (value === Data?.aremxyUsername || value === Data?.UserEmail) {
-  //     setErrorMessage(
-  //       `${value} is your transfer identity, you can only send to other aremxyplug wallet.`
-  //     );
-  //     setVerifiedUser(false);
-  //   }
-  // };
-  // const timer = useRef();
 
-  // // console.log(timer);
-  // const HandleIdentifyCredentials = async (value) => {
-  //   const TestingTransferIdentify = async (transferIdentity) => {
-  //     if (value?.length < 3) {
-  //       setTimeout(() => {
-  //         setErrorMessage("");
-  //         setVerifiedUser(false);
-  //       }, 1000);
-  //       // setErrorMessage("");
-  //     } else if (
-  //       testEmail.test(value) &&
-  //       value?.endsWith(".com") &&
-  //       value?.length > 7
-  //     ) {
-  //       setErrorMessage("");
-  //       setVerifiedUser(false);
-  //       transferIdentity = "email";
-  //     } else if (
-  //       testUsername.test(value) === true &&
-  //       value?.length > 2 &&
-  //       value?.includes("@") === false
-  //     ) {
-  //       setErrorMessage("");
-  //       transferIdentity = "username";
-  //     } else if (
-  //       testEmail.test(value) === true &&
-  //       testUsername.test(value) === false &&
-  //       value?.endsWith(".com") === false &&
-  //       value?.length > 7
-  //     ) {
-  //       setVerifiedUser(false);
-  //       setErrorMessage(
-  //         `Your email address does not include the ${`${".com"}`} extension `
-  //       );
-  //       setFetchedResponse({});
-  //       transferIdentity = null;
-  //     } else if (
-  //       testEmail.test(value) === false &&
-  //       testUsername.test(value) === false &&
-  //       value?.endsWith(".com") === true &&
-  //       value?.length > 7
-  //     ) {
-  //       setErrorMessage("Your email address is not valid.");
-  //       transferIdentity = null;
-  //       setFetchedResponse({});
-  //     } else {
-  //       if (value?.length > 2) {
-  //         setVerifiedUser(false);
-  //         setErrorMessage(
-  //           "Your transfer Identity is neither a recognized email nor an username."
-  //         );
-  //         setFetchedResponse({});
-  //       } else {
-  //         setErrorMessage("");
-  //         setVerifiedUser(false);
-  //         setFetchedResponse({});
-  //       }
-  //     }
-      // console.log(identityMessage);
-      //console.log(transferIdentity)
    const testEmail = new RegExp(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]/);
 const testUsername = new RegExp( /^[a-zA-Z0-9_]{3,20}$/);
 
@@ -752,7 +629,8 @@ const GetBalance = async () => {
         <div className="w-full">
           
             <div onClick={()=> {
-              navigate("/aremxy-select-user");
+             // navigate("/aremxy-select-user");
+             setSelectRecipientPopUp(true)
             }}
             className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] 
                         md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] 
@@ -802,7 +680,7 @@ const GetBalance = async () => {
       </div>
 
       {/* User details section */}
-    
+{/*     
         <div className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] 
                         md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] 
                         pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px]
@@ -824,7 +702,7 @@ const GetBalance = async () => {
             src="./Images/dashboardImages/arrowright.png"
             alt="/"
           />
-        </div>
+        </div> */}
 
         <div className="flex md:justify-start justify-center
          gap-[7.042px] lg:gap-[12px] my-[40px]">
@@ -1073,6 +951,7 @@ const GetBalance = async () => {
         ? "bg-black text-white border border-white"
         : "border border-[#0003] border-[#9C9C9C] text-[#7C7C7C]"
     }`}>
+      {mainCountry === "Nigeria" ?  (
            <p className="text-[13.2px]  sm:p-3 sm:text-lg
             font-[400] leading-[10.4px] md:text-[11px]
             md:leading-[12.206px]  lg:text-[16px] lg:leading-[20.8px]">
@@ -1085,12 +964,20 @@ const GetBalance = async () => {
                   style : "currency", 
                 currency : "NGN"})  }
            </p>
+              ) : (
+                  <p>{"Select Country to get your balance "}</p>
+                 )}
+           
+           {mainCountry === "Nigeria"  ?  (
             <img
               className="align-middle md:h-[14.038px] md:w-[14.038px] 
       lg:h-[24px] lg:w-[24px] w-[14px] h-[16px]"
               src="/Images/transferImages/nigeria.png"
               alt="dropdown"
             />
+           ) : (
+            <p>{"  "}</p>
+           )}
           </div>
         </div>
         
@@ -1176,6 +1063,15 @@ const GetBalance = async () => {
       >
         Proceed
       </button>
+     {selectRecipientPopup && (
+       <Modal> 
+        <AremxySelectUser 
+        setTransferValue={setTransferValue}
+        setSelectRecipientPopUp={setSelectRecipientPopUp}
+        HandleIdentifyCredentials ={HandleIdentifyCredentials }
+        />
+       </Modal>
+     )}
       {currencyAvailable && (
         <Modal>
           <div className={styled.NotInterX}>
@@ -1197,6 +1093,7 @@ const GetBalance = async () => {
           </div>
         </Modal>
       )}
+      
       <ToConfirmAremxyMain
         transferValue={transferValue}
         transferPhone={fetchedResponse?.data?.data?.userDetails?.phone}

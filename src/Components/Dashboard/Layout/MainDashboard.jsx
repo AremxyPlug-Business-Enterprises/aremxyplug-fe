@@ -329,9 +329,7 @@ window.addEventListener("online", ()=> {
       
 return (
     <div className="relative h-[150%] w-[100%]">
-
-      
-        {/* ============SIDE BAR========= */}
+ {/* ============SIDE BAR========= */}
         {toggleSideBar && (
          <div className="absolute top-0 left-0 z-[50]">
             <SideBar fullname ={Data.UserFullName} userId ={Data.aremxyUserId}

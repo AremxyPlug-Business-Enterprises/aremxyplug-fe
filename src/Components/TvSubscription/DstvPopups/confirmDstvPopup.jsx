@@ -83,7 +83,8 @@ const [balanceStatus,setBalanceStatus] = useState("")
         </div>
         <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]"/>
         <div className="mx-auto">
-            <p className="text-[12px] font-extrabold my-[5%] text-center md:my-[3%] md:text-[15px] 
+            <p className="text-[12px] font-extrabold
+             my-[5%] text-center md:my-[3%] md:text-[15px] 
             lg:my-[2%] lg:text-[16px]">
               Confirm Transaction</p>
               <div className={`text-[10px] font-semibold text-center mb-2

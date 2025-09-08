@@ -92,7 +92,8 @@ const GoTv = () => {
   const [failedPopup, setFailedPopup] = useState(false);
   const [gotvLoading, setGotvLoading] = useState(false);
   const [gotvVerifyResponse, setGotvVerifyResponse] = useState({});
-  const [errorFillDecoder, setErrorFillDecoder] = useState(false)
+  const [errorFillDecoder, setErrorFillDecoder] = useState(false);
+  const [checkNetworkError, setCheckNetworkError] = useState(false)
 const Data = GetLocalStorage();
 //console.log(Data?.ConfirmAcc)
   const navigate = useNavigate();
@@ -192,49 +193,9 @@ const Data = GetLocalStorage();
     }
   };
 
-  //console.log(fetchedGotvPlans.status)
-  const GotvOptionalPlan =
-    gotvData?.length < 1 && fetchedGotvPlans.status === 200
-      ? fetchedGotvPlans.data.data.data
-      : gotvData;
-  useEffect(() => {
-    if (fetchedGotvPlans.status === 200 || fetchedGotvPlans.status === 201) {
-      setGotvData(fetchedGotvPlans?.data?.data?.data);
-    } else if (fetchedGotvPlans.status === undefined) {
-      const RetrieveGotvPlans = async () => {
-        const SuccessHandler = () => {
-          console.log("Successfully fetched gotv plans");
-        };
-        const failedHandler = async (ErrorType) => {
-          // console.log("Couldn't fetch gotv plans");
-          if (ErrorType === "unauthorised") {
-            await GetFunction(
-              `products/tvsub/gotv`,
-              setIsLoading,
-              SuccessHandler,
-              (ErrorType) => {
-                if (ErrorType === "unauthorised") {
-                  return setSessionModal(true);
-                }
-              },
-              setFetchedGotvPlans
-            );
-          }
-        };
-
-        await GetFunction(
-          `products/tvsub/gotv`,
-          setIsLoading,
-          SuccessHandler,
-          failedHandler,
-          setFetchedGotvPlans
-        );
-        // console.log(fetchedGotvPlans);
-      };
-      RetrieveGotvPlans();
-    }
-
-    const GetBalance = async () => {
+// ========= Get User's Balance =======
+   const GetBalance = async () => {
+    if(!navigator.onLine) return setCheckNetworkError(true)
       const SuccessHandler = () => {
         //alert("Successful");
         console.log("successfully retrieved balance");
@@ -260,6 +221,7 @@ const Data = GetLocalStorage();
         if(ErrorType === "Server error"){
           alert("Failed to retrieve the balance.")
         }else if(ErrorType === "Network error" || ErrorType === "User error"){
+           setCheckNetworkError(true);
               alert("Kindly check your internet connection to retrieve balance.")
         }else {
           alert("An unexpected error has occured on attempt to retrieve balance.")
@@ -268,7 +230,9 @@ const Data = GetLocalStorage();
         setPassDataBalance
       );
        }else if(ErrorType === "Network error" || ErrorType === "User error"){
-           alert("Kindly check your internet connection to retrieve balance")
+         setCheckNetworkError(true);
+           alert("Kindly check your internet connection to retrieve balance");
+           setCheckNetworkError(true);
        }else {
         alert("An unexpected error has occured on attempt to retrieve the balance")
        }
@@ -303,6 +267,7 @@ const Data = GetLocalStorage();
       }else if(ErrorType === "unauthorised"){
         return sessionModal(true)
       }else if(ErrorType === "Network error" || ErrorType === "User error"){
+         setCheckNetworkError(true);
        alert("Kindly check your internet connection to retrieve balance")
       }else{
        // console.log("yeah bro i am the one running blehh")
@@ -313,6 +278,7 @@ const Data = GetLocalStorage();
         setPassDataBalance
       );
           }else if(ErrorType === "Network error" || ErrorType === "User error"){
+             setCheckNetworkError(true);
             alert("Kindly check your internet connection to retrieve the balance")
           }else if(ErrorType === "Server error"){
             alert("Failed to retrieve the balance.")
@@ -325,6 +291,7 @@ const Data = GetLocalStorage();
     }
           else if(ErrorType === "Network error" || ErrorType === "User error"){
             //The operation was interrupted by a network error
+             setCheckNetworkError(true);
             alert("Kindly check your internet connection to retrieve balance.")
          }else {
           //Place 
@@ -335,7 +302,7 @@ const Data = GetLocalStorage();
         setPassDataBalance
       );
         }else if(ErrorType === "Network error" || ErrorType === "User error"){
-
+            setCheckNetworkError(true);
         }else{
            
           alert("An unexpected error occured in attempt to retrieve balance.")
@@ -349,7 +316,58 @@ const Data = GetLocalStorage();
         setPassDataBalance
       );
     };
-    // Simulate async data loading
+
+
+    //=========Retrieving Gotv Plans=====
+    const RetrieveGotvPlans = async () => {
+       if(!navigator.onLine) return setCheckNetworkError(true)
+        const SuccessHandler = () => {
+          console.log("Successfully fetched gotv plans");
+        };
+        const failedHandler = async (ErrorType) => {
+          // console.log("Couldn't fetch gotv plans");
+          if (ErrorType === "unauthorised") {
+            await GetFunction(
+              `products/tvsub/gotv`,
+              setIsLoading,
+              SuccessHandler,
+              (ErrorType) => {
+                if (ErrorType === "unauthorised") {
+                  return setSessionModal(true);
+                }
+              },
+              setFetchedGotvPlans
+            );
+          }else if(ErrorType === "User error" || ErrorType === "Network error"){
+             setCheckNetworkError(true);
+          }else if(ErrorType === "Server error"){
+             alert("Failed to fetch Gotv Plans, try again later")
+          }else{
+            alert("An unexpected error has occured try again later.")
+          }
+        };
+
+        await GetFunction(
+          `products/tvsub/gotv`,
+          setIsLoading,
+          SuccessHandler,
+          failedHandler,
+          setFetchedGotvPlans
+        );
+        // console.log(fetchedGotvPlans);
+      };
+  //console.log(fetchedGotvPlans.status)
+  const GotvOptionalPlan =
+    gotvData?.length < 1 && fetchedGotvPlans.status === 200
+      ? fetchedGotvPlans.data.data.data
+      : gotvData;
+  useEffect(() => {
+    if (fetchedGotvPlans.status === 200 || fetchedGotvPlans.status === 201) {
+      setGotvData(fetchedGotvPlans?.data?.data?.data);
+    } else if (fetchedGotvPlans.status === undefined) {
+     RetrieveGotvPlans();
+    }
+ // Simulate async data loading
     if ((newBalance === "" ||
        newBalance === null ||
         newBalance === undefined) && Data?.ConfirmAcc === "true") {
@@ -561,7 +579,18 @@ const Data = GetLocalStorage();
             },
             setTvSubscriptionResponse
           );
-        } else {
+        } else if(ErrorType === "Network error" || ErrorType === "User error") {
+             setPurchaseGotvErrorType("Network Error: Purchase Failed")
+          setFailedPopup(true);
+          setInputPinGotv(false);
+          setInputPin("");
+        }else if(ErrorType === "Server error") {
+        setPurchaseGotvErrorType("Server Error: Purchase Failed")
+          setFailedPopup(true);
+          setInputPinGotv(false);
+          setInputPin("");
+        }else{
+            setPurchaseGotvErrorType("An Unexpected error has occured")
           setFailedPopup(true);
           setInputPinGotv(false);
           setInputPin("");
@@ -591,32 +620,42 @@ const Data = GetLocalStorage();
        await VerifyTransPin(
          inputPin,
           async(ErrorType)=> {
+            // unauthorisation >>> unauthorisation ErrorTypes
            if(ErrorType === "unauthorised"){
-             return setSessionModal(true)
+             return setSessionModal(true);
            }else if(ErrorType === "Server error"){
-            await VerifyTransPin(
-         inputPin,
-         (ErrorType)=> {
+           await VerifyTransPin(
+           inputPin,
+           (ErrorType)=> {
+            //unauthorisation >>> Server error then error Types
            if(ErrorType === "Server error"){
            alert("Failed to process your request, try again some other time")
            }else if(ErrorType === "Network error" || ErrorType === "User error"){
-             alert("Kindly check your internet connection.")
+             alert("Kindly check your internet connection.");
            }else{
+            if(ErrorType !== "Bad request"){
              alert("Failed to process your request, try some other time.")
+            }
            }
          },
          setIsLoading,
          setErrorMessage,
        GotvHandler,
       );
-           }
+      //unauthorisation >>> the "Network error" and "User error" ErrorType
+           }else if(ErrorType === "Network error" || ErrorType === "User error"){
+             alert("Kindly check your internet connection.");
+           }else{
+            if(ErrorType !== "Bad request"){
+             alert("Failed to process your request, try some other time.")
+            }
+          }
           },
          setIsLoading,
          setErrorMessage,
        GotvHandler,
       );
-      //Handling of user error or network error for the general
-      //  conditional statement under the setPinFailed
+    //immediate ErrorType to the Failed function...
      }else if(ErrorType === "Server error"){
        //The server could return a 500 then be successful
        //  on next call, so let us try twice.
@@ -638,7 +677,11 @@ const Data = GetLocalStorage();
              alert("The server is currently experiencing a downtime, try again some other time.")
            }else if(ErrorType === "User error" || ErrorType === "Network error"){
              alert("Kindly check your internet connection")
-           }
+           }else{
+            if(ErrorType !== "Bad request"){
+             alert("Failed to process your request, try some other time.")
+            }
+          }
           },
          setIsLoading,
          setErrorMessage,
@@ -646,22 +689,29 @@ const Data = GetLocalStorage();
       );
       //End of the "unauthorised" ErrorType handling on "server error"
       //  ErrorType re-run.
-   
-   }else if(ErrorType === "User error" || ErrorType === "Network error"){
+    }else if(ErrorType === "User error" || ErrorType === "Network error"){
      //A network error occured  during trying to re-try the code on server error
      alert("Kindly check your internet connection");
-   }
+   }else{
+            if(ErrorType !== "Bad request"){
+             alert("Failed to process your request, try some other time.")
+            }
+          }
          },
          setIsLoading,
          setErrorMessage,
        GotvHandler,
       );
-          //The general error message on an "Network error, User error" ErrorType
+          //The immediate ErrorType on "Network error, User error" ErrorType
          }else if( ErrorType === "User error"
        || ErrorType === "Network error" ){
      alert("Kindly check your internet connection")
-     }
-       }
+     }else{
+            if(ErrorType !== "Bad request"){
+             alert("Failed to process your request, try some other time.")
+            }
+          }
+         }
    
     await VerifyTransPin(
       inputPin,
@@ -809,19 +859,32 @@ const Data = GetLocalStorage();
     handleReceivedData();
   };
   const ExitTheDoneButton = () => {
-    setTvEmail("");
-    setMobileNumber("");
-    setSmartCard("");
-    setTvAmount("");
-    setSelectedOptionGOTV("");
-    setPackageGotv("");
-    setDecoderType("");
+    setTvEmail("")
+   setMobileNumber("")
+   setSmartCard("");
+   setTvAmount("");
+   setGotvOrderId("");
+   setGotvDescription("")
+   setGotvTransactionId("");
+   setSelectedOptionGOTV("");
+   setPackageGotv("");
+   setDecoderType("")
     setFlagResult("");
     setTvWalletBalance("");
     setFailedPopup(false);
-    setCardName("")
     //  navigate("/GoTv");
   };
+
+  window.addEventListener("online", ()=> {
+   if(checkNetworkError === true &&
+     (updateBalance === undefined || updateBalance === null || updateBalance === "")
+    && (newBalance === null || newBalance === undefined || newBalance === "") ){
+   return GetBalance()
+   }
+   if(checkNetworkError === true && (fetchedGotvPlans.status !== 200 || fetchedGotvPlans.status === undefined) ) {
+    return RetrieveGotvPlans()
+   }
+  })
 
   return (
     <div>
@@ -1409,7 +1472,7 @@ const Data = GetLocalStorage();
                 src="./Images/failed.png"
                 alt="Failed"
               />
-              <p className="text-sm text-gray-600 mb-8">
+              <p className="text-sm text-red-500 font-[600] mb-8">
                 {purchaseGotvErrorType}
               </p>
               <div className="flex gap-[10px] justify-between w-full px-[10px]">

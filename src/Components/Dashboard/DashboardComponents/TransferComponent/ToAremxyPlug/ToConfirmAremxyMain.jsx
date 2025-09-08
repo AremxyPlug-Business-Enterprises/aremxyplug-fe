@@ -73,14 +73,15 @@ let CheckSufficiency = transformAmountToNumber > updateBalance;
                ${isDarkMode ? "text-white" : "text-black"}`}>
                   You are about to transfer &nbsp;
                   <span className={`font-extrabold text-[10px] md:text-[16px]
-                     lg:text-[12px] ${isDarkMode ? "text-white" : "text-black"}`}>from your NGN wallet</span>&nbsp;
-                from your {" "}
+                     lg:text-[12px] ${isDarkMode ? "text-white" : "text-black"}`}>
+                        { transferAmount} {" "}  from your NGN wallet</span>&nbsp;
+                          
                 {/* {(transferAmount !== undefined || transferAmount !== null) ?
                 amountToNumeric?.toLocaleString("en-NG", {
                   style : "currency",
                   currency : "NGN"
                 }) : "₦"} {" "} to */}
-               { transferAmount} {" "}
+
                 </div>
 
             <div className="flex flex-col gap-3 mt-5 md:mt-6 lg:mt-7">
@@ -92,7 +93,7 @@ let CheckSufficiency = transformAmountToNumber > updateBalance;
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
          justify-between font-[500] lg:text-[16px]">
                 <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Phone Number</p>
-                <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>`{`+${transferPhone}`}</span>
+                <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{`+${transferPhone}`}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
          justify-between font-[500] lg:text-[16px]">
@@ -166,7 +167,8 @@ let CheckSufficiency = transformAmountToNumber > updateBalance;
                <img
                src="./Images/dashboardImages/arrowright.png"
                 alt=""
-               className="w-[12px] h-[12px] md:w-[50px] md:h-[20px] lg:w-[80px] lg:h-[30px]"
+               className="w-[12px] h-[12px] 
+               md:w-[20px] md:h-[20px] lg:w-[30px] lg:h-[30px]"
                              />
             </div>
             

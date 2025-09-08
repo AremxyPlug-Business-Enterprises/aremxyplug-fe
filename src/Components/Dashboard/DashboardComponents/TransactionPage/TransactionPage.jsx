@@ -63,10 +63,6 @@ const TransactionPage = () => {
   const handleSelectedOption = (event) => {
     const clickedoption = event.target.value;
     setSelected(clickedoption);
-    //     if(clickedoption){
-    //      setSymbol(selected === "USD" ? "$" : selected === "AUD" ?
-    //  "AU$" : selected === "KES" ?   "KSh" : selected === "EUR" ? "€" : "")
-    //     }
     return;
   };
 
@@ -263,19 +259,7 @@ const TransactionPage = () => {
     return result;
   };
 
-  //Function handling filtering the transactionResponse based on the
-  //selected categpry by the user
-  // function filterBySelectCategory(categoryByFlowtype, categoryByProduct){
-  //   transactionResponse?.data?.data?.data?.transactions?.filter(filterData=> {
-  //     if(filterData?.flow_type === categoryByFlowtype){
-  //       return filterData?.flow_type === categoryByFlowtype
-  //     }else if(filterData?.product === categoryByProduct){
-  //    return filterData?.product === categoryByProduct;
-  //     }else{
-  //       return []
-  //     }
-  //   })
-  // }
+
 
   return (
     <DashBoardLayout>

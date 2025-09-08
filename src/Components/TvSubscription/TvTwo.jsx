@@ -89,6 +89,7 @@ const Data = GetLocalStorage();
      const [sessionModal, setSessionModal] = useState(false);
      const {purchaseDstvErrorType, setPurchaseDstvErrorType} = useContext(ContextProvider);
      const { setDstvCardName} = useContext(ContextProvider)
+      const [checkNetworkError, setCheckNetworkError] = useState(false)
       const navigate = useNavigate();
   
 const handleOptionClickDstv = (option) => {
@@ -114,7 +115,11 @@ const ReceiptButton = ()=> {
       setDstvEmail("")
    setDstvMobileNumber("")
    setDstvSmartCard("");
+   setDstvCardName("")
    setDstvAmount("");
+   setDstvOrderId("");
+   setDstvDescription("")
+   setDstvTransactionId("");
    setSelectedOptionDstv("");
    setPackageDstv("");
    setDstvDecoderType("")
@@ -213,12 +218,9 @@ const ReceiptButton = ()=> {
   
 const DstvOptionalPlan = dstvData?.length < 1 && fetchedDstvPlans.status === 200 ? fetchedDstvPlans?.data?.data?.data : dstvData;
 
-
-      useEffect(()=> {
-       if(fetchedDstvPlans.status === 200 || fetchedDstvPlans.status === 201){
-      setDstvData(fetchedDstvPlans?.data?.data?.data);
-      }else if(fetchedDstvPlans.status === undefined){
-       const RetrieveGotvPlans = async()=> {
+//=========Retrieving GOtv Plans =====
+ const RetrieveGotvPlans = async()=> {
+  if(!navigator.onLine) return setCheckNetworkError(true)
           const SuccessHandler = ()=> {
     console.log("Successfully fetched dstv plans");
    }
@@ -233,7 +235,13 @@ const DstvOptionalPlan = dstvData?.length < 1 && fetchedDstvPlans.status === 200
           }
       },
          setFetchedDstvPlans);
-      }
+      }else if(ErrorType === "User error" || ErrorType === "Network error"){
+             setCheckNetworkError(true);
+          }else if(ErrorType === "Server error"){
+             alert("Failed to fetch Gotv Plans, try again later")
+          }else{
+            alert("An unexpected error has occured try again later.")
+          }
      }
       
  await GetFunction(`products/tvsub/dstv`, 
@@ -242,9 +250,9 @@ const DstvOptionalPlan = dstvData?.length < 1 && fetchedDstvPlans.status === 200
    failedHandler,
     setFetchedDstvPlans);
 }
-RetrieveGotvPlans()
-}
+//Retrieving User's Balance ======
   const GetBalance = async () => {
+    if(!navigator.onLine) return setCheckNetworkError(true)
       const SuccessHandler = () => {
         //alert("Successful");
         console.log("successfully retrieved balance");
@@ -270,6 +278,7 @@ RetrieveGotvPlans()
         if(ErrorType === "Server error"){
           alert("Failed to retrieve the balance.")
         }else if(ErrorType === "Network error" || ErrorType === "User error"){
+          setCheckNetworkError(true)
               alert("Kindly check your internet connection to retrieve balance.")
         }else {
           alert("An unexpected error has occured on attempt to retrieve balance.")
@@ -278,6 +287,7 @@ RetrieveGotvPlans()
         setPassDataBalance
       );
        }else if(ErrorType === "Network error" || ErrorType === "User error"){
+          setCheckNetworkError(true)
            alert("Kindly check your internet connection to retrieve balance")
        }else {
         alert("An unexpected error has occured on attempt to retrieve the balance")
@@ -313,7 +323,8 @@ RetrieveGotvPlans()
       }else if(ErrorType === "unauthorised"){
         return sessionModal(true)
       }else if(ErrorType === "Network error" || ErrorType === "User error"){
-       alert("Kindly check your internet connection to retrieve balance")
+          setCheckNetworkError(true)
+ alert("Kindly check your internet connection to retrieve balance")
       }else{
         alert("An Unexpected error occured in attempt to retrieve balance")
       }
@@ -322,7 +333,9 @@ RetrieveGotvPlans()
         setPassDataBalance
       );
           }else if(ErrorType === "Network error" || ErrorType === "User error"){
-            alert("Kindly check your internet connection to retrieve the balance")
+          setCheckNetworkError(true)
+ alert("Kindly check your internet connection to retrieve the balance")
+            setCheckNetworkError(true)
           }else{
             alert("An Unexpected error occured in attempt to retrieve balance")
           }
@@ -332,6 +345,7 @@ RetrieveGotvPlans()
     }
           else if(ErrorType === "Network error" || ErrorType === "User error"){
             //The operation was interrupted by a network error
+             setCheckNetworkError(true)
             alert("Kindly check your internet connection to retrieve balance.")
          }else {
           //An alien error has occured with the re-run of the "Server error" ErrorType
@@ -341,7 +355,7 @@ RetrieveGotvPlans()
         setPassDataBalance
       );
         }else if(ErrorType === "Network error" || ErrorType === "User error"){
-
+        setCheckNetworkError(true)
         }else{
           alert("An unexpected error occured in attempt to retrieve balance.")
         }
@@ -354,6 +368,14 @@ RetrieveGotvPlans()
         setPassDataBalance
       );
     };
+      useEffect(()=> {
+       if(fetchedDstvPlans.status === 200 || fetchedDstvPlans.status === 201){
+      setDstvData(fetchedDstvPlans?.data?.data?.data);
+      }else if(fetchedDstvPlans.status === undefined){
+      
+RetrieveGotvPlans()
+}
+
                      // Simulate async data loading
                     if((newBalance === "" ||
        newBalance === null ||
@@ -512,17 +534,17 @@ const VerifyPinHandler = async () => {
           //which doesn't only affect us through service of the platform we are using,
           //but also unrest and panic to the user and the amount for purchase and 
           //been removed twice without a result or successful output.
-          setPurchaseDstvErrorType("Failed to process your request, try again some other time")
+          setPurchaseDstvErrorType("Server Error: Purchase Failed")
        setFailedPopup(true);
        setInputPinDstv(false);
          setInputPin("")
         }else if(ErrorType === "Network error" || ErrorType === "User error"){
-          setPurchaseDstvErrorType("An internet connection error");
+          setPurchaseDstvErrorType("Network Error: Purchase Failed");
           setFailedPopup(true);
        setInputPinDstv(false);
          setInputPin("")
         }else {
-
+      setPurchaseDstvErrorType("An Unexpected error has occured");
         }
       }
       
@@ -766,6 +788,19 @@ alert("Kindly check your internet connection.")
  }
  
 console.log(dstvAmount)
+
+//======Running the Balance and the retrieving if the following 
+//Conditions are met
+window.addEventListener("online", ()=> {
+   if(checkNetworkError === true &&
+     (updateBalance === undefined || updateBalance === null || updateBalance === "")
+    && (newBalance === null || newBalance === undefined || newBalance === "") ){
+   return GetBalance()
+   }
+   if(checkNetworkError === true && (fetchedDstvPlans.status !== 200 || fetchedDstvPlans.status === undefined) ) {
+    return RetrieveGotvPlans()
+   }
+  })
 
 
   return (
@@ -1181,7 +1216,7 @@ console.log(dstvAmount)
              src="./Images/failed.png"
              alt="Failed"
            />
-           <p className="text-sm text-gray-600 mb-8">
+           <p className="text-sm text-red-500 font-[600] mb-8">
              {purchaseDstvErrorType}
            </p>
              <div className="flex gap-[10px] justify-between w-full px-[10px]">
