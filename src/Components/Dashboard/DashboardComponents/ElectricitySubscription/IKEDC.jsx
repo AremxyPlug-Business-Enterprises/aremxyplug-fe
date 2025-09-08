@@ -511,7 +511,7 @@ const IKEDC = () => {
                 "The server is currently experiencing a downtime, try again some other time."
               );
             } else {
-              alert("An unexpected has occured try again some other time.");
+              // alert("An unexpected has occured try again some other time.");
             }
           },
           setLoading,
@@ -525,7 +525,7 @@ const IKEDC = () => {
           "The server is currently experiencing a downtime, try again some other time."
         );
       } else {
-        alert("An unexpected has occured try again some other time.");
+        // alert("An unexpected has occured try again some other time.");
       }
     };
     await VerifyTransPin(
@@ -1481,7 +1481,7 @@ const IKEDC = () => {
                       isDarkMode ? "text-white" : "text-[#000]"
                     }`}
                   >
-                    Benin {selectedIkedcMeterType} Meter (&#8358;
+                    Ikeja {selectedIkedcMeterType} Meter (&#8358;
                     {Number(ikedcAmount).toLocaleString()}){" "}
                   </span>
                   from your {ikedcPaymentResult.split(" (")[0]} to

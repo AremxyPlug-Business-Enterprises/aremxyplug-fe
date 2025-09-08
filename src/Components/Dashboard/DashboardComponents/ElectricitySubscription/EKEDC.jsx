@@ -1471,7 +1471,7 @@ const EKEDC = () => {
                     setSuccessPopup(false);
                     setInputPin("");
                     handleResetFields();
-                    navigate("/ekeedc");
+                    navigate("/ekedc");
                   }}
                   className=" w-[25px] h-[25px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px] cursor-pointer"
                   src="/Images/transferImages/close-circle.png"
@@ -1495,7 +1495,7 @@ const EKEDC = () => {
                       isDarkMode ? "text-white" : "text-[#000]"
                     }`}
                   >
-                    Benin {selectedEkedcMeterType} Meter (&#8358;
+                    Eko {selectedEkedcMeterType} Meter (&#8358;
                     {Number(ekedcAmount).toLocaleString()}){" "}
                   </span>
                   from your {ekedcPaymentResult.split(" (")[0]} to
