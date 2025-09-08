@@ -105,23 +105,28 @@ export const MtnFailedReceipt = (Data) => {
             toggleSideBar ? "" : "lg:w-[880px] "
           } w-full lg:mx-auto`}
         >
-          <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
-            <Link to="/">
+        <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
+            <div>
               <img
-                className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[29px]"
+                 className="w-[15px] h-[10px] md:w-[24px] 
+                md:h-[15px] lg:w-[42px] lg:h-[25px]"
                 src="/Images/login/arpLogo.png"
                 alt=""
               />
-            </Link>
-            <Link to="/MtnDataTopUpBundle">
+            </div>
+            <div
+          onClick ={()=> {
+            handleChange()
+          }}>
               {" "}
               <img
-                className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
+                  className=" w-[15px] h-[10px] md:w-[24px] 
+                md:h-[15px] lg:w-[42px] lg:h-[25px]"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
-                onClick={handleChange}
+
               />
-            </Link>
+            </div>
           </div>
           <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
           <div ref={contentRef}>

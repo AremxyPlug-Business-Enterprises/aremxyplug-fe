@@ -54,7 +54,7 @@ await  VerifyPinHandler()
             <div className="flex items-end justify-center
              lg:items-center lg:justify-center 
    w-[100%] lg:px-[0px] rounded-[10px] h-[100%] px-[15px]">
-        <div className={`  flex flex-col lg:mb-[0px]  mb-[50px]  '
+        <div className={`  flex flex-col lg:mb-[0px]  mb-[50px]
          lg:h-[350px] overflow-scroll h-[300px] bvnQuery  ${
                       toggleSideBar ? "md:w-[45%] lg:w-[40%]  " : "lg:w-[40%]"
                     } md:w-[55%] w-full   ${isDarkMode ? "text-white bg-black border-[1px] border-white rounded-[10px]" : "text-black bg-white rounded-[10px]"}`}

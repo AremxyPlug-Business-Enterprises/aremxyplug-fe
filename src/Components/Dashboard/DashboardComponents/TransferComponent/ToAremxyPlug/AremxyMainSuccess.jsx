@@ -29,7 +29,6 @@ const amountNumeric = Number(transferAmount)
   const handleTransactionSuccessReciept = () => {
     setTransactSuccessToOtherBank(false);
   };
-console.log(transferResponse);
   return (
     <div>
       {transactSuccessToOtherBank && (
@@ -66,7 +65,7 @@ console.log(transferResponse);
             <div className="">
              <p className={`text-[12px] font-extrabold my-[4%] 
             text-center md:text-[20px] md:my-[3%] lg:text-[14px] lg:my-[2%] ${isDarkMode ? "text-white" : "text-[#000]"}`}
-            >Transaction Successful</p>
+            >Transaction {(transferResponse?.data?.status === "success" || transferResponse?.data?.status === "successful") ? "Successful" : "Pending"}</p>
             <img
               className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[70px] lg:h-[70px]"
               src="./Gif/checkMarkGif.gif"
@@ -75,16 +74,17 @@ console.log(transferResponse);
             <p className={`font-semibold w-[97%] mx-auto text-[10px] text-center
                mb-2 md:pb-2 lg:pb-3 md:text-[14px] lg:text-[14px]
                ${isDarkMode ? "text-white" : "text-black" }`}>
-              You have successfully transferred{" "}
+            {(transferResponse?.data?.status === "success" || transferResponse?.data?.status === "successful") ? "You have successfully transferred" : "Your transaction is pending"}
               <span className="text-[#000] font-extrabold text-[10px] 
               md:text-[16px] lg:text-[14px]">
-               {amountNumeric !== undefined || amountNumeric!== null ?
+                {/* {" "} {amountNumeric !== undefined || amountNumeric!== null ?
                 amountNumeric?.toLocaleString("en-NG", {
                   style : "currency",
                   currency : "NGN"
-                }) : "₦"}{" "}
+                }) : "₦"}{" "} */}
+               {" "} {transferAmount} {" "}
               </span>
-              from your NGN wallet to{" "}
+             {" "} from your NGN wallet to{" "}
             </p>
 
             <div className="flex mt-4 flex-col gap-2 lg:gap-4">
@@ -92,12 +92,12 @@ console.log(transferResponse);
                w-[90%] mx-auto justify-between 
             lg:text-[15px] font-[500]">
                 <p  className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Username or Email</p>
-                <span className={`${isDarkMode ? "text-white" : "text-black"}`}>{emailUsername}</span>
+                <span className={`${isDarkMode ? "text-white" : "text-black"}`}>{transferResponse?.data?.username}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between 
             lg:text-[15px] font-[500]">
                 <p  className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Phone Number</p>
-                <span className={`${isDarkMode ? "text-white" : "text-black"}`}>{userPhoneNumber}</span>
+                <span className={`${isDarkMode ? "text-white" : "text-black"}`}>{transferResponse?.data?.phone}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%]
                mx-auto justify-between 
@@ -109,12 +109,12 @@ console.log(transferResponse);
               w-[90%] mx-auto justify-between 
             lg:text-[15px] font-[500]">
                 <p  className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Order Number</p>
-                <span className={`${isDarkMode ? "text-white" : "text-black"}`}>122555556464564</span>
+                <span className={`${isDarkMode ? "text-white" : "text-black"}`}>{transferResponse?.data?.order_id}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between 
             lg:text-[15px] font-[500]">
                 <p  className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Transaction ID</p>
-                <span className={`${isDarkMode ? "text-white" : "text-black"}`}>0331njokdhtf55</span>
+                <span className={`${isDarkMode ? "text-white" : "text-black"}`}>{transferResponse?.data?.transaction_id}</span>
               </div>
             </div>
    </div>
@@ -126,7 +126,7 @@ console.log(transferResponse);
             <p className={`text-[10px] leading-[13px] text-center
              md:text-[14px] md:leading-[18px] lg:text-[14px]  font-semibold 
              ${isDarkMode ? "text-white" : "text-black"}`}>
-            The transfer has been sent successfully. Please contact the recipient user to confirm the payment from his/her wallet.
+           The transfer has been sent successfully. Please contact the recipient user to confirm the payment from his/her wallet.
             </p>
         </div>
             <div className="flex w-full justify-center items-center 

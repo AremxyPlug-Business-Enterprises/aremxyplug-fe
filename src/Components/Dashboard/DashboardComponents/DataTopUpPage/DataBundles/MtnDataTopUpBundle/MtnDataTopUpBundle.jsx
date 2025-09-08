@@ -31,6 +31,7 @@ import {
   HandleUserSession,
 } from "../../../../../ApiCollection.jsx/ApiBuck";
 
+
 const MtnDataTopUpBundle = () => {
   const { isDarkMode, newBalance, setNewBalance } = useContext(ContextProvider);
   const { selectedOptionMtn, setSelectedOptionMtn } =
@@ -43,7 +44,7 @@ const MtnDataTopUpBundle = () => {
     useContext(ContextProvider);
   const { recipientNamesMtn, setRecipientNamesMtn } =
     useContext(ContextProvider);
-  const { walletNameMtn, setWalletNameMtn } = useContext(ContextProvider);
+  const { walletNameMtn, setWalletNameMtn, authenticationOpen } = useContext(ContextProvider);
 
   const [showProductList, setShowProductList] = useState(false);
   const [showOptionList, setShowOptionList] = useState(false);
@@ -71,10 +72,14 @@ const MtnDataTopUpBundle = () => {
   const [passDataBalance, setPassDataBalance] = useState({});
   const [mtnReceiptInfo, setMtnReceiptInfo] = useState("");
   const [sessionModal, setSessionModal] = useState(false);
-
+ 
   let balanceStringToNum = Number(newBalance);
+const assumedString = selectedAmountMtn?.toString()
+  let mtnDataAmount = Number(selectedAmountMtn?.toString()
+  ?.slice(0, assumedString?.length - 3)
+  ?.replace(/\D/g, ""));
 
-  let mtnDataAmount = Number(selectedAmountMtn?.replace(/\D/g, ""));
+  console.log(mtnDataAmount)
   const updateBalance = passDataBalance?.data
     ? passDataBalance?.data?.data?.data?.balance
     : "";
@@ -92,7 +97,7 @@ const MtnDataTopUpBundle = () => {
         const response = await axiosInstance.get(`/products/telecom/list/1`);
         if (response === undefined) {
           alert("Check your internet Connection");
-        } else if (response.status === 201 || 200) {
+        } else if (response.status === 201 || response.status === 200) {
           setProducts(response?.data?.data?.products || []);
         }
       } catch (error) {
@@ -216,6 +221,7 @@ const MtnDataTopUpBundle = () => {
       setSelectedProductMtn(`${product.Plan_Type}`);
       setShowProductList(false);
       fetchPlans(product.Product_ID);
+      
     }
   };
 
@@ -226,95 +232,61 @@ const MtnDataTopUpBundle = () => {
       } `
     );
     setMtnReceiptInfo(plan?.PlanType + " " + plan?.Size);
-    setSelectedAmountMtn(`₦${plan?.Amount}`);
-    setSelectedPlan(plan);
+    setSelectedAmountMtn(`${plan?.Amount !== null || plan?.Amount !== undefined
+       ? plan?.Amount?.toLocaleString("en-NG", {
+        style : "currency", 
+        currency : "NGN"
+       }) : plan?.Amount === "" ? Number(plan?.Amount)?.toLocaleString("en-NG", {
+        style : "currency", 
+        currency : "NGN"
+       }) : selectedAmountMtn}`);
+   setSelectedPlan(plan);
     setShowOptionList(false);
     setShowProductList(false);
   };
-
-  const countryList = [
-    {
-      id: 1,
-      name: "Nigeria",
-      code: "NGN",
-      flag: require("../DataBundles-Images/ng.svg").default,
-      amount:
-        newBalance === "" || newBalance === null
-          ? `${
-              cleanUpBalanceToNumericOnly > 1
-                ? cleanUpBalanceToNumericOnly?.toLocaleString("en-NG", {
-                    style: "currency",
-                    currency: "NGN",
-                  })
-                : "₦"
-            }`
-          : `${
-              balanceStringToNum > 1
-                ? balanceStringToNum?.toLocaleString("en-NG", {
-                    style: "currency",
-                    currency: "NGN",
-                  })
-                : "₦"
-            }`,
-      status: "Active",
-    },
-    {
-      id: 2,
-      name: "United States",
-      code: "USD",
-      flag: require("../DataBundles-Images/us.svg").default,
-      amount: 0?.toLocaleString("en-US", {
-        style: "currency",
-        currency: "USD",
-      }),
-      status: "Inactive",
-    },
-    {
-      id: 3,
-      name: "United Kingdom",
-      code: "GBP",
-      flag: require("../DataBundles-Images/gb.svg").default,
-      amount: 0?.toLocaleString("en-GB", {
-        style: "currency",
-        currency: "GBP",
-      }),
-      status: "Inactive",
-    },
-    {
-      id: 4,
-      name: "European Union",
-      code: "EUR",
-      flag: require("../DataBundles-Images/eu.svg").default,
-      amount: 0?.toLocaleString("en-EU", {
-        style: "currency",
-        currency: "EUR",
-      }),
-      status: "Inactive",
-    },
-    {
-      id: 5,
-      name: "Australia",
-      code: "AUD",
-      flag: require("../DataBundles-Images/au.svg").default,
-      amount: 0?.toLocaleString("en", {
-        style: "currency",
-        currency: "AUD",
-      }),
-      status: "Inactive",
-    },
-    {
-      id: 6,
-      name: "Kenya",
-      code: "KSH",
-      flag: require("../DataBundles-Images/ke.svg").default,
-      amount: 0?.toLocaleString("en-KE", {
-        style: "currency",
-        currency: "KES",
-      }),
-      status: "Inactive",
-    },
-  ];
-
+  
+      
+  const updateBalanceToNumber = Number(updateBalance)
+  const newBalanceToNumber = Number(newBalance)
+  const balanceOption = newBalance === "" || newBalance === null ? updateBalanceToNumber : newBalanceToNumber
+    const methodOptions = [
+      {
+        method: "Nigeria",
+        balance:
+          newBalance === "" || newBalance === null || newBalance === undefined
+            ? `(${updateBalance?.length > 1 ? updateBalanceToNumber?.toLocaleString("en-NG", {
+                 style : "currency",
+                 currency : "NGN"
+            }) : ""})`
+            : `(${newBalance?.length > 1 ? newBalanceToNumber?.toLocaleString("en-Ng", {
+              style : "currency",
+              currency : "NGN"
+            }) : ""})`,
+        flag:  require("../DataBundles-Images/ng.svg").default,
+        id: 1,
+        code : "NGN Wallet"
+      },
+      { method: "United States",
+         balance: "($0.00)", 
+         flag: require("../DataBundles-Images/us.svg").default,
+          id: 2, code : "USD Wallet" },
+      { method: "United Kingdom",
+         balance: "(€0.00)", 
+         flag:   require("../DataBundles-Images/gb.svg").default,
+          id: 3,
+          code : "GBP Wallet"
+        },
+      { method: "European Union",
+         balance: "(£0.00)", 
+         flag:  require("../DataBundles-Images/eu.svg").default,
+          id: 4,
+        code : "EUR Wallet" },
+      { method: "Australia", balance: "(AU$0.00)",
+         flag:   require("../DataBundles-Images/au.svg").default,
+          id: 5 , code : "AUD Wallet"},
+      { method: "Kenya", balance: "(KSh0.00)"
+        , flag:   require("../DataBundles-Images/ke.svg").default, id: 6, code : "KSH Wallet"  },
+    ];
   useEffect(() => {
     const GetBalance = async () => {
       const SuccessHandler = () => {
@@ -370,61 +342,9 @@ const MtnDataTopUpBundle = () => {
     setPaymentSelected(false);
   };
 
-  const handleSelectPayment = (code, flag, amount, id) => {
-    if (code === "NGN" && id === 1) {
-      setWalletNameMtn(code);
-      setImage(flag);
-      setPaymentAmount(amount);
-      setShowPayment(false);
-      setPaymentSelected(true);
-    }
-  };
+  
 
-  const Payment = ({ code, flag, amount, onClick, paymentMethod }) => {
-    return (
-      <div
-        className={`font-[500] w-full flex px-2  gap-[10px] text-[#7C7C7C] text-[8px] leading-[10.4px]
-            lg:text-[16px] lg:leading-[20.8px] md:py-[20px] py-[15px] pl-[10px]
-           lg:pl-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] md:shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)] 
-            ${
-              isDarkMode
-                ? "border-y-[0.5px] border-x-[0.6px] border-white"
-                : "boder-none"
-            } 
-           cursor-pointer ${
-             paymentMethod === "Inactive" && !isDarkMode
-               ? "bg-gray-300 cursor-not-allowed"
-               : paymentMethod === "Inactive" && isDarkMode
-               ? "bg-black"
-               : paymentMethod === "Active" && !isDarkMode
-               ? "bg-white"
-               : "bg-black"
-           } 
-           `}
-        onClick={onClick}
-      >
-        <div className={` ${airtimestyles.netImage}`}>
-          <img src={flag} alt="" className={airtimestyles.NoImage} />
-        </div>
-        <h2
-          className={`font-[500] text-[#7C7C7C] text-[12px] leading-[16.4px]
-            lg:text-[16px] lg:leading-[20.8px] ${
-              isDarkMode ? "text-white" : "text-[#7C7C7C]"
-            }`}
-        >
-          {code}
-        </h2>
-        <p
-          className={`font-[500] text-[#7C7C7C] text-[12px] leading-[16.4px]
-            lg:text-[16px] lg:leading-[20.8px] ${
-              isDarkMode ? "text-white" : "text-[#7C7C7C]"
-            }`}
-        >
-          Wallet({amount.toLocaleString()})
-        </p>
-      </div>
-    );
-  };
+
 
   const {
     toggleSideBar,
@@ -672,7 +592,7 @@ const MtnDataTopUpBundle = () => {
     await buyData(
       1, // Network ID for MTN
       inputValue, // Use inputValue instead of recipientPhoneNumber
-      selectedPlan.PlanID,
+      selectedPlan?.PlanID,
       recipientNamesMtn
     );
   };
@@ -687,6 +607,8 @@ const MtnDataTopUpBundle = () => {
     setPurchaseStatus(null);
     setRecipientPhoneNumberMtn("");
     setInputValue("");
+    setWalletNameMtn("");
+    setPaymentSelected(false);
   };
 
   return (
@@ -932,6 +854,7 @@ const MtnDataTopUpBundle = () => {
                 onClick={() => {
                   setShowOptionList(false);
                   setShowProductList(!showProductList);
+                  setSelectedOptionMtn("");
                 }}
               >
                 <h2
@@ -992,7 +915,7 @@ const MtnDataTopUpBundle = () => {
                      rounded-[10px] lg:rounded-[20px]
             leading-[18px] lg:text-[16px] lg:leading-[22px]"
                   >
-                    Plans unavailable,kindly select another mtn product.
+                    Plans unavailable, kindly select another mtn product.
                   </p>
                 )}
               </div>
@@ -1197,7 +1120,7 @@ const MtnDataTopUpBundle = () => {
                 }
   `}
                   // placeholder="&#8358;100"
-                  value={`${selectedAmountMtn}`}
+                  value={`${selectedAmountMtn  }`}
                   readOnly
                 />
                 <div className="absolute top-[3px] inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
@@ -1234,7 +1157,7 @@ const MtnDataTopUpBundle = () => {
                     >
                       <h2 className="text-[#7C7C7C]">{walletNameMtn}</h2>
                       <h2 className="text-[#7C7C7C]">
-                        Wallet ({paymentAmount.toLocaleString()})
+                       {paymentAmount.toLocaleString()}
                       </h2>
                     </li>
                   ) : (
@@ -1247,14 +1170,17 @@ const MtnDataTopUpBundle = () => {
                   )}
                   {paymentSelected ? (
                     <button
-                      className={`rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[15px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px] 
+                      className={`rounded-full w-[12.02px] h-[12.02px] flex 
+                        items-center justify-center text-[15px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px] 
                          ${isDarkMode ? "bg-black text-white" : ""}`}
                       onClick={handleShowPayment}
                     >
                       <img
                         src={image}
                         alt=""
-                        className="w-full h-full object-cover"
+                         className="decdrop absolute left-[92%] lg:left-[94%]
+              self-center align-middle md:h-[14.038px] md:w-[14.038px] 
+      lg:h-[24px] lg:w-[24px] w-[14px] h-[16px]"
                       />
                     </button>
                   ) : (
@@ -1262,40 +1188,115 @@ const MtnDataTopUpBundle = () => {
                       className="lg:w-6 lg:h-6 h-[11px] w-[11px]"
                       onClick={handleShowPayment}
                     >
-                      <img src={arrowDown} alt="" className="w-full h-full" />
+                      <img src={arrowDown} alt="" 
+                      className="decdrop absolute left-[92%] lg:left-[94%]
+              self-center align-middle md:h-[14.038px] md:w-[14.038px] 
+      lg:h-[24px] lg:w-[24px] w-[14px] h-[16px]" />
                     </button>
                   )}
                 </div>
               </div>
               <div className="relative">
                 {showPayment && (
-                  <div
-                    className={`pb-[16px] w-full pt-[16px] md:pb-[6px] md:pt-[6px]
-                     font-[400] text-[15px] border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute
-                      ${isDarkMode ? "bg-black text-white" : "text-white"}
-                   bg-[#FFF] z-[100] font-weight-bold text-[15px]
-                
-                  `}
-                  >
-                    {countryList.map((country) => (
-                      <Payment
-                        key={country.id}
-                        flag={country.flag}
-                        code={country.code}
-                        amount={country.amount}
-                        onClick={() =>
-                          handleSelectPayment(
-                            country.code,
-                            country.flag,
-                            country.amount,
-                            country.id
-                          )
-                        }
-                        paymentMethod={country.status}
-                      />
-                    ))}
-                  </div>
-                )}
+                           <div
+                             className={`absolute top-[102%] z-[3] flex flex-col w-[100%]  
+                                         cursor-pointer border-[1px]  border-gray-100 rounded-[3px]  
+                                               ${
+                                   isDarkMode
+                                     ? "bg-black border-white rounded-[7px] text-white"
+                                     : "text-[#7C7C7C] bg-white rounded-br-[7px] rounded-bl-[7px] lg:rounded-br-[14px] lg:rounded-bl-[14px]"
+                                 }
+                                 ${
+                                   toggleSideBar
+                                     ? "lg:w-[31.5%] lg:top-[100.5%]"
+                                     : "lg:w-[38.5%] lg:top-[105.3%]"
+                                 }  shadow-xl border w-full lg:w-full flex flex-col divide-y absolute top-20`}
+                               >
+                           {methodOptions.map((methodOption) => {
+                                         return (
+                                           <div
+                                             onClick={(e) => {
+                                               //onchange = { setMethodOptions }
+               
+                                               setWalletNameMtn(
+                                                 methodOption.id === 1
+                                                   ? methodOption.code
+                                                   : walletNameMtn === "NGN Wallet" &&
+                                                     methodOption.id !== 1
+                                                   ? "NGN Wallet"
+                                                   : ""
+                                               );
+                                 setPaymentAmount(methodOption.id === 1 && paymentAmount === ""? 
+                                 newBalance === "" || newBalance === null || newBalance === undefined
+                         ? `(${updateBalance?.length > 1 ? updateBalanceToNumber?.toLocaleString("en-NG", {
+                              style : "currency",
+                              currency : "NGN"
+                         }) : ""})`
+                         : `(${newBalance?.length > 1 ? newBalanceToNumber?.toLocaleString("en-NG", {
+                           style : "currency",
+                           currency : "NGN"
+                         }) : ""})` : walletNameMtn === "NGN Wallet" ?  newBalance === "" || newBalance === null || newBalance === undefined
+                         ? `(${updateBalance?.length > 1 ? updateBalanceToNumber?.toLocaleString("en-NG", {
+                              style : "currency",
+                              currency : "NGN"
+                         }) : ""})`
+                         : `(${newBalance?.length > 1 ? newBalanceToNumber?.toLocaleString("en-NG", {
+                           style : "currency",
+                           currency : "NGN"
+                         }) : ""})` : "");
+               
+                          setShowPayment(() => {
+                              if (methodOption.id === 1) {
+                               setPaymentSelected(true);
+                                    setShowPayment(false);
+                                       document.querySelector(".decdrop")
+                                        .classList.remove("DropIt");
+                                                 } else {
+                                                    setPaymentSelected(false);
+                                                   setShowPayment(true);
+                                                   document
+                                                     .querySelector(".decdrop")
+                                                     .classList.add("DropIt");
+                                                 }
+                                               });
+                                             
+                                                       
+                                              setImage(methodOption.flag);
+                                              
+                                             }}
+                                            className={`py-[18px] md:py-[14px] font-normal px-2 flex
+                                        items-center gap-[5px] text-[12px] md:text-[14px] 
+                                        lg:text-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
+                                         transition-all duration-300 hover:bg-slate-50
+                                      ${
+                                        isDarkMode
+                                          ? "text-white hover:bg-slate-800 bg-black "
+                                          : "text-[#7E7E7E]"
+                                      } ${
+                                       methodOption.method === "Nigeria"
+                                         ? "cursor-pointer"
+                                         : "cursor-not-allowed opacity-50"
+                                     }`}
+                                     
+                                             key={methodOption.id}
+                                           >
+                                             <img
+                                               className="md:h-[29.27px]  h-[14.27px]"
+                                               src={methodOption.flag}
+                                               alt=""
+                                             />
+               
+                                           
+                                             
+                                               {methodOption.code +
+                                                 " " +
+                                                 methodOption.balance}
+                                             
+                                           </div>
+                                         );
+                                       })}
+                           </div>
+                         )}
               </div>
             </div>
           </div>
@@ -1320,39 +1321,47 @@ const MtnDataTopUpBundle = () => {
 
           {proceed && (
             <Modal>
-              <div
-                className={`scroll-bar ${
-                  isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
-                } ${
-                  toggleSideBar ? "confirm01" : "confirm"
-                } grow pt-[10px] pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto mb-[20px] md:my-auto md:overflow-auto`}
+              <div className={`w-full flex justify-center h-full 
+             py-[30px] px-[15px] lg:px-[0px] lg:items-center
+              items-end`}>
+           <div
+                className={` bvnQuery lg:rounded-[12px] rounded-[10px] 
+              h-[520px] ${ toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+              } w-[100%] md:w-[60%] overflow-auto  ${isDarkMode ? "bg-black text-white border rounded-[10px] border-white": "bg-white text-black"} `}
               >
-                <div className="w-full flex justify-end border-b-[6px] border-primary px-[12px] md:h-[25px] lg:border-b-[10px] lg:mt-[20px]">
+                <div className= "flex justify-end pr-2 lg:py-[10px] py-[7px]">
                   <img
                     src={Cancel}
                     alt=""
                     onClick={() => setProceed(false)}
-                    className="md:h-[120%] lg:h-[400%] lg:mt-[-25px] lg:pb-[20px]"
+                      className=" w-[25px] h-[25px] md:w-[35px] md:h-[35px] 
+                lg:w-[26px] lg:h-[26px]"
                   />
                 </div>
-
-                <div>
-                  <h2 className="lg:text-[16px] lg:leading-[24px] text-center mb-1 text-[10px] md:text-[13px] font-[400] mt-[20px] leading-[12px]">
+                <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]"/>
+                <div className="mx-auto">
+                  <p className="text-[12px] font-extrabold
+             my-[5%] text-center md:my-[3%] md:text-[15px] 
+            lg:my-[2%] lg:text-[16px]">
                     Confirm Transaction
-                  </h2>
-                  <h2 className="lg:text-[16px] md:text-[12px] md:px-[30px] lg:leading-[24px] text-[10px] leading-[12px] text-center mt-[26px] mx-[10px] mb-[20px]">
+                  </p>
+                  <div className={`text-[10px] font-semibold text-center mb-2
+               md:text-[12px] lg:text-[14px] mx-2 
+               ${isDarkMode ? "text-white" : "text-black"}`}>
                     You are about to purchase{" "}
-                    <span className="font-bold">
+                    <span className={`font-extrabold text-[10px] md:text-[16px]
+                     lg:text-[12px] ${isDarkMode ? "text-white" : "text-black"}`}>
                       {selectedProductMtn + " " + selectedOptionMtn}
                     </span>{" "}
-                    from your {walletNameMtn + " Wallet"} to
-                  </h2>
+                    from your {walletNameMtn} to
+                  </div>
 
-                  <div className="flex flex-col gap-[15px] px-[20px] mt-[50px] md:gap-[25px]">
-                    <div className="flex items-center justify-between">
-                      <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                  <div className="flex flex-col gap-3 mt-5 md:mt-6 lg:mt-7">
+                    <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
+         justify-between font-[500] lg:text-[16px]">
+                      <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
                         Network
-                      </h2>
+                      </span>
                       <div className="flex gap-1">
                         <div className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]">
                           <img
@@ -1361,170 +1370,152 @@ const MtnDataTopUpBundle = () => {
                             className="w-full h-full object-cover md:h-[25px]"
                           />
                         </div>
-                        <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                        <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
                           MTN
-                        </h2>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        Product
-                      </h2>
-                      <div className="flex gap-1">
-                        <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          {selectedProductMtn}
-                        </h2>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        Plan
-                      </h2>
-                      <div className="flex gap-1">
-                        <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          {selectedProductMtn + " " + selectedOptionMtn}
-                        </h2>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        Phone Number
-                      </h2>
-                      <div className="flex gap-1">
-                        <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          {inputValue}
-                        </h2>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        Recipient Name
-                      </h2>
-                      <div className="flex gap-1">
-                        <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          {recipientNamesMtn}
-                        </h2>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        Payment Method
-                      </h2>
-                      <div className="flex gap-1">
-                        <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          {walletNameMtn + " Wallet"}
-                        </h2>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        Total Amount
-                      </h2>
-                      <div className="flex gap-1">
-                        <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          {selectedAmountMtn}
-                        </h2>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        Transaction Fee
-                      </h2>
-                      <div className="flex gap-1">
-                        <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          0.00
-                        </h2>
-                      </div>
-                    </div>
-                    <div className="flex text-[10px] md:text-[14px] w-[100%] mx-auto justify-between font-semibold lg:text-[16px]">
-                      <span className="text-[#0008]">Points Earned</span>
-                      <span className="text-[#2ED173]">+2.00</span>
-                    </div>
-
-                    <div
-                      className="bg-[#F6F7F7] w-[95%] h-auto  lg:my-8 flex py-[7px] 
-                           justify-between items-center px-[4%] mx-auto rounded-[10px]"
-                    >
-                      <div className="flex flex-col gap-2  ">
-                        <div className="flex gap-[10px] justify-center items-center">
-                          <img
-                            className="w-[16px] h-[16px] bg-white"
-                            src={image}
-                            alt="/"
-                          />
-                          <div className="flex gap-[10px] items-center">
-                            <p className="text-[12px] md:text-[14px] leading-[20px] lg:leading-[22px]  lg:text-[16px] font-[500]">
-                              Available Balance {"  "}
-                            </p>
-                            <span className="text-black">
-                              {`(${
-                                newBalance === "" || newBalance === null
-                                  ? `${
-                                      cleanUpBalanceToNumericOnly > 1
-                                        ? cleanUpBalanceToNumericOnly?.toLocaleString(
-                                            "en-NG",
-                                            {
-                                              style: "currency",
-                                              currency: "NGN",
-                                            }
-                                          )
-                                        : "₦"
-                                    }`
-                                  : `${
-                                      balanceStringToNum > 1
-                                        ? balanceStringToNum?.toLocaleString(
-                                            "en-NG",
-                                            {
-                                              style: "currency",
-                                              currency: "NGN",
-                                            }
-                                          )
-                                        : "₦"
-                                    }`
-                              })`}
-                            </span>
-                          </div>
-                        </div>
-                        <span
-                          className="text-gray-500 text-[14px] font-[400] leading-[20px]
-                                        lg:text-[16px] lg:leading-[22px] text-left"
-                        >
-                          {balanceStatus}
                         </span>
                       </div>
-
-                      <img
-                        src={Select}
-                        alt=""
-                        className="w-[12px] h-[12px] md:w-[50px] md:h-[20px] lg:w-[80px] lg:h-[30px]"
-                      />
                     </div>
 
-                    <div className="flex items-center justify-center">
-                      <button
-                        disabled={CheckSufficiency}
-                        className={`w-full md:w-fit text-white rounded-md px-[28px] 
-                        text-[10px] md:text-[12px] leading-[15px] lg:text-[16px] lg:leading-[24px]
-                         py-[15px] md:py-[10px]  ${
-                           CheckSufficiency ? "bg-gray-400" : "bg-primary"
-                         } `}
-                        onClick={() => {
-                          handleConfirm();
-                        }}
-                      >
-                        Confirmed
-                      </button>
+                    <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
+         justify-between font-[500] lg:text-[16px]">
+                      <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+                        Product
+                      </span>
+                      <div className="flex gap-1">
+                        <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
+                          {selectedProductMtn}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
+         justify-between font-[500] lg:text-[16px]">
+                      <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+                        Plan
+                      </span>
+                      <div className="flex gap-1">
+                        <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
+                          {selectedProductMtn + " " + selectedOptionMtn}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
+         justify-between font-[500] lg:text-[16px]">
+                      <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+                        Phone Number
+                      </span>
+                      <div className="flex gap-1">
+                        <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
+                          {inputValue}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
+         justify-between font-[500] lg:text-[16px]">
+                      <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+                        Recipient Name
+                      </span>
+                      <div className="flex gap-1">
+                        <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
+                          {recipientNamesMtn}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
+         justify-between font-[500] lg:text-[16px]">
+                      <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+                        Payment Method
+                      </span>
+                      <div className="flex gap-1">
+                        <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
+                          {walletNameMtn}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
+         justify-between font-[500] lg:text-[16px]">
+                      <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+                        Total Amount
+                      </span>
+                      <div className="flex gap-1">
+                        <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
+                          {selectedAmountMtn}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
+         justify-between font-[500] lg:text-[16px]">
+                      <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+                        Transaction Fee
+                      </span>
+                      <div className="flex gap-1">
+                        <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
+                          0.00
+                        </span>
+                      </div>
+                    </div>
+                    <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
+         justify-between font-[500] lg:text-[16px]">
+                      <span className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Points Earned</span>
+                      <span className="text-[#2ED173]">+2.00</span>
                     </div>
                   </div>
+                  </div>
+                     <div className={`bg-[#F6F7F7] w-[95%] h-auto my-5 lg:my-8 flex py-[7px] 
+                          justify-between items-center px-[4%] mx-auto rounded-[10px]  
+                          ${isDarkMode ? "bg-black border rounded-[10px]  border-white" : "bg-[#F6F7F7] "}`}>
+                                  <div className="flex flex-col gap-2 ">
+                                    <div className="flex gap-[10px] justify-center items-center">
+                                      <img
+                                        className="w-[16px] h-[16px] bg-white"
+                                        src={image}
+                                        alt="/"
+                                      />
+                                      <div className="flex gap-[10px] items-center">
+                                          <p className={`text-[12px] md:text-[14px] leading-[20px] 
+                                          lg:leading-[22px]  lg:text-[16px] font-[500] ${isDarkMode ? "text-white" : "text-black"}`}>
+                                      Available Balance {"  "} 
+                                       </p>
+                                       <span className={`font-medium ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+                                        {`(${balanceOption !== "" || balanceOption !==null ? balanceOption?.toLocaleString("en-NG", {
+                                          style : "currency",
+                                          currency : "NGN"
+                                        }) : "₦"})`}
+                                      </span>
+                                      </div>
+                                    </div>
+                                  <span className="text-gray-500 text-[14px] font-bold leading-[20px]
+                                       lg:text-[16px] lg:leading-[22px] text-left">
+                                         {balanceStatus}
+                                         </span>
+                                  </div>
+                  
+                                  <img
+                                    src={Select}
+                                    alt=""
+                                    className="w-[12px] h-[12px] md:w-[50px] md:h-[20px] lg:w-[80px] lg:h-[30px]"
+                                  />
+                                </div>
+                   <button
+           disabled={CheckSufficiency}
+            onClick={handleConfirm}
+              className={`bg-[#04177f] my-[5%] w-[90%] flex 
+                justify-center items-center mx-auto cursor-pointer 
+                text-[14px] font-extrabold h-[50px] text-white rounded-[6px]
+                 md:w-[25%] md:rounded-[8px] lg:rounded-[12px] md:text-[16px]
+                 lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:my-[2%] 
+                 ${CheckSufficiency ? "bg-gray-400" : "bg-primary"} `}
+            > Confirmed
+            </button>
+                  </div>
                 </div>
-              </div>
+              
+        
             </Modal>
           )}
 
@@ -1609,40 +1600,52 @@ const MtnDataTopUpBundle = () => {
 
           {confirm && (
             <Modal>
-              <div
-                className={` ${
-                  toggleSideBar ? "confirm02" : "confirm2"
-                } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto  rounded-[12px]
-                   my-[20px] h-[200px]  overflow-y-scroll md:overflow-y-auto`}
+              <div className="flex items-end justify-center
+             lg:items-center lg:justify-center 
+   w-[100%] lg:px-[0px] rounded-[10px] h-[100%] px-[15px]">
+              <div className={`flex flex-col lg:mb-[0px]  mb-[50px]
+         lg:h-[350px] overflow-y-scroll h-[300px] bvnQuery  ${
+                      toggleSideBar ? "md:w-[45%] lg:w-[40%]  " : "lg:w-[40%]"
+                    } md:w-[55%] w-full   ${isDarkMode ? "text-white bg-black border-[1px] border-white rounded-[10px]" : "text-black bg-white rounded-[10px]"}`}
               >
-                <div className="flex justify-end px-2">
+                <div className="pr-3 lg:pr-2 py-[5px] 
+                flex justify-end">
                   <img
                     onClick={() => setConfirm(false)}
-                    className="cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[35px] lg:h-[35px] "
+                     className="w-[25px] h-[25px]  md:w-[35px] md:h-[35px] 
+                lg:w-[25px] lg:h-[25px]"
                     src={Cancel}
                     alt=""
                   />
                 </div>
-
-                <hr className="h-[6px] bg-[#04177f] lg:mt-[2%] border-none mt-[2%] md:mt-[2%] md:h-[10px]" />
-                <div className="md:mt-[15%] lg:mt-[10%]">
-                  <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[8%] md:my-[5%] lg:my-[3%]">
-                    Input PIN to complete transaction
+                 <div className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
+                  <div className="flex flex-col w-full  justify-center 
+             py-[15px] lg:py-[0px]
+             h-[100%] gap-[15px]">
+                  <p className="font-extrabold text-[12px] leading-[16px] 
+            pb-[20px]
+             md:text-[10px]
+             lg:text-[16px] text-center 
+            ">
+                 Input PIN to complete transaction
                   </p>
-                  <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
-                    <div className=" flex justify-center items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
+                  <div className="flex flex-col items-center lg:gap-[0px]
+             gap-[5px] font-extrabold">
+                    <div className=" flex items-center  gap-[10px]">
                       <OtpInput
                         value={inputPin}
                         inputType={!isVisible ? "tel" : "password"}
                         onChange={setInputPin}
                         numInputs={4}
                         shouldAutoFocus={true}
-                        inputStyle={{
-                          color: "#403f3f",
-                          width: 30,
-                          height: 30,
-                          borderRadius: 3,
-                        }}
+                       inputStyle={{
+                      color: "#000000",
+                      fontSize: '14px',
+                      fontWeight: 700,
+                      borderRadius: 4,
+                      height: '35px',
+                      width: '35px',
+                    }}
                         renderInput={(props) => (
                           <input {...props} className="inputOTP mx-[3px]" />
                         )}
@@ -1654,17 +1657,23 @@ const MtnDataTopUpBundle = () => {
                         {isVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
                       </div>
                     </div>
-                    <p className="text-[8px] md:text-[12px] text-[#04177f]">
-                      Forgot Pin ?
-                    </p>
+                     <Link to={{
+                                  pathname : "/ProfileSettingMain",
+                                   state :  authenticationOpen
+                                 }} className="text-[10px] leading-[14px] font-extrabold 
+                                 md:text-[12px]
+                                   my-2 text-[#04177f]">
+                                   Forgot Pin ?
+                                 </Link>
                   </div>
                   {errorMessage && (
-                    <p className="text-[14px] font-[500] text-red-500 text-center leading-[14px]">
+                    <p className="font-bold text-[14px]  lg:text-[16px] md:font-[500] 
+              text-center leading-[18px] lg:leading-[20px]  text-red-600">
                       Incorrect pin
                     </p>
                   )}
-                </div>
-
+            
+     <div className="flex flex-col gap-[10px] px-[20px]" >
                 <button
                   onClick={(e) => {
                     console.log("inputPin", inputPin);
@@ -1699,11 +1708,19 @@ const MtnDataTopUpBundle = () => {
                   }}
                   disabled={inputPin.length !== 4}
                   className={`${
-                    inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
-                  } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                inputPin.length !== 4 && !isDarkMode ? "bg-[#0008]" : 
+                 inputPin.length !== 4 && isDarkMode ? "bg-gray-300" : "bg-[#04177f]"
+              } w-full  md:w-[94px] lg:w-[163px] flex 
+              justify-center items-center mx-auto cursor-pointer text-[12px]
+               md:text-[10px] lg:text-[16px] font-extrabold h-[50px] 
+               lg:h-[38px] md:h-[22px] text-white rounded-[6px] md:rounded-[6.88px]
+                lg:rounded-[12px]`}
                 >
                   Purchase
                 </button>
+                </div>
+              </div>
+              </div>
               </div>
             </Modal>
           )}
@@ -1893,6 +1910,7 @@ const MtnDataTopUpBundle = () => {
                       mtnorderID: mtnOrderID,
                       mtndescription: mtndescription,
                       mtnReceiptInfo: mtnReceiptInfo,
+                      setPaymentSelected : setPaymentSelected
                     }}
                   >
                     <button

@@ -135,10 +135,12 @@ export const GotvReceipt = (Data) => {
             toggleSideBar ? "" : "lg:w-[880px] "
           } w-full lg:mx-auto  ${isDarkMode ? "border border-white" : ""}` } 
         >
-          <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
+          <div className="flex justify-between items-center 
+          mx-[3%] my-[2%] lg:my-[1%]">
             <div>
               <img
-                className=" w-[15px] h-[10px] md:w-[24px] md:h-[15px] lg:w-[42px] lg:h-[25px]"
+                className=" w-[15px] h-[10px] md:w-[24px] 
+                md:h-[15px] lg:w-[42px] lg:h-[25px]"
                 src="/Images/login/arpLogo.png"
                 alt=""
               />
@@ -189,14 +191,14 @@ export const GotvReceipt = (Data) => {
             </span>
             <p className={`text-[10px] p-[5.729px] border-[0.573px] rounded-[6.302px]
              md:p-[5.868px] md:border-[0.578px] md:rounded-[6.455px]  lg:border-[1px] lg:rounded-[11px]
-                   leading-[15px] md:leading-[20px] 
+                   leading-[15px] md:leading-[20px] font-[600] 
                     lg:p-[10px] text-center my-2 md:text-sm
-                    lg:text-base  lg:leading-[24px] font-medium md:mb-7
+                    lg:text-base  lg:leading-[24px]  md:mb-7
              ${tvSubscriptionResponse?.data?.status === "delivered" ? "border-[#27AE60] text-[#27AE60] bg-[#D5F6E3]" :  'border-red-500 text-red-500 bg-red-100' }`}>
              {tvSubscriptionResponse?.data?.status === "delivered" ?  "You have successfully subscribed to " : purchaseGotvErrorType}
               <span  className="font-extrabold text-[10.9px] md:text-[14.9px] 
               lg:text-[16.9px]">
-                {selectedOptionGOTV}{" "}
+              {" "}  {selectedOptionGOTV}{" "}
               </span>
               from your {" "}
               <span>{flagResult} to </span>

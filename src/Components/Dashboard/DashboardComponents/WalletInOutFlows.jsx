@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import { RxDotFilled } from "react-icons/rx";
 import styles from "./component.module.css";
 import { GetFunction, HandleUserSession } from "../../ApiCollection.jsx/ApiBuck";
@@ -7,15 +7,6 @@ import { ContextProvider } from "../../Context";
 import  { RecentTransaction } from  "./RecentTransaction";
 
 
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Label,
-} from "recharts";
 
 export const WalletInOutFlows = ({className}) => {
   const { volumeValueToggle, isValue, isDarkMode, toggleSideBar } =
@@ -490,7 +481,9 @@ export const WalletInOutFlows = ({className}) => {
           options={options}
         /> */}
 
-        <div style={{ width: "100%", maxWidth: "100%", overflowX: "auto" }}>
+
+{/* The Charts Created earlier */}
+        {/* <div style={{ width: "100%", maxWidth: "100%", overflowX: "auto" }}>
           <LineChart
             width={window.innerWidth < 768 ? window.innerWidth - 40 : 1480}
             height={window.innerWidth < 768 ? 300 : 370}
@@ -525,12 +518,9 @@ export const WalletInOutFlows = ({className}) => {
             <Line type="linear" dataKey="outflow" stroke="#FA6B6B" />
             <Tooltip />
           </LineChart>
-        </div>
-
-       
-      </div>
-      {/* ========================Chart End========================= */}
-     
+        </div> */}
+  {/* ========================Chart End========================= */}
+     </div>
        <RecentTransaction transactionResponse = {transactionResponse} 
        transactionHistoryError={transactionHistoryError} loading={loading} />
        
