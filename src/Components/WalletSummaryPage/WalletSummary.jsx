@@ -49,7 +49,6 @@ export default function WalletSummaryPage() {
   const [selected, setSelected] = useState("NGN");
   const [methodImage, setMethodImage] = useState(flagpage);
   const [methodBalance, setMethodBalance] = useState(false);
-  const [totalOutFlow, setTotalOutFlow] = useState("");
   const navigate = useNavigate();
   // const toggleDropdown1 = () => { setIsOpen1(true); };
   //
@@ -321,30 +320,21 @@ export default function WalletSummaryPage() {
       ? "£"
       : "₦";
 
-  const filteredWalletTransactions =
-    walletTransactionResponse?.data?.data?.data?.data?.transactions !== null
-      ? walletTransactionResponse?.data?.data?.data?.data?.transactions?.filter(
-          (transaction) => {
-            if (
-              selectedStatus === "" ||
-              selectedStatus === "All Transactions" ||
-              selectedStatus === "Filter by Status"
-            ) {
-              return transaction;
-            } else {
-              if (selectedStatus !== "Successful") {
-                return transaction?.status === selectedStatus;
-              } else if (selectedStatus === "Successful") {
-                return (
-                  transaction?.status === "success" ||
-                  transaction?.status === "Successful" ||
-                  transaction?.status === "delivered"
-                );
-              }
-            }
-          }
-        )
-      : [];
+  const filteredWalletTransactions = walletTransactionResponse?.data?.data?.data?.data?.transactions !== null ? walletTransactionResponse?.data?.data?.data?.data?.transactions?.filter((transaction) => {
+  return selectedStatus === ""
+     || selectedStatus === "All Transactions"
+    || selectedStatus === "Filter by Status" ? 
+      transaction :
+    selectedStatus !== "Successful" ? 
+      transaction?.status === selectedStatus
+    : selectedStatus === "Successful" ? 
+        transaction?.status === "success" || 
+        transaction?.status === "Successful" || 
+        transaction?.status === "delivered" : null
+        
+      
+      
+}) : [];
   //console.log(walletTransactionResponse?.data?.data?.data?.data);
   const product = [
     "All Transactions",

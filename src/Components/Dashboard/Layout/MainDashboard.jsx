@@ -358,8 +358,8 @@ return (
             }}
             modules={[Pagination, Autoplay]}
             className=""
-            speed="2000"
-            loop="true"
+            speed={2000}
+            loop={true}
           >
             <SwiperSlide>
               {" "}

@@ -19,10 +19,10 @@ const ToAremxyPlug = () => {
            className="min-h-[90px] py-[15px] lg:h-[196px] 
              md:h-[112.29px] rounded-[6.6px] md:rounded-[11.46px] 
              lg:rounded-[20px] mx-auto  flex gap-6 justify-between
-              px-[16.51px] md:px-[28.65px] lg:px-[50px]"
+              px-[16.51px] md:px-[28.65px] lg:px-[50px] w-[100%]"
           >
             <div  className="py-[9.57px] md:py-[16.61px] 
-                            align-middle self-center flex flex-col gap-1.5 w-[70%]">
+                            align-middle self-center flex flex-col gap-1.5 w-[100%]">
               <h2 className="text-[11px] leading-[13px] lg:leading-[30px]
                                  lg:text-[24px] md:text-[13.75px] font-semibold">
                 TRANSFER MONEY TO AREMXYPLUG USER.

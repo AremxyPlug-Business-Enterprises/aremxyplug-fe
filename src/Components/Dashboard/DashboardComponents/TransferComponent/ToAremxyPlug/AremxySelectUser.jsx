@@ -15,8 +15,17 @@ import { GetFunction, HandleUserSession} from "../../../../ApiCollection.jsx/Api
 import { Loader} from "../../../../Loader/Loader";
 import NoRecordImage  from "../../../../Add&SelectRecipient/RecipientImages/NoRecordImage.svg";
 import { GetLocalStorage } from "../../../../LocalStorage/LocalStorage";
+import { useNavigate } from "react-router-dom";
+import nigerianFlag from "../../../../Dashboard/DashboardComponents/flagsImages/nigeriaFlag.png";
+import usdFlag from  "../../../../Dashboard/DashboardComponents/flagsImages/americaFlag.png";
+import kenyaFlag from"../../../../Dashboard/DashboardComponents/flagsImages/kenyaFlag.png";
+import britainFlag from "../../../../Dashboard/DashboardComponents/flagsImages/ukFlag.png";
+import audFlag from "../../../../Dashboard/DashboardComponents/flagsImages/australiaFlag.png";
+import euroFlag from "../../../DashboardComponents/flagsImages/europeanFlag.png";
+import currencyImage from  "../../../../EducationPins/imagesEducation/arrow-down.svg";
 export default function AremxySelectUser(Data) {
 Data = GetLocalStorage()
+const navigate = useNavigate()
     const {
         showList,
         setShowList,
@@ -26,47 +35,51 @@ Data = GetLocalStorage()
         mainCountry,
         setMainCountry,
         mainTransferErrors,
-        isDarkMode
+        isDarkMode,
+        newBalance, setNewBalance
       } = useContext(ContextProvider);
-
-    const countryList = [
-        {
-          id: 1,
-          name: "Nigeria",
-          code: "NGN",
-          flag: require("../../../../Dashboard/DashboardComponents/flagsImages/nigeriaFlag.png"),
-        },
-        {
-          id: 2,
-          name: "United States",
-          code: "USD",
-          flag: require("../../../../Dashboard/DashboardComponents/flagsImages/americaFlag.png"),
-        },
-        {
-          id: 3,
-          name: "United Kingdom",
-          code: "GBP",
-          flag: require("../../../../Dashboard/DashboardComponents/flagsImages/ukFlag.png"),
-        },
-        {
-          id: 4,
-          name: "European",
-          code: "EUR",
-          flag: require("../../../../Dashboard/DashboardComponents/flagsImages/europeanFlag.png"),
-        },
-        {
-          id: 5,
-          name: "Australia",
-          code: "AUD",
-          flag: require("../../../../Dashboard/DashboardComponents/flagsImages/australiaFlag.png"),
-        },
-        {
-          id: 6,
-          name: "Kenya",
-          code: "KES",
-          flag: require("../../../../Dashboard/DashboardComponents/flagsImages/kenyaFlag.png"),
-        },
-      ];
+      const [passDataBalance, setPassDataBalance] = useState({})
+      const [currencyBalance,  setCurrencyBalance] = useState("");
+const updateBalance = passDataBalance?.data?.data?.data !== undefined
+    ? passDataBalance?.data?.data?.data?.balance
+    : "";
+  const updateBalanceToNumber = Number(updateBalance)
+  const newBalanceToNumber = Number(newBalance)
+     const methodOptions = [
+       {
+         method: "Nigeria",
+         balance:
+           newBalance === "" || newBalance === null || newBalance === undefined
+             ? `(${updateBalance?.length > 1 ? updateBalanceToNumber?.toLocaleString("en-NG", {
+                  style : "currency",
+                  currency : "NGN"
+             }) : ""})`
+             : `(${newBalance?.length > 1 ? newBalanceToNumber?.toLocaleString("en-Ng", {
+               style : "currency",
+               currency : "NGN"
+             }) : ""})`,
+         flag: nigerianFlag,
+         id: 1,
+         code : "NGN"
+       },
+       { method: "United States",
+          balance: "($0.00)", 
+          flag: usdFlag,
+           id: 2, code : "" },
+       { method: "United Kingdom",
+          balance: "(€0.00)", 
+          flag: britainFlag,
+           id: 3,
+           code : ""
+         },
+       { method: "Europe",
+          balance: "(£0.00)", 
+          flag: euroFlag,
+           id: 4,
+         code : "" },
+       { method: "Australia", balance: "(AU$0.00)", flag: audFlag, id: 5 , code : ""},
+       { method: "Kenya", balance: "(KSh0.00)", flag: kenyaFlag, id: 6, code : ""  },
+     ];
 
     const [flag, setFlag] = useState("");
     const [activeTab, setActiveTab] = useState('tab_1');
@@ -92,7 +105,7 @@ Data = GetLocalStorage()
     const active = styled.active;
     const inactive = styled.inactive;
     const [searchSelectRecipient, setSearchSelectRecipient] = useState("")
-
+const [currencyImage, setCurrencyImageState] = useState()
     const handleTab1 =()=> {
         setActiveTab('tab_1')
     }
@@ -231,61 +244,203 @@ return (
 )
 
 }): [];
+  useEffect(()=> {
+    
+const GetBalance = async () => {
+      const SuccessHandler = () => {
+        //alert("Successful");
+        console.log("successfully retrieved balance");
+        //alert("Successful")
+      };
+      const FailedHandler = async (ErrorType) => {
+        if (ErrorType === "unauthorised") {
+          await GetFunction(
+            `balance`,
+            setLoading,
+            SuccessHandler,
+            //Handling the error Use Cases of the Unauthorised inside
+            // of the statement.
+            async(ErrorType) => {
+              if (ErrorType === "unauthorised") {
+                return setSessionModal(false);
+              }else if(ErrorType === "Server error"){
+                  await GetFunction(
+        "balance",
+        setLoading,
+        SuccessHandler,
+       async(ErrorType)=> {
+        if(ErrorType === "Server error"){
+          alert("Failed to retrieve the balance.")
+        }else if(ErrorType === "Network error" || ErrorType === "User error"){
+              alert("Kindly check your internet connection to retrieve balance.")
+        }else {
+          alert("An unexpected error has occured on attempt to retrieve balance.")
+        }
+       },
+        setPassDataBalance
+      );
+       }else if(ErrorType === "Network error" || ErrorType === "User error"){
+           alert("Kindly check your internet connection to retrieve balance")
+       }else {
+        alert("An unexpected error has occured on attempt to retrieve the balance")
+       }
+            },
+             setPassDataBalance
+          );
+        }else if(ErrorType === "Server error"){
+            await GetFunction(
+        "balance",
+        setLoading,
+        SuccessHandler,
+       async(ErrorType)=> {
+         if(ErrorType === "unauthorised"){
+            await GetFunction(
+        "balance",
+        setLoading,
+        SuccessHandler,
+        async(ErrorType)=> {
+          if(ErrorType === "unauthorised"){
+            return setSessionModal(false);
+          }else if(ErrorType === "Server error"){
+               await GetFunction(
+        "balance",
+        setLoading,
+        SuccessHandler,
+       async(ErrorType)=> {
+        //if Statements
+      //We run again cause the previous one was interrupted by 401
+      //Let us re-run server error
+      if(ErrorType === "Server error"){
+        alert("Failed to retrieve the balance")
+      }else if(ErrorType === "unauthorised"){
+        return sessionModal(true)
+      }else if(ErrorType === "Network error" || ErrorType === "User error"){
+       alert("Kindly check your internet connection to retrieve balance")
+      }else{
+        alert("An Unexpected error occured in attempt to retrieve balance")
+      }
 
-console.log(searchSelectRecipient);
+       },
+        setPassDataBalance
+      );
+          }else if(ErrorType === "Network error" || ErrorType === "User error"){
+            alert("Kindly check your internet connection to retrieve the balance")
+          }else{
+            alert("An Unexpected error occured in attempt to retrieve balance")
+          }
+        },
+        setPassDataBalance
+      );
+    }
+          else if(ErrorType === "Network error" || ErrorType === "User error"){
+            //The operation was interrupted by a network error
+            alert("Kindly check your internet connection to retrieve balance.")
+         }else {
+          //An alien error has occured with the re-run of the "Server error" ErrorType
+          alert("An unexpected error occured in attempt to retrieve the balance.")
+         }
+       },
+        setPassDataBalance
+      );
+        }else if(ErrorType === "Network error" || ErrorType === "User error"){
+
+        }else{
+          alert("An unexpected error occured in attempt to retrieve balance.")
+        }
+      }
+      await GetFunction(
+        "balance",
+        setLoading,
+        SuccessHandler,
+        FailedHandler,
+        setPassDataBalance
+      );
+    };
+                     // Simulate async data loading
+                    if((newBalance === "" ||
+       newBalance === null ||
+        newBalance === undefined) && Data?.ConfirmAcc === "true"){
+                        GetBalance();
+                        if(GetBalance){
+                         setNewBalance(passDataBalance?.data?.data?.data !== undefined
+                           ? passDataBalance?.data?.data?.data?.balance : "");
+                        }
+                      }else{
+                        console.log("Create an account to access this feature.")
+    
+                      }
+                      //eslint-disable-next-line
+  }, [])
+  
+
+  //DropDown Handling
+    function currencyDropDown() {
+    if(showDrop === false){
+    setShowDrop(true);
+    document.querySelector(".decdrop").classList.add("DropIt");
+    }else {
+     setShowDrop(false);
+     document.querySelector(".decdrop").classList.remove("DropIt");
+    }
+  }
+
 
 
       return (
       
 
   <DashBoardLayout>
-        <div className={style.AirtimeTops}>
-        <div className={style.airtimeTop}>
-           <div
-                     style={{
-                       background:
-                         "#B4BEFA",
-                     }}
-                    className="min-h-[99px] py-[15px] lg:h-[196px] 
-                      md:h-[112.29px] rounded-[6.6px] md:rounded-[11.46px] 
-                      lg:rounded-[20px] mx-auto  flex gap-6 justify-between
-                       px-[16.51px] md:px-[28.65px] lg:px-[50px]"
-                   >
-                     <div  className="py-[9.57px] md:py-[16.61px] 
-                                     align-middle self-center flex flex-col gap-1.5 w-[70%]">
-                       <h2 className="text-[11px] leading-[13px] lg:leading-[30px]
-                                          lg:text-[24px] md:text-[13.75px] font-semibold">
-                         TRANSFER MONEY TO AREMXYPLUG USER.
-                       </h2>
-                       <p className="text-[10px] leading-[13px] lg:leading-[25px]
-                                          lg:text-[20px] md:text-[11.46px]">
-                         Transfer money from your wallets to any 
-                         AremxyPlug user wallets for free, no any hidden fee,
-                          enjoy!!!
-                       </p>
-                     </div>
-                     <div className="w-[100px] h-[66px] lg:w-[230px] lg:h-[150px]">
-                       <img
-                         src="./Images/transferImages/flying-coin-notes.png"
-                         alt=""
-                         className="h-full w-full"
-                       />
-                     </div>
-                   </div>
+        <div className="flex flex-col" >
+       
+            <div
+                      style={{
+                        background:
+                          "#B4BEFA",
+                      }}
+                     className="min-h-[99px] mb-[20px] py-[15px] lg:h-[196px] 
+                       md:h-[112.29px] rounded-[6.6px] md:rounded-[11.46px] 
+                       lg:rounded-[20px] mx-auto  flex gap-6 justify-between
+                        px-[16.51px] md:px-[28.65px] lg:px-[50px] w-[100%]"
+                    >
+                      <div  className="py-[9.57px] md:py-[16.61px] 
+                                      align-middle self-center flex flex-col gap-1.5 w-[100%]">
+                        <h2 className="text-[11px] leading-[13px] lg:leading-[30px]
+                                           lg:text-[24px] md:text-[13.75px] font-semibold">
+                          TRANSFER MONEY TO AREMXYPLUG USER.
+                        </h2>
+                        <p className="text-[10px] leading-[13px] lg:leading-[25px]
+                                           lg:text-[20px] md:text-[11.46px]">
+                          Transfer money from your wallets to any 
+                          AremxyPlug user wallets for free, no any hidden fee,
+                           enjoy!!!
+                        </p>
+                      </div>
+                      <div className="w-[100px] h-[66px] lg:w-[230px] lg:h-[150px]">
+                        <img
+                          src="./Images/transferImages/flying-coin-notes.png"
+                          alt=""
+                          className="h-full w-full"
+                        />
+                      </div>
+                    </div>
+                    <div className="flex flex-col gap-[30px]">
             <div className='flex md:gap-[10px] gap-[3.27px]'>
-                <h2 className='text-[#7C7C7C] font-[500] text-[9px] leading-[12px] lg:text-[20px] lg:leading-[30px]'>
+                <p  className="text-[#7E7E7E] text-[15px] lg:text-[17px]
+                       md:text-[13px] md:font-[600] font-[400]">
                     Select the user account below
-                </h2>
+                </p>
                 <img src={ArrowRight} alt="" 
-                className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
+                className='self-center align-middle md:h-[14.038px] md:w-[14.038px] 
+      lg:h-[24px] lg:w-[24px] w-[14px] h-[16px]'/>
             </div>
-            <div className='relative md:w-[50%] w-[100%] h-[100%]  '>
+            <div className="flex flex-col gap-[15px] lg:gap-[30px]">
+            <div className='relative md:w-[50%] w-[100%] h-[100%]'>
                 <input type="text" 
-                className={`focusSearch mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]
-                         md:p-0 text-[13.8px] 
-                        sm:p-3 sm:text-lg flex justify-between pt-[8.803px] 
-                        pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
-                   leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+                className={`focusSearch mt-2 md:mt-0 rounded-[10px]
+                   md:rounded-0 p-[20px] md:p-0 text-[13.8px] 
+                  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] 
+                  pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+                  leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
                 lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
                 md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px]
                  lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
@@ -304,23 +459,35 @@ console.log(searchSelectRecipient);
                 console.log(e);
                 }}
                 src={SearchIcon} alt="" 
-                className='absolute md:top-[50%] md:right-[10px] top-[25%] right-[7.997px] 
-                lg:w-[20px] lg:h-[15px] h-[15px] w-[20px] cursor-pointer'/>
+                className='absolute md:top-[30%] md:right-[10px] top-[50%] right-[7.997px] 
+                lg:w-[25px] lg:h-[25px] h-[15px] w-[20px] cursor-pointer'/>
             </div>
             <div 
-            // className='flex flex-col md:flex-row md:items-center lg:gap-[22px] gap-[20px] w-full'
-            className='flex flex-col gap-[15px] md:flex-row md:items-end lg:gap-[30px]'
-            
-            >
-            <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px] relative">
-            <h2 className='font-[600] text-[#7E7E7E] text-[8px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] '>
+            className='flex flex-col gap-[15px] md:flex-row
+             md:items-end lg:gap-[30px] w-[100%]'>
+            <div className="flex flex-col md:w-[50%] w-[100%]
+             md:gap-[10px] gap-[5.868px] relative">
+            <p  className="text-[#7E7E7E] text-[15px] lg:text-[17px]
+                       md:text-[13px] md:font-[600] font-[400]">
                 Select Country
-            </h2>
+            </p>
                 {/* =====================Country========================= */}
                 <div
                     onClick={() => setShowDrop(!showDrop)}
-                    className="flex justify-between items-center font-[500] py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px]"
-                >
+                     className={`mt-2 md:mt-0 rounded-[10px] 
+     md:rounded-0 p-[20px] md:p-0 text-[13.2px]
+      sm:p-3 sm:text-lg flex justify-between pt-[8.803px] 
+     pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+     leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] 
+    md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] 
+    lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  
+    items-center cursor-pointer outline-0 border-[0.24px]
+     lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "border border-[#0003] border-[#9C9C9C] text-[#7C7C7C]"
+    }`}>
                     {select ? (
                     <div className="flex gap-[7px] items-center">
                         <img
@@ -336,7 +503,9 @@ console.log(searchSelectRecipient);
                     <p></p>
                     )}
                     <img
-                    className=" h-[13.3px] w-[13.3px] lg:w-[24px] lg:h-[24px] "
+                    className="decdrop absolute left-[92%] lg:left-[94%]
+              self-center align-middle md:h-[14.038px] md:w-[14.038px] 
+      lg:h-[24px] lg:w-[24px] w-[14px] h-[16px]"
                     src="./Images/dashboardImages/arrow-down2.png"
                     alt="dropdown"
                     />
@@ -348,35 +517,114 @@ console.log(searchSelectRecipient);
                 )}
                 {showDrop && (
                     <div
-                    className={`${
-                        toggleSideBar
-                        ? "lg:w-full lg:top-[100.5%]"
-                        : "lg:w-full lg:top-[105.3%]"
-                    }  ${
-                        styles.countryDropDown
-                    } rounded-b-[7px] shadow-xl bg-[#fff] border w-full lg:rounded-b-[14px] absolute left-0 top-[3.5rem] lg:top-1 z-[2]`}
-                    >
-                    {countryList.map((country) => (
-                        <div
-                        className=" cursor-pointer border-b flex items-center p-2 gap-[5px] text-[9px] md:text-[14px] lg:text-[16px]"
-                        key={country.id}
-                        onClick={() =>
-                            handleCountryPress(
-                            country.name,
-                            country.flag,
-                            country.id,
-                            country.code
-                            )
-                        }
-                        >
-                        <img
-                            className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
-                            src={country.flag}
-                            alt="/"
-                        />
-                        {country.name}
-                        </div>
-                    ))}
+                     className={`absolute top-[102%] z-[3] flex flex-col w-[100%]  
+                          cursor-pointer border-[1px]  border-gray-100 rounded-[3px]  
+                                ${
+                    isDarkMode
+                      ? "bg-black border-white rounded-[7px] text-white"
+                      : "text-[#7C7C7C] bg-white rounded-br-[7px] rounded-bl-[7px] lg:rounded-br-[14px] lg:rounded-bl-[14px]"
+                  }
+                  ${
+                    toggleSideBar
+                      ? "lg:w-[31.5%] lg:top-[100.5%]"
+                      : "lg:w-[38.5%] lg:top-[105.3%]"
+                  }  shadow-xl border w-full lg:w-full flex flex-col divide-y
+                   absolute top-20`}>
+                     {methodOptions.map((methodOption) => {
+                                             return (
+                                               <div
+                                                 onClick={(e) => {
+                                                   //onchange = { setMethodOptions }
+                                                 setMiniCountry( methodOption.id === 1
+                                                       ? methodOption.method
+                                                       : mainCountry === "Nigeria" &&
+                                                         methodOption.id !== 1
+                                                       ? "Nigeria"
+                                                       : ""
+                                                   )
+                                                   setSelect(true)
+                                                   setMainCountry(
+                                                     methodOption.id === 1
+                                                       ? methodOption.method
+                                                       : mainCountry === "Nigeria" &&
+                                                         methodOption.id !== 1
+                                                       ? "Nigeria"
+                                                       : ""
+                                                   );
+                                                   setCurrencyBalance(methodOption.id === 1 && currencyBalance === ""? 
+                                                   newBalance === "" || newBalance === null || newBalance === undefined
+                             ? `(${updateBalance?.length > 1 ? updateBalanceToNumber?.toLocaleString("en-NG", {
+                                  style : "currency",
+                                  currency : "NGN"
+                             }) : ""})`
+                             : `(${newBalance?.length > 1 ? newBalanceToNumber?.toLocaleString("en-NG", {
+                               style : "currency",
+                               currency : "NGN"
+                             }) : ""})` : mainCountry === "Nigeria" ?  newBalance === "" || newBalance === null || newBalance === undefined
+                             ? `(${updateBalance?.length > 1 ? updateBalanceToNumber?.toLocaleString("en-NG", {
+                                  style : "currency",
+                                  currency : "NGN"
+                             }) : ""})`
+                             : `(${newBalance?.length > 1 ? newBalanceToNumber?.toLocaleString("en-NG", {
+                               style : "currency",
+                               currency : "NGN"
+                             }) : ""})` : "");
+                   
+                              setShowDrop(() => {
+                                  if (methodOption.id === 1) {
+                                   setSelected(true);
+                                        setShowDrop(false);
+                                           document.querySelector(".decdrop")
+                                            .classList.remove("DropIt");
+                                                     } else {
+                                                        setSelected(false);
+                                                       setShowList(true);
+                                                       document
+                                                         .querySelector(".decdrop")
+                                                         .classList.add("DropIt");
+                                                     }
+                                                   });
+                                                     setCurrencyAvailable(methodOption.id !== 1);
+                                                     currencyDropDown()
+                                                  //            setCurrencyImageState(
+                                                  //    methodOption.id === 1
+                                                  //      ? methodOption.flag
+                                                  //      : currencyImage
+                                                  //  );
+                                                  setFlag(methodOption.flag);
+                                                 
+                                                 }}
+                                                className={`py-[18px] md:py-[14px] font-normal px-2 flex
+                                            items-center gap-[5px] text-[12px] md:text-[14px] 
+                                            lg:text-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
+                                             transition-all duration-300 hover:bg-slate-50
+                                          ${
+                                            isDarkMode
+                                              ? "text-white hover:bg-slate-800 bg-black "
+                                              : "text-[#7E7E7E]"
+                                          } ${
+                                           methodOption.method === "Nigeria"
+                                             ? "cursor-pointer"
+                                             : "cursor-not-allowed opacity-50"
+                                         }`}
+                                         
+                                                 key={methodOption.id}
+                                               >
+                                                 <img
+                                                   className="md:h-[29.27px]  h-[14.27px]"
+                                                   src={methodOption.flag}
+                                                   alt=""
+                                                 />
+                   
+                                               
+                                                 
+                                                   {methodOption.method +
+                                                     " " +
+                                                     methodOption.balance}
+                                                 
+                                               </div>
+                                             );
+                                           })}
                     </div>
                 )}
                       
@@ -384,16 +632,34 @@ console.log(searchSelectRecipient);
             </div>
 
             {/* =====================Add User========================= */}
-            <Link to="/aremxy-add-user" className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]">
-            <div className="flex justify-between items-center font-[500] py-[10.33px] pl-[5.867px] pr-1 md:py-[9.257px] md:pl-[8.67px] md:pr-[5.867px] lg:py-[13px] lg:pl-[10px] border-[0.4px] text-[8px] leading-[10.4px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px]">
-                <p>Add User</p>
+           
+            <div onClick ={()=> {
+              navigate("/aremxy-add-user")
+            }}
+             className={`mt-2 md:mt-[33px] rounded-[10px] md:rounded-0 p-[20px] 
+                        md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] 
+                        pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px]
+     md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]
+       items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full md:w-1/2 h-[40.927px] md:h-[35px]
+        lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "border border-[#0003] border-[#9C9C9C]  text-[#7C7C7C]"
+    }`}
+          >
+                <p className="text-[#7E7E7E] text-[15px] lg:text-[17px]
+                       md:text-[13px] md:font-[600] font-[400]"
+                         >Add User</p>
                 <img
-                className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
+                className="self-center align-middle md:h-[14.038px] 
+                md:w-[14.038px]  lg:h-[24px] lg:w-[24px] w-[14px] h-[16px]"
                 src="./Images/otherBanksImages/add-square.png"
                 alt=""
                 />
             </div>
-            </Link>
+            </div>
+       
 
             </div>    
 
@@ -672,7 +938,7 @@ console.log(searchSelectRecipient);
                 </div>
               </Modal>
             )}
-            {edit && (
+            {/* {edit && (
               <Modal>
                 <div
                   className={`${style.successfulTwo} ${
@@ -717,7 +983,7 @@ console.log(searchSelectRecipient);
                             md:h-[48.801px]  md:w-[48.801px]
                             md:rounded-[48.201px] lg:rounded-[60px]' alt="profilePic"/>
                         </div>
-                        {/* Profile text */}
+                    
                         <div className='flex flex-col justify-center gap-[3.52px] lg:gap-[3px]'>
                         <p className='font-[500] text-[10px] leading-[15px] md:text-[9.389px] md:leading-[12.206px] 
                         lg:text-[14px] lg:leading-[20.8px]'>
@@ -734,7 +1000,7 @@ console.log(searchSelectRecipient);
                   <div
                     className={`${style.mainGrid} px-[20px] mt-[50px] flex flex-col justify-between h-[40%] lg:mt-[20px]`}
                   >
-                    {/* =====================Country========================= */}
+                    
                     <div className={styles.inputBox}>
                     <p className="text-[10px] font-extrabold md:text-[10px] lg:text-[16px]">
                         Select Country
@@ -807,7 +1073,7 @@ console.log(searchSelectRecipient);
  
                   <div className="flex flex-col gap-[15px] md:flex-row lg:gap-[30px]">
                                 
-                    {/* =====================Email or Username=================== */}
+                   
 
                     <div className={` ${styles.inputBox}`}>
                     <p className="text-[10px] font-extrabold md:text-[10px] lg:text-[16px]">
@@ -836,7 +1102,7 @@ console.log(searchSelectRecipient);
                     )}
                     </div>
 
-                    {/* ======================Phone Number================== */}
+                  
                     <div className={styles.inputBox}>
                     <p className="text-[10px] font-extrabold md:text-[10px] lg:text-[16px]">
                         Phone Number
@@ -884,7 +1150,7 @@ console.log(searchSelectRecipient);
                  </div>
                 </div>
               </Modal>
-            )}
+            )} */}
             {save && (
                 <Modal>
                     <div
@@ -1123,11 +1389,12 @@ console.log(searchSelectRecipient);
             )}
            
         </div>
+        </div>
         <div className={style.help}>
             <h2>You need help?</h2>
             <Link to={`/ContactUs`} className={style.btnContact}>Contact Us</Link>
         </div>
-      </div>
+     
        {sessionModal && (
               <HandleUserSession/>
             )}

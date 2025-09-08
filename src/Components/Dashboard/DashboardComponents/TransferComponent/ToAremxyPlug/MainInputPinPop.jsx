@@ -52,6 +52,10 @@ export const MainInputPinPop = ({fetchedResponse}) => {
         }
 
 
+
+const firstStepSlice  = transferAmount === "" || transferAmount?.length > 1? transferAmount?.slice(1)?.replaceAll(",", "") : "";
+  const transformAmountToNumber = Number(firstStepSlice?.slice(0, firstStepSlice?.length -3));
+ console.log(transformAmountToNumber)
   const VerifyPinHandler = async () => {
     //Recipient fUllname
     const recipentFullname = fetchedResponse?.data?.data?.userDetails?.full_name !== undefined 
@@ -72,7 +76,7 @@ export const MainInputPinPop = ({fetchedResponse}) => {
 
 const DstvHandler = async () => {
 const requestData = {
-         amount : Number(transferAmount),
+         amount : transformAmountToNumber,
          reason : messageTransfer,
          name :  recipentFullname,
          email : recipientEmail,

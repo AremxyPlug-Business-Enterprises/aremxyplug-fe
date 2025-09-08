@@ -959,33 +959,30 @@ const Data = GetLocalStorage();
                     )}
                   </div>
 
-                  <div className="relative flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
+                  <div  className="relative flex flex-col gap-[3px] 
+            lg:gap-[5px] w-full md:w-1/2">
                     <label
                       htmlFor="decoderType"
-                      className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] md:font-[600] font-[400]"
-                    >
+                      className="text-[#7E7E7E] text-[15px] lg:text-[17px]
+                       md:text-[13px] md:font-[600] font-[400]"                   >
                       Select Package
                     </label>
 
                     <div
-                      className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
-                        sm:p-3 sm:text-lg  flex justify-between pt-[8.803px] pb-[7.794px] 
-                        pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[11px] 
-                        md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] 
-    md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]
-     items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px]
-      w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] 
-      px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
-      isDarkMode
-        ? "bg-black text-white border border-white"
-        : "hover:bg-[#EDEAEA]"
+  className={`mt-2 md:mt-0 rounded-[10px] m
+    d:rounded-0 p-[20px] md:p-0 text-[13.2px] 
+    sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center" onClick={packageDropdown} ${
+      isDarkMode 
+        ? "bg-black text-white border border-white" 
+        : "hover:bg-[#EDEAEA] border-[#9C9C9C] text-[#7C7C7C] "
     }`}
                       onClick={packageDropdown}
                     >
                       {selectedOptionGOTV}
                       <img
-                        className="imgdrop absolute left-[90%] lg:left-[94%] self-center align-middle md:h-[14.038px] md:w-[14.038px] 
+                        className="imgdrop absolute left-[90%]
+                         lg:left-[94%] self-center align-middle md:h-[14.038px] md:w-[14.038px] 
       lg:h-[24px] lg:w-[24px] w-[14px] h-[16px]"
                         src={arrowDown}
                         alt=""
@@ -1057,7 +1054,9 @@ const Data = GetLocalStorage();
                         e.target.value = numericValue;
                       }}
                       maxLength={10}
-                      className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+                      className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] 
+                        md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] 
+                        pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
       isDarkMode
         ? "bg-black text-white border border-white"
@@ -1153,8 +1152,16 @@ const Data = GetLocalStorage();
                       onChange={handleTvEmail}
                       placeholder="example@gmail.com"
                       required
-                      className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] text-[14px] leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
+                      className={`mt-2 md:mt-0 rounded-[10px] 
+                        md:rounded-0 p-[20px] md:p-0  sm:p-3 sm:text-lg 
+                        flex justify-between pt-[8.803px] pb-[7.794px] 
+                        pr-[13px] pl-[10.876px] font-[400] text-[14px] 
+                        leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
+     items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full 
+     h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px] 
+      self-center ${
       isDarkMode
         ? "bg-black text-white border border-white"
         : "border border-[#0003] hover:bg-[#EDEAEA] border-[#9C9C9C] text-[#7C7C7C]"
