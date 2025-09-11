@@ -690,10 +690,10 @@ console.log(pointPostResponse)
           
   <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]"/>
           <div className="mx-auto">
-            <h2 className="text-[12px] my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
+            <h2 className="text-[12px] my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px] font-extrabold">
               Confirm Transaction
             </h2>
-            <p className={`text-[10px] text-[#000] pt-[20px] text-center mb-2 md:text-[12px] lg:text-[14px]
+            <p className={`text-[10px] text-[#000] pt-[20px] font-semibold text-center mb-2 md:text-[12px] lg:text-[14px]
             ${isDarkMode ? "text-white" : "text-black"}`}>
               You are about to redeem{" "}
               <span className={`text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]
@@ -721,7 +721,7 @@ console.log(pointPostResponse)
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Redeem Rate</p>
+                <p className={`text-[#0008] ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Redeem Rate</p>
                 <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>1 PTS - 1 NGN</span>
               </div>
 
@@ -818,7 +818,7 @@ console.log(pointPostResponse)
               />
               {/* <p className="text-xs md:text-base font-extrabold text-center my-[10%] lg:my-[%] "> */}
               <div className="flex flex-col w-full justify-center py-[15px] lg:py-[0px] h-[100%] gap-[15px] ">
-                <p className="font-extrabold text-xs leading-[16px] pb-[20px] md:text-[10px] lg:text-base text-center">
+                <p className="font-extrabold text-[12px] leading-[16px] pb-[20px] md:text-[10px] lg:text-[16px] text-center">
                   Input PIN to complete transaction
                 </p>
                 <div
@@ -831,7 +831,7 @@ console.log(pointPostResponse)
                   >
         <OtpInput
   value={inputPin}
-  inputType={isVisible ? "tel" : "password"}
+  inputType={!isVisible ? "tel" : "password"}
   onChange={setInputPin}
   numInputs={4}
   shouldAutoFocus={true}
@@ -859,7 +859,10 @@ console.log(pointPostResponse)
                         * * * *
                       </div>
                     )} */}
-                    <div className="text-[#0003]" onClick={toggleVisibility}>
+                    <div className={`text-[#0003]
+                     ${
+                            isDarkMode ? "text-[#7c7c7c7c]" :"inherit"
+                        }`} onClick={toggleVisibility}>
                       {isVisible ? (
                         <AiFillEye className="w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]" />
                       ) : (
@@ -937,7 +940,7 @@ console.log(pointPostResponse)
               />
             </div>
             <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
-            <h2 className="text-[12px] my-[4%] text-center md:text-[20px] md:my-[3%] lg:text-[14px] lg:my-[2%]">
+            <h2 className="text-[12px] font-extrabold my-[4%] text-center md:text-[20px] md:my-[3%] lg:text-[14px] lg:my-[2%]">
               Redeem Successful
             </h2>
             <img
@@ -945,15 +948,15 @@ console.log(pointPostResponse)
               src="./Gif/checkMarkGif.gif"
               alt="/"
             />
-            <p className={`text-[8px] text-[#0008] text-center mb-2 md:text-[14px] lg:text-[12px]
+            <p className={`font-semibold text-[10px] text-[#0008] text-center mb-2 md:text-[14px] lg:text-[14px]
                ${isDarkMode ? "text-white" : "text-black" }
               `}>
               You have successfully redeemed{" "}
-              <span className={` ${isDarkMode? "text-white" : "text-black"} text-[#000] font-extrabold text-[10px] md:text-[12px] lg:text-[14px]`}>
+              <span className={` ${isDarkMode? "text-white" : "text-black"} text-[#000] font-bold text-[10px] md:text-[16px] lg:text-[14px]`}>
                    {isLoading ? "Loading..." : pointAmountRedeemed} .00
               </span>{" "}
               Points to{" "}
-             <span className={` ${isDarkMode? "text-white" : "text-black"} text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]`}>
+             <span className={` ${isDarkMode? "text-white" : "text-black"} text-[#000] font-bold text-[10px] md:text-[16px] lg:text-[14px]`}>
                    &#8358;{isLoading ? "Loading..." : pointAmountRedeemed}.00<br></br>
               </span>
               from your PTS balance{" "} to
@@ -974,7 +977,7 @@ console.log(pointPostResponse)
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}text-[#0008]`}>Redeem Rate</p>
+                <p className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"} text-[#0008]`}>Redeem Rate</p>
                 <span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>
                  {isLoading ? "Loading..." : pointRateRedeemed}
 </span>

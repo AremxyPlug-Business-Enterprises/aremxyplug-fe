@@ -81,10 +81,11 @@ export const AirtimeVtuReceipt = (Data) => {
   };
   return (
     <DashBoardLayout>
-      <div className="flex flex-col gap-[35px] lg:gap-[85px]">
-        <div
-          className={` ${styles.receipt} ${toggleSideBar ? "" : "lg:w-[880px] "
-            } w-full lg:mx-auto`}
+        <div className="flex flex-col gap-[35px] lg:gap-[85px]">
+         <div
+          className={` ${styles.receipt} ${
+            toggleSideBar ? "" : "lg:w-[880px] "
+          } w-full lg:mx-auto  ${isDarkMode ? "border border-white" : ""}` } 
         >
           <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
             <Link to="/">
@@ -106,7 +107,8 @@ export const AirtimeVtuReceipt = (Data) => {
           <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
           <div ref={contentRef}>
             {" "}
-            <h3 className="font-extrabold text-[12px] my-[2%] text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
+            <h3 className={`font-extrabold text-[12px] my-[2%] text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%] ${isDarkMode ? "text-white" : "text-black"}
+          `}> 
               Transaction Receipt
             </h3>
             <div className="w-full flex justify-center ">
@@ -119,7 +121,8 @@ export const AirtimeVtuReceipt = (Data) => {
             <h3 className="font-extrabold text-[12px] mt-[2%] text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
               Purchase Successful on
             </h3>
-            <span className="text-[11px] text-[#0008] font-extrabold flex justify-center items-center">
+            <span className={`text-[11px] text-[#0008] font-extrabold flex justify-center items-center ${isDarkMode ? "text-white" : "text-black"}`}
+            >
               {date.toLocaleDateString(undefined, {
                 year: "numeric",
                 month: "long",
@@ -130,9 +133,10 @@ export const AirtimeVtuReceipt = (Data) => {
                 hour12: true,
               })}
             </span>
-            <p className="text-[9px] text-[#27AE60] bg-[#D5F6E3] rounded-[11px] border-2 border-[#27AE60] py-[5px] px-[2px] text-center mx-[5px] lg:mx-[150px] md:mx-[100px] my-2 md:text-[14px] lg:text-[14px]">
+            <p className={`text-[9px] text-[#27AE60] bg-[#D5F6E3] rounded-[11px] border-2 border-[#27AE60] py-[5px] px-[2px] text-center mx-[5px] lg:mx-[150px] md:mx-[100px] my-2 md:text-[14px] lg:text-[14px]  ${isDarkMode ? "text-white" : "text-black" }
+              `}>
               You have successfully purchased{" "}
-              <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[16px]">
+              <span className={`text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[16px] ${isDarkMode? "text-white" : "text-black"}`}>
                 {networkName + ' ' + selectedProduct} Airtime &#8358;{amount}.00{" "}
               </span>
               from your NGN wallet to{" "}
@@ -141,7 +145,7 @@ export const AirtimeVtuReceipt = (Data) => {
               {/* ========================Recipient Info================== */}
               <div className="flex flex-col gap-[3px] w-[90%] mx-auto lg:gap-[5px]">
                 <div className="flex gap-[5px] items-center text-[10px] lg:text-[16px] font-extrabold">
-                  <p>Recipient Info</p>
+                  <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}> Recipient Info</p>
                   <img
                     className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
                     src="./Images/dashboardImages/arrowright.png"
