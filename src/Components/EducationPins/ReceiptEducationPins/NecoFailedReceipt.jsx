@@ -166,7 +166,7 @@ export const NecoFailedReceipt = () => {
             <div className="flex flex-col gap-3">
               {/* ========================Recipient Info================== */}
               <div className="flex flex-col gap-[3px] md:gap-[7px] w-[90%] mx-auto lg:gap-[8px]">
-                <div className="flex flex-col gap-[5px] w-[90%] mx-auto lg:gap-[10px]">
+                <div className="flex gap-[5px] items-center text-[10px] lg:text-base font-extrabold">
                   <p>Recipient Info</p>
                   <img
                     className="w-[13px] h-[13px] lg:w-5 lg:h-5"

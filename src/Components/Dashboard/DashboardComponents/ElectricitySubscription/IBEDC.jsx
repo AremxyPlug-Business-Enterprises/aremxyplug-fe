@@ -470,24 +470,38 @@ const IBEDC = () => {
             (ErrorType) => {
               if (ErrorType === "unauthorised") {
                 return setSessionModal(true);
+              } else if (ErrorType === "Server error") {
+                setPurchaseElectricityErrorType(
+                  "Server Error: Purchase Failed"
+                );
+              } else if (
+                ErrorType === "Network error" ||
+                ErrorType === "User error"
+              ) {
+                setPurchaseElectricityErrorType(
+                  "Network Error : Purchase Failed"
+                );
+              } else {
+                setPurchaseElectricityErrorType(
+                  "An Unexpected error has occured"
+                );
               }
             },
             setIbedcFetchedResponse
           );
         } else if (ErrorType === "Server error") {
-          setPurchaseElectricityErrorType(
-            "Failed to process your request, try again some other time"
-          );
+          setPurchaseElectricityErrorType("Server Error: Purchase Failed");
           setFailedPopup(true);
           setInputPinPopUp(false);
         } else if (
           ErrorType === "Network error" ||
           ErrorType === "User error"
         ) {
-          setPurchaseElectricityErrorType("An internet connection error");
+          setPurchaseElectricityErrorType("Network Error : Purchase Failed");
           setFailedPopup(true);
           setInputPinPopUp(false);
         } else {
+          setPurchaseElectricityErrorType("An Unexpected error has occured");
         }
       };
 
@@ -789,6 +803,7 @@ const IBEDC = () => {
                 </label>
                 <input
                   type="text"
+                  placeholder="XXXXXXXXXXXXX"
                   value={ibedcMeterNumber}
                   maxLength={13}
                   onInput={(e) => {
@@ -842,6 +857,7 @@ const IBEDC = () => {
                 <div className="relative">
                   <input
                     type="text"
+                    placeholder="Input Meter Number to Verify Name"
                     value={handleVerifiedName}
                     readOnly
                     className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-5 md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-normal leading-[10.4px] md:text-[11px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center focus:outline-0 outline-0 border lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] cursor-not-allowed self-center
@@ -870,6 +886,7 @@ const IBEDC = () => {
                 </label>
                 <input
                   type="number"
+                  placeholder="XXX XXXX XXXX"
                   value={ibedcPhoneNumber}
                   onInput={(e) => {
                     if (ibedcPhoneNumber?.length === 10) {
@@ -914,6 +931,7 @@ const IBEDC = () => {
                 </label>
                 <input
                   type="text"
+                  placeholder="example@gmail.com"
                   value={ibedcEmail}
                   onChange={handleEmail}
                   onInput={() => {
