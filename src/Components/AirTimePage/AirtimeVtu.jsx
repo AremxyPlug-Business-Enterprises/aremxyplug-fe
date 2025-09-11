@@ -1130,7 +1130,7 @@ const HandleAirtime = async () => {
                             ? "text-white hover:bg-slate-800 bg-black "
                             : "text-[#7C7C7C]"
                         } ${
-                        country.code === "Nigerian NGN Wallet"
+                        country.code === "NGN"
                           ? "cursor-pointer"
                           : "cursor-not-allowed opacity-50"
                       }`}
@@ -1622,8 +1622,7 @@ const HandleAirtime = async () => {
                                     }}>
                                         <button
                                             onClick={handleReceiptFailed}
-                                            className={`border-[1px] w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[110px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
-                                        >
+                                            className={`border-[1px] w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[110px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}>
                                             Receipt
                                         </button>
                                     </Link>

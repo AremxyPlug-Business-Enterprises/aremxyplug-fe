@@ -1,6 +1,5 @@
 
 import { Navigate } from 'react-router-dom';
-import { RemoveLocalStorage } from './LocalStorage/LocalStorage';
 export const ProtectedRoute = ({children}) => {
 // The aim is to create three different situation when the user will
 // will be logged from the page

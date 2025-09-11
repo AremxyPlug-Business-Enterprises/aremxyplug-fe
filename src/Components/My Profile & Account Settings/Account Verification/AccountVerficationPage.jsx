@@ -27,7 +27,8 @@ export default function AccountVerficationPage() {
 src={Arrowright} alt="" />
        </div>
        {/* TABS VERIFICATION */}
-       <div className='flex w-[100%] lg:gap-[25px] border-b-[2px] border-[#D9D9D999]
+       <div className='flex w-[100%] lg:gap-[25px] border-b-[2px]
+        border-[#D9D9D999]
        '>
         {/* ========== ID VERIFICATION  ======== */}
     <div onClick={() => {

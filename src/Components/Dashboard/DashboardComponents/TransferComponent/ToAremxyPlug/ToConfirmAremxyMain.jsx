@@ -16,7 +16,7 @@ export const ToConfirmAremxyMain = ({transferValue, transferPhone ,passDataBalan
      setOtherInputPinPopUp,
      transferAmount
   } = useContext(ContextProvider);
-const amountToNumeric = Number(transferAmount)
+
  
   const [balanceStatus, setBalanceStatus] = useState(false);
   const StringToNumber = Number(newBalance);
@@ -24,8 +24,9 @@ const amountToNumeric = Number(transferAmount)
 const updateBalance = newBalance === "" || newBalance === undefined ?
 Number(passDataBalance?.data?.data?.data?.balance) : StringToNumber;
 console.log(passDataBalance);
-
-let CheckSufficiency = amountToNumeric > updateBalance;
+const firstStepSlice  = transferAmount === "" || transferAmount?.length > 1? transferAmount?.slice(1)?.replaceAll(",", "") : "";
+  const transformAmountToNumber = Number(firstStepSlice?.slice(0, firstStepSlice?.length -3));
+let CheckSufficiency = transformAmountToNumber > updateBalance;
       useEffect(()=> {
         const HandleBalanceStatus = ()=> {
           if(CheckSufficiency){
@@ -72,13 +73,15 @@ let CheckSufficiency = amountToNumeric > updateBalance;
                ${isDarkMode ? "text-white" : "text-black"}`}>
                   You are about to transfer &nbsp;
                   <span className={`font-extrabold text-[10px] md:text-[16px]
-                     lg:text-[12px] ${isDarkMode ? "text-white" : "text-black"}`}>from your NGN wallet</span>&nbsp;
-                from your {" "}
-                {(amountToNumeric !== undefined || amountToNumeric !== null) ?
+                     lg:text-[12px] ${isDarkMode ? "text-white" : "text-black"}`}>
+                        { transferAmount} {" "}  from your NGN wallet</span>&nbsp;
+                          
+                {/* {(transferAmount !== undefined || transferAmount !== null) ?
                 amountToNumeric?.toLocaleString("en-NG", {
                   style : "currency",
                   currency : "NGN"
-                }) : "₦"} {" "} to
+                }) : "₦"} {" "} to */}
+
                 </div>
 
             <div className="flex flex-col gap-3 mt-5 md:mt-6 lg:mt-7">
@@ -90,16 +93,19 @@ let CheckSufficiency = amountToNumeric > updateBalance;
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
          justify-between font-[500] lg:text-[16px]">
                 <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Phone Number</p>
-                <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>`{`+${transferPhone}`}</span>
+                <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{`+${transferPhone}`}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
          justify-between font-[500] lg:text-[16px]">
                 <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Amount to Transfer</p>
-                <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{amountToNumeric !== null || amountToNumeric !== undefined ?
+                <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>
+                  {transferAmount}
+                  {/* {amountToNumeric !== null || amountToNumeric !== undefined ?
                 amountToNumeric?.toLocaleString("en-NG", {
                   style :"currency",
                   currency : "NGN"
-                }) : "₦"}</span>
+                }) : "₦"} */}
+                </span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
          justify-between font-[500] lg:text-[16px]">
@@ -114,10 +120,14 @@ let CheckSufficiency = amountToNumeric > updateBalance;
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
          justify-between font-[500] lg:text-[16px]">
                 <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Total Amount</p>
-                <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{(amountToNumeric !== undefined || amountToNumeric !== null) ? (amountToNumeric)?.toLocaleString("en-NG", {
+                <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>
+                  {/* {(amountToNumeric !== undefined || amountToNumeric !== null) ? (amountToNumeric)?.toLocaleString("en-NG", {
                 style : "currency",
                 currency : "NGN"
-                }) :"₦"}</span>
+                
+                }) :"₦"} */}
+                {transferAmount}
+                </span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
          justify-between font-[500] lg:text-[16px]">
@@ -157,12 +167,14 @@ let CheckSufficiency = amountToNumeric > updateBalance;
                <img
                src="./Images/dashboardImages/arrowright.png"
                 alt=""
-               className="w-[12px] h-[12px] md:w-[50px] md:h-[20px] lg:w-[80px] lg:h-[30px]"
+               className="w-[12px] h-[12px] 
+               md:w-[20px] md:h-[20px] lg:w-[30px] lg:h-[30px]"
                              />
             </div>
             
             <button
               onClick={handleSwitch}
+              disabled={CheckSufficiency}
              className={`bg-[#04177f] my-[5%] w-[90%] flex 
                 justify-center items-center mx-auto cursor-pointer 
                 text-[14px] font-extrabold h-[50px] text-white rounded-[6px]

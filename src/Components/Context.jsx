@@ -1380,6 +1380,9 @@ export const Context = ({ children }) => {
   const [electricityTransErrorType, setElectricityTransErrorType] =
     useState("");
 
+    // ========== Transfer to aremxyPlug======
+    const [recipientResponse, setRecipientResponse] = useState([]);
+
 
   const hold = {
     tvSubscriptionResponse,
@@ -2696,6 +2699,9 @@ export const Context = ({ children }) => {
     setLoginAuthorisation,
     twoStepVerificationSuccess,
     setTwoStepVerificationSuccess,
+  //===========  Transfer to aremxyPlug =======
+  recipientResponse,
+   setRecipientResponse
   };
   return (
     <div>

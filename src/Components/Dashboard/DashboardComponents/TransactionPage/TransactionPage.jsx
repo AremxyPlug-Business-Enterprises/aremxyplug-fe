@@ -25,7 +25,7 @@ const TransactionPage = () => {
     toggleSideBar,
     setOrderIdResponse,
     setElectricityTransErrorType,
-    orderIdResponse,
+    // orderIdResponse,
   } = useContext(ContextProvider);
 
   const [showCategories, setShowCategories] = useState(false);
@@ -63,47 +63,55 @@ const TransactionPage = () => {
   const handleSelectedOption = (event) => {
     const clickedoption = event.target.value;
     setSelected(clickedoption);
-    //     if(clickedoption){
-    //      setSymbol(selected === "USD" ? "$" : selected === "AUD" ?
-    //  "AU$" : selected === "KES" ?   "KSh" : selected === "EUR" ? "€" : "")
-    //     }
     return;
   };
 
   //Funcntio to help get the transaction details
   //  which include necessary query parameters for search
-    const GetTransactionInformation = async()=> {
-      if(!navigator.onLine) return setTransactionHistoryError("Network error")
-      const path ="transactions"
-      const SuccessHandler =()=>{
-       console.log("user transaction details fetched")
-}
-      const FailedHandler = async(ErrorType)=> {
-    if(ErrorType === "unauthorised"){
-      setTransactionHistoryError("unauthorised");
-      await GetFunction(path, setLoading, SuccessHandler, (ErrorType)=> {
-        if(ErrorType === "unauthorised"){
-       setSessionModal(true);
-        }
-      }, setTransactionResponse)
-    }else if(ErrorType === "Network error" || ErrorType === "User error" || ErrorType === "Bad request"){
-     setTransactionHistoryError("Network error")
-    }else if(ErrorType === "Server error"){
-      setTransactionHistoryError("Server error")
-    }else {
-      setTransactionHistoryError(null)
-    }
-      }   
-      await GetFunction(path, 
-        setLoading, 
-        SuccessHandler,
-         FailedHandler,
-          setTransactionResponse)}
+  const GetTransactionInformation = async () => {
+    if (!navigator.onLine) return setTransactionHistoryError("Network error");
+    const path = "transactions";
+    const SuccessHandler = () => {
+      console.log("user transaction details fetched");
+    };
+    const FailedHandler = async (ErrorType) => {
+      if (ErrorType === "unauthorised") {
+        setTransactionHistoryError("unauthorised");
+        await GetFunction(
+          path,
+          setLoading,
+          SuccessHandler,
+          (ErrorType) => {
+            if (ErrorType === "unauthorised") {
+              setSessionModal(true);
+            }
+          },
+          setTransactionResponse
+        );
+      } else if (
+        ErrorType === "Network error" ||
+        ErrorType === "User error" ||
+        ErrorType === "Bad request"
+      ) {
+        setTransactionHistoryError("Network error");
+      } else if (ErrorType === "Server error") {
+        setTransactionHistoryError("Server error");
+      } else {
+        setTransactionHistoryError(null);
+      }
+    };
+    await GetFunction(
+      path,
+      setLoading,
+      SuccessHandler,
+      FailedHandler,
+      setTransactionResponse
+    );
+  };
 
-   
-  useEffect(()=> {
-    if(transactionResponse?.data?.data?.data === undefined){
- GetTransactionInformation();
+  useEffect(() => {
+    if (transactionResponse?.data?.data?.data === undefined) {
+      GetTransactionInformation();
     }
     setSelected("NGN");
 
@@ -116,15 +124,20 @@ const TransactionPage = () => {
   });
 
   const getBackgroundColor = (status) => {
-    if (status === "delivered" || status === "Successful") {
+    if (
+      status === "delivered" ||
+      status === "Successful" ||
+      status === "success" ||
+      status === ""
+    ) {
       return "#97E8B9";
-    } else if (status === "Failed") {
+    } else if (status === "failed") {
       return "#FB9393";
-    } else if (status === "Pending") {
+    } else if (status === "pending") {
       return "#FFD98F";
-    } else if (status === "Refunded") {
+    } else if (status === "refunded") {
       return "#A6D9FF";
-    } else if (status === "Cancelled") {
+    } else if (status === "cancelled") {
       return "#EFC6BE";
     } else {
       return "";
@@ -175,7 +188,7 @@ const TransactionPage = () => {
       ? "£"
       : "₦";
 
-      const [orderLoading, setOrderLoading] = useState(false)
+  const [orderLoading, setOrderLoading] = useState(false);
 
   const getTransactionByOrderId = async (orderId, product) => {
     if (!orderId || !product) return;
@@ -184,11 +197,9 @@ const TransactionPage = () => {
         ? "airtime"
         : product === "Data Top-up"
         ? "data"
-        // : product === "TV Subscription"
-        // ? "tv-sub"
-        : product === ""
+        : product === "TV Subscription"
         ? "tv-sub"
-        : product === "Education Pins" || product === "Education E-Pins"
+        : product === "Education Pins"
         ? "edu"
         : product === "Electricity Bills"
         ? "electric-sub"
@@ -205,7 +216,7 @@ const TransactionPage = () => {
       console.log("Transaction fetched successfully");
     };
     const FailedHandler = async (ErrorType) => {
-      if (!navigator.online) alert("Kindly check your internet connection");
+      // if (!navigator.online) alert("Kindly check your internet connection");
       if (ErrorType === "unauthorised") {
         await GetFunction(
           path,
@@ -248,19 +259,30 @@ const TransactionPage = () => {
     return result;
   };
 
-  //Function handling filtering the transactionResponse based on the
-  //selected categpry by the user
-  // function filterBySelectCategory(categoryByFlowtype, categoryByProduct){
-  //   transactionResponse?.data?.data?.data?.transactions?.filter(filterData=> {
-  //     if(filterData?.flow_type === categoryByFlowtype){
-  //       return filterData?.flow_type === categoryByFlowtype
-  //     }else if(filterData?.product === categoryByProduct){
-  //    return filterData?.product === categoryByProduct;
-  //     }else{
-  //       return []
-  //     }
-  //   })
-  // }
+
+  //The formattting of the dates and times
+   function formatDate(isoString) {
+  if (!isoString) return "";
+
+  const date = new Date(isoString);
+
+return date?.toISOString()?.slice(0, 10);
+   
+  
+}
+
+   function formatTime(isoString) {
+  if (!isoString) return "";
+    const date = new Date(isoString);
+  const timePart = date.toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+    hour12: true,
+  });
+  return timePart;
+}
+
 
   return (
     <DashBoardLayout>
@@ -1161,54 +1183,25 @@ const TransactionPage = () => {
                         console.log("resp", response?.data);
                         console.log("orderData", orderData);
 
-                        
-                        if (["delivered", "success", "Successful", ""].includes(orderData?.status)) {
-                          navigate(
-                            transaction?.product === "Electricity Bills"
-                              ? "/ElectricityTransSuccessReceipt"
-                              : transaction?.product === "Education Pins" || transaction?.product === "Education E-Pins"
-                              ? "/EduSuccessReceipt"
-                              :transaction?.product === ""
-                              ? "/TvSubSuccessReceipt"
-                              : "/SuccessfullReceipt",
-                            { state: { orderData, transaction } }
-                          );
-
-                          // transaction?.product === "Education Pins"
-                        } else if (orderData?.status.toLowerCase() === "failed") {
-                          navigate(
-                            orderIdResponse?.product === "Electricity Bills"
-                              ? "/ElectricityFailedReceipt"
-                              : "/FailedReceipt",
-                            { state: { orderData, transaction } }
-                          );
-                        } else if (
-                          orderData?.status.toLowerCase() === "pending"
-                        ) {
-                          navigate("/PendingReceipt", {
-                            state: { orderData },
-                          });
-                        } else if (
-                          orderData?.status.toLowerCase() === "refunded"
-                        ) {
-                          navigate("/RefundedReceipt", {
-                            state: { orderData },
-                          });
-                        } else if (
-                          orderData?.status.toLowerCase() === "cancelled"
-                        ) {
-                          navigate("/CancelledReceipt", {
-                            state: { orderData },
-                          });
-                        } else {
-                          // alert("Transaction status unknown");
-                          navigate("/FailedReceipt", {
-                            state: { transaction },
-                          });
-                          console.log("orderid", orderIdResponse);
-                        }
+                        navigate(
+                          transaction?.product === "Electricity Bills"
+                            ? "/ElectricityReceipt"
+                            : transaction?.product === "Education Pins"
+                            ? "/EduReceipt"
+                            : transaction?.product === "TV Subscription"
+                            ? "/TvSubReceipt"
+                            : transaction?.product === "Airtime Top-up"
+                            ? "/AirtimeTransReceipt"
+                            : transaction?.product === "Data Top-up"
+                            ? "/DataTransReceipt"
+                            : transaction?.product === "Money Transfer"
+                            ? "/TransferReceipt"
+                            : transaction?.product === "Virtual Account"
+                            ? "/VirtualAccountReceipt"
+                            : "/SuccessfullReceipt",
+                          { state: { orderData, transaction } }
+                        );
                       }}
-                      // else if (transaction.status === "Cancelled")
                     >
                       <div
                         key={index}
@@ -1236,8 +1229,7 @@ const TransactionPage = () => {
                             Product : {transaction?.product}
                           </h2>
                           <p
-                            className={`font-medium text-neutral-500 text-[9.167px] 
-                                   leading-[11.167px] ${
+                            className={`font-medium text-neutral-500 text-[9.167px] leading-[11.167px] capitalize ${
                                      isDarkMode
                                        ? "text-white"
                                        : "text-neutral-500"
@@ -1311,11 +1303,27 @@ const TransactionPage = () => {
                               className="font-medium text-white self-center text-[9.167px] leading-[11.167px] cursor-pointer
                              py-[2.122px] px-[4.245px]  rounded-sm"
                             >
-                              {transaction?.status === "delivered" ||
+                              {[
+                                "delivered",
+                                "success",
+                                "Successful",
+                                "",
+                              ].includes(transaction?.status)
+                                ? "Successful"
+                                : transaction?.status === "failed"
+                                ? "Failed"
+                                : transaction?.status === "pending"
+                                ? "Pending"
+                                : transaction?.status === "refunded"
+                                ? "Refunded"
+                                : transaction?.status === "cancelled"
+                                ? "Cancelled"
+                                : "Unknown"}
+                              {/* {transaction?.status === "delivered" ||
                               "success" ||
                               "Successful"
                                 ? "Successful"
-                                : "unknown"}
+                                : "unknown"} */}
                             </p>
                           </div>
 
@@ -1332,10 +1340,10 @@ const TransactionPage = () => {
                                 <span className="block">Date & Time:</span>
                                 <span className="block">
                                   {" "}
-                                  {transaction?.created_at?.slice(0, 10)}{" "}
+                                  {formatDate(transaction?.created_at)}{" "}
                                 </span>
                                 <span className="block">
-                                  {transaction?.created_at?.slice(14, 19)}
+                                  {formatTime(transaction?.created_at)}{" "}
                                 </span>
                               </p>
                             </div>
@@ -1436,80 +1444,47 @@ const TransactionPage = () => {
                 <div key={index}>
                   <div
                     //to={`/${
-                      //transaction.status === "delivered"
-                        // ? "SuccessfullReceipt"
-                        // : transaction.status === "Failed"
-                        // ? "FailedReceipt"
-                        // : transaction.status === "Pending"
-                        // ? "PendingReceipt"
-                        // : transaction.status === "Refunded"
-                        // ? "RefundedReceipt"
-                        // : transaction.status === "Cancelled"
-                        // ? "CancelledReceipt"
-                        //: "" // Add a default case or handle it as per your requirement
+                    //transaction.status === "delivered"
+                    // ? "SuccessfullReceipt"
+                    // : transaction.status === "Failed"
+                    // ? "FailedReceipt"
+                    // : transaction.status === "Pending"
+                    // ? "PendingReceipt"
+                    // : transaction.status === "Refunded"
+                    // ? "RefundedReceipt"
+                    // : transaction.status === "Cancelled"
+                    // ? "CancelledReceipt"
+                    //: "" // Add a default case or handle it as per your requirement
                     // }`}
                     // state={{ transaction }}
-                     onClick={async () => {
-                        // window.scrollTo(0, 0);
-                        console.log("prod", transaction?.product)
-                        console.log("trans", transaction?.product)
+                    onClick={async () => {
+                      const response = await getTransactionByOrderId(
+                        transaction?.order_id,
+                        transaction?.product
+                      );
 
-                        const response = await getTransactionByOrderId(
-                          transaction?.order_id,
-                          transaction?.product
-                        );
-
-                        const orderData = response?.data?.data?.data;
-                        console.log("resp", response?.data);
-                        console.log("orderData", orderData);
-
-                        
-                        if (["delivered", "success", "Successful", ""].includes(orderData?.status)) {
-                          navigate(
-                            transaction?.product === "Electricity Bills"
-                              ? "/ElectricityTransSuccessReceipt"
-                              : transaction?.product === "Education Pins" || transaction?.product === "Education E-Pins"
-                              ? "/EduSuccessReceipt"
-                              // :transaction?.product === ""
-                              // ? "/TvSubSuccessReceipt"
-                              : "/SuccessfullReceipt",
-                            { state: { orderData, transaction } }
-                          );
-
-                          // transaction?.product === "Education Pins"
-                        } else if (orderData?.status.toLowerCase() === "failed") {
-                          navigate(
-                            orderIdResponse?.product === "Electricity Bills"
-                              ? "/ElectricityFailedReceipt"
-                              : "/FailedReceipt",
-                            { state: { orderData, transaction } }
-                          );
-                        } else if (
-                          orderData?.status.toLowerCase() === "pending"
-                        ) {
-                          navigate("/PendingReceipt", {
-                            state: { orderData },
-                          });
-                        } else if (
-                          orderData?.status.toLowerCase() === "refunded"
-                        ) {
-                          navigate("/RefundedReceipt", {
-                            state: { orderData },
-                          });
-                        } else if (
-                          orderData?.status.toLowerCase() === "cancelled"
-                        ) {
-                          navigate("/CancelledReceipt", {
-                            state: { orderData },
-                          });
-                        } else {
-                          // alert("Transaction status unknown");
-                          navigate("/FailedReceipt", {
-                            state: { transaction },
-                          });
-                          console.log("orderid", orderIdResponse);
-                        }
-                      }}
+                      const orderData = response?.data?.data?.data;
+                      console.log("resp", response?.data);
+                      console.log("orderData", orderData);
+                      navigate(
+                        transaction?.product === "Electricity Bills"
+                          ? "/ElectricityReceipt"
+                          : transaction?.product === "Education Pins"
+                          ? "/EduReceipt"
+                          : transaction?.product === "TV Subscription"
+                          ? "/TvSubReceipt"
+                          : transaction?.product === "Airtime Top-up"
+                          ? "/AirtimeTransReceipt"
+                          : transaction?.product === "Data Top-up"
+                          ? "/DataTransReceipt"
+                          : transaction?.product === "Money Transfer"
+                          ? "/TransferReceipt"
+                          : transaction?.product === "Virtual Account"
+                          ? "/VirtualAccountReceipt"
+                          : "/SuccessfullReceipt",
+                        { state: { orderData, transaction } }
+                      );
+                    }}
                   >
                     <div
                       className={`${
@@ -1526,7 +1501,7 @@ const TransactionPage = () => {
                         {transaction?.product}
                       </div>
                       <div
-                        className={`md:text-[#7C7C7C] ${
+                        className={`md:text-[#7C7C7C] capitalize ${
                           toggleSideBar ? "md:w-[18.5%]" : "md:w-[18.5%]"
                         }`}
                       >
@@ -1557,9 +1532,9 @@ const TransactionPage = () => {
                           toggleSideBar ? "md:w-[16.5%] " : "md:w-[16.5%]"
                         }`}
                       >
-                        <span>{transaction?.created_at?.slice(0, 10)}</span>
+                        <span>{formatDate(transaction?.created_at)}{" "}</span>
                         <br />
-                        <span>{transaction?.created_at?.slice(14, 19)}</span>
+                        <span>{formatTime(transaction?.created_at)}{" "}</span>
                       </div>
 
                       <div
@@ -1580,7 +1555,23 @@ const TransactionPage = () => {
                           } md:px-[10px] md:py-[5px] md:text-[#FFFFFF] md:rounded-[5px]`}
                         >
                           {" "}
-                          {transaction.status}
+                          {/* {transaction.status} */}
+                          {[
+                                "delivered",
+                                "success",
+                                "Successful",
+                                "",
+                              ].includes(transaction?.status)
+                                ? "Successful"
+                                : transaction?.status === "failed"
+                                ? "Failed"
+                                : transaction?.status === "pending"
+                                ? "Pending"
+                                : transaction?.status === "refunded"
+                                ? "Refunded"
+                                : transaction?.status === "cancelled"
+                                ? "Cancelled"
+                                : "Unknown"}
                         </div>
                         <img
                           className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"

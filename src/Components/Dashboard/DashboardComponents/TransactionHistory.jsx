@@ -1,31 +1,120 @@
-import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { ContextProvider } from "../../Context";
 import "../DashboardComponents/DataTopUpPage/DataTopUp.css";
 import NoRecordImage from "../../Add&SelectRecipient/RecipientImages/NoRecordImage.svg";
 import { Loader } from "../../Loader/Loader";
+import {
+  GetFunction,
+  HandleUserSession,
+} from "../../ApiCollection.jsx/ApiBuck";
+import { Modal } from "../../Screens/Modal/Modal";
 
 const TransactionHistory = ({
   transactionResponse,
   transactionHistoryError,
   loading,
 }) => {
-  const { isDarkMode, toggleSideBar } = useContext(ContextProvider);
+  const {
+    isDarkMode,
+    toggleSideBar,
+    setOrderIdResponse,
+    setElectricityTransErrorType,
+  } = useContext(ContextProvider);
+
+  const navigate = useNavigate();
 
   const getBackgroundColor = (status) => {
-    if (status === "Successful" || status === "delivered") {
+    if (
+      status === "delivered" ||
+      status === "Successful" ||
+      status === "success" ||
+      status === ""
+    ) {
       return "#97E8B9";
-    } else if (status === "Failed") {
+    } else if (status === "failed") {
       return "#FB9393";
-    } else if (status === "Pending") {
+    } else if (status === "pending") {
       return "#FFD98F";
-    } else if (status === "Refunded") {
+    } else if (status === "refunded") {
       return "#A6D9FF";
-    } else if (status === "Cancelled") {
+    } else if (status === "cancelled") {
       return "#EFC6BE";
     } else {
       return "";
     }
+  };
+
+  const [orderLoading, setOrderLoading] = useState(false);
+  const [sessionModal, setSessionModal] = useState(false);
+
+  const getTransactionByOrderId = async (orderId, product) => {
+    if (!orderId || !product) return;
+    const productType =
+      product === "Airtime Top-up"
+        ? "airtime"
+        : product === "Data Top-up"
+        ? "data"
+        : product === "TV Subscription"
+        ? "tv-sub"
+        : product === "Education Pins"
+        ? "edu"
+        : product === "Electricity Bills"
+        ? "electric-sub"
+        : product === "Virtual Account"
+        ? "deposit"
+        : product === "Money Transfer"
+        ? "transfer"
+        : "";
+
+    const path = `transactions/${orderId}?product=${productType}`;
+    let result;
+    const SuccessHandler = (response) => {
+      result = response;
+      console.log("Transaction fetched successfully");
+    };
+    const FailedHandler = async (ErrorType) => {
+      // if (!navigator.online) alert("Kindly check your internet connection");
+      if (ErrorType === "unauthorised") {
+        await GetFunction(
+          path,
+          setOrderLoading,
+          SuccessHandler,
+          (ErrorType) => {
+            if (ErrorType === "unauthorised") {
+              setSessionModal(true);
+            }
+          },
+          setOrderIdResponse
+        );
+      } else if (ErrorType === "Server error") {
+        await GetFunction(
+          path,
+          setOrderLoading,
+          SuccessHandler,
+          (ErrorType) => {
+            if (ErrorType === "Server error") {
+              alert("A server error occured, please try again later");
+              setElectricityTransErrorType(
+                "Failed to process your request, try again some other time"
+              );
+            }
+          },
+          setOrderIdResponse
+        );
+      } else if (ErrorType === "Network error" || ErrorType === "User error") {
+        setElectricityTransErrorType("An internet connection error");
+      }
+    };
+
+    await GetFunction(
+      path,
+      setOrderLoading,
+      SuccessHandler,
+      FailedHandler,
+      setOrderIdResponse
+    );
+    return result;
   };
 
   const filteredTransactions =
@@ -40,7 +129,24 @@ const TransactionHistory = ({
 
   //Variable types to handle the filtering of the recent transaction history
   //which is viewed or displays the transaction receipt
+// Format Date ======
+const FormatDate =(DateValue)=> {
+  if(!DateValue)  return "";
+  const date = new Date(DateValue);
+  return date?.toISOString()?.slice(0,10)
 
+}
+const FormatTime =(DateValue)=> {
+  if(!DateValue) return ""
+  const date = new Date(DateValue);
+  const TimePart = date?.toLocaleTimeString("en-Us", {
+    hour : "numeric",
+    minute: "numeric",
+    second : "numeric",
+    hour12 : true
+  })
+  return TimePart;
+}
   return (
     <>
       {/* ======Mobile View==== */}
@@ -64,26 +170,53 @@ const TransactionHistory = ({
               ) : filteredTransactions && filteredTransactions?.length > 1 ? (
                 filteredTransactions?.map((transaction, index) => (
                   <div
-                    className={`${
+                    className={`cursor-pointer ${
                       index < 3 ? "border-b-[1.2px] border-gray-500" : ""
                     }`}
                     key={index}
                   >
-                    <Link
-                      to={`/${
-                        transaction.status === "delivered"
-                          ? "SuccessfullReceipt"
-                          : transaction.status === "Failed"
-                          ? "FailedReceipt"
-                          : transaction.status === "Pending"
-                          ? "PendingReceipt"
-                          : transaction.status === "Refunded"
-                          ? "RefundedReceipt"
-                          : transaction.status === "Cancelled"
-                          ? "CancelledReceipt"
-                          : ""
-                      }`}
-                      state={{ transaction }}
+                    <div
+                      // to={`/${
+                      //   transaction.status === "delivered"
+                      //     ? "SuccessfullReceipt"
+                      //     : transaction.status === "Failed"
+                      //     ? "FailedReceipt"
+                      //     : transaction.status === "Pending"
+                      //     ? "PendingReceipt"
+                      //     : transaction.status === "Refunded"
+                      //     ? "RefundedReceipt"
+                      //     : transaction.status === "Cancelled"
+                      //     ? "CancelledReceipt"
+                      //     : ""
+                      // }`}
+                      // state={{ transaction }}
+                      onClick={async () => {
+                        const response = await getTransactionByOrderId(
+                          transaction?.order_id,
+                          transaction?.product
+                        );
+
+                        const orderData = response?.data?.data?.data;
+
+                        navigate(
+                          transaction?.product === "Electricity Bills"
+                            ? "/ElectricityReceipt"
+                            : transaction?.product === "Education Pins"
+                            ? "/EduReceipt"
+                            : transaction?.product === "TV Subscription"
+                            ? "/TvSubReceipt"
+                            : transaction?.product === "Airtime Top-up"
+                            ? "/AirtimeTransReceipt"
+                            : transaction?.product === "Data Top-up"
+                            ? "/DataTransReceipt"
+                            : transaction?.product === "Money Transfer"
+                            ? "/TransferReceipt"
+                            : transaction?.product === "Virtual Account"
+                            ? "/VirtualAccountReceipt"
+                            : "/SuccessfullReceipt",
+                          { state: { orderData, transaction } }
+                        );
+                      }}
                     >
                       <div
                         key={index}
@@ -111,7 +244,7 @@ const TransactionHistory = ({
                             Product : {transaction?.product}
                           </h2>
                           <p
-                            className={`font-medium text-neutral-500 text-[9.167px] 
+                            className={`font-medium capitalize text-neutral-500 text-[9.167px] 
                                    leading-[11.167px] ${
                                      isDarkMode
                                        ? "text-white"
@@ -186,9 +319,22 @@ const TransactionHistory = ({
                               className="font-medium text-white self-center text-[9.167px] leading-[11.167px] cursor-pointer
                              py-[2.122px] px-[4.245px]  rounded-sm"
                             >
-                              {transaction?.status === "delivered"
+                              {[
+                                "delivered",
+                                "success",
+                                "Successful",
+                                "",
+                              ].includes(transaction?.status)
                                 ? "Successful"
-                                : "unknown"}
+                                : transaction?.status === "failed"
+                                ? "Failed"
+                                : transaction?.status === "pending"
+                                ? "Pending"
+                                : transaction?.status === "refunded"
+                                ? "Refunded"
+                                : transaction?.status === "cancelled"
+                                ? "Cancelled"
+                                : "Unknown"}
                             </p>
                           </div>
 
@@ -205,10 +351,10 @@ const TransactionHistory = ({
                                 <span className="block">Date & Time:</span>
                                 <span className="block">
                                   {" "}
-                                  {transaction?.created_at?.slice(0, 10)}{" "}
+                                  {FormatDate(transaction?.created_at)}{" "}
                                 </span>
                                 <span className="block">
-                                  {transaction?.created_at?.slice(14, 19)}
+                                 {FormatTime(transaction?.created_at)}{" "}
                                 </span>
                               </p>
                             </div>
@@ -222,7 +368,7 @@ const TransactionHistory = ({
                           </div>
                         </div>
                       </div>
-                    </Link>
+                    </div>
                   </div>
                 ))
               ) : (filteredTransactions && filteredTransactions?.length < 1) ||
@@ -307,28 +453,40 @@ const TransactionHistory = ({
           ) : filteredTransactions && filteredTransactions?.length > 1 ? (
             filteredTransactions?.map((transaction, index) => (
               <div key={index}>
-                <Link
-                  to={`/${
-                    transaction.status === "delivered"
-                      ? "SuccessfullReceipt"
-                      : transaction.status === "Failed"
-                      ? "FailedReceipt"
-                      : transaction.status === "Pending"
-                      ? "PendingReceipt"
-                      : transaction.status === "Refunded"
-                      ? "RefundedReceipt"
-                      : transaction.status === "Cancelled"
-                      ? "CancelledReceipt"
-                      : "" // Add a default case or handle it as per your requirement
-                  }`}
-                  state={{ transaction }}
+                <div
+                  onClick={async () => {
+                    const response = await getTransactionByOrderId(
+                      transaction?.order_id,
+                      transaction?.product
+                    );
+
+                    const orderData = response?.data?.data?.data;
+                    navigate(
+                      transaction?.product === "Electricity Bills"
+                        ? "/ElectricityReceipt"
+                        : transaction?.product === "Education Pins"
+                        ? "/EduReceipt"
+                        : transaction?.product === "TV Subscription"
+                        ? "/TvSubReceipt"
+                        : transaction?.product === "Airtime Top-up"
+                        ? "/AirtimeTransReceipt"
+                        : transaction?.product === "Data Top-up"
+                        ? "/DataTransReceipt"
+                        : transaction?.product === "Money Transfer"
+                        ? "/TransferReceipt"
+                        : transaction?.product === "Virtual Account"
+                        ? "/VirtualAccountReceipt"
+                        : "/SuccessfullReceipt",
+                      { state: { orderData, transaction } }
+                    );
+                  }}
                 >
                   <div
                     className={`${
                       toggleSideBar
                         ? "lg:text-[15px] md:gap-[4%] lg:gap-0 md:text-[8.5px] "
                         : "lg:text-[15px] md:gap-[%] md:text-[10px] lg:md:gap-[%]"
-                    }  hidden  font-semibold md:flex md:h-[60px] lg:h-[85px] md:justify-start md:px-[20px] md:items-center  md:mt-[20px] md:pb-[2%] border-b-[1px]`}
+                    }  hidden cursor-pointer font-semibold md:flex md:h-[60px] lg:h-[85px] md:justify-start md:px-[20px] md:items-center  md:mt-[20px] md:pb-[2%] border-b-[1px]`}
                   >
                     <p
                       className={`md:text-[#000000] ${
@@ -338,7 +496,7 @@ const TransactionHistory = ({
                       {transaction?.product}
                     </p>
                     <p
-                      className={`md:text-[#7C7C7C] ${
+                      className={`md:text-[#7C7C7C] capitalize ${
                         toggleSideBar ? "md:w-[18.5%]" : "md:w-[18.5%]"
                       } ${isDarkMode ? "text-white" : "text-neutral-500"}`}
                     >
@@ -369,9 +527,9 @@ const TransactionHistory = ({
                         toggleSideBar ? "md:w-[16.5%] " : "md:w-[16.5%]"
                       } ${isDarkMode ? "text-white" : "text-neutral-500"}`}
                     >
-                      <span>{transaction?.created_at?.slice(0, 10)}</span>
+                      <span> {FormatDate(transaction?.created_at)}{" "}</span>
                       <br />
-                      <span>{transaction?.created_at?.slice(14, 19)}</span>
+                      <span> {FormatTime(transaction?.created_at)}{" "}</span>
                     </p>
 
                     <div
@@ -394,9 +552,19 @@ const TransactionHistory = ({
                         } md:px-[10px] md:py-[5px] md:text-[#FFFFFF] md:rounded-[5px]`}
                       >
                         {" "}
-                        {transaction?.status === "delivered"
+                        {["delivered", "success", "Successful", ""].includes(
+                          transaction?.status
+                        )
                           ? "Successful"
-                          : ""}
+                          : transaction?.status === "failed"
+                          ? "Failed"
+                          : transaction?.status === "pending"
+                          ? "Pending"
+                          : transaction?.status === "refunded"
+                          ? "Refunded"
+                          : transaction?.status === "cancelled"
+                          ? "Cancelled"
+                          : "Unknown"}
                       </p>
                       <img
                         className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
@@ -405,7 +573,7 @@ const TransactionHistory = ({
                       />
                     </div>
                   </div>
-                </Link>
+                </div>
               </div>
             ))
           ) : filteredTransactions?.length < 1 ||
@@ -444,6 +612,12 @@ const TransactionHistory = ({
           )}
         </div>
       </div>
+      {orderLoading && (
+        <Modal>
+          <Loader />
+        </Modal>
+      )}
+      {sessionModal && <HandleUserSession />}
     </>
   );
 };

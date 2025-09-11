@@ -5,8 +5,11 @@ import { ContextProvider } from "../../Context";
 import styles from "./Dashboard.module.css";
 import { RemoveLocalStorage } from "../../LocalStorage/LocalStorage";
 import { useNavigate } from "react-router-dom";
+import Logo from "./Image/Logo.svg";
+import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 
 export const SideBar = ({ fullname, userId, BvnVerify, NinVerify }) => {
+  const Data = GetLocalStorage(); 
   const {
     setToggleSideBar,
     isDarkMode,
@@ -54,37 +57,40 @@ export const SideBar = ({ fullname, userId, BvnVerify, NinVerify }) => {
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
-  });
+  })
   return (
-    <div
-      className={`${styles.sidebar}  fixed overflow-auto ${
+      <div
+      className={`bvnQuery fixed overflow-auto ${
         isDarkMode ? "bg-[#000] border" : " bg-[#04177f]"
-      } flex flex-col  justify-between  leading-normal text-white   w-[152px] h-[] rounded-tr-[11.17px] rounded-br-[11.17px] md:w-[178px] md:rounded-tr-[18px] md:rounded-br-[18px] 
-      lg:w-[300px] lg:rounded-br-[32px] lg:rounded-tr-[32px] lg:h-[100vh]`}
-    >
+      } flex flex-col  justify-between  leading-normal text-white 
+        w-[50%] rounded-tr-[11.17px] rounded-br-[11.17px] md:w-[178px]
+        md:rounded-tr-[18px] md:rounded-br-[18px] h-[100%]
+      lg:w-[20%] lg:rounded-br-[32px] lg:rounded-tr-[32px] lg:h-[100vh]`}>
       {/* =======Nav Bar========= */}
-      <div>
-        <div
-          className={`border-b-[0.3px] ${
+     <div
+          className={`border-b-[0.3px]  ${
             isDarkMode ? "bg-[#000]" : "bg-[#04177f]"
-          } sticky top-0 `}
+          } `}
         >
           <div
-            className={`${styles.navSide} ${
+            className={` ${
               isDarkMode
                 ? "border-b-[0.3px]"
                 : "border-b-[0.3px] border-b-[#fff]"
-            } flex w-[100%] gap-[45px] h-[5.7rem] justify-center items-center mx-auto md:gap-[55px] `}
+            } flex w-[100%] justify-between h-[5.7rem] 
+            items-center px-[10px] md:gap-[55px] `}
             // h-[13.97px] lg:py-[15%] py-[13%]
           >
             <img
-              className="w-[59px] h-[10.23px] md:h-[10px] md:w-[67px] lg:w-[125px] lg:h-[25px]"
-              src="./Images/dashboardImages/aremxyLogo.png"
+              className="w-[59px] h-[30.23px] md:h-[10px] md:w-[67px] 
+              lg:w-[125px] lg:h-[25px]"
+              src={Logo}
               alt="Logo"
             />
             <img
               onClick={() => setToggleSideBar(false)}
-              className="cursor-pointer w-[20px] h-[20px] md:w-[22px] md:h-[22px] lg:h-[40px] lg:w-[40px]"
+              className="cursor-pointer w-[30px] h-[30px] mr-[5%] md:h-[30.9px] 
+              md:w-[30.9px] lg:h-[52px] lg:w-[52px]"
               src="./Images/dashboardImages/menumenu.png"
               alt="Menu"
             />
@@ -93,9 +99,10 @@ export const SideBar = ({ fullname, userId, BvnVerify, NinVerify }) => {
           <div className="px-[5%] pt-[5%] ">
             {/* ======Profile picture and name======== */}
             <div className="sticky top-0">
-              <div className="flex gap-[3px] md:gap-[5px] items-center">
+              <div className="flex gap-[20px] md:gap-[5px] justify-left
+               items-center ">
                 <img
-                  className="w-[13.97px] h-[13.97px] md:w-[30px] md:h-[30px] lg:w-[40px] lg:h-[40px]"
+                  className="w-[20.97px] h-[20.97px] md:w-[30px] md:h-[30px] lg:w-[40px] lg:h-[40px]"
                   src="./Images/dashboardImages/habib.png"
                   alt="DP"
                 />
@@ -123,7 +130,7 @@ export const SideBar = ({ fullname, userId, BvnVerify, NinVerify }) => {
                       className=" px-[4px] py-[1px] bg-[#B4B4B4] font-[600] lg:font-[700] text-[10px] text-white md:text-[10px] lg:text-[12px] rounded-[2px]"
                     >
                       {/* KYCed */}
-                      Regular
+                    {Data?.ConfirmAcc ==="true" || Data?.ConfirmBvn === "true" ? "Regular" : ""}  
                     </div>
                   </div>
                 </div>
@@ -132,18 +139,23 @@ export const SideBar = ({ fullname, userId, BvnVerify, NinVerify }) => {
           </div>
 
           {/* ======Dashboard nav======= */}
-          <Link to="/dashboard">
-            <div className={styles.dashboard}>
+         <div className="flex px-[10px] w-[100%] my-[20px] cursor-pointer">
+            <div
+            onClick={()=> {
+              navigate("/dashboard")
+            }}
+             className={`${styles.dashboard}  gap-[10px]  px-[10px] py-[16px]  rounded-[10px] `}>
               <img
-                className="w-[8.38px] h-[8.38px] md:w-[13px] md:h-[13px] lg:h-[24px] lg:w-[24px]"
+                className="w-[15.38px] h-[15.38px] md:w-[13px] md:h-[13px] 
+                lg:h-[24px] lg:w-[24px]"
                 src="./Images/dashboardImages/dashboardimg.png"
                 alt="3squares"
               />
-              <p className=" text-[7px] font-semibold md:text-[14px] lg:text-[14px] ">
+              <p className=" text-[12px]  font-semibold md:text-[14px] lg:text-[14px] ">
                 Dashboard
               </p>
             </div>
-          </Link>
+          </div>
         </div>
 
         <div className=" flex flex-col">
@@ -599,7 +611,7 @@ export const SideBar = ({ fullname, userId, BvnVerify, NinVerify }) => {
             </div>
           </div>
         </div>
-      </div>
+  
       {/* ===========Logout========= */}
 
       <div
@@ -617,5 +629,9 @@ export const SideBar = ({ fullname, userId, BvnVerify, NinVerify }) => {
         </p>
       </div>
     </div>
+    
+   
+
+ 
   );
 };

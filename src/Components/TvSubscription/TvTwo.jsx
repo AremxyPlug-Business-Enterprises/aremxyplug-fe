@@ -89,6 +89,7 @@ const Data = GetLocalStorage();
      const [sessionModal, setSessionModal] = useState(false);
      const {purchaseDstvErrorType, setPurchaseDstvErrorType} = useContext(ContextProvider);
      const { setDstvCardName} = useContext(ContextProvider)
+      const [checkNetworkError, setCheckNetworkError] = useState(false)
       const navigate = useNavigate();
   
 const handleOptionClickDstv = (option) => {
@@ -114,7 +115,11 @@ const ReceiptButton = ()=> {
       setDstvEmail("")
    setDstvMobileNumber("")
    setDstvSmartCard("");
+   setDstvCardName("")
    setDstvAmount("");
+   setDstvOrderId("");
+   setDstvDescription("")
+   setDstvTransactionId("");
    setSelectedOptionDstv("");
    setPackageDstv("");
    setDstvDecoderType("")
@@ -213,12 +218,9 @@ const ReceiptButton = ()=> {
   
 const DstvOptionalPlan = dstvData?.length < 1 && fetchedDstvPlans.status === 200 ? fetchedDstvPlans?.data?.data?.data : dstvData;
 
-
-      useEffect(()=> {
-       if(fetchedDstvPlans.status === 200 || fetchedDstvPlans.status === 201){
-      setDstvData(fetchedDstvPlans?.data?.data?.data);
-      }else if(fetchedDstvPlans.status === undefined){
-       const RetrieveGotvPlans = async()=> {
+//=========Retrieving GOtv Plans =====
+ const RetrieveGotvPlans = async()=> {
+  if(!navigator.onLine) return setCheckNetworkError(true)
           const SuccessHandler = ()=> {
     console.log("Successfully fetched dstv plans");
    }
@@ -233,7 +235,13 @@ const DstvOptionalPlan = dstvData?.length < 1 && fetchedDstvPlans.status === 200
           }
       },
          setFetchedDstvPlans);
-      }
+      }else if(ErrorType === "User error" || ErrorType === "Network error"){
+             setCheckNetworkError(true);
+          }else if(ErrorType === "Server error"){
+             alert("Failed to fetch Gotv Plans, try again later")
+          }else{
+            alert("An unexpected error has occured try again later.")
+          }
      }
       
  await GetFunction(`products/tvsub/dstv`, 
@@ -242,9 +250,9 @@ const DstvOptionalPlan = dstvData?.length < 1 && fetchedDstvPlans.status === 200
    failedHandler,
     setFetchedDstvPlans);
 }
-RetrieveGotvPlans()
-}
+//Retrieving User's Balance ======
   const GetBalance = async () => {
+    if(!navigator.onLine) return setCheckNetworkError(true)
       const SuccessHandler = () => {
         //alert("Successful");
         console.log("successfully retrieved balance");
@@ -270,6 +278,7 @@ RetrieveGotvPlans()
         if(ErrorType === "Server error"){
           alert("Failed to retrieve the balance.")
         }else if(ErrorType === "Network error" || ErrorType === "User error"){
+          setCheckNetworkError(true)
               alert("Kindly check your internet connection to retrieve balance.")
         }else {
           alert("An unexpected error has occured on attempt to retrieve balance.")
@@ -278,6 +287,7 @@ RetrieveGotvPlans()
         setPassDataBalance
       );
        }else if(ErrorType === "Network error" || ErrorType === "User error"){
+          setCheckNetworkError(true)
            alert("Kindly check your internet connection to retrieve balance")
        }else {
         alert("An unexpected error has occured on attempt to retrieve the balance")
@@ -313,7 +323,8 @@ RetrieveGotvPlans()
       }else if(ErrorType === "unauthorised"){
         return sessionModal(true)
       }else if(ErrorType === "Network error" || ErrorType === "User error"){
-       alert("Kindly check your internet connection to retrieve balance")
+          setCheckNetworkError(true)
+ alert("Kindly check your internet connection to retrieve balance")
       }else{
         alert("An Unexpected error occured in attempt to retrieve balance")
       }
@@ -322,7 +333,9 @@ RetrieveGotvPlans()
         setPassDataBalance
       );
           }else if(ErrorType === "Network error" || ErrorType === "User error"){
-            alert("Kindly check your internet connection to retrieve the balance")
+          setCheckNetworkError(true)
+ alert("Kindly check your internet connection to retrieve the balance")
+            setCheckNetworkError(true)
           }else{
             alert("An Unexpected error occured in attempt to retrieve balance")
           }
@@ -332,6 +345,7 @@ RetrieveGotvPlans()
     }
           else if(ErrorType === "Network error" || ErrorType === "User error"){
             //The operation was interrupted by a network error
+             setCheckNetworkError(true)
             alert("Kindly check your internet connection to retrieve balance.")
          }else {
           //An alien error has occured with the re-run of the "Server error" ErrorType
@@ -341,7 +355,7 @@ RetrieveGotvPlans()
         setPassDataBalance
       );
         }else if(ErrorType === "Network error" || ErrorType === "User error"){
-
+        setCheckNetworkError(true)
         }else{
           alert("An unexpected error occured in attempt to retrieve balance.")
         }
@@ -354,6 +368,14 @@ RetrieveGotvPlans()
         setPassDataBalance
       );
     };
+      useEffect(()=> {
+       if(fetchedDstvPlans.status === 200 || fetchedDstvPlans.status === 201){
+      setDstvData(fetchedDstvPlans?.data?.data?.data);
+      }else if(fetchedDstvPlans.status === undefined){
+      
+RetrieveGotvPlans()
+}
+
                      // Simulate async data loading
                     if((newBalance === "" ||
        newBalance === null ||
@@ -512,17 +534,17 @@ const VerifyPinHandler = async () => {
           //which doesn't only affect us through service of the platform we are using,
           //but also unrest and panic to the user and the amount for purchase and 
           //been removed twice without a result or successful output.
-          setPurchaseDstvErrorType("Failed to process your request, try again some other time")
+          setPurchaseDstvErrorType("Server Error: Purchase Failed")
        setFailedPopup(true);
        setInputPinDstv(false);
          setInputPin("")
         }else if(ErrorType === "Network error" || ErrorType === "User error"){
-          setPurchaseDstvErrorType("An internet connection error");
+          setPurchaseDstvErrorType("Network Error: Purchase Failed");
           setFailedPopup(true);
        setInputPinDstv(false);
          setInputPin("")
         }else {
-
+      setPurchaseDstvErrorType("An Unexpected error has occured");
         }
       }
       
@@ -767,6 +789,19 @@ alert("Kindly check your internet connection.")
  
 console.log(dstvAmount)
 
+//======Running the Balance and the retrieving if the following 
+//Conditions are met
+window.addEventListener("online", ()=> {
+   if(checkNetworkError === true &&
+     (updateBalance === undefined || updateBalance === null || updateBalance === "")
+    && (newBalance === null || newBalance === undefined || newBalance === "") ){
+   return GetBalance()
+   }
+   if(checkNetworkError === true && (fetchedDstvPlans.status !== 200 || fetchedDstvPlans.status === undefined) ) {
+    return RetrieveGotvPlans()
+   }
+  })
+
 
   return (
     <div>
@@ -861,11 +896,13 @@ console.log(dstvAmount)
       )}
             </div>
 
-            <div className="relative flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
+            <div className="relative flex flex-col gap-[3px] 
+            lg:gap-[5px] w-full md:w-1/2">
               <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px md:font-[600] font-[400]">
                 Select Package</label>
 
-              <div onClick={packageDropdown} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
+              <div onClick={packageDropdown}
+               className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center" onClick={packageDropdown} ${
       isDarkMode 
         ? "bg-black text-white border border-white" 
@@ -926,7 +963,7 @@ console.log(dstvAmount)
               onInput={(e =>{
                 const numericValue = e.target.value.replace(/\D/g, '');
                     e.target.value = numericValue
-                })}
+                })} placeholder={"XXXXXXXXXX"}
                 onChange={handleSmartCard} 
                 maxLength ={10}
                 className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
@@ -950,6 +987,7 @@ console.log(dstvAmount)
                 Card Name</label>
               <input type="text"
               readOnly value={userVerifiedName}
+              placeholder="Input card number to get verified name"
                  className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 
                   text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.9270px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
@@ -982,6 +1020,7 @@ console.log(dstvAmount)
                   }
                 
                    })}
+                   placeholder="XXX XXXX XXXX"
                 type="tel" maxLength={11} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center ${
       isDarkMode 
@@ -1021,6 +1060,7 @@ console.log(dstvAmount)
 
               <input
                 type="text"
+                placeholder={"0.00"}
                 className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[500]  leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] 
                 lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px] self-center ${
                   isDarkMode 
@@ -1179,7 +1219,7 @@ console.log(dstvAmount)
              src="./Images/failed.png"
              alt="Failed"
            />
-           <p className="text-sm text-gray-600 mb-8">
+           <p className="text-sm text-red-500 font-[600] mb-8">
              {purchaseDstvErrorType}
            </p>
              <div className="flex gap-[10px] justify-between w-full px-[10px]">
