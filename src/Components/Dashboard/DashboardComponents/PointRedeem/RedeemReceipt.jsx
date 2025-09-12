@@ -20,6 +20,7 @@ export const RedeemReceipt = () => {
        pointOrderId,  
         pointAmountRedeemed, 
         pointTransactionProduct,
+         pointPointsRedeemed, 
        
   } = useContext(ContextProvider);
   
@@ -105,7 +106,7 @@ export const RedeemReceipt = () => {
           `}> 
             Redeem Successful on
             </h3>
-            <span className={`text-[8px] text-[#0008] pt-1 font-extrabold flex justify-center items-center
+            <span className={`text-[12px] text-[#0008] pt-1 font-extrabold flex justify-center items-center
             ${isDarkMode ? "text-white" : "text-black"}`}
             >
               {date.toLocaleDateString(undefined, {
@@ -118,15 +119,21 @@ export const RedeemReceipt = () => {
                 hour12: true,
               })}
             </span>
-            <p className="text-[10px] font-medium pt-3 text-[#000] text-center mb-2 md:text-[14px] lg:text-[12px]">
-              You have successfully redeemed <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]" >{isLoading ? "Loading..." : pointAmountRedeemed}.00 {" "} </span> Points to <br></br>
-              <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">
-                {isLoading ? "Loading..." : pointAmountRedeemed}.00 PTS
-              </span>
-              from your PTS balance to{" "}
+             <p className={`mt-5 text-[12px] text-[#0008] text-center md:text-[16px] lg:text-[14px]
+               ${isDarkMode ? "text-white" : "text-black" }
+              `}>
+              You have successfully redeemed{" "}
+              <span className={` ${isDarkMode? "text-white" : "text-black"} text-[#000] font-extrabold text-[10px] md:text-[12px] lg:text-[14px]`}>
+                   {isLoading ? "Loading..." : pointAmountRedeemed}.00
+              </span>{" "}
+              Points to{" "}
+             <span className={` ${isDarkMode? "text-white" : "text-black"} text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]`}>
+                   &#8358;{isLoading ? "Loading..." : pointAmountRedeemed}.00
+              </span>{" "}
+              from your PTS balance{" "} to
             </p>
 
-            <div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-5 py-5">
               {/* ========================Recipient Info================== */}
               <div className="flex flex-col gap-[3px] w-[90%] mx-auto lg:gap-[5px]">
                 <div className="flex gap-[5px] items-center text-[10px] lg:text-[16px] font-extrabold">
@@ -144,11 +151,11 @@ export const RedeemReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Amount Redeemed</p>
-                    <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{isLoading ? "Loading..." : pointAmountRedeemed} PTS</span>
+                    <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{isLoading ? "Loading..." : pointAmountRedeemed}.00 PTS</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Account Received</p>
-                   <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{isLoading ? "Loading..." : pointAmountRedeemed} </span>
+                   <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>&#8358;{isLoading ? "Loading..." : pointPointsRedeemed}.00 </span>
                 </div>
                
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
