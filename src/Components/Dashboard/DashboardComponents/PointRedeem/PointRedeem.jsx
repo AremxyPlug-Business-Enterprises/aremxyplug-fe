@@ -27,7 +27,9 @@ const PointRedeem = () => {
  
 
   const { 
-    toggleSideBar, transferFee, toggleVisibility, isVisible,
+    toggleSideBar, 
+    // transferFee, 
+    toggleVisibility, isVisible,
     inputValue,
            setInputValue, 
            outputValue, 
@@ -39,7 +41,7 @@ const PointRedeem = () => {
             errorMessage,
            setErrorMessage,
           //  redeemResponse, 
-           setRedeemResponse,
+          //  setRedeemResponse,
          
         pointRateRedeemed,
          setPointRateRedeemed,
@@ -52,7 +54,9 @@ const PointRedeem = () => {
          setPointTransactionProduct,
         setPointTransactionDescription,
          setPointFetchedResponse,
+        setPointPointsRedeemed,
           authenticationOpen,
+          pointPointsRedeemed,
           
    } = useContext(ContextProvider);
    
@@ -74,7 +78,6 @@ const PointRedeem = () => {
   
 
 const [text, setText] =useState(false);
-  // const [userPoints, setUserPoints] = useState(0);
   // const [transactionInfo, setTransactionInfo] = useState(null);
   const [isLoading, setLoading] = useState(false);
     const [InputPinPopUp, setInputPinPopUp] = useState(false);
@@ -82,19 +85,9 @@ const [text, setText] =useState(false);
   const [proceed, setProceed] = useState(false);
    const [successPopup, setSuccessPopup] = useState(false);
   const [errors, setErrors] = useState({});
- const [pointPostResponse, setPointPostResponse ] = useState({});
+  const [pointPostResponse, setPointPostResponse] = useState({});
   
 const [userPoints, setUserPoints] = useState(0);
-//  const [transactionPoints, setTransactionPoints] = useState(0);
-// const [referralPoints, setReferralPoints] = useState(0);
-//   const [redeemResponse, setRedeemResponse] = useState(null);
-//   const [isRedeeming, setIsRedeeming] = useState(false);
-//   const [redeemedPoints, setRedeemedPoints] = useState(0);
-//   const [rateRedeemed, setRateRedeemed] = useState(0);
-//   const [ transactionId,  setTransactionId] = useState(0);
-//   const [ orderId,  setOrderId] = useState(0);
-// const [amountRedeemed, setAmountRedeemed] = useState(0);
-
 const [sessionModal, setSessionModal] = useState(false);
 
   const handleInputChange = (event) => {
@@ -243,13 +236,12 @@ const redemptionData = response?.data?.data?.data;
     return;
   }
 
+   setPointPointsRedeemed(redemptionData.points_redeemed ?? 0);
    setPointAmountRedeemed(redemptionData.amount_redeemed ?? 0);
 
-//  console.log("Amount Redeemed", pointAmountRedeemed);
   setPointRateRedeemed(redemptionData.redeemed_rate ?? "1 PTS - 1 NGN");
   setPointTransactionId(redemptionData.transaction_id ?? "");
   setPointOrderId(redemptionData.order_id ?? "");
-  // setUserPoints(redemptionData.remaining_points ?? userPoints);
   setPointTransactionProduct(redemptionData.transaction_product ?? "");
   setPointTransactionDescription(redemptionData.transaction_description ?? "");
 
@@ -270,15 +262,15 @@ const redemptionData = response?.data?.data?.data;
  const failedHandler = (ErrorType) => {
   console.error("Redemption failed with error:", ErrorType);
 
-  if (ErrorType === "unauthorised") {
-    setSessionModal(true);
-  } else if (ErrorType === "Server error") {
-    alert("Server Error: Redemption Failed");
-  } else if (ErrorType === "Network error" || ErrorType === "User error") {
-    alert("Network Error: Redemption Failed");
-  } else {
-    alert("An Unexpected error has occurred");
-  }
+     if (ErrorType === "unauthorised") {
+        setSessionModal(true);
+      } else if (ErrorType === "Server error") {
+        setErrorMessage("Server Error: Redemption Failed");
+      } else if (ErrorType === "Network error" || ErrorType === "User error") {
+        setErrorMessage("Network Error: Redemption Failed");
+      } else {
+        setErrorMessage("An Unexpected error has occurred");
+      }
 
   setInputPinPopUp(false);
   setInputPin("");
@@ -287,7 +279,7 @@ const redemptionData = response?.data?.data?.data;
 
     await PostFunction(Path, setLoading, payloadJson, successHandler, failedHandler, setPointPostResponse);
   };
-// console.log(pointPostResponse)
+console.log(pointPostResponse)
 
   const refreshPoints = () => {
   GetFunction("extra/point", setLoading, (res) => {
@@ -304,16 +296,16 @@ const redemptionData = response?.data?.data?.data;
   await VerifyTransPin(
     inputPin,
     (ErrorType) => {
-      if (ErrorType === "unauthorised") {
+    if (ErrorType === "unauthorised") {
         setSessionModal(true);
       } else if (ErrorType === "Server error") {
-        alert("Server error while verifying PIN");
+        setErrorMessage("Server error while verifying PIN");
       } else if (ErrorType === "Network error" || ErrorType === "User error") {
-        alert("Check your internet connection");
+        setErrorMessage("Check your internet connection");
       } else if (ErrorType === "incorrect pin") {
-        alert("Incorrect PIN entered");
+        setErrorMessage("Incorrect PIN entered");
       } else {
-        alert("PIN verification failed");
+        setErrorMessage("PIN verification failed");
       }
     },
     setLoading,
@@ -698,20 +690,20 @@ const redemptionData = response?.data?.data?.data;
           
   <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]"/>
           <div className="mx-auto">
-            <h2 className="text-[12px] my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
+            <h2 className="text-[12px] my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px] font-extrabold">
               Confirm Transaction
             </h2>
-            <p className={`text-[10px] text-[#000] pt-[20px] text-center mb-2 md:text-[12px] lg:text-[14px]
+            <p className={`text-[10px] text-[#000] pt-[20px] font-semibold text-center mb-2 md:text-[12px] lg:text-[14px]
             ${isDarkMode ? "text-white" : "text-black"}`}>
               You are about to redeem{" "}
               <span className={`text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]
-             ${isDarkMode ? "text-white" : "text-black"}`}>   {isLoading ? "Loading..." : inputValue}.00 PTS{" "}
+             ${isDarkMode ? "text-white" : "text-black"}`}>{isLoading ? "Loading..." : inputValue}.00{" "}
               </span>{" "}
-              Points<br></br>
-              {/* <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]">
-                {outputValue}{" "}
-              </span> */}
-              from your PTS balance to{" "}
+              Points to{" "}
+                <span className={`text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]
+             ${isDarkMode ? "text-white" : "text-black"}`}>&#8358;{isLoading ? "Loading..." : outputValue}.00{" "}
+              </span>{" "}
+              from your PTS balance to {" "}
             </p>
 </div>
             <div className="flex flex-col gap-3 pt-[10px]">
@@ -721,15 +713,15 @@ const redemptionData = response?.data?.data?.data;
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Amount To Redeem</p>
-                <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>   {isLoading ? "Loading..." : inputValue} PTS</span>
+                <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>   {isLoading ? "Loading..." : inputValue}.00 PTS</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Account To Receive</p>
-                <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>&#8358;{isLoading ? "Loading..." : inputValue}</span>
+                <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>&#8358;{isLoading ? "Loading..." : inputValue}.00</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Redeem Rate</p>
+                <p className={`text-[#0008] ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Redeem Rate</p>
                 <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>1 PTS - 1 NGN</span>
               </div>
 
@@ -826,7 +818,7 @@ const redemptionData = response?.data?.data?.data;
               />
               {/* <p className="text-xs md:text-base font-extrabold text-center my-[10%] lg:my-[%] "> */}
               <div className="flex flex-col w-full justify-center py-[15px] lg:py-[0px] h-[100%] gap-[15px] ">
-                <p className="font-extrabold text-xs leading-[16px] pb-[20px] md:text-[10px] lg:text-base text-center">
+                <p className="font-extrabold text-[12px] leading-[16px] pb-[20px] md:text-[10px] lg:text-[16px] text-center">
                   Input PIN to complete transaction
                 </p>
                 <div
@@ -839,7 +831,7 @@ const redemptionData = response?.data?.data?.data;
                   >
         <OtpInput
   value={inputPin}
-  inputType={isVisible ? "tel" : "password"}
+  inputType={!isVisible ? "tel" : "password"}
   onChange={setInputPin}
   numInputs={4}
   shouldAutoFocus={true}
@@ -867,7 +859,10 @@ const redemptionData = response?.data?.data?.data;
                         * * * *
                       </div>
                     )} */}
-                    <div className="text-[#0003]" onClick={toggleVisibility}>
+                    <div className={`text-[#0003]
+                     ${
+                            isDarkMode ? "text-[#7c7c7c7c]" :"inherit"
+                        }`} onClick={toggleVisibility}>
                       {isVisible ? (
                         <AiFillEye className="w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]" />
                       ) : (
@@ -945,7 +940,7 @@ const redemptionData = response?.data?.data?.data;
               />
             </div>
             <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
-            <h2 className="text-[12px] my-[4%] text-center md:text-[20px] md:my-[3%] lg:text-[14px] lg:my-[2%]">
+            <h2 className="text-[12px] font-extrabold my-[4%] text-center md:text-[20px] md:my-[3%] lg:text-[14px] lg:my-[2%]">
               Redeem Successful
             </h2>
             <img
@@ -953,16 +948,16 @@ const redemptionData = response?.data?.data?.data;
               src="./Gif/checkMarkGif.gif"
               alt="/"
             />
-            <p className={`text-[8px] text-[#0008] text-center mb-2 md:text-[14px] lg:text-[12px]
+            <p className={`font-semibold text-[10px] text-[#0008] text-center mb-2 md:text-[14px] lg:text-[14px]
                ${isDarkMode ? "text-white" : "text-black" }
               `}>
               You have successfully redeemed{" "}
-              <span className={` ${isDarkMode? "text-white" : "text-black"} text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]`}>
-                   {isLoading ? "Loading..." : pointAmountRedeemed} .00 PTS
+              <span className={` ${isDarkMode? "text-white" : "text-black"} text-[#000] font-bold text-[10px] md:text-[16px] lg:text-[14px]`}>
+                   {isLoading ? "Loading..." : pointAmountRedeemed} .00
               </span>{" "}
-              Points<br></br>
-              <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">
-                {pointAmountRedeemed}{" "}
+              Points to{" "}
+             <span className={` ${isDarkMode? "text-white" : "text-black"} text-[#000] font-bold text-[10px] md:text-[16px] lg:text-[14px]`}>
+                   &#8358;{isLoading ? "Loading..." : pointAmountRedeemed}.00<br></br>
               </span>
               from your PTS balance{" "} to
             </p>
@@ -978,11 +973,11 @@ const redemptionData = response?.data?.data?.data;
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"} text-[#0008]`}>Account To Receive</p>
-                <span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>{isLoading ? "Loading..." : pointAmountRedeemed}</span>
+                <span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>&#8358;{isLoading ? "Loading..." : pointPointsRedeemed}</span>
               </div>
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                <p className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}text-[#0008]`}>Redeem Rate</p>
+                <p className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"} text-[#0008]`}>Redeem Rate</p>
                 <span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>
                  {isLoading ? "Loading..." : pointRateRedeemed}
 </span>
@@ -990,8 +985,8 @@ const redemptionData = response?.data?.data?.data;
 
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className={`  ${isDarkMode ? "text-white" : "text-[#0008]"}`}>Transaction fee</p>
-                {/* <span>&#8358;{transferFee}.00</span> */}
-                <span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>{transferFee}.00</span>
+                <span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>&#8358;0</span>
+                {/* <span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>{transferFee}.00</span> */}
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                 <p className= {`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Order Number</p>

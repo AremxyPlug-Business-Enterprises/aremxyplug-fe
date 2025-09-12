@@ -888,6 +888,7 @@ export const Context = ({ children }) => {
           const [ pointTransactionId,  setPointTransactionId] = useState(0);
           const [ pointOrderId,  setPointOrderId] = useState(0);
         const [pointAmountRedeemed, setPointAmountRedeemed] = useState(0);
+        const [pointPointsRedeemed, setPointPointsRedeemed] = useState(0);
            const [pointTransactionProduct, setPointTransactionProduct] = useState(0);
         const [pointTransactionDescription, setPointTransactionDescription] = useState(0);
          const [pointFetchedResponse, setPointFetchedResponse ] = useState({});
@@ -1838,7 +1839,10 @@ export const Context = ({ children }) => {
         setPointTransactionDescription,
         pointFetchedResponse,
          setPointFetchedResponse,
-         
+         pointPointsRedeemed, 
+         setPointPointsRedeemed,
+       
+
 
     //electricity subscription
     // ikedc
