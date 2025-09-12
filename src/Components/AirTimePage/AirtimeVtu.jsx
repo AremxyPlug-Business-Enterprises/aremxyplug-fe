@@ -139,7 +139,7 @@ const AirtimeVtu = () => {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(requestBody)  // Use the new object here
+                body: JSON.stringify(requestBody)
             });
 
             if (!response.ok) {
@@ -353,52 +353,87 @@ const AirtimeVtu = () => {
             }),
     });
 
-    const handleProceed = (e) => {
-        e.preventDefault();
+    const canProceed =
+  recipientNumber?.length === 11 &&
+  amount?.length >= 2 &&
+  networkName &&
+  paymentSelected;
 
-        function validateNigerianNumberByNetwork(number) {
-            const networks = {
-                'AIRTEL': ['0701', '0708', '0802', '0808', '0812', '0901', '0902', '0904', '0907', '0912', '0911'],
-                'MTN': ['07025', '07026', '0703', '0704', '0706', '0803', '0806', '0810', '0813', '0814', '0816', '0903', '0906', '0913', '0916'],
-                'GLO': ['0705', '0805', '0807', '0811', '0815', '0905', '0915'],
-                '9MOBILE': ['0809', '0817', '0818', '0909', '0908']
-            };
 
-            for (let network in networks) {
-                for (let prefix of networks[network]) {
-                    if (number.startsWith(prefix) && number.length === prefix.length + 7) {
-                        return network;
-                    }
-                }
-            }
+const handleProceed = (e) => {
+  e.preventDefault();
 
-            return 'Unknown network';
-        }
+  let newErrors = {};
 
-        const { error } = schema.validate({
-            recipientNumber,
-            amount,
-        });
+  // Validate with Joi
+  const { error } = schema.validate({
+    recipientNumber,
+    amount,
+  });
 
-        if (error) {
-            setErrors(
-                error.details.reduce((acc, curr) => {
-                    acc[curr.path[0]] = curr.message;
-                    return acc;
-                }, {})
-            );
-        } else if (validateNigerianNumberByNetwork(recipientNumber) !== networkName) {
-            setErrors({
-                recipientNumber:
-                    `Invalid ${networkName} number. Please enter a valid ${networkName} number.`,
-            });
-        } else {
-            setProceed(true);
-            setErrors({});
-        }
+  if (error) {
+    newErrors = error.details.reduce((acc, curr) => {
+      acc[curr.path[0]] = curr.message;
+      return acc;
+    }, {});
+  }
 
-        // console.log(successful);
+  // Validate network
+  if (!networkName) {
+    newErrors.networkName = "Please select a network.";
+  }
+
+  // Validate payment option
+  if (!paymentSelected) {
+    newErrors.payment = "Please select a payment method.";
+  }
+
+  // Validate amount
+  if (!amount || amount.length < 2) {
+    newErrors.amount = "Please enter a valid amount.";
+  }
+
+  if (Object.keys(newErrors).length > 0) {
+    console.log("Validation failed", newErrors);
+    setErrors(newErrors);
+    return;
+  }
+
+  // Nigerian number validate
+  function validateNigerianNumberByNetwork(number) {
+    const networks = {
+      'AIRTEL': ['0701', '0708', '0802', '0808', '0812', '0901', '0902', '0904', '0907', '0912', '0911'],
+      'MTN': ['07025', '07026', '0703', '0704', '0706', '0803', '0806', '0810', '0813', '0814', '0816', '0903', '0906', '0913', '0916'],
+      'GLO': ['0705', '0805', '0807', '0811', '0815', '0905', '0915'],
+      '9MOBILE': ['0809', '0817', '0818', '0909', '0908']
     };
+
+    for (let network in networks) {
+      for (let prefix of networks[network]) {
+        if (number.startsWith(prefix) && number.length === prefix.length + 7) {
+          return network;
+        }
+      }
+    }
+    return 'Unknown network';
+  }
+
+  const detectedNetwork = validateNigerianNumberByNetwork(recipientNumber);
+  console.log("Detected network:", detectedNetwork);
+
+  if (detectedNetwork !== networkName) {
+    setErrors({
+      recipientNumber: `Invalid ${networkName} number. Please enter a valid ${networkName} number.`,
+    });
+    return;
+  }
+
+  setProceed(true);
+  setErrors({});
+  console.log("All validation passed, proceeding...");
+};
+
+
 
     const factorWalletName = (value) => {
 
@@ -475,7 +510,9 @@ const AirtimeVtu = () => {
                 setOrderID(result?.order_id);
                 setDescription(result?.description);
                 setInputPin("")
-                  if (response.statusCode === 200) {
+                //   if (response.statusCode === 200) 
+                  if (response.status === 200) 
+                    {
             // Success response
             setTransactSuccessPopUp(true); 
             setConfirm(false);
@@ -562,26 +599,41 @@ const AirtimeVtu = () => {
         setInputValues(numericValue);
     };
 
-    const HandleAirtime = async()=> {
-        const setFailedPin = async(ErrorType)=> {
-        if(ErrorType === "unauthorised"){
-             await VerifyTransPin(inputPin,
-    (ErrorType)=> {
-        if(ErrorType === "unauthorised"){
-            return setSessionModal(true)
-        }
+//     const HandleAirtime = async()=> {
+//         const setFailedPin = async(ErrorType)=> {
+//         if(ErrorType === "unauthorised"){
+//              await VerifyTransPin(inputPin,
+//     (ErrorType)=> {
+//         if(ErrorType === "unauthorised"){
+//             return setSessionModal(true)
+//         }
+//     },
+//       setIsLoading,
+//        setErrorMessage,
+//        handleTransactionSuccessClose)
+//         }
+//         }
+//    await VerifyTransPin(inputPin,
+//     setFailedPin,
+//       setIsLoading,
+//        setErrorMessage,
+//        handleTransactionSuccessClose)
+// }
+
+const HandleAirtime = async () => {
+  await VerifyTransPin(
+    inputPin,
+    (ErrorType) => {
+      if (ErrorType === "unauthorised") {
+        setSessionModal(true);
+      }
     },
-      setIsLoading,
-       setErrorMessage,
-       handleTransactionSuccessClose)
-        }
-        }
-   await VerifyTransPin(inputPin,
-    setFailedPin,
-      setIsLoading,
-       setErrorMessage,
-       handleTransactionSuccessClose)
-}
+    setIsLoading,
+    setErrorMessage,
+    handleTransactionSuccessClose
+  );
+};
+
     return (
         <DashBoardLayout>
             <div className={styles.AirtimeTops}>
@@ -827,7 +879,7 @@ const AirtimeVtu = () => {
                             <div className="flex flex-col lg:gap-[14px] gap-[7px] md:mt-12 mt-8"> 
                                 <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
                                             isDarkMode 
-                                              ? "!text-[#7c7c7c]" : "!text-[#7c7c7c]"
+                                              ? "!text-[#7E7E7E]]" : "!text-[#7E7E7E]"
                                           }`}>Phone Number <span
                                     className={`
                                        
@@ -837,16 +889,16 @@ const AirtimeVtu = () => {
                                 <div className={`!mt-2 md:!mt-0
                                    ${
                                             isDarkMode 
-                                                ? "!bg-black !text-white !border !border-solid !border-white" 
-                                                : "border border-solid border-[#0003] bg-white text-black"
+                                                ? "!bg-black !!text-[#7E7E7E]!border !border-solid !border-white" 
+                                                : "border border-solid border-[#0003] bg-white !text-[#7E7E7E]"
                                         }
                                 ${styles.input} !h-[48.927px] md:!h-[57px]
                                           `}>
                                     <div className={`
                                          ${
                                             isDarkMode 
-                                                ? "!bg-black !text-[#7E7E7E]]" 
-                                                : ""
+                                                ? "!bg-black !text-[#7E7E7E]" 
+                                                : "!text-[#7c7c7c]"
                                         }
                                         ${styles.output} !relative !top-[11px] md:!relative md:!top-[14px] !text-[14px] md:!text-base`}>
                                         <input type='number'
@@ -854,9 +906,9 @@ const AirtimeVtu = () => {
                                                   ${
                                             isDarkMode 
                                                 ? "!bg-black !text-[#7c7c7c]" 
-                                                : ""
+                                                : "!text-[#7c7c7c]"
                                         }
-                                                ${styles.phone} !text-[14px] md:!top-[14px]`}  required
+                                                ${styles.phone} !text-[14px] md:!top-[14px] text-[#7c7c7c]`}  required
                                             placeholder='Add recipient phone number'
                                             onChange={(event) => {
                                                 handleChange(event);
@@ -866,7 +918,7 @@ const AirtimeVtu = () => {
                                             ${
                                             isDarkMode 
                                                 ? "!bg-black !text-[#7c7c7c]" 
-                                                : ""
+                                                : "!text-[#7C7C7C]"
                                         }
                                         `}>
                                             <img src={call} alt="" />
@@ -878,7 +930,7 @@ const AirtimeVtu = () => {
                                         ${
                                             isDarkMode 
                                                 ? "!bg-black !text-[#7c7c7c]" 
-                                                : ""
+                                                : "!text-[#7c7c7c]"
                                         }!text-[14px] text-red-500 italic lg:text-[14px]
                                         
                                         `}>
@@ -914,7 +966,7 @@ const AirtimeVtu = () => {
                                              ${
                                             isDarkMode 
                                                 ? "!bg-black !text-[#7E7E7E]" 
-                                                : ""
+                                                : "!text-[#7E7E7E]"
                                         }
                                             ${styles.phone} !text-[14px] md:!text-base`} required placeholder='Add recipient name' onChange={(event) => setRecipientName(event.target.value)} value={recipientName} />
                                         <div className={styles.call}>
@@ -953,8 +1005,8 @@ const AirtimeVtu = () => {
                                         <input type='number' placeholder='Type amount' required className={`pl-[8px] md:pl-base
                                              ${
                                             isDarkMode 
-                                                ? "!bg-black !text-[#7c7c7c]" 
-                                                : ""
+                                                ? "!bg-black !text-[#7E7E7E]" 
+                                                : "!text-[#7E7E7E]"
                                         }
                                             ${styles.phones} !relative !top-[5px] md:!relative md:!top-base !text-[14px] md:!text-base`} onChange={(event) => setAmount(event.target.value)} value={amount.toLocaleString()} />
                                         <div className={`${styles.call} !relative !top-[4px] md:!relative md:!top-base !text-[14px] md:!text-base`}>
@@ -1172,23 +1224,31 @@ const AirtimeVtu = () => {
                     {proceed && (
                         <Modal>
                             (
-                            <div
-                                className={`${styles.transferMoneyPop} ${toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-                                    } w-[90%] md:w-[60%] overflow-auto`}
-                            >
+                                                 <div className={`w-full flex justify-center h-full 
+             py-[30px] px-[15px] lg:px-[0px] lg:items-center
+              items-end`}>
+            <div 
+            className={` bvnQuery lg:rounded-[12px] rounded-[10px] 
+              h-[520px] ${ toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+              } w-[100%] md:w-[60%] overflow-auto  ${isDarkMode ? "bg-black text-white border rounded-[10px] border-white": "bg-white text-black"} `}
+          >
+                    <div className="flex justify-end lg:py-[10px] pr-2 py-[7px] relative">
+ 
                                 <img
                                     onClick={() => setProceed(false)}
                                     className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px]"
                                     src="/Images/transferImages/close-circle.png"
                                     alt=""
                                 />
+                                </div>
                                 <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[8%] md:h-[10px]" />
                                 <h2 className="text-[10px] my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px]">
                                     Confirm Transaction
                                 </h2>
-                                <p className="text-[10px] mx-[10px] text-[#0008] text-center mb-4 md:text-[12px] lg:text-[14px]">
+                                <p className={`text-[10px] mx-[10px] text-[#0008] text-center mb-4 md:text-[12px] lg:text-[14px]
+                                  ${isDarkMode ? "text-white" : "text-black"}`}>
                                     You are about to purchase{" "}
-                                    <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]">
+                                    <span className={`text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[12px]  ${isDarkMode ? "text-white" : "text-black"}`}>
                                         {networkName + ' ' + selectedProduct} Airtime &#8358;{amount}.00{" "}
                                     </span>
                                     from your NGN wallet to{" "}
@@ -1196,7 +1256,7 @@ const AirtimeVtu = () => {
 
                                 <div className="flex flex-col gap-2 mt-3">
                                     <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                                        <p className="text-[#0008]">Network</p>
+                                        <p className={`text-[#0008] ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Network</p>
                                         <span className='flex gap-1'>
                                             <div className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[10px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]">
                                                 <img src={networkImage} alt="" className='w-full h-full object-cover' />
@@ -1205,41 +1265,42 @@ const AirtimeVtu = () => {
                                         </span>
                                     </div>
                                     <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                                        <p className="text-[#0008]">Product</p>
+                                        <p className={`text-[#0008] ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Product</p>
                                         <span>{` ${networkName + ' ' + selectedProduct} VTU`}</span>
                                     </div>
                                     <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                                        <p className="text-[#0008]">Discount</p>
+                                        <p className={`text-[#0008] ${isDarkMode ? "text-white" : "text-[#7C7C7C]"} `}>Discount</p>
                                         <span>{discount}%</span>
                                     </div>
                                     <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                                        <p className="text-[#0008]">Phone Number</p>
+                                        <p className={`text-[#0008] ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Phone Number</p>
                                         <span>{recipientNumber}</span>
                                     </div>
                                     <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                                        <p className="text-[#0008]">Recipient Name</p>
+                                        <p className={`text-[#0008] ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Recipient Name</p>
                                         <span>{recipientName}</span>
                                     </div>
                                     <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                                        <p className="text-[#0008]">Payment Method</p>
+                                        <p className={`text-[#0008] ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Payment Method</p>
                                         <span>{factorWalletName(name)}</span>
                                     </div>
                                     <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                                        <p className="text-[#0008]">Total Amount</p>
-                                        <span>&#8358;{newAmount}</span>
+                                        <p className={`text-[#0008] ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Total Amount</p>
+                                        <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>&#8358;{newAmount}</span>
                                     </div>
                                     <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                                        <p className="text-[#0008]">Transaction Fee</p>
-                                        <span>&#8358;{tFee}.00</span>
+                                        <p className={`text-[#0008] ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Transaction Fee</p>
+                                        <span className={`${isDarkMode ? "text-white" : "text-black"}`}>&#8358;{tFee}.00</span>
                                     </div>
                                     <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                                        <p className="text-[#0008]">Points Earned</p>
+                                        <p className={`text-[#0008] ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Points Earned</p>
                                         <span className="text-[#00AA48]">{points}</span>
                                     </div>
                                 </div>
 
-                                  <div className="bg-[#F6F7F7] w-[95%] h-auto my-5 lg:my-8 flex py-[7px] 
-                                                                            justify-between items-center px-[4%] mx-auto rounded-[10px]">
+                                  <div className={`bg-[#F6F7F7] w-[95%] h-auto my-5 lg:my-8 flex py-[7px] 
+                                                                            justify-between items-center px-[4%] mx-auto rounded-[10px]
+                                                                            ${isDarkMode ? "bg-black border rounded-[10px]  border-white" : "bg-[#F6F7F7] "}`}>
                                                                                     <div className="flex flex-col gap-2  ">
                                                                                       <div className="flex gap-[10px] justify-center items-center">
                                                                                         <img
@@ -1248,7 +1309,7 @@ const AirtimeVtu = () => {
                                                                                           alt="/"
                                                                                         />
                                                                                         <div className="flex gap-[10px] items-center">
-                                                                                            <p className="text-[12px] md:text-[14px] leading-[20px] lg:leading-[22px]  lg:text-[16px] font-[500]">
+                                                                                            <p className={`text-[12px] md:text-[14px] leading-[20px] lg:leading-[22px]  lg:text-[16px] font-[500] ${isDarkMode ? "text-white" : "text-black"}`}>
                                                                                         Available Balance {"  "} 
                                                                                          </p>
                                                                                          <span className="text-black">
@@ -1280,29 +1341,44 @@ const AirtimeVtu = () => {
                                     Confirmed
                                 </button>
                             </div>
+                            </div>
                             )
                         </Modal>
                     )}
                     {
                         confirm && (
                             <Modal>
-                                <div
-                                    className={`${styles.inputPin} ${toggleSideBar ? "md:w-[45%] lg:w-[40%] lg:ml-[20%]" : "lg:w-[40%]"
-                                        } md:w-[55%] w-[90%]`}
-                                >
+                <div className="flex items-end justify-center lg:items-center lg:justify-center w-[100%] lg:px-[0px] rounded-[10px] h-[100%] px-[15px]">
+            <div
+           className={`flex flex-col lg:mb-[0px] mb-[50px] lg:h-[350px] overflow-scroll h-[300px] bvnQuery ${
+                toggleSideBar ? "md:w-[45%] lg:w-[40%]  " : "lg:w-[40%]"
+              } md:w-[55%] w-full ${
+                isDarkMode
+                  ? "text-white bg-black border border-white rounded-[10px]"
+                  : "text-black bg-white rounded-[10px]"
+              }`}
+            >
+                <div className="pr-3 lg:pr-2 py-[5px] flex justify-end">
+               
                                     <img
                                         onClick={() => setConfirm(false)}
-                                        className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px]"
+                                        className="w-[25px] h-[25px] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px]"
                                         src="/Images/transferImages/close-circle.png"
                                         alt=""
                                     />
-                                    <hr className="h-[6px] bg-[#04177f] border-none mt-[8%] md:mt-[8%] md:h-[10px]" />
+                                       </div>
+                                    <hr  className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
+                                    <div className="flex flex-col w-full justify-center py-[15px] lg:py-[0px] h-[100%] gap-[15px] ">
                                     <p className="text-[9px] md:text-[16px] font-extrabold text-center my-[8%] lg:my-[%]">
                                         Input PIN to complete transaction
                                     </p>
-                                    <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
-                                        <div className=" flex justify-center items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
-                                            {" "}
+                                         <div
+
+                  className="flex flex-col items-center lg:gap-[0px] gap-[5px] font-extrabold"
+                >
+                  <div
+                    className="flex items-center gap-2.5"
+                  >  {" "}
                                             {isVisible ? (
                                                 <OtpInput
                                                     value={inputPin}
@@ -1315,6 +1391,8 @@ const AirtimeVtu = () => {
                                                         width: 30,
                                                         height: 30,
                                                         borderRadius: 3,
+                                                        backgroundColor: isDarkMode ? "black" : "white",
+                                                        border: isDarkMode ? "1px solid white" : "1px solid #ccc",
                                                     }}
                                                     renderInput={(props) => (
                                                         <input {...props} className="inputOTP mx-[3px]" />
@@ -1326,7 +1404,10 @@ const AirtimeVtu = () => {
                                                 </div>
                                             )}
                                             <div
-                                                className="text-[#0003] text-xl md:text-3xl"
+                                                className={`text-[#0003] text-xl md:text-3xl
+                                                      ${
+                            isDarkMode ? "text-[#7c7c7c7c]" :"inherit"
+                        }`}
                                                 onClick={toggleVisibility}
                                             >
                                                 {isVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
@@ -1350,6 +1431,8 @@ const AirtimeVtu = () => {
                                     >
                                         Purchase
                                     </button>
+                                </div>
+                                </div>
                                 </div>
                             </Modal>
                         )
@@ -1448,7 +1531,7 @@ const AirtimeVtu = () => {
                                             setDiscount("");
                                             setPaymentSelected("");
                                         }}
-                                        className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                                        className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:px-[50px] md:w-[70%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
                                     >
                                         Done
                                     </button>
@@ -1465,7 +1548,7 @@ const AirtimeVtu = () => {
                                     }}>
                                         <button
                                             onClick={handleReceipt}
-                                            className={`border-[1px] w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[110px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                                           className={`border-[1px] w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
                                         >
                                             Receipt
                                         </button>
@@ -1476,18 +1559,22 @@ const AirtimeVtu = () => {
                     )}
                     {transactFailedPopUp && (
                         <Modal>
-                            <div
-                                className={`${styles.successfulTwo} ${toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-                                    } w-[90%] md:w-[70%]  overflow-auto`}
-                            >
-                                <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
+   <div className={`w-full flex justify-center h-full 
+             py-[30px] px-[15px] lg:items-center
+              items-end`}>
+  <div className={` bvnQuery lg:rounded-[12px] rounded-[10px] 
+              h-[520px] ${ toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+              } w-[100%] md:w-[60%] overflow-auto  ${isDarkMode ? "bg-black text-white border rounded-[10px] border-white": "bg-white text-black"} `}>
+        <div className="flex justify-between items-center 
+        mx-[3%] my-[2%] md:my-[1%]">
+        <div>
                                     <img
                                         onClick={() => setTransactFailedPopUp(false)}
                                         className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[25px]"
                                         src="/Images/login/arpLogo.png"
                                         alt=""
                                     />
-
+    </div>   
                                     <img
                                         onClick={() => setTransactFailedPopUp(false)}
                                         className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
@@ -1541,6 +1628,7 @@ const AirtimeVtu = () => {
                                     </Link>
                                 </div>
                             </div>
+                            </div>
                         </Modal>
                     )}
                     {receipt && (
@@ -1570,8 +1658,13 @@ const AirtimeVtu = () => {
                         />
                     )}
                     <div className={styles.containFlex2}>
-                        <button className={`${amount.length < 2 ? "bg-[#0008]" : "bg-[#04177f]"
-                            } w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`} onClick={handleProceed}>Proceed
+                        <button className={`
+                        ${
+                        canProceed ? "bg-[#04177f]" : "bg-[#0008] cursor-not-allowed"
+                        // ${amount.length < 2 ? "bg-[#0008]" : "bg-[#04177f]"
+                            } w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
+                             disabled={!canProceed}
+                            onClick={handleProceed}>Proceed
                         </button>
                     </div>
                 </div>
