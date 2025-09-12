@@ -7,8 +7,10 @@ import { DashBoardLayout } from "../../../Layout/DashBoardLayout";
 import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import { useNavigate } from "react-router-dom";
 
 export const AremxyMainReceipt = () => {
+  const navigate = useNavigate()
   const {
     toggleSideBar,
     textRef,
@@ -18,11 +20,12 @@ export const AremxyMainReceipt = () => {
     mainUserPhoneNumber,
     amtToTransfer,
     transferAmount,
-    transferResponse
+    transferResponse,
+    setTransferAmount
   } = useContext(ContextProvider);
 
   const contentRef = useRef(null);
-const amountNumeric = Number(transferAmount)
+//const amountNumeric = Number(transferAmount)
   // ===============Copy to Clipboard Function============
   const handleCopyClick = () => {
     const text = textRef.current.innerText;
@@ -74,21 +77,24 @@ const amountNumeric = Number(transferAmount)
           } w-full lg:mx-auto`}
         >
           <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
-            <Link to="/">
+            <div>
               <img
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[29px]"
                 src="/Images/login/arpLogo.png"
                 alt=""
               />
-            </Link>
-            <Link to="/money-transfer">
+            </div>
+            <div onClick={()=> {
+              setTransferAmount(0)
+            navigate("/money-transfer")
+            }}>
               {" "}
               <img
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
               />
-            </Link>
+            </div>
           </div>
           <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
           <div ref={contentRef}>
@@ -120,11 +126,12 @@ const amountNumeric = Number(transferAmount)
             <p className="text-[9px] text-[#0008] text-center my-2 md:text-[14px] lg:text-[14px]">
               You have successfully transferred{" "}
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[16px]">
-             {amountNumeric !== undefined || amountNumeric!== null ?
+             {/* {amountNumeric !== undefined || amountNumeric!== null ?
                 amountNumeric?.toLocaleString("en-NG", {
                   style : "currency",
                   currency : "NGN"
-                }) : "₦"}{" "}
+                }) : "₦"}{" "} */}
+                {transferAmount} {""}
               </span>
               from your NGN wallet to{" "}
             </p>

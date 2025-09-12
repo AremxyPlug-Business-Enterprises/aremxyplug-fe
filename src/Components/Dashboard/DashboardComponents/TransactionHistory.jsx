@@ -129,7 +129,24 @@ const TransactionHistory = ({
 
   //Variable types to handle the filtering of the recent transaction history
   //which is viewed or displays the transaction receipt
+// Format Date ======
+const FormatDate =(DateValue)=> {
+  if(!DateValue)  return "";
+  const date = new Date(DateValue);
+  return date?.toISOString()?.slice(0,10)
 
+}
+const FormatTime =(DateValue)=> {
+  if(!DateValue) return ""
+  const date = new Date(DateValue);
+  const TimePart = date?.toLocaleTimeString("en-Us", {
+    hour : "numeric",
+    minute: "numeric",
+    second : "numeric",
+    hour12 : true
+  })
+  return TimePart;
+}
   return (
     <>
       {/* ======Mobile View==== */}
@@ -336,10 +353,10 @@ const TransactionHistory = ({
                                 <span className="block">Date & Time:</span>
                                 <span className="block">
                                   {" "}
-                                  {transaction?.created_at?.slice(0, 10)}{" "}
+                                  {FormatDate(transaction?.created_at)}{" "}
                                 </span>
                                 <span className="block">
-                                  {transaction?.created_at?.slice(14, 19)}
+                                 {FormatTime(transaction?.created_at)}{" "}
                                 </span>
                               </p>
                             </div>
@@ -514,9 +531,9 @@ const TransactionHistory = ({
                         toggleSideBar ? "md:w-[16.5%] " : "md:w-[16.5%]"
                       } ${isDarkMode ? "text-white" : "text-neutral-500"}`}
                     >
-                      <span>{transaction?.created_at?.slice(0, 10)}</span>
+                      <span> {FormatDate(transaction?.created_at)}{" "}</span>
                       <br />
-                      <span>{transaction?.created_at?.slice(14, 19)}</span>
+                      <span> {FormatTime(transaction?.created_at)}{" "}</span>
                     </p>
 
                     <div

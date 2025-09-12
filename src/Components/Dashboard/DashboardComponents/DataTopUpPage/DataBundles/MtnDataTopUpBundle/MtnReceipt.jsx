@@ -8,21 +8,21 @@ import { ContextProvider } from "../../../../../Context";
 import { useLocation } from 'react-router-dom';
 import { DashBoardLayout } from "../../../../Layout/DashBoardLayout";
 import { GetLocalStorage } from "../../../../../LocalStorage/LocalStorage";
-
+import { useNavigate } from "react-router-dom";
 
 export const MtnReceipt = (Data) => {
   Data = GetLocalStorage()
-
+const navigate = useNavigate()
   const location = useLocation()
   const { 
-    selectedNetworkProduct, 
+    
     selectedOption, 
     // recipientPhoneNumber, 
     inputValue, recipientNames, 
     selectedAmount, mtntransactionID,
      mtnrefNumber, mtnorderID,
      mtnReceiptInfo,
-    selectedProduct} = location.state
+    selectedProduct, setPaymentSelected} = location.state
   
   const {
     toggleSideBar,
@@ -34,7 +34,8 @@ export const MtnReceipt = (Data) => {
     setSelectedAmountMtn,
     setRecipientNamesMtn,
   setWalletNameMtn,
-  setRecipientPhoneNumberMtn
+  setRecipientPhoneNumberMtn,
+  
 } =
     useContext(ContextProvider);
 
@@ -78,32 +79,39 @@ export const MtnReceipt = (Data) => {
     setRecipientNamesMtn("");
     setWalletNameMtn("");
     setRecipientPhoneNumberMtn("");
+    setPaymentSelected(false);
+    navigate("/MtnDataTopUpBundle");
   };
 
   return (
     <DashBoardLayout>
       <div className="flex flex-col gap-[35px] lg:gap-[85px]">
         <div
-          className={` ${styles.receipt} ${toggleSideBar ? "" : "lg:w-[880px] "
-            } w-full lg:mx-auto`}
-        >
+           className={` ${styles.receipt} ${
+                     toggleSideBar ? "" : "lg:w-[880px] "
+                   } w-full lg:mx-auto  ${isDarkMode ? "border border-white" : ""}` } 
+                 >
           <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
-            <Link to="/">
+            <div>
               <img
-                className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[29px]"
+                className=" w-[15px] h-[10px] md:w-[24px] 
+                md:h-[15px] lg:w-[42px] lg:h-[25px]"
                 src="/Images/login/arpLogo.png"
                 alt=""
               />
-            </Link>
-            <Link to="/MtnDataTopUpBundle">
+            </div>
+            <div
+          onClick ={()=> {
+            handleChange()
+          }}>
               {" "}
               <img
-                className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
+                 className=" w-[15px] h-[10px] md:w-[24px] 
+                md:h-[15px] lg:w-[42px] lg:h-[25px]"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
-                onClick={handleChange}
               />
-            </Link>
+            </div>
           </div>
           <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
           <div ref={contentRef}>

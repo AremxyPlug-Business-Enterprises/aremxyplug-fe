@@ -49,7 +49,6 @@ export default function WalletSummaryPage() {
   const [selected, setSelected] = useState("NGN");
   const [methodImage, setMethodImage] = useState(flagpage);
   const [methodBalance, setMethodBalance] = useState(false);
-  const [totalOutFlow, setTotalOutFlow] = useState("");
   const navigate = useNavigate();
   // const toggleDropdown1 = () => { setIsOpen1(true); };
   //
@@ -321,30 +320,21 @@ export default function WalletSummaryPage() {
       ? "£"
       : "₦";
 
-  const filteredWalletTransactions =
-    walletTransactionResponse?.data?.data?.data?.data?.transactions !== null
-      ? walletTransactionResponse?.data?.data?.data?.data?.transactions?.filter(
-          (transaction) => {
-            if (
-              selectedStatus === "" ||
-              selectedStatus === "All Transactions" ||
-              selectedStatus === "Filter by Status"
-            ) {
-              return transaction;
-            } else {
-              if (selectedStatus !== "Successful") {
-                return transaction?.status === selectedStatus;
-              } else if (selectedStatus === "Successful") {
-                return (
-                  transaction?.status === "success" ||
-                  transaction?.status === "Successful" ||
-                  transaction?.status === "delivered"
-                );
-              }
-            }
-          }
-        )
-      : [];
+  const filteredWalletTransactions = walletTransactionResponse?.data?.data?.data?.data?.transactions !== null ? walletTransactionResponse?.data?.data?.data?.data?.transactions?.filter((transaction) => {
+  return selectedStatus === ""
+     || selectedStatus === "All Transactions"
+    || selectedStatus === "Filter by Status" ? 
+      transaction :
+    selectedStatus !== "Successful" ? 
+      transaction?.status === selectedStatus
+    : selectedStatus === "Successful" ? 
+        transaction?.status === "success" || 
+        transaction?.status === "Successful" || 
+        transaction?.status === "delivered" : null
+        
+      
+      
+}) : [];
   //console.log(walletTransactionResponse?.data?.data?.data?.data);
   const product = [
     "All Transactions",
@@ -354,6 +344,26 @@ export default function WalletSummaryPage() {
     "Refunded",
     "Cancelled",
   ];
+
+  //=======Format Date ======
+  const FormatDate =(DateValue)=> {
+  if(!DateValue)  return "";
+  const date = new Date(DateValue);
+  return date?.toISOString()?.slice(0,10)
+
+}
+//======== Format Time ========
+const FormatTime =(DateValue)=> {
+  if(!DateValue) return ""
+  const date = new Date(DateValue);
+  const TimePart = date?.toLocaleTimeString("en-Us", {
+    hour : "numeric",
+    minute: "numeric",
+    second : "numeric",
+    hour12: true
+  })
+  return TimePart;
+}
   return (
     <DashBoardLayout>
       <>
@@ -950,10 +960,10 @@ export default function WalletSummaryPage() {
                                 <span className="block">Date & Time:</span>
                                 <span className="block">
                                   {" "}
-                                  {transaction?.created_at?.slice(0, 10)}{" "}
+                                   {FormatDate(transaction?.created_at)}{" "}
                                 </span>
                                 <span className="block">
-                                  {transaction?.created_at?.slice(14, 19)}
+                                   {FormatTime(transaction?.created_at)}{" "}
                                 </span>
                               </p>
                             </div>
@@ -1128,9 +1138,9 @@ export default function WalletSummaryPage() {
                           toggleSideBar ? "md:w-[16.5%] " : "md:w-[16.5%]"
                         }`}
                       >
-                        <span>{transaction?.created_at?.slice(0, 10)}</span>
+                        <span> {FormatDate(transaction?.created_at)}{" "}</span>
                         <br />
-                        <span>{transaction?.created_at?.slice(14, 19)}</span>
+                        <span> {FormatTime(transaction?.created_at)}{" "}</span>
                       </div>
 
                       <div

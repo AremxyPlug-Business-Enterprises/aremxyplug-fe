@@ -5,12 +5,7 @@
 .dashboard {
   display: flex;
   align-items: center;
-  margin: 10% auto;
-  display: flex;
-  width: 125px;
-  padding: 4% 0 4% 4%;
-  gap: 4%;
-  border-radius: 2.897px;
+  width: 100%;
   background: rgba(242, 250, 255, 0.1);
   backdrop-filter: blur(5.589743614196777px);
 }
@@ -112,10 +107,7 @@
 
 /* ================ TABLET VIEW ============== */
 @media (min-width: 768px) and (max-width: 1180px) {
-  .dashboard {
-    width: 157px;
-    gap: 6px;
-  }
+
 
   .walletText {
     font-size: 26.093px;
@@ -238,10 +230,7 @@
     font-size: 20px;
   }
 
-  .dashboard {
-    width: 209px;
-    gap: 9px;
-  }
+
 
   .viewBalance {
     display: flex;
@@ -370,12 +359,7 @@
 
 /* =================== DESKTOP VIEW================ */
 @media (min-width: 1024px) {
-  .dashboard {
-    width: 220px;
-    gap: 10px;
-    cursor: pointer;
-    border-radius: 10px;
-  }
+
 
   .button {
     display: flex;

@@ -155,7 +155,6 @@ import ContactTeam from "./Components/Dashboard/DashboardComponents/AirtimeConve
 import ToAremxyMain from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/ToAremxyMain";
 import { AremxyMainReceipt } from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/AremxyMainReceipt";
 import AremxyAddUser from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/AremxyAddUser";
-import AremxySelectUser from "./Components/Dashboard/DashboardComponents/TransferComponent/ToAremxyPlug/AremxySelectUser";
 import { AirtimeReceipt } from "./Components/Dashboard/DashboardComponents/AirtimeConversion/AirtimeReceipt";
 import EditSelectRecipient from "./Components/Add&SelectRecipient/GlobalSelectRecipient/EditSelectRecipient";
 import ContentMarketing from "./Components/Screens/ContentMarketing/ContentMarketing";
@@ -302,10 +301,10 @@ export const Router = () => {
           <AremxyAddUser />
           </ProtectedRoute>
           } />
-        <Route path="/aremxy-select-user" element={
+        {/* <Route path="/aremxy-select-user" element={
           <ProtectedRoute>
           <AremxySelectUser />
-          </ProtectedRoute>} />
+          </ProtectedRoute>} /> */}
         <Route path="/airtime-topup" element={
           <ProtectedRoute>
           <AirTime />

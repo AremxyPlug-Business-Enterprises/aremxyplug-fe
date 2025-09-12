@@ -116,7 +116,10 @@ export default function ProfileSettingsMain(Data) {
         <div className="">
           <ProfileHero />
           <div
-            className={`flex flex-wrap md:flex-nowrap  mt-[23px] md:w-[100%] md:gap-[53.4px] lg:gap-[91px]  md:border-b-[2px] md:border-[#D9D9D999] border-opacity-[60%] justify-between `}
+            className={`flex flex-wrap md:flex-nowrap 
+               mt-[23px] md:w-[100%] md:gap-[53.4px] 
+               lg:gap-[91px]  md:border-b-[2px] md:border-[#D9D9D999] 
+               border-opacity-[60%] justify-between `}
           >
             {/* Profile Tab */}
             <div
@@ -128,10 +131,15 @@ export default function ProfileSettingsMain(Data) {
                 setVerificationOpen(false);
                 setAuthenticationOpen(false);
               }}
-              className={`flex flex-col md:w-1/4 w-[50%]  lg:gap-[23px] cursor-pointer md:border-none border-b-[1.7px] border-[#D9D9D999] border-opacity-[60%] ${isDarkMode ? "border-white" : ""}`}
+              className={`flex flex-col md:w-1/4 w-[50%]  
+                lg:gap-[23px] cursor-pointer md:border-none 
+                border-b-[1.7px] border-[#D9D9D999] border-opacity-[60%] 
+                ${isDarkMode ? "border-white" : ""}`}
             >
               <h2
-                className={`font-[600] text-[#A3A3A3] py-[8px] text-start pl-[10px] text-[12px] lg:p-[10px] leading-[14px] lg:text-[16px] lg:leading-[24px] ${
+                className={`font-[600] text-[#A3A3A3] py-[8px]
+                   text-start pl-[10px] text-[12px] lg:p-[10px] 
+                   leading-[14px] lg:text-[16px] lg:leading-[24px] ${
            isDarkMode ? "text-stone-50" : ""
          }`}
               >
