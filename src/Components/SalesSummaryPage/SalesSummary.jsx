@@ -619,7 +619,7 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
       </div>
         </div>
         {/* {salesResponse?.data?.data?.data} */}
-         {salesResponse?.data?.data?.data?.data !== undefined && salesResponse?.data?.data?.data?.data?.length > 1 ? (
+         {salesResponse?.data?.data?.data?.data !== undefined && salesResponse?.data?.data?.data?.data?.length > 0 ? (
            salesResponse?.data?.data?.data?.data.map((item, index)=>{
           if(index < salesResponse?.data?.data?.data?.data?.length ){
           //   balance += item?.total_amount;

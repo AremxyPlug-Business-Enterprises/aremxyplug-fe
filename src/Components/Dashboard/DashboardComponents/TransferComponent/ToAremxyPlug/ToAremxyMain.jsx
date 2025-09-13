@@ -18,6 +18,7 @@ import audFlag from "../../../../Dashboard/DashboardComponents/flagsImages/austr
 import euroFlag from "../../../DashboardComponents/flagsImages/europeanFlag.png";
 import currencyImage from  "../../../../EducationPins/imagesEducation/arrow-down.svg";
 import AremxySelectUser from "./AremxySelectUser";
+import { RestrictionPopUp } from "../../../../ApiCollection.jsx/ApiBuck";
 // import { useNavigate } from "react-router-dom";
 
 export default function ToAremxyMain(Data) {
@@ -55,7 +56,8 @@ export default function ToAremxyMain(Data) {
   const [currencyBalance,  setCurrencyBalance] = useState("");
   const [currencyImageState, setCurrencyImageState] = useState(currencyImage);
   const transferSetTime = useRef()
-  const [selectRecipientPopup, setSelectRecipientPopUp] = useState(false)
+  const [selectRecipientPopup, setSelectRecipientPopUp] = useState(false);
+  const [restrictUser, setRestrictUser] = useState(false)
      //const [errors, setErrors] = useState({});
 
 Data = GetLocalStorage();
@@ -207,11 +209,23 @@ testUsername.test(value) === false && value?.endsWith(".com") === true
     if (
       fetchedResponse?.data?.data?.userDetails?.phone &&
       transferValue?.length > 1 &&
-      transferAmount?.toString()?.length > 1
+      transferAmount?.toString()?.length > 1 &&
+      (newBalance !== null | newBalance !== undefined 
+        || passDataBalance?.data?.data?.data?.balance !== null 
+        || passDataBalance?.data?.data?.data?.balance !== undefined )
+        && mainCountry?.length > 1
     ) {
       setEmailPhoneNumberConfirmation(true);
     }
   };
+
+  const checkParametersTransfer =  fetchedResponse?.data?.data?.userDetails?.phone &&
+      transferValue?.length > 1 &&
+      transferAmount?.toString()?.length > 1 &&
+      (newBalance !== null | newBalance !== undefined 
+        || passDataBalance?.data?.data?.data?.balance !== null 
+        || passDataBalance?.data?.data?.data?.balance !== undefined)
+        && mainCountry?.length > 1; 
 
   // const  HandleAmountFormat=(amount)=> {
   //   const RequireNumericChange = Number(amount)
@@ -257,6 +271,7 @@ testUsername.test(value) === false && value?.endsWith(".com") === true
 //console.log(timer)
   useEffect(()=> {
     
+    
 const GetBalance = async () => {
       const SuccessHandler = () => {
         //alert("Successful");
@@ -273,7 +288,7 @@ const GetBalance = async () => {
             // of the statement.
             async (ErrorType) => {
               if (ErrorType === "unauthorised") {
-                return setSessionModal(false);
+                return setSessionModal(true);
               } else if (ErrorType === "Server error") {
                 await GetFunction(
                   "balance",
@@ -325,7 +340,7 @@ const GetBalance = async () => {
                   SuccessHandler,
                   async (ErrorType) => {
                     if (ErrorType === "unauthorised") {
-                      return setSessionModal(false);
+                      return setSessionModal(true);
                     } else if (ErrorType === "Server error") {
                       await GetFunction(
                         "balance",
@@ -402,19 +417,18 @@ const GetBalance = async () => {
         setPassDataBalance
       );
     };
-                     // Simulate async data loading
-                    if((newBalance === "" ||
+      if (Data?.ConfirmAcc === "true"){                     // Simulate async data loading
+                     if(newBalance === "" ||
        newBalance === null ||
-        newBalance === undefined) && Data?.ConfirmAcc === "true"){
+        newBalance === undefined){
                         GetBalance();
-                        if(GetBalance){
-                         setNewBalance(passDataBalance?.data?.data?.data !== undefined
-                           ? passDataBalance?.data?.data?.data?.balance : "");
-                        }
-                      }else{
-                        console.log("Create an account to access this feature.")
-    
-                      }
+          setNewBalance(passDataBalance?.data?.data?.data !== undefined
+               ? passDataBalance?.data?.data?.data?.balance : "");
+                       
+                     }
+                    }else {
+                      setRestrictUser(true);
+                    }
                       //eslint-disable-next-line
   }, [])
   
@@ -429,6 +443,22 @@ const GetBalance = async () => {
     }
   }
 
+  const selectCountryInputRef=  useRef(null);
+  const [highlightedText, setHighlightedText] = useState("")
+  //Function to handle the timing of the animation.
+  const handleScrollAndHighlight = () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+  setTimeout(() => {
+    if (selectCountryInputRef.current) {
+      selectCountryInputRef.current.classList.add("highlight-animate");
+       setHighlightedText("Click here to select country")
+      setTimeout(() => {
+        selectCountryInputRef.current.classList.remove("highlight-animate");
+        setHighlightedText("")
+      }, 1000); // Remove after animation
+    }
+  }, 500); // Wait for scroll to finish
+};
 
 //  console.log(amtToTransfer)
   return (
@@ -445,6 +475,7 @@ const GetBalance = async () => {
         <div className="flex flex-col md:w-[50%] w-full md:gap-[10px] gap-[5.868px] relative">
           {/* <p className="text-[10px] font-extrabold md:text-[14px] lg:text-[20px]"> */}
           <p
+            id ="selectCountry"
             className="text-[#7E7E7E] text-[15px] lg:text-[17px]
                        md:text-[13px] md:font-[600] font-[400]">
             Select Country
@@ -454,6 +485,7 @@ const GetBalance = async () => {
                setShowList(!showList)
                currencyDropDown()
               } }
+            
             // className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]"
            className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] 
                         md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] 
@@ -463,16 +495,24 @@ const GetBalance = async () => {
         ? "bg-black text-white border border-white"
         : "border border-[#0003] border-[#9C9C9C]  text-[#7C7C7C]"
     }`}>
-         
-        {mainCountry}
-         
-            <img
+         {mainCountry}
+       
+          <img
              className="decdrop absolute left-[92%] lg:left-[94%]
               self-center align-middle md:h-[14.038px] md:w-[14.038px] 
       lg:h-[24px] lg:w-[24px] w-[14px] h-[16px]"
               src={currencyImageState}
               alt="dropdown"
             />
+              <div ref={selectCountryInputRef}
+
+               className="absolute top-[]text-[13.2px] italic   sm:text-lg  pt-[8.803px] 
+                        pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] 
+                        md:text-[11px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px]">
+          {mainCountry === "" && (
+            highlightedText
+         )}
+          </div>
           </div>
         
           {showList && (
@@ -579,6 +619,7 @@ const GetBalance = async () => {
                         })}
             </div>
           )}
+        
         </div>
 
         {/* =======================Currency============================ */}
@@ -591,7 +632,7 @@ const GetBalance = async () => {
             className="text-[#7E7E7E] text-[15px] lg:text-[17px]
                        md:text-[13px] md:font-[600] font-[400]"
           >
-            Select Currency
+            Country's Currency
           </p>
           <div
             // className="border text-[10px]  rounded-[5px] h-[25px] p-1 lg:h-[45px] lg:text-[14px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]"
@@ -780,7 +821,7 @@ const GetBalance = async () => {
         ? "bg-black text-white border border-white"
         : "border border-[#0003] border-[#9C9C9C] text-[#7C7C7C]"
     }`}
-              type="text"
+    type="text"
             />
             <img
               className=" absolute left-[90%] top-[40%] md:top-[30%]
@@ -827,21 +868,21 @@ const GetBalance = async () => {
               maxLength={11}
               readOnly
               value={fetchedResponse?.data?.data?.userDetails?.phone !== undefined ?
-                fetchedResponse?.data?.data?.userDetails?.phone : "" }
-              className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] 
+            `${fetchedResponse?.data?.data?.userDetails?.phone}` : "" }
+        className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] 
      md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] 
-     pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
-          leading-[10.4px] md:text-[11px] md:leading-[12.206px
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] 
-    md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] 
+     pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px]
+      md:text-[11px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px]
+       md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] 
     lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  
     items-center cursor-pointer outline-0 border-[0.24px]
-     lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
+     lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] 
+      px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
       isDarkMode
         ? "bg-black text-white border border-white"
         : "border border-[#0003] border-[#9C9C9C] text-[#7C7C7C]"
     }`}
-              type="number"
+  type="number"
             />
             <img
              className=" absolute left-[90%] top-[40%] md:top-[30%]
@@ -911,7 +952,7 @@ const GetBalance = async () => {
           style : "currency",
           currency : "NGN"
   })) : setTransferAmount(0)
- }, 2000)
+ }, 1000)
       return ()=> clearTimeout(transferSetTime.current)
   }}
               type="tel"
@@ -940,7 +981,12 @@ const GetBalance = async () => {
                        md:text-[13px] md:font-[600] font-[400]">
             Available Balance
           </p>
-          <div className={`relative mt-2 md:mt-0 rounded-[10px]
+          <div onClick={()=> {
+            if(mainCountry ===""){
+           handleScrollAndHighlight()
+               }
+        }}
+          className={` relative mt-2 md:mt-0 rounded-[10px]
            md:rounded-0 p-[20px] gap-[5px]
                         md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] 
                         pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
@@ -965,7 +1011,7 @@ const GetBalance = async () => {
                 currency : "NGN"})  }
            </p>
               ) : (
-                  <p>{"Select Country to get your balance "}</p>
+                  <p >{"Select Country to get your balance "}</p>
                  )}
            
            {mainCountry === "Nigeria"  ?  (
@@ -1056,10 +1102,14 @@ const GetBalance = async () => {
       <button
         onClick={() => ProceedTransfer()}
         className={`${
-          transferAmount?.toString()?.length < 1 ? "bg-[#0008]" : "bg-[#04177f]"
-        } my-[5%] w-full flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px]
-         md:w-[25%] md:rounded-[8px] md:text-[20px] 
-         lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
+        checkParametersTransfer && (!isDarkMode || isDarkMode)  ? "bg-[#04177f]" : 
+         !checkParametersTransfer && !isDarkMode ?  "bg-[#0008]"  : 
+          "bg-gray-500" 
+         } my-[5%] w-full flex justify-center items-center mx-auto 
+        cursor-pointer text-[14px] font-extrabold h-[40px]
+         text-white rounded-[6px] md:w-[25%] md:rounded-[8px]
+          md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]
+          `}
       >
         Proceed
       </button>
@@ -1101,6 +1151,7 @@ const GetBalance = async () => {
       />
       <MainInputPinPop fetchedResponse={fetchedResponse} />
       {loading && <Loader />}
+      {restrictUser && <RestrictionPopUp/>}
       {sessionModal && <HandleUserSession />}
     </div>
   );

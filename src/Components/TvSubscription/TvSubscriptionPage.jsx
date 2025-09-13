@@ -7,9 +7,9 @@ import { GetFunction, HandleUserSession} from "../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../Loader/Loader";
 import { Modal } from "../Screens/Modal/Modal";
 import { ContextProvider } from "../Context";
-
+import { GetLocalStorage } from "../LocalStorage/LocalStorage";
 export const TvSubscription = () =>{
-  
+   const Data = GetLocalStorage()
     const [loading, setLoading] = useState(false);
     const {fetchedGotvPlans, setFetchedGotvPlans, 
         fetchedDstvPlans, 
@@ -284,25 +284,40 @@ return(
                         </div>
                         <div id="tvGrid" className="mx-auto flex flex-wrap justify-between  gap-[25px] md:h-[70px] md:flex-row md:flex-nowrap md:gap-[21.27px]  lg:h-[120px]  md:w-[100%] lg:gap-[37px]">
                         <div onClick ={()=>{
+                          if(Data?.ConfirmAcc === "true"){
                           GetFunctionHandler(0, "Gotv");
+                          }else{
+                            navigate("/GoTv")
+                          }
                             }
                         }>
                             <img src="./Images/TvSubscription/goTV.svg" alt="" className="md:w-[118px] lg:w-[270px] md:h-[94px] lg:h-[250px]"/>
                         </div>
                         <div onClick ={()=>{
+                          if(Data?.ConfirmAcc === "true"){
                           GetFunctionHandler(1, "Dstv");
+                          }else{
+                            navigate("/DsTv")
+                          }
                       }
                         }>
                         <img src="./Images/TvSubscription/dstv.svg" alt="" className="md:w-[118px] lg:w-[270px] md:h-[94px] lg:h-[250px]"/>
                         </div>
                         <div onClick ={()=>{
+                          if(Data?.ConfirmAcc === "true"){
                             GetFunctionHandler(2, "StarTimes");
-                               }
+                          }else {
+                            navigate("/StarTimes")
+                          } }
                         }>
                         <img src="./Images/TvSubscription/starTimes.svg" alt="" className="md:w-[118px] lg:w-[270px] md:h-[94px] lg:h-[250px]"/>
                         </div>
                         <div onClick ={()=>{
+                          if(Data?.ComfirmAcc === "true"){
                            GetFunctionHandler(3, "ShowMax");
+                          }else{
+                            navigate("/Showmax")
+                          }
                                }
                         }>
                         <img src="./Images/TvSubscription/showmax.svg" alt="" className="md:w-[118px] lg:w-[270px] md:h-[94px] lg:h-[250px]"/>

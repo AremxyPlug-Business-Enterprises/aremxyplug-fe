@@ -6,7 +6,7 @@ import { Modal } from "../../Screens/Modal/Modal";
 import arrowRight from "../../../Components/EducationPins/imagesEducation/educationArrowRight.svg";
 import styles from '../../AirTimePage/AirtimeVtu.module.css'
 
-const ConfirmShowmaxPopup = ({userVerifiedName}) => {
+const ConfirmShowmaxPopup = () => {
 
   const {
     confirmShowmaxPopup,
@@ -103,14 +103,14 @@ const ConfirmShowmaxPopup = ({userVerifiedName}) => {
                     <span className="text-[#0008]">Package</span>
                     <span>{selectedOptionShowmax}</span>
                   </div>
-                  <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
+                  {/* <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
                     <span className="text-[#0008]">Smartcard / IUC Number</span>
                     <span>{showMaxSmartCard}</span>
                   </div>
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
                     <span className="text-[#0008]">Card Name</span>
                     <span>{userVerifiedName}</span>
-                  </div>
+                  </div> */}
                   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[16px]">
                     <span className="text-[#0008]">Phone Number</span>
                     <span>{showMaxMobileNumber}</span>

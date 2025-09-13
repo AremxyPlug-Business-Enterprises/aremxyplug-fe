@@ -179,7 +179,12 @@ export const DstvReceipt= (Data) => {
             md:text-[20px] md:my-[7px] lg:text-[16px] lg:my-[10px]
             ${isDarkMode ? "text-white" : "text-black"}
           `}>
-             {dstvSubscriptionResponse?.data?.status === "delivered" ?  "Purchase Successful on" : "Purchase Failed on"}
+             {dstvSubscriptionResponse?.data?.status === "delivered"
+            || dstvSubscriptionResponse?.data?.status === "success"
+             || dstvSubscriptionResponse?.data?.status === "successful"
+              || dstvSubscriptionResponse?.data?.status === "Successful"
+
+              ?  "Purchase Successful on" : "Purchase Failed on"}
             </h3>
             <span className={`text-[11px] ${isDarkMode ? "text-white" : "text-black"}
              font-extrabold flex justify-center items-center
@@ -199,8 +204,17 @@ export const DstvReceipt= (Data) => {
                    leading-[15px] md:leading-[20px] font-[600]
                     lg:p-[10px] text-center my-2 md:text-sm
                     lg:text-base  lg:leading-[24px]  md:mb-7
-             ${dstvSubscriptionResponse?.data?.status === "delivered" ? "border-[#27AE60] text-[#27AE60] bg-[#D5F6E3]" :  'border-red-500 text-red-500 bg-red-100' }`}>
-             {dstvSubscriptionResponse?.data?.status === "delivered" ?  "You have successfully subscribed to " : purchaseDstvErrorType}
+             ${dstvSubscriptionResponse?.data?.status === "delivered" 
+             || dstvSubscriptionResponse?.data?.status === "success"
+             || dstvSubscriptionResponse?.data?.status === "successful"
+              || dstvSubscriptionResponse?.data?.status === "Successful"
+             ? "border-[#27AE60] text-[#27AE60] bg-[#D5F6E3]" :  'border-red-500 text-red-500 bg-red-100' }`}>
+             {dstvSubscriptionResponse?.data?.status === "delivered"
+               || dstvSubscriptionResponse?.data?.status === "success"
+             || dstvSubscriptionResponse?.data?.status === "successful"
+              || dstvSubscriptionResponse?.data?.status === "Successful"
+             ? 
+              "You have successfully subscribed to " : purchaseDstvErrorType}
               <span className="font-extrabold text-[10.9px] md:text-[14.9px] 
               lg:text-[16.9px]">
                 {" "}{selectedOptionDstv}{" "}

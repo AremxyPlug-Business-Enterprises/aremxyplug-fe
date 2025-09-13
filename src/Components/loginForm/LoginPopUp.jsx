@@ -75,7 +75,7 @@ function LoginPopUp() {
       const response = await axios.post(url, body);
 
       if (
-        (response.status === 200 || 201) &&
+        (response.status === 200 || response.status === 201) &&
         response.headers.hasAuthorization
       ) {
         twoStepVerificationHandler();

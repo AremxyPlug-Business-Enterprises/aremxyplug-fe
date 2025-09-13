@@ -28,12 +28,17 @@ import axiosInstance from "../../../../../ApiCollection.jsx/apiClient";
 import {
   GetFunction,
   VerifyTransPin,
+  RestrictionPopUp
 } from "../../../../../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../../../../../Loader/Loader";
 import { HandleUserSession } from "../../../../../ApiCollection.jsx/ApiBuck";
+import { GetLocalStorage } from "../../../../../LocalStorage/LocalStorage";
 
 const AirtelDataBundle = () => {
-  const { isDarkMode, newBalance, setNewBalance } = useContext(ContextProvider);
+  const Data = GetLocalStorage()
+  const { isDarkMode, 
+    newBalance,
+     setNewBalance , authenticationOpen } = useContext(ContextProvider);
   const {
     selectedOptionAirtel,
     setSelectedOptionAirtel,
@@ -85,9 +90,15 @@ const AirtelDataBundle = () => {
   const [passDataBalance, setPassDataBalance] = useState({});
   const [airtelReceiptInfo, setAirtelReceiptInfo] = useState("");
   const [sessionModal, setSessionModal] = useState(false);
+  const [restrictUser, setRestrictUser] = useState(false);
+  const [checkNetworkError, setCheckNetworkError] = useState(false)
   let balanceStringToNum = Number(newBalance);
 
-  let airtelDataAmount = Number(selectedAmountAirtel?.replace(/\D/g, ""));
+const assumedString = selectedAmountAirtel?.toString()
+  let airtelDataAmount = Number(selectedAmountAirtel?.toString()
+  ?.slice(0, assumedString?.length - 3)
+  ?.replace(/\D/g, ""));
+
   const updateBalance = passDataBalance?.data
     ? passDataBalance?.data?.data?.data?.balance
     : "";
@@ -97,8 +108,11 @@ const AirtelDataBundle = () => {
     (newBalance === "" || newBalance === null
       ? cleanUpBalanceToNumericOnly
       : balanceStringToNum);
-  useEffect(() => {
-    const fetchProducts = async () => {
+
+
+
+      //Getting MTN Products
+       const fetchProducts = async () => {
       setLoadingProducts(true);
       try {
         const response = await axiosInstance?.get("/products/telecom/list/4");
@@ -107,6 +121,7 @@ const AirtelDataBundle = () => {
         console.error("Error fetching products:", error);
         if (error && error.response === undefined) {
           alert("Check your internet Connection, then reload the page.");
+          setCheckNetworkError(true)
         } else if (error && error.response.status === 400) {
           alert(
             "Service for airtel is currently not available, Try again later."
@@ -149,8 +164,11 @@ const AirtelDataBundle = () => {
         setLoadingProducts(false);
       }
     };
-
+  useEffect(() => {
+  if(Data?.ConfirmAcc === "true"){
     fetchProducts();
+  }
+   
     const HandleBalanceStatus = () => {
       if (CheckSufficiency) {
         setBalanceStatus("Insufficient fund");
@@ -161,7 +179,7 @@ const AirtelDataBundle = () => {
 
     HandleBalanceStatus();
   }, [CheckSufficiency]);
-  console.log(airtelDataAmount, balanceStringToNum);
+
   // Fetch plans when product is selected
   const fetchPlans = async (productId) => {
     setLoadingPlans(true);
@@ -169,7 +187,8 @@ const AirtelDataBundle = () => {
       const response = await axiosInstance.get(
         `/products/telecom/${productId}`
       );
-      if (response && (response.status === 200 || 201)) {
+      if (response && (response.status === 200 
+        || response.status ===  201)) {
         setProductPlans(response?.data?.data?.plans || []);
         if (response?.data?.data?.plans === null) {
           setSelectProductWarn(true);
@@ -181,6 +200,7 @@ const AirtelDataBundle = () => {
       console.error("Error fetching plans:", error);
       if (error && error.response === undefined) {
         alert("Your internet connection is quite unstable.");
+        setCheckNetworkError(true)
       } else if (error && error.response.status === 401) {
         if (
           error?.response?.headers["x-new-auth-token"] ||
@@ -221,7 +241,10 @@ const AirtelDataBundle = () => {
   };
 
   const handleSelectProduct = (product) => {
-    if (!navigator.onLine) return alert("Check your internet connection.");
+    if (!navigator.onLine) {
+      alert("Check your internet connection.");
+       setCheckNetworkError(true)
+    }
     if (navigator.onLine) {
       setSelectedProductAirtel(`${product?.Plan_Type}`);
       setShowProductList(false);
@@ -234,7 +257,14 @@ const AirtelDataBundle = () => {
       `${plan?.Size} ~ ${plan?.Validity} ~ ₦${plan?.Amount}`
     );
     setAirtelReceiptInfo(plan?.PlanType + " " + plan?.Size);
-    setSelectedAmountAirtel(`₦${plan?.Amount}`);
+    setSelectedAmountAirtel(`${plan?.Amount !== null || plan?.Amount !== undefined
+       ? plan?.Amount?.toLocaleString("en-NG", {
+        style : "currency", 
+        currency : "NGN"
+       }) : plan?.Amount === "" ? Number(plan?.Amount)?.toLocaleString("en-NG", {
+        style : "currency", 
+        currency : "NGN"
+       }) : selectedAmountAirtel}`);
     setSelectedPlan(plan);
     setShowOptionList(false);
     setShowProductList(false);
@@ -253,147 +283,57 @@ const AirtelDataBundle = () => {
     setPaymentSelected(false);
   };
 
-  const handleSelectPayment = (code, flag, amount, id) => {
-    if (code === "NGN" && id === 1) {
-      setWalletNameAirtel(code);
-      setImage(flag);
-      setPaymentAmount(amount);
-      setShowPayment(false);
-      setPaymentSelected(true);
-    }
-  };
 
-  const countryList = [
-    {
-      id: 1,
-      name: "Nigeria",
-      code: "NGN",
-      flag: require("../DataBundles-Images/ng.svg").default,
-      amount:
-        newBalance === "" || newBalance === null
-          ? `${
-              cleanUpBalanceToNumericOnly > 1
-                ? cleanUpBalanceToNumericOnly?.toLocaleString("en-NG", {
-                    style: "currency",
-                    currency: "NGN",
-                  })
-                : "₦"
-            }`
-          : `${
-              balanceStringToNum > 1
-                ? balanceStringToNum?.toLocaleString("en-NG", {
-                    style: "currency",
-                    currency: "NGN",
-                  })
-                : "₦"
-            }`,
-      status: "Active",
-    },
-    {
-      id: 2,
-      name: "United States",
-      code: "USD",
-      flag: require("../DataBundles-Images/us.svg").default,
-      amount: 0?.toLocaleString("en-US", {
-        style: "currency",
-        currency: "USD",
-      }),
-      status: "Inactive",
-    },
-    {
-      id: 3,
-      name: "United Kingdom",
-      code: "GBP",
-      flag: require("../DataBundles-Images/gb.svg").default,
-      amount: 0?.toLocaleString("en-GB", {
-        style: "currency",
-        currency: "GBP",
-      }),
-      status: "Inactive",
-    },
-    {
-      id: 4,
-      name: "European Union",
-      code: "EUR",
-      flag: require("../DataBundles-Images/eu.svg").default,
-      amount: 0?.toLocaleString("en-EU", {
-        style: "currency",
-        currency: "EUR",
-      }),
-      status: "Inactive",
-    },
-    {
-      id: 5,
-      name: "Australia",
-      code: "AUD",
-      flag: require("../DataBundles-Images/au.svg").default,
-      amount: 0?.toLocaleString("en", {
-        style: "currency",
-        currency: "AUD",
-      }),
-      status: "Inactive",
-    },
-    {
-      id: 6,
-      name: "Kenya",
-      code: "KSH",
-      flag: require("../DataBundles-Images/ke.svg").default,
-      amount: 0?.toLocaleString("en-KE", {
-        style: "currency",
-        currency: "KES",
-      }),
-      status: "Inactive",
-    },
-  ];
 
-  const Payment = ({ code, flag, amount, onClick, paymentMethod }) => {
-    return (
-      <div
-        className={`font-[500] flex px-2  gap-[10px] text-[#7C7C7C] text-[8px] leading-[10.4px]
-               lg:text-[16px] lg:leading-[20.8px] md:py-[20px] py-[15px] pl-[10px]
-              lg:pl-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] md:shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)] 
-               ${
-                 isDarkMode
-                   ? "border-y-[0.5px] border-x-[0.6px] border-white"
-                   : "boder-none"
-               } 
-              cursor-pointer ${
-                paymentMethod === "Inactive" && !isDarkMode
-                  ? "bg-gray-300 cursor-not-allowed"
-                  : paymentMethod === "Inactive" && isDarkMode
-                  ? "bg-black"
-                  : paymentMethod === "Active" && !isDarkMode
-                  ? "bg-white"
-                  : "bg-black"
-              } 
-              `}
-        onClick={onClick}
-      >
-        <div className={` ${airtimestyles.netImage}`}>
-          <img src={flag} alt="" className={airtimestyles.NoImage} />
-        </div>
-        <h2
-          className={`font-[500] text-[#7C7C7C] text-[12px] leading-[16.4px]
-               lg:text-[16px] lg:leading-[20.8px] ${
-                 isDarkMode ? "text-white" : "text-[#7C7C7C]"
-               }`}
-        >
-          {code}
-        </h2>
-        <p
-          className={`font-[500] text-[#7C7C7C] text-[12px] leading-[16.4px]
-               lg:text-[16px] lg:leading-[20.8px] ${
-                 isDarkMode ? "text-white" : "text-[#7C7C7C]"
-               }`}
-        >
-          Wallet({amount.toLocaleString()})
-        </p>
-      </div>
-    );
-  };
+   const updateBalanceToNumber = Number(updateBalance)
+  const newBalanceToNumber = Number(newBalance)
+  const balanceOption = newBalance === "" || newBalance === null
+   ? updateBalanceToNumber : newBalanceToNumber
+    const methodOptions = [
+      {
+        method: "Nigeria",
+        balance:
+          newBalance === "" || newBalance === null || newBalance === undefined
+            ? `(${updateBalance?.length > 1 ? updateBalanceToNumber?.toLocaleString("en-NG", {
+                 style : "currency",
+                 currency : "NGN"
+            }) : ""})`
+            : `(${newBalance?.length > 1 ? newBalanceToNumber?.toLocaleString("en-Ng", {
+              style : "currency",
+              currency : "NGN"
+            }) : ""})`,
+        flag:  require("../DataBundles-Images/ng.svg").default,
+        id: 1,
+        code : "NGN Wallet"
+      },
+      { method: "United States",
+         balance: "($0.00)", 
+         flag: require("../DataBundles-Images/us.svg").default,
+          id: 2, code : "USD Wallet" },
+      { method: "United Kingdom",
+         balance: "(€0.00)", 
+         flag:   require("../DataBundles-Images/gb.svg").default,
+          id: 3,
+          code : "GBP Wallet"
+        },
+      { method: "European Union",
+         balance: "(£0.00)", 
+         flag:  require("../DataBundles-Images/eu.svg").default,
+          id: 4,
+        code : "EUR Wallet" },
+      { method: "Australia", balance: "(AU$0.00)",
+         flag:   require("../DataBundles-Images/au.svg").default,
+          id: 5 , code : "AUD Wallet"},
+      { method: "Kenya", balance: "(KSh0.00)"
+        , flag:   require("../DataBundles-Images/ke.svg").default, id: 6, code : "KSH Wallet"  },
+    ];
 
-  useEffect(() => {
-    const GetBalance = async () => {
+  
+
+
+  //Function to get user's account balance
+     const GetBalance = async () => {
+    if(!navigator.onLine) return setCheckNetworkError(true)
       const SuccessHandler = () => {
         //alert("Successful");
         console.log("successfully retrieved balance");
@@ -402,18 +342,110 @@ const AirtelDataBundle = () => {
       const FailedHandler = async (ErrorType) => {
         if (ErrorType === "unauthorised") {
           await GetFunction(
-            "balance",
+            `balance`,
             setLoading,
             SuccessHandler,
-            (ErrorType) => {
+            //Handling the error Use Cases of the Unauthorised inside
+            // of the statement.
+            async(ErrorType) => {
               if (ErrorType === "unauthorised") {
                 return setSessionModal(true);
-              }
-            },
-            setPassDataBalance
-          );
+              }else if(ErrorType === "Server error"){
+                  await GetFunction(
+        "balance",
+        setLoading,
+        SuccessHandler,
+       async(ErrorType)=> {
+        if(ErrorType === "Server error"){
+          alert("Failed to retrieve the balance.")
+        }else if(ErrorType === "Network error" || ErrorType === "User error"){
+           setCheckNetworkError(true);
+              alert("Kindly check your internet connection to retrieve balance.")
+        }else {
+          alert("An unexpected error has occured on attempt to retrieve balance.")
         }
-      };
+       },
+        setPassDataBalance
+      );
+       }else if(ErrorType === "Network error" || ErrorType === "User error"){
+         setCheckNetworkError(true);
+           alert("Kindly check your internet connection to retrieve balance");
+           setCheckNetworkError(true);
+       }else {
+        alert("An unexpected error has occured on attempt to retrieve the balance")
+       }
+            },
+             setPassDataBalance
+          );
+        }else if(ErrorType === "Server error"){
+            await GetFunction(
+        "balance",
+        setLoading,
+        SuccessHandler,
+       async(ErrorType)=> {
+         if(ErrorType === "unauthorised"){
+            await GetFunction(
+        "balance",
+        setLoading,
+        SuccessHandler,
+        async(ErrorType)=> {
+          if(ErrorType === "unauthorised"){
+            return setSessionModal(true)
+          }else if(ErrorType === "Server error"){
+               await GetFunction(
+        "balance",
+        setLoading,
+        SuccessHandler,
+       async(ErrorType)=> {
+        //if Statements
+      //We run again cause the previous one was interrupted by 401
+      //Let us re-run server error
+      if(ErrorType === "Server error"){
+        alert("Failed to retrieve the balance")
+      }else if(ErrorType === "unauthorised"){
+        return sessionModal(true)
+      }else if(ErrorType === "Network error" || ErrorType === "User error"){
+         setCheckNetworkError(true);
+       alert("Kindly check your internet connection to retrieve balance")
+      }else{
+       // console.log("yeah bro i am the one running blehh")
+        alert("An Unexpected error occured in attempt to retrieve balance")
+      }
+
+       },
+        setPassDataBalance
+      );
+          }else if(ErrorType === "Network error" || ErrorType === "User error"){
+             setCheckNetworkError(true);
+            alert("Kindly check your internet connection to retrieve the balance")
+          }else if(ErrorType === "Server error"){
+            alert("Failed to retrieve the balance.")
+          }else{
+            alert("An Unexpected error occured in attempt to retrieve balance")
+          }
+        },
+        setPassDataBalance
+      );
+    }
+          else if(ErrorType === "Network error" || ErrorType === "User error"){
+            //The operation was interrupted by a network error
+             setCheckNetworkError(true);
+            alert("Kindly check your internet connection to retrieve balance.")
+         }else {
+          //Place 
+          //An alien error has occured with the re-run of the "Server error" ErrorType
+          alert("An unexpected error occured in attempt to retrieve the balance.")
+         }
+       },
+        setPassDataBalance
+      );
+        }else if(ErrorType === "Network error" || ErrorType === "User error"){
+            setCheckNetworkError(true);
+        }else{
+           
+          alert("An unexpected error occured in attempt to retrieve balance.")
+        }
+      }
       await GetFunction(
         "balance",
         setLoading,
@@ -422,20 +454,37 @@ const AirtelDataBundle = () => {
         setPassDataBalance
       );
     };
+  useEffect(() => {
     // Simulate async data loading
-
-    if (newBalance === "" || newBalance === null || newBalance === undefined) {
-      GetBalance();
-      if (GetBalance) {
-        setNewBalance(
-          passDataBalance?.data
-            ? passDataBalance?.data?.data?.data?.balance
-            : ""
-        );
-      }
-    }
+ if (Data?.ConfirmAcc === "true"){                     // Simulate async data loading
+                     if(newBalance === "" ||
+       newBalance === null ||
+        newBalance === undefined){
+            GetBalance();
+          setNewBalance(passDataBalance?.data?.data?.data !== undefined
+               ? passDataBalance?.data?.data?.data?.balance : "");
+                        }
+                    }else {
+                      setRestrictUser(true);
+                    }
     //eslint-disable-next-line
   }, []);
+
+  //Used to Check the network then help the user to get balance and other
+  // function automatically once the browser notices they are online
+  if(Data?.ConfirmAcc  ==="true"){
+  window.addEventListener("online", ()=> {
+   if(checkNetworkError === true &&
+     (updateBalance === undefined || updateBalance === null || updateBalance === "")
+    && (newBalance === null || newBalance === undefined || newBalance === "") ){
+   return GetBalance()
+   }
+   if(checkNetworkError === true && products?.length < 1  ) {
+    return fetchProducts()
+   }
+  })
+}
+
 
   const handleConfirm = () => {
     setProceed(false);
@@ -479,7 +528,6 @@ const AirtelDataBundle = () => {
     const value = e.target.value;
     const numericValue = value.replace(/\D/g, "");
     setInputValue(numericValue);
-
     // Validate phone number if it's complete
     if (numericValue.length === 11) {
       const error = validatePhoneNumber(numericValue);
@@ -664,7 +712,7 @@ const AirtelDataBundle = () => {
     await buyData(
       4, // Network ID for MTN
       inputValue, // Use inputValue instead of recipientPhoneNumber
-      selectedPlan.PlanID,
+      selectedPlan.ID,
       recipientNamesAirtel
     );
   };
@@ -889,6 +937,7 @@ const AirtelDataBundle = () => {
                 onClick={() => {
                   setShowOptionList(false);
                   setShowProductList(!showProductList);
+                    setSelectedOptionAirtel("") 
                 }}
               >
                 <h2 className="text-[12px] font-[400] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
@@ -1037,7 +1086,7 @@ const AirtelDataBundle = () => {
                           }}
                         >
                           {`${plan.PlanType} ${plan.Size} (₦${plan.Amount}) ~ ${
-                            plan.Validity ? plan.Validity.toUpperCase() : ""
+                            plan.Validity ? plan.Validity?.toUpperCase() : ""
                           }`}
                         </div>
                       ))
@@ -1187,76 +1236,150 @@ const AirtelDataBundle = () => {
                 }
   `}
                 >
-                  {paymentSelected ? (
-                    <li
-                      onClick={handleShowPayment}
-                      className={` ${airtimestyles.labelInput} bg-white `}
-                    >
-                      <h2 className="text-[#7C7C7C]">{walletNameAirtel}</h2>
-                      <h2 className="text-[#7C7C7C]">
-                        Wallet ({paymentAmount.toLocaleString()})
-                      </h2>
-                    </li>
-                  ) : (
-                    <h2
-                      onClick={handleShowPayment}
-                      className="text-[13px] md:text[14px] lg:text-[14px]"
-                    >
-                      Select Payment Method
-                    </h2>
-                  )}
-                  {paymentSelected ? (
-                    <button
-                      className="rounded-full w-[12.02px] top-[3px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]"
-                      onClick={handleShowPayment}
-                    >
-                      <img
-                        src={image}
-                        alt=""
-                        className="w-full h-full object-cover"
-                      />
-                    </button>
-                  ) : (
-                    <button
-                      className="lg:w-6 lg:h-6 h-[11px] w-[11px]"
-                      onClick={handleShowPayment}
-                    >
-                      <img src={arrowDown} alt="" className="w-full h-full" />
-                    </button>
-                  )}
+                 {paymentSelected ? (
+                                     <li
+                                       onClick={handleShowPayment}
+                                       className={airtimestyles.labelInput}
+                                     >
+                                       <h2 className="text-[#7C7C7C]">{walletNameAirtel}</h2>
+                                       <h2 className="text-[#7C7C7C]">
+                                        {paymentAmount.toLocaleString()}
+                                       </h2>
+                                     </li>
+                                   ) : (
+                                     <h2
+                                       onClick={handleShowPayment}
+                                       className="text-[13.2px] lg:text-[14px]"
+                                     >
+                                       Select Payment Method
+                                     </h2>
+                                   )}
+                                   {paymentSelected ? (
+                                     <button
+                                       className={`rounded-full w-[12.02px] h-[12.02px] flex 
+                                         items-center justify-center text-[15px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px] 
+                                          ${isDarkMode ? "bg-black text-white" : ""}`}
+                                       onClick={handleShowPayment}
+                                     >
+                                       <img
+                                         src={image}
+                                         alt=""
+                                          className="decdrop absolute left-[92%] lg:left-[94%]
+                               self-center align-middle md:h-[14.038px] md:w-[14.038px] 
+                       lg:h-[24px] lg:w-[24px] w-[14px] h-[16px]"
+                                       />
+                                     </button>
+                                   ) : (
+                                     <button
+                                       className="lg:w-6 lg:h-6 h-[11px] w-[11px]"
+                                       onClick={handleShowPayment}
+                                     >
+                                       <img src={arrowDown} alt="" 
+                                       className="decdrop absolute left-[92%] lg:left-[94%]
+                               self-center align-middle md:h-[14.038px] md:w-[14.038px] 
+                       lg:h-[24px] lg:w-[24px] w-[14px] h-[16px]" />
+                                     </button>
+                                   )}
                 </div>
               </div>
               <div className="relative">
                 {showPayment && (
-                  <div
-                    className={`pb-[14px] w-full md:pb-[6px] pt-[14px] md:pt-[6px] font-weight-bold
-                     text-[13px] border md:rounded-[10px] lg:mt-2 rounded-[4px] absolute
-                       ${
-                         isDarkMode
-                           ? "bg-black text-white border !border-white"
-                           : "border border-[#0003]"
-                       }
-                 bg-[#FFF] z-[100]  `}
-                  >
-                    {countryList.map((country) => (
-                      <Payment
-                        key={country.id}
-                        flag={country.flag}
-                        code={country.code}
-                        amount={country.amount}
-                        onClick={() =>
-                          handleSelectPayment(
-                            country.code,
-                            country.flag,
-                            country.amount,
-                            country.id
-                          )
-                        }
-                        paymentMethod={country.status}
-                      />
-                    ))}
-                  </div>
-                )}
+                           <div
+                             className={`absolute top-[102%] z-[3] flex flex-col w-[100%]  
+                                         cursor-pointer border-[1px]  border-gray-100 rounded-[3px]  
+                                               ${
+                                   isDarkMode
+                                     ? "bg-black border-white rounded-[7px] text-white"
+                                     : "text-[#7C7C7C] bg-white rounded-br-[7px] rounded-bl-[7px] lg:rounded-br-[14px] lg:rounded-bl-[14px]"
+                                 }
+                                 ${
+                                   toggleSideBar
+                                     ? "lg:w-[31.5%] lg:top-[100.5%]"
+                                     : "lg:w-[38.5%] lg:top-[105.3%]"
+                                 }  shadow-xl border w-full lg:w-full flex flex-col divide-y absolute top-20`}
+                               >
+                           {methodOptions.map((methodOption) => {
+                                         return (
+                                           <div
+                                             onClick={(e) => {
+                                               //onchange = { setMethodOptions }
+               
+                                               setWalletNameAirtel(
+                                                 methodOption.id === 1
+                                                   ? methodOption.code
+                                                   : walletNameAirtel === "NGN Wallet" &&
+                                                     methodOption.id !== 1
+                                                   ? "NGN Wallet"
+                                                   : ""
+                                               );
+                                 setPaymentAmount(methodOption.id === 1 && paymentAmount === ""? 
+                                 newBalance === "" || newBalance === null || newBalance === undefined
+                         ? `(${updateBalance?.length > 1 ? updateBalanceToNumber?.toLocaleString("en-NG", {
+                              style : "currency",
+                              currency : "NGN"
+                         }) : ""})`
+                         : `(${newBalance?.length > 1 ? newBalanceToNumber?.toLocaleString("en-NG", {
+                           style : "currency",
+                           currency : "NGN"
+                         }) : ""})` : walletNameAirtel === "NGN Wallet" ?  newBalance === "" || newBalance === null || newBalance === undefined
+                         ? `(${updateBalance?.length > 1 ? updateBalanceToNumber?.toLocaleString("en-NG", {
+                              style : "currency",
+                              currency : "NGN"
+                         }) : ""})`
+                         : `(${newBalance?.length > 1 ? newBalanceToNumber?.toLocaleString("en-NG", {
+                           style : "currency",
+                           currency : "NGN"
+                         }) : ""})` : "");
+               
+                          setShowPayment(() => {
+                              if (methodOption.id === 1) {
+                               setPaymentSelected(true);
+                                    setShowPayment(false);
+                                     
+                                                 } else {
+                                                    setPaymentSelected(false);
+                                                   setShowPayment(true);
+                                                  
+                                                 }
+                                               });
+                                             
+                                                       
+                                              setImage(methodOption.flag);
+                                              
+                                             }}
+                                            className={`py-[18px] md:py-[14px] font-normal px-2 flex
+                                        items-center gap-[5px] text-[12px] md:text-[14px] 
+                                        lg:text-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
+                                         transition-all duration-300 hover:bg-slate-50
+                                      ${
+                                        isDarkMode
+                                          ? "text-white hover:bg-slate-800 bg-black "
+                                          : "text-[#7E7E7E]"
+                                      } ${
+                                       methodOption.method === "Nigeria"
+                                         ? "cursor-pointer"
+                                         : "cursor-not-allowed opacity-50"
+                                     }`}
+                                     
+                                             key={methodOption.id}
+                                           >
+                                             <img
+                                               className="md:h-[29.27px]  h-[14.27px]"
+                                               src={methodOption.flag}
+                                               alt=""
+                                             />
+               
+                                           
+                                             
+                                               {methodOption.code +
+                                                 " " +
+                                                 methodOption.balance}
+                                             
+                                           </div>
+                                         );
+                                       })}
+                           </div>
+                         )}
               </div>
             </div>
           </div>
@@ -1281,214 +1404,200 @@ const AirtelDataBundle = () => {
 
           {proceed && (
             <Modal>
-              <div
-                className={`scroll-bar ${
-                  isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
-                } ${
-                  toggleSideBar ? "confirm01" : "confirm"
-                } grow pt-[10px] pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative 
-                md:rounded-[11.5px] md:mx-auto md:my-auto md:overflow-auto`}
-              >
-                <div className="w-full flex justify-end border-b-[6px] border-primary px-[12px] md:h-[25px] lg:border-b-[10px] lg:mt-[20px]">
-                  <img
-                    src={Cancel}
-                    alt=""
-                    onClick={() => setProceed(false)}
-                    className="md:h-[120%] lg:h-[400%] lg:mt-[-25px] lg:pb-[20px]"
-                  />
-                </div>
-
-                <div>
-                  <h2 className="lg:text-[16px] lg:leading-[24px] text-center mb-1 text-[10px] md:text-[13px] font-[600] mt-[20px] leading-[12px]">
-                    Confirm Transaction
-                  </h2>
-                  <h2 className="lg:text-[16px] md:text-[12px] md:px-[30px] lg:leading-[24px] text-[10px] leading-[12px] text-center mt-[26px] mx-[10px] mb-[20px]">
-                    You are about to purchase{" "}
-                    <span className="font-bold">
-                      {selectedProductAirtel + " " + selectedOptionAirtel}
-                    </span>{" "}
-                    from your {walletNameAirtel + " Wallet"} to
-                  </h2>
-
-                  <div className="flex flex-col gap-[15px] px-[20px] mt-[50px] md:gap-[25px]">
-                    <div className="flex items-center justify-between">
-                      <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        Network
-                      </h2>
-                      <div className="flex gap-1">
-                        <div className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]">
-                          <img
-                            src={AirtelLogo}
-                            alt=""
-                            className="w-full h-full object-cover md:h-[23px]"
-                          />
-                        </div>
-                        <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          AIRTEL
-                        </h2>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        Product
-                      </h2>
-                      <div className="flex gap-1">
-                        <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          {selectedProductAirtel}
-                        </h2>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        Plan
-                      </h2>
-                      <div className="flex gap-1">
-                        <h2
-                          className="text-[10px] leading-[12px] capitalize md:text-[12px]
-                         md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]"
-                        >
-                          {selectedProductAirtel + " " + selectedOptionAirtel}
-                        </h2>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        Phone Number
-                      </h2>
-                      <div className="flex gap-1">
-                        <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          {inputValue}
-                        </h2>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        Recipient Name
-                      </h2>
-                      <div className="flex gap-1">
-                        <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          {recipientNamesAirtel}
-                        </h2>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        Payment Method
-                      </h2>
-                      <div className="flex gap-1">
-                        <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          {walletNameAirtel + " Wallet"}
-                        </h2>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        Total Amount
-                      </h2>
-                      <div className="flex gap-1">
-                        <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          {selectedAmountAirtel}
-                        </h2>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        Transaction Fee
-                      </h2>
-                      <div className="flex gap-1">
-                        <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                          0.00
-                        </h2>
-                      </div>
-                    </div>
-                    <div className="flex text-[10px] md:text-[14px] w-[100%] mx-auto justify-between font-semibold lg:text-[16px]">
-                      <span className="text-[#0008]">Points Earned</span>
-                      <span className="text-[#2ED173]">+2.00</span>
-                    </div>
-
-                    <div
-                      className="bg-[#F6F7F7] w-[95%] h-auto my-5 lg:my-8 flex py-[7px] 
-                                             justify-between items-center px-[4%] mx-auto rounded-[10px]"
-                    >
-                      <div className="flex flex-col gap-2  ">
-                        <div className="flex gap-[10px] justify-center items-center">
-                          <img
-                            className="w-[16px] h-[16px] bg-white"
-                            src={image}
-                            alt="/"
-                          />
-                          <div className="flex gap-[10px] items-center">
-                            <p className="text-[12px] md:text-[14px] leading-[20px] lg:leading-[22px]  lg:text-[16px] font-[500]">
-                              Available Balance {"  "}
-                            </p>
-                            <span className="text-black">
-                              {`(${
-                                newBalance === "" || newBalance === null
-                                  ? `${
-                                      cleanUpBalanceToNumericOnly > 1
-                                        ? cleanUpBalanceToNumericOnly?.toLocaleString(
-                                            "en-NG",
-                                            {
-                                              style: "currency",
-                                              currency: "NGN",
-                                            }
-                                          )
-                                        : "₦"
-                                    }`
-                                  : `${
-                                      balanceStringToNum > 1
-                                        ? balanceStringToNum?.toLocaleString(
-                                            "en-NG",
-                                            {
-                                              style: "currency",
-                                              currency: "NGN",
-                                            }
-                                          )
-                                        : "₦"
-                                    }`
-                              })`}
-                            </span>
-                          </div>
-                        </div>
-                        <span
-                          className="text-gray-500 text-[14px] font-[400] leading-[20px]
-                                                          lg:text-[16px] lg:leading-[22px] text-left"
-                        >
-                          {balanceStatus}
-                        </span>
-                      </div>
-
-                      <img
-                        src={Select}
-                        alt=""
-                        className="w-[12px] h-[12px] md:w-[50px] md:h-[20px] lg:w-[80px] lg:h-[30px]"
-                      />
-                    </div>
-
-                    <div className="flex items-center justify-center">
-                      <button
-                        disabled={CheckSufficiency}
-                        className={`w-full md:w-fit  text-white rounded-md px-[28px] text-[10px] md:text-[12px] leading-[15px]
-                           lg:text-[16px] lg:leading-[24px] py-[15px] md:py-[10px] ${
-                             CheckSufficiency ? "bg-gray-400" : " bg-primary"
-                           }  `}
-                        onClick={() => {
-                          handleConfirm();
-                        }}
-                      >
-                        Confirmed
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+             <div className={`w-full flex justify-center h-full 
+                         py-[30px] px-[15px] lg:px-[0px] lg:items-center
+                          items-end`}>
+                       <div
+                            className={` bvnQuery lg:rounded-[12px] rounded-[10px] 
+                          h-[520px] ${ toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+                          } w-[100%] md:w-[60%] overflow-auto  ${isDarkMode ? "bg-black text-white border rounded-[10px] border-white": "bg-white text-black"} `}
+                          >
+                            <div className= "flex justify-end pr-2 lg:py-[10px] py-[7px]">
+                              <img
+                                src={Cancel}
+                                alt=""
+                                onClick={() => setProceed(false)}
+                                  className=" w-[25px] h-[25px] md:w-[35px] md:h-[35px] 
+                            lg:w-[26px] lg:h-[26px]"
+                              />
+                            </div>
+                            <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]"/>
+                            <div className="mx-auto">
+                              <p className="text-[12px] font-extrabold
+                         my-[5%] text-center md:my-[3%] md:text-[15px] 
+                        lg:my-[2%] lg:text-[16px]">
+                                Confirm Transaction
+                              </p>
+                              <div className={`text-[10px] font-semibold text-center mb-2
+                           md:text-[12px] lg:text-[14px] mx-2 
+                           ${isDarkMode ? "text-white" : "text-black"}`}>
+                                You are about to purchase{" "}
+                                <span className={`font-extrabold text-[10px] md:text-[16px]
+                                 lg:text-[12px] ${isDarkMode ? "text-white" : "text-black"}`}>
+                                  {selectedProductAirtel + " " + selectedOptionAirtel}
+                                </span>{" "}
+                                from your {walletNameAirtel} to
+                              </div>
+            
+                              <div className="flex flex-col gap-3 mt-5 md:mt-6 lg:mt-7">
+                                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
+                     justify-between font-[500] lg:text-[16px]">
+                                  <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+                                    Network
+                                  </span>
+                                  <div className="flex gap-1">
+                                    <div className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]">
+                                      <img
+                                        src={AirtelLogo}
+                                        alt=""
+                                        className="w-full h-full object-cover md:h-[25px]"
+                                      />
+                                    </div>
+                                    <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
+                                      AIRTEL
+                                    </span>
+                                  </div>
+                                </div>
+            
+                                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
+                     justify-between font-[500] lg:text-[16px]">
+                                  <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+                                    Product
+                                  </span>
+                                  <div className="flex gap-1">
+                                    <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
+                                      {selectedProductAirtel}
+                                    </span>
+                                  </div>
+                                </div>
+            
+                                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
+                     justify-between font-[500] lg:text-[16px]">
+                                  <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+                                    Plan
+                                  </span>
+                                  <div className="flex gap-1">
+                                    <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
+                                      {selectedProductAirtel + " " + selectedOptionAirtel}
+                                    </span>
+                                  </div>
+                                </div>
+            
+                                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
+                     justify-between font-[500] lg:text-[16px]">
+                                  <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+                                    Phone Number
+                                  </span>
+                                  <div className="flex gap-1">
+                                    <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
+                                      {inputValue}
+                                    </span>
+                                  </div>
+                                </div>
+            
+                                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
+                     justify-between font-[500] lg:text-[16px]">
+                                  <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+                                    Recipient Name
+                                  </span>
+                                  <div className="flex gap-1">
+                                    <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
+                                      {recipientNamesAirtel}
+                                    </span>
+                                  </div>
+                                </div>
+            
+                                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
+                     justify-between font-[500] lg:text-[16px]">
+                                  <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+                                    Payment Method
+                                  </span>
+                                  <div className="flex gap-1">
+                                    <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
+                                      {walletNameAirtel}
+                                    </span>
+                                  </div>
+                                </div>
+            
+                                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
+                     justify-between font-[500] lg:text-[16px]">
+                                  <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+                                    Total Amount
+                                  </span>
+                                  <div className="flex gap-1">
+                                    <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
+                                      {selectedAmountAirtel}
+                                    </span>
+                                  </div>
+                                </div>
+            
+                                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
+                     justify-between font-[500] lg:text-[16px]">
+                                  <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+                                    Transaction Fee
+                                  </span>
+                                  <div className="flex gap-1">
+                                    <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
+                                      0.00
+                                    </span>
+                                  </div>
+                                </div>
+                                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
+                     justify-between font-[500] lg:text-[16px]">
+                                  <span className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Points Earned</span>
+                                  <span className="text-[#2ED173]">+2.00</span>
+                                </div>
+                              </div>
+                              </div>
+                                 <div className={`bg-[#F6F7F7] w-[95%] h-auto my-5 lg:my-8 flex py-[7px] 
+                                      justify-between items-center px-[4%] mx-auto rounded-[10px]  
+                                      ${isDarkMode ? "bg-black border rounded-[10px]  border-white" : "bg-[#F6F7F7] "}`}>
+                                              <div className="flex flex-col gap-2 ">
+                                                <div className="flex gap-[10px] justify-center items-center">
+                                                  <img
+                                                    className="w-[16px] h-[16px] bg-white"
+                                                    src={image}
+                                                    alt="/"
+                                                  />
+                                                  <div className="flex gap-[10px] items-center">
+                                                      <p className={`text-[12px] md:text-[14px] leading-[20px] 
+                                                      lg:leading-[22px]  lg:text-[16px] font-[500] ${isDarkMode ? "text-white" : "text-black"}`}>
+                                                  Available Balance {"  "} 
+                                                   </p>
+                                                   <span className={`font-medium ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+                                                    {`(${balanceOption !== "" || balanceOption !==null ? balanceOption?.toLocaleString("en-NG", {
+                                                      style : "currency",
+                                                      currency : "NGN"
+                                                    }) : "₦"})`}
+                                                  </span>
+                                                  </div>
+                                                </div>
+                                              <span className="text-gray-500 text-[14px] font-bold leading-[20px]
+                                                   lg:text-[16px] lg:leading-[22px] text-left">
+                                                     {balanceStatus}
+                                                     </span>
+                                              </div>
+                              
+                                              <img
+                                                src={Select}
+                                                alt=""
+                                                className="w-[12px] h-[12px] md:w-[50px] md:h-[20px] lg:w-[80px] lg:h-[30px]"
+                                              />
+                                            </div>
+                               <button
+                       disabled={CheckSufficiency}
+                        onClick={handleConfirm}
+                          className={`bg-[#04177f] my-[5%] w-[90%] flex 
+                            justify-center items-center mx-auto cursor-pointer 
+                            text-[14px] font-extrabold h-[50px] text-white rounded-[6px]
+                             md:w-[25%] md:rounded-[8px] lg:rounded-[12px] md:text-[16px]
+                             lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:my-[2%] 
+                             ${CheckSufficiency ? "bg-gray-400" : "bg-primary"} `}
+                        > Confirmed
+                        </button>
+                              </div>
+                            </div>
+                          
             </Modal>
           )}
 
@@ -1560,124 +1669,149 @@ const AirtelDataBundle = () => {
 
           {confirm && (
             <Modal>
-              <div
-                className={` ${
-                  toggleSideBar ? "confirm02" : "confirm2"
-                } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
-              >
-                <div className="flex justify-end px-2">
-                  <img
-                    onClick={() => setConfirm(false)}
-                    className="cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[35px] lg:h-[35px] "
-                    src={Cancel}
-                    alt=""
-                  />
-                </div>
-
-                <hr className="h-[6px] bg-[#04177f] lg:mt-[2%] border-none mt-[2%] md:mt-[2%] md:h-[10px]" />
-                <div className="md:mt-[15%] lg:mt-[10%]">
-                  <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[8%] md:my-[5%] lg:my-[3%]">
-                    Input PIN to complete transaction
-                  </p>
-                  <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
-                    <div className=" flex justify-center items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
-                      <OtpInput
-                        value={inputPin}
-                        inputType={!isVisible ? "tel" : "password"}
-                        onChange={(pin) => {
-                          setInputPin(pin);
-                          console.log("PIN being entered:", pin);
-                        }}
-                        numInputs={4}
-                        shouldAutoFocus={true}
-                        inputStyle={{
-                          color: "#403f3f",
-                          width: 30,
-                          height: 30,
-                          borderRadius: 3,
-                        }}
-                        renderInput={(props) => (
-                          <input {...props} className="inputOTP mx-[3px]" />
-                        )}
-                      />
-                      <div
-                        className="text-[#0003] text-[13px] md:text-3xl"
-                        onClick={toggleVisibility}
-                      >
-                        {isVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
-                      </div>
-                    </div>
-                    <p className="text-[8px] md:text-[12px] text-[#04177f]">
-                      Forgot Pin ?
-                    </p>
-                    {errorMessage && (
-                      <p
-                        className="text-center text-[14px] text-red-500 lg:text-[16px]
-                       font-[500] leading-[18px] lg:leading-[20px]"
-                      >
-                        Incorrect pin
-                      </p>
-                    )}
-                  </div>
-                </div>
-
-                <button
-                  onClick={() => {
-                    console.log("inputPin", inputPin);
-                    const AirtelDataHandler = () => {
-                      setConfirm(false); // Close modal on PIN success
-                      inputPinHandler(); // Proceed with purchase
-                    };
-                    const setFailed = async (ErrorType) => {
-                      if (ErrorType === "unauthorised") {
-                        VerifyTransPin(
-                          inputPin,
-                          (ErrorType) => {
-                            if (ErrorType === "unauthorised") {
-                              return setSessionModal(true);
-                            }
-                          },
-                          setLoading,
-                          setErrorMessage,
-                          AirtelDataHandler
-                        );
-                      }
-                    };
-                    //Function to verify the pin and handle the purchase of users
-                    VerifyTransPin(
-                      inputPin,
-                      setFailed,
-                      setLoading,
-                      setErrorMessage,
-                      AirtelDataHandler
-                    );
-                  }}
-                  disabled={inputPin.length !== 4}
-                  className={`${
-                    inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
-                  } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
-                >
-                  Purchase
-                </button>
-              </div>
-            </Modal>
+              <div className="flex items-end justify-center
+                          lg:items-center lg:justify-center 
+                w-[100%] lg:px-[0px] rounded-[10px] h-[100%] px-[15px]">
+                           <div className={`flex flex-col lg:mb-[0px]  mb-[50px]
+                      lg:h-[350px] overflow-y-scroll h-[300px] bvnQuery  ${
+                                   toggleSideBar ? "md:w-[45%] lg:w-[40%]  " : "lg:w-[40%]"
+                                 } md:w-[55%] w-full   ${isDarkMode ? "text-white bg-black border-[1px] border-white rounded-[10px]" : "text-black bg-white rounded-[10px]"}`}
+                           >
+                             <div className="pr-3 lg:pr-2 py-[5px] 
+                             flex justify-end">
+                               <img
+                                 onClick={() => setConfirm(false)}
+                                  className="w-[25px] h-[25px]  md:w-[35px] md:h-[35px] 
+                             lg:w-[25px] lg:h-[25px]"
+                                 src={Cancel}
+                                 alt=""
+                               />
+                             </div>
+                              <div className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
+                               <div className="flex flex-col w-full  justify-center 
+                          py-[15px] lg:py-[0px]
+                          h-[100%] gap-[15px]">
+                               <p className="font-extrabold text-[12px] leading-[16px] 
+                         pb-[20px]
+                          md:text-[10px]
+                          lg:text-[16px] text-center 
+                         ">
+                              Input PIN to complete transaction
+                               </p>
+                               <div className="flex flex-col items-center lg:gap-[0px]
+                          gap-[5px] font-extrabold">
+                                 <div className=" flex items-center  gap-[10px]">
+                                   <OtpInput
+                                     value={inputPin}
+                                     inputType="tel"
+                                     onChange={setInputPin}
+                                     numInputs={4}
+                                     shouldAutoFocus={true}
+                                    inputStyle={{
+                                   color: "#000000",
+                                   fontSize: '14px',
+                                   fontWeight: 700,
+                                   borderRadius: 4,
+                                   height: '35px',
+                                   width: '35px',
+                                 }}
+                                     renderInput={(props) => (
+                                       <input {...props} className="inputOTP mx-[3px]" type ="tel" />
+                                     )}
+                                   />
+                                   <div
+                                     className="text-[#0003] text-[13px] md:text-3xl"
+                                     onClick={toggleVisibility}
+                                   >
+                                     {isVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
+                                   </div>
+                                 </div>
+                                  <Link to={{
+                                               pathname : "/ProfileSettingMain",
+                                                state :  authenticationOpen
+                                              }} className="text-[10px] leading-[14px] font-extrabold 
+                                              md:text-[12px]
+                                                my-2 text-[#04177f]">
+                                                Forgot Pin ?
+                                              </Link>
+                               </div>
+                               {errorMessage && (
+                                 <p className="font-bold text-[14px]  lg:text-[16px] md:font-[500] 
+                           text-center leading-[18px] lg:leading-[20px]  text-red-600">
+                                   Incorrect pin
+                                 </p>
+                               )}
+                         
+                  <div className="flex flex-col gap-[10px] px-[20px]" >
+                             <button
+                               onClick={(e) => {
+                                 console.log("inputPin", inputPin);
+                                 const AirtelDataHandler = () => {
+                                   // Close modal on PIN success
+                                   inputPinHandler(); // Proceed with purchase
+                                 };
+                                 const setFailed = (ErrorType) => {
+                                   if (ErrorType === "unauthorised") {
+                                     VerifyTransPin(
+                                       inputPin,
+                                       (ErrorType) => {
+                                         if (ErrorType === "unauthorised") {
+                                           return setSessionModal(true);
+                                         }
+                                       },
+                                       setLoading,
+                                       setErrorMessage,
+                                       AirtelDataHandler
+                                     );
+                                   }
+                                 };
+                                 //Run the function to check user's pin
+                                 // and proceed with purchase
+                                 VerifyTransPin(
+                                   inputPin,
+                                   setFailed,
+                                   setLoading,
+                                   setErrorMessage,
+                                   AirtelDataHandler
+                                 );
+                               }}
+                               disabled={inputPin.length !== 4}
+                               className={`${
+                             inputPin.length !== 4 && !isDarkMode ? "bg-[#0008]" : 
+                              inputPin.length !== 4 && isDarkMode ? "bg-gray-300" : "bg-[#04177f]"
+                           } w-full  md:w-[94px] lg:w-[163px] flex 
+                           justify-center items-center mx-auto cursor-pointer text-[12px]
+                            md:text-[10px] lg:text-[16px] font-extrabold h-[50px] 
+                            lg:h-[38px] md:h-[22px] text-white rounded-[6px] md:rounded-[6.88px]
+                             lg:rounded-[12px]`}
+                             >
+                               Purchase
+                             </button>
+                             </div>
+                           </div>
+                           </div>
+                           </div>
+                           </Modal>
           )}
 
           {transactSuccessPopUp && (
             <Modal>
               {/* <TransactFailedPopUp/> */}
+            <div className={`w-full flex justify-center h-full 
+             py-[30px] px-[15px] lg:px-[0px] lg:items-center
+              items-end`}>
               <div
-                className={` scroll-bar ${
-                  toggleSideBar ? "confirm01 w-[90%]" : "confirm w-[90%]"
-                } bg-white rounded-[12px] md:my-auto mx-auto overflow-auto lg:mx-auto lg:my-auto`}
+                className={` bvnQuery lg:rounded-[12px] rounded-[10px] 
+              h-[520px] ${ toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+              } w-[100%] md:w-[60%] overflow-auto  ${isDarkMode ? "bg-black text-white border rounded-[10px] border-white": "bg-white text-black"} `}
               >
-                <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
+                 <div className="flex justify-end pr-2 lg:py-[10px] py-[7px]">
                   <img
                     onClick={() => {
                       setTransactSuccessPopUp(false);
                       window.location.reload();
                     }}
-                    className=" w-[18px] h-[15px] md:w-[35px] md:h-[33px] lg:w-[35px] lg:h-[22px]"
+                    className=" w-[18px] h-[15px] md:w-[35px] md:h-[32px] lg:w-[35px] lg:h-[22px]"
                     src="/Images/login/arpLogo.png"
                     alt=""
                   />
@@ -1692,140 +1826,154 @@ const AirtelDataBundle = () => {
                     alt=""
                   />
                 </div>
-                <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
-                <h2 className="text-[12px] my-[4%] text-center md:text-[20px] md:my-[3%] lg:text-[14px] lg:my-[2%]">
+                 <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
+                <p className={`text-[12px] font-extrabold my-[4%] 
+            text-center md:text-[20px] md:my-[3%] lg:text-[14px] lg:my-[2%] 
+            ${isDarkMode ? "text-white" : "text-[#000]"}`}>
                   Purchase Successful
-                </h2>
+                </p>
                 <img
                   className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[100px] lg:h-[100px]"
                   src="./Gif/checkMarkGif.gif"
                   alt="/"
                 />
 
-                <div className="flex flex-col gap-2 lg:gap-4 px-[20px]">
-                  <p className="text-[8px] text-[#0008] text-center mb-2 md:text-[14px] lg:text-[12px]">
-                    You have successfully purchased{" "}
-                    <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">
-                      {selectedProductAirtel + " " + selectedOptionAirtel}{" "}
+                 <div className={`font-semibold w-[97%] mx-auto text-[10px] text-center
+               mb-2 md:pb-2 lg:pb-3 md:text-[14px] lg:text-[14px]
+               ${isDarkMode ? "text-white" : "text-black" }`}>
+                       
+                     You have successfully purchased{" "}
+                    <span className={` ${isDarkMode? "text-white" : "text-black"} font-bold 
+                   md:text-[16px] lg:text-[14px]`}>
+                       {selectedProductAirtel + " " + selectedOptionAirtel}{" "}
                     </span>
-                    from your {walletNameAirtel + " Wallet"} to{" "}
-                  </p>
-
-                  <div className="flex items-center justify-between">
-                    <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                      Network
-                    </h2>
-                    <div className="flex gap-1">
-                      <div className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]">
-                        <img
-                          src={AirtelLogo}
-                          alt=""
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <h2
-                        className="text-[10px] leading-[12px]
-                       capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]"
-                      >
-                        AIRTEL
-                      </h2>
+                  from your {walletNameAirtel} to{" "}                    
                     </div>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                      Product
-                    </h2>
-                    <div className="flex gap-1">
-                      <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        {selectedProductAirtel}
-                      </h2>
+                    <div className="flex mt-4 flex-col gap-2 lg:gap-4">
+             <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto
+                justify-between font-[500] lg:text-[16px]">
+                  <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`} >
+                 Network
+                </span>
+                   
+                    <div className="rounded-full w-[12.02px]
+                        h-[12.02px] flex items-center justify-center 
+                       overflow-hidden md:w-[12.02px] lg:w-[25px] 
+                      md:h-[12.02px] lg:h-[25px]">
+                       <img  src={AirtelLogo} alt="" className="w-full h-full object-cover"  />
+                            </div>
+                             <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[black]"}`}>
+                      Airtel
+                     </span>
+                  
+                 </div>
+                                               
+          <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto
+            justify-between font-[500] lg:text-[16px]">
+          <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+                   Product
+         </span>
+      =
+      <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
+        {selectedProductAirtel }
+           </span>
+          
+        </div>
+  <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto
+   justify-between font-[500] lg:text-[16px]">
+    <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+           Plan
+      </span>
+<span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
+      {selectedProductAirtel + " " + selectedOptionAirtel}
+      </span>
                     </div>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                      Plan
-                    </h2>
-                    <div className="flex gap-1">
-                      <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        {selectedProductAirtel + " " + selectedOptionAirtel}
-                      </h2>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                      Phone Number
-                    </h2>
-                    <div className="flex gap-1">
-                      <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        {inputValue}
-                      </h2>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                                               
+       <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto
+         justify-between font-[500] lg:text-[16px]">
+              <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+                     Phone Number
+                   </span>
+                  
+                     <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
+                              {inputValue}
+                             </span>
+                        
+                   </div>
+                                               
+                  <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto
+                          justify-between font-[500] lg:text-[16px]">
+                 <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
                       Recipient Name
-                    </h2>
-                    <div className="flex gap-1">
-                      <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        {recipientNamesAirtel}
-                      </h2>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                      Amount
-                    </h2>
-                    <div className="flex gap-1">
-                      <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        &#8358;{selectedAmountAirtel}
-                      </h2>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                      Payment Method
-                    </h2>
-                    <div className="flex gap-1">
-                      <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        {walletNameAirtel + " Wallet"}
-                      </h2>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                      Order Number
-                    </h2>
-                    <div className="flex gap-1">
-                      <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        0124yend44
-                      </h2>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-[#F2FAFF] mx-10 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[75px] md:mx-[20px] md:rounded-[15px] lg:h-[75px]">
-                  <p className="text-[6px] text-center mx-auto w-[171px] md:text-[9px] md:w-full lg:text-[14px]">
-                    The data purchase has been sent successfully to the
-                    recipient phone number. Please kindly engage the recipient
-                    to check his/her balance to confirm the value. You can
-                    contact us for any further assistance.
-                  </p>
-                </div>
-                <div className="flex w-full justify-center mx-auto px-[50px] items-center gap-[5%] md:gap-[10%] mt-[50px] md:w-[50%] lg:gap-[10%] lg:mx-auto  lg:my-[5%] md:mt-[40px]">
+                     </span>
+<span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
+                    {recipientNamesAirtel}
+                    </span>
+                    
+            </div>
+                                               
+                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto
+                        justify-between font-[500] lg:text-[16px]">
+          <span
+           className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+                     Amount
+               </span>
+          <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
+                          {selectedAmountAirtel}
+                     </span>
+            </div>
+           <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto
+               justify-between font-[500] lg:text-[16px]">
+                          <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+                                  Payment Method
+                     </span>
+      <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
+              {walletNameAirtel}
+      </span>
+                                                          
+      </div>
+                                               
+   <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto
+        justify-between font-[500] lg:text-[16px]">
+  <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+    Order Number
+     </span>
+          
+  <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+        {airtelOrderID}
+  </span>
+  
+ </div>
+      </div>
+        </div>
+                <div className={`bg-[#F2FAFF] w-[90%]   mx-auto p-[8px] my-5 flex justify-between 
+        items-center md:p-[9px] lg:p-[10px] rounded-[5px] lg:rounded-[10px]
+         ${
+                isDarkMode ? "bg-slate-800 " : "bg-[#F2FAFF]"
+              }`}>
+            <p className={`text-[10px] leading-[13px] text-center
+             md:text-[14px] md:leading-[18px] lg:text-[14px]  font-semibold 
+             ${isDarkMode ? "text-white" : "text-black"}`}>
+            The decoder has been subscribed successfully.
+             Please kindly confirm from the smartcard / iuc.
+              You can contact us for any further assistance.
+            </p>
+        </div>
+                <div  className="flex w-full justify-center mx-auto 
+                px-[50px] items-center gap-[5%] md:gap-[10%]
+                 mt-[30px] md:w-[50%] lg:gap-[10%] lg:mx-auto 
+                  lg:my-[5%] md:mt-[40px]">
                   <Link to="/AirtelDataBundle">
                     <button
                       onClick={() => {
                         handleTransactionSuccessClose();
                         window.location.reload();
                       }}
-                      className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-[600] h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[12px] lg:w-[163px] lg:h-[38px] lg:my-[2%] md:px-[60px] md:h-[30px]`}
+                       className={`bg-[#04177f] w-[111px] lg:w-[200px] md:w-[99px]
+                   h-[40px] md:h-[24px] lg:h-[42px] lg:my-[2%] flex justify-center 
+                   items-center cursor-pointer text-[12px] md:text-[12px] lg:text-[16px]
+                    font-semibold text-white rounded-[6px] md:rounded-[7px] 
+                    lg:rounded-[12px]`}
                     >
                       Done
                     </button>
@@ -1848,8 +1996,11 @@ const AirtelDataBundle = () => {
                   >
                     <button
                       onClick={handleReceipt}
-                      className={`border-[1px] w-[100px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-[600] h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[12px] lg:w-[163px] lg:h-[38px] lg:my-[2%] md:px-[60px] md:h-[30px]`}
-                    >
+                     style={{boxShadow : '0px 0px 2.0368096828460693px 0px #00000040'}} 
+                className={`border-[1px]  w-[111px] lg:w-[200px] md:w-[99px]
+                   h-[40px] md:h-[24px] lg:h-[42px] lg:my-[2%] flex justify-center
+                    items-center cursor-pointer text-[12px] md:text-[12px] lg:text-[16px]
+                     font-semibold rounded-[6px] md:rounded-[7px] lg:rounded-[12px]`}>
                       Receipt
                     </button>
                   </Link>
@@ -1860,10 +2011,11 @@ const AirtelDataBundle = () => {
 
           <div className="py-[30px] lg:py-[60px] mt-10">
             <button
-              className={`w-full md:w-fit text-white rounded-md px-[28px] text-[10px] md:px-[30px] 
-                md:py-[10px] md:text-[13px] md:font-[600] leading-[15px] lg:text-[16px]
-                 lg:px-[60px] lg:py-[15px] 2xl:text-[20px] 2xl:px-[50px] 2xl:py-[10px] 
-                 lg:leading-[24px] py-[15px] ${
+              className={`mt-[38px] md:mt-[30px] lg:mt-[25px] rounded-[6px]
+             md:rounded-[10px] lg:rounded-[15px] bg-[#04177F] 
+             h-[43px] md:h-[30px] lg:h-[40px] flex items-center 
+             font-semibold text-[12px] md:text-[11px] lg:text-[16px] 
+             text-[#fff] w-full md:w-[100px] lg:w-[170px] justify-center  ${
                    !selectedProductAirtel ||
                    !selectedOptionAirtel ||
                    !inputValue ||
@@ -1916,6 +2068,7 @@ const AirtelDataBundle = () => {
         </Modal>
       )}
       {sessionModal && <HandleUserSession />}
+      {restrictUser && sessionModal === false  && <RestrictionPopUp/>}
     </DashBoardLayout>
   );
 };

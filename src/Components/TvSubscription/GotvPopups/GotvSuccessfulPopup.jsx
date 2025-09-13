@@ -62,7 +62,8 @@ import { Link } from "react-router-dom";
         <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
         <div className="">
             <p className={`text-[12px] font-extrabold my-[4%] 
-            text-center md:text-[20px] md:my-[3%] lg:text-[14px] lg:my-[2%] ${isDarkMode ? "text-white" : "text-[#000]"}`}
+            text-center md:text-[20px] md:my-[3%] lg:text-[14px] lg:my-[2%] 
+            ${isDarkMode ? "text-white" : "text-[#000]"}`}
             >Subscription Successful</p>
             <img
               className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[70px] lg:h-[70px]"

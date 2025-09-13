@@ -24,7 +24,7 @@ import { GetFunction } from "../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../Loader/Loader";
 import { Modal } from "../Screens/Modal/Modal";
 import { BalanceLoading } from "../Loader/Loader";
-import { HandleUserSession } from "../../Components/ApiCollection.jsx/ApiBuck";
+import { HandleUserSession, RestrictionPopUp } from "../../Components/ApiCollection.jsx/ApiBuck";
 import { GetLocalStorage } from "../LocalStorage/LocalStorage";
 
 // import { duration } from "html2canvas/dist/types/css/property-descriptors/duration";
@@ -93,7 +93,8 @@ const GoTv = () => {
   const [gotvLoading, setGotvLoading] = useState(false);
   const [gotvVerifyResponse, setGotvVerifyResponse] = useState({});
   const [errorFillDecoder, setErrorFillDecoder] = useState(false);
-  const [checkNetworkError, setCheckNetworkError] = useState(false)
+  const [checkNetworkError, setCheckNetworkError] = useState(false);
+  const [restrictUser, setRestrictUser] = useState(false)
 const Data = GetLocalStorage();
 //console.log(Data?.ConfirmAcc)
   const navigate = useNavigate();
@@ -362,27 +363,28 @@ const Data = GetLocalStorage();
       ? fetchedGotvPlans.data.data.data
       : gotvData;
   useEffect(() => {
+     if(Data?.ConfirmAcc === "true"){
     if (fetchedGotvPlans.status === 200 || fetchedGotvPlans.status === 201) {
       setGotvData(fetchedGotvPlans?.data?.data?.data);
     } else if (fetchedGotvPlans.status === undefined) {
      RetrieveGotvPlans();
     }
  // Simulate async data loading
-    if ((newBalance === "" ||
+
+    if (newBalance === "" ||
        newBalance === null ||
-        newBalance === undefined) && Data?.ConfirmAcc === "true") {
+        newBalance === undefined) {
     GetBalance();
       if (GetBalance) {
         setNewBalance(
           passDataBalance?.data?.data?.data !== undefined
             ? passDataBalance?.data?.data?.data?.balance
-            : ""
-        );
+            : "");
+        }
       }
-    }else{
-     // alert("Create an account to access this feature.");
-     console.log("Create an account to access this feature.")
-    }
+      } else{
+           setRestrictUser(true)
+      }
     //eslint-disable-next-line
   }, []);
 
@@ -554,10 +556,25 @@ const Data = GetLocalStorage();
       const DataJson = JSON.stringify(requestData);
 
       const Path = "bills/tvsub";
-      const successHandler = () => {
+      const successHandler = (response) => {
+        console.log(response?.data?.data)
+        if(response?.data?.data?.data?.status === "success"
+          || response?.data?.data?.data?.status === "delivered"
+        ||  response?.data?.data?.data?.status === "successful" ||
+        response?.data?.data?.data?.status === "Successful"
+        ){
+          setPurchaseGotvErrorType("");
         setGotvSuccessful(true);
         setInputPinGotv(false);
         setInputPin("");
+        }else if(response?.data?.data?.data?.status === "failed"
+          || response?.data?.data?.data?.status === "Failed"
+        ||  response?.data?.data?.data?.status === "unsuccessful"){
+            setPurchaseGotvErrorType("Plan Unavailable: Purchase Failed")
+          setFailedPopup(true);
+          setInputPinGotv(false);
+          setInputPin("");
+        }
       };
       const FailedHandler = async (ErrorType) => {
         if (ErrorType === "unauthorised") {
@@ -875,6 +892,7 @@ const Data = GetLocalStorage();
     //  navigate("/GoTv");
   };
 
+  if(Data?.ConfirmAcc === "true"){
   window.addEventListener("online", ()=> {
    if(checkNetworkError === true &&
      (updateBalance === undefined || updateBalance === null || updateBalance === "")
@@ -885,6 +903,7 @@ const Data = GetLocalStorage();
     return RetrieveGotvPlans()
    }
   })
+}
 
   return (
     <div>
@@ -1422,7 +1441,11 @@ const Data = GetLocalStorage();
                  ? "bg-[#63616188] "
                  : "bg-primary"
              }
-            mt-[38px] md:mt-[30px] lg:mt-[25px] rounded-[6px] md:rounded-[10px] lg:rounded-[15px] bg-[#04177F] h-[43px] md:h-[30px] lg:h-[40px] flex items-center font-semibold text-[12px] md:text-[11px] lg:text-[16px] text-[#fff] w-full md:w-[100px] lg:w-[170px] justify-center`}
+            mt-[38px] md:mt-[30px] lg:mt-[25px] rounded-[6px]
+             md:rounded-[10px] lg:rounded-[15px] bg-[#04177F] 
+             h-[43px] md:h-[30px] lg:h-[40px] flex items-center 
+             font-semibold text-[12px] md:text-[11px] lg:text-[16px] 
+             text-[#fff] w-full md:w-[100px] lg:w-[170px] justify-center`}
               >
                 Proceed
               </button>
@@ -1507,6 +1530,9 @@ const Data = GetLocalStorage();
         </Modal>
       )}
       {sessionModal && <HandleUserSession />}
+      {restrictUser && sessionModal === false && (
+        <RestrictionPopUp/>
+      )}
     </div>
   );
 };

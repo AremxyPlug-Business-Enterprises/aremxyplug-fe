@@ -18,6 +18,7 @@ import DataSchedulePopUp from "./DataTopUp-Images/DataSchedulePopUp.svg";
 import BulkDataPopUp from "./DataTopUp-Images/BulkDataPopUp.svg";
 import { Modal } from "../../../Screens/Modal/Modal";
 
+
 const DataTopUpPage = () => {
   const [popupVisible, setPopupVisible] = useState(false);
   const [dataRoll, setDataRoll] = useState(false);

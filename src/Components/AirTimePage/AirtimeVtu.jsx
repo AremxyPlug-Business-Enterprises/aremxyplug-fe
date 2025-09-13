@@ -22,11 +22,13 @@ import { AirtimeVtuReceipt } from './AirtimeVtuReceipt';
 import { AirtimeReceiptFailed } from './AirtimeReceiptFailed';
 import axiosInstance from '../ApiCollection.jsx/apiClient';
 import { Loader } from '../Loader/Loader';
-import { VerifyTransPin, GetFunction, HandleUserSession } from '../ApiCollection.jsx/ApiBuck';
+import { VerifyTransPin, GetFunction, HandleUserSession, RestrictionPopUp } from '../ApiCollection.jsx/ApiBuck';
 import Select from  "../Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundles-Images/Select.svg";
+import { GetLocalStorage } from '../LocalStorage/LocalStorage';
 
 
 const AirtimeVtu = () => {
+    const Data = GetLocalStorage()
     // const {  isDarkMode } = useContext(ContextProvider);
     const tFee = 0;
     const points = '+2.00';
@@ -39,6 +41,7 @@ const AirtimeVtu = () => {
     const { networkImage, setNetworkImage } = useContext(ContextProvider);
     const { inputValues, setInputValues } = useContext(ContextProvider);
     const { networkId, setNetworkId } = useContext(ContextProvider);
+    const [restrictUser, setRestrictUser] = useState(false)
    // const { productId, setProductId } = useContext(ContextProvider);
 
 
@@ -97,13 +100,19 @@ const AirtimeVtu = () => {
                              setPassDataBalance)
                            } 
                             // Simulate async data loading
-                           
-                            if(newBalance === "" || newBalance === null || newBalance === undefined){
-                               GetBalance();
-                               if(GetBalance){
-                                setNewBalance(passDataBalance.data ? passDataBalance?.data?.data?.data?.balance : "");
-                               }
-                            }
+                                              // Simulate async data loading
+                      if (Data?.ConfirmAcc === "true"){                     // Simulate async data loading
+                     if(newBalance === "" ||
+       newBalance === null ||
+        newBalance === undefined){
+                        GetBalance();
+          setNewBalance(passDataBalance?.data?.data?.data !== undefined
+               ? passDataBalance?.data?.data?.data?.balance : "");
+             }
+                    }else {
+                      setRestrictUser(true);
+                    }
+
                            //eslint-disable-next-line
                           }, []);
                      
@@ -1681,6 +1690,7 @@ const HandleAirtime = async () => {
             {sessionModal && (
                 <HandleUserSession/>
             )}
+            {restrictUser && <RestrictionPopUp/>}
         </DashBoardLayout>
     );
 }

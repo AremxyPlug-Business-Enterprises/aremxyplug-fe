@@ -17,7 +17,7 @@ import britainFlag from '../../Components/EducationPins/imagesEducation/Britain.
 import euroFlag from '../../Components/EducationPins/imagesEducation/GBP.svg';
 import austriaFlag from '../../Components/EducationPins/imagesEducation/Austria.svg';
 import kenyaFlag from '../../Components/EducationPins/imagesEducation/Kenya.svg';
-import {VerifyTransPin} from "../../Components/ApiCollection.jsx/ApiBuck";
+import {RestrictionPopUp, VerifyTransPin} from "../../Components/ApiCollection.jsx/ApiBuck";
 import { Modal } from "../Screens/Modal/Modal";
 import {Loader} from "../Loader/Loader"
 import {PostFunction} from "../../Components/ApiCollection.jsx/ApiBuck"
@@ -90,6 +90,7 @@ const Data = GetLocalStorage();
      const {purchaseDstvErrorType, setPurchaseDstvErrorType} = useContext(ContextProvider);
      const { setDstvCardName} = useContext(ContextProvider)
       const [checkNetworkError, setCheckNetworkError] = useState(false)
+       const [restrictUser, setRestrictUser] = useState(false)
       const navigate = useNavigate();
   
 const handleOptionClickDstv = (option) => {
@@ -216,10 +217,8 @@ const ReceiptButton = ()=> {
   }
   
   
-const DstvOptionalPlan = dstvData?.length < 1 && fetchedDstvPlans.status === 200 ? fetchedDstvPlans?.data?.data?.data : dstvData;
 
-//=========Retrieving GOtv Plans =====
- const RetrieveGotvPlans = async()=> {
+  const RetrieveGotvPlans = async()=> {
   if(!navigator.onLine) return setCheckNetworkError(true)
           const SuccessHandler = ()=> {
     console.log("Successfully fetched dstv plans");
@@ -250,6 +249,11 @@ const DstvOptionalPlan = dstvData?.length < 1 && fetchedDstvPlans.status === 200
    failedHandler,
     setFetchedDstvPlans);
 }
+
+const DstvOptionalPlan = dstvData?.length < 1 && fetchedDstvPlans.status === 200 ? fetchedDstvPlans?.data?.data?.data : dstvData;
+
+//=========Retrieving GOtv Plans =====
+ 
 //Retrieving User's Balance ======
   const GetBalance = async () => {
     if(!navigator.onLine) return setCheckNetworkError(true)
@@ -369,24 +373,26 @@ const DstvOptionalPlan = dstvData?.length < 1 && fetchedDstvPlans.status === 200
       );
     };
       useEffect(()=> {
+        if(Data?.ConfirmAcc === "true"){
        if(fetchedDstvPlans.status === 200 || fetchedDstvPlans.status === 201){
       setDstvData(fetchedDstvPlans?.data?.data?.data);
       }else if(fetchedDstvPlans.status === undefined){
-      
-RetrieveGotvPlans()
+      RetrieveGotvPlans()
 }
 
                      // Simulate async data loading
-                    if((newBalance === "" ||
+                     
+                    if(newBalance === "" ||
        newBalance === null ||
-        newBalance === undefined) && Data?.ConfirmAcc === "true"){
+        newBalance === undefined){
                         GetBalance();
                         if(GetBalance){
                          setNewBalance(passDataBalance?.data?.data?.data !== undefined
                            ? passDataBalance?.data?.data?.data?.balance : "");
                         }
+                      }
                       }else{
-                        console.log("Create an account to access this feature.")
+                       setRestrictUser(true)
                       }
      //eslint-disable-next-line             
       },[])
@@ -502,10 +508,24 @@ const VerifyPinHandler = async () => {
       };
 
       const Path = "bills/tvsub";
-      const successHandler = () =>{
+      const successHandler = (response) =>{
+       if(response?.data?.data?.data?.status === "success"
+          || response?.data?.data?.data?.status === "delivered"
+        ||  response?.data?.data?.data?.status === "successful" ||
+        response?.data?.data?.data?.status === "Successful"
+        ){
+          setPurchaseDstvErrorType("");
         setDstvSuccessful(true);
         setInputPinDstv(false);
-          setInputPin("")
+        setInputPin("");
+        }else if(response?.data?.data?.data?.status === "failed"
+          || response?.data?.data?.data?.status === "Failed"
+        ||  response?.data?.data?.data?.status === "unsuccessful"){
+            setPurchaseDstvErrorType("Plan Unavailable: Purchase Failed")
+          setFailedPopup(true);
+          setInputPinDstv(false);
+          setInputPin("");
+        }
       //  handleReceivedData()
       }
       const FailedHandler = async(ErrorType) =>{
@@ -520,7 +540,31 @@ const VerifyPinHandler = async () => {
         (ErrorType)=> {
           if(ErrorType === "unauthorised"){
             return setSessionModal(true)
-          }
+          }else if(ErrorType === "Server error"){
+          //Why arepition did not occur here,
+          //We dont want it to be only about User experience here,
+          //There are several things that could happen to the backend,
+          // and there is also a possibility that the server was able to process and 
+          //initiate the transaction but still returned 500,
+          //so we need to prevent the case of carrying two transaction for a user,
+          //which doesn't only affect us through service of the platform we are using,
+          //but also unrest and panic to the user and the amount for purchase and 
+          //been removed twice without a result or successful output.
+          setPurchaseDstvErrorType("Server Error: Purchase Failed")
+       setFailedPopup(true);
+       setInputPinDstv(false);
+         setInputPin("")
+        }else if(ErrorType === "Network error" || ErrorType === "User error"){
+          setPurchaseDstvErrorType("Network Error: Purchase Failed");
+          setFailedPopup(true);
+       setInputPinDstv(false);
+         setInputPin("")
+        }else {
+           setFailedPopup(true);
+       setInputPinDstv(false);
+         setInputPin("")
+      setPurchaseDstvErrorType("An Unexpected error has occured");
+        }
         },
         setDstvSubscriptionResponse
       );
@@ -544,6 +588,9 @@ const VerifyPinHandler = async () => {
        setInputPinDstv(false);
          setInputPin("")
         }else {
+     setFailedPopup(true);
+        setInputPinDstv(false);
+         setInputPin("")
       setPurchaseDstvErrorType("An Unexpected error has occured");
         }
       }
@@ -791,6 +838,7 @@ console.log(dstvAmount)
 
 //======Running the Balance and the retrieving if the following 
 //Conditions are met
+if(Data?.ConfirmAcc === "true"){
 window.addEventListener("online", ()=> {
    if(checkNetworkError === true &&
      (updateBalance === undefined || updateBalance === null || updateBalance === "")
@@ -801,6 +849,7 @@ window.addEventListener("online", ()=> {
     return RetrieveGotvPlans()
    }
   })
+}
 
 
   return (
@@ -1253,6 +1302,9 @@ window.addEventListener("online", ()=> {
          ) } 
          {sessionModal && (
           <HandleUserSession/>
+         )}
+         {sessionModal=== false && restrictUser && (
+          <RestrictionPopUp/>
          )}
     </div>
   )

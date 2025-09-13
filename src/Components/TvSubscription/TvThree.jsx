@@ -24,7 +24,7 @@ import { useNavigate } from "react-router-dom";
 import {PostFunction} from "../../Components/ApiCollection.jsx/ApiBuck";
 import { GetFunction } from "../ApiCollection.jsx/ApiBuck";
 import { BalanceLoading } from "../Loader/Loader";
-import { HandleUserSession } from "../../Components/ApiCollection.jsx/ApiBuck";
+import { HandleUserSession, RestrictionPopUp } from "../../Components/ApiCollection.jsx/ApiBuck";
 import { GetLocalStorage } from "../LocalStorage/LocalStorage";
 const StarTimes = () => {
 const Data = GetLocalStorage();
@@ -85,14 +85,16 @@ const Data = GetLocalStorage();
     const [isLoading, setIsLoading] = useState(false)
     const [failedPopup, setFailedPopup] = useState(false);
     const [errorFillDecoder, setErrorFillDecoder] = useState(false)
-      
-          
-             const [starTimesVerifyResponse, setStarTimesVerifyResponse] = useState({});
-                const [starTimesLoading, setStarTimesLoading] = useState(false);
-                const [stateInvalidDecoderNumber, setStateInvalidDecoderNumber] = useState(false);
-                const [passDataBalance, setPassDataBalance] = useState({});
-                const [starTimesData, setStarTimesData] = useState([]);
-                const [sessionModal, setSessionModal] = useState(false)
+    const [restrictUser, setRestrictUser] = useState(false);
+    const [checkNetworkError, setCheckNetworkError] = useState(false)
+    const [starTimesVerifyResponse, setStarTimesVerifyResponse] = useState({});
+   const [starTimesLoading, setStarTimesLoading] = useState(false);
+   const [stateInvalidDecoderNumber, setStateInvalidDecoderNumber] = useState(false);
+    const [passDataBalance, setPassDataBalance] = useState({});
+    const [starTimesData, setStarTimesData] = useState([]);
+    const [sessionModal, setSessionModal] = useState(false);
+               
+
     const navigate = useNavigate();
 
     
@@ -162,12 +164,129 @@ const Data = GetLocalStorage();
    }
    }
 
-   const starTimesOptionalPlan = starTimesData?.length < 1 && fetchedStarTimesPlans.status === 200 ? fetchedStarTimesPlans.data.data.data : starTimesData;
-         useEffect(()=> {
-          if(fetchedDstvPlans.status === 200 || fetchedDstvPlans.status === 201){
-         setStarTimesData(fetchedStarTimesPlans.data.data.data);
-         }else if(fetchedStarTimesPlans.status === undefined){
-          const RetrieveGotvPlans = async()=> {
+
+
+   //Function to Get User's Balance
+     const GetBalance = async () => {
+       if(!navigator.onLine) return setCheckNetworkError(true)
+         const SuccessHandler = () => {
+           //alert("Successful");
+           console.log("successfully retrieved balance");
+           //alert("Successful")
+         };
+         const FailedHandler = async (ErrorType) => {
+           if (ErrorType === "unauthorised") {
+             await GetFunction(
+               `balance`,
+               setIsLoading,
+               SuccessHandler,
+               //Handling the error Use Cases of the Unauthorised inside
+               // of the statement.
+               async(ErrorType) => {
+                 if (ErrorType === "unauthorised") {
+                   return setSessionModal(true);
+                 }else if(ErrorType === "Server error"){
+                     await GetFunction(
+           "balance",
+           setIsLoading,
+           SuccessHandler,
+          async(ErrorType)=> {
+           if(ErrorType === "Server error"){
+             alert("Failed to retrieve the balance.")
+           }else if(ErrorType === "Network error" || ErrorType === "User error"){
+             setCheckNetworkError(true)
+                 alert("Kindly check your internet connection to retrieve balance.")
+           }else {
+             alert("An unexpected error has occured on attempt to retrieve balance.")
+           }
+          },
+           setPassDataBalance
+         );
+          }else if(ErrorType === "Network error" || ErrorType === "User error"){
+             setCheckNetworkError(true)
+              alert("Kindly check your internet connection to retrieve balance")
+          }else {
+           alert("An unexpected error has occured on attempt to retrieve the balance")
+          }
+               },
+                setPassDataBalance
+             );
+           }else if(ErrorType === "Server error"){
+               await GetFunction(
+           "balance",
+           setIsLoading,
+           SuccessHandler,
+          async(ErrorType)=> {
+            if(ErrorType === "unauthorised"){
+               await GetFunction(
+           "balance",
+           setIsLoading,
+           SuccessHandler,
+           async(ErrorType)=> {
+             if(ErrorType === "unauthorised"){
+               return setSessionModal(true)
+             }else if(ErrorType === "Server error"){
+                  await GetFunction(
+           "balance",
+           setIsLoading,
+           SuccessHandler,
+          async(ErrorType)=> {
+           //if Statements
+         //We run again cause the previous one was interrupted by 401
+         //Let us re-run server error
+         if(ErrorType === "Server error"){
+           alert("Failed to retrieve the balance")
+         }else if(ErrorType === "unauthorised"){
+           return sessionModal(true)
+         }else if(ErrorType === "Network error" || ErrorType === "User error"){
+             setCheckNetworkError(true)
+    alert("Kindly check your internet connection to retrieve balance")
+         }else{
+           alert("An Unexpected error occured in attempt to retrieve balance")
+         }
+   
+          },
+           setPassDataBalance
+         );
+             }else if(ErrorType === "Network error" || ErrorType === "User error"){
+             setCheckNetworkError(true)
+    alert("Kindly check your internet connection to retrieve the balance")
+               setCheckNetworkError(true)
+             }else{
+               alert("An Unexpected error occured in attempt to retrieve balance")
+             }
+           },
+           setPassDataBalance
+         );
+       }
+             else if(ErrorType === "Network error" || ErrorType === "User error"){
+               //The operation was interrupted by a network error
+                setCheckNetworkError(true)
+               alert("Kindly check your internet connection to retrieve balance.")
+            }else {
+             //An alien error has occured with the re-run of the "Server error" ErrorType
+             alert("An unexpected error occured in attempt to retrieve the balance.")
+            }
+          },
+           setPassDataBalance
+         );
+           }else if(ErrorType === "Network error" || ErrorType === "User error"){
+           setCheckNetworkError(true)
+           }else{
+             alert("An unexpected error occured in attempt to retrieve balance.")
+           }
+         }
+         await GetFunction(
+           "balance",
+           setIsLoading,
+           SuccessHandler,
+           FailedHandler,
+           setPassDataBalance
+         );
+       };
+
+       // ======The Function to get starTimes Plans=====//
+        const RetrieveStarTimesPlans = async()=> {
              const SuccessHandler = ()=> {
        console.log("Successfully fetched startimes plans");
       }
@@ -189,38 +308,26 @@ const Data = GetLocalStorage();
     await GetFunction(`products/tvsub/startimes`, setIsLoading, SuccessHandler, failedHandler, setFetchedStarTimesPlans);
    
      }
-   RetrieveGotvPlans()
+   const starTimesOptionalPlan = starTimesData?.length < 1 && fetchedStarTimesPlans.status === 200 ? fetchedStarTimesPlans.data.data.data : starTimesData;
+         useEffect(()=> {
+          if(Data?.ConfirmAcc === "true"){
+          if(fetchedDstvPlans.status === 200 || fetchedDstvPlans.status === 201){
+         setStarTimesData(fetchedStarTimesPlans.data.data.data);
+         }else if(fetchedStarTimesPlans.status === undefined){
+            RetrieveStarTimesPlans()
    }
-    const GetBalance =   async()=> {
-                           const SuccessHandler = ()=> {                         //alert("Successful");
-                    console.log("successfully retrieved balance");
-                      }
-                     const FailedHandler = async(ErrorType)=> {
-                        if(ErrorType === "unauthorised"){
-                       await GetFunction("balance",
-                         setIsLoading, 
-                         SuccessHandler, 
-                        (ErrorType)=> {
-                          if(ErrorType === "unauthorised"){
-                          return setSessionModal(true);
-                          }
-                        },
-                         setPassDataBalance);
-                        }
-                     }
-                     await GetFunction("balance", setIsLoading, SuccessHandler, FailedHandler,setPassDataBalance)
-                       } 
-                        // Simulate async data loading
-                       if((newBalance === "" ||
-                         newBalance === null || 
-                         newBalance === undefined) && Data?.ConfirmAcc === "true"){
-                           GetBalance();
-                           if(GetBalance){
-                            setNewBalance(passDataBalance?.data?.data?.data !== undefined ? passDataBalance?.data?.data?.data?.balance : "");
-                           }
-                         }else{
-                          console.log("Craete an account to access this feature.")
-                         }
+    // Simulate async data loading
+       
+         if(newBalance === "" ||
+           newBalance === null || 
+              newBalance === undefined) {
+                  GetBalance();
+                if(GetBalance){
+               setNewBalance(passDataBalance?.data?.data?.data !== undefined 
+                ? passDataBalance?.data?.data?.data?.balance : "");
+              }} }else {
+                setRestrictUser(true);
+              }
         //eslint-disable-next-line             
          },[])
           
@@ -391,10 +498,24 @@ const VerifyPinHandler = async () => {
         phone: starTimesMobileNumber,
       };
       const Path = "bills/tvsub";
-      const successHandler = () =>{
+      const successHandler = (response) =>{
+       if(response?.data?.data?.data?.status === "success"
+          || response?.data?.data?.data?.status === "delivered"
+        ||  response?.data?.data?.data?.status === "successful" ||
+        response?.data?.data?.data?.status === "Successful"
+        ){
+          setPurchaseStarTimesErrorType("");
         setStarTimesSuccessful(true);
         setInputPinStarTimes(false);
-        setInputPin("")
+        setInputPin("");
+        }else if(response?.data?.data?.data?.status === "failed"
+          || response?.data?.data?.data?.status === "Failed"
+        ||  response?.data?.data?.data?.status === "unsuccessful"){
+            setPurchaseStarTimesErrorType("Plan Unavailable: Purchase Failed")
+          setFailedPopup(true);
+          setInputPinStarTimes(false);
+          setInputPin("");
+        }
       //  handleReceivedData()
       }
       const FailedHandler = async(ErrorType) =>{
@@ -407,7 +528,31 @@ const VerifyPinHandler = async () => {
                (ErrorType)=> {
                  if(ErrorType === "unauthorised"){
                    return setSessionModal(true)
-                 }
+                 }else if(ErrorType === "Server error"){
+                 //Why a repetition did not occur here,
+                 //We dont want it to be only about User experience here,
+                 //There are several things that could happen to the backend,
+                 // and there is also a possibility that the server was able to process and 
+                 //initiate the transaction but still returned 500,
+                 //so we need to prevent the case of carrying two transaction for a user,
+                 //which doesn't only affect us through service of the platform we are using,
+                 //but also unrest and panic to the user and the amount for purchase and 
+                 //been removed twice without a result or successful output.
+                 setPurchaseStarTimesErrorType("Server Error: Purchase Failed")
+              setFailedPopup(true);
+              setInputPinStarTimes(false);
+                setInputPin("")
+               }else if(ErrorType === "Network error" || ErrorType === "User error"){
+                 setPurchaseStarTimesErrorType("Network Error: Purchase Failed");
+                 setFailedPopup(true);
+              setInputPinStarTimes(false);
+                setInputPin("")
+               }else {
+                    setPurchaseStarTimesErrorType("An unexpected error has occured.");
+                 setFailedPopup(true);
+              setInputPinStarTimes(false);
+                setInputPin("")
+               }
                },
                setStarTimesSubscriptionResponse
              );
@@ -421,17 +566,20 @@ const VerifyPinHandler = async () => {
                  //which doesn't only affect us through service of the platform we are using,
                  //but also unrest and panic to the user and the amount for purchase and 
                  //been removed twice without a result or successful output.
-                 setPurchaseStarTimesErrorType("Failed to process your request, try again some other time")
+                 setPurchaseStarTimesErrorType("Server Error: Purchase Failed")
               setFailedPopup(true);
               setInputPinStarTimes(false);
                 setInputPin("")
                }else if(ErrorType === "Network error" || ErrorType === "User error"){
-                 setPurchaseStarTimesErrorType("An internet connection error");
+                 setPurchaseStarTimesErrorType("Network Error: Purchase Failed");
                  setFailedPopup(true);
               setInputPinStarTimes(false);
                 setInputPin("")
                }else {
-       
+                    setPurchaseStarTimesErrorType("An unexpected error has occured");
+                 setFailedPopup(true);
+              setInputPinStarTimes(false);
+                setInputPin("")
                }
     }
       
@@ -537,6 +685,19 @@ const VerifyPinHandler = async () => {
       setFailedPopup(false);
      handleReceivedData();
   }
+
+  if(Data?.ConfirmAcc === "true"){
+window.addEventListener("online", ()=> {
+   if(checkNetworkError === true &&
+     (updateBalance === undefined || updateBalance === null || updateBalance === "")
+    && (newBalance === null || newBalance === undefined || newBalance === "") ){
+   return GetBalance();
+   }
+   if(checkNetworkError === true && (fetchedDstvPlans.status !== 200 || fetchedDstvPlans.status === undefined) ) {
+    return RetrieveStarTimesPlans();
+   }
+  })
+}
 
   return (
     <div>
@@ -975,6 +1136,9 @@ const VerifyPinHandler = async () => {
             {sessionModal &&(
               <HandleUserSession/>
             )}
+            {restrictUser && sessionModal === false && (
+              <RestrictionPopUp/>
+            ) }
             
     </div>
   )

@@ -167,7 +167,7 @@ const FormatTime =(DateValue)=> {
                 <div className="h-[150px] flex items-center justify-center">
                   <Loader />
                 </div>
-              ) : filteredTransactions && filteredTransactions?.length > 1 ? (
+              ) : filteredTransactions && filteredTransactions?.length > 0 ? (
                 filteredTransactions?.map((transaction, index) => (
                   <div
                     className={`cursor-pointer ${
@@ -253,7 +253,7 @@ const FormatTime =(DateValue)=> {
                                        : "text-neutral-500"
                                    }`}
                           >
-                            Description : {transaction.description}
+                            Description : {transaction?.description}
                           </p>
 
                           <p
@@ -265,7 +265,7 @@ const FormatTime =(DateValue)=> {
                                    }`}
                           >
                             Amount :{" "}
-                            {transaction.amount
+                            {transaction?.amount
                               ? transaction.amount?.toLocaleString("en-NG", {
                                   style: "currency",
                                   currency: "NGN",
@@ -375,7 +375,8 @@ const FormatTime =(DateValue)=> {
                 ))
               ) : (filteredTransactions && filteredTransactions?.length < 1) ||
                 transactionResponse?.data?.data?.data?.transactions?.length <
-                  1 ? (
+                  1 || transactionResponse?.data?.data?.data?.transactions === null ||
+                  transactionResponse?.data?.data?.data?.transactions === undefined ? (
                 <img
                   className="lg:w-[517px] lg:h-[456px]"
                   src={NoRecordImage}
@@ -401,9 +402,9 @@ const FormatTime =(DateValue)=> {
               ) : transactionHistoryError === "unauthorised" &&
                 transactionResponse?.data?.data?.data?.transactions ===
                   undefined ? (
-                <div className="h-[150px] flex items-center justify-center">
-                  <Loader />
-                </div>
+                <p className={`text-[20px] text-black font-medium`}>
+                Hold on we are trying to process your request.  
+                </p>
               ) : (
                 loading === false &&
                 transactionHistoryError === null && (
@@ -452,7 +453,7 @@ const FormatTime =(DateValue)=> {
             <div className="h-[150px] flex items-center justify-center">
               <Loader />
             </div>
-          ) : filteredTransactions && filteredTransactions?.length > 1 ? (
+          ) : filteredTransactions && filteredTransactions?.length > 0 ? (
             filteredTransactions?.map((transaction, index) => (
               <div key={index}>
                 <div
@@ -603,9 +604,9 @@ const FormatTime =(DateValue)=> {
           ) : transactionHistoryError === "unauthorised" &&
             transactionResponse?.data?.data?.data?.transactions ===
               undefined ? (
-            <div className="h-[150px] flex items-center justify-center">
-              <Loader />
-            </div>
+            <p className={`text-[20px] text-black font-medium`}>
+                Hold on we are trying to process your request.  
+                </p>
           ) : (
             loading === false &&
             transactionHistoryError === null && (

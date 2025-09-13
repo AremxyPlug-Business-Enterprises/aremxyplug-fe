@@ -74,18 +74,19 @@ export default function WalletSummaryPage() {
     if (!navigator.onLine) return setTransactionHistoryError("Network error");
     const path = `transactions/wallet-summary`;
     const SuccessHandler = () => {
+       setTransactionHistoryError("");
       console.log("Wallet Summary fetched");
     };
     const FailedHandler = async (ErrorType) => {
       if (ErrorType === "unauthorised") {
-        setTransactionHistoryError("unauthorised");
+         
         await GetFunction(
           path,
           setLoading,
           SuccessHandler,
           (ErrorType) => {
             if (ErrorType === "unauthorised") {
-              setSessionModal(true);
+             return setSessionModal(true);
             }
           },
           setWalletTransactionResponse
@@ -198,6 +199,7 @@ export default function WalletSummaryPage() {
     GetTransactionInformation();
     //eslint-disable-next-line
   }, []);
+  
 
   //Filtering the sales Summary data
   //    const filteredSalesSummary = salesResponse?.data?.data?.data?.transactions.filter((transaction) => {
@@ -320,21 +322,24 @@ export default function WalletSummaryPage() {
       ? "£"
       : "₦";
 
-  const filteredWalletTransactions = walletTransactionResponse?.data?.data?.data?.data?.transactions !== null ? walletTransactionResponse?.data?.data?.data?.data?.transactions?.filter((transaction) => {
+  const filteredWalletTransactions =
+   walletTransactionResponse?.data?.data?.data?.data?.transactions !== null || walletTransactionResponse?.data?.data?.data?.data?.transactions 
+   ? walletTransactionResponse?.data?.data?.data?.data?.transactions?.filter((transaction) => {
   return selectedStatus === ""
      || selectedStatus === "All Transactions"
     || selectedStatus === "Filter by Status" ? 
-      transaction :
-    selectedStatus !== "Successful" ? 
-      transaction?.status === selectedStatus
-    : selectedStatus === "Successful" ? 
+      transaction 
+  : selectedStatus === "Successful" ? 
         transaction?.status === "success" || 
         transaction?.status === "Successful" || 
-        transaction?.status === "delivered" : null
+        transaction?.status === "delivered" : selectedStatus === "Failed"?
+        "failed" === transaction?.status : selectedStatus === transaction?.status
         
       
       
 }) : [];
+console.log(filteredWalletTransactions);
+
   //console.log(walletTransactionResponse?.data?.data?.data?.data);
   const product = [
     "All Transactions",
@@ -799,12 +804,12 @@ const FormatTime =(DateValue)=> {
                   <Loader />
                 </div>
               ) : filteredWalletTransactions &&
-                filteredWalletTransactions?.length > 1 ? (
+                filteredWalletTransactions?.length > 0 ? (
                 filteredWalletTransactions?.map((transaction, index) => (
                   <div
                     className={`cursor-pointer ${
                       index < filteredWalletTransactions?.length - 1
-                        ? "border-b-[1px] border-gray-500 "
+                        ? "border-b-[1px] border-gray-500"
                         : ""
                     }`}
                     key={index}
@@ -865,7 +870,7 @@ const FormatTime =(DateValue)=> {
                                             : "text-neutral-500"
                                         }`}
                           >
-                            Description : {transaction.description}
+                            Description : {transaction?.description}
                           </p>
 
                           <p
@@ -877,7 +882,7 @@ const FormatTime =(DateValue)=> {
                                         }`}
                           >
                             Amount :{" "}
-                            {transaction.amount
+                            {transaction?.amount
                               ? transaction.amount?.toLocaleString("en-NG", {
                                   style: "currency",
                                   currency: "NGN",
@@ -980,16 +985,16 @@ const FormatTime =(DateValue)=> {
                     </div>
                   </div>
                 ))
-              ) : (filteredWalletTransactions &&
-                  filteredWalletTransactions?.length < 1) ||
-                walletTransactionResponse?.data?.data?.data?.transactions
-                  ?.length < 1 ? (
-                <img
-                  className="lg:w-[517px] lg:h-[456px]"
+              ) :filteredWalletTransactions?.length < 1 ||
+               walletTransactionResponse?.data?.data?.data?.data?.transactions?.length < 1
+               || walletTransactionResponse?.data?.data?.data?.data?.transaction === null  
+                ? 
+                (<img
+                  className="lg:w-[517px] lg:h-[456px] w-[100%] h-[100%]"
                   src={NoRecordImage}
                   alt="No record found"
                 />
-              ) : transactionHistoryError === "Network error" ? (
+                ): transactionHistoryError === "Network error" ? (
                 <p
                   className={`text-[20px] text-black font-medium 
                      ${isDarkMode ? "text-white" : "text-black"}`}
@@ -1006,12 +1011,12 @@ const FormatTime =(DateValue)=> {
                   your transactions shortly.
                 </p>
               ) : transactionHistoryError === "unauthorised" &&
-                walletTransactionResponse?.data?.data?.data?.transactions ===
+                walletTransactionResponse?.data?.data?.data?.data?.transactions ===
                   undefined ? (
-                <div className="h-[150px] flex items-center justify-center">
-                  <Loader />
-                </div>
-              ) : (
+                 <p className={`text-[20px] text-black font-medium`}>
+                Hold on we are trying to process your request.  
+                </p>
+                 ) : (
                 loading === false &&
                 transactionHistoryError === null && (
                   <p
@@ -1060,7 +1065,7 @@ const FormatTime =(DateValue)=> {
                 <Loader />
               </div>
             ) : filteredWalletTransactions &&
-              filteredWalletTransactions?.length > 1 ? (
+              filteredWalletTransactions?.length > 0 ? (
               filteredWalletTransactions?.map((transaction, index) => (
                 <div key={index}>
                   <div
@@ -1125,8 +1130,8 @@ const FormatTime =(DateValue)=> {
                           toggleSideBar ? "md:w-[16%]" : "md:w-[17%]"
                         }`}
                       >
-                        {transaction.amount
-                          ? transaction.amount?.toLocaleString("en-NG", {
+                        {transaction?.amount
+                          ? transaction?.amount?.toLocaleString("en-NG", {
                               style: "currency",
                               currency: "NGN",
                             })
@@ -1153,7 +1158,7 @@ const FormatTime =(DateValue)=> {
                         <div
                           style={{
                             backgroundColor: getBackgroundColor(
-                              transaction.status
+                              transaction?.status
                             ),
                           }}
                           className={`${
@@ -1185,13 +1190,11 @@ const FormatTime =(DateValue)=> {
                   </div>
                 </div>
               ))
-            ) : filteredWalletTransactions?.length < 1 ||
-              walletTransactionResponse?.data?.data?.data?.transactions
-                ?.length < 1 ||
-              walletTransactionResponse?.data?.data?.data?.transactions ===
-                null ? (
+               ) : filteredWalletTransactions?.length < 1 ||
+               walletTransactionResponse?.data?.data?.data?.data?.transactions?.length < 1
+               || walletTransactionResponse?.data?.data?.data?.data?.transaction === null ? (
               <img
-                className="lg:w-full lg:h-[456px] flex self-center w-["
+                className="lg:w-full lg:h-[456px] flex self-center"
                 src={NoRecordImage}
                 alt="No record found"
               />
@@ -1206,13 +1209,13 @@ const FormatTime =(DateValue)=> {
                 your transactions shortly.
               </p>
             ) : transactionHistoryError === "unauthorised" &&
-              walletTransactionResponse?.data?.data?.data?.transactions ===
+              walletTransactionResponse?.data?.data?.data?.data?.transactions ===
                 undefined ? (
-              <div className="h-[150px] flex items-center justify-center">
-                <Loader />
-              </div>
+            <p className={`text-[20px] text-black font-medium`}>
+                Hold on we are trying to process your request.  
+                </p>
             ) : (
-              loading === false &&
+            loading === false &&
               transactionHistoryError === null && (
                 <p className={`text-[20px] text-black font-medium`}>
                   An Error has occured try again later.

@@ -7,11 +7,11 @@ import jamblogo from "../EducationPins/imagesEducation/jamblogo.svg";
 import Neco from "../EducationPins/imagesEducation/necoImg.svg";
 import Nabteb from "../EducationPins/imagesEducation/NabtebImg.svg";
 import Waec from "../EducationPins/imagesEducation//WaecImg.svg";
-
 import { ContextProvider } from "../Context";
 import { useContext } from "react";
 
 export default function EducationMain() {
+
   const {
     isDarkMode,
     setExamType,
