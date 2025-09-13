@@ -168,7 +168,7 @@ export default function EduReceipt() {
              }`}
               >
                 {["delivered", "successful", "success"].includes(
-                  receiptData?.status.toLowerCase()
+                  receiptData?.status
                 )
                   ? "You have successfully purchased "
                   : receiptData?.status === "pending"

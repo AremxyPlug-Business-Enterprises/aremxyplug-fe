@@ -912,7 +912,7 @@ export default function WaecEducationPin() {
                     name="Waec-Phone"
                     id="phone"
                     maxLength={11}
-                    placeholder=""
+                    placeholder="XXX XXXX XXXX"
                     value={educationPinPhone}
                     onFocus={() => {
                       setErrors((prev) => ({ ...prev, educationPinPhone: "" }));
@@ -989,7 +989,7 @@ export default function WaecEducationPin() {
                     value={
                       educationAmount
                         ? `₦${educationAmount.toLocaleString()}`
-                        : "₦"
+                        : "₦0.00"
                     }
                     readOnly
                   />
@@ -1182,7 +1182,7 @@ export default function WaecEducationPin() {
                               <img
                                 src={WaecImg}
                                 alt=""
-                                className="w-full h-full object-cover md:h-[15px]"
+                                className="w-full object-cover h-[15px]"
                               />
                             </div>
                             <h2

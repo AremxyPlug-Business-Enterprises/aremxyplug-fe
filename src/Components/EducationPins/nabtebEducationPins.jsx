@@ -834,7 +834,7 @@ export default function NabtebEducationPins() {
                     name="phone"
                     id="phone"
                     maxLength={11}
-                    placeholder=""
+                    placeholder="XXX XXXX XXXX"
                     value={nabtebEducationPinPhone}
                     onFocus={() => {
                       setErrors((prev) => ({
@@ -924,7 +924,7 @@ export default function NabtebEducationPins() {
                     value={
                       nabtebEducationAmount
                         ? `₦${nabtebEducationAmount.toLocaleString()}`
-                        : "₦"
+                        : "₦0.00"
                     }
                     readOnly
                   />
@@ -1081,7 +1081,7 @@ export default function NabtebEducationPins() {
                               <img
                                 src={NabtebImg}
                                 alt=""
-                                className="w-full h-full object-cover md:h-[15px]"
+                                className="w-full object-cover h-[15px]"
                               />
                             </div>
                             <span className="capitalize">{nabtebExamType}</span>

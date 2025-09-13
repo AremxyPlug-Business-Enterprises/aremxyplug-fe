@@ -1180,27 +1180,29 @@ return date?.toISOString()?.slice(0, 10);
                         );
 
                         const orderData = response?.data?.data?.data;
-                        console.log("resp", response?.data);
-                        console.log("orderData", orderData);
+                        // console.log("resp", response?.data);
+                        // console.log("orderData", orderData);
 
-                        navigate(
-                          transaction?.product === "Electricity Bills"
-                            ? "/ElectricityReceipt"
-                            : transaction?.product === "Education Pins"
-                            ? "/EduReceipt"
-                            : transaction?.product === "TV Subscription"
-                            ? "/TvSubReceipt"
-                            : transaction?.product === "Airtime Top-up"
-                            ? "/AirtimeTransReceipt"
-                            : transaction?.product === "Data Top-up"
-                            ? "/DataTransReceipt"
-                            : transaction?.product === "Money Transfer"
-                            ? "/TransferReceipt"
-                            : transaction?.product === "Virtual Account"
-                            ? "/VirtualAccountReceipt"
-                            : "/SuccessfullReceipt",
-                          { state: { orderData, transaction } }
-                        );
+                        if (response?.data?.status === 200) {
+                          navigate(
+                            transaction?.product === "Electricity Bills"
+                              ? "/ElectricityReceipt"
+                              : transaction?.product === "Education Pins"
+                              ? "/EduReceipt"
+                              : transaction?.product === "TV Subscription"
+                              ? "/TvSubReceipt"
+                              : transaction?.product === "Airtime Top-up"
+                              ? "/AirtimeTransReceipt"
+                              : transaction?.product === "Data Top-up"
+                              ? "/DataTransReceipt"
+                              : transaction?.product === "Money Transfer"
+                              ? "/TransferReceipt"
+                              : transaction?.product === "Virtual Account"
+                              ? "/VirtualAccountReceipt"
+                              : null,
+                            { state: { orderData, transaction } }
+                          );
+                        }
                       }}
                     >
                       <div
@@ -1230,10 +1232,8 @@ return date?.toISOString()?.slice(0, 10);
                           </h2>
                           <p
                             className={`font-medium text-neutral-500 text-[9.167px] leading-[11.167px] capitalize ${
-                                     isDarkMode
-                                       ? "text-white"
-                                       : "text-neutral-500"
-                                   }`}
+                              isDarkMode ? "text-white" : "text-neutral-500"
+                            }`}
                           >
                             Description : {transaction.description}
                           </p>
@@ -1466,7 +1466,8 @@ return date?.toISOString()?.slice(0, 10);
                       const orderData = response?.data?.data?.data;
                       console.log("resp", response?.data);
                       console.log("orderData", orderData);
-                      navigate(
+                      if (response?.data?.status === 200) {
+                        navigate(
                         transaction?.product === "Electricity Bills"
                           ? "/ElectricityReceipt"
                           : transaction?.product === "Education Pins"
@@ -1484,6 +1485,7 @@ return date?.toISOString()?.slice(0, 10);
                           : "/SuccessfullReceipt",
                         { state: { orderData, transaction } }
                       );
+                      }
                     }}
                   >
                     <div
@@ -1556,22 +1558,19 @@ return date?.toISOString()?.slice(0, 10);
                         >
                           {" "}
                           {/* {transaction.status} */}
-                          {[
-                                "delivered",
-                                "success",
-                                "Successful",
-                                "",
-                              ].includes(transaction?.status)
-                                ? "Successful"
-                                : transaction?.status === "failed"
-                                ? "Failed"
-                                : transaction?.status === "pending"
-                                ? "Pending"
-                                : transaction?.status === "refunded"
-                                ? "Refunded"
-                                : transaction?.status === "cancelled"
-                                ? "Cancelled"
-                                : "Unknown"}
+                          {["delivered", "success", "Successful", ""].includes(
+                            transaction?.status
+                          )
+                            ? "Successful"
+                            : transaction?.status === "failed"
+                            ? "Failed"
+                            : transaction?.status === "pending"
+                            ? "Pending"
+                            : transaction?.status === "refunded"
+                            ? "Refunded"
+                            : transaction?.status === "cancelled"
+                            ? "Cancelled"
+                            : "Unknown"}
                         </div>
                         <img
                           className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
