@@ -464,24 +464,38 @@ const KEDCO = () => {
             (ErrorType) => {
               if (ErrorType === "unauthorised") {
                 return setSessionModal(true);
+              } else if (ErrorType === "Server error") {
+                setPurchaseElectricityErrorType(
+                  "Server Error: Purchase Failed"
+                );
+              } else if (
+                ErrorType === "Network error" ||
+                ErrorType === "User error"
+              ) {
+                setPurchaseElectricityErrorType(
+                  "Network Error : Purchase Failed"
+                );
+              } else {
+                setPurchaseElectricityErrorType(
+                  "An Unexpected error has occured"
+                );
               }
             },
             setKedcoFetchedResponse
           );
         } else if (ErrorType === "Server error") {
-          setPurchaseElectricityErrorType(
-            "Failed to process your request, try again some other time"
-          );
+          setPurchaseElectricityErrorType("Server Error: Purchase Failed");
           setFailedPopup(true);
           setInputPinPopUp(false);
         } else if (
           ErrorType === "Network error" ||
           ErrorType === "User error"
         ) {
-          setPurchaseElectricityErrorType("An internet connection error");
+          setPurchaseElectricityErrorType("Network Error : Purchase Failed");
           setFailedPopup(true);
           setInputPinPopUp(false);
         } else {
+          setPurchaseElectricityErrorType("An Unexpected error has occured");
         }
       };
 
@@ -864,6 +878,7 @@ const KEDCO = () => {
                 </label>
                 <input
                   type="text"
+                  placeholder="XXXXXXXXXXXXX"
                   value={kedcoMeterNumber}
                   // onChange={handleMeterNumber}
                   maxLength={13}
@@ -915,6 +930,7 @@ const KEDCO = () => {
                 <div className="relative">
                   <input
                     type="text"
+                    placeholder="Input Meter Number to Verify Name"
                     value={handleVerifiedName}
                     // onChange={handleVerifiedName}
                     readOnly
@@ -944,6 +960,7 @@ const KEDCO = () => {
                 </label>
                 <input
                   type="number"
+                  placeholder="XXX XXXX XXXX"
                   value={kedcoPhoneNumber}
                   onInput={(e) => {
                     if (kedcoPhoneNumber?.length === 10) {
@@ -988,6 +1005,7 @@ const KEDCO = () => {
                 </label>
                 <input
                   type="text"
+                  placeholder="example@gmail.com"
                   value={kedcoEmail}
                   onChange={handleEmail}
                   onInput={() => {

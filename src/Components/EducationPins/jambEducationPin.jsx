@@ -814,7 +814,7 @@ export default function JambEducationPin() {
                     name="phone"
                     id="phone"
                     maxLength={11}
-                    placeholder=""
+                    placeholder="XXX XXXX XXXX"
                     value={jambEducationPinPhone}
                     onChange={(e) => {
                       setJambEducationPinPhone(e.target.value);
@@ -896,7 +896,7 @@ export default function JambEducationPin() {
                     value={
                       jambEducationAmount
                         ? `₦${jambEducationAmount.toLocaleString()}`
-                        : "₦"
+                        : "₦0.00"
                     }
                     readOnly
                   />
@@ -1051,7 +1051,7 @@ export default function JambEducationPin() {
                               <img
                                 src={jambImg}
                                 alt=""
-                                className="w-full h-full object-cover md:h-[15px]"
+                                className="w-full object-cover h-[15px]"
                               />
                             </div>
                             <span className="capitalize">{jambExamType}</span>

@@ -817,24 +817,26 @@ const FormatTime =(DateValue)=> {
                         );
 
                         const orderData = response?.data?.data?.data;
-                        navigate(
-                          transaction?.product === "Electricity Bills"
-                            ? "/ElectricityReceipt"
-                            : transaction?.product === "Education Pins"
-                            ? "/EduReceipt"
-                            : transaction?.product === "TV Subscription"
-                            ? "/TvSubReceipt"
-                            : transaction?.product === "Airtime Top-up"
-                            ? "/AirtimeTransReceipt"
-                            : transaction?.product === "Data Top-up"
-                            ? "/DataTransReceipt"
-                            : transaction?.product === "Money Transfer"
-                            ? "/TransferReceipt"
-                            : transaction?.product === "Virtual Account"
-                            ? "/VirtualAccountReceipt"
-                            : "/SuccessfullReceipt",
-                          { state: { orderData, transaction } }
-                        );
+                        if (response?.data?.status === 200) {
+                          navigate(
+                            transaction?.product === "Electricity Bills"
+                              ? "/ElectricityReceipt"
+                              : transaction?.product === "Education Pins"
+                              ? "/EduReceipt"
+                              : transaction?.product === "TV Subscription"
+                              ? "/TvSubReceipt"
+                              : transaction?.product === "Airtime Top-up"
+                              ? "/AirtimeTransReceipt"
+                              : transaction?.product === "Data Top-up"
+                              ? "/DataTransReceipt"
+                              : transaction?.product === "Money Transfer"
+                              ? "/TransferReceipt"
+                              : transaction?.product === "Virtual Account"
+                              ? "/VirtualAccountReceipt"
+                              : "/SuccessfullReceipt",
+                            { state: { orderData, transaction } }
+                          );
+                        }
                       }}
                     >
                       <div
@@ -1070,7 +1072,7 @@ const FormatTime =(DateValue)=> {
 
                       const orderData = response?.data?.data?.data;
 
-                      navigate(
+                    if (response?.data?.status === 200) {  navigate(
                         transaction?.product === "Electricity Bills"
                           ? "/ElectricityReceipt"
                           : transaction?.product === "Education Pins"
@@ -1088,7 +1090,7 @@ const FormatTime =(DateValue)=> {
                           : "/SuccessfullReceipt",
                         { state: { orderData, transaction } }
                       );
-                    }}
+                    }}}
                   >
                     <div
                       className={`${

@@ -186,15 +186,23 @@ export const TransferReceipt = () => {
                   : receiptData?.status === "cancelled"
                   ? "Purchase Cancelled due to an unexpected error that occur. Please try again."
                   : "Purchase Failed due to an unexpected error that occured. Please try again."}{" "}
-                <span className=" font-extrabold text-[10px] md:text-base lg:text-base">
-                  {amountNumeric !== undefined || amountNumeric !== null
-                    ? amountNumeric?.toLocaleString("en-NG", {
-                        style: "currency",
-                        currency: "NGN",
-                      })
-                    : "₦"}{" "}
-                </span>
-                from your NGN wallet to{" "}
+                {["delivered", "successful", "success"].includes(
+                  receiptData?.status.toLowerCase()
+                ) && (
+                  <span className="">
+                    <span className=" font-medium text-[10.9px] md:text-[14.9px] lg:text-[16.9px]">
+                      (
+                      {amountNumeric !== undefined || amountNumeric !== null
+                        ? amountNumeric?.toLocaleString("en-NG", {
+                            style: "currency",
+                            currency: "NGN",
+                          })
+                        : "₦"}
+                      ){" "}
+                    </span>
+                    from your NGN wallet to{" "}
+                  </span>
+                )}
               </p>
               <div className="flex flex-col gap-3">
                 {/* ========================Recipient Info================== */}

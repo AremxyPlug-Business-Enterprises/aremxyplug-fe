@@ -837,7 +837,7 @@ export default function NecoEducationPins() {
                     name="phone"
                     id="phone"
                     maxLength={11}
-                    placeholder=""
+                    placeholder="XXX XXXX XXXX"
                     value={necoEducationPinPhone}
                     onChange={(e) => {
                       setNecoEducationPinPhone(e.target.value);
@@ -917,7 +917,7 @@ export default function NecoEducationPins() {
                     value={
                       necoEducationAmount
                         ? `₦${necoEducationAmount.toLocaleString()}`
-                        : "₦"
+                        : "₦0.00"
                     }
                     readOnly
                   />
@@ -1098,7 +1098,7 @@ export default function NecoEducationPins() {
                               <img
                                 src={NecoImg}
                                 alt=""
-                                className="w-full h-full object-cover md:h-[15px]"
+                                className="w-full object-cover h-[15px]"
                               />
                             </div>
                             <span className="capitalize">{necoExamType}</span>
