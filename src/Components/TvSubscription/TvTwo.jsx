@@ -1249,7 +1249,8 @@ window.addEventListener("online", ()=> {
      {/* Failed Transaction Popup */}
    {failedPopup && (
     <Modal>
-       <div className="w-[90%] md:w-[70%] lg:w-[40%] mx-auto bg-white rounded-lg overflow-hidden">
+       <div className={`w-[90%] md:w-[70%] lg:w-[40%] 
+       mx-auto bg-white rounded-lg overflow-hidden`}>
          <div className="flex justify-start w-full items-center p-4">
            <img
              className="w-6 h-6"

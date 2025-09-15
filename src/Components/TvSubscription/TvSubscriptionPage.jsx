@@ -17,14 +17,135 @@ export const TvSubscription = () =>{
         fetchedShowMaxPlans, 
         setFetchedShowMaxPlans,
         fetchedStarTimesPlans, 
-        setFetchedStarTimesPlans} = useContext(ContextProvider)
+        setFetchedStarTimesPlans,
+      setSelectedOptionShowmax,
+    setShowMaxOrderId,
+    setPackageShowMax,
+    setShowMaxTransactionId,
+    setShowMaxDescription,
+    setShowMaxSmartCard,
+    setShowMaxEmail,
+    setShowMaxAmount,
+    setShowMaxDecoderType,
+   setShowMaxFlagResult,
+    setShowMaxMobileNumber,
+
+     setShowMaxWalletBalance,
+      setDstvEmail,
+   setDstvMobileNumber,
+   setDstvSmartCard,
+   setDstvAmount,
+   setDstvOrderId,
+   setDstvDescription,
+   setDstvTransactionId,
+   setSelectedOptionDstv,
+   setPackageDstv,
+   setDstvDecoderType,
+    setDstvFlagResult,
+    setDstvCardName,
+    setDstvWalletBalance,
+       setGotvOrderId,
+   setGotvDescription,
+   setGotvTransactionId,
+   setSelectedOptionGOTV,
+   setPackageGotv,
+   setDecoderType,
+       setFlagResult,
+    setTvWalletBalance,
+    setTvEmail,
+   setMobileNumber,
+   setSmartCard,
+   setTvAmount,
+   setStarTimesEmail,
+   setStarTimesMobileNumber,
+   setStarTimesSmartCard,
+   setStarTimesAmount,
+   setStarTimesOrderId,
+   setStarTimesDescription,
+   setStarTimesTransactionId,
+   setSelectedOptionStarTimes,
+   setPackageStarTimes,
+   setStarTimesDecoderType,
+    setStarTimesFlagResult,
+    setStarTimesWalletBalance,
+   // formatNumberWithCommas,
+   } = useContext(ContextProvider)
     const navigate = useNavigate();
 const [sessionModal, setSessionModal]= useState(false)
 
+
+const ResetShowMaxFields = ()=> {
+setShowMaxEmail("");
+   setShowMaxMobileNumber("");
+   setShowMaxSmartCard("");
+   setShowMaxAmount("");
+   setShowMaxOrderId("");
+   setShowMaxDescription("");
+   setShowMaxTransactionId("");
+   setSelectedOptionShowmax("");
+   setPackageShowMax("");
+   setShowMaxDecoderType("Showmax");
+    setShowMaxFlagResult("");
+    setShowMaxWalletBalance("");
+}
+
+const ResetDsTvFields =()=> {
+  setDstvEmail("")
+   setDstvMobileNumber("")
+   setDstvSmartCard("");
+   setDstvCardName("")
+   setDstvAmount("");
+   setDstvOrderId("");
+   setDstvDescription("")
+   setDstvTransactionId("");
+   setSelectedOptionDstv("");
+   setPackageDstv("");
+   setDstvDecoderType("DStv")
+    setDstvFlagResult("");
+    setDstvWalletBalance("");
+}
+
+const ResetGoTvFields = ()=> {
+   setTvEmail("")
+   setMobileNumber("")
+   setSmartCard("");
+   setTvAmount("");
+   setGotvOrderId("");
+   setGotvDescription("")
+   setGotvTransactionId("");
+   setSelectedOptionGOTV("");
+   setPackageGotv("");
+   setDecoderType("GOtv")
+    setFlagResult("");
+    setTvWalletBalance("");
+}
+
+const ResetStarTimesFields = ()=> {
+   setStarTimesEmail("")
+   setStarTimesMobileNumber("")
+   setStarTimesSmartCard("");
+   setStarTimesAmount("");
+   setStarTimesOrderId("");
+   setStarTimesDescription("")
+   setStarTimesTransactionId("");
+   setSelectedOptionStarTimes("");
+   setPackageStarTimes("");
+   setStarTimesDecoderType("StarTimes")
+    setStarTimesFlagResult("");
+    setStarTimesWalletBalance("");
+}
 const GetFunctionHandler = async(GlobalTvSubscription,tvPage, TvSubscriptionValue)=> {
     const SuccessHandler =()=> {
       //  alert(`Successfully fetched ${TvSubscriptionValue} Plans`)
-      
+      if(GlobalTvSubscription === 0){
+        ResetGoTvFields()
+      }else if(GlobalTvSubscription === 1){
+     ResetDsTvFields()
+      }else if(GlobalTvSubscription === 2){
+        ResetStarTimesFields()
+      }else if(GlobalTvSubscription ===3){
+       ResetShowMaxFields()
+      }
       return navigate(tvPage)
       
      // console.log("Successfully fetched GotvPlans");

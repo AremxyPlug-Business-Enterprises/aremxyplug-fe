@@ -26,6 +26,7 @@ import { Modal } from "../Screens/Modal/Modal";
 import { HandleUserSession, RestrictionPopUp } from "../../Components/ApiCollection.jsx/ApiBuck";
 import { GetLocalStorage } from "../LocalStorage/LocalStorage";
 
+
 const Showmax = () => {
 const Data = GetLocalStorage()
   const {
@@ -71,16 +72,18 @@ showMaxMobileNumber,
 setShowMaxMobileNumber,
     newBalance,
     setNewBalance,
-    setShowMaxCardName,
+    purchaseShowMaxErrorType,
+   // setShowMaxCardName,
    setFetchedShowMaxPlans,
-    setShowMaxFlagResult,
-    showMaxFlagResult,
+
     toggleSideBar,
-    purchaseShowMaxErrorType, setPurchaseShowMaxErrorType
+    setPurchaseShowMaxErrorType,
+    showMaxFlagResult,
+    setShowMaxFlagResult,
   } = useContext(ContextProvider)
  const [isLoading, setIsLoading] = useState(false)
       const [failedPopup, setFailedPopup] = useState(false);
-      
+ 
                    const [passDataBalance, setPassDataBalance] = useState({});
                        const [showMaxData, setShowMaxData] = useState([]);
                      
@@ -303,11 +306,12 @@ const Decoders  = [
     };
 
     // ======== Saving user's plan in an array
-     const showMaxOptionalPlan = showMaxData?.length < 1 && fetchedShowMaxPlans.status === 200 ? 
+     const showMaxOptionalPlan = showMaxData?.length < 1
+      && fetchedShowMaxPlans?.status === 200 ? 
      fetchedShowMaxPlans?.data?.data?.data : showMaxData;
             useEffect(()=> {
               if(Data?.ConfirmAcc === "true"){
-             if(fetchedShowMaxPlans.status === 201 || fetchedShowMaxPlans.status === 201){
+             if(fetchedShowMaxPlans?.status === 201 || fetchedShowMaxPlans?.status === 201){
             setShowMaxData(fetchedShowMaxPlans?.data?.data?.data);
             }else if(fetchedShowMaxPlans.status === undefined && Data?.ConfirmAcc === "true"){
             RetrieveShowMaxPlans()
@@ -346,11 +350,12 @@ const Decoders  = [
   const handleShowmax = (event) => {
     event.preventDefault();
     
+
     const { error } = schema.validate({
+      showMaxSmartCard,
       showMaxMobileNumber,
       showMaxEmail,
-      showMaxSmartCard,
-    });
+       });
   
     if (error) {
       setErrors(
@@ -376,7 +381,13 @@ const Decoders  = [
   // });
 
   const schema = Joi.object({
-   
+      showMaxSmartCard: Joi.string()
+          .regex(/^\d{10,}$/)
+          .required()
+          .messages({
+            "string.pattern.base":
+              "Smart card number should be more than 10 digits",
+          }),
     showMaxMobileNumber: Joi.string().regex(/^\d{11}$/).required()
       .messages({
         "string.pattern.base": "Phone number should be 11 digits",
@@ -447,6 +458,8 @@ const Decoders  = [
   function decoderDropdown() {
     setDecoderActive(!decoderActive)
     document.querySelector('.decdrop').classList.toggle('DropIt');
+    setShowDropdownShowmax(false);
+    setSelectedOptionShowmax("")
   }
 
 
@@ -494,10 +507,10 @@ const Decoders  = [
   //  }
    //console.log(userVerifiedName)
    
-    // const handleSmartCard = async(e) => {
-    //    const inputValue = e.target.value;
-    //  await VerifyUserAccount(inputValue);
-    // }
+    const handleSmartCard = async(e) => {
+     setShowMaxSmartCard(e.target.value)
+   //  await VerifyUserAccount(inputValue);
+    }
     const handleReceivedData = () => {
     setIsLoading(true);
     const receivedData = () => {
@@ -717,20 +730,23 @@ const Decoders  = [
   navigate("/Showmax")
   }
 
-   const ReceiptButton = ()=> {
-      setShowMaxEmail("")
-   setShowMaxMobileNumber("")
-   setShowMaxSmartCard("");
-   setShowMaxAmount("");
-   setPackageShowMax("");
-   setShowMaxDecoderType("")
-    setShowMaxFlagResult("");
-    setShowMaxWalletBalance("");
-    setCardName("");
-     setSelectedOptionShowmax("")
-  setFailedPopup(false);
-  handleReceivedData();
-   }
+  
+
+   if(Data?.ConfirmAcc ===  "true"){
+    window.addEventListener("online", async()=> {
+      if(checkNetworkError === true && (fetchedShowMaxPlans.status === 200 || fetchedShowMaxPlans.status === 201)){
+        await RetrieveShowMaxPlans()
+      }
+      if(checkNetworkError === true && (newBalance === "" 
+        || newBalance === null 
+        || newBalance === undefined || updateBalance === "" 
+        || updateBalance === null 
+        || updateBalance === undefined )){
+        await GetBalance()
+        }
+    
+   })
+  }
   return (
     <div>
       <DashBoardLayout>
@@ -795,7 +811,7 @@ const Decoders  = [
                onClick={(e =>{
           setShowMaxDecoderType(decoder.id === 1 ? decoder.decoderType : "");
                  setDecoderActive(false);
-                 GetOtherDataTv(decoder.id, decoder.path);
+                 GetOtherDataTv(decoder?.id, decoder?.path);
              document.querySelector('.decdrop').classList.remove('DropIt');
              console.log(e);
               })}
@@ -806,12 +822,12 @@ const Decoders  = [
            ${
       isDarkMode
         ? "bg-black text-white"
-        : "bg-white text-black"
+        : "bg-white text-[#7C7C7C]"
     }
   `}
    
-         key= {decoder.id}>
-      <h2>{decoder.decoderType}   </h2>
+         key= {decoder?.id}>
+      <h2>{decoder?.decoderType}   </h2>
          </p>
         
             )
@@ -876,13 +892,13 @@ const Decoders  = [
 
           </div>
         
-          {/* <div className="flex flex-col md:flex-row gap-[20px] md:gap-[12px lg:gap-[22px]] md:my-2 lg:my-4">
+          <div className="flex flex-col md:flex-row gap-[20px] md:gap-[12px lg:gap-[22px]] md:my-2 lg:my-4">
            
             <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
               <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] md:font-[600] font-[400]">
                 Smart Card / IUC Number</label>
               <input type="tel"
-
+                    value={showMaxSmartCard}
               placeholder="XXXXXXXXXX"
               maxLength={11}
               onInput={(e =>{
@@ -890,7 +906,8 @@ const Decoders  = [
                      const numericValue = e.target.value.replace(/\D/g, '');
                     e.target.value = numericValue
                 })}
-                onChange={handleSmartCard} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
+                onChange={(e)=> handleSmartCard(e)} 
+                className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px] self-center ${
       isDarkMode 
         ? "bg-black text-white border border-white" 
@@ -898,15 +915,15 @@ const Decoders  = [
     }`}  />
             {errors.showmaxSmartCard && <p className="text-[#F95252] text-[13.2px] md:text-[12px] lg:text-[14px] font-[400] italic">
                 {errors.showMaxSmartCard}</p>}
-                  {(!errors.showMaxSmartCard && stateInvalidDecoderNumber) && (
+                  {/* {(!errors.showMaxSmartCard && stateInvalidDecoderNumber) && (
                    <p className ="text-[14px] top-0 font-[500] text-red-500 text-left
            lg:text-[14px] lg:leading-[20px] leading-[18px] ">
             Invalid iuc number
           </p>
-                )}
+                )} */}
             </div>
             
-            <div className="flex flex-col relative gap-[3px] lg:gap-[5px] w-full md:w-1/2">
+            {/* <div className="flex flex-col relative gap-[3px] lg:gap-[5px] w-full md:w-1/2">
               <label htmlFor="decoderType" className="text-[#7E7E7E] text-[14px] lg:text-[17px] md:text-[13px] md:font-[600] font-[400]">
                 Card Name</label>
               <input type="text" value={userVerifiedName}
@@ -922,8 +939,8 @@ const Decoders  = [
     <BalanceLoading/>
     </p>
   )}
-            </div> 
-          </div> */}
+            </div>  */}
+          </div>
           <div className="flex flex-col md:flex-row gap-[20px] md:gap-[12px] lg:gap-[22px] md:my-2 lg:my-4">
             <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
               <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] md:font-[600] font-[400]">
@@ -1115,14 +1132,16 @@ const Decoders  = [
         </div>
 
       </DashBoardLayout>
-      <ConfirmShowmaxPopup   />
+      <ConfirmShowmaxPopup passDataBalance ={passDataBalance} />
       <InputShowmaxPopup VerifyPinHandler={VerifyPinHandler}/>
-      <ShowmaxSuccessfulPopup  handleReceivedData = {handleReceivedData} />
+      <ShowmaxSuccessfulPopup  handleReceivedData = {handleReceivedData}/>
 
         {/* Failed Transaction Popup */}
             {failedPopup && (
              <Modal>
-    <div className="w-[90%] md:w-[70%] lg:w-[40%] mx-auto bg-white rounded-lg overflow-hidden">
+    <div className={`w-[90%] md:w-[70%] lg:w-[40%] mx-auto
+     rounded-lg overflow-hidden
+     ${isDarkMode ? "border-[0.2px] border-white text-white bg-black" : "bg-white text-black"}`}>
       <div className="flex justify-between items-center p-4 ">
         <img
           onClick={() => setFailedPopup(false)}
@@ -1147,19 +1166,19 @@ const Decoders  = [
           src="./Images/failed.png"
           alt="Failed"
         />
-        <p className="text-sm text-gray-600 mb-8">
-          An unexpected error has occurred, please try again.
+        <p className="text-sm text-red-500 font-[600] mb-8">
+         {purchaseShowMaxErrorType}
         </p>
         <div className="flex gap-[10px] justify-between w-full px-[10px]">
         <button
-          onClick={() => ExitTheDoneButton()(false)}
+          onClick={() => ExitTheDoneButton()}
           className="bg-[#04177f] w-[50%] max-w-xs mx-auto py-2
            text-white rounded-md font-medium">
           Done
         </button>
            <button
           onClick={() =>{
-               ReceiptButton()
+              handleReceivedData()
           }}
           className="w-[50%] bg-white max-w-xs mx-auto py-2 text-blue-900
            rounded-md font-medium"

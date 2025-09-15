@@ -149,8 +149,9 @@ const TransactionPage = () => {
   const handleStatusFilter = (status) => {
     setSelectedStatus(status);
     setShowStatus(false);
+    window.scrollTo({top : window.innerWidth < 1024 ? 500 : 700, behavior : "smooth"})
   };
-
+console.log(window.innerWidth)
   const filteredTransactions =
     transactionResponse?.data?.data?.data?.transactions !== null
       ? transactionResponse?.data?.data?.data?.transactions.filter(

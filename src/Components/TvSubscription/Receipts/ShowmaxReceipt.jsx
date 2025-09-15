@@ -12,20 +12,18 @@ import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 
 
 
-export const ShowmaxReceipt= (Data) => {
-  Data = GetLocalStorage();
-  const navigate = useNavigate()
+export const ShowmaxReceipt= () => {
+const Data = GetLocalStorage()
+  const navigate = useNavigate();
   const { toggleSideBar, textRef,
-    flagResult,
-    setFlagResult,
-    setTvWalletBalance,
+    setShowMaxFlagResult,
+    purchaseShowMaxErrorType,
     setSelectedOptionShowmax,
     setShowMaxOrderId,
     setPackageShowMax,
     setShowMaxTransactionId,
     setShowMaxDescription,
     setShowMaxSmartCard,
-    setCardName,
     setShowMaxEmail,
     setShowMaxAmount,
     setShowMaxDecoderType,
@@ -37,12 +35,13 @@ export const ShowmaxReceipt= (Data) => {
     showMaxTransactionId,
     showMaxOrderId,
     showMaxDescription,
-    
+    showMaxFlagResult,
+     setShowMaxWalletBalance,
    // formatNumberWithCommas,
     showMaxSmartCard,
-    cardName,
     isDarkMode,
-     date } =
+     date,
+    showMaxSubscriptionResponse } =
     useContext(ContextProvider);
 
   const contentRef = useRef(null);
@@ -90,10 +89,21 @@ export const ShowmaxReceipt= (Data) => {
     }
   };
 
-  const ShowMaxOrderInfo = (showMaxOrderId !== undefined || showMaxOrderId?.length > 1) ?  showMaxOrderId : "";
-  const ShowMaxTransactionInfo = (showMaxTransactionId?.length > 1 || showMaxTransactionId !== undefined )  ? showMaxTransactionId : "";
-  const ShowMaxDescriptionInfo = (showMaxDescription?.length > 1 || showMaxDescription !== undefined) ? showMaxDescription : "";
 
+  //  const ReceiptButton = ()=> {
+  //     setShowMaxEmail("")
+  //  setShowMaxMobileNumber("")
+  //  setShowMaxSmartCard("");
+  //  setShowMaxAmount("");
+  //  setPackageShowMax("");
+  //  setShowMaxDecoderType("")
+  //   setShowMaxFlagResult("");
+  //   setShowMaxWalletBalance("");
+  //   setCardName("");
+  //    setSelectedOptionShowmax("")
+
+  
+  //  }
   // const getNumericValue = (option) => {
   //   const numericPart = option.match(/\d+/);
   //   if (numericPart) {
@@ -103,19 +113,19 @@ export const ShowmaxReceipt= (Data) => {
   // };
 
   const ExitTheReceipt = ()=> {
-      setShowMaxEmail("")
-   setShowMaxMobileNumber("")
+      setShowMaxEmail("");
+   setShowMaxMobileNumber("");
    setShowMaxSmartCard("");
    setShowMaxAmount("");
    setShowMaxOrderId("");
-   setShowMaxDescription("")
+   setShowMaxDescription("");
    setShowMaxTransactionId("");
    setSelectedOptionShowmax("");
    setPackageShowMax("");
-   setShowMaxDecoderType("")
-    setFlagResult("");
-    setTvWalletBalance("");
-    setCardName("")
+   setShowMaxDecoderType("");
+    setShowMaxFlagResult("");
+    setShowMaxWalletBalance("");
+   // setCardName("")
    navigate("/Showmax");
   }
 
@@ -125,7 +135,7 @@ export const ShowmaxReceipt= (Data) => {
         <div
           className={` ${styles.receipt} ${
             toggleSideBar ? "" : "lg:w-[880px] "
-          } w-full lg:mx-auto`}
+          } w-full lg:mx-auto ${isDarkMode ? "border border-white" : ""}`}
         >
           <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
             <div>
@@ -157,10 +167,18 @@ export const ShowmaxReceipt= (Data) => {
                 alt="/"
               />
             </div>
-            <h3 className="font-extrabold text-[12px] mt-[2%] text-center md:text-[20px] md:my-[7px] lg:text-[16px] lg:my-[10px]">
-            Purchase Successful on
+            <h3 className={`font-extrabold text-[12px]  mt-[2%] text-center 
+            md:text-[20px] md:my-[7px] lg:text-[16px] lg:my-[10px]
+            ${isDarkMode ? "text-white" : "text-black"}
+          `}>
+             {showMaxSubscriptionResponse?.data?.status === "delivered" 
+             || showMaxSubscriptionResponse?.data?.status === "success"
+            || showMaxSubscriptionResponse?.data?.status === "Successful"
+            || showMaxSubscriptionResponse?.data?.status === "sucessful"
+             ?  "Purchase Successful on" : "Purchase Failed on"}
             </h3>
-            <span className="text-[11px] text-[#0008] font-extrabold flex justify-center items-center">
+            <span className={`text-[11px] ${isDarkMode ? "text-white" : "text-black"}
+             font-extrabold flex justify-center items-center`}>
               {date.toLocaleDateString(undefined, {
                 year: "numeric",
                 month: "long",
@@ -171,13 +189,27 @@ export const ShowmaxReceipt= (Data) => {
                 hour12: true,
               })}
             </span>
-            <p className=" pt-2 md:pt-4 text-[9px] text-[#0008] font-bold text-center my-2 md:text-[14px] lg:text-[14px]">
-            You have successfully subscribed {" "}
-              <span className="text-[#000] text-[10px] md:text-[16px] lg:text-[16px]">
+            <p className={`text-[10px] p-[5.729px] border-[0.573px] rounded-[6.302px]
+             md:p-[5.868px] md:border-[0.578px] md:rounded-[6.455px]  lg:border-[1px] lg:rounded-[11px]
+                   leading-[15px] md:leading-[20px] font-[600] 
+                    lg:p-[10px] text-center my-2 md:text-sm
+                    lg:text-base  lg:leading-[24px]  md:mb-7
+             ${showMaxSubscriptionResponse?.data?.status === "delivered" 
+              || showMaxSubscriptionResponse?.data?.status === "success"
+            ||showMaxSubscriptionResponse?.data?.status === "Successful"
+            || showMaxSubscriptionResponse?.data?.status === "sucessful"
+             ? "border-[#27AE60] text-[#27AE60] bg-[#D5F6E3]" :  'border-red-500 text-red-500 bg-red-100' }`}>
+           {showMaxSubscriptionResponse?.data?.status === "delivered"
+             || showMaxSubscriptionResponse?.data?.status === "success"
+            || showMaxSubscriptionResponse?.data?.status === "Successful"
+            || showMaxSubscriptionResponse?.data?.status === "sucessful"
+              ?  "You have successfully subscribed to " : purchaseShowMaxErrorType} {" "}
+              <span className="font-extrabold text-[10.9px] md:text-[14.9px] 
+              lg:text-[16.9px]">
                 {selectedOptionShowmax}
               </span>{" "}
               from your{" "}
-              <span>{flagResult}</span>{" "} to
+              <span>{showMaxFlagResult}</span>{" "} to
             </p>
             <div className="flex flex-col gap-3">
               {/* ========================Recipient Info================== */}
@@ -191,32 +223,36 @@ export const ShowmaxReceipt= (Data) => {
                   />
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Decoder Type</p>
-                  <span>Showmax</span>
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Decoder Type</p>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>Showmax</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Package</p>
-                  <span>{selectedOptionShowmax}</span>
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Package</p>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{selectedOptionShowmax}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Smartcard / IUC Number</p>
-                  <span>{showMaxSmartCard}</span>
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Smartcard / IUC Number</p>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{showMaxSmartCard}</span>
                 </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                {/* <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Card Name</p>
                   <span>{cardName}</span>
+                </div> */}
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Phone</p>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{showMaxMobileNumber}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Phone</p>
-                  <span>{showMaxMobileNumber}</span>
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Email</p>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{showMaxEmail}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Email</p>
-                  <span>{showMaxEmail}</span>
-                </div>
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Amount</p>
-                  <span>{`₦$ ${showMaxAmount}` }</span>
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Amount</p>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{`${showMaxAmount !== null
+                     && showMaxAmount !== "" && showMaxAmount !== undefined ? Number(showMaxAmount)?.toLocaleString("en-NG", {
+                style : "currency",
+                currency : "NGN"
+                     }) : showMaxAmount}` }</span>
                 </div>
               </div>
 
@@ -233,12 +269,12 @@ export const ShowmaxReceipt= (Data) => {
                   />
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Customer Name</p>
-                  <span>{Data?.aremxyUsername ? Data?.aremxyUsername : ""}</span>
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Customer Name</p>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{Data?.aremxyUsername ? Data?.aremxyUsername : ""}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Wallet Type</p>
-                  <span>{flagResult}</span>
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Wallet Type</p>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{showMaxFlagResult}</span>
                 </div>
                 
               </div>
@@ -255,22 +291,23 @@ export const ShowmaxReceipt= (Data) => {
                   />
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Product</p>
-                  <span>TV Subscriptions</span>
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`} >Product</p>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>TV Subscriptions</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Description</p>
-                  <span>{ShowMaxDescriptionInfo}</span>
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Description</p>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{showMaxSubscriptionResponse?.data?.transaction_description}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Order Number</p>
-                  <span>{ShowMaxOrderInfo}</span>
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Order Number</p>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{showMaxSubscriptionResponse?.data?.order_id}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between items-center lg:text-[16px]">
-                  <p className="text-[#0008]">Transaction ID</p>
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Transaction ID</p>
                   <div className="flex items-center">
-                    <span ref={textRef}>
-                     {ShowMaxTransactionInfo}
+                    <span className={` ${isDarkMode ? "text-white" : "text-black"}`}
+                    ref={textRef}>
+                     {showMaxSubscriptionResponse?.data?.transaction_id}
                     </span>
                     <div
                       onClick={handleCopyClick}
@@ -283,8 +320,14 @@ export const ShowmaxReceipt= (Data) => {
                 
               </div>
             </div>
-            <div className="rounded-[8px] bg-[#E2F3FF] mx-4 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]">
-              <p className="text-[8px] text-center mx-auto w-[200px] md:text-[14px] md:w-[80%] lg:text-[16px]">
+            <div className={`bg-[#F2FAFF] w-[90%]   mx-auto p-[8px] my-5 flex justify-between 
+        items-center md:p-[9px] lg:p-[10px] rounded-[5px] lg:rounded-[10px]
+         ${
+                isDarkMode ? "bg-slate-800 " : "bg-[#F2FAFF]"
+              }`}>
+              <p  className={`text-[10px] leading-[13px] text-center
+             md:text-[14px] md:leading-[18px] lg:text-[14px]  font-semibold 
+             ${isDarkMode ? "text-white" : "text-black"}`}>
                 Earn free points on every successful transactions, redeem your
                 earned points to real money, withdrawn to your bank account
                 instantly.
@@ -334,4 +377,7 @@ export const ShowmaxReceipt= (Data) => {
       </div>
     </DashBoardLayout>
   );
-};
+}; 
+// Earn free points on every successful transactions, redeem your
+                // earned points to real money, withdrawn to your bank account
+                // instantly.

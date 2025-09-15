@@ -42,6 +42,7 @@ export const GotvReceipt = (Data) => {
     setTvWalletBalance,
     purchaseGotvErrorType,
     tvSubscriptionResponse,
+    
    } =
     useContext(ContextProvider);
 
@@ -126,6 +127,8 @@ export const GotvReceipt = (Data) => {
    navigate("/GoTv");
   }
 
+
+  
 //console.log(tvSubscriptionResponse);
   return (
     <DashBoardLayout>
