@@ -284,6 +284,15 @@ border-radius : 10px;
   .deleteRecipientSuccess::-webkit-scrollbar-thumb{
     background-color: transparent;
   }
+
+  @keyframes highlightInput {
+  0% { box-shadow: 0 0 0 0 #B4BEFA; }
+  50% { box-shadow: 0 0 10px 4px #B4BEFA; }
+  100% { box-shadow: 0 0 0 0 #B4BEFA; }
+}
+.highlight-animate {
+  animation: highlightInput 1s ease;
+}
   /* body{
     background-color: #04177f;
   } */

@@ -7,9 +7,9 @@ import { GetFunction, HandleUserSession} from "../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../Loader/Loader";
 import { Modal } from "../Screens/Modal/Modal";
 import { ContextProvider } from "../Context";
-
+import { GetLocalStorage } from "../LocalStorage/LocalStorage";
 export const TvSubscription = () =>{
-  
+   const Data = GetLocalStorage()
     const [loading, setLoading] = useState(false);
     const {fetchedGotvPlans, setFetchedGotvPlans, 
         fetchedDstvPlans, 
@@ -17,14 +17,135 @@ export const TvSubscription = () =>{
         fetchedShowMaxPlans, 
         setFetchedShowMaxPlans,
         fetchedStarTimesPlans, 
-        setFetchedStarTimesPlans} = useContext(ContextProvider)
+        setFetchedStarTimesPlans,
+      setSelectedOptionShowmax,
+    setShowMaxOrderId,
+    setPackageShowMax,
+    setShowMaxTransactionId,
+    setShowMaxDescription,
+    setShowMaxSmartCard,
+    setShowMaxEmail,
+    setShowMaxAmount,
+    setShowMaxDecoderType,
+   setShowMaxFlagResult,
+    setShowMaxMobileNumber,
+
+     setShowMaxWalletBalance,
+      setDstvEmail,
+   setDstvMobileNumber,
+   setDstvSmartCard,
+   setDstvAmount,
+   setDstvOrderId,
+   setDstvDescription,
+   setDstvTransactionId,
+   setSelectedOptionDstv,
+   setPackageDstv,
+   setDstvDecoderType,
+    setDstvFlagResult,
+    setDstvCardName,
+    setDstvWalletBalance,
+       setGotvOrderId,
+   setGotvDescription,
+   setGotvTransactionId,
+   setSelectedOptionGOTV,
+   setPackageGotv,
+   setDecoderType,
+       setFlagResult,
+    setTvWalletBalance,
+    setTvEmail,
+   setMobileNumber,
+   setSmartCard,
+   setTvAmount,
+   setStarTimesEmail,
+   setStarTimesMobileNumber,
+   setStarTimesSmartCard,
+   setStarTimesAmount,
+   setStarTimesOrderId,
+   setStarTimesDescription,
+   setStarTimesTransactionId,
+   setSelectedOptionStarTimes,
+   setPackageStarTimes,
+   setStarTimesDecoderType,
+    setStarTimesFlagResult,
+    setStarTimesWalletBalance,
+   // formatNumberWithCommas,
+   } = useContext(ContextProvider)
     const navigate = useNavigate();
 const [sessionModal, setSessionModal]= useState(false)
 
+
+const ResetShowMaxFields = ()=> {
+setShowMaxEmail("");
+   setShowMaxMobileNumber("");
+   setShowMaxSmartCard("");
+   setShowMaxAmount("");
+   setShowMaxOrderId("");
+   setShowMaxDescription("");
+   setShowMaxTransactionId("");
+   setSelectedOptionShowmax("");
+   setPackageShowMax("");
+   setShowMaxDecoderType("Showmax");
+    setShowMaxFlagResult("");
+    setShowMaxWalletBalance("");
+}
+
+const ResetDsTvFields =()=> {
+  setDstvEmail("")
+   setDstvMobileNumber("")
+   setDstvSmartCard("");
+   setDstvCardName("")
+   setDstvAmount("");
+   setDstvOrderId("");
+   setDstvDescription("")
+   setDstvTransactionId("");
+   setSelectedOptionDstv("");
+   setPackageDstv("");
+   setDstvDecoderType("DStv")
+    setDstvFlagResult("");
+    setDstvWalletBalance("");
+}
+
+const ResetGoTvFields = ()=> {
+   setTvEmail("")
+   setMobileNumber("")
+   setSmartCard("");
+   setTvAmount("");
+   setGotvOrderId("");
+   setGotvDescription("")
+   setGotvTransactionId("");
+   setSelectedOptionGOTV("");
+   setPackageGotv("");
+   setDecoderType("GOtv")
+    setFlagResult("");
+    setTvWalletBalance("");
+}
+
+const ResetStarTimesFields = ()=> {
+   setStarTimesEmail("")
+   setStarTimesMobileNumber("")
+   setStarTimesSmartCard("");
+   setStarTimesAmount("");
+   setStarTimesOrderId("");
+   setStarTimesDescription("")
+   setStarTimesTransactionId("");
+   setSelectedOptionStarTimes("");
+   setPackageStarTimes("");
+   setStarTimesDecoderType("StarTimes")
+    setStarTimesFlagResult("");
+    setStarTimesWalletBalance("");
+}
 const GetFunctionHandler = async(GlobalTvSubscription,tvPage, TvSubscriptionValue)=> {
     const SuccessHandler =()=> {
       //  alert(`Successfully fetched ${TvSubscriptionValue} Plans`)
-      
+      if(GlobalTvSubscription === 0){
+        ResetGoTvFields()
+      }else if(GlobalTvSubscription === 1){
+     ResetDsTvFields()
+      }else if(GlobalTvSubscription === 2){
+        ResetStarTimesFields()
+      }else if(GlobalTvSubscription ===3){
+       ResetShowMaxFields()
+      }
       return navigate(tvPage)
       
      // console.log("Successfully fetched GotvPlans");
@@ -284,25 +405,40 @@ return(
                         </div>
                         <div id="tvGrid" className="mx-auto flex flex-wrap justify-between  gap-[25px] md:h-[70px] md:flex-row md:flex-nowrap md:gap-[21.27px]  lg:h-[120px]  md:w-[100%] lg:gap-[37px]">
                         <div onClick ={()=>{
+                          if(Data?.ConfirmAcc === "true"){
                           GetFunctionHandler(0, "Gotv");
+                          }else{
+                            navigate("/GoTv")
+                          }
                             }
                         }>
                             <img src="./Images/TvSubscription/goTV.svg" alt="" className="md:w-[118px] lg:w-[270px] md:h-[94px] lg:h-[250px]"/>
                         </div>
                         <div onClick ={()=>{
+                          if(Data?.ConfirmAcc === "true"){
                           GetFunctionHandler(1, "Dstv");
+                          }else{
+                            navigate("/DsTv")
+                          }
                       }
                         }>
                         <img src="./Images/TvSubscription/dstv.svg" alt="" className="md:w-[118px] lg:w-[270px] md:h-[94px] lg:h-[250px]"/>
                         </div>
                         <div onClick ={()=>{
+                          if(Data?.ConfirmAcc === "true"){
                             GetFunctionHandler(2, "StarTimes");
-                               }
+                          }else {
+                            navigate("/StarTimes")
+                          } }
                         }>
                         <img src="./Images/TvSubscription/starTimes.svg" alt="" className="md:w-[118px] lg:w-[270px] md:h-[94px] lg:h-[250px]"/>
                         </div>
                         <div onClick ={()=>{
+                          if(Data?.ComfirmAcc === "true"){
                            GetFunctionHandler(3, "ShowMax");
+                          }else{
+                            navigate("/Showmax")
+                          }
                                }
                         }>
                         <img src="./Images/TvSubscription/showmax.svg" alt="" className="md:w-[118px] lg:w-[270px] md:h-[94px] lg:h-[250px]"/>

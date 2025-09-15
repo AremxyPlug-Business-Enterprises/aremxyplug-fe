@@ -165,7 +165,11 @@ export const StarTimesReceipt= (Data) => {
             md:text-[20px] md:my-[7px] lg:text-[16px] lg:my-[10px]
             ${isDarkMode ? "text-white" : "text-black"}
           `}>
-            {starTimesSubscriptionResponse?.data?.status === "delivered" ?  "Purchase Successful on" : "Purchase Failed on"}
+            {starTimesSubscriptionResponse?.data?.status === "delivered"
+            || starTimesSubscriptionResponse?.data?.status === "success"
+            || starTimesSubscriptionResponse?.data?.status === "successful"
+            || starTimesSubscriptionResponse?.data?.status === "Successful" 
+            ?  "Purchase Successful on" : "Purchase Failed on"}
             </h3>
             <span  className={`text-[11px] ${isDarkMode ? "text-white" : "text-black"}
              font-extrabold flex justify-center items-center
@@ -185,8 +189,16 @@ export const StarTimesReceipt= (Data) => {
                    leading-[15px] md:leading-[20px] 
                     lg:p-[10px] text-center my-2 md:text-sm
                     lg:text-base  lg:leading-[24px] font-medium md:mb-7
-             ${starTimesSubscriptionResponse?.data?.status === "delivered" ? "border-[#27AE60] text-[#27AE60] bg-[#D5F6E3]" :  'border-red-500 text-red-500 bg-red-100' }`}>
-             {starTimesSubscriptionResponse?.data?.status === "delivered" ?  "You have successfully subscribed to " : purchaseStarTimesErrorType}
+             ${starTimesSubscriptionResponse?.data?.status === "delivered" 
+              || starTimesSubscriptionResponse?.data?.status === "success"
+            || starTimesSubscriptionResponse?.data?.status === "successful"
+            || starTimesSubscriptionResponse?.data?.status === "Successful" 
+             ? "border-[#27AE60] text-[#27AE60] bg-[#D5F6E3]" :  'border-red-500 text-red-500 bg-red-100' }`}>
+             {starTimesSubscriptionResponse?.data?.status === "delivered"
+             || starTimesSubscriptionResponse?.data?.status === "success"
+            || starTimesSubscriptionResponse?.data?.status === "successful"
+            || starTimesSubscriptionResponse?.data?.status === "Successful" 
+              ?  "You have successfully subscribed to " : purchaseStarTimesErrorType}
               <span className={`font-extrabold text-[10.9px] md:text-[14.9px] 
               lg:text-[16.9px] `} >
                 {selectedOptionStarTimes}{" "}

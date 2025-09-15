@@ -25,7 +25,6 @@ import Spectranet1 from "../DataBundles/DataBundles-Images/Spectranet1.svg";
 import DataBalance2 from "../DataBundles/DataBundles-Images/DataBalance2.svg";
 import { Modal } from "../../../../Screens/Modal/Modal";
 import BulkDataPopUp from "../DataTopUp-Images/BulkDataPopUp.svg"
-
 const DataBundlesPage = () => {
   const {
     isDarkMode,

@@ -42,6 +42,7 @@ export const GotvReceipt = (Data) => {
     setTvWalletBalance,
     purchaseGotvErrorType,
     tvSubscriptionResponse,
+    
    } =
     useContext(ContextProvider);
 
@@ -126,6 +127,8 @@ export const GotvReceipt = (Data) => {
    navigate("/GoTv");
   }
 
+
+  
 //console.log(tvSubscriptionResponse);
   return (
     <DashBoardLayout>
@@ -174,7 +177,11 @@ export const GotvReceipt = (Data) => {
             md:text-[20px] md:my-[7px] lg:text-[16px] lg:my-[10px]
             ${isDarkMode ? "text-white" : "text-black"}
           `}>
-             {tvSubscriptionResponse?.data?.status === "delivered" ?  "Purchase Successful on" : "Purchase Failed on"}
+             {tvSubscriptionResponse?.data?.status === "delivered" 
+             || tvSubscriptionResponse?.data?.status === "success"
+            || tvSubscriptionResponse?.data?.status === "Successful"
+            || tvSubscriptionResponse?.data?.status === "sucessful"
+             ?  "Purchase Successful on" : "Purchase Failed on"}
             </h3>
             <span className={`text-[11px] ${isDarkMode ? "text-white" : "text-black"}
              font-extrabold flex justify-center items-center
@@ -194,8 +201,16 @@ export const GotvReceipt = (Data) => {
                    leading-[15px] md:leading-[20px] font-[600] 
                     lg:p-[10px] text-center my-2 md:text-sm
                     lg:text-base  lg:leading-[24px]  md:mb-7
-             ${tvSubscriptionResponse?.data?.status === "delivered" ? "border-[#27AE60] text-[#27AE60] bg-[#D5F6E3]" :  'border-red-500 text-red-500 bg-red-100' }`}>
-             {tvSubscriptionResponse?.data?.status === "delivered" ?  "You have successfully subscribed to " : purchaseGotvErrorType}
+             ${tvSubscriptionResponse?.data?.status === "delivered" 
+              || tvSubscriptionResponse?.data?.status === "success"
+            || tvSubscriptionResponse?.data?.status === "Successful"
+            || tvSubscriptionResponse?.data?.status === "sucessful"
+             ? "border-[#27AE60] text-[#27AE60] bg-[#D5F6E3]" :  'border-red-500 text-red-500 bg-red-100' }`}>
+             {tvSubscriptionResponse?.data?.status === "delivered"
+             || tvSubscriptionResponse?.data?.status === "success"
+            || tvSubscriptionResponse?.data?.status === "Successful"
+            || tvSubscriptionResponse?.data?.status === "sucessful"
+              ?  "You have successfully subscribed to " : purchaseGotvErrorType}
               <span  className="font-extrabold text-[10.9px] md:text-[14.9px] 
               lg:text-[16.9px]">
               {" "}  {selectedOptionGOTV}{" "}

@@ -149,8 +149,9 @@ const TransactionPage = () => {
   const handleStatusFilter = (status) => {
     setSelectedStatus(status);
     setShowStatus(false);
+    window.scrollTo({top : window.innerWidth < 1024 ? 500 : 700, behavior : "smooth"})
   };
-
+console.log(window.innerWidth)
   const filteredTransactions =
     transactionResponse?.data?.data?.data?.transactions !== null
       ? transactionResponse?.data?.data?.data?.transactions.filter(
@@ -216,7 +217,7 @@ const TransactionPage = () => {
       console.log("Transaction fetched successfully");
     };
     const FailedHandler = async (ErrorType) => {
-      // if (!navigator.online) alert("Kindly check your internet connection");
+       if (!navigator.onLine) alert("Kindly check your internet connection");
       if (ErrorType === "unauthorised") {
         await GetFunction(
           path,
@@ -260,16 +261,12 @@ const TransactionPage = () => {
   };
 
 
-  //The formattting of the dates and times
+  //The formatting of the dates and times.
    function formatDate(isoString) {
   if (!isoString) return "";
-
   const date = new Date(isoString);
-
 return date?.toISOString()?.slice(0, 10);
-   
-  
-}
+   }
 
    function formatTime(isoString) {
   if (!isoString) return "";
@@ -813,11 +810,9 @@ return date?.toISOString()?.slice(0, 10);
                     <p
                       onClick={() => {
                         handleStatusFilter(
-                          status === "Delivered" ? "delivered" : status
+                          status === "Delivered" ? "delivered" : status === "Failed" ? "failed" : status
                         );
-                        setSelectedStatus(
-                          status === "Delivered" ? "delivered" : status
-                        );
+                      
                       }}
                       className={`pb-[20px] pt-[20px] md:pb-[14px] 
                                 md:pt-[14px] font-weight-bold text-[14px] leading-[18.4px] 
@@ -1140,7 +1135,7 @@ return date?.toISOString()?.slice(0, 10);
                 <div className="h-[150px] flex items-center justify-center">
                   <Loader />
                 </div>
-              ) : filteredTransactions && filteredTransactions?.length > 1 ? (
+              ) : filteredTransactions && filteredTransactions?.length > 0 ? (
                 filteredTransactions?.map((transaction, index) => (
                   <div
                     className={`${
@@ -1171,7 +1166,8 @@ return date?.toISOString()?.slice(0, 10);
                       //     : ""
                       // }`}
                       // state={{ transaction }}
-                      onClick={async () => {
+                      onClick={
+                        async () => {
                         // window.scrollTo(0, 0);
 
                         const response = await getTransactionByOrderId(
@@ -1235,7 +1231,7 @@ return date?.toISOString()?.slice(0, 10);
                               isDarkMode ? "text-white" : "text-neutral-500"
                             }`}
                           >
-                            Description : {transaction.description}
+                            Description : {transaction?.description}
                           </p>
 
                           <p
@@ -1247,7 +1243,7 @@ return date?.toISOString()?.slice(0, 10);
                                    }`}
                           >
                             Amount :{" "}
-                            {transaction.amount
+                            {transaction?.amount
                               ? transaction.amount?.toLocaleString("en-NG", {
                                   style: "currency",
                                   currency: "NGN",
@@ -1362,7 +1358,8 @@ return date?.toISOString()?.slice(0, 10);
                 ))
               ) : (filteredTransactions && filteredTransactions?.length < 1) ||
                 transactionResponse?.data?.data?.data?.transactions?.length <
-                  1 ? (
+                  1 || transactionResponse?.data?.data?.data?.transactions === null ||
+                  transactionResponse?.data?.data?.data?.transactions === undefined ? (
                 <img
                   className="lg:w-[517px] lg:h-[456px]"
                   src={NoRecordImage}
@@ -1439,7 +1436,7 @@ return date?.toISOString()?.slice(0, 10);
               <div className="h-[150px] flex items-center justify-center">
                 <Loader />
               </div>
-            ) : filteredTransactions && filteredTransactions?.length > 1 ? (
+            ) : filteredTransactions && filteredTransactions?.length > 0 ? (
               filteredTransactions?.map((transaction, index) => (
                 <div key={index}>
                   <div
@@ -1583,8 +1580,10 @@ return date?.toISOString()?.slice(0, 10);
                 </div>
               ))
             ) : filteredTransactions?.length < 1 ||
-              transactionResponse?.data?.data?.data?.transactions?.length < 1 ||
-              transactionResponse?.data?.data?.data?.transactions === null ? (
+ transactionResponse?.data?.data?.data?.transactions?.length < 1 ||
+              transactionResponse?.data?.data?.data?.transactions === null 
+              ||  transactionResponse?.data?.data?.data?.transactions === undefined
+              ? (
               <img
                 className="lg:w-full lg:h-[456px] flex self-center w-["
                 src={NoRecordImage}

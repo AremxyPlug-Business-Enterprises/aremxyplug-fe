@@ -848,7 +848,12 @@ const GetBalance = async () => {
           <div className={style.containFlex3}>
             <button
               className={`${
-                fetchedResponse?.data?.data?.userDetails?.username === undefined ? "bg-[#0008]" : "bg-[#04177f]"
+                (fetchedResponse?.data?.data?.userDetails?.username === undefined
+                 ||  fetchedResponse?.data?.data?.userDetails?.username === null)
+                 && !isDarkMode ? 
+                 "bg-[#0008]" : (fetchedResponse?.data?.data?.userDetails?.username === undefined
+                 ||  fetchedResponse?.data?.data?.userDetails?.username === null)
+                 && isDarkMode ?  "bg-gray-500" :  "bg-[#04177f]"
               } w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
               onClick={()=> {
                 setSave(true);

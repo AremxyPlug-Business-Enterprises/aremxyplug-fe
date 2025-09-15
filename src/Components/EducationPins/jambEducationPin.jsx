@@ -29,11 +29,12 @@ import {
   GetFunction,
   HandleUserSession,
   PostFunction,
+  RestrictionPopUp,
   VerifyTransPin,
 } from "../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../Loader/Loader";
 import { validateNigerianNumberByNetwork } from "./waecEducationPin";
-
+import { GetLocalStorage } from "../LocalStorage/LocalStorage";
 export default function JambEducationPin() {
   const navigate = useNavigate();
   const {
@@ -69,7 +70,7 @@ export default function JambEducationPin() {
     jambWalletBalance,
     setJambWalletBalance,
     setEducationPinStatus,
-    // jambEduResponse,
+     jambEduResponse,
     setJambEduResponse,
     newBalance,
     setNewBalance,
@@ -86,13 +87,15 @@ export default function JambEducationPin() {
     purchaseEduErrorType,
     setPurchaseEduErrorType,
   } = useContext(ContextProvider);
-
+  const Data = GetLocalStorage()
   // UseStates
   const [jambImageState, setJambImageState] = useState(arrowDown);
   const [jambEducationProceed, setJambEducationProceed] = useState(false);
   const [errors, setErrors] = useState({});
   const [jambEducationConfirm, setJambEducationConfirm] = useState(false);
   const [jambFailedTransaction, setJambFailedTransaction] = useState(false);
+  const [restrictUser, setRestrictUser] = useState(false);
+  const [checkNetworkError, setCheckNetworkError] = useState(false)
   // const [receipt] = useState(false);
 
   // Get Amount
@@ -152,7 +155,7 @@ export default function JambEducationPin() {
     },
   ];
   const getAmount = async function handleGetAmount() {
-    if (!navigator.online) alert("Kindly check your internet connection");
+    if (!navigator.onLine) alert("Kindly check your internet connection");
     const id = 4;
     const path = `products/edu/${id}`;
     const SuccessHandler = (response) => {
@@ -201,35 +204,130 @@ export default function JambEducationPin() {
     );
   };
   const GetBalance = async () => {
-    if (!navigator.online) alert("Kindly check your internet connection");
-    const SuccessHandler = () => {
-      console.log("successfully retrieved balance");
-    };
-    const FailedHandler = async (ErrorType) => {
-      if (ErrorType === "unauthorised") {
-        await GetFunction(
-          `products/edu/4`,
+      if(!navigator.onLine) return setCheckNetworkError(true)
+        const SuccessHandler = () => {
+          //alert("Successful");
+          console.log("successfully retrieved balance");
+          //alert("Successful")
+        };
+        const FailedHandler = async (ErrorType) => {
+          if (ErrorType === "unauthorised") {
+            await GetFunction(
+              `balance`,
+              setIsLoading,
+              SuccessHandler,
+              //Handling the error Use Cases of the Unauthorised inside
+              // of the statement.
+              async(ErrorType) => {
+                if (ErrorType === "unauthorised") {
+                  return setSessionModal(true);
+                }else if(ErrorType === "Server error"){
+                    await GetFunction(
+          "balance",
           setIsLoading,
           SuccessHandler,
-          (ErrorType) => {
-            if (ErrorType === "unauthorised") {
-              return setSessionModal(true);
+         async(ErrorType)=> {
+          if(ErrorType === "Server error"){
+            alert("Failed to retrieve the balance.")
+          }else if(ErrorType === "Network error" || ErrorType === "User error"){
+             setCheckNetworkError(true);
+                alert("Kindly check your internet connection to retrieve balance.")
+          }else {
+            alert("An unexpected error has occured on attempt to retrieve balance.")
+          }
+         },
+          setPassDataBalance
+        );
+         }else if(ErrorType === "Network error" || ErrorType === "User error"){
+           setCheckNetworkError(true);
+             alert("Kindly check your internet connection to retrieve balance");
+             setCheckNetworkError(true);
+         }else {
+          alert("An unexpected error has occured on attempt to retrieve the balance")
+         }
+              },
+               setPassDataBalance
+            );
+          }else if(ErrorType === "Server error"){
+              await GetFunction(
+          "balance",
+          setIsLoading,
+          SuccessHandler,
+         async(ErrorType)=> {
+           if(ErrorType === "unauthorised"){
+              await GetFunction(
+          "balance",
+          setIsLoading,
+          SuccessHandler,
+          async(ErrorType)=> {
+            if(ErrorType === "unauthorised"){
+              return setSessionModal(true)
+            }else if(ErrorType === "Server error"){
+                 await GetFunction(
+          "balance",
+          setIsLoading,
+          SuccessHandler,
+         async(ErrorType)=> {
+          //if Statements
+        //We run again cause the previous one was interrupted by 401
+        //Let us re-run server error
+        if(ErrorType === "Server error"){
+          alert("Failed to retrieve the balance")
+        }else if(ErrorType === "unauthorised"){
+          return sessionModal(true)
+        }else if(ErrorType === "Network error" || ErrorType === "User error"){
+           setCheckNetworkError(true);
+         alert("Kindly check your internet connection to retrieve balance")
+        }else{
+         // console.log("yeah bro i am the one running blehh")
+          alert("An Unexpected error occured in attempt to retrieve balance")
+        }
+  
+         },
+          setPassDataBalance
+        );
+            }else if(ErrorType === "Network error" || ErrorType === "User error"){
+               setCheckNetworkError(true);
+              alert("Kindly check your internet connection to retrieve the balance")
+            }else if(ErrorType === "Server error"){
+              alert("Failed to retrieve the balance.")
+            }else{
+              alert("An Unexpected error occured in attempt to retrieve balance")
             }
           },
           setPassDataBalance
         );
       }
-    };
-    await GetFunction(
-      "balance",
-      setIsLoading,
-      SuccessHandler,
-      FailedHandler,
-      setPassDataBalance
-    );
-  };
+            else if(ErrorType === "Network error" || ErrorType === "User error"){
+              //The operation was interrupted by a network error
+               setCheckNetworkError(true);
+              alert("Kindly check your internet connection to retrieve balance.")
+           }else {
+            //Place 
+            //An alien error has occured with the re-run of the "Server error" ErrorType
+            alert("An unexpected error occured in attempt to retrieve the balance.")
+           }
+         },
+          setPassDataBalance
+        );
+          }else if(ErrorType === "Network error" || ErrorType === "User error"){
+              setCheckNetworkError(true);
+          }else{
+             
+            alert("An unexpected error occured in attempt to retrieve balance.")
+          }
+        }
+        await GetFunction(
+          "balance",
+          setIsLoading,
+          SuccessHandler,
+          FailedHandler,
+          setPassDataBalance
+        );
+      };
   // get the amount and balance on entering the page
   useEffect(() => {
+    if(Data?.ConfirmAcc === "true"){
     getAmount();
     GetBalance();
     if (newBalance === "" || newBalance === null || newBalance === undefined) {
@@ -241,6 +339,9 @@ export default function JambEducationPin() {
             : ""
         );
       }
+    }
+  }else{
+   setRestrictUser(true)
     }
     // handleResetFields();
     // eslint-disable-next-line
@@ -584,6 +685,19 @@ export default function JambEducationPin() {
   const handleBlur = () => {
     setIsFocused(false);
   };
+    if(Data?.ConfirmAcc === "true"){
+  window.addEventListener("online", ()=> {
+   if(checkNetworkError === true &&
+     (updateBalance === undefined || updateBalance === null || updateBalance === "")
+    && (newBalance === null || newBalance === undefined || newBalance === "") ){
+   return GetBalance();
+   }
+   if(checkNetworkError === true &&
+     (jambEduResponse?.data?.data?.Amount === undefined  || jambEduResponse?.data?.data?.Amount === null) ) {
+    return getAmount();
+   }
+  })
+}
 
   return (
     <DashBoardLayout>
@@ -1640,6 +1754,9 @@ export default function JambEducationPin() {
         </Modal>
       )}
       {sessionModal && <HandleUserSession />}
+      {sessionModal === false && restrictUser && (
+        <RestrictionPopUp/>
+      )}
     </DashBoardLayout>
   );
 }

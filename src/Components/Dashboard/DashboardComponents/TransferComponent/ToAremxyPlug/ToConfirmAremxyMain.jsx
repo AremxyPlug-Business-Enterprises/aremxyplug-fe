@@ -47,7 +47,7 @@ let CheckSufficiency = transformAmountToNumber > updateBalance;
     <div>
       {emailPhoneNumberConfirmation && (
         <Modal>
-          (
+          
          <div className={`w-full flex justify-center h-full 
              py-[30px] px-[15px] lg:px-[0px] lg:items-center
               items-end`}>
@@ -186,9 +186,7 @@ let CheckSufficiency = transformAmountToNumber > updateBalance;
             </button>
           </div>
           </div>
-          
-          )
-        </Modal>
+          </Modal>
       )}
   <MainInputPinPop
         otherInputPinPopUp={otherInputPinPopUp}
