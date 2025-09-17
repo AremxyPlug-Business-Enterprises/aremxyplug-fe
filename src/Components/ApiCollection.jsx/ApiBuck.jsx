@@ -3,6 +3,7 @@ import { RemoveLocalStorage } from "../LocalStorage/LocalStorage";
 import axios from "axios";
 import { Modal } from "../Screens/Modal/Modal";
 import { Link } from "react-router-dom";
+import { Loader } from "../Loader/Loader";
 //To set the different states for  virtual account
 
 export const SignInVirtualAccountState = (
@@ -140,142 +141,194 @@ export const InActionVirtualAccountState = (
 };
 
 ///Login Session =======//
-// export const internalLoginSession = (signInMethod, passwordInput,body)=> {
-//    const isDarkMode = localStorage.getItem("darkModeEnabled")
+export const InternalLoginSession = ({ setExpiredSessionLogin})=> {
+   const isDarkMode = localStorage.getItem("darkModeEnabled");
+   const getUsername = JSON.parse(localStorage.getItem("aremxyUserName"));
+   const UserEmail = JSON.parse(localStorage.getItem("userEmail"))
+   const authorisedLogin = localStorage.getItem("authorisedLogin");
+   const getToken = localStorage.getItem("getToken");
+   const HoldValue = getToken && !authorisedLogin ? getUsername : UserEmail;
+   
+//    const getEmail = localStorage.getItem("userEmail")
 //       const testEmail = new RegExp(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]/);
 // const testUsername = new RegExp( /^[a-zA-Z0-9_]{3,20}$/);
-// const handleLoginMethod = (valueSignIn)=> {
-//   if(valueSignIn.test(testEmail) === true  && 
+// const handleLoginMethod = ()=> {
+//   const valueSignIn = document.getElementById("InternalSessionLoginUsernameOrEmail")?.value
+//   console.log(valueSignIn)
+//   if(testEmail.test(valueSignIn) === true  && 
 //   valueSignIn?.endsWith(".com") &&
 //    valueSignIn?.includes("@")){
-//          signInMethod = "email"
-//   }else if(valueSignIn?.test(testUsername) === true ){
-//     signInMethod = "username"
+//        requestObjectConfirm = "email";
+//       // console.log("email", requestObjectConfirm)
+      
+//   }else if(testUsername?.test(valueSignIn) === true && !valueSignIn?.includes("@")  ){
+//      requestObjectConfirm = "username"
+//     // console.log("username", requestObjectConfirm)
+//   }else{
+//    // console.log("Doesn't belong")
 //   }
-//     body ={
-//      signInMethod : valueSignIn,
-//    password :  passwordInput
-//    }
   
+//   if(requestObjectConfirm === "username"|| requestObjectConfirm === "email"){
+//    SubmitUserLoginDetails( requestObjectConfirm, valueSignIn)
+//   }
+ 
+//   }
 
 
-// }
-//  const setLoading =()=> {
-//     console.log("setLoading")
-//    }
-//     const functionAtSuccess =()=> {
-//     console.log("setLoading")
-//    }
-//     const  functionAtFailed =()=> {
-//     console.log("setLoading")
-//    }
-//     const  setFetchedResponse =()=> {
-//     console.log("setLoading")
-//    }
-// const SubmitUserLoginDetails = ()=> {
-//     PostFunction("login",
-//   setLoading,
-//   body,
-//   functionAtSuccess,
-//   functionAtFailed,
-//   setFetchedResponse)
-// }
+ const functionAtSuccess = async(response)=> {
+  console.log(response);
+  
+  alert("Successful");
+   const authToken = response.headers.get('Authorization');
+console.log(authToken);
+     if(localStorage.getItem("getToken", authToken) ){
+      setExpiredSessionLogin(false);
+  //    alert("Yeah i am present.")
+         localStorage.setItem("getToken", authToken)
+        //await RequestReRun()
+     
+      }else { 
+        setExpiredSessionLogin(false);
+      localStorage.setItem("authorisedLogin", authToken)
+    // await RequestReRun();
+      } 
+}
+    const  functionAtFailed =(ErrorType)=> {
+     if(ErrorType === "unauthorised" ){
+      alert("Incorrect Password");
+     }else if(ErrorType === "Server error"){
+      alert("Failed to process your request")
+     }
+   }
+    const  setFetchedResponse =(response)=> {
+    console.log("fetched Data successfully.")
+   }
+ const setLoading =(value)=> {
+  (
+    value === true && (
+     <Loader/>
+    )
+  )
+}
+      //console.log(requestObjectConfirm);
+const SubmitUserLoginDetails = ()=> {
+   const PasswordValue = document.getElementById("InternalLoginPasswordValue")?.value;
+   const body = {
+    username : getUsername,
+    password : PasswordValue
+  }
+    PostFunction("login",
+  setLoading,
+  body,
+  functionAtSuccess,
+  functionAtFailed,
+  setFetchedResponse)
+  }
+//console.log(requestObjectConfirm)
 
-//   return (
+
+  return (
    
-//    <div className={`w-full h-full justify-center items-center
-//    flex`}>
-//     <Modal>
-//               <div className={`w-full flex  justify-center items-center 
-//              `}>
-//             <div className = {`flex flex-col justify-center items-center
-//              py-[20px] px-[12px] gap-[20px] w-[80%] md:w-[60%] lg:w-[30%] md:h-[300px]  rounded-[10px]
-//              lg:rounded-[20px]   ${isDarkMode === "true" ? "bg-black border border-white rounded-[10px]" 
-//                : "bg-white"}`}>
-//                <div className ="flex flex-col  gap-[20px]">
-//                <h2 className={`text-[14px] text-center font-[600] leading-[18px]
-//                text-black lg:text-[16px] lg:leading-[22px] ${isDarkMode === "true" ? "text-white" : "text-black"}`}>
-//                   Your Session has expired.
-//                   </h2>
-//               <p className ={`text-[14px] text-center font-[400] leading-[18px]
-//                lg:text-[16px] lg:leading-[22px] ${isDarkMode === "true" ? "text-white" : "text-[#04177f]"}`}>
-//            Login to renew your session to continue transactions 
-//             and operations.
-//                </p>
-//                </div>
-//                <div className="flex flex-col gap-[20px]">
-//                 {/* Username */}
-//                <div className="flex flex-col gap-[5px]">
-//                <p className={`text-[14px] text-center font-[600] leading-[18px]
-//                text-black lg:text-[16px] lg:leading-[22px] ${isDarkMode === "true" ? "text-white" : "text-black"}`}>
-//                 Username or Email
-//                </p>
+   <div className={`w-full h-full  justify-center items-center
+   flex`}>
+    <Modal>
+              <div className={`w-full flex px-[17px] justify-center items-center 
+             `}>
+            <div className = {`flex flex-col justify-left items-center
+             py-[20px] px-[10px] gap-[20px] w-[100%] md:w-[60%] lg:w-[30%] md:h-[300px]  rounded-[10px]
+             lg:rounded-[20px]   ${isDarkMode === "true" ? "bg-black border border-white rounded-[10px]" 
+               : "bg-white"}`}>
+               <div className ="flex flex-col  gap-[20px]">
+               <h2 className={`text-[14px] text-center font-[600] leading-[18px]
+               text-black lg:text-[16px] lg:leading-[22px] ${isDarkMode === "true" ? "text-white" : "text-black"}`}>
+                  Your Session has expired.
+                  </h2>
+              <p className ={`text-[14px] text-center font-[600] leading-[18px]
+               lg:text-[16px] lg:leading-[22px] ${isDarkMode === "true" ? "text-white" : "text-[#04177f]"}`}>
+           Login to renew your session to continue transactions 
+            and operations.
+               </p>
+               </div>
+               <div className="flex flex-col gap-[20px] w-[100%] md:w-[50%]">
+                {/* Username */}
+               <div className="flex flex-col gap-[5px] ">
+               <p className={`text-[14px] text-start font-[600] leading-[18px]
+               text-black lg:text-[16px] lg:leading-[22px] ${isDarkMode === "true" ? "text-white" : "text-black"}`}>
+                {getToken && !authorisedLogin ? "Username" : "Email"}
+               </p>
              
-//                <input
-//                className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] 
-//                 md:p-0 text-[14px]  sm:p-3 sm:text-lg flex justify-between 
-//                 pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400]  
-//                 leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
-//     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px]
-//      md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
-//       isDarkMode 
-//       ? "bg-black text-white border border-white" 
-//       : "hover:bg-[#EDEAEA] border-[#9C9C9C] text-[#7C7C7C] "
-//   }`} 
-//   onChange={(e)=> {
-//     handleLoginMethod(e.target.value)
-//   }}
-//                 type="text" />
-//                 </div>
-//                 {/* Password */}
-//                <div className="">
-//               <p className={`text-[14px] text-center font-[600] leading-[18px]
-//                text-black lg:text-[16px] lg:leading-[22px] ${isDarkMode === "true" ? "text-white" : "text-black"}`}>
-//                 Password
-//                </p>
+               <input
+               className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] 
+                md:p-0 text-[14px]  sm:p-3 sm:text-lg flex justify-between 
+                pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400]  
+                leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px]
+     md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] 
+     lg:pr-[9px] lg:pl-[10px] items-center cursor-pointer 
+     outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[50.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
+      isDarkMode === "true" 
+      ? "bg-black text-white border border-white" 
+      : "hover:bg-[#EDEAEA] border-[#9C9C9C] bg-white text-[#7C7C7C] "
+  }`} 
+  readOnly
+  value={HoldValue}
+  
+                type="text" />
+              
+              
+                </div>
+                {/* Password */}
+               <div className="">
+              <p className={`text-[14px] text-start font-[600] leading-[18px]
+               text-black lg:text-[16px] lg:leading-[22px] ${isDarkMode === "true" ? "text-white" : "text-black"}`}>
+                Password
+               </p>
              
-//                <input
-//                className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] 
-//                 md:p-0 text-[14px]  sm:p-3 sm:text-lg flex justify-between 
-//                 pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400]  
-//                 leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
-//     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px]
-//      md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
-//       isDarkMode 
-//       ? "bg-black text-white border border-white" 
-//       : "hover:bg-[#EDEAEA] border-[#9C9C9C] text-[#7C7C7C] "
-//   }`} 
-//                 type="password"
-//                 onChange={(e)=> {
-//                  e.target.value = passwordInput
-                 
-//                 }}/>
-//                </div>
-//                </div>
+               <input
+               className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] 
+                md:p-0 text-[14px]  sm:p-3 sm:text-lg flex justify-between 
+                pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400]  
+                leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px]
+     md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
+     items-center cursor-pointer outline-0 border-[0.24px]
+      lg:border-[0.4px] w-full h-[50.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
+      isDarkMode === "true"
+      ? "bg-black text-white border border-white" 
+      : "hover:bg-[#EDEAEA] border-[#9C9C9C] bg-white text-[#7C7C7C] "
+  }`} 
+  placeholder="Your Current Password"
+  id = "InternalLoginPasswordValue"
+                type="password"
+               />
+
+               </div>
+               </div>
              
-//               <button onClick ={()=> {
-//                     RemoveLocalStorage();
-//                     return window.location.replace("/Login");
-//                 }}
-//                  className="bg-red-700  cursor-pointer mt-[5%] mx-auto w-full py-[12px] flex justify-center items-center text-[#ffffff] 
-//                text-[11px] font-[600] rounded-md md:w-[95px] md:h-[26px]
-//                    md:p-[2%] lg:w-[113px] lg:h-[38px] lg:text-[13px]"
-//             >
-//               Okay
-//             </button>
-//           </div>
-//         </div>
-//       </Modal>
-//     </div>
-//   );
-// };
+              <button onClick ={(e)=> {
+                SubmitUserLoginDetails()
+               
+                }}
+
+              //  disabled={PasswordValue?.length < 1 && userNameorEmail?.length < 1}
+                 className="bg-[#04177f]  cursor-pointer mt-[5%] mx-auto w-full py-[12px] flex justify-center items-center text-[#ffffff] 
+               text-[11px] font-[600] rounded-md md:w-[95px] md:h-[26px]
+                   md:p-[2%] lg:w-[113px] lg:h-[38px] lg:text-[13px]"
+            >
+              Continue
+            </button>
+          </div>
+        </div>
+      </Modal>
+    </div>
+  );
+};
 
 // ======  The Restriction-PopUp for Users that doesn't have an account
   export const RestrictionPopUp = ()=> {
    const isDarkMode = localStorage.getItem("darkModeEnabled")
   return (
-   
-   <div className={`w-full h-full justify-center items-center
+  <div className={`w-full h-full justify-center items-center
    flex`}>
     <Modal>
               <div className={`w-full flex  justify-center items-center 
@@ -496,6 +549,10 @@ if (error.response.headers["x-new-auth-token"] ||
       }else if(error && error.response.status === 404){
    setFailed("User error");
    setErrorMessage(true);
+      }else if(error && error.response.status === 403){
+   setFailed("User Blocked");
+   alert("Purchase blocked due to many retries")
+  // setErrorMessage(true);
       }else {
    alert("Check your internet connection and try again")
       }

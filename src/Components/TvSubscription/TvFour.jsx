@@ -17,13 +17,13 @@ import britainFlag from '../../Components/EducationPins/imagesEducation/Britain.
 import euroFlag from '../../Components/EducationPins/imagesEducation/GBP.svg';
 import austriaFlag from '../../Components/EducationPins/imagesEducation/Austria.svg';
 import kenyaFlag from '../../Components/EducationPins/imagesEducation/Kenya.svg';
-import {VerifyTransPin} from "../../Components/ApiCollection.jsx/ApiBuck";
+import {InternalLoginSession, VerifyTransPin} from "../../Components/ApiCollection.jsx/ApiBuck";
 import {PostFunction} from "../../Components/ApiCollection.jsx/ApiBuck"
 import { useNavigate } from "react-router-dom";
 import { Loader } from "../Loader/Loader";
 import { GetFunction } from "../ApiCollection.jsx/ApiBuck";
 import { Modal } from "../Screens/Modal/Modal";
-import { HandleUserSession, RestrictionPopUp } from "../../Components/ApiCollection.jsx/ApiBuck";
+import {  RestrictionPopUp } from "../../Components/ApiCollection.jsx/ApiBuck";
 import { GetLocalStorage } from "../LocalStorage/LocalStorage";
 
 
@@ -349,7 +349,7 @@ const Decoders  = [
  
   const handleShowmax = (event) => {
     event.preventDefault();
-    
+     setShowMaxSubscriptionResponse({});
 
     const { error } = schema.validate({
       showMaxSmartCard,
@@ -1197,7 +1197,7 @@ const Decoders  = [
                       </Modal>
                   )}
                   {sessionModal && (
-                    <HandleUserSession/>
+                    <InternalLoginSession setExpiredSessionLogin={setSessionModal}/>
                   )}
                   {sessionModal === false && restrictUser && (
                     <RestrictionPopUp/>
@@ -1206,5 +1206,4 @@ const Decoders  = [
     </div>
   )
 }
-
-export default Showmax
+export default Showmax;

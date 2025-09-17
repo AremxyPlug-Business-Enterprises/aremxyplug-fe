@@ -17,7 +17,7 @@ import { ContextProvider } from  "../Context";
 import styles from "../Dashboard/DashboardComponents/./component.module.css";
 import { Calender } from "../Dashboard/DashboardComponents/Calender";
 import { Link } from "react-router-dom/dist/react-router-dom.development";
-import { GetFunction, HandleUserSession } from '../ApiCollection.jsx/ApiBuck';
+import { GetFunction, InternalLoginSession } from '../ApiCollection.jsx/ApiBuck';
 import { Loader } from '../Loader/Loader';
 import { Modal } from '../Screens/Modal/Modal';
 import NoRecordImage from "../Add&SelectRecipient/RecipientImages/NoRecordImage.svg";
@@ -28,7 +28,7 @@ export default function SalesSummaryPage ()  {
     // const [isOpen2, setIsOpen2] = useState(false);
     // const [isOpen3, setIsOpen3] = useState(false); 
     // const [isOpen4, setIsOpen4] = useState(false);
-    const [isOpen5, setIsOpen5] = useState(false);
+   //const [isOpen5, setIsOpen5] = useState(false);
     const [loading, setLoading] = useState(false);
     const [sessionModal, setSessionModal] = useState(false);
     const [transactionHistoryError, setTransactionHistoryError] = useState("");
@@ -38,7 +38,7 @@ export default function SalesSummaryPage ()  {
     const [selected, setSelected] = useState("NGN");
     const [methodImage, setMethodImage] = useState(flagpage);
     const [methodBalance, setMethodBalance] = useState(false);
-      const [totalOutFlow, setTotalOutFlow] = useState('')
+    //  const [totalOutFlow, setTotalOutFlow] = useState('')
          const { isDarkMode, toggleSideBar } =
   useContext(ContextProvider);
     // const toggleDropdown1 = () => { setIsOpen1(true); };
@@ -90,6 +90,8 @@ export default function SalesSummaryPage ()  {
      setTransactionHistoryError("Network error")
     }else if(ErrorType === "Server error"){
       setTransactionHistoryError("Server error")
+ alert(`Error providing ${product} sales analysis.`)
+                              
     }else {
       setTransactionHistoryError(null)
     }
@@ -152,11 +154,11 @@ export default function SalesSummaryPage ()  {
          currency : "NGN"
         }) })`, 
         flag: flagpage, id: 1 },
-     { method: 'USD Wallet ', balance: '(0.00)', flag: flagpage1, id: 2 },
-     { method: 'EUR Wallet', balance: '(0.00)', flag: flagpage2, id: 3 },
-     { method: 'GBP Wallet', balance: '(0.00)', flag: flagpage3, id: 4 },
-     { method: 'AUD Wallet', balance: '(0.00)', flag: flagpage4, id: 5 },
-     { method: 'KES Wallet', balance: '(0.00)', flag: flagpage5, id: 6 }
+ { method: 'USD Wallet ', balance: '($0.00)', flag: flagpage1, id: 2 },
+       { method: 'EUR Wallet', balance: '(€0.00)', flag: flagpage2, id: 3 },
+       { method: 'GBP Wallet', balance: '(£0.00)', flag: flagpage3, id: 4 },
+       { method: 'AUD Wallet', balance: '(AU$0.00)', flag: flagpage4, id: 5 },
+       { method: 'KES Wallet', balance: '(KSh0.00)', flag: flagpage5, id: 6 }
    ];
 
    useEffect(()=> {
@@ -299,16 +301,13 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
     
        {methodBalance && (
                 <div className={`absolute top-[60%] z-[2] flex
-                   flex-col w-[100%] lg:w-[30%] md:w-[50%]  cursor-pointer 
+                   flex-col self-center w-[100%] lg:w-[30%] md:w-[50%]  cursor-pointer 
                    justify-center bg-slate-600   ${  isDarkMode
                                          ? "bg-black border-white rounded-[7px] text-white"
                                          : "text-[#7C7C7C] bg-white rounded-br-[7px] rounded-bl-[7px] lg:rounded-br-[14px] lg:rounded-bl-[14px]"
                                      }
-                                     ${
-                                       toggleSideBar
-                                         ? "lg:w-[31.5%] lg:top-[100.5%]"
-                                         : "lg:w-[38.5%] lg:top-[105.3%]"
-                                     } shadow-xl border w-full lg:w-full  flex flex-col divide-y absolute top-20`}>
+                                    
+                                       shadow-xl border  flex flex-col divide-y  `}>
             {methodOptions.map((method)=> (
              <div onClick ={()=> {
                setSelectedBalance(method.id === 1   ? 
@@ -368,7 +367,7 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
 
   <div onClick={() => {
   setCalender((prev) => !prev);
-  setIsOpen5(false)
+
   setIsOpen1(false)
 }}  className={`cursor-pointer ${styles.filter}  ${
   isDarkMode ? "border" : ""} flex  md:gap-[6px] items-center
@@ -386,9 +385,9 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
 
     {/* filter by product */}
         <div  onClick={() => {
- 
+     setMethodBalance(false)
    setCalender(false)
-   setIsOpen5(false)
+  // setIsOpen5(false)
    if(isOpen1 === false){
     setIsOpen1(true)
    }else{
@@ -412,7 +411,7 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
                                     {isOpen1 ? (
    <img src={arrow44} className="h-[100%] w-[100%]" alt="Arrow44" />
  ) : (
-   <img classname="h-[100%] w-[100%]" src={arrow11} alt="arrow11" />
+   <img className="h-[100%] w-[100%]" src={arrow11} alt="arrow11" />
  )}
 
             </div>
@@ -438,11 +437,12 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
                       }`}
                       key={index}
                       onClick={() =>{
-                        
+                      
                         if(option === "Airtime Top-up"){
                         
                           GetTransactionInformation("airtime")
                           setIsOpen1(false);
+                          
                          
                         }else if(option === "Data Top-up"){
                          
@@ -484,8 +484,8 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
       {/* The flow start here */}
      <div>
                 <div
-                  className={` flex w-full gap-[5px] h-[70px] lg:h-[100px] md:items-center 
-                  lg:mt-[5%] lg:items-center my-[30px]`}>
+                  className={` flex w-full  gap-[5px] h-[70px] lg:h-[100px] md:items-center 
+                  lg:mt-[5%] items-center my-[30px]`}>
                   <select
                     name="curr"
                     id="curr"
@@ -551,7 +551,7 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
                     <p className="text-center  text-[10px] leading-[13px] font-[500] 
                       lg:text-[18px] lg:leading-[24px]">{selected === "NGN" ? 
                       salesResponse?.data?.data?.data?.total_count
-                       || salesResponse?.data?.status === 200  ?
+                       || salesResponse?.data?.status === 200 || salesResponse?.data?.status === 201  ?
                         salesResponse?.data?.data?.data?.total: "" : 0}  </p>
                   </div>
     
@@ -705,7 +705,7 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
 
 )}
 {sessionModal && (
-  <HandleUserSession/>
+   <InternalLoginSession setExpiredSessionLogin={setSessionModal}/>
 )}
   </div>
 

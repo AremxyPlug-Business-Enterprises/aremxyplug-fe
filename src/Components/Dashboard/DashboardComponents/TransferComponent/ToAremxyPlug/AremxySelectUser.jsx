@@ -7,8 +7,7 @@ import styles from "../../TransferComponent/transfer.module.css";
 import SearchIcon from '../../../../Add&SelectRecipient/RecipientImages/search-status.svg';
 import Delete from "../../../../AirTimePage/Images/Deleted.svg";
 import { Modal } from "../../../../Screens/Modal/Modal";
-import { Link } from 'react-router-dom';
-import { GetFunction, HandleUserSession} from "../../../../ApiCollection.jsx/ApiBuck";
+import { GetFunction, InternalLoginSession} from "../../../../ApiCollection.jsx/ApiBuck";
 import { Loader} from "../../../../Loader/Loader";
 import NoRecordImage  from "../../../../Add&SelectRecipient/RecipientImages/NoRecordImage.svg";
 import { GetLocalStorage } from "../../../../LocalStorage/LocalStorage";
@@ -41,7 +40,7 @@ const Data = GetLocalStorage();
       HandleIdentifyCredentials(transferId);
       setTransferValue(transferId)
     }
-    const [currencyAvailable, setCurrencyAvailable] = useState(false);
+
     const [loading, setLoading] = useState(false);
     const [sessionModal, setSessionModal] =useState(false);
    
@@ -116,18 +115,20 @@ setLoading, SuccessHandler,
   
     //eslint-disable-next-line
     }, [])
-const SearchFilter = (recipientResponse?.data?.data?.data !== undefined || recipientResponse?.data?.data?.data !== undefined) 
+const SearchFilter = (recipientResponse?.data?.data?.data !== undefined 
+  || recipientResponse?.data?.data?.data !== null
+   || recipientResponse?.data?.data?.data?.length < 1) 
 ? recipientResponse?.data?.data?.data?.filter(filterBySearch=> {
    //console.log(filterBySearch.username?.includes(searchSelectRecipient))
-   console.log(recipientResponse?.data?.data?.data)
+   console.log(recipientResponse?.data?.data?.data);
 
-  //console.log("Second Running");
 return (
   filterBySearch?.username?.toLowerCase().includes(searchSelectRecipient?.toLowerCase()) ||
   filterBySearch?.email?.toLowerCase().includes(searchSelectRecipient?.toLowerCase())
 )
 
 }): [];
+console.log(recipientResponse?.data?.data?.data)
  
 
   //DropDown Handling
@@ -854,29 +855,14 @@ return (
                 </div>
               </Modal>
             )}
-            {currencyAvailable && (
-              <Modal>
-                <div className={styled.NotInterX} >
-                    <div className={styled.timeAbleK}>
-                        <h3>This Currency is Currently Not Available.</h3>
-                    </div>
-                    <div className={styled.InterAirtimeX}>
-                        <img src="/Images/addAccountImages/account-unavailable.png" alt="" />
-                    </div>
-                    <div className={styled.comingX} >
-                        <h2>Coming soon...</h2>
-                        <button className={styled.btnOkX} onClick={refresh}>Okay</button>
-                    </div>
-                </div>
-              </Modal>
-            )}
+          
            
         </div>
         </div>
        
      
        {sessionModal && (
-              <HandleUserSession/>
+              <InternalLoginSession setExpiredSessionLogin={ setSessionModal}/>
             )}
             {loading && (
               <Modal>

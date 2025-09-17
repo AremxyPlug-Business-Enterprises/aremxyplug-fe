@@ -19,15 +19,15 @@ import { Link } from "react-router-dom";
 import { Loader } from "../../Loader/Loader";
 import { BalanceLoading } from "../../Loader/Loader";
 import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
-import { CheckVirtualAcc, HandleUserSession } from "../../ApiCollection.jsx/ApiBuck";
+import { CheckVirtualAcc, InternalLoginSession } from "../../ApiCollection.jsx/ApiBuck";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { GetFunction} from "../../../Components/ApiCollection.jsx/ApiBuck";
 export const MainDashboard = (Data) => {
-    const [isLoading, setLoading] = useState(false);
+     const [loading, setLoading] = useState(false)
     const [userPoints, setUserPoints] = useState(0);
     const [fetchedResponse, setFetchedResponse] = useState([]);
-
+  
 
   const { setHideNavbar, toggleSideBar, isDarkMode,
     dashLoading, bankNameState, accountNameState, accountNumberState,
@@ -179,7 +179,7 @@ if((clickedoption === "NGN")){
         }
       }else{
       setDashLoading(false)
-          return sessionModal(true)
+          return setSessionModal(true)
       }
       
         }else if(error.response &&error.response.status === 500){
@@ -203,8 +203,8 @@ if((clickedoption === "NGN")){
         if(!navigator.onLine) return setBalanceValue("Check your internet connection.");
         if((authToken || getToken) && navigator.onLine){
         try{
-          setBalanceLoading(true)
-         const url = "https://aremxyplug.onrender.com/api/v1/balance"
+          setBalanceLoading(true);
+         const url = "https://aremxyplug.onrender.com/api/v1/balance";
          const response = await axios.get(url,{ headers : {"Content-Type" : "application/json",
            Authorization : authToken || getToken},withCredentials :true
         })
@@ -213,7 +213,7 @@ if((clickedoption === "NGN")){
           if(response.status && (response.status === 200 || response.status === 201)){
              setBalanceValue("");
            const checkBal =  response?.data?.data?.data?.balance;
-           console.log(checkBal);
+          // console.log(checkBal);
            setNewBalance(checkBal)
              }
         }
@@ -234,7 +234,6 @@ if((clickedoption === "NGN")){
           }
            }else{
       localStorage.setItem("getToken", newToken);
-        ;
        console.log(getToken);
           if(localStorage.getItem("getToken")?.length > 1){
             return GenerateAccountBalance();
@@ -302,11 +301,14 @@ if((clickedoption === "NGN")){
        }
     //eslint-disable-next-line
    }, [])
-window.addEventListener("online", ()=> {
-  if(balanceValue?.length > 1 && Data?.ConfirmAcc === "true"){
-    GenerateAccountBalance();
-  }
-})
+// window.addEventListener("online", ()=> {
+//   if(balanceValue?.length > 1 && 
+//     (balanceValue === "Check your internet connection" ||  balanceValue === "Your internet connection is quite unstable.")
+//   &&  Data?.ConfirmAcc === "true"){
+//     GenerateAccountBalance();
+//   }
+  
+// })
 
   //Fetch Points
    useEffect(() => {
@@ -318,15 +320,32 @@ window.addEventListener("online", ()=> {
     console.log("fetch points succefully", available);
      setUserPoints(available);
      };
-     const FailedHandler = (error) => {
-       console.error("Failed to fetch points:", error);
+     const FailedHandler = (ErrorType) => {
+      if(ErrorType === "unauthorised"){
+      GetFunction("extra/point",
+         setLoading,  
+         successHandler,
+          (ErrorType)=> {
+            if(ErrorType === "unauthorised"){
+            setSessionModal(true)
+            }
+          },
+           setFetchedResponse)
+      }else if(ErrorType === "Network error" || ErrorType === "User error"){
+       setBalanceValue("Your internet connection is quite unstable.")
+      }else if(ErrorType === "Server error"){
+        alert("Unable to retrieve your points balance at the moment")
+      }
      };
  
     
-       GetFunction("extra/point", setLoading,  successHandler, FailedHandler, setFetchedResponse)
-    
-   }, []);
-      
+       GetFunction("extra/point",
+         setLoading,  
+         successHandler,
+          FailedHandler,
+           setFetchedResponse)
+    }, []);
+      console.log(userPoints);
 return (
     <div className="relative h-[150%] w-[100%]">
  {/* ============SIDE BAR========= */}
@@ -453,7 +472,7 @@ return (
                   toggleSideBar ? "lg:text-[18px]" : "lg:text-[24px]"
                 } ${styles.walletText} `}
               >
-              {Data?.ConfirmAcc === "true" ? "Available Balance" : "No Account Created"}
+           Available Balance
               </p>
 
               {blur && (
@@ -557,7 +576,18 @@ return (
                     </span>
                   ) : (
                      <span className="flex items-center text-[19px] leading-normal lg:text-[37px]">
-                    {userPoints}
+                      {loading === true ? (
+                        <BalanceLoading/>
+                      ): (
+                    userPoints  !== null 
+                    && userPoints !== undefined ? userPoints?.toLocaleString("en-NG", {
+                      style : "currency",
+                      currency : "NGN"
+                    }) : userPoints?.length > 1 ? Number(userPoints)?.toLocaleString("en-NG", {
+                      style : "currency",
+                      currency : "NGN"
+                    }) : userPoints
+                      )}
                      </span>
             
                   )}
@@ -940,7 +970,7 @@ return (
           </div> 
     
       {sessionModal && (
-     <HandleUserSession/>
+     <InternalLoginSession setExpiredSessionLogin={setSessionModal}/>
       )}
       </div>
   

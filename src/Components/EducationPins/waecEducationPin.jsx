@@ -30,10 +30,10 @@ import "../Dashboard/DashboardComponents/DataTopUpPage/DataTopUp.css";
 import eduFailed from "./imagesEducation/WaecFailedTransaction.svg";
 import {
   GetFunction,
-  HandleUserSession,
   PostFunction,
   VerifyTransPin,
-  RestrictionPopUp
+  RestrictionPopUp,
+  InternalLoginSession
 } from "../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../Loader/Loader";
 import { GetLocalStorage } from "../LocalStorage/LocalStorage";
@@ -2249,7 +2249,7 @@ console.log(eduResponse?.data?.data?.Amount);
           <Loader />
         </Modal>
       )}
-      {sessionModal && <HandleUserSession />}
+      {sessionModal && <InternalLoginSession setExpiredSessionLogin = {setSessionModal}/>}
       {sessionModal === false && restrictUser &&(
         <RestrictionPopUp/>
       )}

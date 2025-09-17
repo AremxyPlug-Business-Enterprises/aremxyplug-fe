@@ -1,4 +1,3 @@
-//import React from 'react';
 import { useState, useEffect } from 'react';
 import styles from './AirtimeVtu.module.css'
 import { DashBoardLayout } from '../Dashboard/Layout/DashBoardLayout';
@@ -22,7 +21,7 @@ import { AirtimeVtuReceipt } from './AirtimeVtuReceipt';
 import { AirtimeReceiptFailed } from './AirtimeReceiptFailed';
 import axiosInstance from '../ApiCollection.jsx/apiClient';
 import { Loader } from '../Loader/Loader';
-import { VerifyTransPin, GetFunction, HandleUserSession, RestrictionPopUp } from '../ApiCollection.jsx/ApiBuck';
+import { VerifyTransPin, GetFunction, InternalLoginSession, RestrictionPopUp } from '../ApiCollection.jsx/ApiBuck';
 import Select from  "../Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundles-Images/Select.svg";
 import { GetLocalStorage } from '../LocalStorage/LocalStorage';
 
@@ -764,7 +763,7 @@ const HandleAirtime = async () => {
                                                     </div>
                                                     <h2 className={`
                                                     ${
-                                                        isDarkMode ? "!text-[#7C7C7C] !bg-black !border !border-none !border-0 !border-width:0" : ""
+                                                        isDarkMode ? "!text-[#7C7C7C] !bg-black !border-none !border-0 !border-width:0" : ""
                                                     }
                                                     ${styles.head2x}
                                                      !text-[13px] md:!text-[13px]`}>{networkName}</h2>
@@ -795,7 +794,7 @@ const HandleAirtime = async () => {
                      
                    lg:text-[16px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[10]
                  
-                                      ${isDarkMode ? "!bg-black md:!bg-black border border-white border-2 rounded-[5px]" : "border border-none rounded-[5px] text-[#7C7C7C] bg-[#FFF]"}
+                                      ${isDarkMode ? "!bg-black md:!bg-black  border-white border-2 rounded-[5px]" : "border border-none rounded-[5px] text-[#7C7C7C] bg-[#FFF]"}
         `}
                                     >
                                         {networkList.map((item) => (
@@ -1688,7 +1687,7 @@ const HandleAirtime = async () => {
                 </Modal>
             )}
             {sessionModal && (
-                <HandleUserSession/>
+                <InternalLoginSession setExpiredSessionLogin={setSessionModal}/>
             )}
             {restrictUser && <RestrictionPopUp/>}
         </DashBoardLayout>

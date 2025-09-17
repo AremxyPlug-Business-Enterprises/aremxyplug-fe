@@ -28,10 +28,10 @@ import eduFailed from "./imagesEducation/WaecFailedTransaction.svg";
 import "../Dashboard/DashboardComponents/DataTopUpPage/DataTopUp.css";
 import {
   GetFunction,
-  HandleUserSession,
   PostFunction,
   VerifyTransPin,
-  RestrictionPopUp
+  RestrictionPopUp,
+  InternalLoginSession
 } from "../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../Loader/Loader";
 import { validateNigerianNumberByNetwork } from "./waecEducationPin";
@@ -1806,7 +1806,7 @@ console.log(necoEduResponse?.data?.data?.Amount);
           <Loader />
         </Modal>
       )}
-      {sessionModal && <HandleUserSession />}
+      {sessionModal && <InternalLoginSession setExpiredSessionModal ={setSessionModal} />}
       {sessionModal === false && restrictUser &&(
         <RestrictionPopUp/>
       ) }

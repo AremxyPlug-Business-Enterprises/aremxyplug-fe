@@ -17,14 +17,14 @@ import britainFlag from '../../Components/EducationPins/imagesEducation/Britain.
 import euroFlag from '../../Components/EducationPins/imagesEducation/GBP.svg';
 import austriaFlag from '../../Components/EducationPins/imagesEducation/Austria.svg';
 import kenyaFlag from '../../Components/EducationPins/imagesEducation/Kenya.svg';
-import {VerifyTransPin} from "../../Components/ApiCollection.jsx/ApiBuck";
+import {InternalLoginSession, VerifyTransPin} from "../../Components/ApiCollection.jsx/ApiBuck";
 import {Loader} from "../Loader/Loader";
 import {Modal} from "../Screens/Modal/Modal";
 import { useNavigate } from "react-router-dom";
 import {PostFunction} from "../../Components/ApiCollection.jsx/ApiBuck";
 import { GetFunction } from "../ApiCollection.jsx/ApiBuck";
 import { BalanceLoading } from "../Loader/Loader";
-import { HandleUserSession, RestrictionPopUp } from "../../Components/ApiCollection.jsx/ApiBuck";
+import {  RestrictionPopUp } from "../../Components/ApiCollection.jsx/ApiBuck";
 import { GetLocalStorage } from "../LocalStorage/LocalStorage";
 const StarTimes = () => {
 const Data = GetLocalStorage();
@@ -353,6 +353,7 @@ const Data = GetLocalStorage();
   const handleTvEmail = (e) => {
     const inputValue = e.target.value;
     setStarTimesEmail(inputValue);
+    setStarTimesSubscriptionResponse({});
   }
 
   // const handleStarTimes = (event) => {
@@ -1134,7 +1135,7 @@ window.addEventListener("online", ()=> {
                  </Modal>
             ) } 
             {sessionModal &&(
-              <HandleUserSession/>
+              <InternalLoginSession setExpiredSessionLogin={setSessionModal}/>
             )}
             {restrictUser && sessionModal === false && (
               <RestrictionPopUp/>

@@ -7,7 +7,6 @@ import pickPinIcon from "../../../../My Profile & Account Settings/ProfileImages
 import { GetLocalStorage } from "../../../../LocalStorage/LocalStorage";
 import { GetFunction } from "../../../../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../../../../Loader/Loader";
-import { HandleUserSession } from "../../../../ApiCollection.jsx/ApiBuck";
 import { MainInputPinPop } from "./MainInputPinPop";
 import { useNavigate } from "react-router-dom";
 import nigerianFlag from "../../../../Dashboard/DashboardComponents/flagsImages/nigeriaFlag.png";
@@ -19,6 +18,7 @@ import euroFlag from "../../../DashboardComponents/flagsImages/europeanFlag.png"
 import currencyImage from  "../../../../EducationPins/imagesEducation/arrow-down.svg";
 import AremxySelectUser from "./AremxySelectUser";
 import { RestrictionPopUp } from "../../../../ApiCollection.jsx/ApiBuck";
+import { InternalLoginSession } from "../../../../ApiCollection.jsx/ApiBuck";
 // import { useNavigate } from "react-router-dom";
 
 export default function ToAremxyMain(Data) {
@@ -462,10 +462,12 @@ const GetBalance = async () => {
 
 //  console.log(amtToTransfer)
   return (
+   
     <div
       className="flex flex-col gap-[20px] 
     lg:gap-x-[40px] w-full"
     >
+     
       <div
         className="flex flex-col gap-[15px] 
       md:flex-row lg:gap-[30px]"
@@ -1151,8 +1153,13 @@ const GetBalance = async () => {
       />
       <MainInputPinPop fetchedResponse={fetchedResponse} />
       {loading && <Loader />}
-      {restrictUser && <RestrictionPopUp/>}
-      {sessionModal && <HandleUserSession />}
+      {(restrictUser && sessionModal === false ) && <RestrictionPopUp/>}
+      {sessionModal && <InternalLoginSession setExpiredSessionLogin={ setSessionModal} />}
+     
+
+       
+       
+    
     </div>
   );
 }

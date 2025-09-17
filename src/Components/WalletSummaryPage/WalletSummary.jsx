@@ -20,7 +20,7 @@ import {
   Link,
   useNavigate,
 } from "react-router-dom/dist/react-router-dom.development";
-import { GetFunction, HandleUserSession } from "../ApiCollection.jsx/ApiBuck";
+import { GetFunction, InternalLoginSession } from "../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../Loader/Loader";
 import { Modal } from "../Screens/Modal/Modal";
 import NoRecordImage from "../Add&SelectRecipient/RecipientImages/NoRecordImage.svg";
@@ -1247,7 +1247,7 @@ const FormatTime =(DateValue)=> {
               <Loader />
             </Modal>
           )}
-          {sessionModal && <HandleUserSession />}
+          {sessionModal && <InternalLoginSession setExpiredSessionLogin = {setSessionModal} />}
         </div>
       </>
     </DashBoardLayout>

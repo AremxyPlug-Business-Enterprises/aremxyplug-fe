@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import style from "../../../../AirTimePage/AirtimeVtu.module.css";
 import styled from "../../../../AirTimePage/AirTime.module.css";
 import { Modal } from "../../../../Screens/Modal/Modal";
-import {GetFunction, PostFunction, HandleUserSession } from "../../../../ApiCollection.jsx/ApiBuck";
+import {GetFunction, PostFunction,RestrictionPopUp, InternalLoginSession } from "../../../../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../../../../Loader/Loader";
 import { GetLocalStorage } from "../../../../LocalStorage/LocalStorage";
 import nigerianFlag from "../../../../Dashboard/DashboardComponents/flagsImages/nigeriaFlag.png";
@@ -29,8 +29,8 @@ const AremxyAddUser = (Data) => {
  const [loading, setLoading] = useState(false);
  const [sessionModal, setSessionModal] = useState(false);
  const [transferValue, setTransferValue] = useState("");
-
- const [recipientResponse, setRecipientResponse] = useState({})
+  const [restrictUser, setRestrictUser] = useState(false);
+// const [recipientResponse, setRecipientResponse] = useState({})
  Data = GetLocalStorage()
 
 
@@ -39,6 +39,7 @@ const AremxyAddUser = (Data) => {
 const updateBalance = passDataBalance?.data?.data?.data !== undefined
     ? passDataBalance?.data?.data?.data?.balance
     : "";
+  
   const updateBalanceToNumber = Number(updateBalance)
   const newBalanceToNumber = Number(newBalance)
      const methodOptions = [
@@ -82,13 +83,7 @@ const updateBalance = passDataBalance?.data?.data?.data !== undefined
   const [confirm, setConfirm] = useState(false);
   const [currencyAvailable, setCurrencyAvailable] = useState(false);
 
-  const handleCountryClick = (name, flag, id, code) => {
-    setFlag(flag);
-    setShowList(false);
-    setMainCountry(name);
-    setSelected(true);
-    setCurrencyAvailable(id !== 1);
-  };
+  
 
   const refresh = () => window.location.reload(true);
 
@@ -242,7 +237,7 @@ const updateBalance = passDataBalance?.data?.data?.data !== undefined
         if(ErrorType === "unauthorised"){
           setSessionModal(true)
         }
-}, setRecipientResponse
+}, ()=> {}
     )
       }else if(ErrorType === "Network error" || ErrorType === "User error"){
      alert("Kindly check your internet connection");
@@ -251,13 +246,13 @@ const updateBalance = passDataBalance?.data?.data?.data !== undefined
     }
    }
    await PostFunction("bank-recipient", setLoading,body,
-      SuccessHandler, FailedHandler, setRecipientResponse
+      SuccessHandler, FailedHandler, ()=>{}
     )
 }
 
 //GetBalance Function
   useEffect(()=> {
-
+if(Data?.ConfirmAcc === "true"){
 const GetBalance = async () => {
       const SuccessHandler = () => {
         //alert("Successful");
@@ -371,16 +366,16 @@ const GetBalance = async () => {
                      // Simulate async data loading
                     if((newBalance === "" ||
        newBalance === null ||
-        newBalance === undefined) && Data?.ConfirmAcc === "true"){
+        newBalance === undefined)){
                         GetBalance();
                         if(GetBalance){
                          setNewBalance(passDataBalance?.data?.data?.data !== undefined
                            ? passDataBalance?.data?.data?.data?.balance : "");
                         }
-                      }else{
-                        console.log("Create an account to access this feature.")
-    
                       }
+                    }else{
+                      setRestrictUser(false)
+                    }
                       //eslint-disable-next-line
   }, [])
   
@@ -889,8 +884,11 @@ const GetBalance = async () => {
             </Modal>
           )}
           {sessionModal && (
-            <HandleUserSession/>
+            <InternalLoginSession setExpiredSessionLogin ={setSessionModal}/>
           )}
+          {restrictUser && sessionModal === false && (
+        <RestrictionPopUp/>
+      ) }
         </div>
         <div className={style.help}>
           <h2>You need help?</h2>

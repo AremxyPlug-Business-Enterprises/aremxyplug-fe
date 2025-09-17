@@ -11,7 +11,7 @@ import { Calender } from "../Calender";
 import "../DataTopUpPage/DataTopUp.css";
 import {
   GetFunction,
-  HandleUserSession,
+  InternalLoginSession,
 } from "../../../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../../../Loader/Loader";
 import NoRecordImage from "../../../Add&SelectRecipient/RecipientImages/NoRecordImage.svg";
@@ -1639,7 +1639,7 @@ return date?.toISOString()?.slice(0, 10);
           <Loader />
         </Modal>
       )}
-      {sessionModal && <HandleUserSession />}
+      {sessionModal && <InternalLoginSession setExpiredSessionLogin={setSessionModal} />}
     </DashBoardLayout>
   );
 };

@@ -9,6 +9,7 @@ import styles from "../../../Components/Dashboard/DashboardComponents/TransferCo
 import Success from "../ProfileImages/success.gif";
 import axios from "axios";
 import { Loader } from "../../Loader/Loader";
+import { InternalLoginSession } from "../../ApiCollection.jsx/ApiBuck";
 const ChangePassword = () => {
   const { toggleSideBar, isDarkMode } = useContext(ContextProvider);
 
@@ -17,7 +18,8 @@ const ChangePassword = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [update, setUpdate] = useState("");
-const [loading, setLoading] = useState(false)
+const [loading, setLoading] = useState(false);
+const [sessionModal, setSessionModal] = useState(false)
   const validatePassword = (password) => {
     const passwordRegex =
       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -40,7 +42,7 @@ const [loading, setLoading] = useState(false)
      const response = await axios.patch(url,data,{headers : {"Content-Type":"application/json",
       Authorization : getToken || authToken
      }})
-     if(response.status === 200 || 201){
+     if(response.status === 200 || response.status === 201){
       setUpdate(true);
      }
   
@@ -48,7 +50,27 @@ const [loading, setLoading] = useState(false)
        if(error.response.status === 400){
         alert("Invalid Old Password")
        }else if(error && error.response.status === 401){
-       alert("Unable to change your password, Your session has timed out.")
+        if(error.response?.headers.get("x-new-auth-token") || error.response?.headers["x-new-auth-token"]){
+             setLoading(true)
+         const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
+        
+         if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
+             console.log(newToken)
+          localStorage.setItem("authorisedLogin", newToken);
+          
+          if( localStorage.getItem("authorisedLogin")?.length > 1){
+            return ChangeUserPin();
+          }
+           }else{
+      localStorage.setItem("getToken", newToken);
+       console.log(getToken);
+          if(localStorage.getItem("getToken")?.length > 1){
+            return ChangeUserPin();
+          }
+      }}else{
+        return setSessionModal(true);
+      }
+        
        }else if(error.response.status === 404){
         alert("Check your internet connection")
        }else if(error.response.status === 500){
@@ -239,6 +261,10 @@ setErrorMessage("Please fill in all fields");
         <Modal>
         <Loader/>
         </Modal>
+      )}
+      {sessionModal && (
+        <InternalLoginSession 
+        setExpiredSessionModal = {setSessionModal}/>
       )}
     </div>
   );

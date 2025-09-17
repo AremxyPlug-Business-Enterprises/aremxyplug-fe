@@ -4,7 +4,6 @@ import { useContext, useState, useEffect } from "react";
 import { ContextProvider } from "../../Context";
 import { Modal } from "../../Screens/Modal/Modal";
 import arrowRight from "../../../Components/EducationPins/imagesEducation/educationArrowRight.svg";
-import styles from '../../AirTimePage/AirtimeVtu.module.css'
 
 const ConfirmShowmaxPopup = ({passDataBalance}) => {
 

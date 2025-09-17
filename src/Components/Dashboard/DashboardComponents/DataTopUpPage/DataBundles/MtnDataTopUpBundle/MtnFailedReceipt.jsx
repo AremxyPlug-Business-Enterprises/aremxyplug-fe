@@ -8,9 +8,9 @@ import { ContextProvider } from "../../../../../Context";
 import { useLocation } from "react-router-dom";
 import { DashBoardLayout } from "../../../../Layout/DashBoardLayout";
 import { GetLocalStorage } from "../../../../../LocalStorage/LocalStorage";
-
+import { useNavigate } from "react-router-dom";
 export const MtnFailedReceipt = (Data) => {
-
+const navigate= useNavigate()
   Data = GetLocalStorage()
   const location = useLocation();
   const {
@@ -89,12 +89,13 @@ export const MtnFailedReceipt = (Data) => {
 
   const handleChange = () => {
   //  setSelectedNetworkProductMtn(false);
-    setSelectedProductMtn()
+    setSelectedProductMtn("")
     setSelectedOptionMtn(false);
     setSelectedAmountMtn("");
     setRecipientNamesMtn("");
     setWalletNameMtn("");
     setRecipientPhoneNumberMtn("");
+   navigate("/MtnDataTopUpBundle");
   };
 
   return (

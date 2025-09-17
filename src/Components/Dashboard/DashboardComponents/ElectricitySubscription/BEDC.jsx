@@ -21,12 +21,13 @@ import { Link, useNavigate } from "react-router-dom";
 import {
   PostFunction,
   VerifyTransPin,
-  HandleUserSession,
+  InternalLoginSession,
   GetFunction,
+  RestrictionPopUp
 } from "../../../ApiCollection.jsx/ApiBuck";
 import { BalanceLoading, Loader } from "../../../Loader/Loader";
 import { validateNigerianNumberByNetwork } from "./AEDC";
-
+import { GetLocalStorage } from "../../../LocalStorage/LocalStorage";
 const BEDC = () => {
   const navigate = useNavigate();
   const {
@@ -82,7 +83,8 @@ const BEDC = () => {
   const [showProductList, setShowProductList] = useState(false);
   const [sessionModal, setSessionModal] = useState(false);
   const pointsEarned = "+2.00";
-
+  const [restrictUser, setRestrictUser] = useState(false)
+  const Data = GetLocalStorage()
   // const handleValidate = () => {
 
   //   if (isEmailOrNumberValid(email) || isEmailOrNumberValid(number)) {
@@ -141,6 +143,7 @@ const BEDC = () => {
   };
   // get the balance on entering the page
   useEffect(() => {
+    if(Data?.ConfirmAcc === "true"){
     if (newBalance === "" || newBalance === null || newBalance === undefined) {
       GetBalance();
       if (GetBalance) {
@@ -151,6 +154,9 @@ const BEDC = () => {
         );
       }
     }
+  }else{
+    setRestrictUser(true)
+  }
     // handleResetFields();
     // eslint-disable-next-line
   }, []);
@@ -1715,7 +1721,11 @@ const BEDC = () => {
           <Loader />
         </Modal>
       )}
-      {sessionModal && <HandleUserSession />}
+      {sessionModal &&
+       <InternalLoginSession setExpiredSessionLogin ={setSessionModal} />}
+       {restrictUser && sessionModal === false && (
+               <RestrictionPopUp/>
+             ) }
     </DashBoardLayout>
   );
 };

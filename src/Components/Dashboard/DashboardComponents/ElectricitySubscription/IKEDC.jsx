@@ -18,11 +18,12 @@ import { AiFillEye } from "react-icons/ai";
 import OtpInput from "react-otp-input";
 import { Link, useNavigate } from "react-router-dom";
 import { BalanceLoading, Loader } from "../../../Loader/Loader";
-
+import { GetLocalStorage } from "../../../LocalStorage/LocalStorage";
 import {
   PostFunction,
   VerifyTransPin,
-  HandleUserSession,
+  InternalLoginSession,
+  RestrictionPopUp,
   GetFunction,
 } from "../../../ApiCollection.jsx/ApiBuck";
 import { validateNigerianNumberByNetwork } from "./AEDC";
@@ -79,9 +80,10 @@ const IKEDC = () => {
     purchaseElectricityErrorType,
     setPurchaseElectricityErrorType,
   } = useContext(ContextProvider);
-
+ const Data = GetLocalStorage()
   const [showProductList, setShowProductList] = useState(false);
   const [sessionModal, setSessionModal] = useState(false);
+
   const pointsEarned = "+2.00";
 
   // const handleValidate = () => {
@@ -114,7 +116,7 @@ const IKEDC = () => {
   };
   const [loading, setLoading] = useState(false);
   const [passDataBalance, setPassDataBalance] = useState({});
-
+  const [restrictUser, setRestrictUser] = useState(false);
   const GetBalance = async () => {
     const SuccessHandler = () => {
       console.log("successfully retrieved balance");
@@ -144,7 +146,8 @@ const IKEDC = () => {
   };
   // get the balance on entering the page
   useEffect(() => {
-    if (newBalance === "" || newBalance === null || newBalance === undefined) {
+    if(Data?.ConfirmAcc === "true"){
+    if(newBalance === "" || newBalance === null || newBalance === undefined) {
       GetBalance();
       if (GetBalance) {
         setNewBalance(
@@ -154,6 +157,9 @@ const IKEDC = () => {
         );
       }
     }
+  }else{
+    setRestrictUser(true)
+  }
     // handleResetFields();
     // eslint-disable-next-line
   }, []);
@@ -1731,7 +1737,11 @@ const IKEDC = () => {
           <Loader />
         </Modal>
       )}
-      {sessionModal && <HandleUserSession />}
+      {sessionModal &&
+            <InternalLoginSession setexpiredSessionLogin ={setSessionModal} />}
+           {restrictUser && sessionModal === false && (
+             <RestrictionPopUp/>
+           ) }
     </DashBoardLayout>
   );
 };

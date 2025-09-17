@@ -21,11 +21,13 @@ import { Link, useNavigate } from "react-router-dom";
 import {
   PostFunction,
   VerifyTransPin,
-  HandleUserSession,
+  InternalLoginSession,
+  RestrictionPopUp,
   GetFunction,
 } from "../../../ApiCollection.jsx/ApiBuck";
 import { BalanceLoading, Loader } from "../../../Loader/Loader";
 import { validateNigerianNumberByNetwork } from "./AEDC";
+import { GetLocalStorage } from "../../../LocalStorage/LocalStorage";
 
 const KAEDCO = () => {
   const navigate = useNavigate();
@@ -81,6 +83,7 @@ const KAEDCO = () => {
 
   const [showProductList, setShowProductList] = useState(false);
   const [sessionModal, setSessionModal] = useState(false);
+  const [restrictUser, setRestrictUser] = useState(false)
   const pointsEarned = "+2.00";
 
   // const handleValidate = () => {
@@ -105,6 +108,7 @@ const KAEDCO = () => {
       name: "Postpaid",
     },
   ];
+  const Data = GetLocalStorage()
   const handleSelectProduct = (productName) => {
     setSelectedKaedcoMeterType(productName);
     // setSelectedOption("");
@@ -142,6 +146,7 @@ const KAEDCO = () => {
   };
   // get the balance on entering the page
   useEffect(() => {
+    if(Data?.ConfirmAcc === "true"){
     if (newBalance === "" || newBalance === null || newBalance === undefined) {
       GetBalance();
       if (GetBalance) {
@@ -152,6 +157,9 @@ const KAEDCO = () => {
         );
       }
     }
+  }else{
+    setRestrictUser(true)
+  }
     // handleResetFields();
     // eslint-disable-next-line
   }, []);
@@ -1719,7 +1727,11 @@ const KAEDCO = () => {
           <Loader />
         </Modal>
       )}
-      {sessionModal && <HandleUserSession />}
+     {sessionModal &&
+           <InternalLoginSession setexpiredSessionLogin ={setSessionModal} />}
+          {restrictUser && sessionModal === false && (
+            <RestrictionPopUp/>
+          ) }
     </DashBoardLayout>
   );
 };

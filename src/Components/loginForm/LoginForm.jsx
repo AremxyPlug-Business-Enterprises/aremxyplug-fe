@@ -250,8 +250,10 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
               alert("Server error: try some other time");
               }else if (error.status === 404) {
                 alert("User not found");
-              } else if ( error.status === 401 || 400) {
+              } else if ( error.status === 401 || error.status === 400) {
                 alert("Incorrect Password or Username");
+              }else if ( error.status === 403) {
+                alert("Login Failed due to many retries");
               }else if(error && error.response.status === undefined){
                 alert("Check your internet Connection");
           }else {
@@ -338,8 +340,10 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
               }else if(error.status === 404){
                 alert("User not found")
                    }
-                   else if (error.status === 401 || 400) {
+                   else if (error.status === 401 || error.status === 400) {
                      alert("Incorrect Password or Email");
+                   } else if (error.status === 403) {
+                     alert("Login Failed due to many retries.");
                    } else {
                      console.log(error);
                    }

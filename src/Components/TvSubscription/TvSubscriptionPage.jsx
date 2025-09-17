@@ -3,7 +3,7 @@ import { DashBoardLayout } from "../Dashboard/Layout/DashBoardLayout";
 import "../TvSubscription/TvSubscription.css";
 import { Link, useNavigate } from "react-router-dom";
 import style from "../AirTimePage/AirtimeVtu.module.css";
-import { GetFunction, HandleUserSession} from "../ApiCollection.jsx/ApiBuck";
+import { GetFunction, InternalLoginSession} from "../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../Loader/Loader";
 import { Modal } from "../Screens/Modal/Modal";
 import { ContextProvider } from "../Context";
@@ -68,8 +68,9 @@ export const TvSubscription = () =>{
    setStarTimesDecoderType,
     setStarTimesFlagResult,
     setStarTimesWalletBalance,
-   // formatNumberWithCommas,
-   } = useContext(ContextProvider)
+     setTvSubscriptionResponse,
+     setDstvSubscriptionResponse,
+    } = useContext(ContextProvider)
     const navigate = useNavigate();
 const [sessionModal, setSessionModal]= useState(false)
 
@@ -90,34 +91,36 @@ setShowMaxEmail("");
 }
 
 const ResetDsTvFields =()=> {
-  setDstvEmail("")
-   setDstvMobileNumber("")
+  setDstvEmail("");
+   setDstvMobileNumber("");
    setDstvSmartCard("");
-   setDstvCardName("")
+   setDstvCardName("");
    setDstvAmount("");
    setDstvOrderId("");
    setDstvDescription("")
    setDstvTransactionId("");
    setSelectedOptionDstv("");
    setPackageDstv("");
-   setDstvDecoderType("DStv")
+   setDstvDecoderType("DStv");
     setDstvFlagResult("");
     setDstvWalletBalance("");
+    setDstvSubscriptionResponse({})
 }
 
 const ResetGoTvFields = ()=> {
-   setTvEmail("")
-   setMobileNumber("")
+   setTvEmail("");
+   setMobileNumber("");
    setSmartCard("");
    setTvAmount("");
    setGotvOrderId("");
-   setGotvDescription("")
+   setGotvDescription("");
    setGotvTransactionId("");
    setSelectedOptionGOTV("");
    setPackageGotv("");
-   setDecoderType("GOtv")
+   setDecoderType("GOtv");
     setFlagResult("");
     setTvWalletBalance("");
+     setTvSubscriptionResponse({});
 }
 
 const ResetStarTimesFields = ()=> {
@@ -143,7 +146,7 @@ const GetFunctionHandler = async(GlobalTvSubscription,tvPage, TvSubscriptionValu
      ResetDsTvFields()
       }else if(GlobalTvSubscription === 2){
         ResetStarTimesFields()
-      }else if(GlobalTvSubscription ===3){
+      }else if(GlobalTvSubscription === 3){
        ResetShowMaxFields()
       }
       return navigate(tvPage)
@@ -461,7 +464,7 @@ return(
                
             </div>
              {sessionModal && (
-                    <HandleUserSession/>
+                    <InternalLoginSession/>
                 )}
         </DashBoardLayout>
     )

@@ -42,6 +42,7 @@ export const GotvReceipt = (Data) => {
     setTvWalletBalance,
     purchaseGotvErrorType,
     tvSubscriptionResponse,
+    setTvSubscriptionResponse
     
    } =
     useContext(ContextProvider);
@@ -125,6 +126,7 @@ export const GotvReceipt = (Data) => {
     setFlagResult("");
     setTvWalletBalance("");
    navigate("/GoTv");
+   setTvSubscriptionResponse({});
   }
 
 

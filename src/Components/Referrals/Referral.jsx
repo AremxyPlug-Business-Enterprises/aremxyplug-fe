@@ -11,11 +11,11 @@ import rightArrow from "../Referrals/referralImage/rightArrowRefer.svg";
 import arrowDown from "../Referrals/referralImage/arrow-down.svg";
 import NoRecordImage from "../Add&SelectRecipient/RecipientImages/NoRecordImage.svg";
 import { Link } from "react-router-dom/dist/react-router-dom.development";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import "../../App.css";
 import {
   GetFunction,
-  HandleUserSession,
+  InternalLoginSession,
 } from "../../Components/ApiCollection.jsx/ApiBuck";
 import { Loader } from "../Loader/Loader";
 import { Modal } from "../Screens/Modal/Modal";
@@ -113,25 +113,29 @@ export default function Referral() {
   }, []);
 
   useEffect(() => {
+    
     const fetchReferredUsers = async () => {
       await handleReferredUsers();
     };
+    if(referredUsersResponse?.data?.data?.referrals === undefined){
     fetchReferredUsers();
+    }
     //eslint-disable-next-line
   }, []);
 
   const handleReferredUsers = async () => {
     const Path = "extra/referral/referred-users";
     const successHandler = (response) => {
-      console.log("Referred Users:", response.data.data);
-      console.log("Referred Use:", response.data.data.referrals);
+     
       const referredUsersResponse = response?.data?.data?.referrals;
-      setTotalUsers(referredUsersResponse?.length);
+      setTotalUsers(referredUsersResponse === null ? 0 : referredUsers?.length);
       setActiveUsers(
-        referredUsersResponse?.filter((user) => user.is_active === true)?.length
+        referredUsersResponse !== null || referredUsersResponse?.length > 0? 
+        referredUsersResponse?.filter((user) => user.is_active === true)?.length : 0
       );
       setInactiveUsers(
-        referredUsersResponse?.filter((user) => user.is_active === false).length
+        referredUsersResponse !== null || referredUsersResponse?.length > 0 ?
+        referredUsersResponse?.filter((user) => user.is_active === false).length : 0
       );
     };
 
@@ -139,7 +143,7 @@ export default function Referral() {
       if (ErrorType === "unauthorised") {
         await GetFunction(
           Path,
-          setIsLoading,
+        ()=> {},
           successHandler,
           (ErrorType) => {
             if (ErrorType === "unauthorised") {
@@ -151,7 +155,7 @@ export default function Referral() {
       } else if (ErrorType === "Server error") {
         await GetFunction(
           Path,
-          setIsLoading,
+          ()=> {},
           successHandler,
           (ErrorType) => {
             if (ErrorType === "Server error") {
@@ -176,7 +180,7 @@ export default function Referral() {
     };
     await GetFunction(
       Path,
-      setIsLoading,
+    ()=>{},
       successHandler,
       FailedHandler,
       setReferredUsersResponse
@@ -186,6 +190,7 @@ export default function Referral() {
   const referredUsers = referredUsersResponse
     ? referredUsersResponse?.data?.data?.referrals
     : [];
+    
 
   return (
     <DashBoardLayout>
@@ -429,22 +434,22 @@ export default function Referral() {
             {referredUsers?.length > 0 ? (
               referredUsers?.map((user) => (
                 <div
-                  key={user.user_id}
+                  key={user?.user_id}
                   className="flex justify-between py-[31.5px] border-b border-b-[black] border-opacity-[20%]"
                 >
                   {/* left */}
                   <div className="flex flex-col gap-[7.648px]">
                     <h2 className="font-semibold text-[9.167px] leading-[11.167px]">
                       {/* Habib Kamaldeen */}
-                      {user.full_name}
+                      {user?.full_name}
                     </h2>
                     <h2 className="font-semibold text-[9.167px] leading-[11.167px]">
                       {/* Aremxyplug */}
-                      {user.username}
+                      {user?.username}
                     </h2>
                     <p className="font-semibold text-[#7C7C7C] text-[9.167px] leading-[11.167px]">
                       {/* aremxyplug */}
-                      {user.referred_id}
+                      {user?.referred_id}
                     </p>
                   </div>
                   {/* rightSide */}
@@ -452,16 +457,16 @@ export default function Referral() {
                     <p
                       className={`font-semibold self-end text-[9.167px] leading-[11.167px] cursor-pointer py-[2.122px] px-[4.245px] rounded-[1.22px]
                     ${
-                      user.is_active === true ? "bg-[#97E8B9]" : "bg-[#FDCECE]"
+                      user?.is_active === true ? "bg-[#97E8B9]" : "bg-[#FDCECE]"
                     } `}
                     >
                       {/* Active */}
-                      {user.is_active === true ? "Active" : "Inactive"}
+                      {user?.is_active === true ? "Active" : "Inactive"}
                     </p>
                     <p className="font-medium text-[10px] text-[#7C7C7C] leading-[13px]">
                       <span className="block">
                         {/* May 21st, 2023, */}
-                        {new Date(user.referred_at).toLocaleDateString(
+                        {new Date(user?.referred_at).toLocaleDateString(
                           "en-US",
                           {
                             year: "numeric",
@@ -473,7 +478,7 @@ export default function Referral() {
                       </span>
                       <span className="block">
                         {/* 07:21:00pm */}
-                        {new Date(user.referred_at).toLocaleTimeString(
+                        {new Date(user?.referred_at).toLocaleTimeString(
                           "en-US",
                           {
                             hour: "2-digit",
@@ -554,7 +559,7 @@ export default function Referral() {
                       <td className="w-1/5 lg:pt-[30.5px] lg:pb-[28.5px] md:pt-[17.51px] md:pb-[16.36px] p-[0px]">
                         <p className=" text-left font-semibold leading-[20.8px] border-none md:text-[9.167px] md:leading-[11.917px] lg:text-base lg:leading-[20.8px]">
                           <span className="md:block">
-                            {new Date(user.referred_at).toLocaleDateString(
+                            {new Date(user?.referred_at).toLocaleDateString(
                               "en-US",
                               {
                                 year: "numeric",
@@ -565,7 +570,7 @@ export default function Referral() {
                             ,
                           </span>
                           <span className="md:block">
-                            {new Date(user.referred_at).toLocaleTimeString(
+                            {new Date(user?.referred_at).toLocaleTimeString(
                               "en-US",
                               {
                                 hour: "2-digit",
@@ -581,7 +586,7 @@ export default function Referral() {
                         <p className="lg:text-base text-left font-semibold lg:leading-[20.8px] md:text-[9.167px] md:leading-[11.917px] ">
                           <span className="md:block">
                             {/* Habib */}
-                            {user.full_name}
+                            {user?.full_name}
                           </span>
                           {/* <span className="md:block">Kamaldeen</span> */}
                         </p>
@@ -589,25 +594,25 @@ export default function Referral() {
                       <td className="w-1/5 pt-[30.5px] lg:pt-[30.5px] lg:pb-[28.5px] md:pt-[17.51px] md:pb-[16.36px] p-[0px]">
                         <p className="lg:text-base text-left font-semibold lg:leading-[20.8px] md:text-[9.167px] md:leading-[11.917px]">
                           {/* Aremxyplug */}
-                          {user.username}
+                          {user?.username}
                         </p>
                       </td>
                       <td className="w-1/5 flex-start md:pt-[17.51px] md:pb-[16.36px] lg:pt-[30.5px] lg:pb-[28.5px] p-[0px]">
                         <p className="lg:text-base text-left font-semibold lg:leading-[20.8px] md:text-[9.167px] md:leading-[11.917px]">
                           {/* aremxyplug */}
-                          {user.referred_id}
+                          {user?.referred_id}
                         </p>
                       </td>
                       <td className="w-1/5 flex justify-start items-start md:pt-[17.51px] md:pb-[16.36px] lg:pt-[30.5px] lg:pb-[28.5px] p-[0px]">
                         <p
                           className={`lg:text-base text-left font-semibold lg:leading-[20.8px] py-[4px] px-[12px] bg-[#CED9FF] md:text-[9.167px] md:leading-[11.917px] md:rounded-[3.438px] ${
-                            user.is_active === true
+                            user?.is_active === true
                               ? "bg-[#CED9FF]"
                               : "bg-[#FDCECE]"
                           }`}
                         >
                           {/* Active */}
-                          {user.is_active === true ? "Active" : "Inactive"}
+                          {user?.is_active === true ? "Active" : "Inactive"}
                         </p>
                       </td>
                     </tr>
@@ -644,7 +649,9 @@ export default function Referral() {
             <Loader />
           </Modal>
         )}
-        {sessionModal && <HandleUserSession />}
+        {sessionModal
+         && <InternalLoginSession
+          setExpiredSessionModal ={setSessionModal} />}
       </div>
     </DashBoardLayout>
   );

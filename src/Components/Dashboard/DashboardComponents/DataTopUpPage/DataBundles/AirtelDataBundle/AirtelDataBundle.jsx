@@ -1,4 +1,3 @@
-import React from "react";
 import { useState, useEffect } from "react";
 import { DashBoardLayout } from "../../../../Layout/DashBoardLayout";
 import { ContextProvider } from "../../../../../Context";
@@ -28,7 +27,8 @@ import axiosInstance from "../../../../../ApiCollection.jsx/apiClient";
 import {
   GetFunction,
   VerifyTransPin,
-  RestrictionPopUp
+  RestrictionPopUp,
+  InternalLoginSession
 } from "../../../../../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../../../../../Loader/Loader";
 import { HandleUserSession } from "../../../../../ApiCollection.jsx/ApiBuck";
@@ -644,11 +644,10 @@ const assumedString = selectedAmountAirtel?.toString()
 
         const response = await axiosInstance.post(path, data);
         //  console.log(response.data);
-        console.log(response.status);
+       
 
         const resData = response?.data?.data?.data; // Accessing the nested `data` object
-        console.log(resData);
-        console.log(response?.status);
+       
         setAirtelTransactionID(resData?.transaction_id);
         setAirtelRefNumber(resData?.reference_number);
         setAirtelOrderID(resData?.order_id); // No `order_id`, using `id` instead
@@ -2067,7 +2066,7 @@ const assumedString = selectedAmountAirtel?.toString()
           <Loader />
         </Modal>
       )}
-      {sessionModal && <HandleUserSession />}
+      {sessionModal && <InternalLoginSession setExpiredSessionLogin ={setSessionModal} />}
       {restrictUser && sessionModal === false  && <RestrictionPopUp/>}
     </DashBoardLayout>
   );
