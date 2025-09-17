@@ -543,6 +543,7 @@ const assumedString = selectedAmountAirtel?.toString()
   };
 
   const handleProceed = (e) => {
+    setInputPin("")
     e.preventDefault();
 
     function validateNigerianNumberByNetwork(number) {
@@ -1702,7 +1703,7 @@ const assumedString = selectedAmountAirtel?.toString()
                                  <div className=" flex items-center  gap-[10px]">
                                    <OtpInput
                                      value={inputPin}
-                                     inputType="tel"
+                                     inputType= {!isVisible ? "tel" : "password"}
                                      onChange={setInputPin}
                                      numInputs={4}
                                      shouldAutoFocus={true}
@@ -1715,7 +1716,7 @@ const assumedString = selectedAmountAirtel?.toString()
                                    width: '35px',
                                  }}
                                      renderInput={(props) => (
-                                       <input {...props} className="inputOTP mx-[3px]" type ="tel" />
+                                       <input {...props} className="inputOTP mx-[3px]"/>
                                      )}
                                    />
                                    <div
