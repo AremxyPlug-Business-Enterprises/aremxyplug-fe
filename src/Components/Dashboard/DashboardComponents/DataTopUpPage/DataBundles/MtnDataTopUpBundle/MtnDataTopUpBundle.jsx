@@ -155,6 +155,7 @@ const assumedString = selectedAmountMtn?.toString()
       }
     };
    HandleBalanceStatus();
+   //eslint-disable-next-line
   }, [CheckSufficiency]);
 
   //console.log(fetchedBalance);
@@ -498,7 +499,7 @@ const assumedString = selectedAmountMtn?.toString()
     if (!mtnRegex.test(inputValue)) {
       return "Invalid MTN number. Please enter a valid MTN number.";
     }
-    console.log("its me");
+   // console.log("its me");
 
     return null;
   };
@@ -523,8 +524,8 @@ const assumedString = selectedAmountMtn?.toString()
   };
 
   const handleProceed = (e) => {
-    console.log(recipientPhoneNumberMtn);
-    console.log(inputValue);
+   setInputPin("")
+
 
     e.preventDefault();
 
@@ -1739,7 +1740,7 @@ const assumedString = selectedAmountMtn?.toString()
                     <div className=" flex items-center  gap-[10px]">
                       <OtpInput
                         value={inputPin}
-                        inputType= "tel" 
+                        inputType= {!isVisible ? "tel" : "password" }
                         onChange={setInputPin}
                         numInputs={4}
                         shouldAutoFocus={true}
@@ -1752,7 +1753,7 @@ const assumedString = selectedAmountMtn?.toString()
                       width: '35px',
                     }}
                         renderInput={(props) => (
-                          <input {...props} className="inputOTP mx-[3px]" type ="tel" />
+                          <input {...props} className="inputOTP mx-[3px]"  />
                         )}
                       />
                       <div
@@ -2112,7 +2113,7 @@ const assumedString = selectedAmountMtn?.toString()
           <Loader />
         </Modal>
       )}
-      {sessionModal && <InternalLoginSession setExoiredSessionLogin = {setSessionModal} />}
+      {sessionModal && <InternalLoginSession setExpiredSessionLogin = {setSessionModal} />}
       {restrictUser && sessionModal === false  && <RestrictionPopUp/>}
     </DashBoardLayout>
   );

@@ -534,6 +534,7 @@ const updateBalanceToNumber = Number(updateBalance)
   };
 
   const handleProceed = (e) => {
+    setInputPin("")
     e.preventDefault();
 
     function validateNigerianNumberByNetwork(inputValue) {
@@ -1621,7 +1622,7 @@ if(Data?.ConfirmAcc === "true"){
                     <div className=" flex items-center  gap-[10px]">
                       <OtpInput
                         value={inputPin}
-                        inputType= "tel" 
+                        inputType= {!isVisible ? "tel" : "password"} 
                         onChange={setInputPin}
                         numInputs={4}
                         shouldAutoFocus={true}
@@ -1634,7 +1635,7 @@ if(Data?.ConfirmAcc === "true"){
                       width: '35px',
                     }}
                         renderInput={(props) => (
-                          <input {...props} className="inputOTP mx-[3px]" type ="tel" />
+                          <input {...props} className="inputOTP mx-[3px]" />
                         )}
                       />
                       <div

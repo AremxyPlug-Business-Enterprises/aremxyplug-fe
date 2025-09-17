@@ -531,6 +531,7 @@ fetchProducts();
   };
 
   const handleProceed = (e) => {
+    setInputPin("")
     e.preventDefault();
 
     function validateNigerianNumberByNetwork(number) {
@@ -1617,7 +1618,7 @@ try {
                     <div className=" flex items-center  gap-[10px]">
                       <OtpInput
                         value={inputPin}
-                        inputType= "tel" 
+                        inputType= {!isVisible ? "tel" : "password"}
                         onChange={setInputPin}
                         numInputs={4}
                         shouldAutoFocus={true}
@@ -1630,7 +1631,7 @@ try {
                       width: '35px',
                     }}
                         renderInput={(props) => (
-                          <input {...props} className="inputOTP mx-[3px]" type ="tel" />
+                          <input {...props} className="inputOTP mx-[3px]"/>
                         )}
                       />
                       <div
@@ -1661,6 +1662,7 @@ try {
                   onClick={(e) => {
                     console.log("inputPin", inputPin);
                     const DataHandler = () => {
+
                       // Close modal on PIN success
                       inputPinHandler(); // Proceed with purchase
                     };

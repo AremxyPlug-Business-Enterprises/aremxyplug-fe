@@ -4,6 +4,7 @@ import axios from "axios";
 import { Modal } from "../Screens/Modal/Modal";
 import { Link } from "react-router-dom";
 import { Loader } from "../Loader/Loader";
+import { useState } from "react";
 //To set the different states for  virtual account
 
 export const SignInVirtualAccountState = (
@@ -142,6 +143,7 @@ export const InActionVirtualAccountState = (
 
 ///Login Session =======//
 export const InternalLoginSession = ({ setExpiredSessionLogin})=> {
+  const [password, setPassword] = useState()
    const isDarkMode = localStorage.getItem("darkModeEnabled");
    const getUsername = JSON.parse(localStorage.getItem("aremxyUserName"));
    const UserEmail = JSON.parse(localStorage.getItem("userEmail"))
@@ -195,9 +197,13 @@ console.log(authToken);
 }
     const  functionAtFailed =(ErrorType)=> {
      if(ErrorType === "unauthorised" ){
-      alert("Incorrect Password");
+      alert("Incorrect Password: You are only allowed to try 5 times");
      }else if(ErrorType === "Server error"){
       alert("Failed to process your request")
+     }else if(ErrorType === "User Blocked"){
+      alert("Account Blocked try after 1 hour");
+     window.location.replace("/Login")
+     RemoveLocalStorage()
      }
    }
     const  setFetchedResponse =(response)=> {
@@ -210,12 +216,14 @@ console.log(authToken);
     )
   )
 }
+//console.log(document.getElementById("InternalLoginPasswordValue")?.value)
+console.log(document.getElementById("InternalLoginPasswordValue")?.value)
       //console.log(requestObjectConfirm);
 const SubmitUserLoginDetails = ()=> {
-   const PasswordValue = document.getElementById("InternalLoginPasswordValue")?.value;
+   
    const body = {
     username : getUsername,
-    password : PasswordValue
+    password : password
   }
     PostFunction("login",
   setLoading,
@@ -232,10 +240,10 @@ const SubmitUserLoginDetails = ()=> {
    <div className={`w-full h-full  justify-center items-center
    flex`}>
     <Modal>
-              <div className={`w-full flex px-[17px] justify-center items-center 
+              <div className={`w-full flex px-[17px] lg:px-[20px] justify-center items-center 
              `}>
             <div className = {`flex flex-col justify-left items-center
-             py-[20px] px-[10px] gap-[20px] w-[100%] md:w-[60%] lg:w-[30%] md:h-[300px]  rounded-[10px]
+             py-[20px] px-[10px] gap-[20px] w-[100%] md:w-[60%] md:h-auto lg:w-[30%]  rounded-[10px]
              lg:rounded-[20px]   ${isDarkMode === "true" ? "bg-black border border-white rounded-[10px]" 
                : "bg-white"}`}>
                <div className ="flex flex-col  gap-[20px]">
@@ -249,9 +257,10 @@ const SubmitUserLoginDetails = ()=> {
             and operations.
                </p>
                </div>
-               <div className="flex flex-col gap-[20px] w-[100%] md:w-[50%]">
+               <div className="flex flex-col gap-[20px]
+                w-[100%] md:w-[50%] lg:w-[100%]">
                 {/* Username */}
-               <div className="flex flex-col gap-[5px] ">
+               <div className="flex flex-col gap-[5px] lg:gap-[10px] ">
                <p className={`text-[14px] text-start font-[600] leading-[18px]
                text-black lg:text-[16px] lg:leading-[22px] ${isDarkMode === "true" ? "text-white" : "text-black"}`}>
                 {getToken && !authorisedLogin ? "Username" : "Email"}
@@ -278,7 +287,7 @@ const SubmitUserLoginDetails = ()=> {
               
                 </div>
                 {/* Password */}
-               <div className="">
+               <div className="flex flex-col gap-[5px] lg:gap-[10px] ">
               <p className={`text-[14px] text-start font-[600] leading-[18px]
                text-black lg:text-[16px] lg:leading-[22px] ${isDarkMode === "true" ? "text-white" : "text-black"}`}>
                 Password
@@ -299,6 +308,8 @@ const SubmitUserLoginDetails = ()=> {
   }`} 
   placeholder="Your Current Password"
   id = "InternalLoginPasswordValue"
+  value={password}
+  onChange={(e)=> setPassword(e.target.value)}
                 type="password"
                />
 
@@ -612,6 +623,12 @@ export const PostFunction = async (
            if(functionAtFailed) {
             setFetchedResponse(error?.response?.data?.data)
               console.log(error?.response?.data?.data)
+         }
+      }else if(error && error.response.status === 403){
+         functionAtFailed("User Blocked")
+          if(functionAtFailed) {
+            setFetchedResponse(error?.response?.data?.data)
+            
          }
       }else if(error && error.response.status === 401){
      
