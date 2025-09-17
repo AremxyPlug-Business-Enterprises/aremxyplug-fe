@@ -25,10 +25,10 @@ import airtimestyles from "../../../../../AirTimePage/AirtimeVtu.module.css";
 import Failed from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/Failed.svg";
 import axiosInstance from "../../../../../ApiCollection.jsx/apiClient";
 import {
-  HandleUserSession,
   VerifyTransPin,
   GetFunction,
-  RestrictionPopUp
+  RestrictionPopUp,
+  InternalLoginSession
 } from "../../../../../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../../../../../Loader/Loader";
 
@@ -2044,7 +2044,7 @@ try {
           <Loader />
         </Modal>
       )}
-      {sessionModal && <HandleUserSession />}
+      {sessionModal && <InternalLoginSession setExpiredSessionLogin ={setSessionModal}/>}
       {sessionModal  === false && restrictUser && (
         <RestrictionPopUp/>
       )}

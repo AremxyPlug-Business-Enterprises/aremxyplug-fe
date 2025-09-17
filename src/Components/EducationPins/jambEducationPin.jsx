@@ -27,7 +27,7 @@ import eduFailed from "./imagesEducation/WaecFailedTransaction.svg";
 import "../Dashboard/DashboardComponents/DataTopUpPage/DataTopUp.css";
 import {
   GetFunction,
-  HandleUserSession,
+  InternalLoginSession,
   PostFunction,
   RestrictionPopUp,
   VerifyTransPin,
@@ -1753,7 +1753,7 @@ export default function JambEducationPin() {
           <Loader />
         </Modal>
       )}
-      {sessionModal && <HandleUserSession />}
+      {sessionModal && <InternalLoginSession setExpiredSessionLogin={setSessionModal} />}
       {sessionModal === false && restrictUser && (
         <RestrictionPopUp/>
       )}

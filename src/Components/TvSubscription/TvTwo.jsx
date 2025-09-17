@@ -17,17 +17,15 @@ import britainFlag from '../../Components/EducationPins/imagesEducation/Britain.
 import euroFlag from '../../Components/EducationPins/imagesEducation/GBP.svg';
 import austriaFlag from '../../Components/EducationPins/imagesEducation/Austria.svg';
 import kenyaFlag from '../../Components/EducationPins/imagesEducation/Kenya.svg';
-import {RestrictionPopUp, VerifyTransPin} from "../../Components/ApiCollection.jsx/ApiBuck";
+import {InternalLoginSession, RestrictionPopUp, VerifyTransPin} from "../../Components/ApiCollection.jsx/ApiBuck";
 import { Modal } from "../Screens/Modal/Modal";
 import {Loader} from "../Loader/Loader"
 import {PostFunction} from "../../Components/ApiCollection.jsx/ApiBuck"
 import { useNavigate } from "react-router-dom";
 import { GetFunction } from "../ApiCollection.jsx/ApiBuck";
 import { BalanceLoading } from "../Loader/Loader";
-import { HandleUserSession } from "../../Components/ApiCollection.jsx/ApiBuck";
 import { GetLocalStorage } from "../LocalStorage/LocalStorage";
 const DsTv = () => {
-
   const {
     dstvFlagResult,
     setDstvFlagResult,
@@ -74,7 +72,8 @@ const DsTv = () => {
         newBalance,
         setNewBalance,
         setFetchedDstvPlans,
-        toggleSideBar
+        toggleSideBar,
+        
  } = useContext(ContextProvider);
 const Data = GetLocalStorage();
    // const [packageDstv, setPackageDstv] = useState("");
@@ -127,6 +126,7 @@ const ReceiptButton = ()=> {
     setDstvFlagResult("");
     setDstvWalletBalance("");
     setFailedPopup(false);
+    setDstvSubscriptionResponse({})
     // navigate("/DsTv");
   }
 
@@ -138,6 +138,7 @@ const ReceiptButton = ()=> {
   }
 
   const handleDstv = (event) => {
+    setDstvSubscriptionResponse({})
     event.preventDefault();
     
     const { error } = schema.validate({
@@ -1302,7 +1303,7 @@ window.addEventListener("online", ()=> {
               </Modal>
          ) } 
          {sessionModal && (
-          <HandleUserSession/>
+           <InternalLoginSession setExpiredSessionLogin={setSessionModal}/>
          )}
          {sessionModal=== false && restrictUser && (
           <RestrictionPopUp/>

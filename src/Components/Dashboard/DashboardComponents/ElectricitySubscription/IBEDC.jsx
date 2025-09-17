@@ -20,13 +20,16 @@ import { Link, useNavigate } from "react-router-dom";
 import {
   PostFunction,
   VerifyTransPin,
-  HandleUserSession,
+  InternalLoginSession,
+  RestrictionPopUp,
   GetFunction,
 } from "../../../ApiCollection.jsx/ApiBuck";
 import { BalanceLoading, Loader } from "../../../Loader/Loader";
+import { GetLocalStorage } from "../../../LocalStorage/LocalStorage";
 import { validateNigerianNumberByNetwork } from "./AEDC";
 
 const IBEDC = () => {
+  const Data = GetLocalStorage()
   const navigate = useNavigate();
   const {
     isDarkMode,
@@ -81,7 +84,7 @@ const IBEDC = () => {
   // const { selectedNetworkProduct, setSelectedNetworkProduct } =
   //   useContext(ContextProvider);
   const [showProductList, setShowProductList] = useState(false);
-
+  const [restrictUser, setRestrictUser] = useState(false)
   const pointsEarned = "+2.00";
 
   // const handleValidate = () => {
@@ -146,6 +149,7 @@ const IBEDC = () => {
   };
   // get the balance on entering the page
   useEffect(() => {
+    if(Data?.ConfirmAcc === "true"){
     if (newBalance === "" || newBalance === null || newBalance === undefined) {
       GetBalance();
       if (GetBalance) {
@@ -156,6 +160,9 @@ const IBEDC = () => {
         );
       }
     }
+  }else{
+    setRestrictUser(true)
+  }
     // handleResetFields();
     // eslint-disable-next-line
   }, []);
@@ -1736,7 +1743,11 @@ const IBEDC = () => {
         </Modal>
       )}
 
-      {sessionModal && <HandleUserSession />}
+      {sessionModal &&
+            <InternalLoginSession setexpiredSessionLogin ={setSessionModal} />}
+           {restrictUser && sessionModal === false && (
+             <RestrictionPopUp/>
+           ) }
     </DashBoardLayout>
   );
 };

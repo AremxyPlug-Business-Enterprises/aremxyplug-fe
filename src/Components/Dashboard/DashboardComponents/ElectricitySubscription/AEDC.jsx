@@ -22,9 +22,11 @@ import { BalanceLoading, Loader } from "../../../Loader/Loader";
 import {
   PostFunction,
   VerifyTransPin,
-  HandleUserSession,
   GetFunction,
+  InternalLoginSession,
+  RestrictionPopUp
 } from "../../../ApiCollection.jsx/ApiBuck";
+import { GetLocalStorage } from "../../../LocalStorage/LocalStorage";
 // validating the network numbers
 export function validateNigerianNumberByNetwork(number) {
   const networks = [
@@ -89,6 +91,7 @@ export function validateNigerianNumberByNetwork(number) {
 }
 
 const AEDC = () => {
+  const Data = GetLocalStorage()
   const navigate = useNavigate();
   const {
     isDarkMode,
@@ -171,7 +174,7 @@ const AEDC = () => {
     setSelectedAedcMeterType(productName);
     setShowProductList(false);
   };
-
+ const [restrictUser, setRestrictUser] = useState(false);
   const [passDataBalance, setPassDataBalance] = useState({});
 
   const GetBalance = async () => {
@@ -203,6 +206,7 @@ const AEDC = () => {
   };
   // get the balance on entering the page
   useEffect(() => {
+    if(Data?.ConfirmAcc === "true"){
     if (newBalance === "" || newBalance === null || newBalance === undefined) {
       GetBalance();
       if (GetBalance) {
@@ -213,6 +217,9 @@ const AEDC = () => {
         );
       }
     }
+  }else{
+    setRestrictUser(true);
+  }
     // handleResetFields();
     // eslint-disable-next-line
   }, []);
@@ -1966,7 +1973,11 @@ const AEDC = () => {
           <Loader />
         </Modal>
       )}
-      {sessionModal && <HandleUserSession />}
+      {sessionModal 
+      && <InternalLoginSession setExpiredSessionLogin ={setSessionModal} />}
+      {restrictUser && sessionModal === false && (
+        <RestrictionPopUp/>
+      ) }
     </DashBoardLayout>
   );
 };

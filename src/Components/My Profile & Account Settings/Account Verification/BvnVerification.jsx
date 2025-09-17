@@ -19,7 +19,7 @@ import NotVerifiedImage from "../ProfileImages/NotVerifiedIcon.svg";
 import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 import { Loader } from "../../Loader/Loader";
 import countryImage from "../../EducationPins/imagesEducation/Nigeriaflag.svg";
-import { HandleUserSession } from "../../ApiCollection.jsx/ApiBuck";
+import { InternalLoginSession} from "../../ApiCollection.jsx/ApiBuck";
 export default function BvnVerification(Data) {
   const dateInputRef = useRef(null);
   const { bvnVerificationOpen } = useContext(ContextProvider);
@@ -159,7 +159,27 @@ export default function BvnVerification(Data) {
           setBvnStatus("Not Verified");
           setBvnVerifyImage(NotVerifiedImage);
         }else if(error.response.status === 401){
-            setSessionModal(true);
+             if(error.response?.headers.get("x-new-auth-token") || error.response?.headers["x-new-auth-token"]){
+             setLoading(true)
+         const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
+        
+         if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
+             console.log(newToken)
+          localStorage.setItem("authorisedLogin", newToken);
+          
+          if( localStorage.getItem("authorisedLogin")?.length > 1){
+            return checkBvnform();
+          }
+           }else{
+      localStorage.setItem("getToken", newToken);
+       console.log(getToken);
+          if(localStorage.getItem("getToken")?.length > 1){
+            return checkBvnform();
+          }
+      }}else{
+        return setSessionModal(true);
+      }
+        
         } else {
           alert("Check your internet connection.");
           setErrorVerify(true);
@@ -865,7 +885,7 @@ export default function BvnVerification(Data) {
         </Modal>
       )}
       {sessionModal && (
-        <HandleUserSession/>
+        <InternalLoginSession setExpiredSessionLogin ={setSessionModal}/>
       )}
     </div>
   );

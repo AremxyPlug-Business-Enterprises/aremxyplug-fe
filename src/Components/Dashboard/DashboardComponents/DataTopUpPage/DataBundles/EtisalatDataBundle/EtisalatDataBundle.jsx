@@ -25,15 +25,15 @@ import Joi from "joi";
 import airtimestyles from "../../../../../AirTimePage/AirtimeVtu.module.css";
 import Failed from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/Failed.svg";
 import axiosInstance from "../../../../../ApiCollection.jsx/apiClient";
-import { VerifyTransPin } from "../../../../../ApiCollection.jsx/ApiBuck";
+import { InternalLoginSession, VerifyTransPin } from "../../../../../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../../../../../Loader/Loader";
 import {
   GetFunction,
-  HandleUserSession,
+ 
   RestrictionPopUp
 } from "../../../../../ApiCollection.jsx/ApiBuck";
 import { GetLocalStorage } from "../../../../../LocalStorage/LocalStorage";
-import { set } from "date-fns";
+
 
 const EtisalatDataBundle = () => {
   const Data = GetLocalStorage()
@@ -540,8 +540,7 @@ const updateBalanceToNumber = Number(updateBalance)
       const networks = {
         "9MOBILE": ["0809", "0817", "0818", "0909", "0908"],
       };
-
-      for (let network in networks) {
+for (let network in networks) {
         for (let prefix of networks[network]) {
           if (
             inputValue.startsWith(prefix) &&
@@ -549,8 +548,8 @@ const updateBalanceToNumber = Number(updateBalance)
           ) {
             return network;
           }
-        }
-      }
+       }
+    }
 
       return "Unknown network";
     }
@@ -663,7 +662,7 @@ const updateBalanceToNumber = Number(updateBalance)
             return setSessionModal(true);
           }
         } else if (error && error.response === undefined) {
-          alert("Your internet connection si quite unstable.");
+          alert("Your internet connection is quite unstable.");
         } else {
           alert("Kindly check your internet connection.");
         }
@@ -2071,9 +2070,9 @@ if(Data?.ConfirmAcc === "true"){
           <Loader />
         </Modal>
       )}
-      {sessionModal && <HandleUserSession />}
+      {sessionModal && <InternalLoginSession setExpiredSessionLogin ={setSessionModal} />}
        {restrictUser && sessionModal === false  && <RestrictionPopUp/>}
-
+  
     </DashBoardLayout>
   );
 };

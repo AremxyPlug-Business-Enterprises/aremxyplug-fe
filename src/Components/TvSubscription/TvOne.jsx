@@ -24,8 +24,9 @@ import { GetFunction } from "../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../Loader/Loader";
 import { Modal } from "../Screens/Modal/Modal";
 import { BalanceLoading } from "../Loader/Loader";
-import { HandleUserSession, RestrictionPopUp } from "../../Components/ApiCollection.jsx/ApiBuck";
+import {  RestrictionPopUp } from "../../Components/ApiCollection.jsx/ApiBuck";
 import { GetLocalStorage } from "../LocalStorage/LocalStorage";
+import { InternalLoginSession } from "../../Components/ApiCollection.jsx/ApiBuck";
 
 // import { duration } from "html2canvas/dist/types/css/property-descriptors/duration";
 
@@ -94,7 +95,10 @@ const GoTv = () => {
   const [gotvVerifyResponse, setGotvVerifyResponse] = useState({});
   const [errorFillDecoder, setErrorFillDecoder] = useState(false);
   const [checkNetworkError, setCheckNetworkError] = useState(false);
-  const [restrictUser, setRestrictUser] = useState(false)
+  const [restrictUser, setRestrictUser] = useState(false);
+
+//  const [holdCurrentFunction, setHoldCurrentFunction] = useState("")
+//  const [userBlocked, setUserBlocked] = useState(false)
 const Data = GetLocalStorage();
 //console.log(Data?.ConfirmAcc)
   const navigate = useNavigate();
@@ -198,13 +202,11 @@ const Data = GetLocalStorage();
    const GetBalance = async () => {
     if(!navigator.onLine) return setCheckNetworkError(true)
       const SuccessHandler = () => {
-        //alert("Successful");
-        console.log("successfully retrieved balance");
-        //alert("Successful")
-      };
+       console.log("successfully retrieved balance");
+       };
       const FailedHandler = async (ErrorType) => {
         if (ErrorType === "unauthorised") {
-          await GetFunction(
+       await GetFunction(
             `balance`,
             setIsLoading,
             SuccessHandler,
@@ -212,7 +214,7 @@ const Data = GetLocalStorage();
             // of the statement.
             async(ErrorType) => {
               if (ErrorType === "unauthorised") {
-                return setSessionModal(true);
+              return setSessionModal(true);
               }else if(ErrorType === "Server error"){
                   await GetFunction(
         "balance",
@@ -221,7 +223,8 @@ const Data = GetLocalStorage();
        async(ErrorType)=> {
         if(ErrorType === "Server error"){
           alert("Failed to retrieve the balance.")
-        }else if(ErrorType === "Network error" || ErrorType === "User error"){
+        }
+        else if(ErrorType === "Network error" || ErrorType === "User error"){
            setCheckNetworkError(true);
               alert("Kindly check your internet connection to retrieve balance.")
         }else {
@@ -333,7 +336,7 @@ const Data = GetLocalStorage();
               setIsLoading,
               SuccessHandler,
               (ErrorType) => {
-                if (ErrorType === "unauthorised") {
+                if(ErrorType === "unauthorised") {
                   return setSessionModal(true);
                 }
               },
@@ -360,7 +363,7 @@ const Data = GetLocalStorage();
   //console.log(fetchedGotvPlans.status)
   const GotvOptionalPlan =
     gotvData?.length < 1 && fetchedGotvPlans.status === 200
-      ? fetchedGotvPlans.data.data.data
+      ? fetchedGotvPlans?.data?.data?.data
       : gotvData;
   useEffect(() => {
      if(Data?.ConfirmAcc === "true"){
@@ -402,7 +405,7 @@ const Data = GetLocalStorage();
 
   const handleGotv = (event) => {
     event.preventDefault();
-
+     setTvSubscriptionResponse({})
     const { error } = schema.validate({
       mobileNumber,
       tvEmail,
@@ -557,7 +560,7 @@ const Data = GetLocalStorage();
 
       const Path = "bills/tvsub";
       const successHandler = (response) => {
-        console.log(response?.data?.data)
+        //console.log(response?.data?.data)
         if(response?.data?.data?.data?.status === "success"
           || response?.data?.data?.data?.status === "delivered"
         ||  response?.data?.data?.data?.status === "successful" ||
@@ -626,52 +629,54 @@ const Data = GetLocalStorage();
 
       const setFailedConfig= async(ErrorType)=> {
          if(ErrorType === "unauthorised"){
+        setSessionModal(true);
+           //  setHoldCurrentFunction(VerifyPinHandler)
            //The concept behind this code : A user session is regulated by tokens,
            // the moment we notice it expires we try to get the token for the user before
            // a transaction completed(i.e we get it during a transaction process), when unauthorised
            //we get the necessary tokens, then re-run the transaction, there are different errors that 
            //could occur, when re-running such as: it could return same unauthorised errorType,
-           //a server error and even network connection issue or an unexpected error
+           //a server error and even network connnection issue or an unexpected error
            //hence, the reason we account for other types of errors even while re-running,
            //due to the inpredictability of the output of the transaction.
-       await VerifyTransPin(
-         inputPin,
-          async(ErrorType)=> {
-            // unauthorisation >>> unauthorisation ErrorTypes
-           if(ErrorType === "unauthorised"){
-             return setSessionModal(true);
-           }else if(ErrorType === "Server error"){
-           await VerifyTransPin(
-           inputPin,
-           (ErrorType)=> {
-            //unauthorisation >>> Server error then error Types
-           if(ErrorType === "Server error"){
-           alert("Failed to process your request, try again some other time")
-           }else if(ErrorType === "Network error" || ErrorType === "User error"){
-             alert("Kindly check your internet connection.");
-           }else{
-            if(ErrorType !== "Bad request"){
-             alert("Failed to process your request, try some other time.")
-            }
-           }
-         },
-         setIsLoading,
-         setErrorMessage,
-       GotvHandler,
-      );
-      //unauthorisation >>> the "Network error" and "User error" ErrorType
-           }else if(ErrorType === "Network error" || ErrorType === "User error"){
-             alert("Kindly check your internet connection.");
-           }else{
-            if(ErrorType !== "Bad request"){
-             alert("Failed to process your request, try some other time.")
-            }
-          }
-          },
-         setIsLoading,
-         setErrorMessage,
-       GotvHandler,
-      );
+      //  await VerifyTransPin(
+      //    inputPin,
+      //     async(ErrorType)=> {
+      //       // unauthorisation >>> unauthorisation ErrorTypes
+      //      if(ErrorType === "unauthorised"){
+      //        return setSessionModal(true);
+      //      }else if(ErrorType === "Server error"){
+      //      await VerifyTransPin(
+      //      inputPin,
+      //      (ErrorType)=> {
+      //       //unauthorisation >>> Server error then error Types
+      //      if(ErrorType === "Server error"){
+      //      alert("Failed to process your request, try again some other time")
+      //      }else if(ErrorType === "Network error" || ErrorType === "User error"){
+      //        alert("Kindly check your internet connection.");
+      //      }else{
+      //       if(ErrorType !== "Bad request"){
+      //        alert("Failed to process your request, try some other time.")
+      //       }
+      //      }
+      //    },
+      //    setIsLoading,
+      //    setErrorMessage,
+      //  GotvHandler,
+      // );
+      // //unauthorisation >>> the "Network error" and "User error" ErrorType
+      //      }else if(ErrorType === "Network error" || ErrorType === "User error"){
+      //        alert("Kindly check your internet connection.");
+      //      }else{
+      //       if(ErrorType !== "Bad request"){
+      //        alert("Failed to process your request, try some other time.")
+      //       }
+      //     }
+      //     },
+      //    setIsLoading,
+      //    setErrorMessage,
+      //  GotvHandler,
+      // );
     //immediate ErrorType to the Failed function...
      }else if(ErrorType === "Server error"){
        //The server could return a 500 then be successful
@@ -695,7 +700,7 @@ const Data = GetLocalStorage();
            }else if(ErrorType === "User error" || ErrorType === "Network error"){
              alert("Kindly check your internet connection")
            }else{
-            if(ErrorType !== "Bad request"){
+            if(ErrorType !== "Bad request" || ErrorType !== "User Blocked"){
              alert("Failed to process your request, try some other time.")
             }
           }
@@ -710,7 +715,7 @@ const Data = GetLocalStorage();
      //A network error occured  during trying to re-try the code on server error
      alert("Kindly check your internet connection");
    }else{
-            if(ErrorType !== "Bad request"){
+            if(ErrorType !== "Bad request" || ErrorType !== "User Blocked"){
              alert("Failed to process your request, try some other time.")
             }
           }
@@ -724,7 +729,7 @@ const Data = GetLocalStorage();
        || ErrorType === "Network error" ){
      alert("Kindly check your internet connection")
      }else{
-            if(ErrorType !== "Bad request"){
+            if(ErrorType !== "Bad request" || ErrorType !== "User Blocked"){
              alert("Failed to process your request, try some other time.")
             }
           }
@@ -763,6 +768,7 @@ const Data = GetLocalStorage();
         console.log("Succesfully verified tv subscription account.");
         setSmartCard(UserTvSubscription);
         setCardName(response?.data?.data?.data?.name);
+        setStateInvalidDecoderNumber(false)
       };
      const FailedHandler = async(ErrorType)=> {
        //1.
@@ -800,14 +806,12 @@ const Data = GetLocalStorage();
           }
       },
         setGotvVerifyResponse)
-        //2.Handling the ErrorType "Server error" on the general conditional statement
-           
+        //2.Handling the ErrorType "Server error" on the general conditional statement    
            }else if(ErrorType === "Network error" || ErrorType === "User error"){
            //3. Handling the ErrorType "Network error, User error" for the general "unauthorised" 
            //function
            alert("Kindly check your internet connection.")
            }
-     
         }, setGotvVerifyResponse);
         //2. Handling the server for the general conditional 
         // statement under the failedHandler
@@ -847,7 +851,11 @@ const Data = GetLocalStorage();
         //3.Handling the ErrorType "Network error, User error"
      }else if(ErrorType === "Network error" || ErrorType === "User error"){
        alert("Kindly check your internet connection")
-     }else {
+     }
+     else if(ErrorType === "Bad request"){
+      setStateInvalidDecoderNumber(true)
+     }
+      else {
        //4. Handling the "alien" ErrorType.
         alert("An unexpected error has occured, try again some other time.")
      }
@@ -889,6 +897,7 @@ const Data = GetLocalStorage();
     setFlagResult("");
     setTvWalletBalance("");
     setFailedPopup(false);
+     setTvSubscriptionResponse({});
     //  navigate("/GoTv");
   };
 
@@ -1147,7 +1156,8 @@ const Data = GetLocalStorage();
     }`}
                     />
                     {errors.smartCard && (
-                      <p className="text-[#F95252] text-[13px] md:text-[12px] lg:text-[14px] font-[400] italic">
+                      <p className="text-[#F95252] text-[13px] 
+                      md:text-[12px] lg:text-[14px] font-[400] italic">
                         {errors.smartCard}
                       </p>
                     )}
@@ -1438,6 +1448,7 @@ const Data = GetLocalStorage();
                !decoderType ||
                !selectedOptionGOTV ||
                !flagResult
+          
                  ? "bg-[#63616188] "
                  : "bg-primary"
              }
@@ -1529,10 +1540,13 @@ const Data = GetLocalStorage();
           <Loader />
         </Modal>
       )}
-      {sessionModal && <HandleUserSession />}
+    
       {restrictUser && sessionModal === false && (
         <RestrictionPopUp/>
       )}
+  {sessionModal && (
+     <InternalLoginSession setExpiredSessionLogin={setSessionModal}/>
+  ) }
     </div>
   );
 };

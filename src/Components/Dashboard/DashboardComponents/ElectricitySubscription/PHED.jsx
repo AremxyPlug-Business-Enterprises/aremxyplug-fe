@@ -17,11 +17,12 @@ import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import OtpInput from "react-otp-input";
 import { Link, useNavigate } from "react-router-dom";
-
+import { GetLocalStorage } from "../../../LocalStorage/LocalStorage";
 import {
   PostFunction,
   VerifyTransPin,
-  HandleUserSession,
+  InternalLoginSession,
+  RestrictionPopUp,
   GetFunction,
 } from "../../../ApiCollection.jsx/ApiBuck";
 import { BalanceLoading, Loader } from "../../../Loader/Loader";
@@ -78,9 +79,10 @@ const PHED = () => {
     purchaseElectricityErrorType,
     setPurchaseElectricityErrorType,
   } = useContext(ContextProvider);
-
+  const Data = GetLocalStorage()
   const [showProductList, setShowProductList] = useState(false);
   const pointsEarned = "+2.00";
+  const [restrictUser, setRestrictUser] = useState(false)
 
   // const handleValidate = () => {
 
@@ -143,6 +145,7 @@ const PHED = () => {
   };
   // get the balance on entering the page
   useEffect(() => {
+    if(Data?.ConfirmAcc === "true"){
     if (newBalance === "" || newBalance === null || newBalance === undefined) {
       GetBalance();
       if (GetBalance) {
@@ -152,6 +155,8 @@ const PHED = () => {
             : ""
         );
       }
+    }}else{
+    setRestrictUser(true)
     }
     // handleResetFields();
     // eslint-disable-next-line
@@ -1726,7 +1731,11 @@ const PHED = () => {
           <Loader />
         </Modal>
       )}
-      {sessionModal && <HandleUserSession />}
+      {sessionModal &&
+       <InternalLoginSession setexpiredSessionLogin ={setSessionModal} />}
+      {restrictUser && sessionModal === false && (
+        <RestrictionPopUp/>
+      ) }
     </DashBoardLayout>
   );
 };

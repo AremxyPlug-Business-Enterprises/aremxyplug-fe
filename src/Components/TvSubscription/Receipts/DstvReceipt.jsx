@@ -41,6 +41,7 @@ export const DstvReceipt= (Data) => {
     setDstvCardName,
     setDstvWalletBalance,
     dstvSubscriptionResponse,
+    setDstvSubscriptionResponse,
     purchaseDstvErrorType, 
   } =
     useContext(ContextProvider);
@@ -115,6 +116,7 @@ export const DstvReceipt= (Data) => {
    setDstvDecoderType("")
     setDstvFlagResult("");
     setDstvWalletBalance("");
+    setDstvSubscriptionResponse({})
     navigate("/DsTv");
   }
  // console.log(dstvCardName)

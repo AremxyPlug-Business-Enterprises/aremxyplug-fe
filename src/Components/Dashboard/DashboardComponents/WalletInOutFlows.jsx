@@ -1,7 +1,7 @@
 import  { useState, useEffect } from "react";
 import { RxDotFilled } from "react-icons/rx";
 import styles from "./component.module.css";
-import { GetFunction, HandleUserSession } from "../../ApiCollection.jsx/ApiBuck";
+import { GetFunction, InternalLoginSession } from "../../ApiCollection.jsx/ApiBuck";
 import { useContext } from "react";
 import { ContextProvider } from "../../Context";
 import  { RecentTransaction } from  "./RecentTransaction";
@@ -526,7 +526,7 @@ export const WalletInOutFlows = ({className}) => {
        
        
         {sessionModal && (
-          <HandleUserSession/>
+          <InternalLoginSession setExpiredSessionLogin={setSessionModal}/>
         )}
     </div>
   );

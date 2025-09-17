@@ -6,7 +6,7 @@ import NoRecordImage from "../../Add&SelectRecipient/RecipientImages/NoRecordIma
 import { Loader } from "../../Loader/Loader";
 import {
   GetFunction,
-  HandleUserSession,
+  InternalLoginSession,
 } from "../../ApiCollection.jsx/ApiBuck";
 import { Modal } from "../../Screens/Modal/Modal";
 
@@ -622,7 +622,8 @@ const FormatTime =(DateValue)=> {
           <Loader />
         </Modal>
       )}
-      {sessionModal && <HandleUserSession />}
+      {sessionModal && <InternalLoginSession
+       setExpiredSessionLogin={setSessionModal} />}
     </>
   );
 };

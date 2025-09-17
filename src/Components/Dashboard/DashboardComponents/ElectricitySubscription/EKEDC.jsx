@@ -17,12 +17,13 @@ import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import OtpInput from "react-otp-input";
 import { Link, useNavigate } from "react-router-dom";
-
+import { GetLocalStorage } from "../../../LocalStorage/LocalStorage";
 import {
   PostFunction,
   VerifyTransPin,
-  HandleUserSession,
   GetFunction,
+  RestrictionPopUp,
+  InternalLoginSession
 } from "../../../ApiCollection.jsx/ApiBuck";
 import { BalanceLoading, Loader } from "../../../Loader/Loader";
 import { validateNigerianNumberByNetwork } from "./AEDC";
@@ -71,16 +72,16 @@ const EKEDC = () => {
     setEkedcWalletBalance,
     ekedcPaymentResult,
     setEkedcPaymentResult,
-
     newBalance,
     setNewBalance,
     authenticationOpen,
     purchaseElectricityErrorType,
     setPurchaseElectricityErrorType,
   } = useContext(ContextProvider);
-
+  const Data = GetLocalStorage()
   const [showProductList, setShowProductList] = useState(false);
   const [sessionModal, setSessionModal] = useState(false);
+  const [restrictUser, setRestrictUser] = useState(false);
   const pointsEarned = "+2.00";
 
   // const handleValidate = () => {
@@ -145,6 +146,7 @@ const EKEDC = () => {
   };
   // get the balance on entering the page
   useEffect(() => {
+    if(Data?.ConfirmAcc === "true"){
     if (newBalance === "" || newBalance === null || newBalance === undefined) {
       GetBalance();
       if (GetBalance) {
@@ -155,6 +157,9 @@ const EKEDC = () => {
         );
       }
     }
+  }else{
+    setRestrictUser(true);
+  }
     // handleResetFields();
     // eslint-disable-next-line
   }, []);
@@ -1742,7 +1747,11 @@ const EKEDC = () => {
           <Loader />
         </Modal>
       )}
-      {sessionModal && <HandleUserSession />}
+      {sessionModal &&
+       <InternalLoginSession setexpiredSessionLogin ={setSessionModal} />}
+      {restrictUser && sessionModal === false && (
+        <RestrictionPopUp/>
+      ) }
     </DashBoardLayout>
   );
 };

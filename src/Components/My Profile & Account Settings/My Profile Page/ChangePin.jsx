@@ -15,8 +15,8 @@ import ChangePassword from "./ChangePassword";
 import Success from "../ProfileImages/success.gif";
 import axios from "axios";
 import { Loader } from "../../Loader/Loader";
-import { GetLocalStorage, RemoveLocalStorage } from "../../LocalStorage/LocalStorage";
-import { PostFunction, HandleUserSession } from "../../ApiCollection.jsx/ApiBuck";
+import { GetLocalStorage, } from "../../LocalStorage/LocalStorage";
+import { PostFunction, InternalLoginSession } from "../../ApiCollection.jsx/ApiBuck";
 import { PutFunction } from "../../ApiCollection.jsx/ApiBuck";
 
 const ChangePin = (Data) => {
@@ -103,10 +103,32 @@ const ChangeUserPin = async()=> {
 
    }catch(error){
    // console.error(error);
-     if(error && (error.response.status === 400 || 401)){
+     if(error && (error.response.status === 400  )){
       alert("Invalid Old Pin")
       console.error(`errorMessage : ${error} errorStatus : ${error.response.status}`);
-     }else if(error && error.response.status === 404){
+     }else if(error && (error.response.status === 401  )){
+       if(error.response?.headers.get("x-new-auth-token") || error.response?.headers["x-new-auth-token"]){
+             setLoading(true)
+         const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
+        
+         if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
+             console.log(newToken)
+          localStorage.setItem("authorisedLogin", newToken);
+          
+          if( localStorage.getItem("authorisedLogin")?.length > 1){
+            return ChangeUserPin();
+          }
+           }else{
+      localStorage.setItem("getToken", newToken);
+       console.log(getToken);
+          if(localStorage.getItem("getToken")?.length > 1){
+            return  ChangeUserPin();
+          }
+      }}else{
+        return setSessionModal(true);
+      }
+       
+    }else if(error && error.response.status === 404){
       alert("Check your internet connection")
      }else if(error && error.response.status === 500){
       alert("SERVER ERROR")
@@ -210,7 +232,7 @@ await PostFunction(path,
            SuccessHandler, 
         (ErrorType)=> {
           if(ErrorType === "unauthorised"){
-            RemoveLocalStorage();
+           // RemoveLocalStorage();
            setSessionModal(true);
           }
           })
@@ -994,7 +1016,7 @@ await PutFunction(path, setLoading, body, SuccessHandler, FailedHandler);
         </Modal>
       )}
       {sessionModal && (
-        <HandleUserSession/>
+        <InternalLoginSession setExpiredSessionLogin={setSessionModal}/>
       )}
     </div>
   );

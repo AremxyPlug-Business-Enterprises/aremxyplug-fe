@@ -20,10 +20,12 @@ import { AiFillEye } from "react-icons/ai";
 import OtpInput from "react-otp-input";
 import { Link } from "react-router-dom";
 import { BalanceLoading, Loader } from "../../../Loader/Loader";
+import { GetLocalStorage } from "../../../LocalStorage/LocalStorage";
 
 import {
   GetFunction,
-  HandleUserSession,
+  InternalLoginSession,
+  RestrictionPopUp,
   PostFunction,
   VerifyTransPin,
 } from "../../../ApiCollection.jsx/ApiBuck";
@@ -80,8 +82,9 @@ const KEDCO = () => {
     purchaseElectricityErrorType,
     setPurchaseElectricityErrorType,
   } = useContext(ContextProvider);
-
+  const Data = GetLocalStorage()
   const [showProductList, setShowProductList] = useState(false);
+  const [restrictUser, setRestrictUser] =  useState(false)
   // const [showDescription, setShowDescription] = useState(false);
   // const [orderId, setOrderId] = useState(false);
   // const [transactionId, setTransactionId] = useState(false);
@@ -147,6 +150,7 @@ const KEDCO = () => {
   };
   // get the balance on entering the page
   useEffect(() => {
+    if(Data?.ConfirmAcc === "true"){
     if (newBalance === "" || newBalance === null || newBalance === undefined) {
       GetBalance();
       if (GetBalance) {
@@ -157,6 +161,9 @@ const KEDCO = () => {
         );
       }
     }
+  }else{
+    setRestrictUser(true)
+  }
     // handleResetFields();
     // eslint-disable-next-line
   }, []);
@@ -1810,7 +1817,11 @@ const KEDCO = () => {
           </div>
         </Modal>
       )}
-      {sessionModal && <HandleUserSession />}
+     {sessionModal &&
+       <InternalLoginSession setexpiredSessionLogin ={setSessionModal} />}
+      {restrictUser && sessionModal === false && (
+        <RestrictionPopUp/>
+      ) }
     </DashBoardLayout>
   );
 };

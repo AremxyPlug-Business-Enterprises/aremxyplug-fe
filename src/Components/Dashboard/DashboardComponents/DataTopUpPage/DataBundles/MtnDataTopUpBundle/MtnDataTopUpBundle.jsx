@@ -24,11 +24,10 @@ import Joi from "joi";
 import airtimestyles from "../../../../../AirTimePage/AirtimeVtu.module.css";
 import Failed from "./MtnDataTopUpBundleImages/Failed.svg";
 import axiosInstance from "../../../../../ApiCollection.jsx/apiClient";
-import { RestrictionPopUp, VerifyTransPin } from "../../../../../ApiCollection.jsx/ApiBuck";
+import { InternalLoginSession, RestrictionPopUp, VerifyTransPin } from "../../../../../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../../../../../Loader/Loader";
 import {
   GetFunction,
-  HandleUserSession,
 } from "../../../../../ApiCollection.jsx/ApiBuck";
 import { GetLocalStorage } from "../../../../../LocalStorage/LocalStorage";
 
@@ -2113,7 +2112,7 @@ const assumedString = selectedAmountMtn?.toString()
           <Loader />
         </Modal>
       )}
-      {sessionModal && <HandleUserSession />}
+      {sessionModal && <InternalLoginSession setExoiredSessionLogin = {setSessionModal} />}
       {restrictUser && sessionModal === false  && <RestrictionPopUp/>}
     </DashBoardLayout>
   );

@@ -10,7 +10,7 @@ import logo from "../ElectricitySubscription/Electricity-sub-images/eedclogo 1.s
 import arrowDown from "../ElectricitySubscription/Electricity-sub-images/arrow-down.png";
 import arrowRight from "../../../EducationPins/imagesEducation/educationArrowRight.svg";
 import nig from "../ElectricitySubscription/Electricity-sub-images/nigeriaFlag.png";
-
+import { GetLocalStorage } from "../../../LocalStorage/LocalStorage";
 import Joi from "joi";
 import { Modal } from "../../../Screens/Modal/Modal";
 import { AiFillEyeInvisible } from "react-icons/ai";
@@ -20,13 +20,15 @@ import { Link, useNavigate } from "react-router-dom";
 import {
   PostFunction,
   VerifyTransPin,
-  HandleUserSession,
+  InternalLoginSession,
   GetFunction,
+  RestrictionPopUp
 } from "../../../ApiCollection.jsx/ApiBuck";
 import { BalanceLoading, Loader } from "../../../Loader/Loader";
 import { validateNigerianNumberByNetwork } from "./AEDC";
 
 const EEDC = () => {
+  const Data = GetLocalStorage()
   const navigate = useNavigate();
   const {
     isDarkMode,
@@ -80,6 +82,7 @@ const EEDC = () => {
 
   const [showProductList, setShowProductList] = useState(false);
   const [sessionModal, setSessionModal] = useState(false);
+  const [restrictUser, setRestrictUser] = useState(false)
   const pointsEarned = "+2.00";
 
   // const handleValidate = () => {
@@ -144,6 +147,7 @@ const EEDC = () => {
   };
   // get the balance on entering the page
   useEffect(() => {
+    if(Data?.ConfirmAcc === "true"){
     if (newBalance === "" || newBalance === null || newBalance === undefined) {
       GetBalance();
       if (GetBalance) {
@@ -154,6 +158,9 @@ const EEDC = () => {
         );
       }
     }
+  }else{
+    setRestrictUser(true)
+  }
     // handleResetFields();
     // eslint-disable-next-line
   }, []);
@@ -1721,7 +1728,11 @@ const EEDC = () => {
           <Loader />
         </Modal>
       )}
-      {sessionModal && <HandleUserSession />}
+      {sessionModal && <InternalLoginSession 
+      setExpiredSessionLogin ={setSessionModal}/>}
+      {restrictUser && sessionModal === false && (
+              <RestrictionPopUp/>
+            ) }
     </DashBoardLayout>
   );
 };
