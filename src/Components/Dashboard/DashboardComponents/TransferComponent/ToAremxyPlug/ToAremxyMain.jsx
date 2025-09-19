@@ -418,16 +418,14 @@ const GetBalance = async () => {
       );
     };
       if (Data?.ConfirmAcc === "true"){                     // Simulate async data loading
-                     if(newBalance === "" ||
-       newBalance === null ||
-        newBalance === undefined){
+                  
                         GetBalance();
           setNewBalance(passDataBalance?.data?.data?.data !== undefined
                ? passDataBalance?.data?.data?.data?.balance : "");
                        
-                     }
+                     
                     }else {
-                      setRestrictUser(true);
+                    setRestrictUser(true);
                     }
                       //eslint-disable-next-line
   }, [])

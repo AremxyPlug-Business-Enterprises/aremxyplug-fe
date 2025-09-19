@@ -180,8 +180,10 @@ const Data = GetLocalStorage();
           setIsLoading,
           SuccessHandler,
           (ErrorType) => {
-            if (ErrorType === "Server error") {
-              alert("Unable to get NABTEB PINS. Please try again later");
+            if (ErrorType === "Sever error") {
+           alert("Unable to get NABTEB PINS. Please try again later");
+            }else if(ErrorType === "Network error" || ErrorType === "User error"){
+          alert("Your internet connection is quite unstable.")
             }
           },
           setNabtebEduResponse

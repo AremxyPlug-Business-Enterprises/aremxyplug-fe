@@ -194,8 +194,10 @@ export default function NecoEducationPins() {
           setIsLoading,
           SuccessHandler,
           (ErrorType) => {
-            if (ErrorType === "unauthorised") {
-              return setSessionModal(true);
+              if (ErrorType === "Sever error") {
+           alert("Unable to get NECO PINS. Please try again later");
+            }else if(ErrorType === "Network error" || ErrorType === "User error"){
+          alert("Your internet connection is quite unstable.")
             }
           },
           setNecoEduResponse
@@ -337,15 +339,14 @@ const GetBalance = async () => {
   useEffect(() => {
     if(Data?.ConfirmAcc === "true"){
     getAmount();
-    if (newBalance === "" || newBalance === null || newBalance === undefined) {
-      GetBalance();
+   GetBalance();
       if (GetBalance) {
         setNewBalance(
           passDataBalance?.data?.data
             ? passDataBalance?.data?.data?.data?.balance
             : ""
         );
-      }
+      
     }
   }else {
     setRestrictUser(true)

@@ -166,9 +166,13 @@ const Decoders  = [
             setIsLoading,
              SuccessHandler,
               (ErrorType)=> {
-                if(ErrorType === "unauthorised"){
-                  return setSessionModal(true);
-                }
+                 if(ErrorType === "User error" || ErrorType === "Network error"){
+             setCheckNetworkError(true);
+          }else if(ErrorType === "Server error"){
+             alert("Failed to fetch Showmax Plans, try again later")
+          }else{
+            alert("An unexpected error has occured try again later.")
+          }
               }, 
               setFetchedShowMaxPlans);
           }
@@ -316,19 +320,13 @@ const Decoders  = [
             }else if(fetchedShowMaxPlans.status === undefined && Data?.ConfirmAcc === "true"){
             RetrieveShowMaxPlans()
       }
-   
-
-                           // Simulate async data loading
-                  
-                  if(newBalance === "" ||
-                         newBalance === null || 
-                       newBalance === undefined ){
-                        GetBalance();
+      // Simulate async data loading
+                    GetBalance();
                         if(GetBalance){
                           setNewBalance(passDataBalance?.data?.data?.data !== undefined
                       ? passDataBalance?.data?.data?.data?.balance : "");
                       }
-                     }
+                     
                   }else{
                       setRestrictUser(true)
                     }
@@ -1169,23 +1167,36 @@ const Decoders  = [
         <p className="text-sm text-red-500 font-[600] mb-8">
          {purchaseShowMaxErrorType}
         </p>
-        <div className="flex gap-[10px] justify-between w-full px-[10px]">
-        <button
-          onClick={() => ExitTheDoneButton()}
-          className="bg-[#04177f] w-[50%] max-w-xs mx-auto py-2
-           text-white rounded-md font-medium">
-          Done
-        </button>
-           <button
-          onClick={() =>{
-              handleReceivedData()
-          }}
-          className="w-[50%] bg-white max-w-xs mx-auto py-2 text-blue-900
+         {showMaxSubscriptionResponse?.data?.status  ?
+               (
+              <div className="flex gap-[10px] justify-between w-full px-[10px]">
+                <button
+                  onClick={() => ExitTheDoneButton()}
+                  className="bg-[#04177f] w-[50%] max-w-xs mx-auto py-2
+           text-white rounded-md font-medium"
+                >
+                  Done
+                </button>
+                <button
+                  // onClick={() => {
+                  //   ReceiptButton();
+                  // }}
+                  className="w-[50%] bg-white max-w-xs mx-auto py-2 text-blue-900
            rounded-md font-medium"
-        >
-          Receipt
-        </button>
-        </div>
+                >
+                  Receipt
+                </button>
+              </div>
+         
+                ): (
+                   <button
+                  onClick={() => ExitTheDoneButton()}
+                  className="bg-[#04177f] w-[100%] max-w-xs mx-auto py-2
+           text-white rounded-md font-medium"
+                >
+                  Done
+                </button>
+                 )}
 
       </div>
     </div>

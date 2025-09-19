@@ -151,18 +151,22 @@ const TransactionPage = () => {
     setShowStatus(false);
     window.scrollTo({top : window.innerWidth < 1024 ? 500 : 700, behavior : "smooth"})
   };
-console.log(window.innerWidth)
   const filteredTransactions =
     transactionResponse?.data?.data?.data?.transactions !== null
       ? transactionResponse?.data?.data?.data?.transactions.filter(
           (transaction) => {
+         const handleStatus =  selectedStatus === "Successful" ? 
+              "success" : selectedStatus === "Failed" ? "failed" :
+               selectedStatus === "Pending" ? "pending" : selectedStatus === "Refunded" ? 
+               "refunded" : selectedStatus;
+            
             if (
               selectedStatus === "" ||
               selectedStatus === "All Transactions"
             ) {
               return transaction;
             } else {
-              return transaction.status === selectedStatus;
+              return transaction.status === handleStatus;
             }
           }
         )
@@ -170,7 +174,7 @@ console.log(window.innerWidth)
 
   const chooseStatus = [
     "All Transactions",
-    "Delivered",
+    "Successful",
     "Failed",
     "Pending",
     "Refunded",
@@ -810,7 +814,7 @@ return date?.toISOString()?.slice(0, 10);
                     <p
                       onClick={() => {
                         handleStatusFilter(
-                          status === "Delivered" ? "delivered" : status === "Failed" ? "failed" : status
+                         status
                         );
                       
                       }}

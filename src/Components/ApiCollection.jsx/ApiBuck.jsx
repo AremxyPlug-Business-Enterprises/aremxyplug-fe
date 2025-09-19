@@ -201,7 +201,7 @@ console.log(authToken);
      }else if(ErrorType === "Server error"){
       alert("Failed to process your request")
      }else if(ErrorType === "User Blocked"){
-      alert("Account Blocked try after 1 hour");
+      alert("Account Blocked try after one hour");
      window.location.replace("/Login")
      RemoveLocalStorage()
      }
@@ -274,15 +274,15 @@ const SubmitUserLoginDetails = ()=> {
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px]
      md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] 
      lg:pr-[9px] lg:pl-[10px] items-center cursor-pointer 
-     outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[50.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
+     outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[50.927px]
+      md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
       isDarkMode === "true" 
       ? "bg-black text-white border border-white" 
       : "hover:bg-[#EDEAEA] border-[#9C9C9C] bg-white text-[#7C7C7C] "
   }`} 
   readOnly
   value={HoldValue}
-  
-                type="text" />
+   type="text" />
               
               
                 </div>
@@ -686,7 +686,8 @@ export const PostFunction = async (
 
 
 // A general Function to get useful data from the backend
-export const GetFunction = async(path, setLoading, functionAtSuccess,functionAtFailed,setFetchedResponse)=> {
+export const GetFunction = async(path, setLoading, functionAtSuccess,
+  functionAtFailed,setFetchedResponse)=> {
    const authToken = localStorage.getItem("authorisedLogin");
    const getToken = localStorage.getItem("getToken");
    if(!navigator.onLine) return alert("Check your internet connection");

@@ -295,7 +295,25 @@ console.log(pointPostResponse)
     setUserPoints(available);
     
   }, (err) => {
-    console.error("Failed to refresh points", err);
+   if(err === "unauthorised"){
+        GetFunction("extra/point", setLoading, (res) => {
+    const available = res?.data?.data?.point?.available_points ?? 0;
+    setUserPoints(available);
+    
+  }, (err) => {
+   if(err === "unauthorised"){
+      setSessionModal(true)
+   }else if(err === "Server error"){
+    alert("Failed to retrieve points balance.")
+   }else if(err === "Network error" || err === "User error"){
+    alert("Your internet connection is quite unstable")
+   }
+  }, setPointFetchedResponse)
+   }else if(err === "Server error"){
+    alert("Failed to retrieve points balance.")
+   }else if(err === "Network error" || err=== "User error"){
+    alert("Your internet connection is quite unstable")
+   }
   }, setPointFetchedResponse);
 };
 

@@ -81,8 +81,10 @@ const TransactionHistory = ({
           setOrderLoading,
           SuccessHandler,
           (ErrorType) => {
-            if (ErrorType === "unauthorised") {
-              setSessionModal(true);
+            if (ErrorType === "Server error") {
+           alert("A server error occured, please try again later");
+            }else if(ErrorType === "Network error" || ErrorType === "User error"){
+              alert("Your internet connection is quite unstable.")
             }
           },
           setOrderIdResponse
@@ -94,7 +96,7 @@ const TransactionHistory = ({
           SuccessHandler,
           (ErrorType) => {
             if (ErrorType === "Server error") {
-              alert("A server error occured, please try again later");
+              alert("Failed to process your request");
               setElectricityTransErrorType(
                 "Failed to process your request, try again some other time"
               );
@@ -121,7 +123,7 @@ const TransactionHistory = ({
     transactionResponse?.data?.data?.data?.transactions !== null
       ? transactionResponse?.data?.data?.data?.transactions?.filter(
           (transaction, index) => {
-            console.log(transaction);
+         //   console.log(transaction);
             return index < 4;
           }
         )

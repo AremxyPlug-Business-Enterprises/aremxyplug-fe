@@ -151,9 +151,7 @@ const assumedString = selectedAmountGlo?.toString()
                 await inputPinHandler();
               }
             }
-          } else {
-            return setSessionModal(true);
-          }
+          } 
         } else if (error && error.response.status === 500) {
           alert("Service for glo is currently not available, Try again later.");
         }
@@ -451,7 +449,6 @@ fetchProducts();
  
     // Simulate async data loading
   if(Data?.ConfirmAcc === "true"){
-    if (newBalance === "" || newBalance === null || newBalance === undefined) {
       GetBalance();
       if (GetBalance) {
         setNewBalance(
@@ -460,7 +457,6 @@ fetchProducts();
             : ""
         );
       }
-    }
   }else{
     setRestrictUser(true)
   }

@@ -266,13 +266,19 @@ export default function WaecEducationPin() {
           setIsLoading,
           SuccessHandler,
           (ErrorType) => {
-            if (ErrorType === "unauthorised") {
-              return setSessionModal(true);
+            if (ErrorType === "Server error") {
+           alert("Unable to get WAEC PINS. Please try again later");  
+            }else if(ErrorType === "Network error" || ErrorType === "User error"){
+          alert("Your internet connection is quite unstable.");
             }
           },
           setEduResponse
         );
-      }
+      } else if (ErrorType === "Server error") {
+           alert("Unable to get WAEC PINS. Please try again later");
+            }else if(ErrorType === "Network error" || ErrorType === "User error"){
+          alert("Your internet connection is quite unstable.");
+            }
     };
 
     await GetFunction(
@@ -410,7 +416,7 @@ const GetBalance = async () => {
   useEffect(() => {
     if(Data?.ConfirmAcc === "true"){
     getAmount();
-    if (newBalance === "" || newBalance === null || newBalance === undefined) {
+   
       GetBalance();
       if (GetBalance) {
         setNewBalance(
@@ -418,7 +424,7 @@ const GetBalance = async () => {
             ? passDataBalance?.data?.data?.data?.balance
             : ""
         );
-      }
+      
     }
   }else {
     setRestrictUser(true)

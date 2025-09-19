@@ -58,7 +58,7 @@ const Data = GetLocalStorage();
 
   
 
-    const refresh = () => window.location.reload(true);
+   
 
     // 
 
@@ -94,14 +94,24 @@ const Data = GetLocalStorage();
    
 const GetRecipient = async()=> {
   if(recipientResponse?.data?.data?.data === undefined){
-      const SuccessHandler =()=> {
-     console.log("Success Recipients retrieved")
+      
+      const FailedHandler = async(ErrorType)=> {
+      if(ErrorType === "unauthorised"){
+      await GetFunction("bank-recipient", 
+setLoading, ()=> {},
+(ErrorType)=> {
+  if(ErrorType === "unauthorised"){
+    setSessionModal(true)
+  }
+}, setRecipientResponse)
+      }else if(ErrorType === "Server error"){
+         alert("Unable to get your saved recipients at the moment")
+      }else if(ErrorType === "Network error" || ErrorType === "User error"){
+        alert("Check your internet connection")
       }
-      const FailedHandler =()=> {
-        console.log("Failed to fetch recipient")
       }
 await GetFunction("bank-recipient", 
-setLoading, SuccessHandler,
+setLoading, ()=> {},
  FailedHandler, setRecipientResponse)
     }
   }
@@ -109,26 +119,28 @@ setLoading, SuccessHandler,
    const fetchRecipient =async()=> {
  await GetRecipient()
     }
-    if(Data?.ConfirmAcc === "true"){
+  if(Data?.ConfirmAcc === "true"){
     fetchRecipient();
-    }
+  }
   
     //eslint-disable-next-line
     }, [])
-const SearchFilter = (recipientResponse?.data?.data?.data !== undefined 
-  || recipientResponse?.data?.data?.data !== null
-   || recipientResponse?.data?.data?.data?.length < 1) 
+const SearchFilter 
+=
+  (recipientResponse?.data?.data?.data !== undefined 
+ && recipientResponse?.data?.data?.data !== null
+  && recipientResponse?.data?.data?.data?.length > 0 && Array?.isArray(recipientResponse?.data?.data?.data)) 
 ? recipientResponse?.data?.data?.data?.filter(filterBySearch=> {
-   //console.log(filterBySearch.username?.includes(searchSelectRecipient))
-   console.log(recipientResponse?.data?.data?.data);
+  
 
 return (
   filterBySearch?.username?.toLowerCase().includes(searchSelectRecipient?.toLowerCase()) ||
   filterBySearch?.email?.toLowerCase().includes(searchSelectRecipient?.toLowerCase())
 )
 
-}): [];
-console.log(recipientResponse?.data?.data?.data)
+}): 
+[];
+
  
 
   //DropDown Handling

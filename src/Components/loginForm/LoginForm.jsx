@@ -202,79 +202,67 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
             }, {})
           );
         } else {
+          try {
           setLoading(true);
           const loginData = { username: username, password: password};
           const config = {
             headers: { "Content-Type": "application/json" },
             withCredentials : true
           };
-          await axios
+        const response =   await axios
             .post(
               "https://aremxyplug.onrender.com/api/v1/login",
               loginData,
               config
             )
-            .then((response) => {
-              console.log(response);
               if (response.status === 202 && response.headers.hasAuthorization) {
                 setOpenTranspin(true);
-                console.log(`${response?.data?.data}`);
                 const authToken = response.headers.get('Authorization');
                   const customer  =  response?.data?.data?.customer;
             
                 if(authToken){
                  localStorage.setItem("getToken", authToken);
                   if(customer){
-                    console.log(customer);
-                    setCustomerDetail(customer);
+                   setCustomerDetail(customer);
                } }
      } else if(response.status === 200){
                   setOpen2StepVerification(true);
-                    console.log(response.headers);
                   const customer  =  response?.data?.data?.customer;
                   const authToken = response?.headers.get('Authorization');
-                  console.log(authToken);
                    if(authToken){
                 localStorage.setItem("getToken", authToken);
-              
-                  if(customer){
+               if(customer){
                setCustomerDetail(customer);
                console.log(customer);
-                  }
-                   }
-             }
-            })
-            .catch((error) => {
-              if(error && error.status === 500){
-              console.error(error);
-              alert("Server error: try some other time");
-              }else if (error.status === 404) {
-                alert("User not found");
-              } else if ( error.status === 401 || error.status === 400) {
-                alert("Incorrect Password or Username");
-              }else if ( error.status === 403) {
-                alert("Login Failed due to many retries");
-              }else if(error && error.response.status === undefined){
-                alert("Check your internet Connection");
-          }else {
-            alert("Check your internet connection")
-          }
-            });
+                  }} }
+            } catch(error){
+             if(error && error.response === undefined){
+                alert("Your internet connection is quite unstable.");
+          }else if(error && error.response.status === 500){
+              alert("Server error: try some other time.");
+              }else if (error && error.response.status === 404) {
+                alert("User not found.");
+              } else if (error.response.status === 401 || error.response.status === 400) {
+              alert("Incorrect Password: You are only allowed to try 5 times.");
+              }else if (error &&  error.response.status === 403) {
+              alert("Account Blocked try after one hour.");
+              }else {
+             alert("An unexpected error occured during the login process.")
+              }
+            };
           //if (checkbox === true) {
             // localStorage.setItem("aremxyPassword", JSON.stringify(password));
             // localStorage.setItem("aremxyUsername", JSON.stringify(username))
         
           //}
         }
-      } catch (error) {
-        console.log(error);
-      } finally {
+      }finally {
         setLoading(false)
           }
     }
 
     if (usernameORemail === "email" && navigator.onLine && !ActiveSignUp) {
-      try {
+    
         const schema = Joi.object({
           email: Joi.string()
             .pattern(new RegExp(/^\S+@\S+\.\S+$/))
@@ -297,14 +285,14 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
             headers: { "Content-Type": "application/json" },
             withCredentials : true
           };
-          await axios
+          try {
+        const response =   await axios
             .post(
               "https://aremxyplug.onrender.com/api/v1/login",
               loginData,
               config
             )
-            .then((response) => {
-              console.log(response);
+          
               if (response.status === 202  && response?.headers?.hasAuthorization) {
                 setOpenTranspin(true);
                 const authToken = response.headers.get('Authorization');
@@ -313,7 +301,6 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
                  // localStorage.setItem("UserStatus",false)
                   localStorage.setItem("authorisedLogin", authToken);
                    if(customer){
-                    console.log(customer);
                setCustomerDetail(customer);
                   }
               }
@@ -323,43 +310,34 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
                 setOpen2StepVerification(true);
              const customer  =  response?.data?.data?.customer;
              const authToken = response.headers.get('Authorization');
-             console.log(customer)
-            
-           if(authToken){
+             if(authToken){
              localStorage.setItem("authorisedLogin", authToken);
              if(customer){
               setCustomerDetail(customer);
              }
               }
          } 
-            })
-            .catch((error) => {
-            if(error.status=== 500){
-              console.error(error);
-              alert("A SERVER ERROR");
-              }else if(error.status === 404){
+            }catch(error){
+       if(error && error.response === undefined){
+                alert("Your internet connection is quite unstable.");
+          }else if(error.response.status=== 500){
+               alert("Server error: try some other time");
+              }else if(error.response.status === 404){
                 alert("User not found")
                    }
-                   else if (error.status === 401 || error.status === 400) {
-                     alert("Incorrect Password or Email");
-                   } else if (error.status === 403) {
-                     alert("Login Failed due to many retries.");
-                   } else {
-                     console.log(error);
-                   }
-            });
-         // if (checkbox === true) {
-            //localStorage.setItem("aremxyPassword", JSON.stringify(password));
-         // }
-        }
-      } catch (error) {
-        console.log(error);
-      } finally{
+                   else if (error.response.status === 401 || error.response.status === 400) {
+                   alert("Incorrect Password: You are only allowed to try 5 times.");
+                   } else if (error.response.status === 403) {
+                     alert("Account Blocked: Try again after the next one hour.");
+                   }else {
+           alert("An unexpected error occured during the login process")
+            }
+            }finally{
        setLoading(false);
       }
     }
   
-  };
+      }}
 
 
 

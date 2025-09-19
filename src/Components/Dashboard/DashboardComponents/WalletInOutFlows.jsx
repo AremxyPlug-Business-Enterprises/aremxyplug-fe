@@ -1,7 +1,7 @@
 import  { useState, useEffect } from "react";
 import { RxDotFilled } from "react-icons/rx";
 import styles from "./component.module.css";
-import { GetFunction, InternalLoginSession } from "../../ApiCollection.jsx/ApiBuck";
+import { GetFunction} from "../../ApiCollection.jsx/ApiBuck";
 import { useContext } from "react";
 import { ContextProvider } from "../../Context";
 import  { RecentTransaction } from  "./RecentTransaction";
@@ -20,7 +20,6 @@ export const WalletInOutFlows = ({className}) => {
  const [loading, setLoading] = useState(false);
  const {transactionResponse, setTransactionResponse} = useContext(ContextProvider)
  const [transactionHistoryError, setTransactionHistoryError] = useState("");
- const [sessionModal, setSessionModal] = useState(false)
   const [activeButtons, setActiveButtons] = useState([
     true,
     false,
@@ -61,14 +60,17 @@ export const WalletInOutFlows = ({className}) => {
         if(!navigator.onLine) return setTransactionHistoryError("Network error")
         const path ="transactions"
         const SuccessHandler =()=>{
-        console.log('The user transactions are retrieved.');
+        setTransactionHistoryError("");
         }
         const FailedHandler = async(ErrorType)=> {
       if(ErrorType === "unauthorised"){
         setTransactionHistoryError("unauthorised");
-        await GetFunction(path, setLoading, SuccessHandler,(ErrorType)=> {
-          if(ErrorType === "unauthorised"){
-         setSessionModal(true);
+        await GetFunction(path, setLoading, SuccessHandler,
+          (ErrorType)=> {
+          if(ErrorType === "Sever error"){
+          alert("Failed to retrieve transactions")
+          }else if(ErrorType === "User error" || ErrorType === "Network error"){
+             setTransactionHistoryError("Network error")
           }
         }, setTransactionResponse)
       }else if(ErrorType === "Network error" || ErrorType === "User error" || ErrorType === "Bad request"){
@@ -298,7 +300,10 @@ export const WalletInOutFlows = ({className}) => {
                   />
                 </div>
                 <p className="text-center  text-[10px] leading-[13px] font-[500] 
-                  lg:text-[18px] lg:leading-[24px]">{selected === "NGN" ? transactionResponse?.data?.data?.data?.total_count || transactionResponse?.data?.status === 200  ? transactionResponse?.data?.data?.data?.total_count: "" : 0}  </p>
+                  lg:text-[18px] lg:leading-[24px]">{selected === "NGN" 
+                  ? transactionResponse?.data?.data?.data?.total_count
+                   || transactionResponse?.data?.status === 200 
+                    ? transactionResponse?.data?.data?.data?.total_count: "" : 0}  </p>
               </div>
 
               <div
@@ -525,9 +530,7 @@ export const WalletInOutFlows = ({className}) => {
        transactionHistoryError={transactionHistoryError} loading={loading} />
        
        
-        {sessionModal && (
-          <InternalLoginSession setExpiredSessionLogin={setSessionModal}/>
-        )}
+      
     </div>
   );
 };

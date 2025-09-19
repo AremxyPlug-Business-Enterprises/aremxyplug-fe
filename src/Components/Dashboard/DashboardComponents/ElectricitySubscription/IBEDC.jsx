@@ -119,7 +119,7 @@ const IBEDC = () => {
   //   const [showOptionList, setShowOptionList] = useState(false);
 
   const [passDataBalance, setPassDataBalance] = useState({});
-
+const [balanceLoader, setBalanceLoader] = useState(false)
   const GetBalance = async () => {
     const SuccessHandler = () => {
       console.log("successfully retrieved balance");
@@ -128,7 +128,7 @@ const IBEDC = () => {
       if (ErrorType === "unauthorised") {
         await GetFunction(
           `bills/verify`,
-          setLoading,
+          setBalanceLoader,
           SuccessHandler,
           (ErrorType) => {
             if (ErrorType === "unauthorised") {
@@ -141,7 +141,7 @@ const IBEDC = () => {
     };
     await GetFunction(
       "balance",
-      setLoading,
+      setBalanceLoader,
       SuccessHandler,
       FailedHandler,
       setPassDataBalance
@@ -150,7 +150,7 @@ const IBEDC = () => {
   // get the balance on entering the page
   useEffect(() => {
     if(Data?.ConfirmAcc === "true"){
-    if (newBalance === "" || newBalance === null || newBalance === undefined) {
+   
       GetBalance();
       if (GetBalance) {
         setNewBalance(
@@ -159,7 +159,7 @@ const IBEDC = () => {
             : ""
         );
       }
-    }
+    
   }else{
     setRestrictUser(true)
   }
@@ -1099,7 +1099,7 @@ const IBEDC = () => {
                           src={country.flag}
                           alt="/"
                         />
-                        {country.name} {country.balance}
+                         {country.name} {' '}  {balanceLoader === true && country.id === 1 ? <BalanceLoading/> :  country.balance}
                       </div>
                     ))}
                   </div>

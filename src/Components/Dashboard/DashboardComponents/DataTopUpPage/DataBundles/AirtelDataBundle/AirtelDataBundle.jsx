@@ -154,9 +154,7 @@ const assumedString = selectedAmountAirtel?.toString()
                 await fetchProducts();
               }
             }
-          } else {
-            return setSessionModal(true);
-          }
+          } 
         } else {
           alert("Error occured: Kindly check your network connection.");
         }
@@ -457,13 +455,11 @@ const assumedString = selectedAmountAirtel?.toString()
   useEffect(() => {
     // Simulate async data loading
  if (Data?.ConfirmAcc === "true"){                     // Simulate async data loading
-                     if(newBalance === "" ||
-       newBalance === null ||
-        newBalance === undefined){
+                  
             GetBalance();
           setNewBalance(passDataBalance?.data?.data?.data !== undefined
                ? passDataBalance?.data?.data?.data?.balance : "");
-                        }
+                        
                     }else {
                       setRestrictUser(true);
                     }
@@ -619,14 +615,9 @@ const assumedString = selectedAmountAirtel?.toString()
     async function buyData(network, mobileNumber, planID, name) {
       // Add validation for selected plan
       if (!selectedPlan) {
-        console.error("No plan selected");
         return;
       }
-
-      console.log(selectedPlan);
-      console.log(selectedPlan.PlanID);
-
-      const path = "/data";
+const path = "/data";
 
       const data = {
         network,
@@ -635,12 +626,8 @@ const assumedString = selectedAmountAirtel?.toString()
         name,
       };
 
-      setLoading(true);
-
-      console.log(data);
-      console.log("its me");
-
-      try {
+      setLoading(true)
+ try {
         setLoading(true);
 
         const response = await axiosInstance.post(path, data);
@@ -659,7 +646,7 @@ const assumedString = selectedAmountAirtel?.toString()
           setInputPin("");
           return { statusCode: response?.status, data: response?.data };
         }
-        // console.log(response.data);
+      
       } catch (error) {
         if (error && error.response === undefined) {
           alert("Your internet connection is quite unstable.");
@@ -670,8 +657,6 @@ const assumedString = selectedAmountAirtel?.toString()
           setAirtelPurchaseStatus(true); // Show failure popup
           setConfirm(false);
           setInputPin("");
-
-          // alert("I am the problem");
         } else if (error && error.response.status === 401) {
           if (
             error?.response?.headers["x-new-auth-token"] ||

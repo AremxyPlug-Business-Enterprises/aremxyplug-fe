@@ -93,7 +93,7 @@ const Data = GetLocalStorage();
     const [passDataBalance, setPassDataBalance] = useState({});
     const [starTimesData, setStarTimesData] = useState([]);
     const [sessionModal, setSessionModal] = useState(false);
-               
+            const [balanceLoader, setBalanceLoader] = useState(false)   
 
     const navigate = useNavigate();
 
@@ -178,7 +178,7 @@ const Data = GetLocalStorage();
            if (ErrorType === "unauthorised") {
              await GetFunction(
                `balance`,
-               setIsLoading,
+              setBalanceLoader,
                SuccessHandler,
                //Handling the error Use Cases of the Unauthorised inside
                // of the statement.
@@ -188,7 +188,7 @@ const Data = GetLocalStorage();
                  }else if(ErrorType === "Server error"){
                      await GetFunction(
            "balance",
-           setIsLoading,
+           setBalanceLoader,
            SuccessHandler,
           async(ErrorType)=> {
            if(ErrorType === "Server error"){
@@ -214,13 +214,13 @@ const Data = GetLocalStorage();
            }else if(ErrorType === "Server error"){
                await GetFunction(
            "balance",
-           setIsLoading,
+           setBalanceLoader,
            SuccessHandler,
           async(ErrorType)=> {
             if(ErrorType === "unauthorised"){
                await GetFunction(
            "balance",
-           setIsLoading,
+           setBalanceLoader,
            SuccessHandler,
            async(ErrorType)=> {
              if(ErrorType === "unauthorised"){
@@ -228,7 +228,7 @@ const Data = GetLocalStorage();
              }else if(ErrorType === "Server error"){
                   await GetFunction(
            "balance",
-           setIsLoading,
+           setBalanceLoader,
            SuccessHandler,
           async(ErrorType)=> {
            //if Statements
@@ -278,7 +278,7 @@ const Data = GetLocalStorage();
          }
          await GetFunction(
            "balance",
-           setIsLoading,
+           setBalanceLoader,
            SuccessHandler,
            FailedHandler,
            setPassDataBalance
@@ -296,9 +296,13 @@ const Data = GetLocalStorage();
             setIsLoading,
              SuccessHandler, 
              (ErrorType)=> {
-              if(ErrorType === "unauthorised"){
-              return setSessionModal(true);
-              }
+               if(ErrorType === "User error" || ErrorType === "Network error"){
+             setCheckNetworkError(true);
+          }else if(ErrorType === "Server error"){
+             alert("Failed to fetch Startimes Plans, try again later")
+          }else{
+            alert("An unexpected error has occured try again later.");
+          }
              },
               setFetchedStarTimesPlans);
           }
@@ -1043,7 +1047,8 @@ window.addEventListener("online", ()=> {
                         key={methodOption.id} >
         <img className='md:h-[29.27px]  h-[14.27px]' src={methodOption.flag} alt="" />
  
-                          {methodOption.method + ' ' + methodOption.balance}
+                          {methodOption.method } {" "}
+                          { balanceLoader === true && methodOption.id === 1 ? <BalanceLoading/> :  methodOption.balance}
                        
                       </div>
 
@@ -1106,23 +1111,36 @@ window.addEventListener("online", ()=> {
                  <p className="text-sm text-gray-600 mb-8">
                    An unexpected error has occurred, please try again.
                  </p>
-                <div className="flex gap-[10px] justify-between w-full px-[10px]">
-        <button
-          onClick={() => ExitTheDoneButton()}
-          className="bg-[#04177f] w-[50%] max-w-xs mx-auto py-2
-           text-white rounded-md font-medium">
-          Done
-        </button>
-           <button
-          onClick={() =>{
-            ReceiptButton()
-          }}
-          className="w-[50%] bg-white max-w-xs mx-auto py-2 text-blue-900
+               {starTimesSubscriptionResponse?.data?.status  ?
+               (
+              <div className="flex gap-[10px] justify-between w-full px-[10px]">
+                <button
+                  onClick={() => ExitTheDoneButton()}
+                  className="bg-[#04177f] w-[50%] max-w-xs mx-auto py-2
+           text-white rounded-md font-medium"
+                >
+                  Done
+                </button>
+                <button
+                  onClick={() => {
+                    ReceiptButton();
+                  }}
+                  className="w-[50%] bg-white max-w-xs mx-auto py-2 text-blue-900
            rounded-md font-medium"
-        >
-          Receipt
-        </button>
-        </div>
+                >
+                  Receipt
+                </button>
+              </div>
+         
+                ): (
+                   <button
+                  onClick={() => ExitTheDoneButton()}
+                  className="bg-[#04177f] w-[100%] max-w-xs mx-auto py-2
+           text-white rounded-md font-medium"
+                >
+                  Done
+                </button>
+                 )}
 
                </div>
              </div>

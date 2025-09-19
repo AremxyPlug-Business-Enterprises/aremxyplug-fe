@@ -189,7 +189,7 @@ export default function EducationMain() {
             </Link>
             {/* Jamb Examination */}
             <Link
-              to="/JambEducationPin"
+              to= {null}
               onClick={handleResetJambFields}
               className={`${"md:w-1/4 md:h-[100%] h-auto w-[45%]"}
           ${
@@ -199,7 +199,10 @@ export default function EducationMain() {
           }
         `}
             >
-              <div className="flex h-[100%] p-[6.868px] gap-[3.35px] md:p-[5.868px] md:gap-[2.347px] rounded-[2.934px] border-[0.587px] border-[black] border-opacity-[30%] shadow-[0px_0.58686px_0.34722px_0px_rgba(0,0,0,0.25)] lg:shadow-[0px_1px_4px_0px_rgba(0,0,0,0.25)] lg:border-[1px] lg:border-[black] lg:border-opacity-[30%] lg:p-[10px] lg:rounded-[5px] lg:gap-[6px]  cursor-pointer">
+              <div className="flex h-[100%] p-[6.868px]
+               gap-[3.35px] md:p-[5.868px] md:gap-[2.347px] 
+               rounded-[2.934px] border-[0.587px] border-[black]
+                border-opacity-[30%] shadow-[0px_0.58686px_0.34722px_0px_rgba(0,0,0,0.25)] lg:shadow-[0px_1px_4px_0px_rgba(0,0,0,0.25)] lg:border-[1px] lg:border-[black] lg:border-opacity-[30%] lg:p-[10px] lg:rounded-[5px] lg:gap-[6px]  cursor-pointer">
                 {/* Jamb Logo */}
                 <img
                   className="md:w-1/2 w-[40%]"

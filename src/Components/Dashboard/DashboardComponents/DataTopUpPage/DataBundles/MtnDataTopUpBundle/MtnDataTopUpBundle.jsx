@@ -132,8 +132,6 @@ const assumedString = selectedAmountMtn?.toString()
                 await fetchProducts();
               }
             }
-          } else {
-            return setSessionModal(true);
           }
         } else if (error && error?.response?.status === 500) {
           alert("Service for mtn is currently not available, Try again later.");

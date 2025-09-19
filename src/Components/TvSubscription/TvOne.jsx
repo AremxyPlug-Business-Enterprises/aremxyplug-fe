@@ -28,6 +28,7 @@ import {  RestrictionPopUp } from "../../Components/ApiCollection.jsx/ApiBuck";
 import { GetLocalStorage } from "../LocalStorage/LocalStorage";
 import { InternalLoginSession } from "../../Components/ApiCollection.jsx/ApiBuck";
 
+
 // import { duration } from "html2canvas/dist/types/css/property-descriptors/duration";
 
 const GoTv = () => {
@@ -88,7 +89,7 @@ const GoTv = () => {
   const [stateInvalidDecoderNumber, setStateInvalidDecoderNumber] =
     useState(false);
   const [sessionModal, setSessionModal] = useState(false);
-
+const [balanceLoader , setBalanceLoader] = useState(false)
   const [isLoading, setIsLoading] = useState(false);
   const [failedPopup, setFailedPopup] = useState(false);
   const [gotvLoading, setGotvLoading] = useState(false);
@@ -208,7 +209,7 @@ const Data = GetLocalStorage();
         if (ErrorType === "unauthorised") {
        await GetFunction(
             `balance`,
-            setIsLoading,
+            setBalanceLoader,
             SuccessHandler,
             //Handling the error Use Cases of the Unauthorised inside
             // of the statement.
@@ -218,7 +219,7 @@ const Data = GetLocalStorage();
               }else if(ErrorType === "Server error"){
                   await GetFunction(
         "balance",
-        setIsLoading,
+        setBalanceLoader,
         SuccessHandler,
        async(ErrorType)=> {
         if(ErrorType === "Server error"){
@@ -246,13 +247,13 @@ const Data = GetLocalStorage();
         }else if(ErrorType === "Server error"){
             await GetFunction(
         "balance",
-        setIsLoading,
+        setBalanceLoader,
         SuccessHandler,
        async(ErrorType)=> {
          if(ErrorType === "unauthorised"){
             await GetFunction(
         "balance",
-        setIsLoading,
+       setBalanceLoader,
         SuccessHandler,
         async(ErrorType)=> {
           if(ErrorType === "unauthorised"){
@@ -260,7 +261,7 @@ const Data = GetLocalStorage();
           }else if(ErrorType === "Server error"){
                await GetFunction(
         "balance",
-        setIsLoading,
+        setBalanceLoader,
         SuccessHandler,
        async(ErrorType)=> {
         //if Statements
@@ -314,7 +315,7 @@ const Data = GetLocalStorage();
       }
       await GetFunction(
         "balance",
-        setIsLoading,
+         setBalanceLoader,
         SuccessHandler,
         FailedHandler,
         setPassDataBalance
@@ -336,9 +337,13 @@ const Data = GetLocalStorage();
               setIsLoading,
               SuccessHandler,
               (ErrorType) => {
-                if(ErrorType === "unauthorised") {
-                  return setSessionModal(true);
-                }
+               if(ErrorType === "User error" || ErrorType === "Network error"){
+             setCheckNetworkError(true);
+          }else if(ErrorType === "Server error"){
+             alert("Failed to fetch Gotv Plans, try again later")
+          }else{
+            alert("An unexpected error has occured try again later.")
+          }
               },
               setFetchedGotvPlans
             );
@@ -374,9 +379,7 @@ const Data = GetLocalStorage();
     }
  // Simulate async data loading
 
-    if (newBalance === "" ||
-       newBalance === null ||
-        newBalance === undefined) {
+  
     GetBalance();
       if (GetBalance) {
         setNewBalance(
@@ -384,7 +387,7 @@ const Data = GetLocalStorage();
             ? passDataBalance?.data?.data?.data?.balance
             : "");
         }
-      }
+      
       } else{
            setRestrictUser(true)
       }
@@ -1419,9 +1422,10 @@ const Data = GetLocalStorage();
 
                             
                               
-                                {methodOption.method +
-                                  " " +
-                                  methodOption.balance}
+                                {methodOption.method} 
+                                  {" "} 
+
+                                {balanceLoader === true && methodOption.id === 1 ? <BalanceLoading/> :  methodOption.balance}
                               
                             </div>
                           );
@@ -1513,6 +1517,8 @@ const Data = GetLocalStorage();
               <p className="text-sm text-red-500 font-[600] mb-8">
                 {purchaseGotvErrorType}
               </p>
+              {tvSubscriptionResponse?.data?.status  ?
+               (
               <div className="flex gap-[10px] justify-between w-full px-[10px]">
                 <button
                   onClick={() => ExitTheDoneButton()}
@@ -1531,7 +1537,18 @@ const Data = GetLocalStorage();
                   Receipt
                 </button>
               </div>
-            </div>
+         
+                ): (
+                   <button
+                  onClick={() => ExitTheDoneButton()}
+                  className="bg-[#04177f] w-[100%] max-w-xs mx-auto py-2
+           text-white rounded-md font-medium"
+                >
+                  Done
+                </button>
+                 )}
+                 </div>
+                
           </div>
         </Modal>
       )}

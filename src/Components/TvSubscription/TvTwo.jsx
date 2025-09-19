@@ -89,7 +89,8 @@ const Data = GetLocalStorage();
      const {purchaseDstvErrorType, setPurchaseDstvErrorType} = useContext(ContextProvider);
      const { setDstvCardName} = useContext(ContextProvider)
       const [checkNetworkError, setCheckNetworkError] = useState(false)
-       const [restrictUser, setRestrictUser] = useState(false)
+       const [restrictUser, setRestrictUser] = useState(false);
+       const [balanceLoader, setBalanceLoader] = useState(false)
       const navigate = useNavigate();
   
 const handleOptionClickDstv = (option) => {
@@ -129,7 +130,7 @@ const ReceiptButton = ()=> {
     setDstvSubscriptionResponse({})
     // navigate("/DsTv");
   }
-
+console.log(dstvSubscriptionResponse?.data?.status);
   
 
   const handleTvEmail = (e) => {
@@ -230,8 +231,12 @@ const ReceiptButton = ()=> {
       setIsLoading,
        SuccessHandler,
         (ErrorType)=> {
-          if(ErrorType === "unauthorised"){
-            return setSessionModal(true);
+         if(ErrorType === "User error" || ErrorType === "Network error"){
+             setCheckNetworkError(true);
+          }else if(ErrorType === "Server error"){
+             alert("Failed to fetch DStv Plans, try again later")
+          }else{
+            alert("An unexpected error has occured try again later.")
           }
       },
          setFetchedDstvPlans);
@@ -267,7 +272,7 @@ const DstvOptionalPlan = dstvData?.length < 1 && fetchedDstvPlans.status === 200
         if (ErrorType === "unauthorised") {
           await GetFunction(
             `balance`,
-            setIsLoading,
+            setBalanceLoader,
             SuccessHandler,
             //Handling the error Use Cases of the Unauthorised inside
             // of the statement.
@@ -277,7 +282,7 @@ const DstvOptionalPlan = dstvData?.length < 1 && fetchedDstvPlans.status === 200
               }else if(ErrorType === "Server error"){
                   await GetFunction(
         "balance",
-        setIsLoading,
+        setBalanceLoader,
         SuccessHandler,
        async(ErrorType)=> {
         if(ErrorType === "Server error"){
@@ -303,7 +308,7 @@ const DstvOptionalPlan = dstvData?.length < 1 && fetchedDstvPlans.status === 200
         }else if(ErrorType === "Server error"){
             await GetFunction(
         "balance",
-        setIsLoading,
+        setBalanceLoader,
         SuccessHandler,
        async(ErrorType)=> {
          if(ErrorType === "unauthorised"){
@@ -317,7 +322,7 @@ const DstvOptionalPlan = dstvData?.length < 1 && fetchedDstvPlans.status === 200
           }else if(ErrorType === "Server error"){
                await GetFunction(
         "balance",
-        setIsLoading,
+        setBalanceLoader,
         SuccessHandler,
        async(ErrorType)=> {
         //if Statements
@@ -367,7 +372,7 @@ const DstvOptionalPlan = dstvData?.length < 1 && fetchedDstvPlans.status === 200
       }
       await GetFunction(
         "balance",
-        setIsLoading,
+        setBalanceLoader,
         SuccessHandler,
         FailedHandler,
         setPassDataBalance
@@ -383,15 +388,13 @@ const DstvOptionalPlan = dstvData?.length < 1 && fetchedDstvPlans.status === 200
 
                      // Simulate async data loading
                      
-                    if(newBalance === "" ||
-       newBalance === null ||
-        newBalance === undefined){
+                  
                         GetBalance();
                         if(GetBalance){
                          setNewBalance(passDataBalance?.data?.data?.data !== undefined
                            ? passDataBalance?.data?.data?.data?.balance : "");
                         }
-                      }
+                      
                       }else{
                        setRestrictUser(true)
                       }
@@ -1208,8 +1211,8 @@ window.addEventListener("online", ()=> {
  <img className='md:h-[29.27px]  h-[14.27px]' 
  src={methodOption.flag} alt="" />
 
-         {methodOption.method + ' ' + methodOption.balance}
-                    
+         {methodOption.method } {" "}
+                     {balanceLoader === true && methodOption.id === 1 ? <BalanceLoading/> :  methodOption.balance}
                       </div>
 
                     )
@@ -1273,24 +1276,36 @@ window.addEventListener("online", ()=> {
            <p className="text-sm text-red-500 font-[600] mb-8">
              {purchaseDstvErrorType}
            </p>
-             <div className="flex gap-[10px] justify-between w-full px-[10px]">
-        <button
-          onClick={() => ExitTheDoneButton()}
-          className="bg-[#04177f] w-[50%] max-w-xs mx-auto py-2
-           text-white rounded-md font-medium">
-          Done
-        </button>
-           <button
-          onClick={() =>{
-              ReceiptButton()
-              
-          }}
-          className="w-[50%] bg-white max-w-xs mx-auto py-2 text-blue-900
+              {dstvSubscriptionResponse?.data?.statuss ?
+               (
+              <div className="flex gap-[10px] justify-between w-full px-[10px]">
+                <button
+                  onClick={() => ExitTheDoneButton()}
+                  className="bg-[#04177f] w-[50%] max-w-xs mx-auto py-2
+           text-white rounded-md font-medium"
+                >
+                  Done
+                </button>
+                <button
+                  onClick={() => {
+                    ReceiptButton();
+                  }}
+                  className="w-[50%] bg-white max-w-xs mx-auto py-2 text-blue-900
            rounded-md font-medium"
-        >
-          Receipt
-        </button>
-        </div>
+                >
+                  Receipt
+                </button>
+              </div>
+         
+                ): (
+                   <button
+                  onClick={() => ExitTheDoneButton()}
+                  className="bg-[#04177f] w-[100%] max-w-xs mx-auto py-2
+           text-white rounded-md font-medium"
+                >
+                  Done
+                </button>
+                 )}
 
          </div>
        </div>

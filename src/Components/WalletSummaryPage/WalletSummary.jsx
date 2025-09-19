@@ -85,9 +85,17 @@ export default function WalletSummaryPage() {
           setLoading,
           SuccessHandler,
           (ErrorType) => {
-            if (ErrorType === "unauthorised") {
-             return setSessionModal(true);
-            }
+            if (
+        ErrorType === "Network error" ||
+        ErrorType === "User error" ||
+        ErrorType === "Bad request"
+      ) {
+        setTransactionHistoryError("Network error");
+      } else if (ErrorType === "Server error") {
+        setTransactionHistoryError("Server error");
+      } else {
+        setTransactionHistoryError(null);
+      }
           },
           setWalletTransactionResponse
         );
@@ -186,7 +194,7 @@ export default function WalletSummaryPage() {
     //  GetTransactionInformation()
     //     }
     setSelected("NGN");
-    if (newBalance === "" || newBalance === null || newBalance === undefined) {
+   
       GetBalance();
       if (GetBalance) {
         setNewBalance(
@@ -195,7 +203,7 @@ export default function WalletSummaryPage() {
             : ""
         );
       }
-    }
+    
     GetTransactionInformation();
     //eslint-disable-next-line
   }, []);
@@ -369,6 +377,7 @@ const FormatTime =(DateValue)=> {
   })
   return TimePart;
 }
+console.log(walletTransactionResponse?.data?.data?.data?.data?.total_outflow)
   return (
     <DashBoardLayout>
       <>
@@ -650,8 +659,9 @@ const FormatTime =(DateValue)=> {
             {/* The flow start here */}
             <div>
               <div
-                className={` flex w-full gap-[5px] h-[70px] lg:h-[100px] md:items-center 
-                    lg:mt-[5%] lg:items-center my-[30px]`}
+                className={` flex w-full gap-[5px] h-[70px]
+                   lg:h-[100px] md:items-center 
+                    lg:mt-[5%] items-center my-[30px]`}
               >
                 <select
                   name="curr"
@@ -693,7 +703,7 @@ const FormatTime =(DateValue)=> {
                   >
                     {selected === "NGN"
                       ? walletTransactionResponse?.data?.data?.data
-                        ? walletTransactionResponse?.data?.data?.data?.total_inflow?.toLocaleString(
+                        ? walletTransactionResponse?.data?.data?.data?.data?.total_inflow?.toLocaleString(
                             "en-NG",
                             {
                               style: "currency",
@@ -767,7 +777,7 @@ const FormatTime =(DateValue)=> {
                   >
                     {selected === "NGN"
                       ? walletTransactionResponse?.data?.data?.data
-                        ? walletTransactionResponse?.data?.data?.data?.total_outflow?.toLocaleString(
+                        ? walletTransactionResponse?.data?.data?.data?.data?.total_outflow?.toLocaleString(
                             "en-NG",
                             {
                               style: "currency",
