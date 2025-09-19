@@ -83,7 +83,7 @@ export default function ProfileSettingsMain(Data) {
       setVerificationResponse)
       }
     }
-  console.log(verificationResponse?.data?.data?.address);
+  //console.log(verificationResponse?.data?.data?.address);
     const setLoading=(Value)=> {
   console.log(Value)
     }

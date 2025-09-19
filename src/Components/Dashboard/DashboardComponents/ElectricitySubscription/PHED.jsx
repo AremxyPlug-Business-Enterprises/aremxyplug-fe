@@ -115,7 +115,7 @@ const PHED = () => {
   //   const { selectedOption, setSelectedOption } = useContext(ContextProvider);
   //   const [showOptionList, setShowOptionList] = useState(false);
   const [passDataBalance, setPassDataBalance] = useState({});
-
+  const [balanceLoader, setBalanceLoader] = useState(false)
   const GetBalance = async () => {
     const SuccessHandler = () => {
       console.log("successfully retrieved balance");
@@ -124,7 +124,7 @@ const PHED = () => {
       if (ErrorType === "unauthorised") {
         await GetFunction(
           `bills/verify`,
-          setLoading,
+          setBalanceLoader,
           SuccessHandler,
           (ErrorType) => {
             if (ErrorType === "unauthorised") {
@@ -137,7 +137,7 @@ const PHED = () => {
     };
     await GetFunction(
       "balance",
-      setLoading,
+      setBalanceLoader,
       SuccessHandler,
       FailedHandler,
       setPassDataBalance
@@ -146,7 +146,7 @@ const PHED = () => {
   // get the balance on entering the page
   useEffect(() => {
     if(Data?.ConfirmAcc === "true"){
-    if (newBalance === "" || newBalance === null || newBalance === undefined) {
+   
       GetBalance();
       if (GetBalance) {
         setNewBalance(
@@ -154,7 +154,7 @@ const PHED = () => {
             ? passDataBalance?.data?.data?.data?.balance
             : ""
         );
-      }
+      
     }}else{
     setRestrictUser(true)
     }
@@ -1090,7 +1090,7 @@ const PHED = () => {
                           src={country.flag}
                           alt="/"
                         />
-                        {country.name} {country.balance}
+                          {country.name} {' '}  {balanceLoader === true && country.id === 1 ? <BalanceLoading/> :  country.balance}
                       </div>
                     ))}
                   </div>

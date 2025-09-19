@@ -148,7 +148,9 @@ const AEDC = () => {
   const pointsEarned = "+2.00";
   const [loading, setLoading] = useState(false);
   const [sessionModal, setSessionModal] = useState(false);
+  const [balanceLoader, setBalanceLoader] = useState(false)
   // const handleValidate = () => {
+
 
   //   if (isEmailOrNumberValid(email) || isEmailOrNumberValid(number)) {
   //     setErrorMessage('')
@@ -185,7 +187,7 @@ const AEDC = () => {
       if (ErrorType === "unauthorised") {
         await GetFunction(
           `bills/verify`,
-          setLoading,
+          setBalanceLoader,
           SuccessHandler,
           (ErrorType) => {
             if (ErrorType === "unauthorised") {
@@ -198,7 +200,7 @@ const AEDC = () => {
     };
     await GetFunction(
       "balance",
-      setLoading,
+      setBalanceLoader,
       SuccessHandler,
       FailedHandler,
       setPassDataBalance
@@ -207,7 +209,7 @@ const AEDC = () => {
   // get the balance on entering the page
   useEffect(() => {
     if(Data?.ConfirmAcc === "true"){
-    if (newBalance === "" || newBalance === null || newBalance === undefined) {
+    
       GetBalance();
       if (GetBalance) {
         setNewBalance(
@@ -215,7 +217,7 @@ const AEDC = () => {
             ? passDataBalance?.data?.data?.data?.balance
             : ""
         );
-      }
+      
     }
   }else{
     setRestrictUser(true);
@@ -381,7 +383,7 @@ const AEDC = () => {
     setAmountError("");
     setSelected(true);
     setAedcWalletBalance(balance);
-    setAedcPaymentResult(`${name} ${balance}`);
+    setAedcPaymentResult(`${name} ${ balance }`);
     // setSelectedCountry(country)
     // setCountryCode(code);
     // setCurrencyAvailable(id !== 1);
@@ -1144,7 +1146,7 @@ const AEDC = () => {
                           src={country.flag}
                           alt="/"
                         />
-                        {country.name} {country.balance}
+                        {country.name} {' '}  {balanceLoader === true && country.id === 1 ? <BalanceLoading/> :  country.balance}
                       </div>
                     ))}
                   </div>

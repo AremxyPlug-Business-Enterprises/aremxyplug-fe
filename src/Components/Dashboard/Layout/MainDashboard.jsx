@@ -26,7 +26,7 @@ import { GetFunction} from "../../../Components/ApiCollection.jsx/ApiBuck";
 export const MainDashboard = (Data) => {
      const [loading, setLoading] = useState(false)
     const [userPoints, setUserPoints] = useState(0);
-    const [fetchedResponse, setFetchedResponse] = useState([]);
+   
   
 
   const { setHideNavbar, toggleSideBar, isDarkMode,
@@ -213,7 +213,6 @@ if((clickedoption === "NGN")){
           if(response.status && (response.status === 200 || response.status === 201)){
              setBalanceValue("");
            const checkBal =  response?.data?.data?.data?.balance;
-          // console.log(checkBal);
            setNewBalance(checkBal)
              }
         }
@@ -317,8 +316,7 @@ if((clickedoption === "NGN")){
         if (!response?.data?.data) return;
         // console.log("fetch points succefully");
    const available = response?.data?.data?.point?.available_points ?? 0;
-    console.log("fetch points succefully", available);
-     setUserPoints(available);
+    setUserPoints(available);
      };
      const FailedHandler = (ErrorType) => {
       if(ErrorType === "unauthorised"){
@@ -326,15 +324,19 @@ if((clickedoption === "NGN")){
          setLoading,  
          successHandler,
           (ErrorType)=> {
-            if(ErrorType === "unauthorised"){
-            setSessionModal(true)
+            if(ErrorType ==="Server error"){
+             alert("Failed to retrieve points balance at the moment.")
+            }else if(ErrorType === "unauthorised"){
+              if(Data?.ConfirmAcc === "false"){
+                return setSessionModal(true)
+              }
             }
           },
-           setFetchedResponse)
+           ()=> {})
       }else if(ErrorType === "Network error" || ErrorType === "User error"){
        setBalanceValue("Your internet connection is quite unstable.")
       }else if(ErrorType === "Server error"){
-        alert("Unable to retrieve your points balance at the moment")
+        alert("Failed to retrieve points balance at the moment.")
       }
      };
  
@@ -343,9 +345,9 @@ if((clickedoption === "NGN")){
          setLoading,  
          successHandler,
           FailedHandler,
-           setFetchedResponse)
+           ()=> {})
+           //eslint-disable-next-line
     }, []);
-      console.log(userPoints);
 return (
     <div className="relative h-[150%] w-[100%]">
  {/* ============SIDE BAR========= */}
@@ -910,8 +912,8 @@ return (
                 <p className="text-white text-[10px] md:text-[12px] lg:text-[16px] 
                 font-[500] lg:font-[600]">Transfer</p>
             </Link>
-            <Link
-              to="/withdraw"
+            <div
+        
               className={`${
                 isDarkMode ? " border bg-[#000]" : "bg-[#04177f]"
               } w-[25%] py-[12px] px-[10px] lg:py-[15px]
@@ -926,7 +928,7 @@ return (
                 <p className="text-white text-[10px] md:text-[12px] lg:text-[16px] 
                 font-[500] lg:font-[600]">Withdraw</p>
             
-            </Link>
+            </div>
             <Link
               to="/currencyConversion"
               className={`${

@@ -101,13 +101,10 @@ const AirtimeVtu = () => {
                             // Simulate async data loading
                                               // Simulate async data loading
                       if (Data?.ConfirmAcc === "true"){                     // Simulate async data loading
-                     if(newBalance === "" ||
-       newBalance === null ||
-        newBalance === undefined){
-                        GetBalance();
+                       GetBalance();
           setNewBalance(passDataBalance?.data?.data?.data !== undefined
                ? passDataBalance?.data?.data?.data?.balance : "");
-             }
+             
                     }else {
                       setRestrictUser(true);
                     }
@@ -509,16 +506,12 @@ const handleProceed = (e) => {
                 setIsLoading(true)
                 const response = await axiosInstance.post(path, data);
                 const result = response?.data?.data?.data; // Access the nested `data`
-            
-                console.log(result);
-                console.log(response.status);
-            
-                setTransactionID(result?.transaction_id);
+               setTransactionID(result?.transaction_id);
                 setRefNumber(result?.reference_number);
                 setOrderID(result?.order_id);
                 setDescription(result?.description);
                 setInputPin("")
-                //   if (response.statusCode === 200) 
+               
                   if (response.status === 200) 
                     {
             // Success response
@@ -628,12 +621,26 @@ const handleProceed = (e) => {
 //        handleTransactionSuccessClose)
 // }
 
-const HandleAirtime = async () => {
+ const HandleAirtime = async () => {
   await VerifyTransPin(
+    inputPin,
+    async(ErrorType) => {
+      if (ErrorType === "unauthorised") {
+        await VerifyTransPin(
     inputPin,
     (ErrorType) => {
       if (ErrorType === "unauthorised") {
         setSessionModal(true);
+      }else if(ErrorType === "Network error" || ErrorType === "User error"){
+        alert("Your internet connectiom is quite unstable.")
+      }
+    },
+    setIsLoading,
+    setErrorMessage,
+    handleTransactionSuccessClose
+  );
+      }else if(ErrorType === "Network error" || ErrorType === "User error"){
+        alert("Your internet connectiom is quite unstable.")
       }
     },
     setIsLoading,

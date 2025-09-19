@@ -144,9 +144,7 @@ const assumedString = selectedAmountEtisalat?.toString()
                 await fetchProducts();
               }
             }
-          } else {
-            return setSessionModal(true);
-          }
+          } 
         } else if (error && error.response.status === 500) {
           alert(
             "Service for 9 mobile is currently not available, Try again later."
@@ -456,13 +454,10 @@ const updateBalanceToNumber = Number(updateBalance)
   useEffect(() => {
     // Simulate async data loading
  if (Data?.ConfirmAcc === "true"){    
-                     if(newBalance === "" ||
-       newBalance === null ||
-        newBalance === undefined){
-       GetBalance();
+           GetBalance();
     setNewBalance(passDataBalance?.data?.data?.data !== undefined
                ? passDataBalance?.data?.data?.data?.balance : "");
-                 }
+                 
                     }else {
                       setRestrictUser(true);
                     }

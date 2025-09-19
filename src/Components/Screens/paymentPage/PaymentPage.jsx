@@ -32,13 +32,13 @@ const cardPaymentData = [
     title: "Card Payments",
     content:
       "Shop online or in-store, fund your wallet with card without any hassle.",
-    link: "/CardPayment",
+    link: null,
   },
   {
     image: "./Images/paymentPage/internationalPayment.svg",
     title: "International Payments",
     content: "Send and receive money internationally without any hassle",
-    link: "/To-other-banks",
+    link: null,
   },
 ];
 // FUNDING METHODS DATA ENDS HERE
@@ -65,7 +65,7 @@ const PaymentPage = () => {
       <div
         // to={`${data.link}`}
         onClick={()=>{
-          if (data.link === "/To-other-banks") {
+          if ( data.link === null) {
             setShowPopUp(true)
           } else {
             navigate(data.link)
@@ -74,7 +74,7 @@ const PaymentPage = () => {
       >
         <div
           className={` ${
-            isDarkMode ? "Style11 " : "Style1 "
+            isDarkMode ? "Style11" : "Style1"
           } mt-[25px] lg:mt-[27px] cursor-pointer`}
         >
           <div className="flex items-center">
@@ -151,7 +151,6 @@ const PaymentPage = () => {
         </div>
         {showPopUp && (
           <CurrencyConversionModal
-            title="International Payments"
             image="./Images/wallet/comingSoon.png"
             onClick={() => setShowPopUp(false)}
             tag="This Feature is Currently Not Available."

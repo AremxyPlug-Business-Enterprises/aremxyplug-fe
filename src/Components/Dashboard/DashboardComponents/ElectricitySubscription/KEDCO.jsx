@@ -120,7 +120,7 @@ const KEDCO = () => {
     // setShowOptionList(false);
   };
   const [passDataBalance, setPassDataBalance] = useState({});
-
+   const [balanceLoader, setBalanceLoader] = useState(false)
   const GetBalance = async () => {
     const SuccessHandler = () => {
       console.log("successfully retrieved balance");
@@ -129,7 +129,7 @@ const KEDCO = () => {
       if (ErrorType === "unauthorised") {
         await GetFunction(
           `bills/verify`,
-          setLoading,
+          setBalanceLoader,
           SuccessHandler,
           (ErrorType) => {
             if (ErrorType === "unauthorised") {
@@ -142,7 +142,7 @@ const KEDCO = () => {
     };
     await GetFunction(
       "balance",
-      setLoading,
+      setBalanceLoader,
       SuccessHandler,
       FailedHandler,
       setPassDataBalance
@@ -151,7 +151,7 @@ const KEDCO = () => {
   // get the balance on entering the page
   useEffect(() => {
     if(Data?.ConfirmAcc === "true"){
-    if (newBalance === "" || newBalance === null || newBalance === undefined) {
+   
       GetBalance();
       if (GetBalance) {
         setNewBalance(
@@ -159,7 +159,7 @@ const KEDCO = () => {
             ? passDataBalance?.data?.data?.data?.balance
             : ""
         );
-      }
+      
     }
   }else{
     setRestrictUser(true)
@@ -1174,7 +1174,7 @@ const KEDCO = () => {
                           src={country.flag}
                           alt="/"
                         />
-                        {country.name} {country.balance}
+                         {country.name} {' '}  {balanceLoader === true && country.id === 1 ? <BalanceLoading/> :  country.balance}
                       </div>
                     ))}
                   </div>

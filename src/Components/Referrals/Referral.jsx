@@ -83,8 +83,14 @@ export default function Referral() {
           setIsLoading,
           successHandler,
           (ErrorType) => {
-            if (ErrorType === "unauthorised") {
-              setSessionModal(true);
+            if (ErrorType === "unauthorised" && !referralCode && !referralLink) {
+             setSessionModal(true);
+              
+            }else if (ErrorType === "User error" || ErrorType === "Network error") {
+          alert("Your inetrnet connection is quite unstable")
+      }else  if (ErrorType === "Server error") {
+              alert("Failed to fetch referred users");
+             
             }
           },
           setReferralResponds
@@ -146,8 +152,17 @@ export default function Referral() {
         ()=> {},
           successHandler,
           (ErrorType) => {
-            if (ErrorType === "unauthorised") {
-              setSessionModal(true);
+            if(ErrorType === "unathorised" && referralCode && referralLink){
+           setSessionModal(true);
+            } else if (ErrorType === "User error" || ErrorType === "Network error") {
+        setTotalUsers("");
+        setActiveUsers("");
+        setInactiveUsers("");
+      }else  if (ErrorType === "Server error") {
+              alert("Failed to fetch referred users");
+              setTotalUsers("");
+              setActiveUsers("");
+              setInactiveUsers("");
             }
           },
           setReferralResponds

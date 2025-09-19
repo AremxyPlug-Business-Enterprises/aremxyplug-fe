@@ -166,14 +166,12 @@ export default function SalesSummaryPage ()  {
 //  GetTransactionInformation()
 //     }
     setSelected("NGN");
-    if(newBalance === "" || newBalance === null || newBalance === undefined){
-                                  GetBalance();
-                                  if(GetBalance){
-                                   
-                                   setNewBalance(passDataBalance?.data?.data?.data !== undefined ? passDataBalance?.data?.data?.data?.balance : "");
-                                
-                                  }
-                                }
+      GetBalance();
+         if(GetBalance){
+          setNewBalance(passDataBalance?.data?.data?.data !== undefined 
+         ? passDataBalance?.data?.data?.data?.balance : "");
+         }
+     
 
  //eslint-disable-next-line
  }, [])
@@ -196,14 +194,11 @@ export default function SalesSummaryPage ()  {
 
 const symbolValue = selected === "USD" ? "$" : selected === "AUD" ? 
  "AU$" : selected === "KES" ?   "KSh" : selected === "EUR" ? "€" : selected === "GBP" ? "£" : "₦";
-// const handleSelectedOption = ()=> {
- 
-// }
-console.log(salesResponse?.data?.data?.data?.data)
+
+
 const product = ["Airtime Top-up", "Data Top-up", "Bills payment"]
     return (
-
-        <DashBoardLayout>
+     <DashBoardLayout>
         <>
         <div className="flex flex-col gap-[20px]">
 

@@ -117,6 +117,7 @@ const IKEDC = () => {
   const [loading, setLoading] = useState(false);
   const [passDataBalance, setPassDataBalance] = useState({});
   const [restrictUser, setRestrictUser] = useState(false);
+  const [balanceLoader, setBalanceLoader] = useState(false)
   const GetBalance = async () => {
     const SuccessHandler = () => {
       console.log("successfully retrieved balance");
@@ -125,7 +126,7 @@ const IKEDC = () => {
       if (ErrorType === "unauthorised") {
         await GetFunction(
           `bills/verify`,
-          setLoading,
+          setBalanceLoader,
           SuccessHandler,
           (ErrorType) => {
             if (ErrorType === "unauthorised") {
@@ -138,7 +139,7 @@ const IKEDC = () => {
     };
     await GetFunction(
       "balance",
-      setLoading,
+      setBalanceLoader,
       SuccessHandler,
       FailedHandler,
       setPassDataBalance
@@ -147,7 +148,7 @@ const IKEDC = () => {
   // get the balance on entering the page
   useEffect(() => {
     if(Data?.ConfirmAcc === "true"){
-    if(newBalance === "" || newBalance === null || newBalance === undefined) {
+   
       GetBalance();
       if (GetBalance) {
         setNewBalance(
@@ -156,7 +157,7 @@ const IKEDC = () => {
             : ""
         );
       }
-    }
+    
   }else{
     setRestrictUser(true)
   }
@@ -1097,7 +1098,7 @@ const IKEDC = () => {
                           src={country.flag}
                           alt="/"
                         />
-                        {country.name} {country.balance}
+                         {country.name} {' '}  {balanceLoader === true && country.id === 1 ? <BalanceLoading/> :  country.balance}
                       </div>
                     ))}
                   </div>
