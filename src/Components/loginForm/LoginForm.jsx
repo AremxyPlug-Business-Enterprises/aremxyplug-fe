@@ -168,13 +168,11 @@ function LoginForm() {
 
   //SetLocalStorage for input Pin flow
  
-
-
 // Function to Verify user's Virtual Account situation 2
- 
 
 
-  // ==========Login Handler===========
+
+// ==========Login Handler===========
   const submitHandler = async (e) => {
     e.preventDefault();
 if(!navigator.onLine) return alert("No internet Connection, Check your network connection to proceed ");

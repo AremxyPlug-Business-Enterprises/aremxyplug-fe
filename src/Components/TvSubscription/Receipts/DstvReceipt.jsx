@@ -138,7 +138,7 @@ export const DstvReceipt= (Data) => {
       <div className="flex flex-col gap-[35px] lg:gap-[85px]">
         <div
           className={` ${styles.receipt} ${
-            toggleSideBar ? "" : "lg:w-[880px] "
+            toggleSideBar ? "" : "lg:w-[880px]"
           } w-full lg:mx-auto ${isDarkMode ? "border border-white" : ""}`}
         >
           <div className="flex justify-between items-center 

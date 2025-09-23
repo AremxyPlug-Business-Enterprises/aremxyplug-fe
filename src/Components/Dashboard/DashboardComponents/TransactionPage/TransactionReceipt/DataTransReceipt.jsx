@@ -29,8 +29,8 @@ export const DataTransReceipt = () => {
   const amountToNumber = Number(amount);
   const recipient_name =
     receiptData?.recipient_name?.length > 0 ? receiptData?.recipient_name : "";
-  const plan_name =
-    receiptData?.plan_name?.length > 0 ? receiptData?.plan_name : "";
+  // const plan_name =
+  //   receiptData?.plan_name?.length > 0 ? receiptData?.plan_name : "";
   const order_id =
     receiptData?.order_id !== undefined ? receiptData?.order_id : "";
   const phone =
@@ -190,8 +190,9 @@ export const DataTransReceipt = () => {
                   receiptData?.Status
                 ) && (
                   <span className="">
-                    <span className="font-extrabold text-[10.9px] md:text-[14.9px] lg:text-[16.9px] capitalize">
-                      {network_product} {plan_name} (
+                    <span className="font-extrabold text-[10.9px]
+                     md:text-[14.9px] lg:text-[16.9px] capitalize">
+                      {description}  (
                       {`${String(
                         amountToNumber.toLocaleString("en-NG", {
                           style: "currency",
@@ -255,7 +256,7 @@ export const DataTransReceipt = () => {
                       Plan
                     </p>
                     <span>
-                      {network_product} {plan_name} (
+                      {description}  (
                       {`${String(
                         amountToNumber.toLocaleString("en-NG", {
                           style: "currency",
@@ -466,7 +467,13 @@ export const DataTransReceipt = () => {
                 onClick={() => {
                   handleSaveAsPDFClick();
                 }}
-                className={`bg-[#ffffff] border-[1px] w-[111px] border-[#0003] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                className={` border-[1px] w-[111px]
+                   border-[#0003] flex justify-center 
+                   items-center mx-auto cursor-pointer text-[12px]
+                    font-extrabold h-[40px] rounded-[6px] 
+                    md:w-[25%] md:rounded-[8px] md:text-base
+                     lg:w-[163px] lg:h-[38px] lg:my-[2%]
+                     ${isDarkMode ? "bg-black border-[0.2px] text-white border-[#04177f]" : "text-black bg-white border-[0.2px] border-black"}`}
               >
                 Save as PDF
               </button>

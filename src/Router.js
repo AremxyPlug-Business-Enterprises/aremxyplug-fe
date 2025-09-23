@@ -190,10 +190,13 @@ import { AirtimeTransReceipt } from "./Components/Dashboard/DashboardComponents/
 import { DataTransReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/DataTransReceipt";
 import { TransferReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/TransferReceipt";
 import { VirtualAccountReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/VirtualAccountReceipt";
+import { ThemeHandler } from "./Components/ApiCollection.jsx/ApiBuck";
 
 export const Router = () => {
+
   return (
     <div>
+      <ThemeHandler/>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/About-us" element={<AboutUs />} />

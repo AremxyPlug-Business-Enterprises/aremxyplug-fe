@@ -82,7 +82,8 @@ export const RemoveLocalStorage = () => {
  localStorage.removeItem("ReferralCode");
  localStorage?.removeItem("aremxyPassword");
   localStorage?.removeItem("aremxyUsername");
-   localStorage?.removeItem("3232");     
+   localStorage?.removeItem("3232");    
+     localStorage?.removeItem("SessionExpiration") 
  const AccCreated = localStorage.getItem("AccCreated")
  const getToken = localStorage.getItem("getToken");
  if(getToken){

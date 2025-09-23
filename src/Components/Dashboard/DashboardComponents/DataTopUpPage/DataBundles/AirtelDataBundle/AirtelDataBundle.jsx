@@ -31,9 +31,8 @@ import {
   InternalLoginSession
 } from "../../../../../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../../../../../Loader/Loader";
-import { HandleUserSession } from "../../../../../ApiCollection.jsx/ApiBuck";
 import { GetLocalStorage } from "../../../../../LocalStorage/LocalStorage";
-
+import { BalanceLoading } from "../../../../../Loader/Loader";
 const AirtelDataBundle = () => {
   const Data = GetLocalStorage()
   const { isDarkMode, 
@@ -61,7 +60,7 @@ const AirtelDataBundle = () => {
     toggleVisibility,
     isVisible,
   } = useContext(ContextProvider);
-
+  const [balanceLoader, setBalanceLoader] = useState(false)
   const [showProductList, setShowProductList] = useState(false);
   const [showOptionList, setShowOptionList] = useState(false);
   const [addRecipient, setAddRecipient] = useState(false);
@@ -73,16 +72,13 @@ const AirtelDataBundle = () => {
   const [showPayment, setShowPayment] = useState(false);
   const [image, setImage] = useState("");
   const [paymentAmount, setPaymentAmount] = useState("");
-  const [codes, setCodes] = useState(false);
-
-  const [loading, setLoading] = useState("");
+  const [codes, setCodes] = useState(false);const [loading, setLoading] = useState("");
   const [airtelpurchaseStatus, setAirtelPurchaseStatus] = useState(null); // State to hold purchase status
   const [products, setProducts] = useState([]);
   const [productPlans, setProductPlans] = useState([]);
   const [loadingProducts, setLoadingProducts] = useState(false);
   const [loadingPlans, setLoadingPlans] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null);
-
   const [errorMessage, setErrorMessage] = useState("");
   const [balanceStatus, setBalanceStatus] = useState("");
   const [selectProductWarn, setSelectProductWarn] = useState("");
@@ -91,7 +87,8 @@ const AirtelDataBundle = () => {
   const [airtelReceiptInfo, setAirtelReceiptInfo] = useState("");
   const [sessionModal, setSessionModal] = useState(false);
   const [restrictUser, setRestrictUser] = useState(false);
-  const [checkNetworkError, setCheckNetworkError] = useState(false)
+  const [checkNetworkError, setCheckNetworkError] = useState(false);
+
   let balanceStringToNum = Number(newBalance);
 
 const assumedString = selectedAmountAirtel?.toString()
@@ -341,7 +338,7 @@ const assumedString = selectedAmountAirtel?.toString()
         if (ErrorType === "unauthorised") {
           await GetFunction(
             `balance`,
-            setLoading,
+            setBalanceLoader,
             SuccessHandler,
             //Handling the error Use Cases of the Unauthorised inside
             // of the statement.
@@ -351,7 +348,7 @@ const assumedString = selectedAmountAirtel?.toString()
               }else if(ErrorType === "Server error"){
                   await GetFunction(
         "balance",
-        setLoading,
+        setBalanceLoader,
         SuccessHandler,
        async(ErrorType)=> {
         if(ErrorType === "Server error"){
@@ -378,13 +375,13 @@ const assumedString = selectedAmountAirtel?.toString()
         }else if(ErrorType === "Server error"){
             await GetFunction(
         "balance",
-        setLoading,
+        setBalanceLoader,
         SuccessHandler,
        async(ErrorType)=> {
          if(ErrorType === "unauthorised"){
             await GetFunction(
         "balance",
-        setLoading,
+        setBalanceLoader,
         SuccessHandler,
         async(ErrorType)=> {
           if(ErrorType === "unauthorised"){
@@ -392,7 +389,7 @@ const assumedString = selectedAmountAirtel?.toString()
           }else if(ErrorType === "Server error"){
                await GetFunction(
         "balance",
-        setLoading,
+        setBalanceLoader,
         SuccessHandler,
        async(ErrorType)=> {
         //if Statements
@@ -446,7 +443,7 @@ const assumedString = selectedAmountAirtel?.toString()
       }
       await GetFunction(
         "balance",
-        setLoading,
+        setBalanceLoader,
         SuccessHandler,
         FailedHandler,
         setPassDataBalance
@@ -639,7 +636,7 @@ const path = "/data";
         setAirtelTransactionID(resData?.transaction_id);
         setAirtelRefNumber(resData?.reference_number);
         setAirtelOrderID(resData?.order_id); // No `order_id`, using `id` instead
-        if (response.statusCode === 200) {
+        if (response.status === 200 || response.status === 201) {
           // Success response
           setTransactSuccessPopUp(true); // Show success popup
           setConfirm(false);
@@ -1356,9 +1353,9 @@ const path = "/data";
                
                                            
                                              
-                                               {methodOption.code +
-                                                 " " +
-                                                 methodOption.balance}
+                                               {methodOption.code }
+                                                {" "}
+                                     {balanceLoader === true ? <BalanceLoading/> : methodOption.balance}
                                              
                                            </div>
                                          );
@@ -1510,7 +1507,8 @@ const path = "/data";
                                     Total Amount
                                   </span>
                                   <div className="flex gap-1">
-                                    <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
+                                    <span className={`text-[#0008] 
+                                       ${isDarkMode ? "text-white" : "text-black"}`}>
                                       {selectedAmountAirtel}
                                     </span>
                                   </div>
@@ -1563,7 +1561,7 @@ const path = "/data";
                                                      </span>
                                               </div>
                               
-                                              <img
+                                           <img
                                                 src={Select}
                                                 alt=""
                                                 className="w-[12px] h-[12px] md:w-[50px] md:h-[20px] lg:w-[80px] lg:h-[30px]"
@@ -1693,12 +1691,18 @@ const path = "/data";
                                      numInputs={4}
                                      shouldAutoFocus={true}
                                     inputStyle={{
-                                   color: "#000000",
-                                   fontSize: '14px',
-                                   fontWeight: 700,
-                                   borderRadius: 4,
-                                   height: '35px',
-                                   width: '35px',
+                                  color: isDarkMode ? "#ffffff" : "#000000",
+                        // width: 30,
+                        // height: 30,
+                        // borderRadius: 3,
+                        fontWeight: 700,
+                        borderRadius: 4,
+                        height: "35px",
+                        width: "35px",
+                        backgroundColor: isDarkMode ? "black" : "white",
+                        border: isDarkMode
+                          ? "1px solid white"
+                          : "1px solid #ccc",
                                  }}
                                      renderInput={(props) => (
                                        <input {...props} className="inputOTP mx-[3px]"/>
@@ -1708,7 +1712,10 @@ const path = "/data";
                                      className="text-[#0003] text-[13px] md:text-3xl"
                                      onClick={toggleVisibility}
                                    >
-                                     {isVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
+                                   {isVisible ? <AiFillEye className={`w-[16px] h-[16px]
+                                                      lg:w-[24px] lg:h-[24px]  ${isDarkMode ? " text-white" : "text-black" }`}/> : <AiFillEyeInvisible  
+                                                      className={`w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]
+                                                      ${isDarkMode ? " text-white" : "text-black" }`}/>}
                                    </div>
                                  </div>
                                   <Link to={{
@@ -1729,11 +1736,10 @@ const path = "/data";
                          
                   <div className="flex flex-col gap-[10px] px-[20px]" >
                              <button
-                               onClick={(e) => {
-                                 console.log("inputPin", inputPin);
-                                 const AirtelDataHandler = () => {
+                               onClick={() => {
+                                 const AirtelDataHandler = async() => {
                                    // Close modal on PIN success
-                                   inputPinHandler(); // Proceed with purchase
+                                  await inputPinHandler(); // Proceed with purchase
                                  };
                                  const setFailed = (ErrorType) => {
                                    if (ErrorType === "unauthorised") {
@@ -1782,15 +1788,16 @@ const path = "/data";
           {transactSuccessPopUp && (
             <Modal>
               {/* <TransactFailedPopUp/> */}
-            <div className={`w-full flex justify-center h-full 
+            <div className={`w-full flex flex-col justify-center h-full 
              py-[30px] px-[15px] lg:px-[0px] lg:items-center
               items-end`}>
               <div
-                className={` bvnQuery lg:rounded-[12px] rounded-[10px] 
+                 className={` bvnQuery lg:rounded-[12px] rounded-[10px] 
               h-[520px] ${ toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
               } w-[100%] md:w-[60%] overflow-auto  ${isDarkMode ? "bg-black text-white border rounded-[10px] border-white": "bg-white text-black"} `}
               >
-                 <div className="flex justify-end pr-2 lg:py-[10px] py-[7px]">
+                 <div className="flex justify-between px-2
+                   lg:py-[10px] py-[7px]">
                   <img
                     onClick={() => {
                       setTransactSuccessPopUp(false);

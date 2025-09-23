@@ -27,7 +27,7 @@ export const TransferReceipt = () => {
   const amount = receiptData?.amount !== undefined ? receiptData?.amount : "";
   const username =
     receiptData?.username?.length > 0 ? receiptData?.username : "";
-  const customer_name =
+  const full_name =
     receiptData?.customer_name?.length > 0 ? receiptData?.customer_name : "";
   const email = receiptData?.email?.length > 0 ? receiptData?.email : "";
   const phone = receiptData?.phone?.length > 0 ? receiptData?.phone : "";
@@ -43,7 +43,7 @@ export const TransferReceipt = () => {
     receiptData?.transaction_product?.length > 0
       ? receiptData?.transaction_product
       : "";
-  const full_name =
+  const customer_name =
     receiptData?.full_name?.length > 0 ? receiptData?.full_name : "";
   const session_id =
     receiptData?.session_id?.length > 0 ? receiptData?.session_id : "";
