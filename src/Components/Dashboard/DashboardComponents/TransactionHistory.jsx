@@ -6,7 +6,7 @@ import NoRecordImage from "../../Add&SelectRecipient/RecipientImages/NoRecordIma
 import { Loader } from "../../Loader/Loader";
 import {
   GetFunction,
-  HandleUserSession,
+  InternalLoginSession,
 } from "../../ApiCollection.jsx/ApiBuck";
 import { Modal } from "../../Screens/Modal/Modal";
 
@@ -81,8 +81,10 @@ const TransactionHistory = ({
           setOrderLoading,
           SuccessHandler,
           (ErrorType) => {
-            if (ErrorType === "unauthorised") {
-              setSessionModal(true);
+            if (ErrorType === "Server error") {
+           alert("A server error occured, please try again later");
+            }else if(ErrorType === "Network error" || ErrorType === "User error"){
+              alert("Your internet connection is quite unstable.")
             }
           },
           setOrderIdResponse
@@ -94,7 +96,7 @@ const TransactionHistory = ({
           SuccessHandler,
           (ErrorType) => {
             if (ErrorType === "Server error") {
-              alert("A server error occured, please try again later");
+              alert("Failed to process your request");
               setElectricityTransErrorType(
                 "Failed to process your request, try again some other time"
               );
@@ -121,8 +123,8 @@ const TransactionHistory = ({
     transactionResponse?.data?.data?.data?.transactions !== null
       ? transactionResponse?.data?.data?.data?.transactions?.filter(
           (transaction, index) => {
-            console.log(transaction);
-            return index < 4;
+         //   console.log(transaction);
+            return index < 10;
           }
         )
       : [];
@@ -167,11 +169,11 @@ const FormatTime =(DateValue)=> {
                 <div className="h-[150px] flex items-center justify-center">
                   <Loader />
                 </div>
-              ) : filteredTransactions && filteredTransactions?.length > 1 ? (
+              ) : filteredTransactions && filteredTransactions?.length > 0 ? (
                 filteredTransactions?.map((transaction, index) => (
                   <div
                     className={`cursor-pointer ${
-                      index < 3 ? "border-b-[1.2px] border-gray-500" : ""
+                      index < 9 ? "border-b-[1.2px] border-gray-500" : ""
                     }`}
                     key={index}
                   >
@@ -253,7 +255,7 @@ const FormatTime =(DateValue)=> {
                                        : "text-neutral-500"
                                    }`}
                           >
-                            Description : {transaction.description}
+                            Description : {transaction?.description}
                           </p>
 
                           <p
@@ -265,7 +267,7 @@ const FormatTime =(DateValue)=> {
                                    }`}
                           >
                             Amount :{" "}
-                            {transaction.amount
+                            {transaction?.amount
                               ? transaction.amount?.toLocaleString("en-NG", {
                                   style: "currency",
                                   currency: "NGN",
@@ -375,7 +377,8 @@ const FormatTime =(DateValue)=> {
                 ))
               ) : (filteredTransactions && filteredTransactions?.length < 1) ||
                 transactionResponse?.data?.data?.data?.transactions?.length <
-                  1 ? (
+                  1 || transactionResponse?.data?.data?.data?.transactions === null ||
+                  transactionResponse?.data?.data?.data?.transactions === undefined ? (
                 <img
                   className="lg:w-[517px] lg:h-[456px]"
                   src={NoRecordImage}
@@ -401,9 +404,9 @@ const FormatTime =(DateValue)=> {
               ) : transactionHistoryError === "unauthorised" &&
                 transactionResponse?.data?.data?.data?.transactions ===
                   undefined ? (
-                <div className="h-[150px] flex items-center justify-center">
-                  <Loader />
-                </div>
+                <p className={`text-[20px] text-black font-medium`}>
+                Hold on we are trying to process your request.  
+                </p>
               ) : (
                 loading === false &&
                 transactionHistoryError === null && (
@@ -452,7 +455,7 @@ const FormatTime =(DateValue)=> {
             <div className="h-[150px] flex items-center justify-center">
               <Loader />
             </div>
-          ) : filteredTransactions && filteredTransactions?.length > 1 ? (
+          ) : filteredTransactions && filteredTransactions?.length > 0 ? (
             filteredTransactions?.map((transaction, index) => (
               <div key={index}>
                 <div
@@ -493,30 +496,30 @@ const FormatTime =(DateValue)=> {
                     }  hidden cursor-pointer font-semibold md:flex md:h-[60px] lg:h-[85px] md:justify-start md:px-[20px] md:items-center  md:mt-[20px] md:pb-[2%] border-b-[1px]`}
                   >
                     <p
-                      className={`md:text-[#000000] ${
+                      className={`md:text-[#7C7C7C] ${
                         toggleSideBar ? "md:w-[16.5%]" : "md:w-[17%]"
-                      } ${isDarkMode ? "text-white" : "text-neutral-500"}`}
+                      } `}
                     >
                       {transaction?.product}
                     </p>
                     <p
                       className={`md:text-[#7C7C7C] capitalize ${
                         toggleSideBar ? "md:w-[18.5%]" : "md:w-[18.5%]"
-                      } ${isDarkMode ? "text-white" : "text-neutral-500"}`}
+                      } `}
                     >
                       {transaction?.description}
                     </p>
                     <p
                       className={`md:text-[#7C7C7C]  ${
                         toggleSideBar ? "md:w-[16%]" : "md:w-[16%]"
-                      } ${isDarkMode ? "text-white" : "text-neutral-500"}`}
+                      } `}
                     >
                       {transaction?.order_id}
                     </p>
                     <p
                       className={`md:text-[#7C7C7C]  ${
                         toggleSideBar ? "md:w-[16%]" : "md:w-[17%]"
-                      } ${isDarkMode ? "text-white" : "text-neutral-500"}`}
+                      }`}
                     >
                       {transaction.amount
                         ? transaction.amount?.toLocaleString("en-NG", {
@@ -529,7 +532,7 @@ const FormatTime =(DateValue)=> {
                     <p
                       className={`md:text-[#7C7C7C]  ${
                         toggleSideBar ? "md:w-[16.5%] " : "md:w-[16.5%]"
-                      } ${isDarkMode ? "text-white" : "text-neutral-500"}`}
+                      }`}
                     >
                       <span> {FormatDate(transaction?.created_at)}{" "}</span>
                       <br />
@@ -549,9 +552,7 @@ const FormatTime =(DateValue)=> {
                             transaction.status
                           ),
                         }}
-                        className={`${
-                          isDarkMode ? "text-white" : "text-neutral-500"
-                        } ${
+                        className={` ${
                           toggleSideBar ? "md:w-[100%]" : "md:w-[100%]"
                         } md:px-[10px] md:py-[5px] md:text-[#FFFFFF] md:rounded-[5px]`}
                       >
@@ -603,9 +604,9 @@ const FormatTime =(DateValue)=> {
           ) : transactionHistoryError === "unauthorised" &&
             transactionResponse?.data?.data?.data?.transactions ===
               undefined ? (
-            <div className="h-[150px] flex items-center justify-center">
-              <Loader />
-            </div>
+            <p className={`text-[20px] text-black font-medium`}>
+                Hold on we are trying to process your request.  
+                </p>
           ) : (
             loading === false &&
             transactionHistoryError === null && (
@@ -621,7 +622,8 @@ const FormatTime =(DateValue)=> {
           <Loader />
         </Modal>
       )}
-      {sessionModal && <HandleUserSession />}
+      {sessionModal && <InternalLoginSession
+       setExpiredSessionLogin={setSessionModal} />}
     </>
   );
 };

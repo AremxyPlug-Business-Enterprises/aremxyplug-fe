@@ -20,13 +20,16 @@ import { Link, useNavigate } from "react-router-dom";
 import {
   PostFunction,
   VerifyTransPin,
-  HandleUserSession,
+  InternalLoginSession,
+  RestrictionPopUp,
   GetFunction,
 } from "../../../ApiCollection.jsx/ApiBuck";
 import { BalanceLoading, Loader } from "../../../Loader/Loader";
+import { GetLocalStorage } from "../../../LocalStorage/LocalStorage";
 import { validateNigerianNumberByNetwork } from "./AEDC";
 
 const IBEDC = () => {
+  const Data = GetLocalStorage()
   const navigate = useNavigate();
   const {
     isDarkMode,
@@ -81,7 +84,7 @@ const IBEDC = () => {
   // const { selectedNetworkProduct, setSelectedNetworkProduct } =
   //   useContext(ContextProvider);
   const [showProductList, setShowProductList] = useState(false);
-
+  const [restrictUser, setRestrictUser] = useState(false)
   const pointsEarned = "+2.00";
 
   // const handleValidate = () => {
@@ -116,7 +119,7 @@ const IBEDC = () => {
   //   const [showOptionList, setShowOptionList] = useState(false);
 
   const [passDataBalance, setPassDataBalance] = useState({});
-
+const [balanceLoader, setBalanceLoader] = useState(false)
   const GetBalance = async () => {
     const SuccessHandler = () => {
       console.log("successfully retrieved balance");
@@ -125,7 +128,7 @@ const IBEDC = () => {
       if (ErrorType === "unauthorised") {
         await GetFunction(
           `bills/verify`,
-          setLoading,
+          setBalanceLoader,
           SuccessHandler,
           (ErrorType) => {
             if (ErrorType === "unauthorised") {
@@ -138,7 +141,7 @@ const IBEDC = () => {
     };
     await GetFunction(
       "balance",
-      setLoading,
+      setBalanceLoader,
       SuccessHandler,
       FailedHandler,
       setPassDataBalance
@@ -146,7 +149,8 @@ const IBEDC = () => {
   };
   // get the balance on entering the page
   useEffect(() => {
-    if (newBalance === "" || newBalance === null || newBalance === undefined) {
+    if(Data?.ConfirmAcc === "true"){
+   
       GetBalance();
       if (GetBalance) {
         setNewBalance(
@@ -155,7 +159,10 @@ const IBEDC = () => {
             : ""
         );
       }
-    }
+    
+  }else{
+    setRestrictUser(true)
+  }
     // handleResetFields();
     // eslint-disable-next-line
   }, []);
@@ -1092,7 +1099,7 @@ const IBEDC = () => {
                           src={country.flag}
                           alt="/"
                         />
-                        {country.name} {country.balance}
+                         {country.name} {' '}  {balanceLoader === true && country.id === 1 ? <BalanceLoading/> :  country.balance}
                       </div>
                     ))}
                   </div>
@@ -1736,7 +1743,11 @@ const IBEDC = () => {
         </Modal>
       )}
 
-      {sessionModal && <HandleUserSession />}
+      {sessionModal &&
+            <InternalLoginSession setexpiredSessionLogin ={setSessionModal} />}
+           {restrictUser && sessionModal === false && (
+             <RestrictionPopUp/>
+           ) }
     </DashBoardLayout>
   );
 };

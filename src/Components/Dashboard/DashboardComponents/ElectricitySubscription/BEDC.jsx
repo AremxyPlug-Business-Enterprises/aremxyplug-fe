@@ -21,12 +21,13 @@ import { Link, useNavigate } from "react-router-dom";
 import {
   PostFunction,
   VerifyTransPin,
-  HandleUserSession,
+  InternalLoginSession,
   GetFunction,
+  RestrictionPopUp
 } from "../../../ApiCollection.jsx/ApiBuck";
 import { BalanceLoading, Loader } from "../../../Loader/Loader";
 import { validateNigerianNumberByNetwork } from "./AEDC";
-
+import { GetLocalStorage } from "../../../LocalStorage/LocalStorage";
 const BEDC = () => {
   const navigate = useNavigate();
   const {
@@ -82,7 +83,8 @@ const BEDC = () => {
   const [showProductList, setShowProductList] = useState(false);
   const [sessionModal, setSessionModal] = useState(false);
   const pointsEarned = "+2.00";
-
+  const [restrictUser, setRestrictUser] = useState(false)
+  const Data = GetLocalStorage()
   // const handleValidate = () => {
 
   //   if (isEmailOrNumberValid(email) || isEmailOrNumberValid(number)) {
@@ -120,7 +122,7 @@ const BEDC = () => {
       if (ErrorType === "unauthorised") {
         await GetFunction(
           `bills/verify`,
-          setLoading,
+          setBalanceLoader,
           SuccessHandler,
           (ErrorType) => {
             if (ErrorType === "unauthorised") {
@@ -133,15 +135,17 @@ const BEDC = () => {
     };
     await GetFunction(
       "balance",
-      setLoading,
+      setBalanceLoader,
       SuccessHandler,
       FailedHandler,
       setPassDataBalance
     );
   };
   // get the balance on entering the page
+  const [balanceLoader, setBalanceLoader ]= useState(false)
   useEffect(() => {
-    if (newBalance === "" || newBalance === null || newBalance === undefined) {
+    if(Data?.ConfirmAcc === "true"){
+   
       GetBalance();
       if (GetBalance) {
         setNewBalance(
@@ -149,8 +153,11 @@ const BEDC = () => {
             ? passDataBalance?.data?.data?.data?.balance
             : ""
         );
-      }
+      
     }
+  }else{
+    setRestrictUser(true)
+  }
     // handleResetFields();
     // eslint-disable-next-line
   }, []);
@@ -1074,7 +1081,7 @@ const BEDC = () => {
                           src={country.flag}
                           alt="/"
                         />
-                        {country.name} {country.balance}
+                        {country.name} {' '}  {balanceLoader === true && country.id === 1 ? <BalanceLoading/> :  country.balance}
                       </div>
                     ))}
                   </div>
@@ -1715,7 +1722,11 @@ const BEDC = () => {
           <Loader />
         </Modal>
       )}
-      {sessionModal && <HandleUserSession />}
+      {sessionModal &&
+       <InternalLoginSession setExpiredSessionLogin ={setSessionModal} />}
+       {restrictUser && sessionModal === false && (
+               <RestrictionPopUp/>
+             ) }
     </DashBoardLayout>
   );
 };

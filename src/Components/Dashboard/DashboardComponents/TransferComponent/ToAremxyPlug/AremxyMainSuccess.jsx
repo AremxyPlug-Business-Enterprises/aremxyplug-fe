@@ -3,14 +3,13 @@ import { useContext } from "react";
 import { ContextProvider } from "../../../../Context";
 import { Modal } from "../../../../Screens/Modal/Modal";
 import { Link } from "react-router-dom";
-import styles from "../../../../AirTimePage/AirtimeVtu.module.css";
+
 // import { TransactFailedPopUp } from "./TransactionFailedPopUp";
 
 export const AremxyMainSuccess = ({
   transactSuccessToOtherBank,
   setTransactSuccessToOtherBank,
-  emailUsername,
-  userPhoneNumber
+
 }) => {
   const {
     toggleSideBar,
@@ -20,7 +19,6 @@ export const AremxyMainSuccess = ({
     isDarkMode,
     transferResponse
   } = useContext(ContextProvider);
-const amountNumeric = Number(transferAmount)
   const handleTransactionSuccessClose = () => {
     setTransactSuccessToOtherBank(false);
     window.location.reload();
@@ -75,8 +73,8 @@ const amountNumeric = Number(transferAmount)
                mb-2 md:pb-2 lg:pb-3 md:text-[14px] lg:text-[14px]
                ${isDarkMode ? "text-white" : "text-black" }`}>
             {(transferResponse?.data?.status === "success" || transferResponse?.data?.status === "successful") ? "You have successfully transferred" : "Your transaction is pending"}
-              <span className="text-[#000] font-extrabold text-[10px] 
-              md:text-[16px] lg:text-[14px]">
+              <span className=" font-extrabold text-[14px] 
+  lg:text-[14px]">
                 {/* {" "} {amountNumeric !== undefined || amountNumeric!== null ?
                 amountNumeric?.toLocaleString("en-NG", {
                   style : "currency",

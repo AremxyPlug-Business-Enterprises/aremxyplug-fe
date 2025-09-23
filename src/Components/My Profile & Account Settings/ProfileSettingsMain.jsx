@@ -10,7 +10,7 @@ import ChangePin from "./My Profile Page/ChangePin";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { GetLocalStorage } from "../LocalStorage/LocalStorage";
-import { HandleUserSession, GetFunction } from "../ApiCollection.jsx/ApiBuck";
+import {  GetFunction, InternalLoginSession } from "../ApiCollection.jsx/ApiBuck";
 
 export default function ProfileSettingsMain(Data) {
   const { profilePage, setProfilePage } = useContext(ContextProvider);
@@ -83,7 +83,7 @@ export default function ProfileSettingsMain(Data) {
       setVerificationResponse)
       }
     }
-  console.log(verificationResponse?.data?.data?.address);
+  //console.log(verificationResponse?.data?.data?.address);
     const setLoading=(Value)=> {
   console.log(Value)
     }
@@ -259,7 +259,7 @@ export default function ProfileSettingsMain(Data) {
         </div>
       </div>
       {sessionModal && (
-        <HandleUserSession/>
+        <InternalLoginSession setExpiredSessionLogin ={setSessionModal}/>
       )}
     </DashBoardLayout>
   );

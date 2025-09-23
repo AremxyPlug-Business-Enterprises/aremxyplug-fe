@@ -1,4 +1,3 @@
-//import React from 'react';
 import { useState, useEffect } from 'react';
 import styles from './AirtimeVtu.module.css'
 import { DashBoardLayout } from '../Dashboard/Layout/DashBoardLayout';
@@ -22,11 +21,15 @@ import { AirtimeVtuReceipt } from './AirtimeVtuReceipt';
 import { AirtimeReceiptFailed } from './AirtimeReceiptFailed';
 import axiosInstance from '../ApiCollection.jsx/apiClient';
 import { Loader } from '../Loader/Loader';
-import { VerifyTransPin, GetFunction, HandleUserSession } from '../ApiCollection.jsx/ApiBuck';
+import { VerifyTransPin, GetFunction, InternalLoginSession, RestrictionPopUp } from '../ApiCollection.jsx/ApiBuck';
 import Select from  "../Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundles-Images/Select.svg";
+import { GetLocalStorage } from '../LocalStorage/LocalStorage';
+import { BalanceLoading } from '../Loader/Loader';
+import airtimestyles from "./AirTime.module.css";
 
 
 const AirtimeVtu = () => {
+    const Data = GetLocalStorage()
     // const {  isDarkMode } = useContext(ContextProvider);
     const tFee = 0;
     const points = '+2.00';
@@ -38,7 +41,9 @@ const AirtimeVtu = () => {
     const { amount, setAmount } = useContext(ContextProvider);
     const { networkImage, setNetworkImage } = useContext(ContextProvider);
     const { inputValues, setInputValues } = useContext(ContextProvider);
-    const { networkId, setNetworkId } = useContext(ContextProvider);
+    const { networkId, setNetworkId, authenticationOpen } = useContext(ContextProvider);
+    const [restrictUser, setRestrictUser] = useState(false)
+    const [balanceLoader, setBalanceLoader] = useState(false)
    // const { productId, setProductId } = useContext(ContextProvider);
 
 
@@ -67,10 +72,23 @@ const AirtimeVtu = () => {
     const [passDataBalance, setPassDataBalance] = useState({});
     const [balanceStatus, setBalanceStatus] = useState("")
    const balanceStringToNum = Number(newBalance);
-     let airtelDataAmount = Number(amount.replace(/\D/g, ""));
-               const updateBalance = passDataBalance?.data ?  passDataBalance?.data?.data?.data?.balance : "";
-                  const cleanUpBalanceToNumericOnly = Number(updateBalance.replace(/\D/g, ""));
-                 let CheckSufficiency = airtelDataAmount  > (newBalance === "" || newBalance === null ? cleanUpBalanceToNumericOnly : balanceStringToNum);
+    
+      const calcAmount = (a, b) => {
+        if (a === '' || b === '') {
+            return ''
+        } else {
+            const totalAmount = ((1 - (a / 100)) * b)
+            return totalAmount
+        }
+     }
+      const newAmount = calcAmount(discount, amount)
+   console.log(newAmount)      
+               const updateBalance = passDataBalance?.data?.data?.data
+               && (newBalance === "" || newBalance === undefined || newBalance === null)
+                ?  passDataBalance?.data?.data?.data?.balance : balanceStringToNum;
+            //console.log(updateBalance);
+                 let CheckSufficiency = newAmount  >   updateBalance
+                 
                  useEffect(() => {
                            const GetBalance =   async()=> {
                                const SuccessHandler = ()=> {
@@ -81,7 +99,7 @@ const AirtimeVtu = () => {
                          const FailedHandler = async(ErrorType)=> {
                            if(ErrorType === "unauthorised"){
                               await GetFunction("balance",
-                                 setIsLoading, SuccessHandler,
+                                 setBalanceLoader, SuccessHandler,
                                   (ErrorType)=> {
                                     if(ErrorType === "unauthorised"){
                                     return setSessionModal(true);
@@ -91,19 +109,22 @@ const AirtimeVtu = () => {
                            }
                          }
                          await GetFunction("balance",
-                             setIsLoading, 
+                             setBalanceLoader, 
                              SuccessHandler, 
                              FailedHandler,
                              setPassDataBalance)
                            } 
                             // Simulate async data loading
-                           
-                            if(newBalance === "" || newBalance === null || newBalance === undefined){
-                               GetBalance();
-                               if(GetBalance){
-                                setNewBalance(passDataBalance.data ? passDataBalance?.data?.data?.data?.balance : "");
-                               }
-                            }
+                                              // Simulate async data loading
+                      if (Data?.ConfirmAcc === "true"){                     // Simulate async data loading
+                       GetBalance();
+          setNewBalance(passDataBalance?.data?.data?.data !== undefined
+               ? passDataBalance?.data?.data?.data?.balance : "");
+             
+                    }else {
+                      setRestrictUser(true);
+                    }
+
                            //eslint-disable-next-line
                           }, []);
                      
@@ -208,78 +229,85 @@ const AirtimeVtu = () => {
         },
     ];
 
-    const countryList = [
-        {
-            id: 1,
-            name: 'Nigeria',
-            code: 'NGN',
-            flag: require('./Images/ng.svg').default,
-            amount: newBalance === "" || newBalance === null ? updateBalance : newBalance,
+    const updateBalanceToNumber = Number(updateBalance)
+  const newBalanceToNumber = Number(newBalance)
+  const balanceOption = newBalance === "" || newBalance === null ? updateBalanceToNumber : newBalanceToNumber
+    const methodOptions = [
+      {
+        method: "Nigeria",
+        balance:
+     balanceOption !== null ||  balanceOption !== undefined
+            ? `(${ balanceOption?.toLocaleString("en-NG", {
+                 style : "currency",
+                 currency : "NGN"
+            })})` : "", 
+           flag:  require("./Images/ng.svg").default,
+        id: 1,
+        code : "NGN Wallet"
+      },
+      { method: "United States",
+         balance: "($0.00)", 
+         flag: require("./Images/us.svg").default,
+          id: 2, code : "USD Wallet" },
+      { method: "United Kingdom",
+         balance: "(€0.00)", 
+         flag:   require("./Images/gb.svg").default,
+          id: 3,
+          code : "GBP Wallet"
         },
-        {
-            id: 2,
-            name: 'United States',
-            code: 'USD',
-            flag: require('./Images/us.svg').default,
-            amount: 0
-        },
-        {
-            id: 3,
-            name: 'United Kingdom',
-            code: 'GBP',
-            flag: require('./Images/gb.svg').default,
-            amount: 0
-        },
-        {
-            id: 4,
-            name: 'European Union',
-            code: 'EUR',
-            flag: require('./Images/eu.svg').default,
-            amount: 0
-        },
-        {
-            id: 5,
-            name: 'Australia',
-            code: 'AUD',
-            flag: require('./Images/au.svg').default,
-            amount: 0
-        },
-        {
-            id: 6,
-            name: 'Kenya',
-            code: 'KSH',
-            flag: require('./Images/ke.svg').default,
-            amount: 0
-        }
+      { method: "European Union",
+         balance: "(£0.00)", 
+         flag:  require("./Images/eu.svg").default,
+          id: 4,
+        code : "EUR Wallet" },
+      { method: "Australia", balance: "(AU$0.00)",
+         flag:   require("./Images/au.svg").default,
+          id: 5 , code : "AUD Wallet"},
+      { method: "Kenya", balance: "(KSh0.00)"
+        , flag:   require("./Images/ke.svg").default, id: 6, code : "KSH Wallet"  },
     ];
+
 
    
 
 
     const Network = ({ name, image, onClick }) => {
         return (
-            <li className="py-[10px]  border-[0.5px] flex items-center
-         gap-[10px] pl-[7px]" onClick={onClick}>
-                <div className={styles.netImage}>
-                    <img src={image} alt="" className={styles.NoImage} />
+            <div  className={`pb-[20px] pt-[20px] md:pb-[14px] 
+                                md:pt-[14px] font-weight-bold text-[14px] leading-[18.4px] 
+                                md:py-[15px]
+                                 py-[8px] pl-[10px] font-[500]  
+         md:text-[13.227px] md:leading-[17.195px] 
+         shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] 
+         lg:text-[16px] lg:leading-[20.8px] cursor-pointer ${
+           isDarkMode
+             ? "bg-black text-white border border-white"
+             : "hover:bg-[#EDEAEA] bg-white text-[#7C7C7C]"
+         }`}
+                      
+                               onClick={onClick}>
+                <div className= "flex gap-[5px] lg:gap-[10px] items-center">
+                    <img src={image} alt=""
+                     className="md:h-[29.27px] h-[14.27px]" />
+               
+                <h2 >{name}</h2>
                 </div>
-                <h2 className={styles.netName}>{name}</h2>
-            </li>
+            </div>
         )
     }
 
-    const Payment = ({ code, flag, amount, onClick, className }) => {
-        return (
-            <li className="py-[10px] flex items-center 
-         gap-[10px] pl-[7px]" onClick={onClick}>
-                <div className={styles.netImage}>
-                    <img src={flag} alt="" className={styles.NoImage} />
-                </div>
-                <h2 className={styles.netName}>{code}</h2>
-                <h2 className={styles.netName}>Wallet({amount})</h2>
-            </li>
-        )
-    }
+    // const Payment = ({ code, flag, amount, onClick, className }) => {
+    //     return (
+    //         <li className="py-[10px] flex items-center 
+    //      gap-[10px] pl-[7px]" onClick={onClick}>
+    //             <div className={styles.netImage}>
+    //                 <img src={flag} alt="" className={styles.NoImage} />
+    //             </div>
+    //             <h2 className={styles.netName}>{code}</h2>
+    //             <h2 className={styles.netName}>Wallet({amount})</h2>
+    //         </li>
+    //     )
+    // }
 
   
 
@@ -292,24 +320,9 @@ const AirtimeVtu = () => {
         setNetworkId(netId);
     }
 
-    const calcAmount = (a, b) => {
-        if (a === '' || b === '') {
-            return ''
-        } else {
-            const totalAmount = ((1 - (a / 100)) * b)
-            return totalAmount
-        }
-    }
-    const newAmount = calcAmount(discount, amount).toLocaleString();
-
-    const handleSelectPayment = (code, flag, amount) => {
-        setName(code);
-        setImage(flag);
-        setPaymentAmount(amount);
-        setShowPayment(false);
-        setPaymentSelected(true);
-    }
-
+   
+    
+    
     // const handleSelectProduct = (val, proId) => {
     //     setSelectedProduct(val);
     //     setShowProduct(false);
@@ -495,22 +508,16 @@ const handleProceed = (e) => {
                 amount,
              };
 
-            console.log(data);
-
             try {
                 setIsLoading(true)
                 const response = await axiosInstance.post(path, data);
                 const result = response?.data?.data?.data; // Access the nested `data`
-            
-                console.log(result);
-                console.log(response.status);
-            
-                setTransactionID(result?.transaction_id);
+               setTransactionID(result?.transaction_id);
                 setRefNumber(result?.reference_number);
                 setOrderID(result?.order_id);
                 setDescription(result?.description);
                 setInputPin("")
-                //   if (response.statusCode === 200) 
+               
                   if (response.status === 200) 
                     {
             // Success response
@@ -620,12 +627,27 @@ const handleProceed = (e) => {
 //        handleTransactionSuccessClose)
 // }
 
-const HandleAirtime = async () => {
+
+ const HandleAirtime = async () => {
   await VerifyTransPin(
+    inputPin,
+    async(ErrorType) => {
+      if (ErrorType === "unauthorised") {
+        await VerifyTransPin(
     inputPin,
     (ErrorType) => {
       if (ErrorType === "unauthorised") {
         setSessionModal(true);
+      }else if(ErrorType === "Network error" || ErrorType === "User error"){
+        alert("Your internet connectiom is quite unstable.")
+      }
+    },
+    setIsLoading,
+    setErrorMessage,
+    handleTransactionSuccessClose
+  );
+      }else if(ErrorType === "Network error" || ErrorType === "User error"){
+        alert("Your internet connectiom is quite unstable.")
       }
     },
     setIsLoading,
@@ -633,30 +655,27 @@ const HandleAirtime = async () => {
     handleTransactionSuccessClose
   );
 };
-
     return (
         <DashBoardLayout>
             <div className={styles.AirtimeTops}>
                 <div className={styles.airtimeTop}>
-                    <div className="w-full h-[90px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] bg-gradient-to-r from-[#73FF9A] to-[#6EDCFF] flex px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px]">
-                        <div className="w-[80%] pt-[19px] lg:pt-[20px]">
-                            <h2 className={`text-[11px] md:text-[13.75px] font-bold mb-2 lg:text-[24px] lg:mb-4 
-                                 ${
-                                    isDarkMode ? "text-black" : ""
-                                 }
-                                `}>
+                    <div 
+                    className="min-h-[90px] py-[15px] lg:h-[196px] md:h-[112.29px] rounded-[6.6px] 
+                    md:rounded-[11.46px] lg:rounded-[20px] mx-auto  flex gap-6 justify-between
+                 px-[16.51px] md:px-[28.65px] lg:px-[50px] bg-gradient-to-r from-[#73FF9A] to-[#6EDCFF] ">
+                        <div className="w-[80%] flex flex-col justify-center
+                         pt-[19px] lg:pt-[20px] h-[100%] gap-[10px] lg:gap-[20px]">
+                            <h2  className="text-[11px] leading-[14px]  lg:leading-[30px]
+                   lg:text-[24px] md:text-[13.75px] font-semibold">
                                 AIRTIME VTU, FAST AND AUTOMATED.</h2>
-                            <h2 className={`text-[8.4px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px] mb-4
-                              ${
-                                    isDarkMode ? "text-black" : ""
-                                 }
-                            `
-                            }>
+                            <h2 className="text-[10px] leading-[13px] lg:text-[20px]
+                   lg:leading-[25px] md:text-[11.46px]">
                                 Top up your mobile sim using our automated airtime vending directly from network providers, enjoy discounts without any hassle or hidden fee.
                             </h2>
                         </div>
-                        <div className="w-[91px] h-[66px] lg:w-[170px] lg:h-[150px]">
-                            <img src="./Images/airtimeTopUp/young.png" className="h-full" alt="" />
+                        <div className="flex w-[23%] h-[97%] pt-2 shrink-0">
+                            <img src="./Images/airtimeTopUp/young.png" 
+                            className="h-full" alt="" />
                         </div>
                     </div>
                     <div className={`${styles.containFlex} !text-[12px] md:!text-base`}>
@@ -705,7 +724,8 @@ const HandleAirtime = async () => {
                         </div>
                     </div>  
               {/* .containFlex1 */}
-                    <div className={`flex mt-[35px] my-[30px] md:w-[100%] md:gap-[10%] !text-[15px] md:!text-base`}>
+                    <div className={`flex mt-[35px] my-[30px] 
+                        md:w-[100%] md:gap-[10%] !text-[15px] md:!text-base`}>
                         {/* </div><div className={styles.FlexPut1} onClick={handleCodes}> */}
                         <div className="rounded-[4px] w-full bg-primary text-white md:w-[50%] h-[30px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-center md:justify-between gap-[10px] px-[5px]" onClick={handleCodes}>
                             {/* <div className={styles.conPut1}> */}
@@ -718,84 +738,82 @@ const HandleAirtime = async () => {
                             </div>
                             
                         </div>
-                         <div className="hidden md:w-[50%] md:block"></div>
+                         {/* <div className="hidden md:w-[50%] md:block"></div> */}
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-y-[20px] md:gap-x-[58.68px] lg:gap-x-[100px] md:gap-y-[15px] lg:gap-y-[25px]">
+                    <div  className="flex flex-col gap-[20px]  lg:mb-[100px] md:gap-0">
                     {/* <div className={styles.mainGrid}> */}
-                        <div className="flex flex-col lg:gap-[14px] gap-[7px]">
+                        <div className="flex flex-col  md:flex-row gap-[20px]
+                 md:gap-[12px] lg:gap-[22px] md:my-2 lg:my-4">
                         {/* <div className={styles.mainGridCol}> */}
-                            <div>
-                                <div className={styles.NetworkFlex}>
-                                    <h2 className={`lg:text-[18px] text-[#7c7c7c] lg:leading-[24px] mb-4 text-[15px] md:text-[12px] md:font-[600] font-[400] leading-[12px]   ${isDarkMode 
-                                              ? "text-[#7c7c7c]" : "text-[#7c7c7c]"
-                                          }`}>Select Network</h2>
-                                    <div className={`
-                                              ${
-        isDarkMode 
-            ? "!bg-black !text-white !border !border-solid !border-white !mt-2 md:!mt-0" 
-            : "border border-solid border-[#0003] bg-white text-black !mt-2 md:!mt-0"
-    }
-                                    ${styles.input} !h-[44.927px] md:!h-[58px]
-       `} >
-
-                                        <div 
-                                        
-                                        className={`${styles.output2}
-                                       
-
-                                        !relative !top-[17px] md:!relative md:!top-base !text-[14px] md:!text-base
-                                     `}>
-                                            {networkName ? (
-                                                <li onClick={handleShowList} 
-                                                className={`${styles.labelInput}  
-                                              `}
-                                              >
-                                                    <div className={styles.network}>
-                                                        {networkImage && <img src={networkImage} alt="" />}
+                            <div className="relative flex flex-col gap-[3px]
+                   lg:gap-[5px] w-full md:w-1/2">
+       <h2 className="text-[#7E7E7E] text-[14px] lg:text-[17px]
+                       md:text-[13px] md:font-[600] font-[400]">
+                        Select Network</h2>
+                <div  className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
+         sm:p-3 sm:text-lg  flex justify-between pt-[8.803px]
+         pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}
+    >
+<div onClick={handleShowList} 
+className={`flex justify-left  w-[100%] items-center`}>
+         {networkName ? (
+             <div onClick={handleShowList} 
+             className={` items-center h-[100%] ${styles.labelInput}  
+         `}
+                     >
+    <div className={styles.network}>
+                        {networkImage && <img className=""
+                    src={networkImage} alt="" />}
                                                     </div>
-                                                    <h2 className={`
-                                                    ${
-                                                        isDarkMode ? "!text-[#7C7C7C] !bg-black !border !border-none !border-0 !border-width:0" : ""
-                                                    }
-                                                    ${styles.head2x}
-                                                     !text-[13px] md:!text-[13px]`}>{networkName}</h2>
-                                                </li>
+             <h2 className={`text-left text-[13.2px]  font-[400] 
+         leading-[17.4px] md:text-[11px] md:leading-[12.206px]
+            lg:text-[16px] lg:leading-[20.8px] 
+         ${isDarkMode ? "text-white" : "text-[#7E7E7E]" }`}>
+                        {networkName}
+                        </h2>
+                                                </div>
                                             ) : (
-                                                <h2 onClick={handleShowList} className={`
-                                                    ${isDarkMode ? "!text-[#7C7C7C] " : ""}
-                                                    ${styles.head6}
-                                                 
-                                                
-                                                !text-[14px] md:!text-base`}>Select Network</h2>
-                                            )}
-                                            <button className={`
-                                            ${isDarkMode ? "!text-[#7C7C7C] " : ""}
-                                            ${styles.btnDrop} !text-[14px] md:!text-base
-                                                     
-                                            `} onClick={handleShowList}>
-                                                <img src={arrowDown} alt="" />
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="relative">
-                                {/* ${styles.colDown} */}
+                          
+ <div className="flex justify-between w-[100%]">
+    <h2 className="text-[#7E7E7E] text-[14px] lg:text-[17px]
+    md:text-[13px] md:font-[600] font-[400]
+                                    ">Select Network</h2>
+                                      <img className="decdrop  self-center
+                                       align-middle md:h-[14.038px] md:w-[14.038px] 
+                lg:h-[24px] lg:w-[24px] w-[14px] h-[16px]"
+                 src={arrowDown} alt="" />
+                 </div>
+                        )}
+                                         
+     </div>
+                                     
+     {/* ${styles.colDown} */}
                                 {showList &&
-                                    <div className={`text-[16px] md:text-[12px]  bvnQuery text-[#7C7C7C]
-                  shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] 
-                     
-                   lg:text-[16px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[10]
-                 
-                                      ${isDarkMode ? "!bg-black md:!bg-black border border-white border-2 rounded-[5px]" : "border border-none rounded-[5px] text-[#7C7C7C] bg-[#FFF]"}
-        `}
-                                    >
+                                    <div 
+                       className={`absolute lg:top-[90px] md:top-[60px] left-0 top-[74px] 
+                          z-[2]  flex flex-col w-[100%] lg:h-225px md:h-[210px]  
+          ${
+            isDarkMode
+              ? "bg-black text-white border border-white"
+              : "hover:bg-[#EDEAEA]"
+          }`}>
                                         {networkList.map((item) => (
                                              <div className='text-[#7C7C7C]'>
-                                            <Network key={item.id} image={item.image} name={item.name} onClick={() => handleSelectNetwork(item.name, item.image, item.discount, item.networkId)}
+                                            <Network key={item.id} 
+                                            image={item.image} 
+                                            name={item.name} 
+                                            onClick={() => handleSelectNetwork(item.name, item.image, item.discount, item.networkId)}
                                             
                                             />
                                              </div>
-
                                         ))}
                                     </div>
 
@@ -805,127 +823,109 @@ const HandleAirtime = async () => {
                             </div>
                             
                             {/* <div className={styles.headPro}> */}
-                            <div className="flex flex-col">
-                                <h2 className={`
-                                    ${
-                                        isDarkMode 
-                                            ? "!text-[#7E7E7E]" 
-                                            : ""
-                                    }
-                                  mt-8 lg:text-[18px] md:text-[14px] lg:leading-[24px] mb-4 text-[16px] md:font-[600] font-[400] leading-[12px] text-[#7c7c7c]`}> Product</h2>
-                                <div className={` 
-                                           ${
-                                            isDarkMode 
-                                                ? "!mt-2 md:!mt-0 !bg-black !text-white !border !border-solid !border-white !rounded-[7px]" 
-                                                : "!mt-2 md:!mt-0 border border-solid border-[#0003] bg-white  text-[#7c7c7c]"
-                                        }                  ${styles.input1} !h-[44.927px] md:!h-[58px]
-            `}
-                                >
+                        <div className="relative z-0 flex flex-col gap-[3px]
+                   lg:gap-[5px] w-full md:w-1/2">
+                                <h2  className="text-[#7E7E7E] 
+                                text-[14px] lg:text-[17px] md:text-[13px] md:font-[600] font-[400]
+                                    "> Product</h2>
+                                <div 
+                               className={` mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]
+                                 md:p-0 text-[13.2px] 
+                         sm:p-3 sm:text-lg  z-4  flex justify-between pt-[8.803px]
+                          pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+                          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px]
+     lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`} >
                                     
-                                        <h2 className={`
-                                           ${styles.span2} !relative !top-[5px] md:!relative 
-                                            md:!top-base !text-[13px] md:!text-[13] !pr-[0] md:pr-[5px]`} required>VTU</h2>
-                                        
-                                         <button className={`
-                                     ${isDarkMode ? "!text-[#7E7E7E]" : ""}
-                                    ${styles.btnDrop} !relative !top-[0px] md:!relative md:!top-base !text-[14px] md:!text-base
-                                     `} disabled={!selected}>
-                                        <img src={arrowDown} alt="" />
-                                    </button>
+                        <h2 className="text-green-600 className={`text-left text-[13.2px]  font-[400] 
+         leading-[17.4px] md:text-[11px] md:leading-[12.206px]
+            lg:text-[16px] lg:leading-[20.8px] 
+        ">VTU</h2>
+                                         <img className="self-center align-middle
+                                         md:h-[14.038px] md:w-[14.038px] 
+                lg:h-[24px] lg:w-[24px] w-[14px] h-[16px]" src={arrowDown} alt="" />
+                                
                                 </div>
-                                {/* {showProduct &&
-                                    <div className={`
-                                        ${isDarkMode ? "md:!bg-black md:!border md:!border-white md:!text-[#7E7E7E] !bg-black !border !border-white !text-[#7E7E7E]" : "border border-none rounded-[5px] text-black bg-[#FFF]"}
-                                        ${styles.colDown} 
-           
-        `}>
-                                 
-                                            <Product product= "VNS" />
-                                    
-                                    </div>
-                                } */}
+                                
                             </div>
                         </div>
-                        <div className={styles.mainGridCol}>
-                            <div className="flex flex-col lg:gap-0 gap-[2px] md:mt-0 mt-4">
-                                <h2 className={` text-[#7c7c7c] lg:text-[18px] lg:leading-[24px] mb-2 md:mb-4 text-[15px] md:text-[12px] md:font-[600] font-[400] leading-[12px] md:text-base ${
-                                            isDarkMode 
-                                              ? "!text-[#7c7c7c]" : "!text-text-[#7E7E7E]"
-                                          }`}>Discount</h2>
-                                <div className={`${styles.input2} !h-[44.927px] md:!h-[57px] !mt-2 md:!mt-0
-                                    ${
-                                            isDarkMode 
-                                                ? "!bg-black !text-[#7E7E7E] !border !border-solid !border-white !rounded-[7px]" 
-                                                : "border border-solid border-[#0003] bg-white text-[#7c7c7c]"
-                                        }`}>
-                                    <h2 className={`!relative !top-[6px] md:!relative md:!top-base !text-[13px] md:!text-[13px]
-                                         ${
-                                            isDarkMode 
-                                                ? "!bg-black !text-[#7E7E7E]" 
-                                                : ""
-                                        }
-                                        `}>{discount ? `${networkName + ' ' + discount}%` : ''}</h2>
-                                    <div className={`
-                                        ${
-                                            isDarkMode 
-                                                ? "!bg-black !text-[#7E7E7E]" 
-                                                : ""
-                                        }
-                                        ${styles.disc} !relative !top-[6px] md:!relative md:!top-base !text-[14px] md:text-[13px]`}>
-                                        <img src={discountImg} alt="" />
+                        <div className="flex flex-col  md:flex-row gap-[20px]
+                 md:gap-[12px] lg:gap-[22px] md:my-2 lg:my-4">
+                            <div  className="relative flex flex-col gap-[3px]
+                   lg:gap-[5px] w-full md:w-1/2">
+                                <h2 className="text-[#7E7E7E] text-[14px] lg:text-[17px]
+                       md:text-[13px] md:font-[600] font-[400]">Discount</h2>
+                                <div className={` mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]
+                                 md:p-0 text-[13.2px] 
+                         sm:p-3 sm:text-lg  z-4  flex justify-between pt-[8.803px]
+                          pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+                          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px]
+     lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}>
+
+          
+                                    <h2 className={`text-left text-[13.2px]  font-[400] 
+         leading-[17.4px] md:text-[11px] md:leading-[12.206px]
+            lg:text-[16px] lg:leading-[20.8px] 
+         ${isDarkMode ? "text-white" : "text-[#7E7E7E]" }`}>{discount ? `${networkName + ' ' + discount}%` : ''}
+                       </h2>
+                                 
+                                   
+                                        <img className="self-center align-middle
+                                         md:h-[14.038px] md:w-[14.038px] 
+                lg:h-[24px] lg:w-[24px] w-[14px] h-[16px]"
+                                        src={discountImg} alt="" />
                                     </div>
-                                </div>
+                               
                             </div>
-                            <div className="flex flex-col lg:gap-[14px] gap-[7px] md:mt-12 mt-8"> 
-                                <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
-                                            isDarkMode 
-                                              ? "!text-[#7E7E7E]]" : "!text-[#7E7E7E]"
-                                          }`}>Phone Number <span
-                                    className={`
-                                       
-                                       
-                                    ${styles.span3} !text-[15px] md:!text-base`}><Link to="/select-vtu-recipient"> (Select Recipient) </Link>
-                                </span></h2>
-                                <div className={`!mt-2 md:!mt-0
-                                   ${
-                                            isDarkMode 
-                                                ? "!bg-black !!text-[#7E7E7E]!border !border-solid !border-white" 
-                                                : "border border-solid border-[#0003] bg-white !text-[#7E7E7E]"
-                                        }
-                                ${styles.input} !h-[48.927px] md:!h-[57px]
-                                          `}>
-                                    <div className={`
-                                         ${
-                                            isDarkMode 
-                                                ? "!bg-black !text-[#7E7E7E]" 
-                                                : "!text-[#7c7c7c]"
-                                        }
-                                        ${styles.output} !relative !top-[11px] md:!relative md:!top-[14px] !text-[14px] md:!text-base`}>
-                                        <input type='number'
-                                            className={`
-                                                  ${
-                                            isDarkMode 
-                                                ? "!bg-black !text-[#7c7c7c]" 
-                                                : "!text-[#7c7c7c]"
-                                        }
-                                                ${styles.phone} !text-[14px] md:!top-[14px] text-[#7c7c7c]`}  required
+                 
+
+                            
+                    <div className="relative flex flex-col gap-[3px]
+                   lg:gap-[5px] w-full md:w-1/2"> 
+                                <h2 className="text-[#7E7E7E] text-[15px] 
+                      lg:text-[17px] md:text-[13px] md:font-[600] font-[400]"
+                                         >Phone Number <span
+                                    className={`text-blue-800`}>
+                                        <Link to="/select-vtu-recipient"> (Select Recipient) </Link>
+                                </span>
+                                </h2>
+            <div className="relative flex flex-col h-full 
+            gap-[3px] lg:gap-[5px] w-full ">
+                 <input type='number'
+               className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.8px]
+                 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+                   leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+                lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
+                  isDarkMode
+                    ? "bg-black text-white border border-white"
+                    : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
+                }
+                  
+  `}
+                  required
                                             placeholder='Add recipient phone number'
                                             onChange={(event) => {
                                                 handleChange(event);
                                                 setRecipientNumber(event.target.value);
                                             }} value={recipientNumber} />
-                                        <div className={`${styles.call}
-                                            ${
-                                            isDarkMode 
-                                                ? "!bg-black !text-[#7c7c7c]" 
-                                                : "!text-[#7C7C7C]"
-                                        }
-                                        `}>
-                                            <img src={call} alt="" />
-                                        </div>
+                                       
+                                            <img
+                                               className=" absolute left-[90%] top-[40%] md:top-[30%]
+                         lg:left-[94%] self-center align-middle md:h-[14.038px] md:w-[14.038px] 
+      lg:h-[24px] lg:w-[24px] w-[14px] h-[16px] "
+                                             src={call} alt="" />
+                                       
                                     </div>
-                                </div>
-                                {errors.recipientNumber && (
+                                      {errors.recipientNumber && (
                                     <div className={`
                                         ${
                                             isDarkMode 
@@ -937,218 +937,286 @@ const HandleAirtime = async () => {
                                         {errors.recipientNumber}
                                     </div>
                                 )}
+                                </div>
+                              
                             </div>
-                        </div>
-                        </div>
+                        
+                    
+                       
                         {/* <div className={styles.mainGridCol}>
                             <div className='flex flex-col '> */}
-                             <div className='grid grid-cols-1 lg:gap-[9.5vw] gap-[7px] md:grid-cols-2 lg-grid-cols-2 '>
-                            <div className=''>
-                                <h2 className={` text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] mb-2 md:mb-4 ${
-                                            isDarkMode 
-                                              ? "!text-[#7c7c7c]" : "!text-[#7c7c7c]"
-                                          }
-                                          `}>Recipient Name <span className={`${styles.span4} !text-[15px] md:!text-base`}>(optional)</span></h2>
-                                <div className={`!mt-2 md:!mt-0
-                                     ${
-                                            isDarkMode 
-                                                ? "!bg-black !text-[#7c7c7c] !border !border-solid !border-white" 
-                                                : "border border-solid border-[#0003] bg-white text-[#7c7c7c]"
-                                        }
-                                    ${styles.input} !h-[44.927px] md:!h-[51px]`}>
-                                    <div className={` ${
-                                            isDarkMode 
-                                                ? "!bg-black !text-[#7E7E7E]" 
-                                                : ""
-                                        }
-                                        ${styles.output} !relative !top-[11px] md:!relative md:!top-base !text-[14px] md:!text-base`}>
-                                        <input type='text' className={`
-                                             ${
-                                            isDarkMode 
-                                                ? "!bg-black !text-[#7E7E7E]" 
-                                                : "!text-[#7E7E7E]"
-                                        }
-                                            ${styles.phone} !text-[14px] md:!text-base`} required placeholder='Add recipient name' onChange={(event) => setRecipientName(event.target.value)} value={recipientName} />
-                                        <div className={styles.call}>
-                                            <img src={user} alt="" />
-                                        </div>
-                                    </div>
+                             <div className="flex flex-col  md:flex-row gap-[20px]
+                 md:gap-[12px] lg:gap-[22px] md:my-2 lg:my-4">
+                            <div className=" flex flex-col gap-[3px]
+                   lg:gap-[5px] w-full md:w-1/2"> 
+                                <h2 className="text-[#7E7E7E] text-[15px] 
+                      lg:text-[17px] md:text-[13px] md:font-[600] font-[400]">Recipient Name <span className={`${styles.span4} !text-[15px] md:!text-base`}>(optional)</span></h2>
+                                <div className={`relative `}>
+                                   
+               <input type='text' className={`mt-2 md:mt-0 rounded-[10px]
+                 md:rounded-0 p-[20px] md:p-0 text-[13.8px]
+                 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px]
+                  pr-[13px] pl-[10.876px] font-[400] 
+                   leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+                lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
+                  isDarkMode
+                    ? "bg-black text-white border border-white"
+                    : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
+                }
+                  
+  `}
+                 required placeholder='Add recipient name'
+                  onChange={(event) => setRecipientName(event.target.value)} value={recipientName} />
+                                      
+              <img  className=" absolute left-[90%] top-[40%] md:top-[30%]
+                         lg:left-[94%] self-center align-middle md:h-[14.038px] md:w-[14.038px] 
+      lg:h-[24px] lg:w-[24px] w-[14px] h-[16px] "
+               src={user} alt="" />
+                                   
+                                
                                 </div>
                             </div>
-                            <div className='md:mt-0 mt-4'>
+                            {/* Type Amount */}
+                            <div  className="relative flex flex-col gap-[3px]
+                   lg:gap-[5px] w-full md:w-1/2"> 
                             {/* <div className="flex flex-col lg:gap-[14px] gap-[7px] mt-8 md:mt-10"> */}
-                                <h2 className={`text-[#7c7c7c] mb-2 md:mb-4 text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
-                                            isDarkMode 
-                                              ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
-                                          }`}>Type Amount</h2>
-                                <div className={`!mt-2 md:!mt-0
-                                     ${
-                                            isDarkMode 
-                                                ? "!bg-black !text-[#7c7c7c] !border !border-solid !border-white" 
-                                                : "border border-solid border-[#0003] bg-white text-[#7c7c7c]"
-                                        }
-                                    ${styles.input} !h-[44.927px] md:!h-[56px] `}>
-                                    <div className={`
-                                         ${
-                                            isDarkMode 
-                                                ? "!bg-black !text-[#7c7c7c]" 
-                                                : ""
-                                        }
-                                        ${styles.output} !relative !top-[9px] md:!relative md:!top-base !text-[14px] md:!text-base`}>
-                                        <span className={`text-gray-500 bottom-[1px] !relative !top-[7px] md:!relative md:!top-base !text-[14px] md:!text-base
-                                             ${
-                                            isDarkMode 
-                                                ? "!bg-black !text-[#7c7c7c]" 
-                                                : ""
-                                        }
-                                            `}>&#8358;</span>
-                                        <input type='number' placeholder='Type amount' required className={`pl-[8px] md:pl-base
-                                             ${
-                                            isDarkMode 
-                                                ? "!bg-black !text-[#7E7E7E]" 
-                                                : "!text-[#7E7E7E]"
-                                        }
-                                            ${styles.phones} !relative !top-[5px] md:!relative md:!top-base !text-[14px] md:!text-base`} onChange={(event) => setAmount(event.target.value)} value={amount.toLocaleString()} />
-                                        <div className={`${styles.call} !relative !top-[4px] md:!relative md:!top-base !text-[14px] md:!text-base`}>
-                                            <img src={money} alt="" />
-                                        </div>
-                                    </div>
+                                <h2 className="text-[#7E7E7E] text-[15px] 
+                      lg:text-[17px] md:text-[13px] md:font-[600] font-[400]">
+                        Type Amount</h2>
+                              
+                                    <div className={`relative
+                                `}>
+                                        <input type='number' 
+                                        placeholder='Type amount' 
+                                        required 
+                  className={`mt-2 md:mt-0 rounded-[10px]
+                 md:rounded-0 p-[20px] md:p-0 text-[13.8px]
+                 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] 
+                 pr-[13px] pl-[10.876px] font-[400] 
+                   leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+                lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
+                  isDarkMode
+                    ? "bg-black text-white border border-white"
+                    : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
+                }
+                  
+  `}
+                onChange={(event) => setAmount(event.target.value)} value={amount.toLocaleString()} />
+                 
+                                            <img className="absolute left-[90%] top-[40%] md:top-[30%]
+                         lg:left-[94%] self-center align-middle md:h-[14.038px] md:w-[14.038px] 
+      lg:h-[24px] lg:w-[24px] w-[14px] h-[16px]"
+                                             src={money} alt="" />
+                                       
+                        
                                 </div>
                                 {errors.amount && (
                                     <div className="!text-[14px] text-red-500 italic lg:text-[14px]">
                                         {errors.amount}
+                                      
                                     </div>
                                 )}
-                            </div>
+                                  {(!errors.amount && networkName === "" && amount?.length > 1) && (
+                                             <p className="text-[#F95252] text-[13px] 
+                      md:text-[12px] lg:text-[14px] font-[400] italic">
+                           Select Network Type
+                                            </p>
+
+                                        )}
+                        </div>
                         </div>
 
 
                         {/* <div className={styles.mainGridCol}> */}
                             {/* <div className="flex flex-col lg:gap-[14px] gap-[6.6px] md:mt-4 mt-5">  */}
-<div className='grid grid-cols-1 lg:gap-[9.5vw] gap-[7px] md:grid-cols-2 lg-grid-cols-2'>
-                            <div>
-                                <h2 className={`text-[#7c7c7c] text-[15px] mb-2 md:mb-4 md:font-[600] font-[400] md:text-[12px] lg:text-[18px]  ${
-                                            isDarkMode 
-                                              ? "!text-[#7c7c7c]" : "!text-[#7c7c7c]"
-                                          }`}>Total Amount</h2>
-                                <div className={`!mt-2 md:!mt-0
-                                ${
-        isDarkMode 
-            ? "!bg-black !text-[#7c7c7c] !border !border-solid !border-white" 
-            : "border border-solid border-[#0003] bg-white text-[#7c7c7c]"
-    }
-                                ${styles.input} !h-[44.927px] md:!h-[56px] `}>
-                                    <div className={`
-                                    ${
-        isDarkMode 
-            ? "!bg-black !text-[#7c7c7c]" 
-            : ""
-    }
-                                    ${styles.output1} !relative !top-[17px] md:!relative md:!top-base !text-[14px] md:!text-base`}>
-                                        <h2 className={`
-                                        ${
-        isDarkMode 
-            ? "!bg-black !text-[#7c7c7c]" 
-            : ""
-    }
-                                        !text-[14px] md:!text-[15px] text-[#7C7C7C] `}>{newAmount ? `NGN${newAmount}` : `Total Amount`}</h2>
-                                        <div className={styles.disc}>
-                                            <img src={money} alt="" className='w-full h-full' />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+<div className="flex flex-col  md:flex-row gap-[20px]
+                 md:gap-[12px] lg:gap-[22px] md:my-2 lg:my-4">
 
-                            <div>
-                            <div className='md:mt-0 mt-4'>
+      <div className="relative flex flex-col gap-[3px] 
+      lg:gap-[5px] w-full md:w-1/2">
+      <h2 className='text-[#7E7E7E] text-[15px] 
+                      lg:text-[17px] md:text-[13px] md:font-[600] font-[400]'>
+                        Total Amount
+                      </h2>
+        <div className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.8px]
+                 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+                   leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+                lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px]
+                 md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center
+                  ${
+                  isDarkMode
+                    ? "bg-black text-white border border-white"
+                    : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
+                }`}>
+
+     <h2 className={`text-left text-[13.2px]  font-[400] 
+         leading-[17.4px] md:text-[11px] md:leading-[12.206px]
+            lg:text-[16px] lg:leading-[20.8px] 
+         ${isDarkMode ? "text-white" : "text-[#7E7E7E]" }`}>{newAmount ? `NGN${newAmount}` : `Total Amount`}
+                      </h2>
+                       <img src={money} alt="" 
+                                          className="self-center align-middle md:h-[14.038px]
+                                           md:w-[14.038px] lg:h-[24px] lg:w-[24px] w-[14px] h-[16px]" />
+                                
+ </div>
+      </div>
+
+                            <div  className="relative flex flex-col gap-[3px] 
+      lg:gap-[5px] w-full md:w-1/2">
                                 {/* <div className="flex flex-col lg:gap-[14px] gap-[7px] md:mt-10 mt-8"> */}
-                                    <h2 className={`text-[#7c7c7c] text-[15px] mb-2 md:mb-4 md:font-[600] font-[400] md:text-[12px] lg:text-[18px]  ${
-                                            isDarkMode 
-                                              ? "!text-[#7c7c7c]" : "!text-[#7c7c7c]]"
-                                          }`}>Payment Method</h2>
-                                    <div className={`!mt-2 md:!mt-0
-                                    ${
-        isDarkMode 
-            ? "!bg-black text-[#7c7c7c] !border !border-solid !border-white !rounded-[7px]"  
-            : "border border-solid border-[#0003] bg-white text-[#7c7c7c]"
-    }
-                                    ${styles.input1} !h-[44.927px] md:!h-[58px]
-                                  `}>
-                                        {paymentSelected ?
-                                            <li onClick={handleShowPayment} className={styles.labelInput}>
-                                                <h2 className={`
-                                                ${
-        isDarkMode 
-            ? "!bg-black !text-[#7c7c7c]" 
-            : ""
-    }
-                                                ${styles.head4} !relative !top-[3.8px] md:!relative md:!top-base !text-[14px] md:!text-[15px]`}>{name}</h2>
-                                                <h2 className={`${styles.head4} !relative !top-[3.8px] md:!relative md:!top-base !text-[14px] md:!text-[15px]`}>Wallet({paymentAmount.toLocaleString()})</h2>
-                                            </li>
-                                            :
-                                            <h2 onClick={handleShowPayment} className={`
-                                             ${
-        isDarkMode 
-            ? "!bg-black !text-[#7c7c7c]" 
-            : ""
-    }
-                                            ${styles.head9} !relative !top-[5px] md:!relative md:!top-base !text-[14px] md:!text-base text-[#7C7C7C]`}>Select Payment Method</h2>}
-                                        {paymentSelected ?
-                                            <button className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px] !relative !top-[4px] md:!relative md:!top-base md:!text-base" onClick={handleShowPayment}>
-                                                <img src={image} alt="" className='w-full h-full object-cover ' />
-                                            </button>
-                                            :
-                                            <button className='lg:w-6 lg:h-6 h-[11px] w-[11px] !relative !top-[5px] md:!relative md:!top-base !text-[14px] md:!text-base' onClick={handleShowPayment}>
-                                                <img src={arrowDown} alt="" className='w-full h-full' />
-                                            </button>
-                                        }
+                                    <h2 className='text-[#7E7E7E] text-[15px] 
+                      lg:text-[17px] md:text-[13px] md:font-[600] font-[400]'>Payment Method</h2>
+                        <div onClick={handleShowPayment}
+                                     className={`mt-2 md:mt-0 relative rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.8px]
+                 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+                   leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+                lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
+                  isDarkMode
+                    ? "bg-black text-white border border-white"
+                    : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
+                }
+                  
+  `}
+                >
+                                       {paymentSelected ? (
+                   <div className={airtimestyles.labelInput}
+                                                          >
+                             <h2  className={`text-left text-[13.2px] font-[400] 
+         leading-[17.4px] md:text-[11px] md:leading-[12.206px]
+            lg:text-[16px] lg:leading-[20.8px] 
+         ${isDarkMode ? "text-white" : "text-[#7E7E7E]" }`}>
+                                  {name} {" "} {paymentAmount}
+                                         </h2>
+                                                          </div>
+                                                        ) : (
+             <h2 className={`text-left text-[13.2px]  font-[400] 
+         leading-[17.4px] md:text-[11px] md:leading-[12.206px]
+            lg:text-[16px] lg:leading-[20.8px] 
+         ${isDarkMode ? "text-white" : "text-[#7E7E7E]" }`}>
+                                                            Select Payment Method
+                                                          </h2>
+                                                        )}
+                                       {paymentSelected ? (
+                                                          <button
+                                                            className={`rounded-full w-[12.02px] h-[12.02px] flex 
+                                                              items-center justify-center text-[15px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px] 
+                                                               ${isDarkMode ? "bg-black text-white" : ""}`}
+                                                            onClick={handleShowPayment}
+                                                          >
+                                                            <img
+                                                              src={image}
+                                                              alt=""
+                                                               className="decdrop absolute left-[92%] lg:left-[94%]
+                                                    self-center align-middle md:h-[14.038px] md:w-[14.038px] 
+                                            lg:h-[24px] lg:w-[24px] w-[14px] h-[16px]"
+                                                            />
+                                                          </button>
+                                                        ) : (
+                                                          <button
+                                                            className="lg:w-6 lg:h-6 h-[11px] w-[11px]"
+                                                            onClick={handleShowPayment}
+                                                          >
+                                                            <img src={arrowDown} alt="" 
+                                                            className="decdrop  left-[92%] lg:left-[94%]
+                                                    self-center align-middle md:h-[14.038px] md:w-[14.038px] 
+                                            lg:h-[24px] lg:w-[24px] w-[14px] h-[16px]" />
+                                                          </button>
+                                                        )}
                                     </div>
-                                </div>
+                               
+                                
                                 {/* <div className="relative"> */}
+                               
                                 {showPayment &&
-                                    <div className={`mt-[7px]
-                                                 ${
-                      isDarkMode
-                        ? "bg-black border-white rounded-[7px] text-white"
-                        : "text-[#7C7C7C] bg-white rounded-br-[7px] rounded-bl-[7px] lg:rounded-br-[14px] lg:rounded-bl-[14px]"
-                    }
-                    ${
-                      toggleSideBar
-                        ? "lg:w-[31.5%] lg:top-[100.5%]"
-                        : "lg:w-[38.5%] lg:top-[105.3%]"
-                    }  ${
-                    styles.countryDropDown
-                  }  shadow-xl border w-full lg:w-full  flex flex-col divide-y`}
+                                    
+                           <div
+                             className={`absolute top-[102%] z-[3] flex flex-col w-[100%]  
+                                         cursor-pointer border-[1px]  border-gray-100 rounded-[3px]  
+                                               ${
+                                   isDarkMode
+                                     ? "bg-black border-white rounded-[7px] text-white"
+                                     : "text-[#7C7C7C] bg-white rounded-br-[7px] rounded-bl-[7px] lg:rounded-br-[14px] lg:rounded-bl-[14px]"
+                                 }
+                                 ${
+                                   toggleSideBar
+                                     ? "lg:w-[31.5%] lg:top-[100.5%]"
+                                     : "lg:w-[38.5%] lg:top-[105.3%]"
+                                 }  shadow-xl border w-full lg:w-full flex flex-col divide-y absolute top-20`}
+                               >
                
-    >
-                                        {countryList.map((country) => (
-                                              <div
-    key={country.id}
-    className={`py-[18px] md:py-[14px] font-normal px-2 flex items-center gap-[5px] text-[12px] md:text-[14px] lg:text-[16px] transition-all duration-300 hover:bg-slate-50 shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
-                        ${
-                          isDarkMode
-                            ? "text-white hover:bg-slate-800 bg-black "
-                            : "text-[#7C7C7C]"
-                        } ${
-                        country.code === "NGN"
-                          ? "cursor-pointer"
-                          : "cursor-not-allowed opacity-50"
-                      }`}
-    onClick={() => {
-      if (country.code === "Nigerian NGN Wallet") {
-        handleSelectPayment(country.code, country.flag, country.amount);
-      }
-    }}
-  >
-
-                                            <Payment key={country.id} flag={country.flag} code={country.code} amount={country.amount} onClick={() => handleSelectPayment(country.code, country.flag, country.amount)}  
-                                            />
-                                             </div>
-                                        ))}
+    
+                                     {methodOptions.map((methodOption) => {
+                                         return (
+                                           <div
+                                             onClick={(e) => {
+                                           setName(methodOption.id === 1
+                                                   ? methodOption.code
+                                                   : name === "NGN Wallet" &&
+                                                     methodOption.id !== 1
+                                                   ? "NGN Wallet"
+                                                   : ""
+                                               );
+                                setPaymentAmount(methodOption.id === 1 && paymentAmount === "" && name !== "NGN Wallet" ? 
+                                methodOption.balance : methodOption.id !== 1 && name === "NGN Wallet"
+                                 ?  paymentAmount : "");
+               
+                          setShowPayment(() => {
+                              if (methodOption.id === 1) {
+                               setPaymentSelected(true);
+                                    setShowPayment(false);
+                                       document.querySelector(".decdrop")
+                                        .classList.remove("DropIt");
+                                                 } else {
+                                                    setPaymentSelected(false);
+                                                   setShowPayment(true);
+                                                   document
+                                                     .querySelector(".decdrop")
+                                                     .classList.add("DropIt");
+                                                 }
+                                               });
+                                             
+                                                       
+                                              setImage(methodOption.flag);
+                                              
+                                             }}
+                                            className={`py-[18px] md:py-[14px] font-normal px-2 flex
+                                        items-center gap-[5px] text-[12px] md:text-[14px] 
+                                        lg:text-[16px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
+                                         transition-all duration-300 hover:bg-slate-50
+                                      ${
+                                        isDarkMode
+                                          ? "text-white hover:bg-slate-800 bg-black "
+                                          : "text-[#7E7E7E]"
+                                      } ${
+                                       methodOption.method === "Nigeria"
+                                         ? "cursor-pointer"
+                                         : "cursor-not-allowed opacity-50"
+                                     }`}
+                                     
+                                             key={methodOption.id}
+                                           >
+                                             <img
+                                               className="md:h-[29.27px]  h-[14.27px]"
+                                               src={methodOption.flag}
+                                               alt=""
+                                             />
+               
+                                           
+                                             
+                                               {methodOption.code}
+                                               {""}   {balanceLoader === true && methodOption.id === 1 ? <BalanceLoading/> :  methodOption.balance}
+                                             
+                                           </div>
+                                         );
+                                       })}
                                     </div>
                                 }
+                               </div>
                             </div>
-                            </div>
+                          
+                            
+                           
+                         
                         {/* </div> */}
                     {/* </div> */}
                     <div className={styles.add}>
@@ -1160,7 +1228,7 @@ const HandleAirtime = async () => {
                         </div>
                         {isLoading && <p>Loading...</p>}
                     </div>
-
+           
                     {codes && (
                         <Modal>
                             (
@@ -1223,7 +1291,7 @@ const HandleAirtime = async () => {
                     )}
                     {proceed && (
                         <Modal>
-                            (
+                            
                                                  <div className={`w-full flex justify-center h-full 
              py-[30px] px-[15px] lg:px-[0px] lg:items-center
               items-end`}>
@@ -1277,12 +1345,12 @@ const HandleAirtime = async () => {
                                         <span>{recipientNumber}</span>
                                     </div>
                                     <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                                        <p className={`text-[#0008] ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Recipient Name</p>
+                                        <p className={`text-[#0008] ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Recipient Name</p>
                                         <span>{recipientName}</span>
                                     </div>
                                     <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                                         <p className={`text-[#0008] ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Payment Method</p>
-                                        <span>{factorWalletName(name)}</span>
+                                        <span>{name}</span>
                                     </div>
                                     <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                                         <p className={`text-[#0008] ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Total Amount</p>
@@ -1342,98 +1410,120 @@ const HandleAirtime = async () => {
                                 </button>
                             </div>
                             </div>
-                            )
+                            
                         </Modal>
                     )}
                     {
                         confirm && (
                             <Modal>
-                <div className="flex items-end justify-center lg:items-center lg:justify-center w-[100%] lg:px-[0px] rounded-[10px] h-[100%] px-[15px]">
-            <div
-           className={`flex flex-col lg:mb-[0px] mb-[50px] lg:h-[350px] overflow-scroll h-[300px] bvnQuery ${
-                toggleSideBar ? "md:w-[45%] lg:w-[40%]  " : "lg:w-[40%]"
-              } md:w-[55%] w-full ${
-                isDarkMode
-                  ? "text-white bg-black border border-white rounded-[10px]"
-                  : "text-black bg-white rounded-[10px]"
-              }`}
+               <div className="flex items-end justify-center
+             lg:items-center lg:justify-center 
+   w-[100%] lg:px-[0px] rounded-[10px] h-[100%] px-[15px]">
+        <div className={`  flex flex-col lg:mb-[0px]  mb-[50px]
+         lg:h-[350px] overflow-scroll h-[300px] bvnQuery  ${
+                      toggleSideBar ? "md:w-[45%] lg:w-[40%]  " : "lg:w-[40%]"
+                    } md:w-[55%] w-full   ${isDarkMode ? "text-white bg-black border-[1px] border-white rounded-[10px]" : "text-black bg-white rounded-[10px]"}`}
             >
-                <div className="pr-3 lg:pr-2 py-[5px] flex justify-end">
-               
-                                    <img
-                                        onClick={() => setConfirm(false)}
-                                        className="w-[25px] h-[25px] md:w-[35px] md:h-[35px] lg:w-[25px] lg:h-[25px]"
-                                        src="/Images/transferImages/close-circle.png"
-                                        alt=""
-                                    />
-                                       </div>
-                                    <hr  className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
-                                    <div className="flex flex-col w-full justify-center py-[15px] lg:py-[0px] h-[100%] gap-[15px] ">
-                                    <p className="text-[9px] md:text-[16px] font-extrabold text-center my-[8%] lg:my-[%]">
-                                        Input PIN to complete transaction
-                                    </p>
-                                         <div
-
-                  className="flex flex-col items-center lg:gap-[0px] gap-[5px] font-extrabold"
+            <div className="pr-3 lg:pr-2 py-[5px] flex justify-end">
+            <img  onClick={()=> setConfirm(false)}
+                className="w-[25px] h-[25px]  md:w-[35px] md:h-[35px] 
+                lg:w-[25px] lg:h-[25px]"
+                src="/Images/transferImages/close-circle.png"
+                alt=""
+              />
+            </div>
+            <div className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
+            <div className="flex flex-col w-full  justify-center 
+             py-[15px] lg:py-[0px]
+             h-[100%] gap-[15px] ">
+            <p className="font-extrabold text-[12px] leading-[16px] 
+            pb-[20px]
+             md:text-[10px]
+             lg:text-[16px] text-center 
+            ">Input PIN to complete transaction</p>
+            <div className="flex flex-col items-center lg:gap-[0px]
+             gap-[5px] font-extrabold">
+              <div className=" flex items-center  gap-[10px]">
+                  <OtpInput
+                    value={inputPin}
+                    inputType={!isVisible ? "tel" : "password"}
+                    onChange={setInputPin}
+                    numInputs={4}
+                    shouldAutoFocus={true}
+                    inputStyle={{
+                       color: isDarkMode ? "#ffffff" : "#000000",
+                        // width: 30,
+                        // height: 30,
+                        // borderRadius: 3,
+                        fontWeight: 700,
+                        borderRadius: 4,
+                        height: "35px",
+                        width: "35px",
+                        backgroundColor: isDarkMode ? "black" : "white",
+                        border: isDarkMode
+                          ? "1px solid white"
+                          : "1px solid #ccc",
+                    }
+                }
+                    
+                    renderInput={(props) => (
+                      <input {...props} className={`inputOTP mx-[2px] 
+                      `}/>
+                    )}
+                  />
+                <div
+                  className="text-[#0003]"
+                  onClick={toggleVisibility}
                 >
-                  <div
-                    className="flex items-center gap-2.5"
-                  >  {" "}
-                                            {isVisible ? (
-                                                <OtpInput
-                                                    value={inputPin}
-                                                    inputType="tel"
-                                                    onChange={setInputPin}
-                                                    numInputs={4}
-                                                    shouldAutoFocus={true}
-                                                    inputStyle={{
-                                                        color: "#403f3f",
-                                                        width: 30,
-                                                        height: 30,
-                                                        borderRadius: 3,
-                                                        backgroundColor: isDarkMode ? "black" : "white",
-                                                        border: isDarkMode ? "1px solid white" : "1px solid #ccc",
-                                                    }}
-                                                    renderInput={(props) => (
-                                                        <input {...props} className="inputOTP mx-[3px]" />
-                                                    )}
-                                                />
-                                            ) : (
-                                                <div className="text-[24px] md:text-[24px] mt-1">
-                                                    * * * *{" "}
-                                                </div>
-                                            )}
-                                            <div
-                                                className={`text-[#0003] text-xl md:text-3xl
-                                                      ${
-                            isDarkMode ? "text-[#7c7c7c7c]" :"inherit"
-                        }`}
-                                                onClick={toggleVisibility}
-                                            >
-                                                {isVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
-                                            </div>
-                                        </div>
-                                        <p className="text-[8px] md:text-[12px] text-[#04177f]">
-                                            Forgot Pin ?
-                                        </p>
-                                        {errorMessage && (
-                                            <p className='text-[14px] text-center text-red-500 leading-[18px] font-[500]
-                                            lg:text-[16px] lg:leading-[24px] '>
-                                           Incorrect pin
-                                            </p>
-                                        )}
-                                    </div>
-                                    <button
-                                        onClick={()=> HandleAirtime()}
-                                        disabled={inputPin.length !== 4 ? true : false}
-                                        className={`${inputPin.length !== 4 ? "bg-[#0008]" : "bg-[#04177f]"
-                                            } my-[5%] w-[225px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
-                                    >
-                                        Purchase
-                                    </button>
-                                </div>
-                                </div>
-                                </div>
+                    {isVisible ? <AiFillEye className={`w-[16px] h-[16px]
+                  lg:w-[24px] lg:h-[24px]  ${isDarkMode ? " text-white" : "text-black" }`}/> : <AiFillEyeInvisible  
+                    className={`w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]
+                 ${isDarkMode ? " text-white" : "text-black" }`}/>}
+                </div>
+              </div>
+              <Link  to = {{
+               pathname : "/ProfileSettingMain",
+                state :  authenticationOpen
+              }} className="text-[10px] leading-[14px] font-extrabold 
+              md:text-[12px]
+                my-2 text-[#04177f]">
+                Forgot Pin ?
+              </Link>
+            </div>
+            {errorMessage && (
+              <p className="font-bold text-[14px]  lg:text-[16px] md:font-[500] 
+              text-center leading-[18px] lg:leading-[20px]   text-red-600">
+                 Incorrect Pin
+              </p>
+            ) 
+            }
+             <div className="flex flex-col gap-[10px] px-[20px]" >
+            <button
+              onClick={HandleAirtime}
+              disabled={inputPin.length !== 4 ? true : false}
+              className={`${
+                inputPin.length !== 4 && !isDarkMode ? "bg-[#0008]" : 
+                 inputPin.length !== 4 && isDarkMode ? "bg-gray-300" : "bg-[#04177f]"
+              }  w-full  md:w-[94px] lg:w-[163px] flex 
+              justify-center items-center mx-auto cursor-pointer text-[12px]
+               md:text-[10px] lg:text-[16px] font-extrabold h-[50px] 
+               lg:h-[38px] md:h-[22px] text-white rounded-[6px] md:rounded-[6.88px]
+                lg:rounded-[12px]`}
+            >
+              Purchase
+            </button>
+            {/* {errorMessage && (
+              <p className="text-[10px] leading-[16px] font-[400]
+              lg:text-[12px] lg:leading-[18px] lg:font-[500] text-red-500">
+                Incorrect Pin
+                </p>
+
+            )} */}
+            </div>
+             </div>
+           
+        </div>
+        </div>
                             </Modal>
                         )
                     }
@@ -1657,30 +1747,38 @@ const HandleAirtime = async () => {
                             description={description}
                         />
                     )}
-                    <div className={styles.containFlex2}>
+                  
+                </div>
+                
                         <button className={`
                         ${
-                        canProceed ? "bg-[#04177f]" : "bg-[#0008] cursor-not-allowed"
-                        // ${amount.length < 2 ? "bg-[#0008]" : "bg-[#04177f]"
-                            } w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
+                        canProceed  ? "bg-[#04177f]" : "bg-[#63616188] cursor-not-allowed"
+                    }  md:mt-[30px] lg:mt-[25px] rounded-[6px] mt-[30px]
+             md:rounded-[10px] lg:rounded-[15px] 
+             h-[43px] md:h-[30px] lg:h-[40px] flex items-center 
+             font-semibold text-[12px] md:text-[11px] lg:text-[16px] 
+             text-[#fff] w-full md:w-[100px] lg:w-[170px] justify-center`}
                              disabled={!canProceed}
-                            onClick={handleProceed}>Proceed
+                            onClick={handleProceed}>
+                                Proceed
                         </button>
-                    </div>
+             
                 </div>
-                <div className={styles.help}>
+                   <div className={styles.help}>
                     <h2>You need help?</h2>
                     <Link to={`/ContactUs`} className={styles.btnContact}>Contact Us</Link>
                 </div>
-            </div>
+                </div>
+          
             {isLoading && (
                 <Modal>
                     <Loader/>
                 </Modal>
             )}
             {sessionModal && (
-                <HandleUserSession/>
+                <InternalLoginSession setExpiredSessionLogin={setSessionModal}/>
             )}
+            {restrictUser && <RestrictionPopUp/>}
         </DashBoardLayout>
     );
 }

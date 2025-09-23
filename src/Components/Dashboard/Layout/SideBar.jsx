@@ -615,7 +615,9 @@ export const SideBar = ({ fullname, userId, BvnVerify, NinVerify }) => {
       {/* ===========Logout========= */}
 
       <div
-        className={`${styles.logout} pl-[5%] mt-[%] border-t-[0.3px] ml-[%] flex gap-[4%] md:mt-[%] md:border-t-[1.5px] py-[10%] lg:pb-[10%] lg:text-[14px]`}
+        className={`${styles.logout} pl-[5%] mt-[%] border-t-[0.3px] ml-[%] 
+        flex gap-[4%] md:mt-[%] md:border-t-[1.5px] w-[100%] h-[100%]
+        py-[10%] lg:pb-[10%] `}
       >
         <img
           className="w-[11px] h-[11px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
@@ -623,9 +625,11 @@ export const SideBar = ({ fullname, userId, BvnVerify, NinVerify }) => {
           alt="logout"
         />
         <p
-          className={`${styles.logouttxt} cursor-pointer text-[7px] md:text-[7px] lg:text-[14px]`}
+          className={`${styles.logouttxt} cursor-pointer text-[7px] 
+          md:text-[7px] lg:text-[14px]`}
         >
-          <div onClick={() => RemoveLocalStorageKeys()}>Logout</div>
+          <p className="text-[10px] lg:text-[14px] font-[500]"
+           onClick={() => RemoveLocalStorageKeys()}>Logout</p>
         </p>
       </div>
     </div>

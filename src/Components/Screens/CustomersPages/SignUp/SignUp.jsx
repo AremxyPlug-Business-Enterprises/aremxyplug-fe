@@ -86,8 +86,7 @@ const setNav = () => {
   } = state;
   const checkInput = country?.length > 1 && email?.length > 1 && phoneNumber?.length > 1 && userName?.length > 1
   && password?.length > 1 && fullName?.length > 1 && checkbox === true;
-  console.log(checkboxChecked);
-  console.log(state);
+
 
   const [showPassModal, setShowPassModal] = useState(false);
 

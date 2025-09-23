@@ -17,17 +17,15 @@ import britainFlag from '../../Components/EducationPins/imagesEducation/Britain.
 import euroFlag from '../../Components/EducationPins/imagesEducation/GBP.svg';
 import austriaFlag from '../../Components/EducationPins/imagesEducation/Austria.svg';
 import kenyaFlag from '../../Components/EducationPins/imagesEducation/Kenya.svg';
-import {VerifyTransPin} from "../../Components/ApiCollection.jsx/ApiBuck";
+import {InternalLoginSession, RestrictionPopUp, VerifyTransPin} from "../../Components/ApiCollection.jsx/ApiBuck";
 import { Modal } from "../Screens/Modal/Modal";
 import {Loader} from "../Loader/Loader"
 import {PostFunction} from "../../Components/ApiCollection.jsx/ApiBuck"
 import { useNavigate } from "react-router-dom";
 import { GetFunction } from "../ApiCollection.jsx/ApiBuck";
 import { BalanceLoading } from "../Loader/Loader";
-import { HandleUserSession } from "../../Components/ApiCollection.jsx/ApiBuck";
 import { GetLocalStorage } from "../LocalStorage/LocalStorage";
 const DsTv = () => {
-
   const {
     dstvFlagResult,
     setDstvFlagResult,
@@ -74,7 +72,8 @@ const DsTv = () => {
         newBalance,
         setNewBalance,
         setFetchedDstvPlans,
-        toggleSideBar
+        toggleSideBar,
+        
  } = useContext(ContextProvider);
 const Data = GetLocalStorage();
    // const [packageDstv, setPackageDstv] = useState("");
@@ -90,6 +89,8 @@ const Data = GetLocalStorage();
      const {purchaseDstvErrorType, setPurchaseDstvErrorType} = useContext(ContextProvider);
      const { setDstvCardName} = useContext(ContextProvider)
       const [checkNetworkError, setCheckNetworkError] = useState(false)
+       const [restrictUser, setRestrictUser] = useState(false);
+       const [balanceLoader, setBalanceLoader] = useState(false)
       const navigate = useNavigate();
   
 const handleOptionClickDstv = (option) => {
@@ -126,9 +127,10 @@ const ReceiptButton = ()=> {
     setDstvFlagResult("");
     setDstvWalletBalance("");
     setFailedPopup(false);
+    setDstvSubscriptionResponse({})
     // navigate("/DsTv");
   }
-
+console.log(dstvSubscriptionResponse?.data?.status);
   
 
   const handleTvEmail = (e) => {
@@ -137,6 +139,7 @@ const ReceiptButton = ()=> {
   }
 
   const handleDstv = (event) => {
+    setDstvSubscriptionResponse({})
     event.preventDefault();
     
     const { error } = schema.validate({
@@ -216,10 +219,8 @@ const ReceiptButton = ()=> {
   }
   
   
-const DstvOptionalPlan = dstvData?.length < 1 && fetchedDstvPlans.status === 200 ? fetchedDstvPlans?.data?.data?.data : dstvData;
 
-//=========Retrieving GOtv Plans =====
- const RetrieveGotvPlans = async()=> {
+  const RetrieveGotvPlans = async()=> {
   if(!navigator.onLine) return setCheckNetworkError(true)
           const SuccessHandler = ()=> {
     console.log("Successfully fetched dstv plans");
@@ -230,8 +231,12 @@ const DstvOptionalPlan = dstvData?.length < 1 && fetchedDstvPlans.status === 200
       setIsLoading,
        SuccessHandler,
         (ErrorType)=> {
-          if(ErrorType === "unauthorised"){
-            return setSessionModal(true);
+         if(ErrorType === "User error" || ErrorType === "Network error"){
+             setCheckNetworkError(true);
+          }else if(ErrorType === "Server error"){
+             alert("Failed to fetch DStv Plans, try again later")
+          }else{
+            alert("An unexpected error has occured try again later.")
           }
       },
          setFetchedDstvPlans);
@@ -250,6 +255,11 @@ const DstvOptionalPlan = dstvData?.length < 1 && fetchedDstvPlans.status === 200
    failedHandler,
     setFetchedDstvPlans);
 }
+
+const DstvOptionalPlan = dstvData?.length < 1 && fetchedDstvPlans.status === 200 ? fetchedDstvPlans?.data?.data?.data : dstvData;
+
+//=========Retrieving GOtv Plans =====
+ 
 //Retrieving User's Balance ======
   const GetBalance = async () => {
     if(!navigator.onLine) return setCheckNetworkError(true)
@@ -262,7 +272,7 @@ const DstvOptionalPlan = dstvData?.length < 1 && fetchedDstvPlans.status === 200
         if (ErrorType === "unauthorised") {
           await GetFunction(
             `balance`,
-            setIsLoading,
+            setBalanceLoader,
             SuccessHandler,
             //Handling the error Use Cases of the Unauthorised inside
             // of the statement.
@@ -272,7 +282,7 @@ const DstvOptionalPlan = dstvData?.length < 1 && fetchedDstvPlans.status === 200
               }else if(ErrorType === "Server error"){
                   await GetFunction(
         "balance",
-        setIsLoading,
+        setBalanceLoader,
         SuccessHandler,
        async(ErrorType)=> {
         if(ErrorType === "Server error"){
@@ -298,7 +308,7 @@ const DstvOptionalPlan = dstvData?.length < 1 && fetchedDstvPlans.status === 200
         }else if(ErrorType === "Server error"){
             await GetFunction(
         "balance",
-        setIsLoading,
+        setBalanceLoader,
         SuccessHandler,
        async(ErrorType)=> {
          if(ErrorType === "unauthorised"){
@@ -312,7 +322,7 @@ const DstvOptionalPlan = dstvData?.length < 1 && fetchedDstvPlans.status === 200
           }else if(ErrorType === "Server error"){
                await GetFunction(
         "balance",
-        setIsLoading,
+        setBalanceLoader,
         SuccessHandler,
        async(ErrorType)=> {
         //if Statements
@@ -362,31 +372,31 @@ const DstvOptionalPlan = dstvData?.length < 1 && fetchedDstvPlans.status === 200
       }
       await GetFunction(
         "balance",
-        setIsLoading,
+        setBalanceLoader,
         SuccessHandler,
         FailedHandler,
         setPassDataBalance
       );
     };
       useEffect(()=> {
+        if(Data?.ConfirmAcc === "true"){
        if(fetchedDstvPlans.status === 200 || fetchedDstvPlans.status === 201){
       setDstvData(fetchedDstvPlans?.data?.data?.data);
       }else if(fetchedDstvPlans.status === undefined){
-      
-RetrieveGotvPlans()
+      RetrieveGotvPlans()
 }
 
                      // Simulate async data loading
-                    if((newBalance === "" ||
-       newBalance === null ||
-        newBalance === undefined) && Data?.ConfirmAcc === "true"){
+                     
+                  
                         GetBalance();
                         if(GetBalance){
                          setNewBalance(passDataBalance?.data?.data?.data !== undefined
                            ? passDataBalance?.data?.data?.data?.balance : "");
                         }
+                      
                       }else{
-                        console.log("Create an account to access this feature.")
+                       setRestrictUser(true)
                       }
      //eslint-disable-next-line             
       },[])
@@ -502,10 +512,24 @@ const VerifyPinHandler = async () => {
       };
 
       const Path = "bills/tvsub";
-      const successHandler = () =>{
+      const successHandler = (response) =>{
+       if(response?.data?.data?.data?.status === "success"
+          || response?.data?.data?.data?.status === "delivered"
+        ||  response?.data?.data?.data?.status === "successful" ||
+        response?.data?.data?.data?.status === "Successful"
+        ){
+          setPurchaseDstvErrorType("");
         setDstvSuccessful(true);
         setInputPinDstv(false);
-          setInputPin("")
+        setInputPin("");
+        }else if(response?.data?.data?.data?.status === "failed"
+          || response?.data?.data?.data?.status === "Failed"
+        ||  response?.data?.data?.data?.status === "unsuccessful"){
+            setPurchaseDstvErrorType("Plan Unavailable: Purchase Failed")
+          setFailedPopup(true);
+          setInputPinDstv(false);
+          setInputPin("");
+        }
       //  handleReceivedData()
       }
       const FailedHandler = async(ErrorType) =>{
@@ -520,7 +544,31 @@ const VerifyPinHandler = async () => {
         (ErrorType)=> {
           if(ErrorType === "unauthorised"){
             return setSessionModal(true)
-          }
+          }else if(ErrorType === "Server error"){
+          //Why arepition did not occur here,
+          //We dont want it to be only about User experience here,
+          //There are several things that could happen to the backend,
+          // and there is also a possibility that the server was able to process and 
+          //initiate the transaction but still returned 500,
+          //so we need to prevent the case of carrying two transaction for a user,
+          //which doesn't only affect us through service of the platform we are using,
+          //but also unrest and panic to the user and the amount for purchase and 
+          //been removed twice without a result or successful output.
+          setPurchaseDstvErrorType("Server Error: Purchase Failed")
+       setFailedPopup(true);
+       setInputPinDstv(false);
+         setInputPin("")
+        }else if(ErrorType === "Network error" || ErrorType === "User error"){
+          setPurchaseDstvErrorType("Network Error: Purchase Failed");
+          setFailedPopup(true);
+       setInputPinDstv(false);
+         setInputPin("")
+        }else {
+           setFailedPopup(true);
+       setInputPinDstv(false);
+         setInputPin("")
+      setPurchaseDstvErrorType("An Unexpected error has occured");
+        }
         },
         setDstvSubscriptionResponse
       );
@@ -544,6 +592,9 @@ const VerifyPinHandler = async () => {
        setInputPinDstv(false);
          setInputPin("")
         }else {
+     setFailedPopup(true);
+        setInputPinDstv(false);
+         setInputPin("")
       setPurchaseDstvErrorType("An Unexpected error has occured");
         }
       }
@@ -791,6 +842,7 @@ console.log(dstvAmount)
 
 //======Running the Balance and the retrieving if the following 
 //Conditions are met
+if(Data?.ConfirmAcc === "true"){
 window.addEventListener("online", ()=> {
    if(checkNetworkError === true &&
      (updateBalance === undefined || updateBalance === null || updateBalance === "")
@@ -801,6 +853,7 @@ window.addEventListener("online", ()=> {
     return RetrieveGotvPlans()
    }
   })
+}
 
 
   return (
@@ -1158,8 +1211,8 @@ window.addEventListener("online", ()=> {
  <img className='md:h-[29.27px]  h-[14.27px]' 
  src={methodOption.flag} alt="" />
 
-         {methodOption.method + ' ' + methodOption.balance}
-                    
+         {methodOption.method } {" "}
+                     {balanceLoader === true && methodOption.id === 1 ? <BalanceLoading/> :  methodOption.balance}
                       </div>
 
                     )
@@ -1200,13 +1253,21 @@ window.addEventListener("online", ()=> {
      {/* Failed Transaction Popup */}
    {failedPopup && (
     <Modal>
-       <div className="w-[90%] md:w-[70%] lg:w-[40%] mx-auto bg-white rounded-lg overflow-hidden">
-         <div className="flex justify-start w-full items-center p-4">
+       <div  className={`w-[90%] md:w-[50%] lg:w-[35%] mx-auto 
+           rounded-lg overflow-hidden
+            ${isDarkMode ? "bg-black border-[1px] rounded-[7px] border-white": "bg-white"}`}>
+         <div className="flex justify-between items-center p-4">
            <img
-             className="w-6 h-6"
-             src="/Images/login/arpLogo.png"
-             alt="Logo"
-           />
+          className={`w-6 h-6  `}
+                src="/Images/login/arpLogo.png"
+                alt="Logo"
+              />
+              <img
+                onClick={() => setFailedPopup(false)}
+                className="w-6 h-6 cursor-pointer"
+                src="/Images/transferImages/close-circle.png"
+                alt="Close"
+              />
           
          </div>
          <hr className="h-1 bg-[#04177f] border-none" />
@@ -1215,31 +1276,44 @@ window.addEventListener("online", ()=> {
              Transaction Failed
            </h2>
            <img
-             className="w-32 h-32 mx-auto my-6"
+              className={`w-32 h-32 mx-auto my-6 
+                   ${isDarkMode ? "bg-black rounded-full border-[0.1px] border-black": "bg-white"}`}
              src="./Images/failed.png"
              alt="Failed"
            />
            <p className="text-sm text-red-500 font-[600] mb-8">
              {purchaseDstvErrorType}
            </p>
-             <div className="flex gap-[10px] justify-between w-full px-[10px]">
-        <button
-          onClick={() => ExitTheDoneButton()}
-          className="bg-[#04177f] w-[50%] max-w-xs mx-auto py-2
-           text-white rounded-md font-medium">
-          Done
-        </button>
-           <button
-          onClick={() =>{
-              ReceiptButton()
-              
-          }}
-          className="w-[50%] bg-white max-w-xs mx-auto py-2 text-blue-900
-           rounded-md font-medium"
-        >
-          Receipt
-        </button>
-        </div>
+              {dstvSubscriptionResponse?.data?.status ?
+               (
+              <div className="flex gap-[10px] justify-between w-full px-[10px]">
+                <button
+                  onClick={() => ExitTheDoneButton()}
+                  className="bg-[#04177f] w-[50%] max-w-xs mx-auto py-2
+           text-white rounded-md font-medium"
+                >
+                  Done
+                </button>
+                <button
+                  onClick={() => {
+                    ReceiptButton();
+                  }}
+                    className={`w-[50%]  max-w-xs 
+                  mx-auto py-2 
+           rounded-md font-medium ${isDarkMode ? "text-blue-900 bg-white border-[0.2px] rounded-[10px]" : "bg-black border-[0.2px] text-white border-blue-900"}`}>
+                  Receipt
+                </button>
+              </div>
+         
+                ): (
+                   <button
+                  onClick={() => ExitTheDoneButton()}
+                  className="bg-[#04177f] w-[100%] max-w-xs mx-auto py-2
+           text-white rounded-md font-medium"
+                >
+                  Done
+                </button>
+                 )}
 
          </div>
        </div>
@@ -1252,7 +1326,10 @@ window.addEventListener("online", ()=> {
               </Modal>
          ) } 
          {sessionModal && (
-          <HandleUserSession/>
+           <InternalLoginSession setExpiredSessionLogin={setSessionModal}/>
+         )}
+         {sessionModal=== false && restrictUser && (
+          <RestrictionPopUp/>
          )}
     </div>
   )

@@ -24,8 +24,10 @@ import { GetFunction } from "../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../Loader/Loader";
 import { Modal } from "../Screens/Modal/Modal";
 import { BalanceLoading } from "../Loader/Loader";
-import { HandleUserSession } from "../../Components/ApiCollection.jsx/ApiBuck";
+import {  RestrictionPopUp } from "../../Components/ApiCollection.jsx/ApiBuck";
 import { GetLocalStorage } from "../LocalStorage/LocalStorage";
+import { InternalLoginSession } from "../../Components/ApiCollection.jsx/ApiBuck";
+
 
 // import { duration } from "html2canvas/dist/types/css/property-descriptors/duration";
 
@@ -87,13 +89,17 @@ const GoTv = () => {
   const [stateInvalidDecoderNumber, setStateInvalidDecoderNumber] =
     useState(false);
   const [sessionModal, setSessionModal] = useState(false);
-
+const [balanceLoader , setBalanceLoader] = useState(false)
   const [isLoading, setIsLoading] = useState(false);
   const [failedPopup, setFailedPopup] = useState(false);
   const [gotvLoading, setGotvLoading] = useState(false);
   const [gotvVerifyResponse, setGotvVerifyResponse] = useState({});
   const [errorFillDecoder, setErrorFillDecoder] = useState(false);
-  const [checkNetworkError, setCheckNetworkError] = useState(false)
+  const [checkNetworkError, setCheckNetworkError] = useState(false);
+  const [restrictUser, setRestrictUser] = useState(false);
+
+//  const [holdCurrentFunction, setHoldCurrentFunction] = useState("")
+//  const [userBlocked, setUserBlocked] = useState(false)
 const Data = GetLocalStorage();
 //console.log(Data?.ConfirmAcc)
   const navigate = useNavigate();
@@ -197,30 +203,29 @@ const Data = GetLocalStorage();
    const GetBalance = async () => {
     if(!navigator.onLine) return setCheckNetworkError(true)
       const SuccessHandler = () => {
-        //alert("Successful");
-        console.log("successfully retrieved balance");
-        //alert("Successful")
-      };
+       console.log("successfully retrieved balance");
+       };
       const FailedHandler = async (ErrorType) => {
         if (ErrorType === "unauthorised") {
-          await GetFunction(
+       await GetFunction(
             `balance`,
-            setIsLoading,
+            setBalanceLoader,
             SuccessHandler,
             //Handling the error Use Cases of the Unauthorised inside
             // of the statement.
             async(ErrorType) => {
               if (ErrorType === "unauthorised") {
-                return setSessionModal(true);
+              return setSessionModal(true);
               }else if(ErrorType === "Server error"){
                   await GetFunction(
         "balance",
-        setIsLoading,
+        setBalanceLoader,
         SuccessHandler,
        async(ErrorType)=> {
         if(ErrorType === "Server error"){
           alert("Failed to retrieve the balance.")
-        }else if(ErrorType === "Network error" || ErrorType === "User error"){
+        }
+        else if(ErrorType === "Network error" || ErrorType === "User error"){
            setCheckNetworkError(true);
               alert("Kindly check your internet connection to retrieve balance.")
         }else {
@@ -242,13 +247,13 @@ const Data = GetLocalStorage();
         }else if(ErrorType === "Server error"){
             await GetFunction(
         "balance",
-        setIsLoading,
+        setBalanceLoader,
         SuccessHandler,
        async(ErrorType)=> {
          if(ErrorType === "unauthorised"){
             await GetFunction(
         "balance",
-        setIsLoading,
+       setBalanceLoader,
         SuccessHandler,
         async(ErrorType)=> {
           if(ErrorType === "unauthorised"){
@@ -256,7 +261,7 @@ const Data = GetLocalStorage();
           }else if(ErrorType === "Server error"){
                await GetFunction(
         "balance",
-        setIsLoading,
+        setBalanceLoader,
         SuccessHandler,
        async(ErrorType)=> {
         //if Statements
@@ -310,7 +315,7 @@ const Data = GetLocalStorage();
       }
       await GetFunction(
         "balance",
-        setIsLoading,
+         setBalanceLoader,
         SuccessHandler,
         FailedHandler,
         setPassDataBalance
@@ -332,9 +337,13 @@ const Data = GetLocalStorage();
               setIsLoading,
               SuccessHandler,
               (ErrorType) => {
-                if (ErrorType === "unauthorised") {
-                  return setSessionModal(true);
-                }
+               if(ErrorType === "User error" || ErrorType === "Network error"){
+             setCheckNetworkError(true);
+          }else if(ErrorType === "Server error"){
+             alert("Failed to fetch Gotv Plans, try again later")
+          }else{
+            alert("An unexpected error has occured try again later.")
+          }
               },
               setFetchedGotvPlans
             );
@@ -359,30 +368,29 @@ const Data = GetLocalStorage();
   //console.log(fetchedGotvPlans.status)
   const GotvOptionalPlan =
     gotvData?.length < 1 && fetchedGotvPlans.status === 200
-      ? fetchedGotvPlans.data.data.data
+      ? fetchedGotvPlans?.data?.data?.data
       : gotvData;
   useEffect(() => {
+     if(Data?.ConfirmAcc === "true"){
     if (fetchedGotvPlans.status === 200 || fetchedGotvPlans.status === 201) {
       setGotvData(fetchedGotvPlans?.data?.data?.data);
     } else if (fetchedGotvPlans.status === undefined) {
      RetrieveGotvPlans();
     }
  // Simulate async data loading
-    if ((newBalance === "" ||
-       newBalance === null ||
-        newBalance === undefined) && Data?.ConfirmAcc === "true") {
+
+  
     GetBalance();
       if (GetBalance) {
         setNewBalance(
           passDataBalance?.data?.data?.data !== undefined
             ? passDataBalance?.data?.data?.data?.balance
-            : ""
-        );
+            : "");
+        }
+      
+      } else{
+           setRestrictUser(true)
       }
-    }else{
-     // alert("Create an account to access this feature.");
-     console.log("Create an account to access this feature.")
-    }
     //eslint-disable-next-line
   }, []);
 
@@ -400,7 +408,7 @@ const Data = GetLocalStorage();
 
   const handleGotv = (event) => {
     event.preventDefault();
-
+     setTvSubscriptionResponse({})
     const { error } = schema.validate({
       mobileNumber,
       tvEmail,
@@ -554,10 +562,25 @@ const Data = GetLocalStorage();
       const DataJson = JSON.stringify(requestData);
 
       const Path = "bills/tvsub";
-      const successHandler = () => {
+      const successHandler = (response) => {
+        //console.log(response?.data?.data)
+        if(response?.data?.data?.data?.status === "success"
+          || response?.data?.data?.data?.status === "delivered"
+        ||  response?.data?.data?.data?.status === "successful" ||
+        response?.data?.data?.data?.status === "Successful"
+        ){
+          setPurchaseGotvErrorType("");
         setGotvSuccessful(true);
         setInputPinGotv(false);
         setInputPin("");
+        }else if(response?.data?.data?.data?.status === "failed"
+          || response?.data?.data?.data?.status === "Failed"
+        ||  response?.data?.data?.data?.status === "unsuccessful"){
+            setPurchaseGotvErrorType("Plan Unavailable: Purchase Failed")
+          setFailedPopup(true);
+          setInputPinGotv(false);
+          setInputPin("");
+        }
       };
       const FailedHandler = async (ErrorType) => {
         if (ErrorType === "unauthorised") {
@@ -609,52 +632,54 @@ const Data = GetLocalStorage();
 
       const setFailedConfig= async(ErrorType)=> {
          if(ErrorType === "unauthorised"){
+        setSessionModal(true);
+           //  setHoldCurrentFunction(VerifyPinHandler)
            //The concept behind this code : A user session is regulated by tokens,
            // the moment we notice it expires we try to get the token for the user before
            // a transaction completed(i.e we get it during a transaction process), when unauthorised
            //we get the necessary tokens, then re-run the transaction, there are different errors that 
            //could occur, when re-running such as: it could return same unauthorised errorType,
-           //a server error and even network connection issue or an unexpected error
+           //a server error and even network connnection issue or an unexpected error
            //hence, the reason we account for other types of errors even while re-running,
            //due to the inpredictability of the output of the transaction.
-       await VerifyTransPin(
-         inputPin,
-          async(ErrorType)=> {
-            // unauthorisation >>> unauthorisation ErrorTypes
-           if(ErrorType === "unauthorised"){
-             return setSessionModal(true);
-           }else if(ErrorType === "Server error"){
-           await VerifyTransPin(
-           inputPin,
-           (ErrorType)=> {
-            //unauthorisation >>> Server error then error Types
-           if(ErrorType === "Server error"){
-           alert("Failed to process your request, try again some other time")
-           }else if(ErrorType === "Network error" || ErrorType === "User error"){
-             alert("Kindly check your internet connection.");
-           }else{
-            if(ErrorType !== "Bad request"){
-             alert("Failed to process your request, try some other time.")
-            }
-           }
-         },
-         setIsLoading,
-         setErrorMessage,
-       GotvHandler,
-      );
-      //unauthorisation >>> the "Network error" and "User error" ErrorType
-           }else if(ErrorType === "Network error" || ErrorType === "User error"){
-             alert("Kindly check your internet connection.");
-           }else{
-            if(ErrorType !== "Bad request"){
-             alert("Failed to process your request, try some other time.")
-            }
-          }
-          },
-         setIsLoading,
-         setErrorMessage,
-       GotvHandler,
-      );
+      //  await VerifyTransPin(
+      //    inputPin,
+      //     async(ErrorType)=> {
+      //       // unauthorisation >>> unauthorisation ErrorTypes
+      //      if(ErrorType === "unauthorised"){
+      //        return setSessionModal(true);
+      //      }else if(ErrorType === "Server error"){
+      //      await VerifyTransPin(
+      //      inputPin,
+      //      (ErrorType)=> {
+      //       //unauthorisation >>> Server error then error Types
+      //      if(ErrorType === "Server error"){
+      //      alert("Failed to process your request, try again some other time")
+      //      }else if(ErrorType === "Network error" || ErrorType === "User error"){
+      //        alert("Kindly check your internet connection.");
+      //      }else{
+      //       if(ErrorType !== "Bad request"){
+      //        alert("Failed to process your request, try some other time.")
+      //       }
+      //      }
+      //    },
+      //    setIsLoading,
+      //    setErrorMessage,
+      //  GotvHandler,
+      // );
+      // //unauthorisation >>> the "Network error" and "User error" ErrorType
+      //      }else if(ErrorType === "Network error" || ErrorType === "User error"){
+      //        alert("Kindly check your internet connection.");
+      //      }else{
+      //       if(ErrorType !== "Bad request"){
+      //        alert("Failed to process your request, try some other time.")
+      //       }
+      //     }
+      //     },
+      //    setIsLoading,
+      //    setErrorMessage,
+      //  GotvHandler,
+      // );
     //immediate ErrorType to the Failed function...
      }else if(ErrorType === "Server error"){
        //The server could return a 500 then be successful
@@ -678,7 +703,7 @@ const Data = GetLocalStorage();
            }else if(ErrorType === "User error" || ErrorType === "Network error"){
              alert("Kindly check your internet connection")
            }else{
-            if(ErrorType !== "Bad request"){
+            if(ErrorType !== "Bad request" || ErrorType !== "User Blocked"){
              alert("Failed to process your request, try some other time.")
             }
           }
@@ -693,7 +718,7 @@ const Data = GetLocalStorage();
      //A network error occured  during trying to re-try the code on server error
      alert("Kindly check your internet connection");
    }else{
-            if(ErrorType !== "Bad request"){
+            if(ErrorType !== "Bad request" || ErrorType !== "User Blocked"){
              alert("Failed to process your request, try some other time.")
             }
           }
@@ -707,7 +732,7 @@ const Data = GetLocalStorage();
        || ErrorType === "Network error" ){
      alert("Kindly check your internet connection")
      }else{
-            if(ErrorType !== "Bad request"){
+            if(ErrorType !== "Bad request" || ErrorType !== "User Blocked"){
              alert("Failed to process your request, try some other time.")
             }
           }
@@ -746,6 +771,7 @@ const Data = GetLocalStorage();
         console.log("Succesfully verified tv subscription account.");
         setSmartCard(UserTvSubscription);
         setCardName(response?.data?.data?.data?.name);
+        setStateInvalidDecoderNumber(false)
       };
      const FailedHandler = async(ErrorType)=> {
        //1.
@@ -783,14 +809,12 @@ const Data = GetLocalStorage();
           }
       },
         setGotvVerifyResponse)
-        //2.Handling the ErrorType "Server error" on the general conditional statement
-           
+        //2.Handling the ErrorType "Server error" on the general conditional statement    
            }else if(ErrorType === "Network error" || ErrorType === "User error"){
            //3. Handling the ErrorType "Network error, User error" for the general "unauthorised" 
            //function
            alert("Kindly check your internet connection.")
            }
-     
         }, setGotvVerifyResponse);
         //2. Handling the server for the general conditional 
         // statement under the failedHandler
@@ -830,7 +854,11 @@ const Data = GetLocalStorage();
         //3.Handling the ErrorType "Network error, User error"
      }else if(ErrorType === "Network error" || ErrorType === "User error"){
        alert("Kindly check your internet connection")
-     }else {
+     }
+     else if(ErrorType === "Bad request"){
+      setStateInvalidDecoderNumber(true)
+     }
+      else {
        //4. Handling the "alien" ErrorType.
         alert("An unexpected error has occured, try again some other time.")
      }
@@ -872,9 +900,11 @@ const Data = GetLocalStorage();
     setFlagResult("");
     setTvWalletBalance("");
     setFailedPopup(false);
+     setTvSubscriptionResponse({});
     //  navigate("/GoTv");
   };
 
+  if(Data?.ConfirmAcc === "true"){
   window.addEventListener("online", ()=> {
    if(checkNetworkError === true &&
      (updateBalance === undefined || updateBalance === null || updateBalance === "")
@@ -885,6 +915,8 @@ const Data = GetLocalStorage();
     return RetrieveGotvPlans()
    }
   })
+}
+console.log(tvSubscriptionResponse?.data?.status)
 
   return (
     <div>
@@ -937,8 +969,10 @@ const Data = GetLocalStorage();
               </div>
 
               <div className="flex flex-col gap-[20px] md:gap-0">
-                <div className="flex flex-col md:flex-row gap-[20px] md:gap-[12px] lg:gap-[22px] md:my-2 lg:my-4">
-                  <div className="relative flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
+                <div className="flex flex-col md:flex-row gap-[20px]
+                 md:gap-[12px] lg:gap-[22px] md:my-2 lg:my-4">
+                  <div className="relative flex flex-col gap-[3px]
+                   lg:gap-[5px] w-full md:w-1/2">
                     <label
                       htmlFor="decoderType"
                       className="text-[#7E7E7E] text-[14px] lg:text-[17px]
@@ -1032,13 +1066,15 @@ const Data = GetLocalStorage();
                     </label>
 
                     <div
-  className={`mt-2 md:mt-0 rounded-[10px] m
-    d:rounded-0 p-[20px] md:p-0 text-[13.2px] 
-    sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
+  className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
+    sm:p-3 sm:text-lg flex justify-between pt-[8.803px] 
+    pb-[7.794px] pr-[13px]
+     pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px]
+      md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center" onClick={packageDropdown} ${
       isDarkMode 
         ? "bg-black text-white border border-white" 
-        : "hover:bg-[#EDEAEA] border-[#9C9C9C] text-[#7C7C7C] "
+        : "hover:bg-[#EDEAEA] border-[rgb(156,156,156)] text-[#7C7C7C] "
     }`}
                       onClick={packageDropdown}
                     >
@@ -1128,7 +1164,8 @@ const Data = GetLocalStorage();
     }`}
                     />
                     {errors.smartCard && (
-                      <p className="text-[#F95252] text-[13px] md:text-[12px] lg:text-[14px] font-[400] italic">
+                      <p className="text-[#F95252] text-[13px] 
+                      md:text-[12px] lg:text-[14px] font-[400] italic">
                         {errors.smartCard}
                       </p>
                     )}
@@ -1172,7 +1209,8 @@ const Data = GetLocalStorage();
                   <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
                     <label
                       htmlFor="decoderType"
-                      className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] md:font-[600] font-[400]"
+                      className="text-[#7E7E7E] text-[15px] 
+                      lg:text-[17px] md:text-[13px] md:font-[600] font-[400]"
                     >
                       Phone Number
                     </label>
@@ -1244,7 +1282,8 @@ const Data = GetLocalStorage();
                   <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
                     <label
                       htmlFor="decoderType"
-                      className="text-[#7E7E7E] text-[15px] lg:text-[16px] md:text-[12px] md:font-[600] font-[400]"
+                      className="text-[#7E7E7E] text-[15px] 
+                      lg:text-[16px] md:text-[12px] md:font-[600] font-[400]"
                     >
                       Amount
                     </label>
@@ -1272,7 +1311,8 @@ const Data = GetLocalStorage();
                     />
                   </div>
 
-                  <div className="relative flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
+                  <div className="relative flex flex-col gap-[3px] 
+                  lg:gap-[5px] w-full md:w-1/2">
                     <label
                       htmlFor="decoderType"
                       className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] md:font-[600] font-[400]"
@@ -1390,9 +1430,10 @@ const Data = GetLocalStorage();
 
                             
                               
-                                {methodOption.method +
-                                  " " +
-                                  methodOption.balance}
+                                {methodOption.method} 
+                                  {" "} 
+
+                                {balanceLoader === true && methodOption.id === 1 ? <BalanceLoading/> :  methodOption.balance}
                               
                             </div>
                           );
@@ -1419,10 +1460,15 @@ const Data = GetLocalStorage();
                !decoderType ||
                !selectedOptionGOTV ||
                !flagResult
+          
                  ? "bg-[#63616188] "
                  : "bg-primary"
              }
-            mt-[38px] md:mt-[30px] lg:mt-[25px] rounded-[6px] md:rounded-[10px] lg:rounded-[15px] bg-[#04177F] h-[43px] md:h-[30px] lg:h-[40px] flex items-center font-semibold text-[12px] md:text-[11px] lg:text-[16px] text-[#fff] w-full md:w-[100px] lg:w-[170px] justify-center`}
+            mt-[38px] md:mt-[30px] lg:mt-[25px] rounded-[6px]
+             md:rounded-[10px] lg:rounded-[15px] bg-[#04177F] 
+             h-[43px] md:h-[30px] lg:h-[40px] flex items-center 
+             font-semibold text-[12px] md:text-[11px] lg:text-[16px] 
+             text-[#fff] w-full md:w-[100px] lg:w-[170px] justify-center`}
               >
                 Proceed
               </button>
@@ -1450,9 +1496,10 @@ const Data = GetLocalStorage();
       {/* Failed Transaction Popup */}
       {failedPopup && (
         <Modal>
-          <div className={`w-[90%] md:w-[70%] lg:w-[40%] mx-auto  rounded-lg overflow-hidden
+          <div className={`w-[90%] md:w-[50%] lg:w-[35%] mx-auto 
+           rounded-lg overflow-hidden
             ${isDarkMode ? "bg-black border-[1px] rounded-[7px] border-white": "bg-white"}`}>
-            <div className="flex justify-between items-center p-4 ">
+            <div className="flex justify-between items-center p-4">
               <img
                 onClick={() => setFailedPopup(false)}
                 className={`w-6 h-6  `}
@@ -1472,13 +1519,16 @@ const Data = GetLocalStorage();
                 Transaction Failed
               </h2>
               <img
-                className={`w-32 h-32 mx-auto my-6  ${isDarkMode ? "bg-black rounded-full border-[0.1px] border-black": "bg-white"}`}
+                className={`w-32 h-32 mx-auto my-6 
+                   ${isDarkMode ? "bg-black rounded-full border-[0.1px] border-black": "bg-white"}`}
                 src="./Images/failed.png"
                 alt="Failed"
               />
               <p className="text-sm text-red-500 font-[600] mb-8">
                 {purchaseGotvErrorType}
               </p>
+              {tvSubscriptionResponse?.data?.status  ?
+               (
               <div className="flex gap-[10px] justify-between w-full px-[10px]">
                 <button
                   onClick={() => ExitTheDoneButton()}
@@ -1491,13 +1541,25 @@ const Data = GetLocalStorage();
                   onClick={() => {
                     ReceiptButton();
                   }}
-                  className="w-[50%] bg-white max-w-xs mx-auto py-2 text-blue-900
-           rounded-md font-medium"
+                  className={`w-[50%]  max-w-xs 
+                  mx-auto py-2 
+           rounded-md font-medium ${isDarkMode ? "text-blue-900 bg-white border-[0.2px] rounded-[10px]" : "bg-black border-[0.2px] text-white border-blue-900"}`}
                 >
                   Receipt
                 </button>
               </div>
-            </div>
+         
+                ): (
+                   <button
+                  onClick={() => ExitTheDoneButton()}
+                  className="bg-[#04177f] w-[100%] max-w-xs mx-auto py-2
+           text-white rounded-md font-medium"
+                >
+                  Done
+                </button>
+                 )}
+                 </div>
+                
           </div>
         </Modal>
       )}
@@ -1506,7 +1568,13 @@ const Data = GetLocalStorage();
           <Loader />
         </Modal>
       )}
-      {sessionModal && <HandleUserSession />}
+    
+      {restrictUser && sessionModal === false && (
+        <RestrictionPopUp/>
+      )}
+  {sessionModal && (
+     <InternalLoginSession setExpiredSessionLogin={setSessionModal}/>
+  ) }
     </div>
   );
 };

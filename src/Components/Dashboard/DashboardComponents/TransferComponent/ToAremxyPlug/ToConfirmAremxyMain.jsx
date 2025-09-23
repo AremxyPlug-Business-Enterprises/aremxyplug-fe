@@ -2,10 +2,9 @@ import React from "react";
 import { useContext, useState, useEffect} from "react";
 import { ContextProvider } from "../../../../Context";
 import { Modal } from "../../../../Screens/Modal/Modal";
-import styles from "../../TransferComponent/transfer.module.css";
 import { MainInputPinPop } from "./MainInputPinPop";
 
-export const ToConfirmAremxyMain = ({transferValue, transferPhone ,passDataBalance}) => {
+export const ToConfirmAremxyMain = ({transferValue, fetchedResponse ,passDataBalance}) => {
   const {
     toggleSideBar,
     emailPhoneNumberConfirmation,
@@ -23,10 +22,10 @@ export const ToConfirmAremxyMain = ({transferValue, transferPhone ,passDataBalan
 
 const updateBalance = newBalance === "" || newBalance === undefined ?
 Number(passDataBalance?.data?.data?.data?.balance) : StringToNumber;
-console.log(passDataBalance);
-const firstStepSlice  = transferAmount === "" || transferAmount?.length > 1? transferAmount?.slice(1)?.replaceAll(",", "") : "";
-  const transformAmountToNumber = Number(firstStepSlice?.slice(0, firstStepSlice?.length -3));
-let CheckSufficiency = transformAmountToNumber > updateBalance;
+
+const amountUsable  = transferAmount === "" || transferAmount?.length > 1? Number(transferAmount?.slice(1)?.replaceAll(",", "")) : "";
+console.log(amountUsable)
+let CheckSufficiency = amountUsable > updateBalance;
       useEffect(()=> {
         const HandleBalanceStatus = ()=> {
           if(CheckSufficiency){
@@ -47,7 +46,7 @@ let CheckSufficiency = transformAmountToNumber > updateBalance;
     <div>
       {emailPhoneNumberConfirmation && (
         <Modal>
-          (
+          
          <div className={`w-full flex justify-center h-full 
              py-[30px] px-[15px] lg:px-[0px] lg:items-center
               items-end`}>
@@ -93,7 +92,7 @@ let CheckSufficiency = transformAmountToNumber > updateBalance;
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
          justify-between font-[500] lg:text-[16px]">
                 <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Phone Number</p>
-                <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{`+${transferPhone}`}</span>
+                <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{`+${fetchedResponse?.data?.data?.userDetails?.phone}`}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
          justify-between font-[500] lg:text-[16px]">
@@ -186,11 +185,10 @@ let CheckSufficiency = transformAmountToNumber > updateBalance;
             </button>
           </div>
           </div>
-          
-          )
-        </Modal>
+          </Modal>
       )}
   <MainInputPinPop
+   fetchedResponse={fetchedResponse}
         otherInputPinPopUp={otherInputPinPopUp}
         setOtherInputPinPopUp={setOtherInputPinPopUp}
       />

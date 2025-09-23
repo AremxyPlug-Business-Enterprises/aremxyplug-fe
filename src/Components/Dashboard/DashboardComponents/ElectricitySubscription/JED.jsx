@@ -21,13 +21,15 @@ import { Link, useNavigate } from "react-router-dom";
 import {
   PostFunction,
   VerifyTransPin,
-  HandleUserSession,
+  InternalLoginSession,
+  RestrictionPopUp,
   GetFunction,
 } from "../../../ApiCollection.jsx/ApiBuck";
 import { BalanceLoading, Loader } from "../../../Loader/Loader";
 import { validateNigerianNumberByNetwork } from "./AEDC";
-
+import { GetLocalStorage } from "../../../LocalStorage/LocalStorage";
 const JED = () => {
+  const Data = GetLocalStorage()
   const navigate = useNavigate();
   const {
     isDarkMode,
@@ -81,6 +83,7 @@ const JED = () => {
 
   const [showProductList, setShowProductList] = useState(false);
   const [sessionModal, setSessionModal] = useState(false);
+  const [restrictUser, setRestrictUser]= useState(false)
   const pointsEarned = "+2.00";
 
   // const handleValidate = () => {
@@ -115,7 +118,7 @@ const JED = () => {
   //   const [showOptionList, setShowOptionList] = useState(false);
 
   const [passDataBalance, setPassDataBalance] = useState({});
-
+  const [balanceLoader, setBalanceLoader] = useState(false)
   const GetBalance = async () => {
     const SuccessHandler = () => {
       console.log("successfully retrieved balance");
@@ -124,7 +127,7 @@ const JED = () => {
       if (ErrorType === "unauthorised") {
         await GetFunction(
           `bills/verify`,
-          setLoading,
+          setBalanceLoader,
           SuccessHandler,
           (ErrorType) => {
             if (ErrorType === "unauthorised") {
@@ -137,7 +140,7 @@ const JED = () => {
     };
     await GetFunction(
       "balance",
-      setLoading,
+      setBalanceLoader,
       SuccessHandler,
       FailedHandler,
       setPassDataBalance
@@ -145,8 +148,8 @@ const JED = () => {
   };
   // get the balance on entering the page
   useEffect(() => {
-    if (newBalance === "" || newBalance === null || newBalance === undefined) {
-      GetBalance();
+    if(Data?.ConfirmAcc === "true"){
+    GetBalance();
       if (GetBalance) {
         setNewBalance(
           passDataBalance?.data?.data
@@ -154,7 +157,9 @@ const JED = () => {
             : ""
         );
       }
-    }
+    }else{
+    setRestrictUser(true)
+  }
     // handleResetFields();
     // eslint-disable-next-line
   }, []);
@@ -1075,7 +1080,7 @@ const JED = () => {
                           src={country.flag}
                           alt="/"
                         />
-                        {country.name} {country.balance}
+                         {country.name} {' '}  {balanceLoader === true && country.id === 1 ? <BalanceLoading/> :  country.balance}
                       </div>
                     ))}
                   </div>
@@ -1716,7 +1721,11 @@ const JED = () => {
           <Loader />
         </Modal>
       )}
-      {sessionModal && <HandleUserSession />}
+      {sessionModal &&
+       <InternalLoginSession setexpiredSessionLogin ={setSessionModal} />}
+      {restrictUser && sessionModal === false && (
+        <RestrictionPopUp/>
+      ) }
     </DashBoardLayout>
   );
 };

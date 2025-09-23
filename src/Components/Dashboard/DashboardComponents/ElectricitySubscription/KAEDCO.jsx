@@ -21,11 +21,13 @@ import { Link, useNavigate } from "react-router-dom";
 import {
   PostFunction,
   VerifyTransPin,
-  HandleUserSession,
+  InternalLoginSession,
+  RestrictionPopUp,
   GetFunction,
 } from "../../../ApiCollection.jsx/ApiBuck";
 import { BalanceLoading, Loader } from "../../../Loader/Loader";
 import { validateNigerianNumberByNetwork } from "./AEDC";
+import { GetLocalStorage } from "../../../LocalStorage/LocalStorage";
 
 const KAEDCO = () => {
   const navigate = useNavigate();
@@ -81,6 +83,7 @@ const KAEDCO = () => {
 
   const [showProductList, setShowProductList] = useState(false);
   const [sessionModal, setSessionModal] = useState(false);
+  const [restrictUser, setRestrictUser] = useState(false)
   const pointsEarned = "+2.00";
 
   // const handleValidate = () => {
@@ -105,6 +108,7 @@ const KAEDCO = () => {
       name: "Postpaid",
     },
   ];
+  const Data = GetLocalStorage()
   const handleSelectProduct = (productName) => {
     setSelectedKaedcoMeterType(productName);
     // setSelectedOption("");
@@ -112,7 +116,7 @@ const KAEDCO = () => {
     // setShowOptionList(false);
   };
   const [passDataBalance, setPassDataBalance] = useState({});
-
+   const [balanceLoader, setBalanceLoader] = useState(false)
   const GetBalance = async () => {
     const SuccessHandler = () => {
       console.log("successfully retrieved balance");
@@ -121,7 +125,7 @@ const KAEDCO = () => {
       if (ErrorType === "unauthorised") {
         await GetFunction(
           `bills/verify`,
-          setLoading,
+          setBalanceLoader,
           SuccessHandler,
           (ErrorType) => {
             if (ErrorType === "unauthorised") {
@@ -134,7 +138,7 @@ const KAEDCO = () => {
     };
     await GetFunction(
       "balance",
-      setLoading,
+      setBalanceLoader,
       SuccessHandler,
       FailedHandler,
       setPassDataBalance
@@ -142,7 +146,8 @@ const KAEDCO = () => {
   };
   // get the balance on entering the page
   useEffect(() => {
-    if (newBalance === "" || newBalance === null || newBalance === undefined) {
+    if(Data?.ConfirmAcc === "true"){
+    
       GetBalance();
       if (GetBalance) {
         setNewBalance(
@@ -150,8 +155,11 @@ const KAEDCO = () => {
             ? passDataBalance?.data?.data?.data?.balance
             : ""
         );
-      }
+      
     }
+  }else{
+    setRestrictUser(true)
+  }
     // handleResetFields();
     // eslint-disable-next-line
   }, []);
@@ -1078,7 +1086,7 @@ const KAEDCO = () => {
                           src={country.flag}
                           alt="/"
                         />
-                        {country.name} {country.balance}
+                        {country.name} {' '}  {balanceLoader === true && country.id === 1 ? <BalanceLoading/> :  country.balance}
                       </div>
                     ))}
                   </div>
@@ -1719,7 +1727,11 @@ const KAEDCO = () => {
           <Loader />
         </Modal>
       )}
-      {sessionModal && <HandleUserSession />}
+     {sessionModal &&
+           <InternalLoginSession setexpiredSessionLogin ={setSessionModal} />}
+          {restrictUser && sessionModal === false && (
+            <RestrictionPopUp/>
+          ) }
     </DashBoardLayout>
   );
 };

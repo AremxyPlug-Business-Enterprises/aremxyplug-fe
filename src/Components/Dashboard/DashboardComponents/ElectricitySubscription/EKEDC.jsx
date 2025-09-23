@@ -17,12 +17,13 @@ import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import OtpInput from "react-otp-input";
 import { Link, useNavigate } from "react-router-dom";
-
+import { GetLocalStorage } from "../../../LocalStorage/LocalStorage";
 import {
   PostFunction,
   VerifyTransPin,
-  HandleUserSession,
   GetFunction,
+  RestrictionPopUp,
+  InternalLoginSession
 } from "../../../ApiCollection.jsx/ApiBuck";
 import { BalanceLoading, Loader } from "../../../Loader/Loader";
 import { validateNigerianNumberByNetwork } from "./AEDC";
@@ -71,16 +72,16 @@ const EKEDC = () => {
     setEkedcWalletBalance,
     ekedcPaymentResult,
     setEkedcPaymentResult,
-
     newBalance,
     setNewBalance,
     authenticationOpen,
     purchaseElectricityErrorType,
     setPurchaseElectricityErrorType,
   } = useContext(ContextProvider);
-
+  const Data = GetLocalStorage()
   const [showProductList, setShowProductList] = useState(false);
   const [sessionModal, setSessionModal] = useState(false);
+  const [restrictUser, setRestrictUser] = useState(false);
   const pointsEarned = "+2.00";
 
   // const handleValidate = () => {
@@ -115,7 +116,7 @@ const EKEDC = () => {
   //   const [showOptionList, setShowOptionList] = useState(false);
 
   const [passDataBalance, setPassDataBalance] = useState({});
-
+  const [balanceLoader, setBalanceLoader] = useState(false)
   const GetBalance = async () => {
     const SuccessHandler = () => {
       console.log("successfully retrieved balance");
@@ -124,7 +125,7 @@ const EKEDC = () => {
       if (ErrorType === "unauthorised") {
         await GetFunction(
           `bills/verify`,
-          setLoading,
+          setBalanceLoader,
           SuccessHandler,
           (ErrorType) => {
             if (ErrorType === "unauthorised") {
@@ -137,7 +138,7 @@ const EKEDC = () => {
     };
     await GetFunction(
       "balance",
-      setLoading,
+      setBalanceLoader,
       SuccessHandler,
       FailedHandler,
       setPassDataBalance
@@ -145,16 +146,19 @@ const EKEDC = () => {
   };
   // get the balance on entering the page
   useEffect(() => {
-    if (newBalance === "" || newBalance === null || newBalance === undefined) {
-      GetBalance();
+    if(Data?.ConfirmAcc === "true"){
+     GetBalance();
       if (GetBalance) {
         setNewBalance(
           passDataBalance?.data?.data
             ? passDataBalance?.data?.data?.data?.balance
             : ""
         );
-      }
+      
     }
+  }else{
+    setRestrictUser(true);
+  }
     // handleResetFields();
     // eslint-disable-next-line
   }, []);
@@ -1101,7 +1105,7 @@ const EKEDC = () => {
                           src={country.flag}
                           alt="/"
                         />
-                        {country.name} {country.balance}
+                          {country.name} {' '}  {balanceLoader === true && country.id === 1 ? <BalanceLoading/> :  country.balance}
                       </div>
                     ))}
                   </div>
@@ -1742,7 +1746,11 @@ const EKEDC = () => {
           <Loader />
         </Modal>
       )}
-      {sessionModal && <HandleUserSession />}
+      {sessionModal &&
+       <InternalLoginSession setexpiredSessionLogin ={setSessionModal} />}
+      {restrictUser && sessionModal === false && (
+        <RestrictionPopUp/>
+      ) }
     </DashBoardLayout>
   );
 };

@@ -22,9 +22,11 @@ import { BalanceLoading, Loader } from "../../../Loader/Loader";
 import {
   PostFunction,
   VerifyTransPin,
-  HandleUserSession,
   GetFunction,
+  InternalLoginSession,
+  RestrictionPopUp
 } from "../../../ApiCollection.jsx/ApiBuck";
+import { GetLocalStorage } from "../../../LocalStorage/LocalStorage";
 // validating the network numbers
 export function validateNigerianNumberByNetwork(number) {
   const networks = [
@@ -89,6 +91,7 @@ export function validateNigerianNumberByNetwork(number) {
 }
 
 const AEDC = () => {
+  const Data = GetLocalStorage()
   const navigate = useNavigate();
   const {
     isDarkMode,
@@ -145,7 +148,9 @@ const AEDC = () => {
   const pointsEarned = "+2.00";
   const [loading, setLoading] = useState(false);
   const [sessionModal, setSessionModal] = useState(false);
+  const [balanceLoader, setBalanceLoader] = useState(false)
   // const handleValidate = () => {
+
 
   //   if (isEmailOrNumberValid(email) || isEmailOrNumberValid(number)) {
   //     setErrorMessage('')
@@ -171,7 +176,7 @@ const AEDC = () => {
     setSelectedAedcMeterType(productName);
     setShowProductList(false);
   };
-
+ const [restrictUser, setRestrictUser] = useState(false);
   const [passDataBalance, setPassDataBalance] = useState({});
 
   const GetBalance = async () => {
@@ -182,7 +187,7 @@ const AEDC = () => {
       if (ErrorType === "unauthorised") {
         await GetFunction(
           `bills/verify`,
-          setLoading,
+          setBalanceLoader,
           SuccessHandler,
           (ErrorType) => {
             if (ErrorType === "unauthorised") {
@@ -195,7 +200,7 @@ const AEDC = () => {
     };
     await GetFunction(
       "balance",
-      setLoading,
+      setBalanceLoader,
       SuccessHandler,
       FailedHandler,
       setPassDataBalance
@@ -203,7 +208,8 @@ const AEDC = () => {
   };
   // get the balance on entering the page
   useEffect(() => {
-    if (newBalance === "" || newBalance === null || newBalance === undefined) {
+    if(Data?.ConfirmAcc === "true"){
+    
       GetBalance();
       if (GetBalance) {
         setNewBalance(
@@ -211,8 +217,11 @@ const AEDC = () => {
             ? passDataBalance?.data?.data?.data?.balance
             : ""
         );
-      }
+      
     }
+  }else{
+    setRestrictUser(true);
+  }
     // handleResetFields();
     // eslint-disable-next-line
   }, []);
@@ -374,7 +383,7 @@ const AEDC = () => {
     setAmountError("");
     setSelected(true);
     setAedcWalletBalance(balance);
-    setAedcPaymentResult(`${name} ${balance}`);
+    setAedcPaymentResult(`${name} ${ balance }`);
     // setSelectedCountry(country)
     // setCountryCode(code);
     // setCurrencyAvailable(id !== 1);
@@ -1137,7 +1146,7 @@ const AEDC = () => {
                           src={country.flag}
                           alt="/"
                         />
-                        {country.name} {country.balance}
+                        {country.name} {' '}  {balanceLoader === true && country.id === 1 ? <BalanceLoading/> :  country.balance}
                       </div>
                     ))}
                   </div>
@@ -1966,7 +1975,11 @@ const AEDC = () => {
           <Loader />
         </Modal>
       )}
-      {sessionModal && <HandleUserSession />}
+      {sessionModal 
+      && <InternalLoginSession setExpiredSessionLogin ={setSessionModal} />}
+      {restrictUser && sessionModal === false && (
+        <RestrictionPopUp/>
+      ) }
     </DashBoardLayout>
   );
 };

@@ -19,12 +19,16 @@ import { AiFillEye } from "react-icons/ai";
 import OtpInput from "react-otp-input";
 import Joi from "joi";
 // import axios from 'axios';
-import { GetFunction, HandleUserSession, PostFunction, VerifyTransPin } from "../../../../Components/ApiCollection.jsx/ApiBuck";
+import { GetFunction, 
+ RestrictionPopUp, 
+ InternalLoginSession,
+  PostFunction, 
+  VerifyTransPin } from "../../../../Components/ApiCollection.jsx/ApiBuck";
 import { Loader } from "../../../Loader/Loader";
-
+import { GetLocalStorage } from "../../../LocalStorage/LocalStorage";
 
 const PointRedeem = () => {
- 
+ const Data = GetLocalStorage()
 
   const { 
     toggleSideBar, 
@@ -78,6 +82,7 @@ const PointRedeem = () => {
   
 
 const [text, setText] =useState(false);
+const [restrictUser, setRestrictUser] = useState(false);
   // const [transactionInfo, setTransactionInfo] = useState(null);
   const [isLoading, setLoading] = useState(false);
     const [InputPinPopUp, setInputPinPopUp] = useState(false);
@@ -155,7 +160,7 @@ const [sessionModal, setSessionModal] = useState(false);
 
     //Fetch Points
   useEffect(() => {
-   
+    if(Data?.ConfirmAcc === "true"){
     const  successHandler = (response) => {
      if (!response?.data?.data) return;
      // console.log("fetch points succefully");
@@ -174,6 +179,9 @@ const [sessionModal, setSessionModal] = useState(false);
 
    
       GetFunction("extra/point", setLoading,  successHandler, FailedHandler, setPointFetchedResponse)
+  }else{
+    setRestrictUser(true)
+  }
    //eslint-disable-next-line
   }, []);
 
@@ -287,7 +295,25 @@ console.log(pointPostResponse)
     setUserPoints(available);
     
   }, (err) => {
-    console.error("Failed to refresh points", err);
+   if(err === "unauthorised"){
+        GetFunction("extra/point", setLoading, (res) => {
+    const available = res?.data?.data?.point?.available_points ?? 0;
+    setUserPoints(available);
+    
+  }, (err) => {
+   if(err === "unauthorised"){
+      setSessionModal(true)
+   }else if(err === "Server error"){
+    alert("Failed to retrieve points balance.")
+   }else if(err === "Network error" || err === "User error"){
+    alert("Your internet connection is quite unstable")
+   }
+  }, setPointFetchedResponse)
+   }else if(err === "Server error"){
+    alert("Failed to retrieve points balance.")
+   }else if(err === "Network error" || err=== "User error"){
+    alert("Your internet connection is quite unstable")
+   }
   }, setPointFetchedResponse);
 };
 
@@ -1039,8 +1065,11 @@ console.log(pointPostResponse)
                     </Modal>
                ) } 
                {sessionModal && (
-                <HandleUserSession/>
+                <InternalLoginSession setExpiredSessionLogin={setSessionModal}/>
                )}
+               {restrictUser && sessionModal === false && (
+        <RestrictionPopUp/>
+      ) }
     </DashBoardLayout>
   );
 };

@@ -10,7 +10,7 @@ import logo from "../ElectricitySubscription/Electricity-sub-images/eedclogo 1.s
 import arrowDown from "../ElectricitySubscription/Electricity-sub-images/arrow-down.png";
 import arrowRight from "../../../EducationPins/imagesEducation/educationArrowRight.svg";
 import nig from "../ElectricitySubscription/Electricity-sub-images/nigeriaFlag.png";
-
+import { GetLocalStorage } from "../../../LocalStorage/LocalStorage";
 import Joi from "joi";
 import { Modal } from "../../../Screens/Modal/Modal";
 import { AiFillEyeInvisible } from "react-icons/ai";
@@ -20,13 +20,15 @@ import { Link, useNavigate } from "react-router-dom";
 import {
   PostFunction,
   VerifyTransPin,
-  HandleUserSession,
+  InternalLoginSession,
   GetFunction,
+  RestrictionPopUp
 } from "../../../ApiCollection.jsx/ApiBuck";
 import { BalanceLoading, Loader } from "../../../Loader/Loader";
 import { validateNigerianNumberByNetwork } from "./AEDC";
 
 const EEDC = () => {
+  const Data = GetLocalStorage()
   const navigate = useNavigate();
   const {
     isDarkMode,
@@ -80,6 +82,7 @@ const EEDC = () => {
 
   const [showProductList, setShowProductList] = useState(false);
   const [sessionModal, setSessionModal] = useState(false);
+  const [restrictUser, setRestrictUser] = useState(false)
   const pointsEarned = "+2.00";
 
   // const handleValidate = () => {
@@ -114,7 +117,7 @@ const EEDC = () => {
   //   const [showOptionList, setShowOptionList] = useState(false);
 
   const [passDataBalance, setPassDataBalance] = useState({});
-
+const [balanceLoader, setBalanceLoader] = useState(false)
   const GetBalance = async () => {
     const SuccessHandler = () => {
       console.log("successfully retrieved balance");
@@ -123,7 +126,7 @@ const EEDC = () => {
       if (ErrorType === "unauthorised") {
         await GetFunction(
           `bills/verify`,
-          setLoading,
+          setBalanceLoader,
           SuccessHandler,
           (ErrorType) => {
             if (ErrorType === "unauthorised") {
@@ -136,7 +139,7 @@ const EEDC = () => {
     };
     await GetFunction(
       "balance",
-      setLoading,
+      setBalanceLoader,
       SuccessHandler,
       FailedHandler,
       setPassDataBalance
@@ -144,7 +147,8 @@ const EEDC = () => {
   };
   // get the balance on entering the page
   useEffect(() => {
-    if (newBalance === "" || newBalance === null || newBalance === undefined) {
+    if(Data?.ConfirmAcc === "true"){
+   
       GetBalance();
       if (GetBalance) {
         setNewBalance(
@@ -152,8 +156,11 @@ const EEDC = () => {
             ? passDataBalance?.data?.data?.data?.balance
             : ""
         );
-      }
+      
     }
+  }else{
+    setRestrictUser(true)
+  }
     // handleResetFields();
     // eslint-disable-next-line
   }, []);
@@ -1081,7 +1088,7 @@ const EEDC = () => {
                           src={country.flag}
                           alt="/"
                         />
-                        {country.name} {country.balance}
+                         {country.name} {' '}  {balanceLoader === true && country.id === 1 ? <BalanceLoading/> :  country.balance}
                       </div>
                     ))}
                   </div>
@@ -1721,7 +1728,11 @@ const EEDC = () => {
           <Loader />
         </Modal>
       )}
-      {sessionModal && <HandleUserSession />}
+      {sessionModal && <InternalLoginSession 
+      setExpiredSessionLogin ={setSessionModal}/>}
+      {restrictUser && sessionModal === false && (
+              <RestrictionPopUp/>
+            ) }
     </DashBoardLayout>
   );
 };

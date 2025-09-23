@@ -16,9 +16,6 @@ export const AremxyMainReceipt = () => {
     textRef,
     isDarkMode,
     date,
-    mainEmailUsername,
-    mainUserPhoneNumber,
-    amtToTransfer,
     transferAmount,
     transferResponse,
     setTransferAmount
@@ -72,11 +69,12 @@ export const AremxyMainReceipt = () => {
     <DashBoardLayout>
       <div className="flex flex-col gap-[35px] lg:gap-[85px]">
         <div
-          className={` ${styles.receipt} ${
-            toggleSideBar ? "" : "lg:w-[880px] "
-          } w-full lg:mx-auto`}
+           className={` ${styles.receipt} ${
+                     toggleSideBar ? "" : "lg:w-[880px]"
+                   } w-full lg:mx-auto ${isDarkMode ? "border border-white" : ""}`}
         >
-          <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
+          <div className="flex justify-between 
+          items-center mx-[3%] my-[2%] lg:my-[1%]">
             <div>
               <img
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[29px]"
@@ -109,10 +107,14 @@ export const AremxyMainReceipt = () => {
                 alt="/"
               />
             </div>
-            <h3 className="font-extrabold text-[12px] mt-[2%] text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
+             <h3 className={`font-extrabold text-[12px] my-[2%] text-center
+             md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]
+              ${isDarkMode ? "text-white" : "text-black"}`}
+          >
               Transaction Successful on
             </h3>
-            <span className="text-[11px] text-[#0008] font-extrabold flex justify-center items-center">
+            <span className="text-[11px] text-[#0008]
+             font-extrabold flex justify-center items-center">
               {date.toLocaleDateString(undefined, {
                 year: "numeric",
                 month: "long",
@@ -123,18 +125,16 @@ export const AremxyMainReceipt = () => {
                 hour12: true,
               })}
             </span>
-            <p className="text-[9px] text-[#0008] text-center my-2 md:text-[14px] lg:text-[14px]">
+            <h3 className={`font-extrabold text-[12px]  mt-[2%] text-center 
+            md:text-[20px] md:my-[7px] lg:text-[16px] lg:my-[10px]
+            ${isDarkMode ? "text-white" : "text-black"}`}>
               You have successfully transferred{" "}
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[16px]">
-             {/* {amountNumeric !== undefined || amountNumeric!== null ?
-                amountNumeric?.toLocaleString("en-NG", {
-                  style : "currency",
-                  currency : "NGN"
-                }) : "₦"}{" "} */}
+        
                 {transferAmount} {""}
               </span>
               from your NGN wallet to{" "}
-            </p>
+            </h3>
             <div className="flex flex-col gap-3">
               {/* ========================Recipient Info================== */}
               <div className="flex flex-col gap-[3px] w-[90%] mx-auto lg:gap-[5px]">

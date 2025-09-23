@@ -17,15 +17,16 @@ import britainFlag from '../../Components/EducationPins/imagesEducation/Britain.
 import euroFlag from '../../Components/EducationPins/imagesEducation/GBP.svg';
 import austriaFlag from '../../Components/EducationPins/imagesEducation/Austria.svg';
 import kenyaFlag from '../../Components/EducationPins/imagesEducation/Kenya.svg';
-import {VerifyTransPin} from "../../Components/ApiCollection.jsx/ApiBuck";
+import {InternalLoginSession, VerifyTransPin} from "../../Components/ApiCollection.jsx/ApiBuck";
 import {PostFunction} from "../../Components/ApiCollection.jsx/ApiBuck"
 import { useNavigate } from "react-router-dom";
 import { Loader } from "../Loader/Loader";
 import { GetFunction } from "../ApiCollection.jsx/ApiBuck";
 import { Modal } from "../Screens/Modal/Modal";
-import { BalanceLoading } from "../Loader/Loader";
-import { HandleUserSession } from "../../Components/ApiCollection.jsx/ApiBuck";
+import {  RestrictionPopUp } from "../../Components/ApiCollection.jsx/ApiBuck";
 import { GetLocalStorage } from "../LocalStorage/LocalStorage";
+import { BalanceLoading } from "../Loader/Loader";
+
 
 const Showmax = () => {
 const Data = GetLocalStorage()
@@ -72,48 +73,36 @@ showMaxMobileNumber,
 setShowMaxMobileNumber,
     newBalance,
     setNewBalance,
-    setShowMaxCardName,
-    setShowMaxFlagResult,
+    purchaseShowMaxErrorType,
+   // setShowMaxCardName,
+   setFetchedShowMaxPlans,
+
+    toggleSideBar,
+    setPurchaseShowMaxErrorType,
     showMaxFlagResult,
-    toggleSideBar
+    setShowMaxFlagResult,
   } = useContext(ContextProvider)
  const [isLoading, setIsLoading] = useState(false)
       const [failedPopup, setFailedPopup] = useState(false);
-      
-       const [showMaxLoading, setShowMaxLoading] = useState(false);
-                       const [stateInvalidDecoderNumber, setStateInvalidDecoderNumber] = useState(false);
-                       const [passDataBalance, setPassDataBalance] = useState({});
-                       const [showMaxData, setShowMaxData] = useState([]);
-                      const [showMaxVerifyResponse, setShowMaxVerifyResponse] = useState({});
-                      const [sessionModal, setSessionModal] = useState(false);
-    
+    const [balanceLoader, setBalanceLoader] = useState(false)
+    const [passDataBalance, setPassDataBalance] = useState({});
+     const [showMaxData, setShowMaxData] = useState([]);
+        const [sessionModal, setSessionModal] = useState(false);
+                       const [checkNetworkError, setCheckNetworkError] = useState(false)
+                    const [restrictUser, setRestrictUser] = useState(false)
             const navigate = useNavigate();
       
             const handleOptionClickShowmax = () => {
   setShowDropdownShowmax(false);
-  };
+  }
 
-  
-
-    useEffect(()=> {
-        if( showMaxVerifyResponse?.data?.name?.length < 1 ){
-         setStateInvalidDecoderNumber(true);
-        }else{
-          setStateInvalidDecoderNumber(false)
-        }
-      },[showMaxVerifyResponse?.data?.name])
-
-  
-  
-  const Decoders  = [
+const Decoders  = [
     { decoderType :'Showmax',  id : 1},
       { decoderType :'DStv', path :  "/DsTv", id : 2 },
       { decoderType :'StarTimes', path : "/StarTimes", id : 3 },
     { decoderType :'GOtv', path : "/Gotv", id : 4 }
      ]
-
-
-     const GetOtherDataTv = async(id, path)=> {
+  const GetOtherDataTv = async(id, path)=> {
       const SuccessHandler = ()=> {
        navigate(path);
       }
@@ -164,12 +153,10 @@ setShowMaxMobileNumber,
      }
      }
      
-     const showMaxOptionalPlan = showMaxData?.length < 1 && fetchedShowMaxPlans.status === 200 ? fetchedShowMaxPlans.data.data.data : showMaxData;
-            useEffect(()=> {
-             if(fetchedShowMaxPlans.status === 200 || fetchedShowMaxPlans.status === 201){
-            setShowMaxData(fetchedShowMaxPlans?.data?.data?.data);
-            }else if(fetchedShowMaxPlans.status === undefined){
-             const RetrieveGotvPlans = async()=> {
+
+
+//==========Retrieve Showmax Plans =========///
+  const RetrieveShowMaxPlans = async()=> {
                 const SuccessHandler = ()=> {
           console.log("Successfully fetched showmax plans");
          }
@@ -179,11 +166,15 @@ setShowMaxMobileNumber,
             setIsLoading,
              SuccessHandler,
               (ErrorType)=> {
-                if(ErrorType === "unauthorised"){
-                  return setSessionModal(true);
-                }
+                 if(ErrorType === "User error" || ErrorType === "Network error"){
+             setCheckNetworkError(true);
+          }else if(ErrorType === "Server error"){
+             alert("Failed to fetch Showmax Plans, try again later")
+          }else{
+            alert("An unexpected error has occured try again later.")
+          }
               }, 
-              setFetchedStarTimesPlans);
+              setFetchedShowMaxPlans);
           }
           }
             
@@ -191,47 +182,154 @@ setShowMaxMobileNumber,
         setIsLoading,
          SuccessHandler,
           failedHandler,
-           setFetchedStarTimesPlans);
+           setFetchedShowMaxPlans);
       
         }
-      RetrieveGotvPlans()
+        // ========= Retrieve User's Balance ======== //
+           const GetBalance = async () => {
+    if(!navigator.onLine) return setCheckNetworkError(true)
+      const SuccessHandler = () => {
+        //alert("Successful");
+        console.log("successfully retrieved balance");
+        //alert("Successful")
+      };
+      const FailedHandler = async (ErrorType) => {
+        if (ErrorType === "unauthorised") {
+          await GetFunction(
+            `balance`,
+            setBalanceLoader,
+            SuccessHandler,
+            //Handling the error Use Cases of the Unauthorised inside
+            // of the statement.
+            async(ErrorType) => {
+              if (ErrorType === "unauthorised") {
+                return setSessionModal(true);
+              }else if(ErrorType === "Server error"){
+                  await GetFunction(
+        "balance",
+        setBalanceLoader,
+        SuccessHandler,
+       async(ErrorType)=> {
+        if(ErrorType === "Server error"){
+          alert("Failed to retrieve the balance.")
+        }else if(ErrorType === "Network error" || ErrorType === "User error"){
+           setCheckNetworkError(true);
+              alert("Kindly check your internet connection to retrieve balance.")
+        }else {
+          alert("An unexpected error has occured on attempt to retrieve balance.")
+        }
+       },
+        setPassDataBalance
+      );
+       }else if(ErrorType === "Network error" || ErrorType === "User error"){
+         setCheckNetworkError(true);
+           alert("Kindly check your internet connection to retrieve balance");
+           setCheckNetworkError(true);
+       }else {
+        alert("An unexpected error has occured on attempt to retrieve the balance")
+       }
+            },
+             setPassDataBalance
+          );
+        }else if(ErrorType === "Server error"){
+            await GetFunction(
+        "balance",
+        setBalanceLoader,
+        SuccessHandler,
+       async(ErrorType)=> {
+         if(ErrorType === "unauthorised"){
+            await GetFunction(
+        "balance",
+        setBalanceLoader,
+        SuccessHandler,
+        async(ErrorType)=> {
+          if(ErrorType === "unauthorised"){
+            return setSessionModal(true)
+          }else if(ErrorType === "Server error"){
+               await GetFunction(
+        "balance",
+        setBalanceLoader,
+        SuccessHandler,
+       async(ErrorType)=> {
+        //if Statements
+      //We run again cause the previous one was interrupted by 401
+      //Let us re-run server error
+      if(ErrorType === "Server error"){
+        alert("Failed to retrieve the balance")
+      }else if(ErrorType === "unauthorised"){
+        return setSessionModal(true)
+      }else if(ErrorType === "Network error" || ErrorType === "User error"){
+         setCheckNetworkError(true);
+       alert("Kindly check your internet connection to retrieve balance")
+      }else{
+       // console.log("yeah bro i am the one running blehh")
+        alert("An Unexpected error occured in attempt to retrieve balance")
       }
-       const GetBalance =   async()=> {
-                              const SuccessHandler = ()=> {
-                            //alert("Successful");
-                       console.log("successfully retrieved balance");
-                       //alert("Successful")
-                         }
-                        const FailedHandler = async(ErrorType)=> {
-                        if(ErrorType === "unauthorised"){
-                          await GetFunction("balance", 
-                            setIsLoading,
-                             SuccessHandler,
-                              (ErrorType)=> {
-                               if(ErrorType === "unauthorised"){
-                                return setSessionModal(true);
-                               }
-                              },
-                              setPassDataBalance)
-                        }
-                        }
-                        await GetFunction("balance",
-                           setIsLoading,
-                            SuccessHandler, 
-                            FailedHandler,
-                            setPassDataBalance)
-                          } 
-                           // Simulate async data loading
-                          if((newBalance === "" || newBalance === null || newBalance === undefined)
-                          && Data?.ConfirmAcc === "true"){
-                              GetBalance();
-                              if(GetBalance){
-                               setNewBalance(passDataBalance?.data?.data?.data !== undefined
-                                 ? passDataBalance?.data?.data?.data?.balance : "");
-                              }
-                            }else{
-                              console.log("Create an account to access this feature")
-                            }
+
+       },
+        setPassDataBalance
+      );
+          }else if(ErrorType === "Network error" || ErrorType === "User error"){
+             setCheckNetworkError(true);
+            alert("Kindly check your internet connection to retrieve the balance")
+          }else if(ErrorType === "Server error"){
+            alert("Failed to retrieve the balance.")
+          }else{
+            alert("An Unexpected error occured in attempt to retrieve balance")
+          }
+        },
+        setPassDataBalance
+      );
+    }
+          else if(ErrorType === "Network error" || ErrorType === "User error"){
+            //The operation was interrupted by a network error
+             setCheckNetworkError(true);
+            alert("Kindly check your internet connection to retrieve balance.")
+         }else {
+          //Place 
+          //An alien error has occured with the re-run of the "Server error" ErrorType
+          alert("An unexpected error occured in attempt to retrieve the balance.")
+         }
+       },
+        setPassDataBalance
+      );
+        }else if(ErrorType === "Network error" || ErrorType === "User error"){
+            setCheckNetworkError(true);
+        }else{
+           
+          alert("An unexpected error occured in attempt to retrieve balance.")
+        }
+      }
+      await GetFunction(
+        "balance",
+        setBalanceLoader,
+        SuccessHandler,
+        FailedHandler,
+        setPassDataBalance
+      );
+    };
+
+    // ======== Saving user's plan in an array
+     const showMaxOptionalPlan = showMaxData?.length < 1
+      && fetchedShowMaxPlans?.status === 200 ? 
+     fetchedShowMaxPlans?.data?.data?.data : showMaxData;
+            useEffect(()=> {
+              if(Data?.ConfirmAcc === "true"){
+             if(fetchedShowMaxPlans?.status === 201 || fetchedShowMaxPlans?.status === 201){
+            setShowMaxData(fetchedShowMaxPlans?.data?.data?.data);
+            }else if(fetchedShowMaxPlans.status === undefined && Data?.ConfirmAcc === "true"){
+            RetrieveShowMaxPlans()
+      }
+      // Simulate async data loading
+                    GetBalance();
+                        if(GetBalance){
+                          setNewBalance(passDataBalance?.data?.data?.data !== undefined
+                      ? passDataBalance?.data?.data?.data?.balance : "");
+                      }
+                     
+                  }else{
+                      setRestrictUser(true)
+                    }
            //eslint-disable-next-line             
             },[])
              
@@ -249,12 +347,13 @@ setShowMaxMobileNumber,
  
   const handleShowmax = (event) => {
     event.preventDefault();
-    
+     setShowMaxSubscriptionResponse({});
+
     const { error } = schema.validate({
+      showMaxSmartCard,
       showMaxMobileNumber,
       showMaxEmail,
-      showMaxSmartCard,
-    });
+       });
   
     if (error) {
       setErrors(
@@ -280,10 +379,13 @@ setShowMaxMobileNumber,
   // });
 
   const schema = Joi.object({
-    showMaxSmartCard: Joi.string().regex(/^\d{10,}$/).required()
-      .messages({
-        "string.pattern.base": "Smart card number should be more than 10 digits",
-      }),
+      showMaxSmartCard: Joi.string()
+          .regex(/^\d{10,}$/)
+          .required()
+          .messages({
+            "string.pattern.base":
+              "Smart card number should be more than 10 digits",
+          }),
     showMaxMobileNumber: Joi.string().regex(/^\d{11}$/).required()
       .messages({
         "string.pattern.base": "Phone number should be 11 digits",
@@ -354,56 +456,58 @@ setShowMaxMobileNumber,
   function decoderDropdown() {
     setDecoderActive(!decoderActive)
     document.querySelector('.decdrop').classList.toggle('DropIt');
+    setShowDropdownShowmax(false);
+    setSelectedOptionShowmax("")
   }
 
 
-  let userVerifiedName = showMaxVerifyResponse?.data ? showMaxVerifyResponse?.data?.name : "";
-   //Function to help Verify users account
-   const VerifyUserAccount = async(UserTvSubscription)=> {
-    setShowMaxVerifyResponse({});
-       const body = {
-              decoder_type : showMaxDecoderType.toLowerCase(),
-             iuc_number : UserTvSubscription
-           }
-      const SuccessHandler = (response)=> {
-      // console.log("Succesfully verified tv subscription account.");
-     setShowMaxSmartCard(UserTvSubscription);
-     setShowMaxCardName(response?.data?.data?.data?.name);
-   }
-   const FailedHandler = async(ErrorType)=> {
-    if(ErrorType === "unauthorised"){
-   await PostFunction("bills/verify",
-     setShowMaxLoading, 
-     bodyToJson, 
-     SuccessHandler,
-     (ErrorType)=> {
-     if(ErrorType === "unauthorised"){
-      return setSessionModal(true)
-     }
-     }, 
-     setShowMaxVerifyResponse )
-    }
-   }
+  // let userVerifiedName = showMaxVerifyResponse?.data ? showMaxVerifyResponse?.data?.name : "";
+  //  //Function to help Verify users account
+  //  const VerifyUserAccount = async(UserTvSubscription)=> {
+  //   setShowMaxVerifyResponse({});
+  //      const body = {
+  //             decoder_type : showMaxDecoderType.toLowerCase(),
+  //            iuc_number : UserTvSubscription
+  //          }
+  //     const SuccessHandler = (response)=> {
+  //     // console.log("Succesfully verified tv subscription account.");
+  //    setShowMaxSmartCard(UserTvSubscription);
+  //    setShowMaxCardName(response?.data?.data?.data?.name);
+  //  }
+  //  const FailedHandler = async(ErrorType)=> {
+  //   if(ErrorType === "unauthorised"){
+  //  await PostFunction("bills/verify",
+  //    setShowMaxLoading, 
+  //    bodyToJson, 
+  //    SuccessHandler,
+  //    (ErrorType)=> {
+  //    if(ErrorType === "unauthorised"){
+  //     return setSessionModal(true)
+  //    }
+  //    }, 
+  //    setShowMaxVerifyResponse )
+  //   }
+  //  }
            
-           const bodyToJson = JSON.stringify(body);
-      if(UserTvSubscription?.length === 11 && 
-       (UserTvSubscription !== "" && 
-         UserTvSubscription !== null && 
-         UserTvSubscription !== undefined)){
+  //          const bodyToJson = JSON.stringify(body);
+  //     if(UserTvSubscription?.length === 11 && 
+  //      (UserTvSubscription !== "" && 
+  //        UserTvSubscription !== null && 
+  //        UserTvSubscription !== undefined)){
         
-   await PostFunction("bills/verify",
-     setShowMaxLoading, 
-     bodyToJson, 
-     SuccessHandler,
-     FailedHandler, 
-     setShowMaxVerifyResponse )
-   }
-   }
+  //  await PostFunction("bills/verify",
+  //    setShowMaxLoading, 
+  //    bodyToJson, 
+  //    SuccessHandler,
+  //    FailedHandler, 
+  //    setShowMaxVerifyResponse )
+  //  }
+  //  }
    //console.log(userVerifiedName)
    
     const handleSmartCard = async(e) => {
-       const inputValue = e.target.value;
-     await VerifyUserAccount(inputValue);
+     setShowMaxSmartCard(e.target.value)
+   //  await VerifyUserAccount(inputValue);
     }
     const handleReceivedData = () => {
     setIsLoading(true);
@@ -413,7 +517,7 @@ setShowMaxMobileNumber,
       setShowMaxTransactionId(showMaxSubscriptionResponse?.data?.transcation_id ? showMaxSubscriptionResponse?.data?.transcation_id : "");
      // setShowmaxRequestId(showMaxSubscriptionResponse.data.request_id);
       setShowMaxDescription(showMaxSubscriptionResponse?.data?.description ? showMaxSubscriptionResponse?.data?.description : "");
-      setCardName(userVerifiedName)
+     // setCardName(userVerifiedName)
     };
   
     receivedData();
@@ -437,11 +541,25 @@ setShowMaxMobileNumber,
           amount: showMaxAmount,
           phone: showMaxMobileNumber,
         };
-        const Path = "tvsub";
-        const successHandler = () =>{
-          setShowmaxSuccessful(true);
+        const Path = "bills/tvsub";
+        const successHandler = (response) =>{
+           if(response?.data?.data?.data?.status === "success"
+          || response?.data?.data?.data?.status === "delivered"
+        ||  response?.data?.data?.data?.status === "successful" ||
+        response?.data?.data?.data?.status === "Successful"
+        ){
+          setPurchaseShowMaxErrorType("");
+        setShowmaxSuccessful(true);
+        setInputPinShowmax(false);
+        setInputPin("");
+        }else if(response?.data?.data?.data?.status === "failed"
+          || response?.data?.data?.data?.status === "Failed"
+        ||  response?.data?.data?.data?.status === "unsuccessful"){
+            setPurchaseShowMaxErrorType("Plan Unavailable: Purchase Failed")
+          setFailedPopup(true);
           setInputPinShowmax(false);
-            setInputPin("")
+          setInputPin("");
+        }
          // handleReceivedData()
         }
         const FailedHandler = async(ErrorType) =>{
@@ -454,15 +572,41 @@ setShowMaxMobileNumber,
           (ErrorType)=> {
             if(ErrorType === "unauthorised"){
             return setSessionModal(true)
-            }
+            }else if(ErrorType === "Network error" || ErrorType === "User error") {
+             setPurchaseShowMaxErrorType("Network Error: Purchase Failed")
+          setFailedPopup(true);
+          setInputPinShowmax(false);
+          setInputPin("");
+        }else if(ErrorType === "Server error") {
+        setPurchaseShowMaxErrorType("Server Error: Purchase Failed")
+          setFailedPopup(true);
+          setInputPinShowmax(false);
+          setInputPin("");
+        }else{
+            setPurchaseShowMaxErrorType("An Unexpected error has occured")
+          setFailedPopup(true);
+          setInputPinShowmax(false);
+          setInputPin("");
+        }
           },
         setShowMaxSubscriptionResponse
         );
-          }else{
-         setFailedPopup(true);
-         setInputPinShowmax(false);
-           setInputPin("")
-          }
+          } else if(ErrorType === "Network error" || ErrorType === "User error") {
+             setPurchaseShowMaxErrorType("Network Error: Purchase Failed")
+          setFailedPopup(true);
+          setInputPinShowmax(false);
+          setInputPin("");
+        }else if(ErrorType === "Server error") {
+        setPurchaseShowMaxErrorType("Server Error: Purchase Failed")
+          setFailedPopup(true);
+          setInputPinShowmax(false);
+          setInputPin("");
+        }else{
+            setPurchaseShowMaxErrorType("An Unexpected error has occured")
+          setFailedPopup(true);
+          setInputPinShowmax(false);
+          setInputPin("");
+        }
         }
         
         await PostFunction(
@@ -584,20 +728,23 @@ setShowMaxMobileNumber,
   navigate("/Showmax")
   }
 
-   const ReceiptButton = ()=> {
-      setShowMaxEmail("")
-   setShowMaxMobileNumber("")
-   setShowMaxSmartCard("");
-   setShowMaxAmount("");
-   setPackageShowMax("");
-   setShowMaxDecoderType("")
-    setShowMaxFlagResult("");
-    setShowMaxWalletBalance("");
-    setCardName("");
-     setSelectedOptionShowmax("")
-  setFailedPopup(false);
-  handleReceivedData();
-   }
+  
+
+   if(Data?.ConfirmAcc ===  "true"){
+    window.addEventListener("online", async()=> {
+      if(checkNetworkError === true && (fetchedShowMaxPlans.status === 200 || fetchedShowMaxPlans.status === 201)){
+        await RetrieveShowMaxPlans()
+      }
+      if(checkNetworkError === true && (newBalance === "" 
+        || newBalance === null 
+        || newBalance === undefined || updateBalance === "" 
+        || updateBalance === null 
+        || updateBalance === undefined )){
+        await GetBalance()
+        }
+    
+   })
+  }
   return (
     <div>
       <DashBoardLayout>
@@ -662,7 +809,7 @@ setShowMaxMobileNumber,
                onClick={(e =>{
           setShowMaxDecoderType(decoder.id === 1 ? decoder.decoderType : "");
                  setDecoderActive(false);
-                 GetOtherDataTv(decoder.id, decoder.path);
+                 GetOtherDataTv(decoder?.id, decoder?.path);
              document.querySelector('.decdrop').classList.remove('DropIt');
              console.log(e);
               })}
@@ -673,12 +820,12 @@ setShowMaxMobileNumber,
            ${
       isDarkMode
         ? "bg-black text-white"
-        : "bg-white text-black"
+        : "bg-white text-[#7C7C7C]"
     }
   `}
    
-         key= {decoder.id}>
-      <h2>{decoder.decoderType}   </h2>
+         key= {decoder?.id}>
+      <h2>{decoder?.decoderType}   </h2>
          </p>
         
             )
@@ -742,12 +889,14 @@ setShowMaxMobileNumber,
 
 
           </div>
+        
           <div className="flex flex-col md:flex-row gap-[20px] md:gap-[12px lg:gap-[22px]] md:my-2 lg:my-4">
+           
             <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
               <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] md:font-[600] font-[400]">
                 Smart Card / IUC Number</label>
               <input type="tel"
-
+                    value={showMaxSmartCard}
               placeholder="XXXXXXXXXX"
               maxLength={11}
               onInput={(e =>{
@@ -755,7 +904,8 @@ setShowMaxMobileNumber,
                      const numericValue = e.target.value.replace(/\D/g, '');
                     e.target.value = numericValue
                 })}
-                onChange={handleSmartCard} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
+                onChange={(e)=> handleSmartCard(e)} 
+                className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px] self-center ${
       isDarkMode 
         ? "bg-black text-white border border-white" 
@@ -763,15 +913,15 @@ setShowMaxMobileNumber,
     }`}  />
             {errors.showmaxSmartCard && <p className="text-[#F95252] text-[13.2px] md:text-[12px] lg:text-[14px] font-[400] italic">
                 {errors.showMaxSmartCard}</p>}
-                  {(!errors.showMaxSmartCard && stateInvalidDecoderNumber) && (
+                  {/* {(!errors.showMaxSmartCard && stateInvalidDecoderNumber) && (
                    <p className ="text-[14px] top-0 font-[500] text-red-500 text-left
            lg:text-[14px] lg:leading-[20px] leading-[18px] ">
             Invalid iuc number
           </p>
-                )}
+                )} */}
             </div>
-
-            <div className="flex flex-col relative gap-[3px] lg:gap-[5px] w-full md:w-1/2">
+            
+            {/* <div className="flex flex-col relative gap-[3px] lg:gap-[5px] w-full md:w-1/2">
               <label htmlFor="decoderType" className="text-[#7E7E7E] text-[14px] lg:text-[17px] md:text-[13px] md:font-[600] font-[400]">
                 Card Name</label>
               <input type="text" value={userVerifiedName}
@@ -787,7 +937,7 @@ setShowMaxMobileNumber,
     <BalanceLoading/>
     </p>
   )}
-            </div>
+            </div>  */}
           </div>
           <div className="flex flex-col md:flex-row gap-[20px] md:gap-[12px] lg:gap-[22px] md:my-2 lg:my-4">
             <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
@@ -872,7 +1022,9 @@ setShowMaxMobileNumber,
       ? "bg-black text-white border border-white" 
       : "border-[#9C9C9C]"
   }`} >
-                <p className='font-[400] text-[12px] leading-[10.4px] md:text-[12px] md:leading-[12.206px] lg:text-[16px] text-[#7C7C7C] lg:leading-[20.8px] cursor-pointer'>
+                <p className={`font-[500] text-[13px] leading-[10.4px] md:text-[9.389px] 
+                md:leading-[12.206px] lg:text-[16px] text-[#7C7C7C] lg:leading-[20.8px] cursor-pointer
+                ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
                     {`${showMaxFlagResult} ${" "} ${showMaxWalletBalance}`}
                 </p>
                 <img className='methodDrop h-[16px] w-[14px] md:h-[14.038px] md:w-[14.038px] lg:h-[24px] lg:w-[24px]'
@@ -943,9 +1095,10 @@ setShowMaxMobileNumber,
                       }`}
                         key={methodOption.id}>
 
-                        <img className='md:h-[29.27px]  h-[14.27px]' src={methodOption.flag} alt="" />
-
-                       {methodOption.method + ' ' + methodOption.balance}
+        <img className='md:h-[29.27px]  h-[14.27px]'
+         src={methodOption.flag} alt="" />
+{methodOption.method}
+                    {balanceLoader === true ? <BalanceLoading/> : methodOption.balance }
                        
                       </div>
 
@@ -961,9 +1114,9 @@ setShowMaxMobileNumber,
         </div>
 
         <button onClick={handleShowmax}
-          disabled={showMaxMobileNumber.length !== 11 || !userVerifiedName || !showMaxEmail|| !showMaxDecoderType || !selectedOptionShowmax || !showMaxFlagResult}
+          disabled={showMaxMobileNumber.length !== 11 || !showMaxEmail|| !showMaxDecoderType || !selectedOptionShowmax || !showMaxFlagResult}
           className={`
-             ${showMaxMobileNumber.length !== 11 || !userVerifiedName|| !showMaxEmail || !showMaxDecoderType || !selectedOptionShowmax || !showMaxFlagResult
+             ${showMaxMobileNumber.length !== 11 || !showMaxEmail || !showMaxDecoderType || !selectedOptionShowmax || !showMaxFlagResult
               ? "bg-[#63616188] "
               : "bg-primary"
             }
@@ -980,17 +1133,17 @@ setShowMaxMobileNumber,
         </div>
 
       </DashBoardLayout>
-      <ConfirmShowmaxPopup  userVerifiedName ={userVerifiedName} />
+      <ConfirmShowmaxPopup passDataBalance ={passDataBalance} />
       <InputShowmaxPopup VerifyPinHandler={VerifyPinHandler}/>
-      <ShowmaxSuccessfulPopup  handleReceivedData = {handleReceivedData}  userVerifiedName ={userVerifiedName}/>
+      <ShowmaxSuccessfulPopup  handleReceivedData = {handleReceivedData}/>
 
         {/* Failed Transaction Popup */}
             {failedPopup && (
              <Modal>
-    <div className="w-[90%] md:w-[70%] lg:w-[40%] mx-auto bg-white rounded-lg overflow-hidden">
-      <div className="flex justify-between items-center p-4 ">
+    <div className={`w-[90%] md:w-[50%] lg:w-[35%] mx-auto 
+ rounded-lg overflow-hidden ${isDarkMode ? "bg-black border-[1px] rounded-[7px] border-white": "bg-white"}`}>
+      <div className="flex justify-between items-center p-4">
         <img
-          onClick={() => setFailedPopup(false)}
           className="w-6 h-6"
           src="/Images/login/arpLogo.png"
           alt="Logo"
@@ -1008,30 +1161,45 @@ setShowMaxMobileNumber,
           Transaction Failed
         </h2>
         <img
-          className="w-32 h-32 mx-auto my-6"
+         className={`w-32 h-32 mx-auto my-6 
+        ${isDarkMode ? "bg-black rounded-full border-[0.1px] border-black": "bg-white"}`}
           src="./Images/failed.png"
           alt="Failed"
         />
-        <p className="text-sm text-gray-600 mb-8">
-          An unexpected error has occurred, please try again.
+        <p className="text-sm text-red-500 font-[600] mb-8">
+         {purchaseShowMaxErrorType}
         </p>
-        <div className="flex gap-[10px] justify-between w-full px-[10px]">
-        <button
-          onClick={() => ExitTheDoneButton()(false)}
-          className="bg-[#04177f] w-[50%] max-w-xs mx-auto py-2
-           text-white rounded-md font-medium">
-          Done
-        </button>
-           <button
-          onClick={() =>{
-               ReceiptButton()
-          }}
-          className="w-[50%] bg-white max-w-xs mx-auto py-2 text-blue-900
-           rounded-md font-medium"
-        >
-          Receipt
-        </button>
-        </div>
+         {showMaxSubscriptionResponse?.data?.status  ?
+               (
+              <div className="flex gap-[10px] justify-between w-full px-[10px]">
+                <button
+                  onClick={() => ExitTheDoneButton()}
+                  className="bg-[#04177f] w-[50%] max-w-xs mx-auto py-2
+           text-white rounded-md font-medium"
+                >
+                  Done
+                </button>
+                <button
+                  // onClick={() => {
+                  //   ReceiptButton();
+                  // }}
+                 className={`w-[50%]  max-w-xs 
+                  mx-auto py-2  rounded-md font-medium
+            ${isDarkMode ? "text-blue-900 bg-white border-[0.2px] rounded-[10px]" : "bg-black border-[0.2px] text-white border-blue-900"}`}
+                >
+                  Receipt
+                </button>
+              </div>
+         
+                ): (
+                   <button
+                  onClick={() => ExitTheDoneButton()}
+                  className="bg-[#04177f] w-[100%] max-w-xs mx-auto py-2
+           text-white rounded-md font-medium"
+                >
+                  Done
+                </button>
+                 )}
 
       </div>
     </div>
@@ -1043,11 +1211,13 @@ setShowMaxMobileNumber,
                       </Modal>
                   )}
                   {sessionModal && (
-                    <HandleUserSession/>
+                    <InternalLoginSession setExpiredSessionLogin={setSessionModal}/>
+                  )}
+                  {sessionModal === false && restrictUser && (
+                    <RestrictionPopUp/>
                   )}
                   
     </div>
   )
 }
-
-export default Showmax
+export default Showmax;

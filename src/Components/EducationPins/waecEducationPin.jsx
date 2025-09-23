@@ -30,11 +30,13 @@ import "../Dashboard/DashboardComponents/DataTopUpPage/DataTopUp.css";
 import eduFailed from "./imagesEducation/WaecFailedTransaction.svg";
 import {
   GetFunction,
-  HandleUserSession,
   PostFunction,
   VerifyTransPin,
+  RestrictionPopUp,
+  InternalLoginSession
 } from "../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../Loader/Loader";
+import { GetLocalStorage } from "../LocalStorage/LocalStorage";
 
 // export function handleFormattedAmount(value) {
 //   return value.toLocaleString("en-NG", {
@@ -145,7 +147,7 @@ export default function WaecEducationPin() {
     setEducationPinStatus,
     educationPinEmail,
     setEducationPinEmail,
-    // eduResponse,
+     eduResponse,
     setEduResponse,
     newBalance,
     setNewBalance,
@@ -171,12 +173,13 @@ export default function WaecEducationPin() {
   const [educationConfirm, setEducationConfirm] = useState(false);
   // const [receipt] = useState(false);
   const [waecFailedTransaction, setWaecFailedTransaction] = useState(false);
-
+  const [restrictUser, setRestrictUser] = useState(false)
   // Get Amount
   const [isLoading, setIsLoading] = useState(false);
   const [sessionModal, setSessionModal] = useState(false);
   const [passDataBalance, setPassDataBalance] = useState({});
-
+  const [checkNetworkError, setCheckNetworkError] = useState(false)
+ const Data = GetLocalStorage()
   const options = [
     {
       quantity: "1 Piece Of Result Checker",
@@ -231,7 +234,7 @@ export default function WaecEducationPin() {
   ];
 
   const getAmount = async function handleGetAmount() {
-    if (!navigator.online) alert("Kindly check your internet connection");
+    if (!navigator.onLine) alert("Kindly check your internet connection");
     const id = 1;
     const path = `products/edu/${id}`;
 
@@ -263,13 +266,19 @@ export default function WaecEducationPin() {
           setIsLoading,
           SuccessHandler,
           (ErrorType) => {
-            if (ErrorType === "unauthorised") {
-              return setSessionModal(true);
+            if (ErrorType === "Server error") {
+           alert("Unable to get WAEC PINS. Please try again later");  
+            }else if(ErrorType === "Network error" || ErrorType === "User error"){
+          alert("Your internet connection is quite unstable.");
             }
           },
           setEduResponse
         );
-      }
+      } else if (ErrorType === "Server error") {
+           alert("Unable to get WAEC PINS. Please try again later");
+            }else if(ErrorType === "Network error" || ErrorType === "User error"){
+          alert("Your internet connection is quite unstable.");
+            }
     };
 
     await GetFunction(
@@ -280,38 +289,134 @@ export default function WaecEducationPin() {
       setEduResponse
     );
   };
-  const GetBalance = async () => {
-    if (!navigator.online) alert("Kindly check your internet connection");
-    const SuccessHandler = () => {
-      console.log("successfully retrieved balance");
-    };
-    const FailedHandler = async (ErrorType) => {
-      if (ErrorType === "unauthorised") {
-        await GetFunction(
-          `products/edu/1`,
-          setIsLoading,
-          SuccessHandler,
-          (ErrorType) => {
-            if (ErrorType === "unauthorised") {
-              return setSessionModal(true);
-            }
-          },
-          setPassDataBalance
-        );
+const GetBalance = async () => {
+    if(!navigator.onLine) return setCheckNetworkError(true)
+      const SuccessHandler = () => {
+        //alert("Successful");
+        console.log("successfully retrieved balance");
+        //alert("Successful")
+      };
+      const FailedHandler = async (ErrorType) => {
+        if (ErrorType === "unauthorised") {
+          await GetFunction(
+            `balance`,
+            setIsLoading,
+            SuccessHandler,
+            //Handling the error Use Cases of the Unauthorised inside
+            // of the statement.
+            async(ErrorType) => {
+              if (ErrorType === "unauthorised") {
+                return setSessionModal(true);
+              }else if(ErrorType === "Server error"){
+                  await GetFunction(
+        "balance",
+        setIsLoading,
+        SuccessHandler,
+       async(ErrorType)=> {
+        if(ErrorType === "Server error"){
+          alert("Failed to retrieve the balance.")
+        }else if(ErrorType === "Network error" || ErrorType === "User error"){
+           setCheckNetworkError(true);
+              alert("Kindly check your internet connection to retrieve balance.")
+        }else {
+          alert("An unexpected error has occured on attempt to retrieve balance.")
+        }
+       },
+        setPassDataBalance
+      );
+       }else if(ErrorType === "Network error" || ErrorType === "User error"){
+         setCheckNetworkError(true);
+           alert("Kindly check your internet connection to retrieve balance");
+           setCheckNetworkError(true);
+       }else {
+        alert("An unexpected error has occured on attempt to retrieve the balance")
+       }
+            },
+             setPassDataBalance
+          );
+        }else if(ErrorType === "Server error"){
+            await GetFunction(
+        "balance",
+        setIsLoading,
+        SuccessHandler,
+       async(ErrorType)=> {
+         if(ErrorType === "unauthorised"){
+            await GetFunction(
+        "balance",
+        setIsLoading,
+        SuccessHandler,
+        async(ErrorType)=> {
+          if(ErrorType === "unauthorised"){
+            return setSessionModal(true)
+          }else if(ErrorType === "Server error"){
+               await GetFunction(
+        "balance",
+        setIsLoading,
+        SuccessHandler,
+       async(ErrorType)=> {
+        //if Statements
+      //We run again cause the previous one was interrupted by 401
+      //Let us re-run server error
+      if(ErrorType === "Server error"){
+        alert("Failed to retrieve the balance")
+      }else if(ErrorType === "unauthorised"){
+        return sessionModal(true)
+      }else if(ErrorType === "Network error" || ErrorType === "User error"){
+         setCheckNetworkError(true);
+       alert("Kindly check your internet connection to retrieve balance")
+      }else{
+       // console.log("yeah bro i am the one running blehh")
+        alert("An Unexpected error occured in attempt to retrieve balance")
       }
+
+       },
+        setPassDataBalance
+      );
+          }else if(ErrorType === "Network error" || ErrorType === "User error"){
+             setCheckNetworkError(true);
+            alert("Kindly check your internet connection to retrieve the balance")
+          }else if(ErrorType === "Server error"){
+            alert("Failed to retrieve the balance.")
+          }else{
+            alert("An Unexpected error occured in attempt to retrieve balance")
+          }
+        },
+        setPassDataBalance
+      );
+    }
+          else if(ErrorType === "Network error" || ErrorType === "User error"){
+            //The operation was interrupted by a network error
+             setCheckNetworkError(true);
+            alert("Kindly check your internet connection to retrieve balance.")
+         }else {
+          //Place 
+          //An alien error has occured with the re-run of the "Server error" ErrorType
+          alert("An unexpected error occured in attempt to retrieve the balance.")
+         }
+       },
+        setPassDataBalance
+      );
+        }else if(ErrorType === "Network error" || ErrorType === "User error"){
+            setCheckNetworkError(true);
+        }else{
+           
+          alert("An unexpected error occured in attempt to retrieve balance.")
+        }
+      }
+      await GetFunction(
+        "balance",
+        setIsLoading,
+        SuccessHandler,
+        FailedHandler,
+        setPassDataBalance
+      );
     };
-    await GetFunction(
-      "balance",
-      setIsLoading,
-      SuccessHandler,
-      FailedHandler,
-      setPassDataBalance
-    );
-  };
+   
   // get the amount and balance on entering the page
   useEffect(() => {
+    if(Data?.ConfirmAcc === "true"){
     getAmount();
-    if (newBalance === "" || newBalance === null || newBalance === undefined) {
+   
       GetBalance();
       if (GetBalance) {
         setNewBalance(
@@ -319,8 +424,11 @@ export default function WaecEducationPin() {
             ? passDataBalance?.data?.data?.data?.balance
             : ""
         );
-      }
+      
     }
+  }else {
+    setRestrictUser(true)
+  }
     // handleResetFields();
     // eslint-disable-next-line
   }, []);
@@ -684,6 +792,20 @@ export default function WaecEducationPin() {
   const handleBlur = () => {
     setIsFocused(false);
   };
+
+    if(Data?.ConfirmAcc === "true"){
+  window.addEventListener("online", ()=> {
+   if(checkNetworkError === true &&
+     (updateBalance === undefined || updateBalance === null || updateBalance === "")
+    && (newBalance === null || newBalance === undefined || newBalance === "") ){
+   return GetBalance()
+   }
+   if(checkNetworkError === true && (eduResponse?.data?.data?.Amount === undefined ||eduResponse?.data?.data?.Amount === null) ) {
+    return getAmount()
+   }
+  })
+}
+console.log(eduResponse?.data?.data?.Amount);
 
   return (
     <DashBoardLayout>
@@ -2133,7 +2255,10 @@ export default function WaecEducationPin() {
           <Loader />
         </Modal>
       )}
-      {sessionModal && <HandleUserSession />}
+      {sessionModal && <InternalLoginSession setExpiredSessionLogin = {setSessionModal}/>}
+      {sessionModal === false && restrictUser &&(
+        <RestrictionPopUp/>
+      )}
     </DashBoardLayout>
   );
 }

@@ -18,11 +18,12 @@ import { AiFillEye } from "react-icons/ai";
 import OtpInput from "react-otp-input";
 import { Link, useNavigate } from "react-router-dom";
 import { BalanceLoading, Loader } from "../../../Loader/Loader";
-
+import { GetLocalStorage } from "../../../LocalStorage/LocalStorage";
 import {
   PostFunction,
   VerifyTransPin,
-  HandleUserSession,
+  InternalLoginSession,
+  RestrictionPopUp,
   GetFunction,
 } from "../../../ApiCollection.jsx/ApiBuck";
 import { validateNigerianNumberByNetwork } from "./AEDC";
@@ -79,9 +80,10 @@ const IKEDC = () => {
     purchaseElectricityErrorType,
     setPurchaseElectricityErrorType,
   } = useContext(ContextProvider);
-
+ const Data = GetLocalStorage()
   const [showProductList, setShowProductList] = useState(false);
   const [sessionModal, setSessionModal] = useState(false);
+
   const pointsEarned = "+2.00";
 
   // const handleValidate = () => {
@@ -114,7 +116,8 @@ const IKEDC = () => {
   };
   const [loading, setLoading] = useState(false);
   const [passDataBalance, setPassDataBalance] = useState({});
-
+  const [restrictUser, setRestrictUser] = useState(false);
+  const [balanceLoader, setBalanceLoader] = useState(false)
   const GetBalance = async () => {
     const SuccessHandler = () => {
       console.log("successfully retrieved balance");
@@ -123,7 +126,7 @@ const IKEDC = () => {
       if (ErrorType === "unauthorised") {
         await GetFunction(
           `bills/verify`,
-          setLoading,
+          setBalanceLoader,
           SuccessHandler,
           (ErrorType) => {
             if (ErrorType === "unauthorised") {
@@ -136,7 +139,7 @@ const IKEDC = () => {
     };
     await GetFunction(
       "balance",
-      setLoading,
+      setBalanceLoader,
       SuccessHandler,
       FailedHandler,
       setPassDataBalance
@@ -144,7 +147,8 @@ const IKEDC = () => {
   };
   // get the balance on entering the page
   useEffect(() => {
-    if (newBalance === "" || newBalance === null || newBalance === undefined) {
+    if(Data?.ConfirmAcc === "true"){
+   
       GetBalance();
       if (GetBalance) {
         setNewBalance(
@@ -153,7 +157,10 @@ const IKEDC = () => {
             : ""
         );
       }
-    }
+    
+  }else{
+    setRestrictUser(true)
+  }
     // handleResetFields();
     // eslint-disable-next-line
   }, []);
@@ -1091,7 +1098,7 @@ const IKEDC = () => {
                           src={country.flag}
                           alt="/"
                         />
-                        {country.name} {country.balance}
+                         {country.name} {' '}  {balanceLoader === true && country.id === 1 ? <BalanceLoading/> :  country.balance}
                       </div>
                     ))}
                   </div>
@@ -1731,7 +1738,11 @@ const IKEDC = () => {
           <Loader />
         </Modal>
       )}
-      {sessionModal && <HandleUserSession />}
+      {sessionModal &&
+            <InternalLoginSession setexpiredSessionLogin ={setSessionModal} />}
+           {restrictUser && sessionModal === false && (
+             <RestrictionPopUp/>
+           ) }
     </DashBoardLayout>
   );
 };

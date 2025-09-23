@@ -213,7 +213,7 @@ export const ElectricityReceipt = () => {
             md:text-[20px] md:my-[7px] lg:text-base font-medium lg:my-[10px]"
               >
                 {["delivered", "successful", "success", ""].includes(
-                  receiptData?.status.toLowerCase()
+                  receiptData?.status
                 )
                   ? "Purchase Successful on"
                   : receiptData?.status === "pending"
@@ -239,7 +239,7 @@ export const ElectricityReceipt = () => {
                 className={`text-[10px] p-[5.729px] border-[0.573px] rounded-[6.302px] md:p-[5.868px] md:border-[0.578px] md:rounded-[6.455px] lg:border lg:rounded-[11px] leading-[15px] md:leading-[20px] lg:p-2.5 text-center my-2 md:text-sm lg:text-base lg:leading-6 font-medium md:mb-7
              ${
                ["delivered", "successful", "success", ""].includes(
-                 receiptData?.status.toLowerCase()
+                 receiptData?.status
                )
                  ? "border-[#27AE60] text-[#27AE60] bg-[#D5F6E3]"
                  : receiptData?.status === "pending"
@@ -252,7 +252,7 @@ export const ElectricityReceipt = () => {
              }`}
               >
                 {["delivered", "successful", "success", ""].includes(
-                  receiptData?.status.toLowerCase()
+                  receiptData?.status
                 )
                   ? "You have successfully purchased "
                   : receiptData?.status === "pending"
@@ -264,7 +264,7 @@ export const ElectricityReceipt = () => {
                   : "Purchase Failed due to an unexpected error that occured. Please try again."}
                 {/* <span className="text-[#000] font-medium text-[10px] md:text-sm"> */}
                 {["delivered", "successful", "success", ""].includes(
-                  receiptData?.status.toLowerCase()
+                  receiptData?.status
                 ) && (
                   <span className="">
                     <span className=" font-medium text-[10.9px] md:text-[14.9px] lg:text-[16.9px]">

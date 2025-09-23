@@ -35,7 +35,7 @@ handleToggle()
       {isDarkMode ? (
         <style>
           {
-            "body { background-color: #000; color: #fff; border: 1px solid #fff },  "
+            "body { background-color: #000; color: #fff;  },  "
           }
         </style>
       ) : (

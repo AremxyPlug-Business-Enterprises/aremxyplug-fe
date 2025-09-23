@@ -3,10 +3,9 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { ContextProvider } from "../../Context";
 import DarkModeToggle from "../DashboardComponents/DarkModeToggle";
-import styles from "./Dashboard.module.css";
 import { RemoveLocalStorage } from "../../LocalStorage/LocalStorage";
 export const TopBar = () => {
-  const { setToggleSideBar, isDarkMode, toggleSideBar, logout, setLogout, setUserStatus } =
+  const { setToggleSideBar, isDarkMode,logout, setLogout } =
     useContext(ContextProvider);
 
   const toggleTrueFalse = () => {

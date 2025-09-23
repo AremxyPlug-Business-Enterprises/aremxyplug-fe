@@ -75,7 +75,7 @@ function LoginPopUp() {
       const response = await axios.post(url, body);
 
       if (
-        (response.status === 200 || 201) &&
+        (response.status === 200 || response.status === 201) &&
         response.headers.hasAuthorization
       ) {
         twoStepVerificationHandler();
@@ -338,6 +338,16 @@ function LoginPopUp() {
     }
   };
 
+//=======Session Management of the User========//
+   const currentStandardTimeInMilliSeconds = Date.now();
+ const SessionStandard = 1000 * 900;
+
+ function SessionTiming(){
+  const expirationTime = SessionStandard + currentStandardTimeInMilliSeconds;
+  localStorage.setItem("SessionExpiration", expirationTime)
+   return expirationTime;
+   }
+
   //Function to help set the user's account details such as bank name,
   //account name and account Number
   const handleAccountDetails = async (AuthUsed) => {
@@ -364,8 +374,8 @@ function LoginPopUp() {
       setTwoStepVerificationSuccess,
       ConfirmVirtualState
     );
-    console.log(twoStepVerificationSuccess);
     if (CheckVirtualAcc) {
+      SessionTiming();
       navigate("/dashboard");
       //  document.cookie = `sessionToken=${AuthUsed}; path=/; max-age=900`;
       //   }

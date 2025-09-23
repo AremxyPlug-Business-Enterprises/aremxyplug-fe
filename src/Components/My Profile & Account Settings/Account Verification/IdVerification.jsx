@@ -21,7 +21,7 @@ import { Loader } from "../../Loader/Loader";
 import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 import idSuccess from "../ProfileImages/user-tick.svg";
 import countryImage from "../../EducationPins/imagesEducation/Nigeriaflag.svg";
-import { HandleUserSession } from "../../ApiCollection.jsx/ApiBuck";
+import { InternalLoginSession } from "../../ApiCollection.jsx/ApiBuck";
 
 export default function IdVerification(Data) {
   const { verificationOpen } = useContext(ContextProvider);
@@ -204,7 +204,27 @@ export default function IdVerification(Data) {
           setIdStatus("Not Verified");
           setVerifyImage(NotVerifiedIcon);
         }else if( error.response.status === 401){
-         setSessionModal(true);
+         if(error.response?.headers.get("x-new-auth-token") || error.response?.headers["x-new-auth-token"]){
+             setLoading(true)
+         const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
+        
+         if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
+             //console.log(newToken)
+          localStorage.setItem("authorisedLogin", newToken);
+          
+          if( localStorage.getItem("authorisedLogin")?.length > 1){
+            return CheckIdForm();
+          }
+           }else{
+      localStorage.setItem("getToken", newToken);
+      // console.log(getToken);
+          if(localStorage.getItem("getToken")?.length > 1){
+            return CheckIdForm();
+          }
+      }}else{
+        return setSessionModal(true);
+      }
+        
         }else {
           alert("Check your internet connection.")
         }
@@ -1027,7 +1047,8 @@ Confirming your identity ensures that the person accessing the account is indeed
         </div>
       )}
       {sessionModal && (
-        <HandleUserSession/>
+        <InternalLoginSession 
+        setExpiredSessionLogin ={setSessionModal}/>
       )}
       {loading && (
         <Modal>

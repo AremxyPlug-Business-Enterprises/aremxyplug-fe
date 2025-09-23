@@ -24,15 +24,16 @@ import Joi from "joi";
 import airtimestyles from "../../../../../AirTimePage/AirtimeVtu.module.css";
 import Failed from "./MtnDataTopUpBundleImages/Failed.svg";
 import axiosInstance from "../../../../../ApiCollection.jsx/apiClient";
-import { VerifyTransPin } from "../../../../../ApiCollection.jsx/ApiBuck";
+import { InternalLoginSession, RestrictionPopUp, VerifyTransPin } from "../../../../../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../../../../../Loader/Loader";
 import {
   GetFunction,
-  HandleUserSession,
 } from "../../../../../ApiCollection.jsx/ApiBuck";
+import { GetLocalStorage } from "../../../../../LocalStorage/LocalStorage";
 
 
 const MtnDataTopUpBundle = () => {
+  const Data = GetLocalStorage();
   const { isDarkMode, newBalance, setNewBalance } = useContext(ContextProvider);
   const { selectedOptionMtn, setSelectedOptionMtn } =
     useContext(ContextProvider);
@@ -66,12 +67,13 @@ const MtnDataTopUpBundle = () => {
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [balanceStatus, setBalanceStatus] = useState("");
-
+  const [restrictUser, setRestrictUser] = useState(false);
   const [selectPlanWarn, setSelectPlanWarn] = useState(false);
   const [selectProductWarn, setSelectProductWarn] = useState(false);
   const [passDataBalance, setPassDataBalance] = useState({});
   const [mtnReceiptInfo, setMtnReceiptInfo] = useState("");
   const [sessionModal, setSessionModal] = useState(false);
+  const [checkNetworkError, setCheckNetworkError] = useState(false)
  
   let balanceStringToNum = Number(newBalance);
 const assumedString = selectedAmountMtn?.toString()
@@ -90,14 +92,14 @@ const assumedString = selectedAmountMtn?.toString()
       ? cleanUpBalanceToNumericOnly
       : balanceStringToNum);
 
-  useEffect(() => {
-    const fetchProducts = async () => {
+//fetching the products
+       const fetchProducts = async () => {
       setLoadingProducts(true);
       try {
         const response = await axiosInstance.get(`/products/telecom/list/1`);
-        if (response === undefined) {
-          alert("Check your internet Connection");
-        } else if (response.status === 201 || response.status === 200) {
+       
+        
+        if (response.status === 201 || response.status === 200) {
           setProducts(response?.data?.data?.products || []);
         }
       } catch (error) {
@@ -130,8 +132,6 @@ const assumedString = selectedAmountMtn?.toString()
                 await fetchProducts();
               }
             }
-          } else {
-            return setSessionModal(true);
           }
         } else if (error && error?.response?.status === 500) {
           alert("Service for mtn is currently not available, Try again later.");
@@ -140,8 +140,11 @@ const assumedString = selectedAmountMtn?.toString()
         setLoadingProducts(false);
       }
     };
-
+  useEffect(() => {
+   
+   if(Data?.ConfirmAcc === "true"){
     fetchProducts();
+   }
     const HandleBalanceStatus = () => {
       if (CheckSufficiency) {
         setBalanceStatus("Insufficient fund");
@@ -149,8 +152,8 @@ const assumedString = selectedAmountMtn?.toString()
         setBalanceStatus("");
       }
     };
-
-    HandleBalanceStatus();
+   HandleBalanceStatus();
+   //eslint-disable-next-line
   }, [CheckSufficiency]);
 
   //console.log(fetchedBalance);
@@ -158,14 +161,13 @@ const assumedString = selectedAmountMtn?.toString()
   // Fetch plans when product is selected
   const fetchPlans = async (productId) => {
     setLoadingPlans(true);
-
-    try {
+   try {
       setLoadingPlans(true);
       const response = await axiosInstance.get(
-        `/products/telecom/${productId}`
+        `/products/telecom/${productId}`  
       );
 
-      if (response.status === 201 || 200) {
+      if (response.status === 201 || response.status ===  200) {
         setProductPlans(response.data.data.plans || []);
         if (
           response?.data?.data?.plans === null ||
@@ -216,7 +218,10 @@ const assumedString = selectedAmountMtn?.toString()
   };
 
   const handleSelectProduct = (product) => {
-    if (!navigator.onLine) return alert("Check your internet connection.");
+    if (!navigator.onLine){ 
+      alert("Check your internet connection.");
+      setCheckNetworkError(true);
+       }
     if (navigator.onLine) {
       setSelectedProductMtn(`${product.Plan_Type}`);
       setShowProductList(false);
@@ -287,45 +292,140 @@ const assumedString = selectedAmountMtn?.toString()
       { method: "Kenya", balance: "(KSh0.00)"
         , flag:   require("../DataBundles-Images/ke.svg").default, id: 6, code : "KSH Wallet"  },
     ];
-  useEffect(() => {
-    const GetBalance = async () => {
-      const SuccessHandler = () => {
-        //alert("Successful");
-        console.log("successfully retrieved balance");
-        //alert("Successful")
-      };
-      const FailedHandler = async (ErrorType) => {
-        if (ErrorType === "unauthoriesed") {
-          await GetFunction(
-            "balance",
-            setLoading,
-            SuccessHandler,
-            (ErrorType) => {
-              if (ErrorType === "unauthorised") {
-                setSessionModal(true);
-              }
-            },
-            setPassDataBalance
-          );
-        }
-      };
-      await GetFunction(
-        "balance",
-        setLoading,
-        SuccessHandler,
-        FailedHandler,
-        setPassDataBalance
-      );
-    };
-    // Simulate async data loading
 
-    if (newBalance === "" || newBalance === null || newBalance === undefined) {
-      GetBalance();
-      console.log(passDataBalance);
-      if (GetBalance && passDataBalance?.data) {
-        setNewBalance(passDataBalance?.data?.data?.data?.balance);
-      }
-    }
+     const GetBalance = async () => {
+       if(!navigator.onLine) return setCheckNetworkError(true)
+         const SuccessHandler = () => {
+           //alert("Successful");
+           console.log("successfully retrieved balance");
+           //alert("Successful")
+         };
+         const FailedHandler = async (ErrorType) => {
+           if (ErrorType === "unauthorised") {
+             await GetFunction(
+               `balance`,
+               setLoading,
+               SuccessHandler,
+               //Handling the error Use Cases of the Unauthorised inside
+               // of the statement.
+               async(ErrorType) => {
+                 if (ErrorType === "unauthorised") {
+                   return setSessionModal(true);
+                 }else if(ErrorType === "Server error"){
+                     await GetFunction(
+           "balance",
+           setLoading,
+           SuccessHandler,
+          async(ErrorType)=> {
+           if(ErrorType === "Server error"){
+             alert("Failed to retrieve the balance.")
+           }else if(ErrorType === "Network error" || ErrorType === "User error"){
+              setCheckNetworkError(true);
+                 alert("Kindly check your internet connection to retrieve balance.")
+           }else {
+             alert("An unexpected error has occured on attempt to retrieve balance.")
+           }
+          },
+           setPassDataBalance
+         );
+          }else if(ErrorType === "Network error" || ErrorType === "User error"){
+            setCheckNetworkError(true);
+              alert("Kindly check your internet connection to retrieve balance");
+              setCheckNetworkError(true);
+          }else {
+           alert("An unexpected error has occured on attempt to retrieve the balance")
+          }
+               },
+                setPassDataBalance
+             );
+           }else if(ErrorType === "Server error"){
+               await GetFunction(
+           "balance",
+           setLoading,
+           SuccessHandler,
+          async(ErrorType)=> {
+            if(ErrorType === "unauthorised"){
+               await GetFunction(
+           "balance",
+           setLoading,
+           SuccessHandler,
+           async(ErrorType)=> {
+             if(ErrorType === "unauthorised"){
+               return setSessionModal(true)
+             }else if(ErrorType === "Server error"){
+                  await GetFunction(
+           "balance",
+           setLoading,
+           SuccessHandler,
+          async(ErrorType)=> {
+           //if Statements
+         //We run again cause the previous one was interrupted by 401
+         //Let us re-run server error
+         if(ErrorType === "Server error"){
+           alert("Failed to retrieve the balance")
+         }else if(ErrorType === "unauthorised"){
+           return sessionModal(true)
+         }else if(ErrorType === "Network error" || ErrorType === "User error"){
+            setCheckNetworkError(true);
+          alert("Kindly check your internet connection to retrieve balance")
+         }else{
+          // console.log("yeah bro i am the one running blehh")
+           alert("An Unexpected error occured in attempt to retrieve balance")
+         }},
+           setPassDataBalance
+         );
+             }else if(ErrorType === "Network error" || ErrorType === "User error"){
+                setCheckNetworkError(true);
+               alert("Kindly check your internet connection to retrieve the balance")
+             }else if(ErrorType === "Server error"){
+               alert("Failed to retrieve the balance.")
+             }else{
+               alert("An Unexpected error occured in attempt to retrieve balance")
+             }
+           },
+           setPassDataBalance
+         );
+       }
+             else if(ErrorType === "Network error" || ErrorType === "User error"){
+               //The operation was interrupted by a network error
+                setCheckNetworkError(true);
+               alert("Kindly check your internet connection to retrieve balance.")
+            }else {
+             //Place 
+             //An alien error has occured with the re-run of the "Server error" ErrorType
+             alert("An unexpected error occured in attempt to retrieve the balance.")
+            }
+          },
+           setPassDataBalance
+         );
+           }else if(ErrorType === "Network error" || ErrorType === "User error"){
+               setCheckNetworkError(true);
+           }else{
+               alert("An unexpected error occured in attempt to retrieve balance.")
+           }
+         }
+         await GetFunction(
+           "balance",
+           setLoading,
+           SuccessHandler,
+           FailedHandler,
+           setPassDataBalance
+         );
+       };
+  useEffect(() => {
+    // Simulate async data loading
+ if (Data?.ConfirmAcc === "true"){                     // Simulate async data loading
+                     if(newBalance === "" ||
+       newBalance === null ||
+        newBalance === undefined){
+                        GetBalance();
+          setNewBalance(passDataBalance?.data?.data?.data !== undefined
+               ? passDataBalance?.data?.data?.data?.balance : "");
+                       
+                     }
+                    }else {
+                      setRestrictUser(true);
+                    }
     //eslint-disable-next-line
   }, []);
   //console.log(passDataBalance.data.data.data.balance);
@@ -397,14 +497,14 @@ const assumedString = selectedAmountMtn?.toString()
     if (!mtnRegex.test(inputValue)) {
       return "Invalid MTN number. Please enter a valid MTN number.";
     }
-    console.log("its me");
+   // console.log("its me");
 
     return null;
   };
 
   const handleChange = (e) => {
     const value = e.target.value;
-    const numericValue = value.replace(/\D/g, "").slice(0, 11);
+    const numericValue = value.replace(/\D/g, "");
     setInputValue(numericValue);
 
     // Validate phone number if it's complete
@@ -422,8 +522,8 @@ const assumedString = selectedAmountMtn?.toString()
   };
 
   const handleProceed = (e) => {
-    console.log(recipientPhoneNumberMtn);
-    console.log(inputValue);
+   setInputPin("")
+
 
     e.preventDefault();
 
@@ -501,16 +601,11 @@ const assumedString = selectedAmountMtn?.toString()
     // sendDataToBackend(1, recipientPhoneNumber, plan, recipientNames);
   };
   const inputPinHandler = async () => {
+    setLoading(true);
     async function buyData(network, mobileNumber, planID, name) {
-      // Add validation for selected plan
       if (!selectedPlan) {
-        console.error("No plan selected");
         return;
       }
-
-      // console.log(selectedPlan)
-      // console.log(selectedPlan.PlanID)
-
       const path = "/data";
 
       const data = {
@@ -520,30 +615,22 @@ const assumedString = selectedAmountMtn?.toString()
         name,
       };
 
-      setLoading(true);
-
-      console.log(data);
-      console.log("its me");
-
-      try {
+    try {
         setLoading(true);
         const response = await axiosInstance.post(path, data);
         const resData = response?.data?.data?.data; // Accessing the nested `data` object
-        console.log(resData);
         setMtnTransactionID(resData?.transaction_id);
         setMtnRefNumber(resData?.reference_number);
         setMtnOrderID(resData?.order_id); // No `order_id`, using `id` instead
         setMtnDescription(`${resData?.network} - ${resData?.plan_name}`); // Fabricated description
-        if (response.statusCode === 200 || 201) {
+        if (response.status === 200 || response.status === 201) {
           // Success response
           setTransactSuccessPopUp(true);
           setInputPin("");
           setConfirm(false);
-          console.log(response);
           return { statusCode: response.status, data: response.data };
         }
       } catch (error) {
-        console.error(error);
         if (error && error.response === undefined) {
           alert("Your internet connection is quite unstable.");
         } else if (
@@ -592,7 +679,7 @@ const assumedString = selectedAmountMtn?.toString()
     await buyData(
       1, // Network ID for MTN
       inputValue, // Use inputValue instead of recipientPhoneNumber
-      selectedPlan?.PlanID,
+      selectedPlan?.ID,
       recipientNamesMtn
     );
   };
@@ -611,6 +698,18 @@ const assumedString = selectedAmountMtn?.toString()
     setPaymentSelected(false);
   };
 
+  if(Data?.ConfirmAcc === "true") {
+    window.addEventListener("online", ()=> {
+   if(checkNetworkError === true &&
+     (updateBalance === undefined || updateBalance === null || updateBalance === "")
+    && (newBalance === null || newBalance === undefined || newBalance === "") ){
+   return GetBalance()
+   }
+   if(checkNetworkError === true && products?.length < 1  ) {
+    return fetchProducts()
+   }
+  })
+}
   return (
     <DashBoardLayout>
       <div
@@ -1634,27 +1733,36 @@ const assumedString = selectedAmountMtn?.toString()
                     <div className=" flex items-center  gap-[10px]">
                       <OtpInput
                         value={inputPin}
-                        inputType={!isVisible ? "tel" : "password"}
+                        inputType= {!isVisible ? "tel" : "password" }
                         onChange={setInputPin}
                         numInputs={4}
                         shouldAutoFocus={true}
                        inputStyle={{
-                      color: "#000000",
-                      fontSize: '14px',
-                      fontWeight: 700,
-                      borderRadius: 4,
-                      height: '35px',
-                      width: '35px',
+                       color: isDarkMode ? "#ffffff" : "#000000",
+                        // width: 30,
+                        // height: 30,
+                        // borderRadius: 3,
+                        fontWeight: 700,
+                        borderRadius: 4,
+                        height: "35px",
+                        width: "35px",
+                        backgroundColor: isDarkMode ? "black" : "white",
+                        border: isDarkMode
+                          ? "1px solid white"
+                          : "1px solid #ccc",
                     }}
                         renderInput={(props) => (
-                          <input {...props} className="inputOTP mx-[3px]" />
+                          <input {...props} className="inputOTP mx-[3px]"  />
                         )}
                       />
                       <div
                         className="text-[#0003] text-[13px] md:text-3xl"
                         onClick={toggleVisibility}
                       >
-                        {isVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
+                        {isVisible ? <AiFillEye className={`w-[16px] h-[16px]
+                                          lg:w-[24px] lg:h-[24px]  ${isDarkMode ? " text-white" : "text-black" }`}/> : <AiFillEyeInvisible  
+                                          className={`w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]
+                                          ${isDarkMode ? " text-white" : "text-black" }`}/>}
                       </div>
                     </div>
                      <Link to={{
@@ -1677,9 +1785,9 @@ const assumedString = selectedAmountMtn?.toString()
                 <button
                   onClick={(e) => {
                     console.log("inputPin", inputPin);
-                    const DataHandler = () => {
+                    const DataHandler = async() => {
                       // Close modal on PIN success
-                      inputPinHandler(); // Proceed with purchase
+                     await inputPinHandler(); // Proceed with purchase
                     };
                     const setFailed = (ErrorType) => {
                       if (ErrorType === "unauthorised") {
@@ -1728,12 +1836,16 @@ const assumedString = selectedAmountMtn?.toString()
           {transactSuccessPopUp && (
             <Modal>
               {/* <DataBundleFailedPopUp/> */}
+              <div className={`w-full flex justify-center h-full 
+             py-[30px] px-[15px] lg:px-[0px] lg:items-center
+              items-end`}>
               <div
-                className={`scroll-bar ${
-                  toggleSideBar ? "confirm01 w-[90%]" : "confirm w-[90%]"
-                } bg-white rounded-[12px] md:my-auto mx-auto overflow-auto lg:mx-auto lg:my-auto`}
+               className={` bvnQuery lg:rounded-[12px] rounded-[10px] 
+              h-[520px] ${ toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+              } w-[100%] md:w-[60%] overflow-auto  ${isDarkMode ? "bg-black text-white border rounded-[10px] border-white": "bg-white text-black"} `}
               >
-                <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
+                <div className="flex justify-between px-2 
+                lg:py-[10px] py-[7px]">
                   <img
                     onClick={() => {
                       setTransactSuccessPopUp(false);
@@ -1755,142 +1867,157 @@ const assumedString = selectedAmountMtn?.toString()
                   />
                 </div>
                 <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
-                <h2 className="text-[12px] my-[4%] text-center md:text-[20px] md:my-[3%] lg:text-[14px] lg:my-[2%]">
+                <p className={`text-[12px] font-extrabold my-[4%] 
+            text-center md:text-[20px] md:my-[3%] lg:text-[14px] lg:my-[2%] 
+            ${isDarkMode ? "text-white" : "text-[#000]"}`}>
                   Purchase Successful
-                </h2>
+                </p>
                 <img
                   className="w-[50px] h-[50px] mx-auto mb-[2%] lg:w-[100px] lg:h-[100px]"
                   src="./Gif/checkMarkGif.gif"
                   alt="/"
                 />
 
-                <div className="flex flex-col gap-2 lg:gap-4 px-[20px]">
-                  <p className="text-[8px] text-[#0008] text-center mb-2 md:text-[14px] lg:text-[12px]">
-                    You have successfully purchased{" "}
-                    <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]">
+                <div  className={`font-semibold w-[97%] mx-auto text-[10px] text-center
+               mb-2 md:pb-2 lg:pb-3 md:text-[14px] lg:text-[14px]
+               ${isDarkMode ? "text-white" : "text-black" }`}>
+                 You have successfully purchased{" "}
+                    <span className={` ${isDarkMode? "text-white" : "text-black"} font-bold 
+                   md:text-[16px] lg:text-[14px]`}>
                       {selectedProductMtn + " " + selectedOptionMtn}{" "}
                     </span>
-                    from your {walletNameMtn + " Wallet"} to{" "}
-                  </p>
-
-                  <div className="flex items-center justify-between">
-                    <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                      Network
-                    </h2>
-                    <div className="flex gap-1">
-                      <div className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]">
-                        <img
-                          src={MtnLogo}
-                          alt=""
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        MTN
-                      </h2>
-                    </div>
+                    from your {walletNameMtn} to{" "}
                   </div>
-
-                  <div className="flex items-center justify-between">
-                    <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                      Product
-                    </h2>
-                    <div className="flex gap-1">
-                      <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        {selectedProductMtn}
-                      </h2>
+           <div className="flex mt-4 flex-col gap-2 lg:gap-4">
+                  <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto
+                                   justify-between font-[500] lg:text-[16px]">
+                                    <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`} >
+                                      Network
+                                    </span>
+                                  
+                                      <div className="flex gap-[5px] h-[20px] items-center">
+                                        <img
+                                          src={MtnLogo}
+                                          alt=""
+                                          className="w-full h-full rounded-full
+                                          object-cover"
+                                        />
+                                      
+                                      <p className={`text-[#0008]  
+                                        ${isDarkMode ? "text-white" : "text-[black]"}`}>
+                                        MTN
+                                      </p>
+                                      </div>
+                                    
+                                  </div>
+                
+                                  <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto
+                                   justify-between font-[500] lg:text-[16px]">
+                                    <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+                                      Product
+                                    </span>
+                                   <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
+                                        {selectedProductMtn }
+                                      </span>
+                                  
+                                  </div>
+                
+                                  <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto
+                                   justify-between font-[500] lg:text-[16px]">
+                                    <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+                                      Plan
+                                    </span>
+                        <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
+                      {selectedProductMtn + " " + selectedOptionMtn}
+                       </span>
+                                    
+                                  </div>
+                
+                                  <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto
+                                   justify-between font-[500] lg:text-[16px]">
+                                    <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+                                      Phone Number
+                                    </span>
+              <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
+                          {inputValue}
+                         </span>
+                             </div>
+                
+                                  <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto
+                                   justify-between font-[500] lg:text-[16px]">
+                                    <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+                                      Recipient Name
+                                    </span>
+              <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
+               {recipientNamesMtn}
+                     </span>
+              </div>
+                
+                                  <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto
+                                   justify-between font-[500] lg:text-[16px]">
+                                    <span
+                                     className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+                                      Amount
+                                    </span>
+                                  <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
+                                        {selectedAmountMtn}
+                                      </span>
+                                    
+                                  </div>
+                
+                                  <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto
+                                   justify-between font-[500] lg:text-[16px]">
+                                    <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+                                      Payment Method
+                                    </span>
+                            <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
+                                        {walletNameMtn + " Wallet"}
+                                      </span>
+                                  
+                                  </div>
+                
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
+                justify-between font-[500] lg:text-[16px]">
+             <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+                         Order Number
+                      </span>
+                     <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
+                            {mtnOrderID}
+                         </span>
+                                  
                     </div>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                      Plan
-                    </h2>
-                    <div className="flex gap-1">
-                      <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        {selectedProductMtn + " " + selectedOptionMtn}
-                      </h2>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                      Phone Number
-                    </h2>
-                    <div className="flex gap-1">
-                      <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        {recipientPhoneNumberMtn}
-                      </h2>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                      Recipient Name
-                    </h2>
-                    <div className="flex gap-1">
-                      <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        {recipientNamesMtn}
-                      </h2>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                      Amount
-                    </h2>
-                    <div className="flex gap-1">
-                      <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        &#8358;{selectedAmountMtn}
-                      </h2>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                      Payment Method
-                    </h2>
-                    <div className="flex gap-1">
-                      <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        {walletNameMtn + " Wallet"}
-                      </h2>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <h2 className="text-[#7C7C7C] text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                      Order Number
-                    </h2>
-                    <div className="flex gap-1">
-                      <h2 className="text-[10px] leading-[12px] capitalize md:text-[12px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
-                        {mtnOrderID}
-                      </h2>
-                    </div>
-                  </div>
                 </div>
 
-                <div
-                  className="w-full h-auto my-10 flex
-                 justify-center items-center 
-                 md:rounded-[15px] "
-                >
-                  <div className="bg-[#F2FAFF] h-full w-[80%] p-[10px] rounded-[10px] lg:rounded-[20px]">
-                    <p className="text-[10px] text-center  md:text-[12px] lg:text-[14px]">
-                      The data purchase has been sent successfully to the
-                      recipient phone number. Please kindly engage the recipient
-                      to check his/her balance to confirm the value. You can
-                      contact us for any further assistance.
-                    </p>
-                  </div>
+                
+                  <div className={`bg-[#F2FAFF] w-[90%]   mx-auto p-[8px] my-5 flex justify-between 
+        items-center md:p-[9px] lg:p-[10px] rounded-[5px] lg:rounded-[10px]
+         ${
+                isDarkMode ? "bg-slate-800 " : "bg-[#F2FAFF]"
+              }`}>
+            <p className={`text-[10px] leading-[13px] text-center
+             md:text-[14px] md:leading-[18px] lg:text-[14px]  font-semibold 
+             ${isDarkMode ? "text-white" : "text-black"}`}>
+            The decoder has been subscribed successfully.
+             Please kindly confirm from the smartcard / iuc.
+              You can contact us for any further assistance.
+            </p>
+        
                 </div>
-                <div className="flex w-full justify-center mx-auto px-[50px] items-center gap-[5%] md:gap-[10%] mt-[30px] md:w-[50%] lg:gap-[10%] lg:mx-auto  lg:my-[5%] md:mt-[40px]">
+                <div className="flex w-full justify-center mx-auto 
+                px-[50px] items-center gap-[5%] md:gap-[10%]
+                 mt-[30px] md:w-[50%] lg:gap-[10%] lg:mx-auto 
+                  lg:my-[5%] md:mt-[40px]">
                   <Link to="/MtnDataTopUpBundle">
                     <button
                       onClick={() => {
                         handleTransactionSuccessClose();
                         window.location.reload();
                       }}
-                      className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-[400] h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[12px] lg:w-[163px] lg:h-[38px] lg:my-[2%] md:px-[60px] md:h-[30px]`}
+                     className={`bg-[#04177f] w-[111px] lg:w-[200px] md:w-[99px]
+                   h-[40px] md:h-[24px] lg:h-[42px] lg:my-[2%] flex justify-center 
+                   items-center cursor-pointer text-[12px] md:text-[12px] lg:text-[16px]
+                    font-semibold text-white rounded-[6px] md:rounded-[7px] 
+                    lg:rounded-[12px]`}
                     >
                       Done
                     </button>
@@ -1910,27 +2037,33 @@ const assumedString = selectedAmountMtn?.toString()
                       mtnorderID: mtnOrderID,
                       mtndescription: mtndescription,
                       mtnReceiptInfo: mtnReceiptInfo,
-                      setPaymentSelected : setPaymentSelected
+                     
                     }}
                   >
                     <button
                       onClick={handleReceipt}
-                      className={`border-[1px] w-[100px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[10px] font-[400] h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[12px] lg:w-[163px] lg:h-[38px] lg:my-[2%] md:px-[60px] md:h-[30px]`}
+                      style={{boxShadow : '0px 0px 2.0368096828460693px 0px #00000040'}} 
+                className={`border-[1px]  w-[111px] lg:w-[200px] md:w-[99px]
+                   h-[40px] md:h-[24px] lg:h-[42px] lg:my-[2%] flex justify-center
+                    items-center cursor-pointer text-[12px] md:text-[12px] lg:text-[16px]
+                     font-semibold rounded-[6px] md:rounded-[7px] lg:rounded-[12px]`}
                     >
                       Receipt
                     </button>
                   </Link>
                 </div>
               </div>
+              </div>
             </Modal>
           )}
 
           <div className="py-[30px] lg:py-[60px] mt-10">
             <button
-              className={`w-full md:w-fit text-white rounded-md px-[28px] 
-                text-[10px] md:px-[30px] md:py-[10px] md:text-[13px] md:font-[400] 
-                leading-[15px] lg:text-[16px] lg:px-[60px] lg:py-[15px] 2xl:text-[20px]
-                 2xl:px-[50px] 2xl:py-[10px] lg:leading-[24px] py-[15px] ${
+              className={`  md:mt-[30px] lg:mt-[25px] rounded-[6px]
+             md:rounded-[10px] lg:rounded-[15px] bg-[#04177F] 
+             h-[43px] md:h-[30px] lg:h-[40px] flex items-center 
+             font-semibold text-[12px] md:text-[11px] lg:text-[16px] 
+             text-[#fff] w-full md:w-[100px] lg:w-[170px] justify-center  ${
                    !selectedProductMtn ||
                    !selectedOptionMtn ||
                    !inputValue ||
@@ -1983,7 +2116,8 @@ const assumedString = selectedAmountMtn?.toString()
           <Loader />
         </Modal>
       )}
-      {sessionModal && <HandleUserSession />}
+      {sessionModal && <InternalLoginSession setExpiredSessionLogin = {setSessionModal} />}
+      {restrictUser && sessionModal === false  && <RestrictionPopUp/>}
     </DashBoardLayout>
   );
 };

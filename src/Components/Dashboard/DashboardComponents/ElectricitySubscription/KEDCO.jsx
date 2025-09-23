@@ -20,10 +20,12 @@ import { AiFillEye } from "react-icons/ai";
 import OtpInput from "react-otp-input";
 import { Link } from "react-router-dom";
 import { BalanceLoading, Loader } from "../../../Loader/Loader";
+import { GetLocalStorage } from "../../../LocalStorage/LocalStorage";
 
 import {
   GetFunction,
-  HandleUserSession,
+  InternalLoginSession,
+  RestrictionPopUp,
   PostFunction,
   VerifyTransPin,
 } from "../../../ApiCollection.jsx/ApiBuck";
@@ -80,8 +82,9 @@ const KEDCO = () => {
     purchaseElectricityErrorType,
     setPurchaseElectricityErrorType,
   } = useContext(ContextProvider);
-
+  const Data = GetLocalStorage()
   const [showProductList, setShowProductList] = useState(false);
+  const [restrictUser, setRestrictUser] =  useState(false)
   // const [showDescription, setShowDescription] = useState(false);
   // const [orderId, setOrderId] = useState(false);
   // const [transactionId, setTransactionId] = useState(false);
@@ -117,7 +120,7 @@ const KEDCO = () => {
     // setShowOptionList(false);
   };
   const [passDataBalance, setPassDataBalance] = useState({});
-
+   const [balanceLoader, setBalanceLoader] = useState(false)
   const GetBalance = async () => {
     const SuccessHandler = () => {
       console.log("successfully retrieved balance");
@@ -126,7 +129,7 @@ const KEDCO = () => {
       if (ErrorType === "unauthorised") {
         await GetFunction(
           `bills/verify`,
-          setLoading,
+          setBalanceLoader,
           SuccessHandler,
           (ErrorType) => {
             if (ErrorType === "unauthorised") {
@@ -139,7 +142,7 @@ const KEDCO = () => {
     };
     await GetFunction(
       "balance",
-      setLoading,
+      setBalanceLoader,
       SuccessHandler,
       FailedHandler,
       setPassDataBalance
@@ -147,7 +150,8 @@ const KEDCO = () => {
   };
   // get the balance on entering the page
   useEffect(() => {
-    if (newBalance === "" || newBalance === null || newBalance === undefined) {
+    if(Data?.ConfirmAcc === "true"){
+   
       GetBalance();
       if (GetBalance) {
         setNewBalance(
@@ -155,8 +159,11 @@ const KEDCO = () => {
             ? passDataBalance?.data?.data?.data?.balance
             : ""
         );
-      }
+      
     }
+  }else{
+    setRestrictUser(true)
+  }
     // handleResetFields();
     // eslint-disable-next-line
   }, []);
@@ -1167,7 +1174,7 @@ const KEDCO = () => {
                           src={country.flag}
                           alt="/"
                         />
-                        {country.name} {country.balance}
+                         {country.name} {' '}  {balanceLoader === true && country.id === 1 ? <BalanceLoading/> :  country.balance}
                       </div>
                     ))}
                   </div>
@@ -1810,7 +1817,11 @@ const KEDCO = () => {
           </div>
         </Modal>
       )}
-      {sessionModal && <HandleUserSession />}
+     {sessionModal &&
+       <InternalLoginSession setexpiredSessionLogin ={setSessionModal} />}
+      {restrictUser && sessionModal === false && (
+        <RestrictionPopUp/>
+      ) }
     </DashBoardLayout>
   );
 };

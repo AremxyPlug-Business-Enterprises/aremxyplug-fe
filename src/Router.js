@@ -38,17 +38,17 @@ import { AddAccount } from "./Components/Dashboard/DashboardComponents/PersonalA
 import NgnVirtualAccount from "./Components/Screens/ngnVirtualAccount/NgnVirtualAccount";
 import { CookiesSettings } from "./Components/Screens/Home/Cookie/CookiesSettings";
 import { Receipt } from "./Components/Dashboard/DashboardComponents/PersonalAccountPage/Receipt";
-import { WithdrawPage } from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawPage";
+//import { WithdrawPage } from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawPage";
 import { BusinessAccountPage } from "./Components/Dashboard/DashboardComponents/PersonalAccountPage/BusinessAccountPage";
 import { WithdrawToMyAccountPage } from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToMyAccountPage";
 import { WithdrawToPersonalAccountPage } from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToPersonalAccountPage";
 import { WithdrawToBusinessAccountPage } from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToBusinessAccountPage";
 import { WithdrawalReceipt } from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawalPopUps/WithdrawalReceipt.";
 import DigitalServices from "./Components/Screens/digitalServices/DigitalServices";
-import { ToOtherBanks } from "./Components/Dashboard/DashboardComponents/TransferComponent/TransferToOtherBankPages/ToOtherBanks";
-import { OtherBankReceipt } from "./Components/Dashboard/DashboardComponents/TransferComponent/TransferToOtherBankPages/OtherBankPopUp/OtherBankPopUp/OtherBankReceipt";
+//import { ToOtherBanks } from "./Components/Dashboard/DashboardComponents/TransferComponent/TransferToOtherBankPages/ToOtherBanks";
+//import { OtherBankReceipt } from "./Components/Dashboard/DashboardComponents/TransferComponent/TransferToOtherBankPages/OtherBankPopUp/OtherBankPopUp/OtherBankReceipt";
 import GlobalTransfer from "./Components/Dashboard/DashboardComponents/TransferComponent/TransferToOtherBankPages/GlobalTransfer";
-import { InternationalReceipt } from "./Components/Dashboard/DashboardComponents/TransferComponent/TransferToOtherBankPages/OtherBankPopUp/InternationalPopUp/InternationalReceipt";
+//import { InternationalReceipt } from "./Components/Dashboard/DashboardComponents/TransferComponent/TransferToOtherBankPages/OtherBankPopUp/InternationalPopUp/InternationalReceipt";
 import FiatConversion from "./Components/CurrencyConversion/FiatConversion";
 import DataTopUpPage from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataTopUpPage";
 import CurrencyConversion from "./Components/CurrencyConversion/currencyConversion";
@@ -57,7 +57,7 @@ import Referral from "./Components/Referrals/Referral";
 import { AirtimeVtuReceipt } from "./Components/AirTimePage/AirtimeVtuReceipt";
 import DataBundlesPage from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundlesPage";
 import MtnDataTopUpBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/MtnDataTopUpBundle/MtnDataTopUpBundle";
-import WithdrawToOtherBanks from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToOtherBanks";
+//import WithdrawToOtherBanks from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToOtherBanks";
 import WalletSummaryPage from "./Components/WalletSummaryPage/WalletSummary";
 import SalesSummaryPage from "./Components/SalesSummaryPage/SalesSummary";
 // import NotificationsPage from "./Components/NotificationsPage/Notifications";
@@ -66,7 +66,7 @@ import { WalletFailedReceipt } from "./Components/WalletSummaryPage/WalletFailed
 import { WalletPendingReceipt } from "./Components/WalletSummaryPage/WalletPendingReceipt";
 import { WalletCancelledReceipt } from "./Components/WalletSummaryPage/WalletCancelledReceipt";
 import { WalletRefundedReceipt } from "./Components/WalletSummaryPage/WalletRefundedReceipt";
-import { WithdrawToOtherBankReceipt } from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToOtherBanksPopUp/WithdrawToOtherBankReceipt";
+//import { WithdrawToOtherBankReceipt } from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToOtherBanksPopUp/WithdrawToOtherBankReceipt";
 import AirtelDataBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/AirtelDataBundle/AirtelDataBundle";
 import GloDataBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/GloDataBundle/GloDataBundle";
 import EtisalatDataBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/EtisalatDataBundle/EtisalatDataBundle";
@@ -77,7 +77,7 @@ import { GloReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUp
 import EducationMain from "./Components/EducationPins/educationMain";
 import WaecEducationPin from "./Components/EducationPins/waecEducationPin";
 import NecoEducationPins from "./Components/EducationPins/NecoEducationPins";
-import JambEducationPin from "./Components/EducationPins/jambEducationPin";
+//import JambEducationPin from "./Components/EducationPins/jambEducationPin";
 import NabtebEducationPins from "./Components/EducationPins/nabtebEducationPins";
 import WaecReceipt from "./Components/EducationPins/ReceiptEducationPins/waecReceipt";
 import JambReceipt from "./Components/EducationPins/ReceiptEducationPins/jambReceipt";
@@ -190,10 +190,13 @@ import { AirtimeTransReceipt } from "./Components/Dashboard/DashboardComponents/
 import { DataTransReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/DataTransReceipt";
 import { TransferReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/TransferReceipt";
 import { VirtualAccountReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/VirtualAccountReceipt";
+import { ThemeHandler } from "./Components/ApiCollection.jsx/ApiBuck";
 
 export const Router = () => {
+
   return (
     <div>
+      <ThemeHandler/>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/About-us" element={<AboutUs />} />
@@ -349,13 +352,13 @@ export const Router = () => {
           <CookiesSettings />
           } />
         <Route path="/Receipt" element={
-          <ProtectedRoute>x
+          <ProtectedRoute>
           <Receipt />
           </ProtectedRoute>} />
-        <Route path="/withdraw" element={
+        {/* <Route path="/withdraw" element={
           <ProtectedRoute>
           <WithdrawPage />
-          </ProtectedRoute>} />
+          </ProtectedRoute>} /> */}
         <Route path="/wallet-summary" element={
           <ProtectedRoute>
           <WalletSummaryPage/>
@@ -435,34 +438,34 @@ export const Router = () => {
           <ProtectedRoute>
           <WithdrawalReceipt />
           </ProtectedRoute>} />
-        <Route path="/To-other-banks" element={
+        {/* <Route path="/To-other-banks" element={
           <ProtectedRoute>
           <ToOtherBanks />
-          </ProtectedRoute>} />
-        <Route
+          </ProtectedRoute>} /> */}
+        {/* <Route
           path="/withdraw-to-other-banks"
           element={
             <ProtectedRoute>
           <WithdrawToOtherBanks />
           </ProtectedRoute>}
-        />
-        <Route path="/other-bank-receipt" element={
+        /> */}
+        {/* <Route path="/other-bank-receipt" element={
           <ProtectedRoute>
           <OtherBankReceipt />
           </ProtectedRoute>
-          } />
-        <Route
+          } /> */}
+        {/* <Route
           path="/other-bank-withdrawalreceipt"
           element={<ProtectedRoute>
           <WithdrawToOtherBankReceipt />
           </ProtectedRoute>}
-        />
-        <Route
+        /> */}
+        {/* <Route
           path="/international-bank-receipt"
           element={<ProtectedRoute>
           <InternationalReceipt />
           </ProtectedRoute>}
-        />
+        /> */}
         <Route path="/redeem-receipt" element={<RedeemReceipt />} />
         <Route path="/ikedc-receipt" element={<ProtectedRoute>
           <IkedcReceipt />
@@ -733,11 +736,11 @@ export const Router = () => {
           <NabtebEducationPins />
           </ProtectedRoute>
           } />
-        <Route path="/JambEducationPin" element={
+        {/* <Route path="/JambEducationPin" element={
           <ProtectedRoute>
           <JambEducationPin />
           </ProtectedRoute>
-          } />
+          } /> */}
         <Route path="/WaecReceipt" element={
           <ProtectedRoute>
           <WaecReceipt />

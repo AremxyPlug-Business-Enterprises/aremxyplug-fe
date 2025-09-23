@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import style from "../../../../AirTimePage/AirtimeVtu.module.css";
 import styled from "../../../../AirTimePage/AirTime.module.css";
 import { Modal } from "../../../../Screens/Modal/Modal";
-import {GetFunction, PostFunction, HandleUserSession } from "../../../../ApiCollection.jsx/ApiBuck";
+import {GetFunction, PostFunction,RestrictionPopUp, InternalLoginSession } from "../../../../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../../../../Loader/Loader";
 import { GetLocalStorage } from "../../../../LocalStorage/LocalStorage";
 import nigerianFlag from "../../../../Dashboard/DashboardComponents/flagsImages/nigeriaFlag.png";
@@ -22,15 +22,15 @@ const AremxyAddUser = (Data) => {
   const [selected, setSelected] = useState(false);
   const [showList, setShowList] = useState(false);
   const [save, setSave] = useState(false);
-  const [errors, setErrors] = useState({});
+
  const [errorMessage, setErrorMessage]  = useState("")
  const [verifiedUser, setVerifiedUser] = useState(false);
  const [fetchedResponse, setFetchedResponse] = useState({});
  const [loading, setLoading] = useState(false);
  const [sessionModal, setSessionModal] = useState(false);
  const [transferValue, setTransferValue] = useState("");
-
- const [recipientResponse, setRecipientResponse] = useState({})
+  const [restrictUser, setRestrictUser] = useState(false);
+// const [recipientResponse, setRecipientResponse] = useState({})
  Data = GetLocalStorage()
 
 
@@ -39,6 +39,7 @@ const AremxyAddUser = (Data) => {
 const updateBalance = passDataBalance?.data?.data?.data !== undefined
     ? passDataBalance?.data?.data?.data?.balance
     : "";
+  
   const updateBalanceToNumber = Number(updateBalance)
   const newBalanceToNumber = Number(newBalance)
      const methodOptions = [
@@ -82,13 +83,7 @@ const updateBalance = passDataBalance?.data?.data?.data !== undefined
   const [confirm, setConfirm] = useState(false);
   const [currencyAvailable, setCurrencyAvailable] = useState(false);
 
-  const handleCountryClick = (name, flag, id, code) => {
-    setFlag(flag);
-    setShowList(false);
-    setMainCountry(name);
-    setSelected(true);
-    setCurrencyAvailable(id !== 1);
-  };
+  
 
   const refresh = () => window.location.reload(true);
 
@@ -242,7 +237,7 @@ const updateBalance = passDataBalance?.data?.data?.data !== undefined
         if(ErrorType === "unauthorised"){
           setSessionModal(true)
         }
-}, setRecipientResponse
+}, ()=> {}
     )
       }else if(ErrorType === "Network error" || ErrorType === "User error"){
      alert("Kindly check your internet connection");
@@ -251,13 +246,13 @@ const updateBalance = passDataBalance?.data?.data?.data !== undefined
     }
    }
    await PostFunction("bank-recipient", setLoading,body,
-      SuccessHandler, FailedHandler, setRecipientResponse
+      SuccessHandler, FailedHandler, ()=>{}
     )
 }
 
 //GetBalance Function
   useEffect(()=> {
-
+if(Data?.ConfirmAcc === "true"){
 const GetBalance = async () => {
       const SuccessHandler = () => {
         //alert("Successful");
@@ -371,16 +366,16 @@ const GetBalance = async () => {
                      // Simulate async data loading
                     if((newBalance === "" ||
        newBalance === null ||
-        newBalance === undefined) && Data?.ConfirmAcc === "true"){
+        newBalance === undefined)){
                         GetBalance();
                         if(GetBalance){
                          setNewBalance(passDataBalance?.data?.data?.data !== undefined
                            ? passDataBalance?.data?.data?.data?.balance : "");
                         }
-                      }else{
-                        console.log("Create an account to access this feature.")
-    
                       }
+                    }else{
+                      setRestrictUser(false)
+                    }
                       //eslint-disable-next-line
   }, [])
   
@@ -515,11 +510,7 @@ const GetBalance = async () => {
                     alt="dropdown"
                     />
                 </div>
-            {errors.country && (
-              <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                {errors.country}
-              </div>
-            )}
+          
             {showList && (
               <div
               className={`absolute top-[102%] z-[3] flex flex-col w-[100%]  
@@ -735,11 +726,7 @@ const GetBalance = async () => {
               alt="dropdown"
             />
           </div>
-              {errors.userPhoneNumber && (
-                <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                  {errors.userPhoneNumber}
-                </div>
-              )}
+             
             </div>
           </div>
           {save && (
@@ -848,7 +835,12 @@ const GetBalance = async () => {
           <div className={style.containFlex3}>
             <button
               className={`${
-                fetchedResponse?.data?.data?.userDetails?.username === undefined ? "bg-[#0008]" : "bg-[#04177f]"
+                (fetchedResponse?.data?.data?.userDetails?.username === undefined
+                 ||  fetchedResponse?.data?.data?.userDetails?.username === null)
+                 && !isDarkMode ? 
+                 "bg-[#0008]" : (fetchedResponse?.data?.data?.userDetails?.username === undefined
+                 ||  fetchedResponse?.data?.data?.userDetails?.username === null)
+                 && isDarkMode ?  "bg-gray-500" :  "bg-[#04177f]"
               } w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
               onClick={()=> {
                 setSave(true);
@@ -884,8 +876,11 @@ const GetBalance = async () => {
             </Modal>
           )}
           {sessionModal && (
-            <HandleUserSession/>
+            <InternalLoginSession setExpiredSessionLogin ={setSessionModal}/>
           )}
+          {restrictUser && sessionModal === false && (
+        <RestrictionPopUp/>
+      ) }
         </div>
         <div className={style.help}>
           <h2>You need help?</h2>

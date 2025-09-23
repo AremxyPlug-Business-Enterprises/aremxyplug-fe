@@ -20,7 +20,7 @@ import BusinessKYC from "./BusinessKYC";
 import Success from "../ProfileImages/success.gif";
 import { PostFunction } from "../../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../../Loader/Loader";
-import { HandleUserSession } from "../../ApiCollection.jsx/ApiBuck";
+import { InternalLoginSession } from "../../ApiCollection.jsx/ApiBuck";
 const ChangePhoneNumber = () => {
   const { isDarkMode } = useContext(ContextProvider);
   // const { recipientPhoneNumber, setRecipientPhoneNumber } =
@@ -28,7 +28,7 @@ const ChangePhoneNumber = () => {
     const [loading, setLoading] = useState(false);
     const [fetchedResponse, setFetchedResponse] = useState({});
   const [sessionModal, setSessionModal] = useState(false)
-
+   
  const [otp, setOtp] = useState("");
  const [verificationPinError, setVerificationPinError] = useState("");
 
@@ -497,7 +497,7 @@ const VerifyPopUpHandler =async()=> {
         </Modal>
       )}
       {sessionModal && (
-        <HandleUserSession/>
+        <InternalLoginSession setExpiredSessionModal ={setSessionModal}/>
       )}
     
            
