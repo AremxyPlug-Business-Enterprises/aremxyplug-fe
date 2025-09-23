@@ -86,12 +86,18 @@ await  VerifyPinHandler()
                     numInputs={4}
                     shouldAutoFocus={true}
                     inputStyle={{
-                      color: "#000000",
-                      fontSize: '14px',
-                      fontWeight: 700,
-                      borderRadius: 4,
-                      height: '35px',
-                      width: '35px',
+                     color: isDarkMode ? "#ffffff" : "#000000",
+                        // width: 30,
+                        // height: 30,
+                        // borderRadius: 3,
+                        fontWeight: 700,
+                        borderRadius: 4,
+                        height: "35px",
+                        width: "35px",
+                        backgroundColor: isDarkMode ? "black" : "white",
+                        border: isDarkMode
+                          ? "1px solid white"
+                          : "1px solid #ccc",
                     }
                 }
                     
@@ -105,8 +111,10 @@ await  VerifyPinHandler()
                   className="text-[#0003]"
                   onClick={toggleVisibility}
                 >
-                  {isVisible ? <AiFillEye className="w-[16px] h-[16px]
-                   lg:w-[24px] lg:h-[24px]" /> : <AiFillEyeInvisible  className="w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]"/>}
+                   {isVisible ? <AiFillEye className={`w-[16px] h-[16px]
+                                    lg:w-[24px] lg:h-[24px]  ${isDarkMode ? " text-white" : "text-black" }`}/> : <AiFillEyeInvisible  
+                                    className={`w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]
+                                    ${isDarkMode ? " text-white" : "text-black" }`}/>}
                 </div>
               </div>
               <Link  to = {{

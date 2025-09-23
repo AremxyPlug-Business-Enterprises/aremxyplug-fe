@@ -22,7 +22,7 @@ const AremxyAddUser = (Data) => {
   const [selected, setSelected] = useState(false);
   const [showList, setShowList] = useState(false);
   const [save, setSave] = useState(false);
-  const [errors, setErrors] = useState({});
+
  const [errorMessage, setErrorMessage]  = useState("")
  const [verifiedUser, setVerifiedUser] = useState(false);
  const [fetchedResponse, setFetchedResponse] = useState({});
@@ -510,11 +510,7 @@ const GetBalance = async () => {
                     alt="dropdown"
                     />
                 </div>
-            {errors.country && (
-              <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                {errors.country}
-              </div>
-            )}
+          
             {showList && (
               <div
               className={`absolute top-[102%] z-[3] flex flex-col w-[100%]  
@@ -730,11 +726,7 @@ const GetBalance = async () => {
               alt="dropdown"
             />
           </div>
-              {errors.userPhoneNumber && (
-                <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-                  {errors.userPhoneNumber}
-                </div>
-              )}
+             
             </div>
           </div>
           {save && (

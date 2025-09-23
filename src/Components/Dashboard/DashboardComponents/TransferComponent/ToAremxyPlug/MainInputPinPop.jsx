@@ -3,7 +3,6 @@ import { Modal } from "../../../../Screens/Modal/Modal";
 import OtpInput from "react-otp-input";
 import { useContext } from "react";
 import { ContextProvider } from "../../../../Context";
-import styles from "../../TransferComponent/transfer.module.css";
 import { useState } from "react";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
@@ -20,7 +19,6 @@ export const MainInputPinPop = ({fetchedResponse}) => {
        otherInputPinPopUp,
         setOtherInputPinPopUp,
       transferAmount,
-      transferResponse,
        setTransferResponse,
        messageTransfer,
        isDarkMode,
@@ -53,9 +51,9 @@ export const MainInputPinPop = ({fetchedResponse}) => {
 
 
 
-const firstStepSlice  = transferAmount === "" || transferAmount?.length > 1? transferAmount?.slice(1)?.replaceAll(",", "") : "";
-  const transformAmountToNumber = Number(firstStepSlice?.slice(0, firstStepSlice?.length -3));
- console.log(transformAmountToNumber)
+const amountUsable  = transferAmount === "" || transferAmount?.length > 1? transferAmount?.slice(1)?.replaceAll(",", "") : "";
+
+const transformAmountToNumber = Number(amountUsable)
   const VerifyPinHandler = async () => {
     //Recipient fUllname
     const recipentFullname = fetchedResponse?.data?.data?.userDetails?.full_name !== undefined 
@@ -279,12 +277,18 @@ if(ErrorType === "Server error"){
                     numInputs={4}
                     shouldAutoFocus={true}
                     inputStyle={{
-                      color: "#000000",
-                      fontSize: '14px',
-                      fontWeight: 700,
-                      borderRadius: 4,
-                      height: '35px',
-                      width: '35px',
+                        color: isDarkMode ? "#ffffff" : "#000000",
+                        // width: 30,
+                        // height: 30,
+                        // borderRadius: 3,
+                        fontWeight: 700,
+                        borderRadius: 4,
+                        height: "35px",
+                        width: "35px",
+                        backgroundColor: isDarkMode ? "black" : "white",
+                        border: isDarkMode
+                          ? "1px solid white"
+                          : "1px solid #ccc",
                     }
                 }
                     
@@ -303,8 +307,10 @@ if(ErrorType === "Server error"){
                   className="text-[#0003]"
                   onClick={toggleVisibility}
                 >
-                  {isVisible ? <AiFillEye className="w-[16px] h-[16px]
-                   lg:w-[24px] lg:h-[24px]" /> : <AiFillEyeInvisible  className="w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]"/>}
+ {isVisible ? <AiFillEye className={`w-[16px] h-[16px]
+                  lg:w-[24px] lg:h-[24px]  ${isDarkMode ? " text-white" : "text-black" }`}/> : <AiFillEyeInvisible  
+                    className={`w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]
+                 ${isDarkMode ? " text-white" : "text-black" }`}/>}
                 </div>
               </div>
               <Link  to = {{

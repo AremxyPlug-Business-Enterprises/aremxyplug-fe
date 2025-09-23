@@ -3,8 +3,10 @@ import { RemoveLocalStorage } from "../LocalStorage/LocalStorage";
 import axios from "axios";
 import { Modal } from "../Screens/Modal/Modal";
 import { Link } from "react-router-dom";
-import { Loader } from "../Loader/Loader";
-import { useState } from "react";
+import { BalanceLoading } from "../Loader/Loader";
+import { useState, useEffect} from "react";
+
+
 //To set the different states for  virtual account
 
 export const SignInVirtualAccountState = (
@@ -143,7 +145,8 @@ export const InActionVirtualAccountState = (
 
 ///Login Session =======//
 export const InternalLoginSession = ({ setExpiredSessionLogin})=> {
-  const [password, setPassword] = useState()
+  const [password, setPassword] = useState();
+  const [loading, setLoading] = useState(false)
    const isDarkMode = localStorage.getItem("darkModeEnabled");
    const getUsername = JSON.parse(localStorage.getItem("aremxyUserName"));
    const UserEmail = JSON.parse(localStorage.getItem("userEmail"))
@@ -151,30 +154,6 @@ export const InternalLoginSession = ({ setExpiredSessionLogin})=> {
    const getToken = localStorage.getItem("getToken");
    const HoldValue = getToken && !authorisedLogin ? getUsername : UserEmail;
    
-//    const getEmail = localStorage.getItem("userEmail")
-//       const testEmail = new RegExp(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]/);
-// const testUsername = new RegExp( /^[a-zA-Z0-9_]{3,20}$/);
-// const handleLoginMethod = ()=> {
-//   const valueSignIn = document.getElementById("InternalSessionLoginUsernameOrEmail")?.value
-//   console.log(valueSignIn)
-//   if(testEmail.test(valueSignIn) === true  && 
-//   valueSignIn?.endsWith(".com") &&
-//    valueSignIn?.includes("@")){
-//        requestObjectConfirm = "email";
-//       // console.log("email", requestObjectConfirm)
-      
-//   }else if(testUsername?.test(valueSignIn) === true && !valueSignIn?.includes("@")  ){
-//      requestObjectConfirm = "username"
-//     // console.log("username", requestObjectConfirm)
-//   }else{
-//    // console.log("Doesn't belong")
-//   }
-  
-//   if(requestObjectConfirm === "username"|| requestObjectConfirm === "email"){
-//    SubmitUserLoginDetails( requestObjectConfirm, valueSignIn)
-//   }
- 
-//   }
 
 
  const functionAtSuccess = async(response)=> {
@@ -209,16 +188,8 @@ console.log(authToken);
     const  setFetchedResponse =(response)=> {
     console.log("fetched Data successfully.")
    }
- const setLoading =(value)=> {
-  (
-    value === true && (
-     <Loader/>
-    )
-  )
-}
-//console.log(document.getElementById("InternalLoginPasswordValue")?.value)
-console.log(document.getElementById("InternalLoginPasswordValue")?.value)
-      //console.log(requestObjectConfirm);
+
+
 const SubmitUserLoginDetails = ()=> {
    
    const body = {
@@ -318,18 +289,18 @@ const SubmitUserLoginDetails = ()=> {
              
               <button onClick ={(e)=> {
                 SubmitUserLoginDetails()
-               
+                
                 }}
-
-              //  disabled={PasswordValue?.length < 1 && userNameorEmail?.length < 1}
+         disabled={loading === true}
                  className="bg-[#04177f]  cursor-pointer mt-[5%] mx-auto w-full py-[12px] flex justify-center items-center text-[#ffffff] 
                text-[11px] font-[600] rounded-md md:w-[95px] md:h-[26px]
                    md:p-[2%] lg:w-[113px] lg:h-[38px] lg:text-[13px]"
             >
-              Continue
+             {loading === true ? <BalanceLoading/> : "Continue"}
             </button>
           </div>
         </div>
+      
       </Modal>
     </div>
   );
@@ -828,6 +799,25 @@ export const PutFunction = async (
     }
   }
 };
+
+export const ThemeHandler =()=> {
+    const isDarkMode = localStorage.getItem("darkModeEnabled");
+    const UserStatus = localStorage.getItem("UserStatus")
+    const metaname = document.querySelector("meta[name=theme-color]");
+    
+  useEffect(()=> {
+
+  if(  !UserStatus){
+     metaname.setAttribute("content", "#04177f")
+   }else if(  isDarkMode === "false" && UserStatus === "true"){
+      metaname.setAttribute("content", "#fff");
+   }
+    else if(  isDarkMode === "true" &&  UserStatus === "true"){
+      metaname.setAttribute("content", "#000");
+   }
+  }, [ UserStatus, isDarkMode, metaname])
+  return null;
+}
 
 //A re-usable components to handle user session management
 

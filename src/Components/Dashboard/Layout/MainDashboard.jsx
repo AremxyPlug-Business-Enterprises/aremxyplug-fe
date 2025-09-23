@@ -458,7 +458,7 @@ return (
             <div
               className={`  w-[100%] md:w-1/2 flex flex-col h-auto rounded-[8px] md:rounded-[10px] lg:rounded-[16.32px]
               lg:p-[20px] md:p-[15px] p-[10px] justify-between ${
-                isDarkMode ? "bg-[#000] border border-[#fff]" : "bg-[#e9edfb]"} 
+                isDarkMode ? "bg-[#000] border " : "bg-[#e9edfb]"} 
                `}>
               <div className ="flex justify-end w-full items-center">
                 <Link to="/wallet"

@@ -70,7 +70,7 @@ export const TvSubscription = () =>{
     setStarTimesWalletBalance,
      setTvSubscriptionResponse,
      setDstvSubscriptionResponse,
-    } = useContext(ContextProvider)
+       } = useContext(ContextProvider)
     const navigate = useNavigate();
 const [sessionModal, setSessionModal]= useState(false)
 
@@ -368,7 +368,6 @@ return navigate("/StarTimes");
   if(GetFunction && (fetchedShowMaxPlans.status === 200 || fetchedShowMaxPlans.status === 201)){
  return navigate("/Showmax");
   }
-
      }else{
        return LinkToPage();
      }
@@ -400,13 +399,16 @@ return(
                             </div>
                         </div>
 
-                        <div className=" mx-auto flex gap-1.5 py-[25.29px] lg:py-[50px] md:py-[28.64px]">
+                        <div className={`mx-auto flex gap-1.5 py-[25.29px]
+                         lg:py-[50px] md:py-[28.64px] `}>
                             <div className="text-[8px] lg:text-xl md:text-[11.46px] font-medium text-[#7C7C7C]">Select Decoder Type</div>
-                            <div>
-                                <img src="./Images/currencyImages/right.svg" alt="" className="lg:h-[24px] lg:w-[24px] md:h-[13.75px] md:w-[13.75px]" />
+                            <div >
+                                <img src="./Images/currencyImages/right.svg" alt="" className={`lg:h-[24px] lg:w-[24px] md:h-[13.75px]
+                                   md:w-[13.75px]`} />
                             </div>
                         </div>
-                        <div id="tvGrid" className="mx-auto flex flex-wrap justify-between  gap-[25px] md:h-[70px] md:flex-row md:flex-nowrap md:gap-[21.27px]  lg:h-[120px]  md:w-[100%] lg:gap-[37px]">
+                        <div id="tvGrid" className="mx-auto flex flex-wrap
+                         justify-between  gap-[25px] md:h-[70px] md:flex-row md:flex-nowrap md:gap-[21.27px]  lg:h-[120px]  md:w-[100%] lg:gap-[37px]">
                         <div onClick ={()=>{
                           if(Data?.ConfirmAcc === "true"){
                           GetFunctionHandler(0, "Gotv");

@@ -97,9 +97,9 @@ const assumedString = selectedAmountMtn?.toString()
       setLoadingProducts(true);
       try {
         const response = await axiosInstance.get(`/products/telecom/list/1`);
-        if (response === undefined) {
-          alert("Check your internet Connection");
-        } else if (response.status === 201 || response.status === 200) {
+       
+        
+        if (response.status === 201 || response.status === 200) {
           setProducts(response?.data?.data?.products || []);
         }
       } catch (error) {
@@ -504,7 +504,7 @@ const assumedString = selectedAmountMtn?.toString()
 
   const handleChange = (e) => {
     const value = e.target.value;
-    const numericValue = value.replace(/\D/g, "").slice(0, 11);
+    const numericValue = value.replace(/\D/g, "");
     setInputValue(numericValue);
 
     // Validate phone number if it's complete
@@ -601,16 +601,11 @@ const assumedString = selectedAmountMtn?.toString()
     // sendDataToBackend(1, recipientPhoneNumber, plan, recipientNames);
   };
   const inputPinHandler = async () => {
+    setLoading(true);
     async function buyData(network, mobileNumber, planID, name) {
-      // Add validation for selected plan
       if (!selectedPlan) {
-        console.error("No plan selected");
         return;
       }
-
-      // console.log(selectedPlan)
-      // console.log(selectedPlan.PlanID)
-
       const path = "/data";
 
       const data = {
@@ -619,7 +614,7 @@ const assumedString = selectedAmountMtn?.toString()
         plan: planID,
         name,
       };
- setLoading(true);
+
     try {
         setLoading(true);
         const response = await axiosInstance.post(path, data);
@@ -628,7 +623,7 @@ const assumedString = selectedAmountMtn?.toString()
         setMtnRefNumber(resData?.reference_number);
         setMtnOrderID(resData?.order_id); // No `order_id`, using `id` instead
         setMtnDescription(`${resData?.network} - ${resData?.plan_name}`); // Fabricated description
-        if (response.statusCode === 200 || response.statusCode === 201) {
+        if (response.status === 200 || response.status === 201) {
           // Success response
           setTransactSuccessPopUp(true);
           setInputPin("");
@@ -1743,12 +1738,18 @@ const assumedString = selectedAmountMtn?.toString()
                         numInputs={4}
                         shouldAutoFocus={true}
                        inputStyle={{
-                      color: "#000000",
-                      fontSize: '14px',
-                      fontWeight: 700,
-                      borderRadius: 4,
-                      height: '35px',
-                      width: '35px',
+                       color: isDarkMode ? "#ffffff" : "#000000",
+                        // width: 30,
+                        // height: 30,
+                        // borderRadius: 3,
+                        fontWeight: 700,
+                        borderRadius: 4,
+                        height: "35px",
+                        width: "35px",
+                        backgroundColor: isDarkMode ? "black" : "white",
+                        border: isDarkMode
+                          ? "1px solid white"
+                          : "1px solid #ccc",
                     }}
                         renderInput={(props) => (
                           <input {...props} className="inputOTP mx-[3px]"  />
@@ -1758,7 +1759,10 @@ const assumedString = selectedAmountMtn?.toString()
                         className="text-[#0003] text-[13px] md:text-3xl"
                         onClick={toggleVisibility}
                       >
-                        {isVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
+                        {isVisible ? <AiFillEye className={`w-[16px] h-[16px]
+                                          lg:w-[24px] lg:h-[24px]  ${isDarkMode ? " text-white" : "text-black" }`}/> : <AiFillEyeInvisible  
+                                          className={`w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]
+                                          ${isDarkMode ? " text-white" : "text-black" }`}/>}
                       </div>
                     </div>
                      <Link to={{
@@ -1781,9 +1785,9 @@ const assumedString = selectedAmountMtn?.toString()
                 <button
                   onClick={(e) => {
                     console.log("inputPin", inputPin);
-                    const DataHandler = () => {
+                    const DataHandler = async() => {
                       // Close modal on PIN success
-                      inputPinHandler(); // Proceed with purchase
+                     await inputPinHandler(); // Proceed with purchase
                     };
                     const setFailed = (ErrorType) => {
                       if (ErrorType === "unauthorised") {
@@ -1840,7 +1844,8 @@ const assumedString = selectedAmountMtn?.toString()
               h-[520px] ${ toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
               } w-[100%] md:w-[60%] overflow-auto  ${isDarkMode ? "bg-black text-white border rounded-[10px] border-white": "bg-white text-black"} `}
               >
-                <div className="flex justify-end pr-2 lg:py-[10px] py-[7px]">
+                <div className="flex justify-between px-2 
+                lg:py-[10px] py-[7px]">
                   <img
                     onClick={() => {
                       setTransactSuccessPopUp(false);
@@ -1890,19 +1895,19 @@ const assumedString = selectedAmountMtn?.toString()
                                       Network
                                     </span>
                                   
-                                      <div className="rounded-full w-[12.02px]
-                                       h-[12.02px] flex items-center justify-center 
-                                       overflow-hidden md:w-[12.02px] lg:w-[25px] 
-                                       md:h-[12.02px] lg:h-[25px]">
+                                      <div className="flex gap-[5px] h-[20px] items-center">
                                         <img
                                           src={MtnLogo}
                                           alt=""
-                                          className="w-full h-full object-cover"
+                                          className="w-full h-full rounded-full
+                                          object-cover"
                                         />
-                                      </div>
-                                      <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[black]"}`}>
+                                      
+                                      <p className={`text-[#0008]  
+                                        ${isDarkMode ? "text-white" : "text-[black]"}`}>
                                         MTN
-                                      </span>
+                                      </p>
+                                      </div>
                                     
                                   </div>
                 
@@ -1976,7 +1981,7 @@ const assumedString = selectedAmountMtn?.toString()
              <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
                          Order Number
                       </span>
-                     <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+                     <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
                             {mtnOrderID}
                          </span>
                                   
@@ -2032,7 +2037,7 @@ const assumedString = selectedAmountMtn?.toString()
                       mtnorderID: mtnOrderID,
                       mtndescription: mtndescription,
                       mtnReceiptInfo: mtnReceiptInfo,
-                      setPaymentSelected : setPaymentSelected
+                     
                     }}
                   >
                     <button
@@ -2054,7 +2059,7 @@ const assumedString = selectedAmountMtn?.toString()
 
           <div className="py-[30px] lg:py-[60px] mt-10">
             <button
-              className={`  mt-[38px] md:mt-[30px] lg:mt-[25px] rounded-[6px]
+              className={`  md:mt-[30px] lg:mt-[25px] rounded-[6px]
              md:rounded-[10px] lg:rounded-[15px] bg-[#04177F] 
              h-[43px] md:h-[30px] lg:h-[40px] flex items-center 
              font-semibold text-[12px] md:text-[11px] lg:text-[16px] 

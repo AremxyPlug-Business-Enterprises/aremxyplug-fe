@@ -916,6 +916,7 @@ const Data = GetLocalStorage();
    }
   })
 }
+console.log(tvSubscriptionResponse?.data?.status)
 
   return (
     <div>
@@ -968,8 +969,10 @@ const Data = GetLocalStorage();
               </div>
 
               <div className="flex flex-col gap-[20px] md:gap-0">
-                <div className="flex flex-col md:flex-row gap-[20px] md:gap-[12px] lg:gap-[22px] md:my-2 lg:my-4">
-                  <div className="relative flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
+                <div className="flex flex-col md:flex-row gap-[20px]
+                 md:gap-[12px] lg:gap-[22px] md:my-2 lg:my-4">
+                  <div className="relative flex flex-col gap-[3px]
+                   lg:gap-[5px] w-full md:w-1/2">
                     <label
                       htmlFor="decoderType"
                       className="text-[#7E7E7E] text-[14px] lg:text-[17px]
@@ -1063,13 +1066,15 @@ const Data = GetLocalStorage();
                     </label>
 
                     <div
-  className={`mt-2 md:mt-0 rounded-[10px] m
-    d:rounded-0 p-[20px] md:p-0 text-[13.2px] 
-    sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
+  className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
+    sm:p-3 sm:text-lg flex justify-between pt-[8.803px] 
+    pb-[7.794px] pr-[13px]
+     pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px]
+      md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center" onClick={packageDropdown} ${
       isDarkMode 
         ? "bg-black text-white border border-white" 
-        : "hover:bg-[#EDEAEA] border-[#9C9C9C] text-[#7C7C7C] "
+        : "hover:bg-[#EDEAEA] border-[rgb(156,156,156)] text-[#7C7C7C] "
     }`}
                       onClick={packageDropdown}
                     >
@@ -1204,7 +1209,8 @@ const Data = GetLocalStorage();
                   <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
                     <label
                       htmlFor="decoderType"
-                      className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] md:font-[600] font-[400]"
+                      className="text-[#7E7E7E] text-[15px] 
+                      lg:text-[17px] md:text-[13px] md:font-[600] font-[400]"
                     >
                       Phone Number
                     </label>
@@ -1276,7 +1282,8 @@ const Data = GetLocalStorage();
                   <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
                     <label
                       htmlFor="decoderType"
-                      className="text-[#7E7E7E] text-[15px] lg:text-[16px] md:text-[12px] md:font-[600] font-[400]"
+                      className="text-[#7E7E7E] text-[15px] 
+                      lg:text-[16px] md:text-[12px] md:font-[600] font-[400]"
                     >
                       Amount
                     </label>
@@ -1304,7 +1311,8 @@ const Data = GetLocalStorage();
                     />
                   </div>
 
-                  <div className="relative flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
+                  <div className="relative flex flex-col gap-[3px] 
+                  lg:gap-[5px] w-full md:w-1/2">
                     <label
                       htmlFor="decoderType"
                       className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] md:font-[600] font-[400]"
@@ -1488,9 +1496,10 @@ const Data = GetLocalStorage();
       {/* Failed Transaction Popup */}
       {failedPopup && (
         <Modal>
-          <div className={`w-[90%] md:w-[70%] lg:w-[40%] mx-auto  rounded-lg overflow-hidden
+          <div className={`w-[90%] md:w-[50%] lg:w-[35%] mx-auto 
+           rounded-lg overflow-hidden
             ${isDarkMode ? "bg-black border-[1px] rounded-[7px] border-white": "bg-white"}`}>
-            <div className="flex justify-between items-center p-4 ">
+            <div className="flex justify-between items-center p-4">
               <img
                 onClick={() => setFailedPopup(false)}
                 className={`w-6 h-6  `}
@@ -1510,7 +1519,8 @@ const Data = GetLocalStorage();
                 Transaction Failed
               </h2>
               <img
-                className={`w-32 h-32 mx-auto my-6  ${isDarkMode ? "bg-black rounded-full border-[0.1px] border-black": "bg-white"}`}
+                className={`w-32 h-32 mx-auto my-6 
+                   ${isDarkMode ? "bg-black rounded-full border-[0.1px] border-black": "bg-white"}`}
                 src="./Images/failed.png"
                 alt="Failed"
               />
@@ -1531,8 +1541,9 @@ const Data = GetLocalStorage();
                   onClick={() => {
                     ReceiptButton();
                   }}
-                  className="w-[50%] bg-white max-w-xs mx-auto py-2 text-blue-900
-           rounded-md font-medium"
+                  className={`w-[50%]  max-w-xs 
+                  mx-auto py-2 
+           rounded-md font-medium ${isDarkMode ? "text-blue-900 bg-white border-[0.2px] rounded-[10px]" : "bg-black border-[0.2px] text-white border-blue-900"}`}
                 >
                   Receipt
                 </button>

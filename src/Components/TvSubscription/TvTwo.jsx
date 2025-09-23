@@ -1253,14 +1253,21 @@ window.addEventListener("online", ()=> {
      {/* Failed Transaction Popup */}
    {failedPopup && (
     <Modal>
-       <div className={`w-[90%] md:w-[70%] lg:w-[40%] 
-       mx-auto bg-white rounded-lg overflow-hidden`}>
-         <div className="flex justify-start w-full items-center p-4">
+       <div  className={`w-[90%] md:w-[50%] lg:w-[35%] mx-auto 
+           rounded-lg overflow-hidden
+            ${isDarkMode ? "bg-black border-[1px] rounded-[7px] border-white": "bg-white"}`}>
+         <div className="flex justify-between items-center p-4">
            <img
-             className="w-6 h-6"
-             src="/Images/login/arpLogo.png"
-             alt="Logo"
-           />
+          className={`w-6 h-6  `}
+                src="/Images/login/arpLogo.png"
+                alt="Logo"
+              />
+              <img
+                onClick={() => setFailedPopup(false)}
+                className="w-6 h-6 cursor-pointer"
+                src="/Images/transferImages/close-circle.png"
+                alt="Close"
+              />
           
          </div>
          <hr className="h-1 bg-[#04177f] border-none" />
@@ -1269,14 +1276,15 @@ window.addEventListener("online", ()=> {
              Transaction Failed
            </h2>
            <img
-             className="w-32 h-32 mx-auto my-6"
+              className={`w-32 h-32 mx-auto my-6 
+                   ${isDarkMode ? "bg-black rounded-full border-[0.1px] border-black": "bg-white"}`}
              src="./Images/failed.png"
              alt="Failed"
            />
            <p className="text-sm text-red-500 font-[600] mb-8">
              {purchaseDstvErrorType}
            </p>
-              {dstvSubscriptionResponse?.data?.statuss ?
+              {dstvSubscriptionResponse?.data?.status ?
                (
               <div className="flex gap-[10px] justify-between w-full px-[10px]">
                 <button
@@ -1290,9 +1298,9 @@ window.addEventListener("online", ()=> {
                   onClick={() => {
                     ReceiptButton();
                   }}
-                  className="w-[50%] bg-white max-w-xs mx-auto py-2 text-blue-900
-           rounded-md font-medium"
-                >
+                    className={`w-[50%]  max-w-xs 
+                  mx-auto py-2 
+           rounded-md font-medium ${isDarkMode ? "text-blue-900 bg-white border-[0.2px] rounded-[10px]" : "bg-black border-[0.2px] text-white border-blue-900"}`}>
                   Receipt
                 </button>
               </div>

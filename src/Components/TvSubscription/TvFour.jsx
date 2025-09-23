@@ -25,6 +25,7 @@ import { GetFunction } from "../ApiCollection.jsx/ApiBuck";
 import { Modal } from "../Screens/Modal/Modal";
 import {  RestrictionPopUp } from "../../Components/ApiCollection.jsx/ApiBuck";
 import { GetLocalStorage } from "../LocalStorage/LocalStorage";
+import { BalanceLoading } from "../Loader/Loader";
 
 
 const Showmax = () => {
@@ -83,11 +84,10 @@ setShowMaxMobileNumber,
   } = useContext(ContextProvider)
  const [isLoading, setIsLoading] = useState(false)
       const [failedPopup, setFailedPopup] = useState(false);
- 
-                   const [passDataBalance, setPassDataBalance] = useState({});
-                       const [showMaxData, setShowMaxData] = useState([]);
-                     
-                      const [sessionModal, setSessionModal] = useState(false);
+    const [balanceLoader, setBalanceLoader] = useState(false)
+    const [passDataBalance, setPassDataBalance] = useState({});
+     const [showMaxData, setShowMaxData] = useState([]);
+        const [sessionModal, setSessionModal] = useState(false);
                        const [checkNetworkError, setCheckNetworkError] = useState(false)
                     const [restrictUser, setRestrictUser] = useState(false)
             const navigate = useNavigate();
@@ -197,7 +197,7 @@ const Decoders  = [
         if (ErrorType === "unauthorised") {
           await GetFunction(
             `balance`,
-            setIsLoading,
+            setBalanceLoader,
             SuccessHandler,
             //Handling the error Use Cases of the Unauthorised inside
             // of the statement.
@@ -207,7 +207,7 @@ const Decoders  = [
               }else if(ErrorType === "Server error"){
                   await GetFunction(
         "balance",
-        setIsLoading,
+        setBalanceLoader,
         SuccessHandler,
        async(ErrorType)=> {
         if(ErrorType === "Server error"){
@@ -234,13 +234,13 @@ const Decoders  = [
         }else if(ErrorType === "Server error"){
             await GetFunction(
         "balance",
-        setIsLoading,
+        setBalanceLoader,
         SuccessHandler,
        async(ErrorType)=> {
          if(ErrorType === "unauthorised"){
             await GetFunction(
         "balance",
-        setIsLoading,
+        setBalanceLoader,
         SuccessHandler,
         async(ErrorType)=> {
           if(ErrorType === "unauthorised"){
@@ -248,7 +248,7 @@ const Decoders  = [
           }else if(ErrorType === "Server error"){
                await GetFunction(
         "balance",
-        setIsLoading,
+        setBalanceLoader,
         SuccessHandler,
        async(ErrorType)=> {
         //if Statements
@@ -257,7 +257,7 @@ const Decoders  = [
       if(ErrorType === "Server error"){
         alert("Failed to retrieve the balance")
       }else if(ErrorType === "unauthorised"){
-        return sessionModal(true)
+        return setSessionModal(true)
       }else if(ErrorType === "Network error" || ErrorType === "User error"){
          setCheckNetworkError(true);
        alert("Kindly check your internet connection to retrieve balance")
@@ -302,7 +302,7 @@ const Decoders  = [
       }
       await GetFunction(
         "balance",
-        setIsLoading,
+        setBalanceLoader,
         SuccessHandler,
         FailedHandler,
         setPassDataBalance
@@ -1022,7 +1022,9 @@ const Decoders  = [
       ? "bg-black text-white border border-white" 
       : "border-[#9C9C9C]"
   }`} >
-                <p className='font-[400] text-[12px] leading-[10.4px] md:text-[12px] md:leading-[12.206px] lg:text-[16px] text-[#7C7C7C] lg:leading-[20.8px] cursor-pointer'>
+                <p className={`font-[500] text-[13px] leading-[10.4px] md:text-[9.389px] 
+                md:leading-[12.206px] lg:text-[16px] text-[#7C7C7C] lg:leading-[20.8px] cursor-pointer
+                ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
                     {`${showMaxFlagResult} ${" "} ${showMaxWalletBalance}`}
                 </p>
                 <img className='methodDrop h-[16px] w-[14px] md:h-[14.038px] md:w-[14.038px] lg:h-[24px] lg:w-[24px]'
@@ -1093,9 +1095,10 @@ const Decoders  = [
                       }`}
                         key={methodOption.id}>
 
-                        <img className='md:h-[29.27px]  h-[14.27px]' src={methodOption.flag} alt="" />
-
-                       {methodOption.method + ' ' + methodOption.balance}
+        <img className='md:h-[29.27px]  h-[14.27px]'
+         src={methodOption.flag} alt="" />
+{methodOption.method}
+                    {balanceLoader === true ? <BalanceLoading/> : methodOption.balance }
                        
                       </div>
 
@@ -1137,12 +1140,10 @@ const Decoders  = [
         {/* Failed Transaction Popup */}
             {failedPopup && (
              <Modal>
-    <div className={`w-[90%] md:w-[70%] lg:w-[40%] mx-auto
-     rounded-lg overflow-hidden
-     ${isDarkMode ? "border-[0.2px] border-white text-white bg-black" : "bg-white text-black"}`}>
-      <div className="flex justify-between items-center p-4 ">
+    <div className={`w-[90%] md:w-[50%] lg:w-[35%] mx-auto 
+ rounded-lg overflow-hidden ${isDarkMode ? "bg-black border-[1px] rounded-[7px] border-white": "bg-white"}`}>
+      <div className="flex justify-between items-center p-4">
         <img
-          onClick={() => setFailedPopup(false)}
           className="w-6 h-6"
           src="/Images/login/arpLogo.png"
           alt="Logo"
@@ -1160,7 +1161,8 @@ const Decoders  = [
           Transaction Failed
         </h2>
         <img
-          className="w-32 h-32 mx-auto my-6"
+         className={`w-32 h-32 mx-auto my-6 
+        ${isDarkMode ? "bg-black rounded-full border-[0.1px] border-black": "bg-white"}`}
           src="./Images/failed.png"
           alt="Failed"
         />
@@ -1181,8 +1183,9 @@ const Decoders  = [
                   // onClick={() => {
                   //   ReceiptButton();
                   // }}
-                  className="w-[50%] bg-white max-w-xs mx-auto py-2 text-blue-900
-           rounded-md font-medium"
+                 className={`w-[50%]  max-w-xs 
+                  mx-auto py-2  rounded-md font-medium
+            ${isDarkMode ? "text-blue-900 bg-white border-[0.2px] rounded-[10px]" : "bg-black border-[0.2px] text-white border-blue-900"}`}
                 >
                   Receipt
                 </button>

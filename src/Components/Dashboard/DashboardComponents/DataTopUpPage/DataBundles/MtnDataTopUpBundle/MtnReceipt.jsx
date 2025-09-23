@@ -22,7 +22,7 @@ const navigate = useNavigate()
     selectedAmount, mtntransactionID,
      mtnrefNumber, mtnorderID,
      mtnReceiptInfo,
-    selectedProduct, setPaymentSelected} = location.state
+    selectedProduct} = location.state
   
   const {
     toggleSideBar,
@@ -79,19 +79,18 @@ const navigate = useNavigate()
     setRecipientNamesMtn("");
     setWalletNameMtn("");
     setRecipientPhoneNumberMtn("");
-    setPaymentSelected(false);
+   // setPaymentSelected(false);
     navigate("/MtnDataTopUpBundle");
   };
 
   return (
     <DashBoardLayout>
-      <div className="flex flex-col gap-[35px] lg:gap-[85px]">
-        <div
-           className={` ${styles.receipt} ${
-                     toggleSideBar ? "" : "lg:w-[880px] "
-                   } w-full lg:mx-auto  ${isDarkMode ? "border border-white" : ""}` } 
-                 >
-          <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
+      <div className={`flex flex-col gap-[35px] lg:gap-[85px]`}>
+        <div className={` ${styles.receipt} ${
+                      toggleSideBar ? "" : "lg:w-[880px] "
+                    } w-full lg:mx-auto ${isDarkMode ? "border border-white" : ""}`}>
+   <div className={`flex justify-between items-center
+     mx-[3%] my-[2%] lg:my-[1%]`}>
             <div>
               <img
                 className=" w-[15px] h-[10px] md:w-[24px] 
@@ -106,7 +105,7 @@ const navigate = useNavigate()
           }}>
               {" "}
               <img
-                 className=" w-[15px] h-[10px] md:w-[24px] 
+                 className=" w-[15px] h-[15px] md:w-[24px] 
                 md:h-[15px] lg:w-[42px] lg:h-[25px]"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
@@ -116,7 +115,9 @@ const navigate = useNavigate()
           <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
           <div ref={contentRef}>
             {" "}
-            <h3 className="font-extrabold text-[12px] my-[2%] text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
+            <h3 className={`font-extrabold text-[12px] my-[2%] 
+            text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]
+              ${isDarkMode ? "text-white" : "text-black"}`}>
               Transaction Receipt
             </h3>
             <div className="w-full flex justify-center ">
@@ -126,10 +127,14 @@ const navigate = useNavigate()
                 alt="/"
               />
             </div>
-            <h3 className="font-extrabold text-[12px] mt-[2%] text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
+            <h3 className={`font-extrabold text-[12px]  mt-[2%] text-center 
+            md:text-[20px] md:my-[7px] lg:text-[16px] lg:my-[10px]
+            ${isDarkMode ? "text-white" : "text-black"}
+          `}>
               Transaction Successful on
             </h3>
-            <span className="text-[11px] text-[#0008] font-extrabold flex justify-center items-center">
+            <span className="text-[11px] text-[#0008] font-extrabold 
+            flex justify-center items-center">
               {date.toLocaleDateString(undefined, {
                 year: "numeric",
                 month: "long",
@@ -140,9 +145,12 @@ const navigate = useNavigate()
                 hour12: true,
               })}
             </span>
-            <p className="text-[9px] text-[#27AE60] bg-[#D5F6E3] rounded-[11px] border-2 border-[#27AE60] py-[5px] px-[2px] text-center mx-[5px] lg:mx-[150px] md:mx-[100px] my-2 md:text-[14px] lg:text-[14px]">
+            <p className="text-[9px] text-[#27AE60] bg-[#D5F6E3] 
+            rounded-[11px] border-2 border-[#27AE60] w-[100%]
+            py-[5px] px-[2px] text-center mx-[5px]  my-2 md:text-[14px] lg:text-[14px]">
               You have successfully purchased{" "}
-              <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[16px]">
+              <span className=" font-extrabold text-[10px]
+               md:text-[16px] lg:text-[16px]">
                 {`${selectedProduct + " " + selectedOption}`}
               </span>
               from your NGN wallet to{" "}
@@ -150,10 +158,12 @@ const navigate = useNavigate()
             <div className="flex flex-col gap-3">
               {/* ========================Recipient Info================== */}
               <div className="flex flex-col gap-[3px] w-[90%] mx-auto lg:gap-[5px]">
-                <div className="flex gap-[5px] items-center text-[10px] lg:text-[16px] font-extrabold">
-                  <p>Recipient Info</p>
+                <div className="flex gap-[5px] items-center">
+                  <p className="text-[10px] lg:text-[16px] font-extrabold">
+                    Recipient Info
+                    </p>
                   <img
-                    className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
+                    className="w-[13px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
                     src="./Images/dashboardImages/arrowright.png"
                     alt="/"
                   />
@@ -176,7 +186,7 @@ const navigate = useNavigate()
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Amount</p>
-                  <span>&#8358;{selectedAmount}</span>
+                  <span>{selectedAmount}</span>
                 </div>
               </div>
               
@@ -232,11 +242,19 @@ const navigate = useNavigate()
                 </div>
               </div>
             </div>
-            <div className="rounded-[8px] bg-[#E2F3FF] mx-4 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]">
-              <p className="text-[8px] text-center mx-auto w-[200px] md:text-[14px] md:w-[80%] lg:text-[16px]">
-                Earn free points on every successful transactions, redeem your earned points to real money, withdrawn to your bank account instantly.
-              </p>
-            </div>
+          <div className={`bg-[#F2FAFF] w-[90%]   mx-auto p-[8px] my-5 flex justify-between 
+        items-center md:p-[9px] lg:p-[10px] rounded-[5px] lg:rounded-[10px]
+         ${
+                isDarkMode ? "bg-slate-800 " : "bg-[#F2FAFF]"
+              }`}>
+            <p className={`text-[10px] leading-[13px] text-center
+             md:text-[14px] md:leading-[18px] lg:text-[14px]  font-semibold 
+             ${isDarkMode ? "text-white" : "text-black"}`}>
+           Earn free points on every successful transactions,
+            redeem your earned points to real money, withdrawn to your bank account instantly.
+            </p>
+        
+                </div>
           </div>
 
           <div className="flex w-[70%] mx-auto mb-[5%] md:w-[60%] ">
@@ -270,4 +288,5 @@ const navigate = useNavigate()
       </div>
     </DashBoardLayout>
   );
-};
+}; 
+

@@ -693,7 +693,7 @@ const GetBalance = async () => {
         </div>
         <div className="w-full">
          
-            <div   className={`mt-2 md:mt-0 rounded-[10px] 
+            <div className={`mt-2 md:mt-0 rounded-[10px] 
                         md:rounded-0 p-[20px] md:p-0  sm:p-3 sm:text-lg 
                         flex justify-between pt-[8.803px] pb-[7.794px] 
                         pr-[13px] pl-[10.876px] font-[400] text-[14px] 
@@ -934,6 +934,7 @@ const GetBalance = async () => {
         : "border border-[#0003] border-[#9C9C9C] text-[#7C7C7C]"
     }`}
               onChange={(e)=> {
+             
        console.log(e.target.value)
        setTransferAmount(e.target.value);
        if(transferSetTime.current) clearTimeout(transferSetTime.current)
@@ -944,18 +945,24 @@ const GetBalance = async () => {
          e.target.value!== undefined && e.target.value !==null 
           ? setTransferAmount(()=> Number(e.target.value)?.toLocaleString("en-NG", {
           style : "currency",
-          currency : "NGN"
+          currency : "NGN",
+          maximumFractionDigits : 0
   }))  :  e.target.value !== undefined && 
   e.target.value !==null 
  && e.target.value !== "" ? 
   setTransferAmount(()=> e.target.value?.toLocaleString("en-NG", {
           style : "currency",
-          currency : "NGN"
+          currency : "NGN",
+          maximumFractionDigits : 0
+           
   })) : setTransferAmount(0)
  }, 1000)
       return ()=> clearTimeout(transferSetTime.current)
   }}
+ 
               type="tel"
+          
+               
               value={transferAmount}
             />
             <img
@@ -1005,7 +1012,8 @@ const GetBalance = async () => {
                 newBalance=== undefined) ?
                  Number(passDataBalance?.data?.data?.data?.balance)?.toLocaleString("en-NG", {
                   style : "currency", 
-                currency : "NGN"}) 
+                currency : "NGN",
+              }) 
                  : Number(newBalance)?.toLocaleString("en-NG", {
                   style : "currency", 
                 currency : "NGN"})  }
@@ -1146,7 +1154,7 @@ const GetBalance = async () => {
       
       <ToConfirmAremxyMain
         transferValue={transferValue}
-        transferPhone={fetchedResponse?.data?.data?.userDetails?.phone}
+        fetchedResponse={fetchedResponse}
         passDataBalance={passDataBalance}
       />
       <MainInputPinPop fetchedResponse={fetchedResponse} />
