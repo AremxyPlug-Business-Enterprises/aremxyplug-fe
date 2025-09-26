@@ -22,7 +22,6 @@ import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import Joi from "joi";
 import airtimestyles from "../../../../../AirTimePage/AirtimeVtu.module.css";
-import Failed from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/Failed.svg";
 import axiosInstance from "../../../../../ApiCollection.jsx/apiClient";
 import {
   VerifyTransPin,
@@ -31,7 +30,7 @@ import {
   InternalLoginSession
 } from "../../../../../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../../../../../Loader/Loader";
-
+import { BalanceLoading } from "../../../../../Loader/Loader";
 import { GetLocalStorage } from "../../../../../LocalStorage/LocalStorage";
 
 const GloDataBundle = () => {
@@ -59,7 +58,9 @@ const GloDataBundle = () => {
     toggleVisibility,
     isVisible,
     setNewBalance,
-    authenticationOpen
+    authenticationOpen,
+    gloPurchaseErrorType,
+     setGloPurchaseErrorType
   } = useContext(ContextProvider);
 
   const [showProductList, setShowProductList] = useState(false);
@@ -88,26 +89,30 @@ const GloDataBundle = () => {
   const [balanceStatus, setBalanceStatus] = useState("");
   const [selectPlanWarn, setSelectPlanWarn] = useState(false);
   const [selectProductWarn, setSelectProductWarn] = useState(false);
-  let balanceStringToNum = Number(newBalance);
   const [passDataBalance, setPassDataBalance] = useState({});
   const [gloReceiptInfo, setGloReceiptInfo] = useState("");
   const [sessionModal, setSessionModal] = useState(false);
   const [checkNetworkError, setCheckNetworkError] = useState(false);
   const [restrictUser, setRestrictUser] = useState(false)
+  const [balanceLoader, setBalanceLoader] = useState(false)
+const [gloSuccessfulResponse, setGloSuccessfulResponse] = useState({})
 
-const assumedString = selectedAmountGlo?.toString()
+
+
+    const updateBalance = passDataBalance?.data?.data?.data 
+    ? passDataBalance?.data?.data?.data?.balance
+    :  "";
+    const updateBalanceToNumber = Number(updateBalance);
+  const newBalanceToNumber = Number(newBalance);
+  const balanceOption = newBalance === "" || newBalance === null
+   ? updateBalanceToNumber : newBalanceToNumber;
+const assumedString = selectedAmountGlo?.toString();
   let gloDataAmount = Number(selectedAmountGlo?.toString()
   ?.slice(0, assumedString?.length - 3)
   ?.replace(/\D/g, ""));
-    const updateBalance = passDataBalance?.data
-    ? passDataBalance?.data?.data?.data?.balance
-    : "";
-  const cleanUpBalanceToNumeric = Number(updateBalance.replace(/\D/, ""));
-  let CheckSufficiency =
-    gloDataAmount > (newBalance === "" || newBalance === null)
-      ? cleanUpBalanceToNumeric
-      : balanceStringToNum;
 
+  
+  let CheckSufficiency = gloDataAmount > balanceOption;
 
 
       //Function used to fetch the newtork products that are available ===
@@ -117,6 +122,13 @@ const assumedString = selectedAmountGlo?.toString()
         const response = await axiosInstance.get("/products/telecom/list/2");
         if (response.status === 201 || response.status === 200) {
           setProducts(response?.data?.data?.products || []);
+          console.log(response?.data?.data?.plans)
+           if (
+          response?.data?.data?.plans === null ||
+          response?.data?.data?.length < 1
+        ) {
+          setSelectProductWarn(true);
+        }
         }
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -172,6 +184,7 @@ fetchProducts();
     };
 
     HandleBalanceStatus();
+    //eslint-disable-next-line
   }, [CheckSufficiency]);
 
   // Fetch plans when product is selected
@@ -185,8 +198,8 @@ fetchProducts();
         setProductPlans(response?.data?.data?.plans || []);
         if (
           response &&
-          (response?.data?.data?.plan === null ||
-            response?.data?.data?.length < 1)
+          (response?.data?.data?.plans === null ||
+            response?.data?.data?.plans?.length < 1)
         ) {
           setSelectProductWarn(true);
         }
@@ -283,22 +296,17 @@ fetchProducts();
 
 
 
-  const updateBalanceToNumber = Number(updateBalance)
-  const newBalanceToNumber = Number(newBalance)
-  const balanceOption = newBalance === "" || newBalance === null ? updateBalanceToNumber : newBalanceToNumber
+
     const methodOptions = [
       {
         method: "Nigeria",
         balance:
-          newBalance === "" || newBalance === null || newBalance === undefined
-            ? `(${updateBalance?.length > 1 ? updateBalanceToNumber?.toLocaleString("en-NG", {
+         balanceOption !== undefined || balanceOption !== null ? 
+            `(${ balanceOption?.toLocaleString("en-NG", {
                  style : "currency",
                  currency : "NGN"
-            }) : ""})`
-            : `(${newBalance?.length > 1 ? newBalanceToNumber?.toLocaleString("en-Ng", {
-              style : "currency",
-              currency : "NGN"
-            }) : ""})`,
+             })})`  : "()",
+         
         flag:  require("../DataBundles-Images/ng.svg").default,
         id: 1,
         code : "NGN Wallet"
@@ -336,7 +344,7 @@ fetchProducts();
            if (ErrorType === "unauthorised") {
              await GetFunction(
                `balance`,
-               setLoading,
+               setBalanceLoader,
                SuccessHandler,
                //Handling the error Use Cases of the Unauthorised inside
                // of the statement.
@@ -346,7 +354,7 @@ fetchProducts();
                  }else if(ErrorType === "Server error"){
                      await GetFunction(
            "balance",
-           setLoading,
+           setBalanceLoader,
            SuccessHandler,
           async(ErrorType)=> {
            if(ErrorType === "Server error"){
@@ -373,7 +381,7 @@ fetchProducts();
            }else if(ErrorType === "Server error"){
                await GetFunction(
            "balance",
-           setLoading,
+           setBalanceLoader,
            SuccessHandler,
           async(ErrorType)=> {
             if(ErrorType === "unauthorised"){
@@ -387,7 +395,7 @@ fetchProducts();
              }else if(ErrorType === "Server error"){
                   await GetFunction(
            "balance",
-           setLoading,
+           setBalanceLoader,
            SuccessHandler,
           async(ErrorType)=> {
            //if Statements
@@ -438,7 +446,7 @@ fetchProducts();
          }
          await GetFunction(
            "balance",
-           setLoading,
+           setBalanceLoader,
            SuccessHandler,
            FailedHandler,
            setPassDataBalance
@@ -509,7 +517,7 @@ fetchProducts();
 
   const handleChange = (e) => {
     const value = e.target.value;
-    const numericValue = value.replace(/\D/g, "").slice(0, 11);
+    const numericValue = value.replace(/\D/g, "");
     setInputValue(numericValue);
 
     // Validate phone number if it's complete
@@ -586,7 +594,6 @@ fetchProducts();
     async function buyData(network, mobileNumber, plan, name) {
       // Add validation for selected plan
       if (!selectedPlan) {
-        console.error("No plan selected");
         return;
       }
       const path = "/data";
@@ -610,8 +617,23 @@ try {
         // No `order_id`, using `id` instead
 
         setGloDescription(`${resData?.network} - ${resData?.plan_name}`); // Fabricated description
-        if (response.statusCode === 200 || response.statusCode === 201) {
+        if (response.status === 200 || response.status === 201) {
+          setGloSuccessfulResponse(response?.data?.data?.data)
+          if(response?.data?.data?.data?.Status === "success"
+            || response?.data?.data?.data?.Status === "successful"
+            || response?.data?.data?.data?.Status === "delivered"
+            || response?.data?.data?.data?.Status === "successfully"
+          )
           // Success response
+          setGloPurchaseErrorType("")
+          setTransactSuccessPopUp(true); // Show success popup
+          setConfirm(false);
+          setInputPin("");
+        }else if(  response?.data?.data?.data?.Status === "failed"
+          || response?.data?.data?.data?.Status === "Failed"
+          || response?.data?.data?.data?.Status === "unsuccessful"){
+              
+           setGloPurchaseErrorType("Plan Unavailable: Purchase Failed")
           setTransactSuccessPopUp(true); // Show success popup
           setConfirm(false);
           setInputPin("");
@@ -622,9 +644,15 @@ try {
       } catch (error) {
         console.error(error);
         if (error && error.response === undefined) {
-          alert("Your internet connection is quite unstable");
+          setGloPurchaseErrorType("Network error: Purchase Failed");
+          setGloPurchaseStatus(true)
+             setConfirm(false);
+          setInputPin("");
         } else if (error && error.response.status === 404) {
-          alert("Check your internet connection");
+           setGloPurchaseErrorType("Network error: Purchase Failed");
+          setGloPurchaseStatus(true)
+             setConfirm(false);
+          setInputPin("");
         } else if (error && error.response.status === 401) {
           if (
             error.response.headers["x-new-auth-token"] ||
@@ -656,22 +684,24 @@ try {
             return setSessionModal(true);
           }
         } else if (error && error?.response?.status === 400) {
+           setGloPurchaseErrorType("Unexpected error: Purchase Failed");
           setGloPurchaseStatus(true); // Show failure popup
           setConfirm(false);
           setInputPin("");
         } else if (
           error &&
-          (error?.response?.status === 500 || error?.response?.status === 400)
+          error?.response?.status === 500 
         ) {
+          setGloPurchaseErrorType("Server error: Purchase Failed")
           setGloPurchaseStatus(true); // Show failure popup
           setConfirm(false);
           setInputPin("");
-        } else if (error && error?.response?.status === 401) {
-          setSessionModal(true);
-        } else {
-          alert(
-            "An error has occurred, kindly check your internet connection."
-          );
+        }  else {
+            setGloPurchaseErrorType("Unexpected error: Purchase Failed")
+          setGloPurchaseStatus(true); // Show failure popup
+          setConfirm(false);
+          setInputPin("");
+        
         }
       } finally {
         setLoading(false);
@@ -681,7 +711,7 @@ try {
     await buyData(
       2, // Network ID for MTN
       inputValue, // Use inputValue instead of recipientPhoneNumber
-      selectedPlan.PlanID,
+      selectedPlan?.ID,
       recipientNamesGlo
     );
   };
@@ -695,6 +725,8 @@ try {
     setRecipientPhoneNumberGlo("");
     setGloPurchaseStatus(null);
     setRecipientPhoneNumberGlo("");
+    setPaymentSelected(false);
+    setPaymentAmount("");
     setInputValue("");
   };
 
@@ -900,7 +932,7 @@ try {
             <div className="flex flex-col lg:gap-[12px] gap-[7px]">
               <h2
                 className={`lg:text-[18px] lg:leading-[24px] mb-1 text-[14px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
-                  isDarkMode ? "!text-[#7E7E7E]" : "text-[#7E7E7E]"
+                  isDarkMode ? "text-[#7E7E7E]" : "text-black"
                 }`}
               >
                 Select Product
@@ -969,8 +1001,7 @@ try {
                     )}
                   </div>
                 )}
-              </div>
-              {selectProductWarn && (
+                {selectProductWarn && (
                 <p
                   className="absolute text-red-500 p-[10px] bg-white  
                     text-left font-[500] text-[14px] border-[1px]  border-gray-300 
@@ -980,6 +1011,8 @@ try {
                   Plans unavailable, kindly select another glo product.
                 </p>
               )}
+              </div>
+              
             </div>
 
             <div className="flex flex-col lg:gap-[12px] gap-[7px]">
@@ -1036,7 +1069,7 @@ try {
   `}
                   >
                     {loadingPlans ? (
-                      <div>Loading plans...</div>
+                      <p className={`"bg-white text-black`}>Loading plans...</p>
                     ) : (
                       productPlans.map((plan) => (
                         <div
@@ -1189,12 +1222,12 @@ try {
               </div>
             </div>
 
-            <div className="flex flex-col lg:gap-[12px] gap-[7px]">
-              <div onClick={handleShowPayment}>
+            <div>
+              <div className="flex flex-col lg:gap-[12px] gap-[7px]" onClick={handleShowPayment}>
                 <h2
                   className={`lg:text-[18px] mt-[5px] lg:leading-[24px] mb-2 text-[15px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
                     isDarkMode ? "!text-[#7E7E7E]" : "!text-black"
-                  }`}
+                  }`} 
                 >
                   Payment Method
                 </h2>
@@ -1217,8 +1250,8 @@ try {
                                        onClick={handleShowPayment}
                                        className={airtimestyles.labelInput}
                                      >
-                                       <h2 className="text-[#7C7C7C]">{walletNameGlo}</h2>
-                                       <h2 className="text-[#7C7C7C]">
+                                       <h2  className= {`${isDarkMode ?  "text-white" : "text-[#7E7E7E]"}`}>{walletNameGlo}</h2>
+                                       <h2 className= {`${isDarkMode ?  "text-white" : "text-[#7E7E7E]"}`}>
                                         {paymentAmount.toLocaleString()}
                                        </h2>
                                      </li>
@@ -1342,9 +1375,8 @@ try {
                
                                            
                                              
-                                               {methodOption.code +
-                                                 " " +
-                                                 methodOption.balance}
+                                               {methodOption.code} {" "}
+                                                {balanceLoader === true && methodOption.id ===1 ? <BalanceLoading/> :  methodOption.balance}
                                              
                                            </div>
                                          );
@@ -1619,12 +1651,18 @@ try {
                         numInputs={4}
                         shouldAutoFocus={true}
                        inputStyle={{
-                      color: "#000000",
-                      fontSize: '14px',
-                      fontWeight: 700,
-                      borderRadius: 4,
-                      height: '35px',
-                      width: '35px',
+                       color: isDarkMode ? "#ffffff" : "#000000",
+                        // width: 30,
+                        // height: 30,
+                        // borderRadius: 3,
+                        fontWeight: 700,
+                        borderRadius: 4,
+                        height: "35px",
+                        width: "35px",
+                        backgroundColor: isDarkMode ? "black" : "white",
+                        border: isDarkMode
+                          ? "1px solid white"
+                          : "1px solid #ccc",
                     }}
                         renderInput={(props) => (
                           <input {...props} className="inputOTP mx-[3px]"/>
@@ -1634,7 +1672,10 @@ try {
                         className="text-[#0003] text-[13px] md:text-3xl"
                         onClick={toggleVisibility}
                       >
-                        {isVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
+                      {isVisible ? <AiFillEye className={`w-[16px] h-[16px]
+            lg:w-[24px] lg:h-[24px]  ${isDarkMode ? " text-white" : "text-black" }`}/> : <AiFillEyeInvisible  
+                         className={`w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]
+                     ${isDarkMode ? " text-white" : "text-black" }`}/>}
                       </div>
                     </div>
                      <Link to={{
@@ -1657,10 +1698,10 @@ try {
                 <button
                   onClick={(e) => {
                     console.log("inputPin", inputPin);
-                    const DataHandler = () => {
+                    const DataHandler = async() => {
 
                       // Close modal on PIN success
-                      inputPinHandler(); // Proceed with purchase
+                    await  inputPinHandler(); // Proceed with purchase
                     };
                     const setFailed = (ErrorType) => {
                       if (ErrorType === "unauthorised") {
@@ -1707,40 +1748,51 @@ try {
           )}
 
           {glopurchaseStatus && (
-            <Modal>
-              <div
-                className={` ${
-                  toggleSideBar ? "confirm02" : "confirm2"
-                } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px] my-[20px]
-                  h-[200px] overflow-y-scroll md:overflow-y-auto md:h-auto`}
-              >
-                <hr
-                  className="h-[8px] bg-[#04177f] lg:mt-[30px] border-none  
-                md:mt-[2%] mt-[30px] md:h-[10px]"
-                />
-                <div className="md:mt-[15%] lg:mt-[10%]">
-                  <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[8%] md:my-[5%] lg:my-[3%]">
-                    Transaction Failed
-                  </p>
-                  <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
-                    <img src={Failed} alt="" />
-                    <p className="text-[8px] md:text-[12px] text-[#04177f]">
-                      An unexpected error has occurred, please try again.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex justify-center items-center gap-[20px]">
-                  <button
-                    onClick={(e) => {
-                      DoneChangeHandler();
-                    }}
-                    className="bg-[#04177f] my-[%] w-[100px] cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[%] md:rounded-[8px] md:text-[16px] lg:w-[px] lg:h-[38px] lg:my-[2%]"
-                  >
-                    Done
-                  </button>
-
-                  <Link
+           <Modal>
+                    <div className={`w-[90%] md:w-[50%] lg:w-[35%] mx-auto 
+                     rounded-lg overflow-hidden
+                      ${isDarkMode ? "bg-black border-[1px] rounded-[7px] border-white": "bg-white"}`}>
+                      <div className="flex justify-between items-center p-4">
+                        <img
+                        
+                          className={`w-6 h-6  `}
+                          src="/Images/login/arpLogo.png"
+                          alt="Logo"
+                        />
+                        <img
+                          onClick={() => setGloPurchaseStatus(false)}
+                          className="w-6 h-6 cursor-pointer"
+                          src="/Images/transferImages/close-circle.png"
+                          alt="Close"
+                        />
+                      </div>
+                      <hr className="h-1 bg-[#04177f] border-none" />
+                      <div className="p-4 text-center">
+                        <h2 className="text-lg md:text-xl font-semibold my-4">
+                          Transaction Failed
+                        </h2>
+                        <img
+                          className={`w-32 h-32 mx-auto my-6 
+                             ${isDarkMode ? "bg-black rounded-full border-[0.1px] border-black": "bg-white"}`}
+                          src="./Images/failed.png"
+                          alt="Failed"
+                        />
+                        <p className="text-sm text-red-500 font-[600] mb-8">
+                          {gloPurchaseErrorType}
+                        </p>
+                        {gloSuccessfulResponse?.Status  ?
+                         (
+                        <div className="flex gap-[10px] justify-between w-full px-[10px]">
+                          <button
+                            onClick={() => DoneChangeHandler()}
+                            className="bg-[#04177f] w-[50%] max-w-xs mx-auto py-2
+                     text-white rounded-md font-medium"
+                          >
+                            Done
+                          </button>
+                       
+          
+                        <Link
                     to="/GloFailedReceipt"
                     state={{
                       networkName: "GLO",
@@ -1755,22 +1807,34 @@ try {
                       gloorderID: gloorderID,
                       glodescription: glodescription,
                       gloReceiptinfo: gloReceiptInfo,
-                    }}
-                  >
-                    <button
-                      onClick={() => {
-                        // e.preventDefault();
-                        setGloPurchaseStatus(false);
-                      }}
-                      className="bg-white my-[%] w-[100px] cursor-pointer text-[10px] font-extrabold h-[px] rounded-[6px] md:w-[%] md:rounded-[8px] md:text-[16px] lg:w-[px] lg:h-[38px] lg:my-[2%]"
-                    >
-                      Receipt
-                    </button>
-                  </Link>
-                </div>
-              </div>
-            </Modal>
+                    }} 
+                            
+                            className={`w-[50%]  max-w-xs 
+                            mx-auto py-2 
+                     rounded-md font-medium ${isDarkMode 
+                      ? "text-white bg-black border-[0.2px] border-blue-900 rounded-[10px]"
+                       :  "bg-white border-[0.2px]  rounded-[2px] text-black border-blue-900"}`}
+                          >
+                            Receipt
+                          </Link>
+                        </div>
+                   
+                          ): (
+                             <button
+                            onClick={() => DoneChangeHandler()}
+                            className="bg-[#04177f] w-[100%] max-w-xs mx-auto py-2
+                     text-white rounded-md font-medium"
+                          >
+                            Done
+                          </button>
+                           )}
+                           </div>
+                          
+                    </div>
+                  </Modal>
           )}
+
+      
 
           {transactSuccessPopUp && (
             <Modal>
@@ -1782,7 +1846,7 @@ try {
                 className={` bvnQuery lg:rounded-[12px] rounded-[10px] 
               h-[520px] ${ toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
               } w-[100%] md:w-[60%] overflow-auto  ${isDarkMode ? "bg-black text-white border rounded-[10px] border-white": "bg-white text-black"} `}>
-                <div className="flex justify-end pr-2 lg:py-[10px] py-[7px]">
+                <div className="flex justify-between px-2 lg:py-[10px] py-[7px]">
                   <img
                     onClick={() => {
                       setTransactSuccessPopUp(false);
@@ -1832,16 +1896,14 @@ try {
                     <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`} >
                       Network
                     </span>
-              <div className="rounded-full w-[12.02px]
-               h-[12.02px] flex items-center justify-center 
-                overflow-hidden md:w-[12.02px] lg:w-[25px] 
-             md:h-[12.02px] lg:h-[25px]">
+              <div className="flex gap-[5px] h-[20px] items-center">
         <img src={GloLogo} alt=""
      className="w-full h-full object-cover"/>
-                      </div>
-                      <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[black]"}`}>
+      <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[black]"}`}>
                         GLO
                       </span>
+                      </div>
+                     
                   
                   </div>
 
@@ -2001,7 +2063,10 @@ try {
                    ? "bg-[#63616188] cursor-not-allowed"
                  : "bg-primary"
              }`}
-              onClick={handleProceed}
+              onClick={(e)=> {
+                handleProceed(e);
+                //alert("Proceed")
+              }}
               disabled={
                 !selectedProductGlo ||
                 !selectedOptionGlo ||

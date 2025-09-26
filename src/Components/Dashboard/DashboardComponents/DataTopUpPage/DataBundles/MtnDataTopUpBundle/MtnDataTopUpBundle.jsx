@@ -22,13 +22,13 @@ import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import Joi from "joi";
 import airtimestyles from "../../../../../AirTimePage/AirtimeVtu.module.css";
-import Failed from "./MtnDataTopUpBundleImages/Failed.svg";
 import axiosInstance from "../../../../../ApiCollection.jsx/apiClient";
 import { InternalLoginSession, RestrictionPopUp, VerifyTransPin } from "../../../../../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../../../../../Loader/Loader";
 import {
   GetFunction,
 } from "../../../../../ApiCollection.jsx/ApiBuck";
+import { BalanceLoading } from "../../../../../Loader/Loader";
 import { GetLocalStorage } from "../../../../../LocalStorage/LocalStorage";
 
 
@@ -45,7 +45,11 @@ const MtnDataTopUpBundle = () => {
     useContext(ContextProvider);
   const { recipientNamesMtn, setRecipientNamesMtn } =
     useContext(ContextProvider);
-  const { walletNameMtn, setWalletNameMtn, authenticationOpen } = useContext(ContextProvider);
+  const { walletNameMtn, 
+    setWalletNameMtn,
+     authenticationOpen,
+    purchaseMtnErrorType, 
+    setPurchaseMtnErrorType} = useContext(ContextProvider);
 
   const [showProductList, setShowProductList] = useState(false);
   const [showOptionList, setShowOptionList] = useState(false);
@@ -74,7 +78,9 @@ const MtnDataTopUpBundle = () => {
   const [mtnReceiptInfo, setMtnReceiptInfo] = useState("");
   const [sessionModal, setSessionModal] = useState(false);
   const [checkNetworkError, setCheckNetworkError] = useState(false)
- 
+   const [mtnSuccessfulResponse, setMtnSuccessfulResponse] = useState({});
+   const [balanceLoader, setBalanceLoader] = useState(false)
+   
   let balanceStringToNum = Number(newBalance);
 const assumedString = selectedAmountMtn?.toString()
   let mtnDataAmount = Number(selectedAmountMtn?.toString()
@@ -304,7 +310,7 @@ const assumedString = selectedAmountMtn?.toString()
            if (ErrorType === "unauthorised") {
              await GetFunction(
                `balance`,
-               setLoading,
+               setBalanceLoader,
                SuccessHandler,
                //Handling the error Use Cases of the Unauthorised inside
                // of the statement.
@@ -314,7 +320,7 @@ const assumedString = selectedAmountMtn?.toString()
                  }else if(ErrorType === "Server error"){
                      await GetFunction(
            "balance",
-           setLoading,
+           setBalanceLoader,
            SuccessHandler,
           async(ErrorType)=> {
            if(ErrorType === "Server error"){
@@ -341,7 +347,7 @@ const assumedString = selectedAmountMtn?.toString()
            }else if(ErrorType === "Server error"){
                await GetFunction(
            "balance",
-           setLoading,
+           setBalanceLoader,
            SuccessHandler,
           async(ErrorType)=> {
             if(ErrorType === "unauthorised"){
@@ -355,7 +361,7 @@ const assumedString = selectedAmountMtn?.toString()
              }else if(ErrorType === "Server error"){
                   await GetFunction(
            "balance",
-           setLoading,
+           setBalanceLoader,
            SuccessHandler,
           async(ErrorType)=> {
            //if Statements
@@ -406,7 +412,7 @@ const assumedString = selectedAmountMtn?.toString()
          }
          await GetFunction(
            "balance",
-           setLoading,
+           setBalanceLoader,
            SuccessHandler,
            FailedHandler,
            setPassDataBalance
@@ -415,14 +421,9 @@ const assumedString = selectedAmountMtn?.toString()
   useEffect(() => {
     // Simulate async data loading
  if (Data?.ConfirmAcc === "true"){                     // Simulate async data loading
-                     if(newBalance === "" ||
-       newBalance === null ||
-        newBalance === undefined){
-                        GetBalance();
+                GetBalance();
           setNewBalance(passDataBalance?.data?.data?.data !== undefined
                ? passDataBalance?.data?.data?.data?.balance : "");
-                       
-                     }
                     }else {
                       setRestrictUser(true);
                     }
@@ -624,19 +625,39 @@ const assumedString = selectedAmountMtn?.toString()
         setMtnOrderID(resData?.order_id); // No `order_id`, using `id` instead
         setMtnDescription(`${resData?.network} - ${resData?.plan_name}`); // Fabricated description
         if (response.status === 200 || response.status === 201) {
+          setMtnSuccessfulResponse(response?.data?.data?.data);
+         
           // Success response
+          if(response?.data?.data?.data?.Status === "success"
+            || response?.data?.data?.data?.Status === "delivered"
+            || response?.data?.data?.data?.Status === "successful"
+            || response?.data?.data?.data?.Status === "successfully"
+          ){
           setTransactSuccessPopUp(true);
+          setPurchaseMtnErrorType("")
           setInputPin("");
           setConfirm(false);
+          }else if(response?.data?.data?.data?.Status === "failed"
+            || response?.data?.data?.data?.Status === "Failed"
+           ){
+            setPurchaseMtnErrorType("Plan Unavailable: Purchase Failed")
+         setPurchaseStatus(true);
+          setInputPin("");
+          setConfirm(false);
+          }
           return { statusCode: response.status, data: response.data };
         }
       } catch (error) {
         if (error && error.response === undefined) {
-          alert("Your internet connection is quite unstable.");
+          setPurchaseMtnErrorType("Network error: Purchase Failed")
+        setPurchaseStatus(true)
+              setConfirm(false);
+          setInputPin("");
         } else if (
           error &&
-          (error.response.status === 500 || error.response.status === 400)
-        ) {
+          error.response.status === 500 
+        ){
+          setPurchaseMtnErrorType("Server error: Purchase Failed")
           setPurchaseStatus(true); // Show failure popup
           setConfirm(false);
           setInputPin("");
@@ -667,8 +688,27 @@ const assumedString = selectedAmountMtn?.toString()
           } else {
             return setSessionModal(true);
           }
+        }else if (
+          error &&
+         (error.response.status === 400 )
+        ) {
+          setPurchaseMtnErrorType("Unexpected error: Purchase Failed")
+          setPurchaseStatus(true); // Show failure popup
+          setConfirm(false);
+          setInputPin("");
+        } else if (
+          error &&
+         (error.response.status === 404 )
+        ) {
+          setPurchaseMtnErrorType("Network error: Purchase Failed")
+          setPurchaseStatus(true); // Show failure popup
+          setConfirm(false);
+          setInputPin("");
         } else {
-          alert("Check your internet connection");
+           setPurchaseMtnErrorType("Unexpected error: Purchase Failed")
+          setPurchaseStatus(true); // Show failure popup
+          setConfirm(false);
+          setInputPin("");
         }
       } finally {
         setLoading(false);
@@ -690,6 +730,8 @@ const assumedString = selectedAmountMtn?.toString()
     setSelectedAmountMtn("");
     setRecipientNamesMtn("");
     setWalletNameMtn("");
+    setPaymentSelected(false);
+    setPaymentAmount("")
     setRecipientPhoneNumberMtn("");
     setPurchaseStatus(null);
     setRecipientPhoneNumberMtn("");
@@ -710,6 +752,7 @@ const assumedString = selectedAmountMtn?.toString()
    }
   })
 }
+
   return (
     <DashBoardLayout>
       <div
@@ -1076,7 +1119,7 @@ const assumedString = selectedAmountMtn?.toString()
   `}
                   >
                     {loadingPlans ? (
-                      <div>Loading plans...</div>
+                      <p className={`"bg-white text-black`}>Loading plans...</p>
                     ) : (
                       productPlans.map((plan) => (
                         <div
@@ -1229,7 +1272,8 @@ const assumedString = selectedAmountMtn?.toString()
             </div>
 
             <div className="flex flex-col lg:gap-[12px] gap-[7px]">
-              <div onClick={handleShowPayment}>
+              <div className="flex flex-col lg:gap-[12px] gap-[7px]"
+               onClick={handleShowPayment}>
                 <h2
                   className={`lg:text-[18px] mt-[5px] lg:leading-[24px] mb-2 text-[15px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
                     isDarkMode ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
@@ -1254,8 +1298,8 @@ const assumedString = selectedAmountMtn?.toString()
                       onClick={handleShowPayment}
                       className={airtimestyles.labelInput}
                     >
-                      <h2 className="text-[#7C7C7C]">{walletNameMtn}</h2>
-                      <h2 className="text-[#7C7C7C]">
+                      <h2 className= {`${isDarkMode ?  "text-white" : "text-[#7E7E7E]"}`}>{walletNameMtn}</h2>
+                      <h2 className= {`${isDarkMode ?  "text-white" : "text-[#7E7E7E]"}`}>
                        {paymentAmount.toLocaleString()}
                       </h2>
                     </li>
@@ -1386,10 +1430,8 @@ const assumedString = selectedAmountMtn?.toString()
                                              />
                
                                            
-                                             
-                                               {methodOption.code +
-                                                 " " +
-                                                 methodOption.balance}
+                          {methodOption.code } {" "} 
+                                               {methodOption.id === 1 && balanceLoader === true ? <BalanceLoading/> : methodOption.balance}
                                              
                                            </div>
                                          );
@@ -1619,51 +1661,52 @@ const assumedString = selectedAmountMtn?.toString()
           )}
 
           {purchaseStatus && (
-            <Modal>
-              <div
-                className={` ${
-                  toggleSideBar ? "confirm02" : "confirm2"
-                } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px] my-[20px]
-                  h-[200px] overflow-y-scroll md:overflow-y-auto md:h-auto `}
-              >
-                {/* <div className="flex justify-end px-2">
-                  <img
-                    onClick={() => setPurchaseStatus(null)}
-                    className="cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[35px] lg:h-[35px] "
-                    src={Cancel}
-                    alt=""
-                  />
-                </div> */}
+       
+              <Modal>
+          <div className={`w-[90%] md:w-[50%] lg:w-[35%] mx-auto 
+           rounded-lg overflow-hidden
+            ${isDarkMode ? "bg-black border-[1px] rounded-[7px] border-white": "bg-white"}`}>
+            <div className="flex justify-between items-center p-4">
+              <img
+              
+                className={`w-6 h-6  `}
+                src="/Images/login/arpLogo.png"
+                alt="Logo"
+              />
+              <img
+                onClick={() => setPurchaseStatus(false)}
+                className="w-6 h-6 cursor-pointer"
+                src="/Images/transferImages/close-circle.png"
+                alt="Close"
+              />
+            </div>
+            <hr className="h-1 bg-[#04177f] border-none" />
+            <div className="p-4 text-center">
+              <h2 className="text-lg md:text-xl font-semibold my-4">
+                Transaction Failed
+              </h2>
+              <img
+                className={`w-32 h-32 mx-auto my-6 
+                   ${isDarkMode ? "bg-black rounded-full border-[0.1px] border-black": "bg-white"}`}
+                src="./Images/failed.png"
+                alt="Failed"
+              />
+              <p className="text-sm text-red-500 font-[600] mb-8">
+                {purchaseMtnErrorType}
+              </p>
+              {mtnSuccessfulResponse?.Status  ?
+               (
+              <div className="flex gap-[10px] justify-between w-full px-[10px]">
+                <button
+                  onClick={() => doneChangeHandler()}
+                  className="bg-[#04177f] w-[50%] max-w-xs mx-auto py-2
+           text-white rounded-md font-medium"
+                >
+                  Done
+                </button>
+             
 
-                <hr
-                  className="h-[8px] bg-[#04177f] lg:mt-[30px] border-none  
-                md:mt-[2%] mt-[30px] md:h-[10px]"
-                />
-                <div className="md:mt-[15%] lg:mt-[10%]">
-                  <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[8%] md:my-[5%] lg:my-[3%]">
-                    Transaction Failed
-                  </p>
-                  <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
-                    <img src={Failed} alt="" />
-                    <p className="text-[8px] md:text-[12px] text-[#04177f]">
-                      An error has occurred, please try again.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex justify-center items-center gap-[20px]">
-                  <button
-                    onClick={(e) => {
-                      // e.preventDefault();
-                      // setTransaction(false);
-                      doneChangeHandler();
-                    }}
-                    className="bg-[#04177f] my-[%] w-[100px] cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[%] md:rounded-[8px] md:text-[16px] lg:w-[px] lg:h-[38px] lg:my-[2%]"
-                  >
-                    Done
-                  </button>
-
-                  <Link
+              <Link
                     to="/MtnFailedReceipt"
                     state={{
                       networkName: "MTN",
@@ -1679,23 +1722,33 @@ const assumedString = selectedAmountMtn?.toString()
                       mtndescription: mtndescription,
                       mtnReceiptInfo: mtnReceiptInfo,
                     }}
-                  >
-                    <button
-                      onClick={() => {
-                        // e.preventDefault();
-                        setPurchaseStatus(false);
-                      }}
-                      className="bg-white my-[%] w-[100px] cursor-pointer
-                       text-[10px] font-extrabold h-[px] rounded-[6px] md:w-[%]
-                        md:rounded-[8px] md:text-[16px] lg:w-[px] lg:h-[38px] lg:my-[2%]"
-                    >
-                      Receipt
-                    </button>
-                  </Link>
-                </div>
+                  
+                  className={`w-[50%]  max-w-xs 
+                  mx-auto py-2 
+           rounded-md font-medium ${isDarkMode 
+            ? "text-white bg-black border-[0.2px] border-blue-900 rounded-[10px]"
+             :  "bg-white border-[0.2px]  rounded-[2px] text-black border-blue-900"}`}
+                >
+                  Receipt
+                </Link>
               </div>
-            </Modal>
+         
+                ): (
+                   <button
+                  onClick={() => doneChangeHandler()}
+                  className="bg-[#04177f] w-[100%] max-w-xs mx-auto py-2
+           text-white rounded-md font-medium"
+                >
+                  Done
+                </button>
+                 )}
+                 </div>
+                
+          </div>
+        </Modal>
+         
           )}
+
 
           {confirm && (
             <Modal>

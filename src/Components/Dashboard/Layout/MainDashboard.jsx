@@ -23,9 +23,35 @@ import { CheckVirtualAcc, InternalLoginSession } from "../../ApiCollection.jsx/A
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { GetFunction} from "../../../Components/ApiCollection.jsx/ApiBuck";
+//import { useImageHook } from "../../useImageHook";
+
+
 export const MainDashboard = (Data) => {
+//   const DashBoardImages = [
+//     "./Images/dashboardImages/hero1image.png",
+//     "./Images/dashboardImages/hero2image.png",
+//     "./Images/dashboardImages/hero3image.png",
+//     "./Images/dashboardImages/topup.png",
+//     "./Images/dashboardImages/withdraw.png",
+//     "./Images/dashboardImages/transfer.png",
+//     "./Images/dashboardImages/convert.png",
+//     "./Images/dashboardImages/arrowright.png",
+//     "./Images/dashboardImages/feature1.png",
+//     "./Images/dashboardImages/feature2.png",
+//     "./Images/dashboardImages/feature3.png",
+//     "./Images/dashboardImages/feature4.png",
+//     "./Images/dashboardImages/feature5.png",
+//     "./Images/dashboardImages/feature6.png",
+//     "./Images/dashboardImages/feature7.png",
+//     "./Images/dashboardImages/feature8.png",
+//     "./Images/dashboardImages/feature9.png",
+//     "./Images/dashboardImages/feature10.png",
+// ]
+// const ImageLoadingExecution = useImageHook(DashBoardImages);
+
      const [loading, setLoading] = useState(false)
     const [userPoints, setUserPoints] = useState(0);
+   
    
   
 
@@ -262,9 +288,7 @@ if((clickedoption === "NGN")){
       }
  }
       
-
-     const ValueRef = useRef()
-   
+const ValueRef = useRef()
  Data = GetLocalStorage()
  
   useEffect(() => {
@@ -311,7 +335,6 @@ if((clickedoption === "NGN")){
 
   //Fetch Points
    useEffect(() => {
-    
      const  successHandler = (response) => {
         if (!response?.data?.data) return;
         // console.log("fetch points succefully");
@@ -346,8 +369,17 @@ if((clickedoption === "NGN")){
          successHandler,
           FailedHandler,
            ()=> {})
+        
            //eslint-disable-next-line
     }, []);
+// if(!ImageLoadingExecution) {
+//     return (
+// <div className ="h-[100%] w-[100%] items-center justify-center">
+//   Loading.....
+// </div>
+//   )
+// }
+
 return (
     <div className="relative h-[150%] w-[100%]">
  {/* ============SIDE BAR========= */}

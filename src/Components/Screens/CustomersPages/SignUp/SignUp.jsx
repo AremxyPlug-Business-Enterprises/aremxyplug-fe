@@ -34,7 +34,8 @@ export const SignUp = () => {
     handleSubmit,
     setShowPassword,
     setShowPasswordTwo,
-    checkboxChecked,
+    errorSpecialCharacterUsername,
+    setErrorSpecialCharacterUsername,
     loadSignUp,
     setVerification
   } = useContext(ContextProvider);
@@ -85,7 +86,7 @@ const setNav = () => {
     // confirmPassword,
   } = state;
   const checkInput = country?.length > 1 && email?.length > 1 && phoneNumber?.length > 1 && userName?.length > 1
-  && password?.length > 1 && fullName?.length > 1 && checkbox === true;
+  && password?.length > 1 && fullName?.length > 1 && checkbox === true && errorSpecialCharacterUsername === false;
 
 
   const [showPassModal, setShowPassModal] = useState(false);
@@ -102,6 +103,16 @@ const ContinueSignUp = ()=> {
   setContinueConsentModal(false);
 }
 
+
+
+
+const ChangeEventFunctionUsername = (value)=> {
+       if(value?.length > 1 && value?.includes("@")){
+      setErrorSpecialCharacterUsername(true)
+   }else{
+    setErrorSpecialCharacterUsername(false)
+   }
+}
 
   return (
     <div className="h-[240%] pb-[70px] lg:pb-[0px] lg:h-[200%] bg-[#04177f]
@@ -220,13 +231,24 @@ const ContinueSignUp = ()=> {
                 value={state.userName}
                 name="userName"
                 placeholder ="John"
-                onChange={changeHandler}
+                onChange={(e)=> {
+                 changeHandler(e);
+               ChangeEventFunctionUsername(e.target.value)
+                }}
               />
             </div>
             {errors.userName && (
               <div className="text-[12px] text-red-500 italic lg:text-[14px]">
                 {errors.userName}
               </div>
+            )}
+            {(!errors.userName && errorSpecialCharacterUsername) &&(
+              
+              <p className="text-[12px] text-red-500 italic lg:text-[14px]">
+                 The Username field cannot accept the @ special character,
+                  you can include numbers for differentiation with names similar to yours.
+              </p>
+        
             )}
           </div>
           {/* =========UserName Input start======== */}
@@ -285,7 +307,7 @@ const ContinueSignUp = ()=> {
                 selected={phoneNumber}
                 value={state.phoneNumber ? state.phoneNumber : '234'}
                 name="phoneNumber"
-                placeholder="xxxxxxxxxx (10 digits)"
+                placeholder="XX XXXX XXXX"
                 onChange={(value)=>handlePhoneNumberChange(value)}
                 enableSearch
                 disableSearchIcon
@@ -485,7 +507,11 @@ const ContinueSignUp = ()=> {
         <button
           onClick={(e)=>{
            handleSubmit(e);
-         
+   
+            if(checkInput === false && window.innerWidth < 420){
+              window.scrollTo({top : 100, behavior : "smooth"})
+            
+           }
           
           }}
           disabled={checkInput ? false : true}

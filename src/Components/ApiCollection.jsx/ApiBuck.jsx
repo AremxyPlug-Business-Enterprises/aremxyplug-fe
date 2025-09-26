@@ -436,6 +436,31 @@ export const CheckVirtualAcc = async(authToken, customerDetail, setLoading,
     }
   }
 };
+
+
+export const ImageLoader =(ImageUrl)=> {
+  return Promise.allSettled(
+    ImageUrl.map((imageUrl)=> {
+      return new Promise((resolve, reject)=> {
+      const imageInstance = new Image();
+       imageUrl  = imageInstance.src;
+       imageInstance.onload = resolve;
+       imageInstance.onerror = reject
+       
+      })
+    })
+  )
+
+}
+
+
+
+
+
+
+
+
+
 //API TO GET TO PURCAHSE TV SUBSCRIPTION
 //CUSTOM FUNCTION FOR PURCHASE O ANY PLAN
 

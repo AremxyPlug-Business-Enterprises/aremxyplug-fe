@@ -38,37 +38,39 @@ export const ProtectedRoute = ({children}) => {
  const getToken = localStorage.getItem("getToken");
 const UserStatus = localStorage.getItem("UserStatus");
  if((!authToken && !getToken) || !UserStatus  ){
+    RemoveLocalStorage();
      return <Navigate to ="/login" replace/>
   }
-const TrackSessionActicty = ()=> {
-    const expiryTime = localStorage.getItem("SessionExpiration");
-    if(!expiryTime) return false;
+
+// const TrackSessionActicty = ()=> {
+//     const expiryTime = localStorage.getItem("SessionExpiration");
+//     if(!expiryTime) return false;
    
-return Date.now() > Number(expiryTime)
-}
+// return Date.now() > Number(expiryTime)
+// }
 
-const AutoLogOut = ()=> {
-    if(TrackSessionActicty()){
-       alert("Session Expired: You have been logged out of your session due to inactivity")
-        RemoveLocalStorage();
-        localStorage.removeItem("SessionExpiration")
-        window.location.href= "/Login" ;
-}}
+// const AutoLogOut = ()=> {
+//     if(TrackSessionActicty()){
+//        alert("Session Expired: You have been logged out of your session due to inactivity")
+//         RemoveLocalStorage();
+//         localStorage.removeItem("SessionExpiration")
+//         window.location.href= "/Login" ;
+// }}
 
-setInterval(AutoLogOut, 60000)
-function ResetTimer(){
-    const Reset = 900  *  1000;
-    const resetExpiration = Date.now() + Reset;
-   return localStorage.setItem("SessionExpiration", resetExpiration);
-}
+// setInterval(AutoLogOut, 60000)
+// function ResetTimer(){
+//     const Reset = 900  *  1000;
+//     const resetExpiration = Date.now() + Reset;
+//    return localStorage.setItem("SessionExpiration", resetExpiration);
+// }
 
 
-window.onclick = ResetTimer;
-window.onload = ResetTimer;
-window.onkeyup = ResetTimer;
-window.onkeydown = ResetTimer;
-window.onmousedown = ResetTimer;
-window.onmouseenter = ResetTimer;
+// window.onclick = ResetTimer;
+// window.onload = ResetTimer;
+// window.onkeyup = ResetTimer;
+// window.onkeydown = ResetTimer;
+// window.onmousedown = ResetTimer;
+// window.onmouseenter = ResetTimer;
 
 
 

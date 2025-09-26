@@ -1277,7 +1277,8 @@ window.addEventListener("online", ()=> {
            </h2>
            <img
               className={`w-32 h-32 mx-auto my-6 
-                   ${isDarkMode ? "bg-black rounded-full border-[0.1px] border-black": "bg-white"}`}
+                   ${isDarkMode ? "bg-black rounded-full border-[0.1px] border-black"
+                    : "bg-white"}`}
              src="./Images/failed.png"
              alt="Failed"
            />
@@ -1300,7 +1301,8 @@ window.addEventListener("online", ()=> {
                   }}
                     className={`w-[50%]  max-w-xs 
                   mx-auto py-2 
-           rounded-md font-medium ${isDarkMode ? "text-blue-900 bg-white border-[0.2px] rounded-[10px]" : "bg-black border-[0.2px] text-white border-blue-900"}`}>
+           rounded-md font-medium ${isDarkMode ? "text-blue-900 bg-white border-[0.2px] rounded-[10px]" 
+           :  "bg-white border-[0.2px]  rounded-[2px] text-black border-blue-900"}`}>
                   Receipt
                 </button>
               </div>
