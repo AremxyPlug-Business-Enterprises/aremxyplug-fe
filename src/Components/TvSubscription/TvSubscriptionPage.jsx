@@ -466,7 +466,7 @@ return(
                
             </div>
              {sessionModal && (
-                    <InternalLoginSession/>
+                    <InternalLoginSession setExpiredSessionLogin ={setSessionModal}/>
                 )}
         </DashBoardLayout>
     )

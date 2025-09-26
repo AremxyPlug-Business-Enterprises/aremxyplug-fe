@@ -3,7 +3,7 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { Link } from "react-router-dom";
 import { useContext, useRef } from "react";
-import styles from '../../../../../AirTimePage/AirtimeVtu.module.css'
+import styles from "../../../TransferComponent/transfer.module.css";
 import { ContextProvider } from "../../../../../Context";
 import { useLocation } from 'react-router-dom';
 import { DashBoardLayout } from "../../../../Layout/DashBoardLayout";
@@ -99,21 +99,24 @@ export const GloReceipt = (Data) => {
     <DashBoardLayout>
       <div className="flex flex-col gap-[35px] lg:gap-[85px]">
         <div
-          className={` ${styles.receipt} ${toggleSideBar ? "" : "lg:w-[880px] "
-            } w-full lg:mx-auto`}
+            className={` ${styles.receipt} ${
+                               toggleSideBar ? "" : "lg:w-[880px] "
+                             } w-full lg:mx-auto  ${isDarkMode ? "border border-white" : ""}` } 
+                  
         >
           <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
-            <Link to="/">
+            <Link to= {null}>
               <img
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[29px]"
                 src="/Images/login/arpLogo.png"
                 alt=""
               />
             </Link>
-            <Link to="/MtnDataTopUpBundle">
+            <Link to="/GloDataBundle">
               {" "}
               <img
-                className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
+                className="w-[18px] h-[18px] md:w-[35px]
+                 md:h-[35px] lg:w-[29px] lg:h-[29px]"
                 src="/Images/transferImages/close-circle.png"
                 alt=""
                 onClick={handleChange}
@@ -123,7 +126,9 @@ export const GloReceipt = (Data) => {
           <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
           <div ref={contentRef}>
             {" "}
-            <h3 className="font-extrabold text-[12px] my-[2%] text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
+            <h3 className="font-extrabold text-[12px] my-[2%]
+             text-center md:text-[20px] md:my-[3%]
+              lg:text-[16px] lg:my-[2%]">
               Transaction Receipt
             </h3>
             <div className="w-full flex justify-center ">
@@ -133,10 +138,12 @@ export const GloReceipt = (Data) => {
                 alt="/"
               />
             </div>
-            <h3 className="font-extrabold text-[12px] mt-[2%] text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
+            <h3 className="font-extrabold text-[12px] mt-[2%] 
+            text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
               Transaction Successful on
             </h3>
-            <span className="text-[11px] text-[#0008] font-extrabold flex justify-center items-center">
+            <span className="text-[11px] text-[#0008]
+             font-extrabold flex justify-center items-center">
               {date.toLocaleDateString(undefined, {
                 year: "numeric",
                 month: "long",
@@ -147,10 +154,12 @@ export const GloReceipt = (Data) => {
                 hour12: true,
               })}
             </span>
-            <p className="text-[9px] text-[#27AE60] bg-[#D5F6E3] rounded-[11px] border-2 border-[#27AE60] py-[5px] px-[2px] text-center mx-[5px] lg:mx-[150px] md:mx-[100px] my-2 md:text-[14px] lg:text-[14px]">
+            <p className="text-[9px] text-[#27AE60] bg-[#D5F6E3]
+             rounded-[11px] border-2 border-[#27AE60]
+              py-[5px] px-[2px] text-center mx-[5px] lg:mx-[150px] md:mx-[100px] my-2 md:text-[14px] lg:text-[14px]">
               You have successfully purchased{" "}
-              <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[16px]">
-                {selectedProduct + " " + selectedOption}
+              <span className=" font-extrabold text-[10px] md:text-[16px] lg:text-[16px]">
+                {selectedProduct + " " + selectedOption} {" "}
               </span>
               from your NGN wallet to{" "}
             </p>
@@ -183,7 +192,7 @@ export const GloReceipt = (Data) => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Amount</p>
-                  <span>&#8358;{selectedAmount}</span>
+                  <span>{selectedAmount}</span>
                 </div>
               </div>
 
@@ -239,11 +248,19 @@ export const GloReceipt = (Data) => {
                 </div>
               </div>
             </div>
-            <div className="rounded-[8px] bg-[#E2F3FF] mx-4 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]">
-              <p className="text-[8px] text-center mx-auto w-[200px] md:text-[14px] md:w-[80%] lg:text-[16px]">
-                Earn free points on every successful transactions, redeem your earned points to real money, withdrawn to your bank account instantly.
-              </p>
-            </div>
+         <div className={`bg-[#F2FAFF] w-[90%]   mx-auto p-[8px] my-5 flex justify-between 
+        items-center md:p-[9px] lg:p-[10px] rounded-[5px] lg:rounded-[10px]
+         ${
+                isDarkMode ? "bg-slate-800 " : "bg-[#F2FAFF]"
+              }`}>
+            <p className={`text-[10px] leading-[13px] text-center
+             md:text-[14px] md:leading-[18px] lg:text-[14px]  font-semibold 
+             ${isDarkMode ? "text-white" : "text-black"}`}>
+           Earn free points on every successful transactions,
+            redeem your earned points to real money, withdrawn to your bank account instantly.
+            </p>
+        
+                </div>
           </div>
 
           <div className="flex w-[70%] mx-auto mb-[5%] md:w-[60%] ">
@@ -265,15 +282,30 @@ export const GloReceipt = (Data) => {
             </button>
           </div>
         </div>
-        <div
-          className={`${isDarkMode ? "mb-[1%]" : "mb-[5%]"
-            } flex gap-[15px] justify-center items-center lg:mb-[%]`}
-        >
-          <div className={styles.help}>
-            <h2>You need help?</h2>
-            <Link to={`/ContactUs`} className={styles.btnContact}>Contact Us</Link>
-          </div>
-        </div>
+         <div
+                className={`${
+                  isDarkMode ? "mb-[1%]" : "mb-[5%]"
+                } flex gap-[15px] justify-center items-center lg:mb-[%]`}
+              >
+             <div
+                       className={`${
+                         isDarkMode ? "mb-[1%]" : "mb-[5%]"
+                       } flex gap-[15px] justify-center items-center mt-[80px] lg:mb-[%]`}
+                     >
+                       <div className="text-[10px] md:text-[12px] lg:text-base">
+                         You need help ?
+                       </div>
+                       <Link to="/ContactUs">
+                         <div
+                           className={`${isDarkMode ? "" : "bg-[#04177f]"} ${
+                             styles.contactus
+                           } text-[8px] p-1 text-white rounded-[8px] lg:text-sm`}
+                         >
+                           Contact Us
+                         </div>
+                       </Link>
+                     </div>
+                     </div>
       </div>
     </DashBoardLayout>
   );

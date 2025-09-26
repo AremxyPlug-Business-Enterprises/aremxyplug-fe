@@ -728,6 +728,11 @@ const Decoders  = [
   navigate("/Showmax")
   }
 
+  const ReceiptButton = () => {
+    setFailedPopup(false);
+    handleReceivedData();
+  };
+
   
 
    if(Data?.ConfirmAcc ===  "true"){
@@ -1180,12 +1185,13 @@ const Decoders  = [
                   Done
                 </button>
                 <button
-                  // onClick={() => {
-                  //   ReceiptButton();
-                  // }}
+                  onClick={() => {
+                    ReceiptButton();
+                  }}
                  className={`w-[50%]  max-w-xs 
                   mx-auto py-2  rounded-md font-medium
-            ${isDarkMode ? "text-blue-900 bg-white border-[0.2px] rounded-[10px]" : "bg-black border-[0.2px] text-white border-blue-900"}`}
+            ${isDarkMode ? "text-blue-900 bg-white border-[0.2px] rounded-[10px]"
+               : "bg-white border-[0.2px]  rounded-[2px] text-black border-blue-900"}`}
                 >
                   Receipt
                 </button>

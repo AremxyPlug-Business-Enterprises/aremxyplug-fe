@@ -56,6 +56,8 @@ const AirtelDataBundle = () => {
     toggleSideBar,
     inputPin,
     setInputPin,
+    airtelPurchaseErrorType,
+    setAirtelPurchaseErrorType,
     // inputPinHandler,
     toggleVisibility,
     isVisible,
@@ -88,6 +90,7 @@ const AirtelDataBundle = () => {
   const [sessionModal, setSessionModal] = useState(false);
   const [restrictUser, setRestrictUser] = useState(false);
   const [checkNetworkError, setCheckNetworkError] = useState(false);
+  const [airtelSuccessfulResponse, setAirtelSuccessfulResponse] = useState({})
 
   let balanceStringToNum = Number(newBalance);
 
@@ -173,6 +176,7 @@ const assumedString = selectedAmountAirtel?.toString()
     };
 
     HandleBalanceStatus();
+    //eslint-disable-next-line
   }, [CheckSufficiency]);
 
   // Fetch plans when product is selected
@@ -536,7 +540,8 @@ const assumedString = selectedAmountAirtel?.toString()
   };
 
   const handleProceed = (e) => {
-    setInputPin("")
+    setInputPin("");
+    
     e.preventDefault();
 
     function validateNigerianNumberByNetwork(number) {
@@ -637,23 +642,58 @@ const path = "/data";
         setAirtelRefNumber(resData?.reference_number);
         setAirtelOrderID(resData?.order_id); // No `order_id`, using `id` instead
         if (response.status === 200 || response.status === 201) {
+          setAirtelSuccessfulResponse(response?.data?.data?.data)
           // Success response
+          if(response?.data?.data?.data?.Status === "success"
+            || response?.data?.data?.data?.Status === "delivered"
+            || response?.data?.data?.data?.Status === "successful"
+            || response?.data?.data?.data?.Status === "successfully"
+          ){
           setTransactSuccessPopUp(true); // Show success popup
           setConfirm(false);
           setInputPin("");
+          }else if(response?.data?.data?.data?.Status === "failed"
+            || response?.data?.data?.data?.Status === "Failed"
+            || response?.data?.data?.data?.Status === "unsuccessful"
+          ){
+            setAirtelPurchaseErrorType("Plan Unavailable: Purchase Failed")
+           setAirtelPurchaseStatus(true); // Show success popup
+          setConfirm(false);
+          setInputPin("");
+          }
           return { statusCode: response?.status, data: response?.data };
         }
       
       } catch (error) {
         if (error && error.response === undefined) {
-          alert("Your internet connection is quite unstable.");
+             setAirtelPurchaseErrorType("Network error: Purchase Failed")
+           setAirtelPurchaseStatus(true); // Show success popup
+          setConfirm(false);
+          setInputPin("");
         } else if (
           error &&
-          (error.response.status === 500 || error.response.status === 400)
+          error.response.status === 500 
         ) {
           setAirtelPurchaseStatus(true); // Show failure popup
           setConfirm(false);
           setInputPin("");
+          setAirtelPurchaseErrorType("Server error: Purchase Failed")
+        }else if (
+          error &&
+          (error.response.status === 400 )
+        ) {
+          setAirtelPurchaseStatus(true); // Show failure popup
+          setConfirm(false);
+          setInputPin("");
+          setAirtelPurchaseErrorType("Unexpected error: Purchase Failed")
+        }else if (
+          error &&
+          (error.response.status === 404 )
+        ) {
+          setAirtelPurchaseStatus(true); // Show failure popup
+          setConfirm(false);
+          setInputPin("");
+          setAirtelPurchaseErrorType("Network error: Purchase Failed")
         } else if (error && error.response.status === 401) {
           if (
             error?.response?.headers["x-new-auth-token"] ||
@@ -682,8 +722,12 @@ const path = "/data";
             return setSessionModal(true);
           }
         } else {
-          alert("Check your internet connection");
+             setAirtelPurchaseErrorType("Unexpected error: Purchase Failed")
+          setAirtelPurchaseStatus(true); // Show failure popup
+          setConfirm(false);
+          setInputPin("");
         }
+        
         return { statusCode: error.response.status, data: null };
       } finally {
         setLoading(false);
@@ -705,6 +749,8 @@ const path = "/data";
     setSelectedAmountAirtel("");
     setRecipientNamesAirtel("");
     setWalletNameAirtel("");
+    setPaymentAmount("");
+    setPaymentSelected(false)
     setRecipientPhoneNumberAirtel("");
     setAirtelPurchaseStatus(null);
     setRecipientPhoneNumberAirtel("");
@@ -755,7 +801,8 @@ const path = "/data";
 
           <div className="flex gap-[10%] mt-[40px] md:w-full md:justify-between md:gap-[10%] ">
             <div
-              className={`w-full flex items-center justify-between border text-[10px] md:py-[15px] md:w-[50%] rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003] 
+              className={`w-full flex items-center justify-between 
+                border text-[10px] md:py-[15px] md:w-[50%] rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003] 
               ${
                 isDarkMode
                   ? "bg-black text-white border !border-white"
@@ -901,7 +948,7 @@ const path = "/data";
             <div className="flex flex-col lg:gap-[14px] gap-[7px]">
               <h2
                 className={`lg:text-[18px] lg:leading-[24px] mb-1 text-[15px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
-                  isDarkMode ? "!text-[#7E7E7E]" : "!text-black"
+                  isDarkMode ? "text-[#7E7E7E]" : "text-black"
                 }`}
               >
                 Select Product
@@ -1044,7 +1091,7 @@ const path = "/data";
                 `}
                   >
                     {loadingPlans ? (
-                      <div>Loading plans...</div>
+                      <p className={`"bg-white text-black`}>Loading plans...</p>
                     ) : (
                       productPlans.map((plan) => (
                         <div
@@ -1170,7 +1217,7 @@ const path = "/data";
             <div className="flex flex-col lg:gap-[14px] gap-[7px]">
               <h2
                 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
-                  isDarkMode ? "!text-[#7E7E7E]" : "!text-[#7E7E7E]"
+                  isDarkMode ? "text-[#7E7E7E]" : "text-black"
                 }`}
               >
                 Amount
@@ -1197,12 +1244,13 @@ const path = "/data";
             </div>
 
             <div>
-              <div onClick={handleShowPayment}>
+              <div className="flex flex-col lg:gap-[14px] gap-[7px]"
+               onClick={handleShowPayment}>
                 <h2
                   className={`lg:text-[18px] mt-[5px] lg:leading-[24px] 
                 mb-2 text-[15px] md:text-[12px] md:font-[600]
                  font-[400] leading-[12px] ${
-                   isDarkMode ? "!text-[#7E7E7E]" : "text-[#7E7E7E]"
+                   isDarkMode ? "text-[#7E7E7E]" : "text-black"
                  }`}
                 >
                   Payment Method
@@ -1223,8 +1271,8 @@ const path = "/data";
                                        onClick={handleShowPayment}
                                        className={airtimestyles.labelInput}
                                      >
-                                       <h2 className="text-[#7C7C7C]">{walletNameAirtel}</h2>
-                                       <h2 className="text-[#7C7C7C]">
+                                       <h2 className= {`${isDarkMode ?  "text-white" : "text-[#7E7E7E]"}`}>{walletNameAirtel}</h2>
+                                       <h2 className= {`${isDarkMode ?  "text-white" : "text-[#7E7E7E]"}`}>
                                         {paymentAmount.toLocaleString()}
                                        </h2>
                                      </li>
@@ -1389,8 +1437,7 @@ const path = "/data";
              <div className={`w-full flex justify-center h-full 
                          py-[30px] px-[15px] lg:px-[0px] lg:items-center
                           items-end`}>
-                       <div
-                            className={` bvnQuery lg:rounded-[12px] rounded-[10px] 
+                <div className={` bvnQuery lg:rounded-[12px] rounded-[10px] 
                           h-[520px] ${ toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
                           } w-[100%] md:w-[60%] overflow-auto  ${isDarkMode ? "bg-black text-white border rounded-[10px] border-white": "bg-white text-black"} `}
                           >
@@ -1584,41 +1631,53 @@ const path = "/data";
             </Modal>
           )}
 
-          {airtelpurchaseStatus && (
-            <Modal>
-              <div
-                className={` ${
-                  toggleSideBar ? "confirm02" : "confirm2"
-                } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px] my-[20px]
-                  h-[200px] overflow-y-scroll md:overflow-y-auto md:h-auto`}
-              >
-                <hr
-                  className="h-[8px] bg-[#04177f] lg:mt-[30px] border-none  
-                md:mt-[2%] mt-[30px] md:h-[10px]"
-                />
-                <div className="md:mt-[15%] lg:mt-[10%]">
-                  <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[8%] md:my-[5%] lg:my-[3%]">
-                    Transaction Failed
-                  </p>
-                  <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
-                    <img src={Failed} alt="" />
-                    <p className="text-[8px] md:text-[12px] text-[#04177f]">
-                      An unexpected error has occurred, please try again.
-                    </p>
-                  </div>
-                </div>
+           {airtelpurchaseStatus && (
+       
+              <Modal>
+          <div className={`w-[90%] md:w-[50%] lg:w-[35%] mx-auto 
+           rounded-lg overflow-hidden
+            ${isDarkMode ? "bg-black border-[1px] rounded-[7px] border-white": "bg-white"}`}>
+            <div className="flex justify-between items-center p-4">
+              <img
+              
+                className={`w-6 h-6  `}
+                src="/Images/login/arpLogo.png"
+                alt="Logo"
+              />
+              <img
+                onClick={() => setAirtelPurchaseStatus(false)}
+                className="w-6 h-6 cursor-pointer"
+                src="/Images/transferImages/close-circle.png"
+                alt="Close"
+              />
+            </div>
+            <hr className="h-1 bg-[#04177f] border-none" />
+            <div className="p-4 text-center">
+              <h2 className="text-lg md:text-xl font-semibold my-4">
+                Transaction Failed
+              </h2>
+              <img
+                className={`w-32 h-32 mx-auto my-6 
+                   ${isDarkMode ? "bg-black rounded-full border-[0.1px] border-black": "bg-white"}`}
+                src="./Images/failed.png"
+                alt="Failed"
+              />
+              <p className="text-sm text-red-500 font-[600] mb-8">
+                {airtelPurchaseErrorType}
+              </p>
+              {airtelSuccessfulResponse?.Status  ?
+               (
+              <div className="flex gap-[10px] justify-between w-full px-[10px]">
+                <button
+                  onClick={() => DoneChangeHandler()}
+                  className="bg-[#04177f] w-[50%] max-w-xs mx-auto py-2
+           text-white rounded-md font-medium"
+                >
+                  Done
+                </button>
+             
 
-                <div className="flex justify-center items-center gap-[20px]">
-                  <button
-                    onClick={(e) => {
-                      DoneChangeHandler();
-                    }}
-                    className="bg-[#04177f] my-[%] w-[100px] cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[%] md:rounded-[8px] md:text-[16px] lg:w-[px] lg:h-[38px] lg:my-[2%]"
-                  >
-                    Done
-                  </button>
-
-                  <Link
+             <Link
                     to="/AirtelFailedReceipt"
                     state={{
                       networkName: "AIRTEL",
@@ -1632,23 +1691,32 @@ const path = "/data";
                       airtelReceiptInfo: airtelReceiptInfo,
                       inputValue: inputValue,
                     }}
-                  >
-                    <button
-                      onClick={() => {
-                        // e.preventDefault();
-                        // setTransaction(false);
-                        setAirtelPurchaseStatus(null);
-                        // setProceedToShowReceipt(purchaseStatus === "paid" || purchaseStatus === "failed");
-                      }}
-                      className="bg-white my-[%] w-[100px] cursor-pointer text-[10px] font-extrabold h-[px] rounded-[6px] md:w-[%] md:rounded-[8px] md:text-[16px] lg:w-[px] lg:h-[38px] lg:my-[2%]"
-                    >
-                      Receipt
-                    </button>
-                  </Link>
-                </div>
+                  
+                   className={`w-[50%]  max-w-xs 
+                  mx-auto py-2 
+           rounded-md font-medium ${isDarkMode 
+            ? "text-white bg-black border-[0.2px] border-blue-900 rounded-[10px]"
+             :  "bg-white border-[0.2px]  rounded-[2px] text-black border-blue-900"}`}>
+                  Receipt
+                </Link>
               </div>
-            </Modal>
+         
+                ): (
+                   <button
+                  onClick={() => DoneChangeHandler()}
+                  className="bg-[#04177f] w-[100%] max-w-xs mx-auto py-2
+           text-white rounded-md font-medium"
+                >
+                  Done
+                </button>
+                 )}
+                 </div>
+                
+          </div>
+        </Modal>
+         
           )}
+        
 
           {confirm && (
             <Modal>

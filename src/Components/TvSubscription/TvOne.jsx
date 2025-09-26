@@ -1543,7 +1543,7 @@ console.log(tvSubscriptionResponse?.data?.status)
                   }}
                   className={`w-[50%]  max-w-xs 
                   mx-auto py-2 
-           rounded-md font-medium ${isDarkMode ? "text-blue-900 bg-white border-[0.2px] rounded-[10px]" : "bg-black border-[0.2px] text-white border-blue-900"}`}
+           rounded-md font-medium ${isDarkMode ? "text-blue-900 bg-white border-[0.2px] rounded-[10px]" :  "bg-white border-[0.2px]  rounded-[2px] text-black border-blue-900"}`}
                 >
                   Receipt
                 </button>

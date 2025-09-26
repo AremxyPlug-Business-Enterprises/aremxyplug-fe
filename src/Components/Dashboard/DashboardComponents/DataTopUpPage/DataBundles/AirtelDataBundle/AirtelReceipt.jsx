@@ -4,6 +4,7 @@ import { ContextProvider } from '../../../../../Context';
 import { DashBoardLayout } from '../../../../Layout/DashBoardLayout';
 import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
+import styles from "../../../TransferComponent/transfer.module.css";
 import html2canvas from "html2canvas";
 import { useLocation } from 'react-router-dom';
 import { GetLocalStorage } from "../../../../../LocalStorage/LocalStorage";
@@ -95,7 +96,7 @@ Data = GetLocalStorage()
     <DashBoardLayout>
       <div className="flex flex-col gap-[35px] lg:gap-[85px]">
         <div
-          className={`  ${
+          className={`${styles.receipt}  ${
             toggleSideBar ? "" : "lg:w-[880px] "
           } w-full lg:mx-auto border-[2px] rounded-[10px]`}
         >
