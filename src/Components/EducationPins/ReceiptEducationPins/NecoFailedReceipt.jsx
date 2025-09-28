@@ -39,6 +39,7 @@ export const NecoFailedReceipt = () => {
     setNecoPinsGenerated,
     purchaseEduErrorType,
     setPurchaseEduErrorType,
+    setFetchedPurchaseResponse
   } = useContext(ContextProvider);
 
   const { toggleSideBar, isDarkMode, date } = useContext(ContextProvider);
@@ -60,6 +61,7 @@ export const NecoFailedReceipt = () => {
     setNecoPinsGenerated([]);
     setNecoTransactionProduct("");
     setPurchaseEduErrorType("");
+    setFetchedPurchaseResponse({});
     navigate("/NecoEducationPin");
   };
 

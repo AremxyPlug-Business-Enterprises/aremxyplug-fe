@@ -23,7 +23,7 @@ import {
   VerifyTransPin,
   GetFunction,
   RestrictionPopUp,
-  InternalLoginSession
+  InternalLoginSession,
 } from "../../../ApiCollection.jsx/ApiBuck";
 import { BalanceLoading, Loader } from "../../../Loader/Loader";
 import { validateNigerianNumberByNetwork } from "./AEDC";
@@ -78,7 +78,7 @@ const EKEDC = () => {
     purchaseElectricityErrorType,
     setPurchaseElectricityErrorType,
   } = useContext(ContextProvider);
-  const Data = GetLocalStorage()
+  const Data = GetLocalStorage();
   const [showProductList, setShowProductList] = useState(false);
   const [sessionModal, setSessionModal] = useState(false);
   const [restrictUser, setRestrictUser] = useState(false);
@@ -116,7 +116,7 @@ const EKEDC = () => {
   //   const [showOptionList, setShowOptionList] = useState(false);
 
   const [passDataBalance, setPassDataBalance] = useState({});
-  const [balanceLoader, setBalanceLoader] = useState(false)
+  const [balanceLoader, setBalanceLoader] = useState(false);
   const GetBalance = async () => {
     const SuccessHandler = () => {
       console.log("successfully retrieved balance");
@@ -146,19 +146,18 @@ const EKEDC = () => {
   };
   // get the balance on entering the page
   useEffect(() => {
-    if(Data?.ConfirmAcc === "true"){
-     GetBalance();
+    if (Data?.ConfirmAcc === "true") {
+      GetBalance();
       if (GetBalance) {
         setNewBalance(
           passDataBalance?.data?.data
             ? passDataBalance?.data?.data?.data?.balance
             : ""
         );
-      
+      }
+    } else {
+      setRestrictUser(true);
     }
-  }else{
-    setRestrictUser(true);
-  }
     // handleResetFields();
     // eslint-disable-next-line
   }, []);
@@ -458,9 +457,29 @@ const EKEDC = () => {
       };
       // const parsedAmount = parseInt(amount, 10);
       const SuccessHandler = (response) => {
-        setInputPinPopUp(false);
         setEkedcDiscoType(response?.data?.data?.data?.disco_type);
-        setSuccessPopup(true);
+        if (
+          response?.data?.data?.data?.status === "success" ||
+          response?.data?.data?.data?.status === "delivered" ||
+          response?.data?.data?.data?.status === "successful" ||
+          response?.data?.data?.data?.status === "Successful"
+        ) {
+          setPurchaseElectricityErrorType("");
+          setSuccessPopup(true);
+          setInputPinPopUp(false);
+          setInputPin("");
+        } else if (
+          response?.data?.data?.data?.status === "failed" ||
+          response?.data?.data?.data?.status === "Failed" ||
+          response?.data?.data?.data?.status === "unsuccessful"
+        ) {
+          setPurchaseElectricityErrorType(
+            "E-Bill Unavailable: Purchase Failed"
+          );
+          setFailedPopup(true);
+          setInputPinPopUp(false);
+          setInputPin("");
+        }
       };
       //Function to help handle the error type encountered on running
       //the api request
@@ -500,6 +519,7 @@ const EKEDC = () => {
           setPurchaseElectricityErrorType("Server Error: Purchase Failed");
           setFailedPopup(true);
           setInputPinPopUp(false);
+          setInputPin("");
         } else if (
           ErrorType === "Network error" ||
           ErrorType === "User error"
@@ -507,8 +527,12 @@ const EKEDC = () => {
           setPurchaseElectricityErrorType("Network Error : Purchase Failed");
           setFailedPopup(true);
           setInputPinPopUp(false);
+          setInputPin("");
         } else {
           setPurchaseElectricityErrorType("An Unexpected error has occured");
+          setFailedPopup(true);
+          setInputPinPopUp(false);
+          setInputPin("");
         }
       };
 
@@ -1105,7 +1129,12 @@ const EKEDC = () => {
                           src={country.flag}
                           alt="/"
                         />
-                          {country.name} {' '}  {balanceLoader === true && country.id === 1 ? <BalanceLoading/> :  country.balance}
+                        {country.name}{" "}
+                        {balanceLoader === true && country.id === 1 ? (
+                          <BalanceLoading />
+                        ) : (
+                          country.balance
+                        )}
                       </div>
                     ))}
                   </div>
@@ -1352,7 +1381,7 @@ const EKEDC = () => {
                     : "bg-primary cursor-pointer"
                 }`}
               >
-                Confirm
+                Confirmed
               </button>
             </div>
           </div>
@@ -1415,7 +1444,12 @@ const EKEDC = () => {
                         />
                       )}
                     />
-                    <div className="text-[#0003] " onClick={toggleVisibility}>
+                    <div
+                      className={`cursor-pointer ${
+                        isDarkMode ? "text-white" : "text-[#003]"
+                      }`}
+                      onClick={toggleVisibility}
+                    >
                       {isVisible ? (
                         <AiFillEye className="w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]" />
                       ) : (
@@ -1649,7 +1683,7 @@ const EKEDC = () => {
 
                 <button
                   onClick={handleSuccessData}
-                  className={`border w-[111px] lg:w-[200px] md:w-[99px] h-[40px] md:h-[24px] lg:h-[42px] lg:my-[2%] flex justify-center items-center cursor-pointer text-xs md:text-xs lg:text-base font-semibold rounded-[6px] md:rounded-[7px] lg:rounded-[12px]`}
+                  className={`border w-[111px] lg:w-[200px] md:w-[99px] h-[40px] md:h-[24px] lg:h-[42px] lg:my-[2%] flex justify-center items-center cursor-pointer text-xs md:text-xs lg:text-base font-semibold rounded-[6px] md:rounded-[7px] lg:rounded-[12px] border-[#04177f]`}
                 >
                   Receipt
                 </button>
@@ -1711,7 +1745,34 @@ const EKEDC = () => {
               >
                 {purchaseElectricityErrorType}
               </p>
-              <div className="flex gap-[10px] justify-between w-full px-[10px]">
+              {ekedcFetchedResponse?.data?.status ? (
+                <div className="flex gap-[10px] justify-between w-full px-[10px]">
+                  <button
+                    onClick={() => {
+                      setFailedPopup(false);
+                      setInputPin("");
+                      handleResetFields();
+                      setPurchaseElectricityErrorType("");
+                      navigate("/ekedc");
+                    }}
+                    className="bg-[#04177f] w-[50%] max-w-xs mx-auto py-2 text-white rounded-md font-medium"
+                  >
+                    Done
+                  </button>
+
+                  <button
+                    onClick={handleFailedData}
+                    style={{
+                      boxShadow: "0px 0px 2.0368096828460693px 0px #00000040",
+                    }}
+                    className={`w-[50%] max-w-xs mx-auto border py-2  rounded-md font-medium transition-colors ${
+                      isDarkMode ? "bg-black hover:bg-slate-800 " : "bg-white"
+                    }`}
+                  >
+                    Receipt
+                  </button>
+                </div>
+              ) : (
                 <button
                   onClick={() => {
                     setFailedPopup(false);
@@ -1720,23 +1781,11 @@ const EKEDC = () => {
                     setPurchaseElectricityErrorType("");
                     navigate("/ekedc");
                   }}
-                  className="bg-[#04177f] w-[50%] max-w-xs mx-auto py-2 text-white rounded-md font-medium"
+                  className="bg-[#04177f] w-full max-w-xs mx-auto py-2 text-white rounded-md font-medium"
                 >
                   Done
                 </button>
-
-                <button
-                  onClick={handleFailedData}
-                  style={{
-                    boxShadow: "0px 0px 2.0368096828460693px 0px #00000040",
-                  }}
-                  className={`w-[50%] max-w-xs mx-auto border py-2  rounded-md font-medium transition-colors ${
-                    isDarkMode ? "bg-black hover:bg-slate-800 " : "bg-white"
-                  }`}
-                >
-                  Receipt
-                </button>
-              </div>
+              )}
             </div>
           </div>
         </Modal>
@@ -1746,11 +1795,10 @@ const EKEDC = () => {
           <Loader />
         </Modal>
       )}
-      {sessionModal &&
-       <InternalLoginSession setexpiredSessionLogin ={setSessionModal} />}
-      {restrictUser && sessionModal === false && (
-        <RestrictionPopUp/>
-      ) }
+      {sessionModal && (
+        <InternalLoginSession setexpiredSessionLogin={setSessionModal} />
+      )}
+      {restrictUser && sessionModal === false && <RestrictionPopUp />}
     </DashBoardLayout>
   );
 };

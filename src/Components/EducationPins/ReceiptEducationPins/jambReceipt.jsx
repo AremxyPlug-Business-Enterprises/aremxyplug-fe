@@ -40,6 +40,7 @@ export default function JambReceipt() {
     setJambPinsGenerated,
     purchaseEduErrorType,
     fetchedPurchaseResponse,
+    setFetchedPurchaseResponse,
   } = useContext(ContextProvider);
 
   const { toggleSideBar, isDarkMode, date } = useContext(ContextProvider);
@@ -69,6 +70,7 @@ export default function JambReceipt() {
     setJambShowDescription("");
     setJambPinsGenerated([]);
     setJambTransactionProduct("");
+    setFetchedPurchaseResponse({})
     navigate("/JambEducationPin");
   };
 

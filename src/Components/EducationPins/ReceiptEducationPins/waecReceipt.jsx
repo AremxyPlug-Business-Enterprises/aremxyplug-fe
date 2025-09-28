@@ -39,6 +39,7 @@ export default function WaecReceipt() {
     setWaecTransactionProduct,
     waecPinsGenerated,
     setWaecPinsGenerated,
+    setFetchedPurchaseResponse
   } = useContext(ContextProvider);
 
   const { toggleSideBar, isDarkMode, date } = useContext(ContextProvider);
@@ -68,6 +69,7 @@ export default function WaecReceipt() {
     setWaecShowDescription("");
     setWaecPinsGenerated([]);
     setWaecTransactionProduct("");
+    setFetchedPurchaseResponse({});
     navigate("/WaecEducationPin");
   };
 

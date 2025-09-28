@@ -33,7 +33,7 @@ import {
   PostFunction,
   VerifyTransPin,
   RestrictionPopUp,
-  InternalLoginSession
+  InternalLoginSession,
 } from "../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../Loader/Loader";
 import { GetLocalStorage } from "../LocalStorage/LocalStorage";
@@ -144,10 +144,10 @@ export default function WaecEducationPin() {
     setQuantityAmount,
     walletBalance,
     setWalletBalance,
-    setEducationPinStatus,
+    // setEducationPinStatus,
     educationPinEmail,
     setEducationPinEmail,
-     eduResponse,
+    eduResponse,
     setEduResponse,
     newBalance,
     setNewBalance,
@@ -173,13 +173,13 @@ export default function WaecEducationPin() {
   const [educationConfirm, setEducationConfirm] = useState(false);
   // const [receipt] = useState(false);
   const [waecFailedTransaction, setWaecFailedTransaction] = useState(false);
-  const [restrictUser, setRestrictUser] = useState(false)
+  const [restrictUser, setRestrictUser] = useState(false);
   // Get Amount
   const [isLoading, setIsLoading] = useState(false);
   const [sessionModal, setSessionModal] = useState(false);
   const [passDataBalance, setPassDataBalance] = useState({});
-  const [checkNetworkError, setCheckNetworkError] = useState(false)
- const Data = GetLocalStorage()
+  const [checkNetworkError, setCheckNetworkError] = useState(false);
+  const Data = GetLocalStorage();
   const options = [
     {
       quantity: "1 Piece Of Result Checker",
@@ -267,18 +267,21 @@ export default function WaecEducationPin() {
           SuccessHandler,
           (ErrorType) => {
             if (ErrorType === "Server error") {
-           alert("Unable to get WAEC PINS. Please try again later");  
-            }else if(ErrorType === "Network error" || ErrorType === "User error"){
-          alert("Your internet connection is quite unstable.");
+              alert("Unable to get WAEC PINS. Please try again later");
+            } else if (
+              ErrorType === "Network error" ||
+              ErrorType === "User error"
+            ) {
+              alert("Your internet connection is quite unstable.");
             }
           },
           setEduResponse
         );
       } else if (ErrorType === "Server error") {
-           alert("Unable to get WAEC PINS. Please try again later");
-            }else if(ErrorType === "Network error" || ErrorType === "User error"){
-          alert("Your internet connection is quite unstable.");
-            }
+        alert("Unable to get WAEC PINS. Please try again later");
+      } else if (ErrorType === "Network error" || ErrorType === "User error") {
+        alert("Your internet connection is quite unstable.");
+      }
     };
 
     await GetFunction(
@@ -289,134 +292,166 @@ export default function WaecEducationPin() {
       setEduResponse
     );
   };
-const GetBalance = async () => {
-    if(!navigator.onLine) return setCheckNetworkError(true)
-      const SuccessHandler = () => {
-        //alert("Successful");
-        console.log("successfully retrieved balance");
-        //alert("Successful")
-      };
-      const FailedHandler = async (ErrorType) => {
-        if (ErrorType === "unauthorised") {
-          await GetFunction(
-            `balance`,
-            setIsLoading,
-            SuccessHandler,
-            //Handling the error Use Cases of the Unauthorised inside
-            // of the statement.
-            async(ErrorType) => {
-              if (ErrorType === "unauthorised") {
-                return setSessionModal(true);
-              }else if(ErrorType === "Server error"){
-                  await GetFunction(
-        "balance",
-        setIsLoading,
-        SuccessHandler,
-       async(ErrorType)=> {
-        if(ErrorType === "Server error"){
-          alert("Failed to retrieve the balance.")
-        }else if(ErrorType === "Network error" || ErrorType === "User error"){
-           setCheckNetworkError(true);
-              alert("Kindly check your internet connection to retrieve balance.")
-        }else {
-          alert("An unexpected error has occured on attempt to retrieve balance.")
-        }
-       },
-        setPassDataBalance
-      );
-       }else if(ErrorType === "Network error" || ErrorType === "User error"){
-         setCheckNetworkError(true);
-           alert("Kindly check your internet connection to retrieve balance");
-           setCheckNetworkError(true);
-       }else {
-        alert("An unexpected error has occured on attempt to retrieve the balance")
-       }
-            },
-             setPassDataBalance
-          );
-        }else if(ErrorType === "Server error"){
-            await GetFunction(
-        "balance",
-        setIsLoading,
-        SuccessHandler,
-       async(ErrorType)=> {
-         if(ErrorType === "unauthorised"){
-            await GetFunction(
-        "balance",
-        setIsLoading,
-        SuccessHandler,
-        async(ErrorType)=> {
-          if(ErrorType === "unauthorised"){
-            return setSessionModal(true)
-          }else if(ErrorType === "Server error"){
-               await GetFunction(
-        "balance",
-        setIsLoading,
-        SuccessHandler,
-       async(ErrorType)=> {
-        //if Statements
-      //We run again cause the previous one was interrupted by 401
-      //Let us re-run server error
-      if(ErrorType === "Server error"){
-        alert("Failed to retrieve the balance")
-      }else if(ErrorType === "unauthorised"){
-        return sessionModal(true)
-      }else if(ErrorType === "Network error" || ErrorType === "User error"){
-         setCheckNetworkError(true);
-       alert("Kindly check your internet connection to retrieve balance")
-      }else{
-       // console.log("yeah bro i am the one running blehh")
-        alert("An Unexpected error occured in attempt to retrieve balance")
-      }
-
-       },
-        setPassDataBalance
-      );
-          }else if(ErrorType === "Network error" || ErrorType === "User error"){
-             setCheckNetworkError(true);
-            alert("Kindly check your internet connection to retrieve the balance")
-          }else if(ErrorType === "Server error"){
-            alert("Failed to retrieve the balance.")
-          }else{
-            alert("An Unexpected error occured in attempt to retrieve balance")
-          }
-        },
-        setPassDataBalance
-      );
-    }
-          else if(ErrorType === "Network error" || ErrorType === "User error"){
-            //The operation was interrupted by a network error
-             setCheckNetworkError(true);
-            alert("Kindly check your internet connection to retrieve balance.")
-         }else {
-          //Place 
-          //An alien error has occured with the re-run of the "Server error" ErrorType
-          alert("An unexpected error occured in attempt to retrieve the balance.")
-         }
-       },
-        setPassDataBalance
-      );
-        }else if(ErrorType === "Network error" || ErrorType === "User error"){
-            setCheckNetworkError(true);
-        }else{
-           
-          alert("An unexpected error occured in attempt to retrieve balance.")
-        }
-      }
-      await GetFunction(
-        "balance",
-        setIsLoading,
-        SuccessHandler,
-        FailedHandler,
-        setPassDataBalance
-      );
+  const GetBalance = async () => {
+    if (!navigator.onLine) return setCheckNetworkError(true);
+    const SuccessHandler = () => {
+      //alert("Successful");
+      console.log("successfully retrieved balance");
+      //alert("Successful")
     };
-   
+    const FailedHandler = async (ErrorType) => {
+      if (ErrorType === "unauthorised") {
+        await GetFunction(
+          `balance`,
+          setIsLoading,
+          SuccessHandler,
+          //Handling the error Use Cases of the Unauthorised inside
+          // of the statement.
+          async (ErrorType) => {
+            if (ErrorType === "unauthorised") {
+              return setSessionModal(true);
+            } else if (ErrorType === "Server error") {
+              await GetFunction(
+                "balance",
+                setIsLoading,
+                SuccessHandler,
+                async (ErrorType) => {
+                  if (ErrorType === "Server error") {
+                    alert("Failed to retrieve the balance.");
+                  } else if (
+                    ErrorType === "Network error" ||
+                    ErrorType === "User error"
+                  ) {
+                    setCheckNetworkError(true);
+                    alert(
+                      "Kindly check your internet connection to retrieve balance."
+                    );
+                  } else {
+                    alert(
+                      "An unexpected error has occured on attempt to retrieve balance."
+                    );
+                  }
+                },
+                setPassDataBalance
+              );
+            } else if (
+              ErrorType === "Network error" ||
+              ErrorType === "User error"
+            ) {
+              setCheckNetworkError(true);
+              alert(
+                "Kindly check your internet connection to retrieve balance"
+              );
+              setCheckNetworkError(true);
+            } else {
+              alert(
+                "An unexpected error has occured on attempt to retrieve the balance"
+              );
+            }
+          },
+          setPassDataBalance
+        );
+      } else if (ErrorType === "Server error") {
+        await GetFunction(
+          "balance",
+          setIsLoading,
+          SuccessHandler,
+          async (ErrorType) => {
+            if (ErrorType === "unauthorised") {
+              await GetFunction(
+                "balance",
+                setIsLoading,
+                SuccessHandler,
+                async (ErrorType) => {
+                  if (ErrorType === "unauthorised") {
+                    return setSessionModal(true);
+                  } else if (ErrorType === "Server error") {
+                    await GetFunction(
+                      "balance",
+                      setIsLoading,
+                      SuccessHandler,
+                      async (ErrorType) => {
+                        //if Statements
+                        //We run again cause the previous one was interrupted by 401
+                        //Let us re-run server error
+                        if (ErrorType === "Server error") {
+                          alert("Failed to retrieve the balance");
+                        } else if (ErrorType === "unauthorised") {
+                          return sessionModal(true);
+                        } else if (
+                          ErrorType === "Network error" ||
+                          ErrorType === "User error"
+                        ) {
+                          setCheckNetworkError(true);
+                          alert(
+                            "Kindly check your internet connection to retrieve balance"
+                          );
+                        } else {
+                          // console.log("yeah bro i am the one running blehh")
+                          alert(
+                            "An Unexpected error occured in attempt to retrieve balance"
+                          );
+                        }
+                      },
+                      setPassDataBalance
+                    );
+                  } else if (
+                    ErrorType === "Network error" ||
+                    ErrorType === "User error"
+                  ) {
+                    setCheckNetworkError(true);
+                    alert(
+                      "Kindly check your internet connection to retrieve the balance"
+                    );
+                  } else if (ErrorType === "Server error") {
+                    alert("Failed to retrieve the balance.");
+                  } else {
+                    alert(
+                      "An Unexpected error occured in attempt to retrieve balance"
+                    );
+                  }
+                },
+                setPassDataBalance
+              );
+            } else if (
+              ErrorType === "Network error" ||
+              ErrorType === "User error"
+            ) {
+              //The operation was interrupted by a network error
+              setCheckNetworkError(true);
+              alert(
+                "Kindly check your internet connection to retrieve balance."
+              );
+            } else {
+              //Place
+              //An alien error has occured with the re-run of the "Server error" ErrorType
+              alert(
+                "An unexpected error occured in attempt to retrieve the balance."
+              );
+            }
+          },
+          setPassDataBalance
+        );
+      } else if (ErrorType === "Network error" || ErrorType === "User error") {
+        setCheckNetworkError(true);
+      } else {
+        alert("An unexpected error occured in attempt to retrieve balance.");
+      }
+    };
+    await GetFunction(
+      "balance",
+      setIsLoading,
+      SuccessHandler,
+      FailedHandler,
+      setPassDataBalance
+    );
+  };
+
   // get the amount and balance on entering the page
   useEffect(() => {
-    if(Data?.ConfirmAcc === "true"){
-    getAmount();
-   
+    if (Data?.ConfirmAcc === "true") {
+      getAmount();
+
       GetBalance();
       if (GetBalance) {
         setNewBalance(
@@ -424,11 +459,10 @@ const GetBalance = async () => {
             ? passDataBalance?.data?.data?.data?.balance
             : ""
         );
-      
+      }
+    } else {
+      setRestrictUser(true);
     }
-  }else {
-    setRestrictUser(true)
-  }
     // handleResetFields();
     // eslint-disable-next-line
   }, []);
@@ -635,10 +669,10 @@ const GetBalance = async () => {
     handleResetFields();
   };
 
-  const eduPinSuccess = () => {
-    setTransactSuccessPopUp(true);
-    setEducationConfirm(false);
-  };
+  // const eduPinSuccess = () => {
+  //   setTransactSuccessPopUp(true);
+  //   setEducationConfirm(false);
+  // };
   const waecEduPinFailed = () => {
     setEducationConfirm(false);
     setWaecFailedTransaction(true);
@@ -659,9 +693,29 @@ const GetBalance = async () => {
         quantity: parseInt(quantityResult.split(" (")[0].slice(0, 1)),
       };
       const SuccessHandler = (response) => {
-        eduPinSuccess();
-        setEducationPinStatus(true);
+        // eduPinSuccess();
+        // setEducationPinStatus(true);
         setWaecOrderId(response?.data?.data?.data?.order_id);
+        if (
+          response?.data?.data?.data?.status === "success" ||
+          response?.data?.data?.data?.status === "delivered" ||
+          response?.data?.data?.data?.status === "successful" ||
+          response?.data?.data?.data?.status === "Successful"
+        ) {
+          setPurchaseEduErrorType("");
+          setTransactSuccessPopUp(true);
+          setEducationConfirm(false);
+          setInputPin("");
+        } else if (
+          response?.data?.data?.data?.status === "failed" ||
+          response?.data?.data?.data?.status === "Failed" ||
+          response?.data?.data?.data?.status === "unsuccessful"
+        ) {
+          setPurchaseEduErrorType("E-Pins Unavailable: Purchase Failed");
+          setWaecFailedTransaction(true);
+          setEducationConfirm(false);
+          setInputPin("");
+        }
       };
       const FailedHandler = async (ErrorType) => {
         if (ErrorType === "Bad request") {
@@ -675,24 +729,37 @@ const GetBalance = async () => {
             (ErrorType) => {
               if (ErrorType === "unauthorised") {
                 return setSessionModal(true);
+              } else if (ErrorType === "Server error") {
+                setPurchaseEduErrorType("Server Error: Purchase Failed");
+              } else if (
+                ErrorType === "Network error" ||
+                ErrorType === "User error"
+              ) {
+                setPurchaseEduErrorType("Network Error : Purchase Failed");
+              } else {
+                setPurchaseEduErrorType("An Unexpected error has occured");
               }
             },
             setFetchedPurchaseResponse
           );
         } else if (ErrorType === "Server error") {
-          setPurchaseEduErrorType(
-            "Failed to process your request, try again some other time"
-          );
+          setPurchaseEduErrorType("Server Error: Purchase Failed");
+          setInputPin("");
           setWaecFailedTransaction(true);
           setEducationConfirm(false);
         } else if (
           ErrorType === "Network error" ||
           ErrorType === "User error"
         ) {
-          setPurchaseEduErrorType("An internet connection error");
+          setPurchaseEduErrorType("Network Error : Purchase Failed");
           setWaecFailedTransaction(true);
           setEducationConfirm(false);
+          setInputPin("");
         } else {
+          setPurchaseEduErrorType("An Unexpected error has occured");
+          setWaecFailedTransaction(true);
+          setEducationConfirm(false);
+          setInputPin("");
         }
       };
 
@@ -793,19 +860,27 @@ const GetBalance = async () => {
     setIsFocused(false);
   };
 
-    if(Data?.ConfirmAcc === "true"){
-  window.addEventListener("online", ()=> {
-   if(checkNetworkError === true &&
-     (updateBalance === undefined || updateBalance === null || updateBalance === "")
-    && (newBalance === null || newBalance === undefined || newBalance === "") ){
-   return GetBalance()
-   }
-   if(checkNetworkError === true && (eduResponse?.data?.data?.Amount === undefined ||eduResponse?.data?.data?.Amount === null) ) {
-    return getAmount()
-   }
-  })
-}
-console.log(eduResponse?.data?.data?.Amount);
+  if (Data?.ConfirmAcc === "true") {
+    window.addEventListener("online", () => {
+      if (
+        checkNetworkError === true &&
+        (updateBalance === undefined ||
+          updateBalance === null ||
+          updateBalance === "") &&
+        (newBalance === null || newBalance === undefined || newBalance === "")
+      ) {
+        return GetBalance();
+      }
+      if (
+        checkNetworkError === true &&
+        (eduResponse?.data?.data?.Amount === undefined ||
+          eduResponse?.data?.data?.Amount === null)
+      ) {
+        return getAmount();
+      }
+    });
+  }
+  console.log(eduResponse?.data?.data?.Amount);
 
   return (
     <DashBoardLayout>
@@ -1773,7 +1848,9 @@ console.log(eduResponse?.data?.data?.Amount);
                           />
                           <div
                             // className="text-[#0003] text-xl md:text-3xl"
-                            className="text-[#0003]"
+                            className={`cursor-pointer ${
+                              isDarkMode ? "text-white" : "text-[#0003]"
+                            }`}
                             onClick={toggleVisibility}
                           >
                             {isVisible ? (
@@ -2051,8 +2128,7 @@ console.log(eduResponse?.data?.data?.Amount);
                         //  font-extrabold h-[40px] rounded-[6px] md:w-[150px] md:rounded-[8px] md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%] ${
                         //    isDarkMode ? "text-black" : "text-black"
                         //  }`}
-                        className={`border  w-[111px] lg:w-[200px] md:w-[99px] h-[40px] md:h-[24px] lg:h-[42px] lg:my-[2%] flex justify-center
-                    items-center cursor-pointer text-xs md:text-xs lg:text-base font-semibold rounded-[6px] md:rounded-[7px] lg:rounded-[12px]`}
+                        className={`border  w-[111px] lg:w-[200px] md:w-[99px] h-[40px] md:h-[24px] lg:h-[42px] lg:my-[2%] flex justify-center items-center cursor-pointer text-xs md:text-xs lg:text-base font-semibold rounded-[6px] md:rounded-[7px] lg:rounded-[12px] border-[#04177f]`}
                       >
                         Receipt
                       </Link>
@@ -2191,7 +2267,38 @@ console.log(eduResponse?.data?.data?.Amount);
               items-center gap-[15px] md:gap-5 mt-[50px]  lg:gap-5 
               lg:my-[5%] md:mt-[20px] mb-[20px] "
               > */}
-              <div className="flex gap-[10px] justify-between w-full px-[10px]">
+              {fetchedPurchaseResponse?.data?.status ? (
+                <div className="flex gap-[10px] justify-between w-full px-[10px]">
+                  <Link
+                    to="/WaecEducationPin"
+                    onClick={() => {
+                      setWaecFailedTransaction(false);
+                      setInputPin("");
+                      handleResetFields();
+                      setPurchaseEduErrorType("");
+                      // window.location.reload();
+                    }}
+                    className="bg-[#04177f] w-[50%] max-w-xs mx-auto py-2 text-white rounded-md font-medium"
+                  >
+                    Done
+                  </Link>
+                  <Link
+                    to="/WaecFailedReceipt"
+                    onClick={handleFailedData}
+                    style={{
+                      boxShadow: "0px 0px 2.0368096828460693px 0px #00000040",
+                    }}
+                    // className={`bg-[#ffffff] border w-[111px] border-[#0003] flex justify-center items-center text-center cursor-pointer text-xs font-extrabold h-[40px] rounded-[6px] md:w-[150px] md:rounded-[8px] md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%] ${
+                    //   isDarkMode ? "text-black" : "text-black"
+                    // }`}
+                    className={`w-[50%] max-w-xs mx-auto border py-2  rounded-md font-medium transition-colors ${
+                      isDarkMode ? "bg-black hover:bg-slate-800 " : "bg-white"
+                    }`}
+                  >
+                    Receipt
+                  </Link>
+                </div>
+              ) : (
                 <Link
                   to="/WaecEducationPin"
                   onClick={() => {
@@ -2201,30 +2308,11 @@ console.log(eduResponse?.data?.data?.Amount);
                     setPurchaseEduErrorType("");
                     // window.location.reload();
                   }}
-                  // className={`bg-[#04177f] w-[111px] flex justify-center
-                  //   items-center  cursor-pointer text-center text-xs font-extrabold h-[40px]
-                  //    text-white rounded-[6px] md:w-[150px] md:rounded-[8px]
-                  //    md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%] `}
-                  className="bg-[#04177f] w-[50%] max-w-xs mx-auto py-2 text-white rounded-md font-medium"
+                  className="bg-[#04177f] w-full max-w-xs mx-auto py-2 text-white rounded-md font-medium"
                 >
                   Done
                 </Link>
-                <Link
-                  to="/WaecFailedReceipt"
-                  onClick={handleFailedData}
-                  style={{
-                    boxShadow: "0px 0px 2.0368096828460693px 0px #00000040",
-                  }}
-                  // className={`bg-[#ffffff] border w-[111px] border-[#0003] flex justify-center items-center text-center cursor-pointer text-xs font-extrabold h-[40px] rounded-[6px] md:w-[150px] md:rounded-[8px] md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%] ${
-                  //   isDarkMode ? "text-black" : "text-black"
-                  // }`}
-                  className={`w-[50%] max-w-xs mx-auto border py-2  rounded-md font-medium transition-colors ${
-                    isDarkMode ? "bg-black hover:bg-slate-800 " : "bg-white"
-                  }`}
-                >
-                  Receipt
-                </Link>
-              </div>
+              )}
             </div>
           </div>
         </Modal>
@@ -2255,10 +2343,10 @@ console.log(eduResponse?.data?.data?.Amount);
           <Loader />
         </Modal>
       )}
-      {sessionModal && <InternalLoginSession setExpiredSessionLogin = {setSessionModal}/>}
-      {sessionModal === false && restrictUser &&(
-        <RestrictionPopUp/>
+      {sessionModal && (
+        <InternalLoginSession setExpiredSessionLogin={setSessionModal} />
       )}
+      {sessionModal === false && restrictUser && <RestrictionPopUp />}
     </DashBoardLayout>
   );
 }

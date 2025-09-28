@@ -31,11 +31,11 @@ import {
   PostFunction,
   VerifyTransPin,
   RestrictionPopUp,
-  InternalLoginSession
+  InternalLoginSession,
 } from "../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../Loader/Loader";
 import { validateNigerianNumberByNetwork } from "./waecEducationPin";
- import { GetLocalStorage } from "../LocalStorage/LocalStorage";
+import { GetLocalStorage } from "../LocalStorage/LocalStorage";
 export default function NabtebEducationPins() {
   const navigate = useNavigate();
   const {
@@ -72,11 +72,11 @@ export default function NabtebEducationPins() {
     setNabtebEduResponse,
     nabtebWalletBalance,
     setNabtebWalletBalance,
-    setEducationPinStatus,
+    // setEducationPinStatus,
     newBalance,
     setNewBalance,
 
-     nabtebEduResponse,
+    nabtebEduResponse,
     setNabtebPinsGenerated,
     nabtebOrderId,
     setNabtebOrderId,
@@ -89,16 +89,16 @@ export default function NabtebEducationPins() {
     purchaseEduErrorType,
     setPurchaseEduErrorType,
   } = useContext(ContextProvider);
-const Data = GetLocalStorage();
+  const Data = GetLocalStorage();
   // UseStates
-  
+
   const [nabtebImageState, setNabtebImageState] = useState(arrowDown);
   const [nabtebEducationProceed, setNabtebEducationProceed] = useState(false);
   const [errors, setErrors] = useState({});
   const [nabtebEducationConfirm, setNabtebEducationConfirm] = useState(false);
   const [nabtebFailedTransaction, setNabtebFailedTransaction] = useState(false);
   const [restrictUser, setRestrictUser] = useState(false);
-  const [checkNetworkError, setCheckNetworkError] = useState(false)
+  const [checkNetworkError, setCheckNetworkError] = useState(false);
   // const [receipt] = useState(false);
 
   // Get Amount
@@ -181,9 +181,12 @@ const Data = GetLocalStorage();
           SuccessHandler,
           (ErrorType) => {
             if (ErrorType === "Sever error") {
-           alert("Unable to get NABTEB PINS. Please try again later");
-            }else if(ErrorType === "Network error" || ErrorType === "User error"){
-          alert("Your internet connection is quite unstable.")
+              alert("Unable to get NABTEB PINS. Please try again later");
+            } else if (
+              ErrorType === "Network error" ||
+              ErrorType === "User error"
+            ) {
+              alert("Your internet connection is quite unstable.");
             }
           },
           setNabtebEduResponse
@@ -212,144 +215,180 @@ const Data = GetLocalStorage();
     );
   };
   const GetBalance = async () => {
-      if(!navigator.onLine) return setCheckNetworkError(true)
-        const SuccessHandler = () => {
-          //alert("Successful");
-          console.log("successfully retrieved balance");
-          //alert("Successful")
-        };
-        const FailedHandler = async (ErrorType) => {
-          if (ErrorType === "unauthorised") {
-            await GetFunction(
-              `balance`,
-              setIsLoading,
-              SuccessHandler,
-              //Handling the error Use Cases of the Unauthorised inside
-              // of the statement.
-              async(ErrorType) => {
-                if (ErrorType === "unauthorised") {
-                  return setSessionModal(true);
-                }else if(ErrorType === "Server error"){
-                    await GetFunction(
-          "balance",
+    if (!navigator.onLine) return setCheckNetworkError(true);
+    const SuccessHandler = () => {
+      //alert("Successful");
+      console.log("successfully retrieved balance");
+      //alert("Successful")
+    };
+    const FailedHandler = async (ErrorType) => {
+      if (ErrorType === "unauthorised") {
+        await GetFunction(
+          `balance`,
           setIsLoading,
           SuccessHandler,
-         async(ErrorType)=> {
-          if(ErrorType === "Server error"){
-            alert("Failed to retrieve the balance.")
-          }else if(ErrorType === "Network error" || ErrorType === "User error"){
-             setCheckNetworkError(true);
-                alert("Kindly check your internet connection to retrieve balance.")
-          }else {
-            alert("An unexpected error has occured on attempt to retrieve balance.")
-          }
-         },
-          setPassDataBalance
-        );
-         }else if(ErrorType === "Network error" || ErrorType === "User error"){
-           setCheckNetworkError(true);
-             alert("Kindly check your internet connection to retrieve balance");
-             setCheckNetworkError(true);
-         }else {
-          alert("An unexpected error has occured on attempt to retrieve the balance")
-         }
-              },
-               setPassDataBalance
-            );
-          }else if(ErrorType === "Server error"){
+          //Handling the error Use Cases of the Unauthorised inside
+          // of the statement.
+          async (ErrorType) => {
+            if (ErrorType === "unauthorised") {
+              return setSessionModal(true);
+            } else if (ErrorType === "Server error") {
               await GetFunction(
-          "balance",
-          setIsLoading,
-          SuccessHandler,
-         async(ErrorType)=> {
-           if(ErrorType === "unauthorised"){
-              await GetFunction(
-          "balance",
-          setIsLoading,
-          SuccessHandler,
-          async(ErrorType)=> {
-            if(ErrorType === "unauthorised"){
-              return setSessionModal(true)
-            }else if(ErrorType === "Server error"){
-                 await GetFunction(
-          "balance",
-          setIsLoading,
-          SuccessHandler,
-         async(ErrorType)=> {
-          //if Statements
-        //We run again cause the previous one was interrupted by 401
-        //Let us re-run server error
-        if(ErrorType === "Server error"){
-          alert("Failed to retrieve the balance")
-        }else if(ErrorType === "unauthorised"){
-          return sessionModal(true)
-        }else if(ErrorType === "Network error" || ErrorType === "User error"){
-           setCheckNetworkError(true);
-         alert("Kindly check your internet connection to retrieve balance")
-        }else{
-         // console.log("yeah bro i am the one running blehh")
-          alert("An Unexpected error occured in attempt to retrieve balance")
-        }
-  
-         },
-          setPassDataBalance
-        );
-            }else if(ErrorType === "Network error" || ErrorType === "User error"){
-               setCheckNetworkError(true);
-              alert("Kindly check your internet connection to retrieve the balance")
-            }else if(ErrorType === "Server error"){
-              alert("Failed to retrieve the balance.")
-            }else{
-              alert("An Unexpected error occured in attempt to retrieve balance")
+                "balance",
+                setIsLoading,
+                SuccessHandler,
+                async (ErrorType) => {
+                  if (ErrorType === "Server error") {
+                    alert("Failed to retrieve the balance.");
+                  } else if (
+                    ErrorType === "Network error" ||
+                    ErrorType === "User error"
+                  ) {
+                    setCheckNetworkError(true);
+                    alert(
+                      "Kindly check your internet connection to retrieve balance."
+                    );
+                  } else {
+                    alert(
+                      "An unexpected error has occured on attempt to retrieve balance."
+                    );
+                  }
+                },
+                setPassDataBalance
+              );
+            } else if (
+              ErrorType === "Network error" ||
+              ErrorType === "User error"
+            ) {
+              setCheckNetworkError(true);
+              alert(
+                "Kindly check your internet connection to retrieve balance"
+              );
+              setCheckNetworkError(true);
+            } else {
+              alert(
+                "An unexpected error has occured on attempt to retrieve the balance"
+              );
             }
           },
           setPassDataBalance
         );
-      }
-            else if(ErrorType === "Network error" || ErrorType === "User error"){
-              //The operation was interrupted by a network error
-               setCheckNetworkError(true);
-              alert("Kindly check your internet connection to retrieve balance.")
-           }else {
-            //Place 
-            //An alien error has occured with the re-run of the "Server error" ErrorType
-            alert("An unexpected error occured in attempt to retrieve the balance.")
-           }
-         },
-          setPassDataBalance
-        );
-          }else if(ErrorType === "Network error" || ErrorType === "User error"){
-              setCheckNetworkError(true);
-          }else{
-             
-            alert("An unexpected error occured in attempt to retrieve balance.")
-          }
-        }
+      } else if (ErrorType === "Server error") {
         await GetFunction(
           "balance",
           setIsLoading,
           SuccessHandler,
-          FailedHandler,
+          async (ErrorType) => {
+            if (ErrorType === "unauthorised") {
+              await GetFunction(
+                "balance",
+                setIsLoading,
+                SuccessHandler,
+                async (ErrorType) => {
+                  if (ErrorType === "unauthorised") {
+                    return setSessionModal(true);
+                  } else if (ErrorType === "Server error") {
+                    await GetFunction(
+                      "balance",
+                      setIsLoading,
+                      SuccessHandler,
+                      async (ErrorType) => {
+                        //if Statements
+                        //We run again cause the previous one was interrupted by 401
+                        //Let us re-run server error
+                        if (ErrorType === "Server error") {
+                          alert("Failed to retrieve the balance");
+                        } else if (ErrorType === "unauthorised") {
+                          return sessionModal(true);
+                        } else if (
+                          ErrorType === "Network error" ||
+                          ErrorType === "User error"
+                        ) {
+                          setCheckNetworkError(true);
+                          alert(
+                            "Kindly check your internet connection to retrieve balance"
+                          );
+                        } else {
+                          // console.log("yeah bro i am the one running blehh")
+                          alert(
+                            "An Unexpected error occured in attempt to retrieve balance"
+                          );
+                        }
+                      },
+                      setPassDataBalance
+                    );
+                  } else if (
+                    ErrorType === "Network error" ||
+                    ErrorType === "User error"
+                  ) {
+                    setCheckNetworkError(true);
+                    alert(
+                      "Kindly check your internet connection to retrieve the balance"
+                    );
+                  } else if (ErrorType === "Server error") {
+                    alert("Failed to retrieve the balance.");
+                  } else {
+                    alert(
+                      "An Unexpected error occured in attempt to retrieve balance"
+                    );
+                  }
+                },
+                setPassDataBalance
+              );
+            } else if (
+              ErrorType === "Network error" ||
+              ErrorType === "User error"
+            ) {
+              //The operation was interrupted by a network error
+              setCheckNetworkError(true);
+              alert(
+                "Kindly check your internet connection to retrieve balance."
+              );
+            } else {
+              //Place
+              //An alien error has occured with the re-run of the "Server error" ErrorType
+              alert(
+                "An unexpected error occured in attempt to retrieve the balance."
+              );
+            }
+          },
           setPassDataBalance
         );
-      };
+      } else if (ErrorType === "Network error" || ErrorType === "User error") {
+        setCheckNetworkError(true);
+      } else {
+        alert("An unexpected error occured in attempt to retrieve balance.");
+      }
+    };
+    await GetFunction(
+      "balance",
+      setIsLoading,
+      SuccessHandler,
+      FailedHandler,
+      setPassDataBalance
+    );
+  };
   // get the amount and balance on entering the page
   useEffect(() => {
-    if(Data?.ConfirmAcc === "true"){
-    getAmount();
-    if (newBalance === "" || newBalance === null || newBalance === undefined) {
-      GetBalance();
-      if (GetBalance) {
-        setNewBalance(
-          passDataBalance?.data?.data
-            ? passDataBalance?.data?.data?.data?.balance
-            : ""
-        );
+    if (Data?.ConfirmAcc === "true") {
+      getAmount();
+      if (
+        newBalance === "" ||
+        newBalance === null ||
+        newBalance === undefined
+      ) {
+        GetBalance();
+        if (GetBalance) {
+          setNewBalance(
+            passDataBalance?.data?.data
+              ? passDataBalance?.data?.data?.data?.balance
+              : ""
+          );
+        }
       }
+    } else {
+      setRestrictUser(true);
     }
-  }else {
-    setRestrictUser(true)
-  }
     // handleResetFields();
     // eslint-disable-next-line
   }, []);
@@ -556,10 +595,10 @@ const Data = GetLocalStorage();
     handleResetFields();
   };
 
-  const nabtebEduPinSuccess = (e) => {
-    setTransactSuccessPopUp(true);
-    setNabtebEducationConfirm(false);
-  };
+  // const nabtebEduPinSuccess = (e) => {
+  //   setTransactSuccessPopUp(true);
+  //   setNabtebEducationConfirm(false);
+  // };
   const nabtebEduPinFailed = () => {
     setNabtebEducationConfirm(false);
     setNabtebFailedTransaction(true);
@@ -584,9 +623,29 @@ const Data = GetLocalStorage();
         quantity: parseInt(nabtebQuantityResult.split(" (")[0].slice(0, 1)),
       };
       const SuccessHandler = (response) => {
-        nabtebEduPinSuccess();
-        setEducationPinStatus(true);
+        // nabtebEduPinSuccess();
+        // setEducationPinStatus(true);
         setNabtebOrderId(response?.data?.data?.data?.order_id);
+        if (
+          response?.data?.data?.data?.status === "success" ||
+          response?.data?.data?.data?.status === "delivered" ||
+          response?.data?.data?.data?.status === "successful" ||
+          response?.data?.data?.data?.status === "Successful"
+        ) {
+          setPurchaseEduErrorType("");
+          setTransactSuccessPopUp(true);
+          setNabtebEducationConfirm(false);
+          setInputPin("");
+        } else if (
+          response?.data?.data?.data?.status === "failed" ||
+          response?.data?.data?.data?.status === "Failed" ||
+          response?.data?.data?.data?.status === "unsuccessful"
+        ) {
+          setPurchaseEduErrorType("E-Pins Unavailable: Purchase Failed");
+          setNabtebFailedTransaction(true);
+          setNabtebEducationConfirm(false);
+          setInputPin("");
+        }
       };
       const FailedHandler = async (ErrorType) => {
         if (ErrorType === "Bad request") {
@@ -600,24 +659,37 @@ const Data = GetLocalStorage();
             (ErrorType) => {
               if (ErrorType === "unauthorised") {
                 return setSessionModal(true);
+              } else if (ErrorType === "Server error") {
+                setPurchaseEduErrorType("Server Error: Purchase Failed");
+              } else if (
+                ErrorType === "Network error" ||
+                ErrorType === "User error"
+              ) {
+                setPurchaseEduErrorType("Network Error : Purchase Failed");
+              } else {
+                setPurchaseEduErrorType("An Unexpected error has occured");
               }
             },
             setFetchedPurchaseResponse
           );
         } else if (ErrorType === "Server error") {
-          setPurchaseEduErrorType(
-            "Failed to process your request, try again some other time"
-          );
+          setPurchaseEduErrorType("Server Error: Purchase Failed");
+          setInputPin("");
           setNabtebFailedTransaction(true);
           setNabtebEducationConfirm(false);
         } else if (
           ErrorType === "Network error" ||
           ErrorType === "User error"
         ) {
-          setPurchaseEduErrorType("An internet connection error");
+          setPurchaseEduErrorType("Network Error : Purchase Failed");
           setNabtebFailedTransaction(true);
           setNabtebEducationConfirm(false);
+          setInputPin("");
         } else {
+          setPurchaseEduErrorType("An Unexpected error has occured");
+          setNabtebFailedTransaction(true);
+          setNabtebEducationConfirm(false);
+          setInputPin("");
         }
       };
 
@@ -712,20 +784,27 @@ const Data = GetLocalStorage();
     setIsFocused(false);
   };
 
-  if(Data?.ConfirmAcc === "true"){
-  window.addEventListener("online", ()=> {
-   if(checkNetworkError === true &&
-     (updateBalance === undefined || updateBalance === null || updateBalance === "")
-    && (newBalance === null || newBalance === undefined || newBalance === "") ){
-   return GetBalance();
-   }
-   if(checkNetworkError === true &&
-     (nabtebEduResponse?.data?.data?.Amount === undefined  || nabtebEduResponse?.data?.data?.Amount === null) ) {
-    return getAmount();
-   }
-  })
-}
-console.log(nabtebEduResponse?.data?.data?.Amount);
+  if (Data?.ConfirmAcc === "true") {
+    window.addEventListener("online", () => {
+      if (
+        checkNetworkError === true &&
+        (updateBalance === undefined ||
+          updateBalance === null ||
+          updateBalance === "") &&
+        (newBalance === null || newBalance === undefined || newBalance === "")
+      ) {
+        return GetBalance();
+      }
+      if (
+        checkNetworkError === true &&
+        (nabtebEduResponse?.data?.data?.Amount === undefined ||
+          nabtebEduResponse?.data?.data?.Amount === null)
+      ) {
+        return getAmount();
+      }
+    });
+  }
+  console.log(nabtebEduResponse?.data?.data?.Amount);
   return (
     <DashBoardLayout>
       <div className="flex flex-col h-[115%] lg:h-[120%] justify-between ">
@@ -1419,7 +1498,9 @@ console.log(nabtebEduResponse?.data?.data?.Amount);
                             )}
                           />
                           <div
-                            className="text-[#0003]"
+                            className={`cursor-pointer ${
+                              isDarkMode ? "text-white" : "text-[#003]"
+                            }`}
                             onClick={toggleVisibility}
                           >
                             {isVisible ? (
@@ -1501,6 +1582,7 @@ console.log(nabtebEduResponse?.data?.data?.Amount);
                           setTransactSuccessPopUp(false);
                           setInputPin("");
                           handleResetFields();
+                          setFetchedPurchaseResponse({});
                           navigate("/NabtebEducationPin");
                         }}
                         className=" w-[25px] h-[25px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px] cursor-pointer"
@@ -1630,6 +1712,7 @@ console.log(nabtebEduResponse?.data?.data?.Amount);
                         to="/NabtebEducationPin"
                         onClick={() => {
                           nabtebTransactionSuccessClose();
+                          setFetchedPurchaseResponse({});
                         }}
                         className={`bg-[#04177f] w-[111px] lg:w-[200px] md:w-[99px] h-[40px] md:h-6 lg:h-[42px] lg:my-[2%] flex justify-center items-center cursor-pointer text-xs md:text-xs lg:text-base font-semibold text-white rounded-[6px] md:rounded-[7px] lg:rounded-[12px]`}
                       >
@@ -1643,7 +1726,7 @@ console.log(nabtebEduResponse?.data?.data?.Amount);
                           boxShadow:
                             "0px 0px 2.0368096828460693px 0px #00000040",
                         }}
-                        className={`border w-[111px] lg:w-[200px] md:w-[99px] h-[40px] md:h-[24px] lg:h-[42px] lg:my-[2%] flex justify-center items-center cursor-pointer text-xs md:text-xs lg:text-base font-semibold rounded-[6px] md:rounded-[7px] lg:rounded-[12px]`}
+                        className={`border w-[111px] lg:w-[200px] md:w-[99px] h-[40px] md:h-[24px] lg:h-[42px] lg:my-[2%] flex justify-center items-center cursor-pointer text-xs md:text-xs lg:text-base font-semibold rounded-[6px] md:rounded-[7px] lg:rounded-[12px] border-[#04177f]`}
                       >
                         Receipt
                       </Link>
@@ -1739,7 +1822,7 @@ console.log(nabtebEduResponse?.data?.data?.Amount);
                 >
                   {purchaseEduErrorType}
                 </p>
-                <div className="flex gap-[10px] justify-between w-full px-[10px]">
+                {fetchedPurchaseResponse?.data?.status ? (<div className="flex gap-[10px] justify-between w-full px-[10px]">
                   <Link
                     to="/NabtebEducationPin"
                     onClick={() => {
@@ -1766,7 +1849,20 @@ console.log(nabtebEduResponse?.data?.data?.Amount);
                   >
                     Receipt
                   </Link>
-                </div>
+                </div>): <Link
+                    to="/NabtebEducationPin"
+                    onClick={() => {
+                      setNabtebFailedTransaction(false);
+                      setInputPin("");
+                      // window.location.reload();
+                      handleResetFields();
+                      setPurchaseEduErrorType("");
+                      setFetchedPurchaseResponse({})
+                    }}
+                    className="bg-[#04177f] w-[50%] max-w-xs mx-auto py-2 text-white rounded-md font-medium"
+                  >
+                    Done
+                  </Link>}
               </div>
             </div>
           </Modal>
@@ -1786,10 +1882,10 @@ console.log(nabtebEduResponse?.data?.data?.Amount);
           <Loader />
         </Modal>
       )}
-      {sessionModal && <InternalLoginSession setExpiredSessionLogin={setSessionModal} />}
-      {sessionModal === false && restrictUser && (
-        <RestrictionPopUp/>
+      {sessionModal && (
+        <InternalLoginSession setExpiredSessionLogin={setSessionModal} />
       )}
+      {sessionModal === false && restrictUser && <RestrictionPopUp />}
     </DashBoardLayout>
   );
 }

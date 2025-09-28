@@ -24,7 +24,7 @@ import {
   VerifyTransPin,
   GetFunction,
   InternalLoginSession,
-  RestrictionPopUp
+  RestrictionPopUp,
 } from "../../../ApiCollection.jsx/ApiBuck";
 import { GetLocalStorage } from "../../../LocalStorage/LocalStorage";
 // validating the network numbers
@@ -91,7 +91,7 @@ export function validateNigerianNumberByNetwork(number) {
 }
 
 const AEDC = () => {
-  const Data = GetLocalStorage()
+  const Data = GetLocalStorage();
   const navigate = useNavigate();
   const {
     isDarkMode,
@@ -148,9 +148,8 @@ const AEDC = () => {
   const pointsEarned = "+2.00";
   const [loading, setLoading] = useState(false);
   const [sessionModal, setSessionModal] = useState(false);
-  const [balanceLoader, setBalanceLoader] = useState(false)
+  const [balanceLoader, setBalanceLoader] = useState(false);
   // const handleValidate = () => {
-
 
   //   if (isEmailOrNumberValid(email) || isEmailOrNumberValid(number)) {
   //     setErrorMessage('')
@@ -176,7 +175,7 @@ const AEDC = () => {
     setSelectedAedcMeterType(productName);
     setShowProductList(false);
   };
- const [restrictUser, setRestrictUser] = useState(false);
+  const [restrictUser, setRestrictUser] = useState(false);
   const [passDataBalance, setPassDataBalance] = useState({});
 
   const GetBalance = async () => {
@@ -208,8 +207,7 @@ const AEDC = () => {
   };
   // get the balance on entering the page
   useEffect(() => {
-    if(Data?.ConfirmAcc === "true"){
-    
+    if (Data?.ConfirmAcc === "true") {
       GetBalance();
       if (GetBalance) {
         setNewBalance(
@@ -217,11 +215,10 @@ const AEDC = () => {
             ? passDataBalance?.data?.data?.data?.balance
             : ""
         );
-      
+      }
+    } else {
+      setRestrictUser(true);
     }
-  }else{
-    setRestrictUser(true);
-  }
     // handleResetFields();
     // eslint-disable-next-line
   }, []);
@@ -383,7 +380,7 @@ const AEDC = () => {
     setAmountError("");
     setSelected(true);
     setAedcWalletBalance(balance);
-    setAedcPaymentResult(`${name} ${ balance }`);
+    setAedcPaymentResult(`${name} ${balance}`);
     // setSelectedCountry(country)
     // setCountryCode(code);
     // setCurrencyAvailable(id !== 1);
@@ -506,9 +503,29 @@ const AEDC = () => {
         disco_type: "abuja-electric",
       };
       const SuccessHandler = (response) => {
-        setInputPinPopUp(false);
         setAedcDiscoType(response?.data?.data?.data?.disco_type);
-        setSuccessPopup(true);
+        if (
+          response?.data?.data?.data?.status === "success" ||
+          response?.data?.data?.data?.status === "delivered" ||
+          response?.data?.data?.data?.status === "successful" ||
+          response?.data?.data?.data?.status === "Successful"
+        ) {
+          setPurchaseElectricityErrorType("");
+          setSuccessPopup(true);
+          setInputPinPopUp(false);
+          setInputPin("");
+        } else if (
+          response?.data?.data?.data?.status === "failed" ||
+          response?.data?.data?.data?.status === "Failed" ||
+          response?.data?.data?.data?.status === "unsuccessful"
+        ) {
+          setPurchaseElectricityErrorType(
+            "E-Bill Unavailable: Purchase Failed"
+          );
+          setFailedPopup(true);
+          setInputPinPopUp(false);
+          setInputPin("");
+        }
       };
       const FailedHandler = async (ErrorType) => {
         if (ErrorType === "Bad request") {
@@ -546,6 +563,7 @@ const AEDC = () => {
           setPurchaseElectricityErrorType("Server Error: Purchase Failed");
           setFailedPopup(true);
           setInputPinPopUp(false);
+          setInputPin("");
         } else if (
           ErrorType === "Network error" ||
           ErrorType === "User error"
@@ -553,8 +571,12 @@ const AEDC = () => {
           setPurchaseElectricityErrorType("Network Error : Purchase Failed");
           setFailedPopup(true);
           setInputPinPopUp(false);
+          setInputPin("");
         } else {
           setPurchaseElectricityErrorType("An Unexpected error has occured");
+          setFailedPopup(true);
+          setInputPinPopUp(false);
+          setInputPin("");
         }
       };
       await PostFunction(
@@ -1146,7 +1168,12 @@ const AEDC = () => {
                           src={country.flag}
                           alt="/"
                         />
-                        {country.name} {' '}  {balanceLoader === true && country.id === 1 ? <BalanceLoading/> :  country.balance}
+                        {country.name}{" "}
+                        {balanceLoader === true && country.id === 1 ? (
+                          <BalanceLoading />
+                        ) : (
+                          country.balance
+                        )}
                       </div>
                     ))}
                   </div>
@@ -1541,7 +1568,12 @@ const AEDC = () => {
                         />
                       )}
                     />
-                    <div className="text-[#0003]" onClick={toggleVisibility}>
+                    <div
+                      className={`cursor-pointer ${
+                        isDarkMode ? "text-white" : "text-[#003]"
+                      }`}
+                      onClick={toggleVisibility}
+                    >
                       {isVisible ? (
                         <AiFillEye className="w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]" />
                       ) : (
@@ -1839,8 +1871,7 @@ const AEDC = () => {
               > */}
                 <button
                   onClick={handleSuccessData}
-                  // className={`border w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-xs md:px-[50px] font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:rounded-[8px] md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
-                  className={`border w-[111px] lg:w-[200px] md:w-[99px] h-[40px] md:h-[24px] lg:h-[42px] lg:my-[2%] flex justify-center items-center cursor-pointer text-xs md:text-xs lg:text-base font-semibold rounded-[6px] md:rounded-[7px] lg:rounded-[12px]`}
+                  className={`border w-[111px] lg:w-[200px] md:w-[99px] h-[40px] md:h-[24px] lg:h-[42px] lg:my-[2%] flex justify-center items-center cursor-pointer text-xs md:text-xs lg:text-base font-semibold rounded-[6px] md:rounded-[7px] lg:rounded-[12px] border-[#04177f]`}
                 >
                   Receipt
                 </button>
@@ -1921,24 +1952,25 @@ const AEDC = () => {
               >
                 {purchaseElectricityErrorType}
               </p>
-              <div
-                // className="flex w-[70%] mx-auto items-center my-6  gap-[6%] md:gap-[20px] justify-center md:w-[20%] lg:my-[5%]"
-                className="flex gap-[10px] justify-between w-full px-[10px]"
-              >
-                <button
-                  onClick={() => {
-                    setFailedPopup(false);
-                    setInputPin("");
-                    handleResetFields();
-                    setPurchaseElectricityErrorType("");
-                    navigate("/aedc");
-                  }}
-                  // className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-xs font-extrabold h-[40px] text-white rounded-[6px] md:px-[50px] md:w-[70%] md:rounded-[8px] md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%] `}
-                  className="bg-[#04177f] w-[50%] max-w-xs mx-auto py-2 text-white rounded-md font-medium"
+              {aedcFetchedResponse?.data?.status ? (
+                <div
+                  // className="flex w-[70%] mx-auto items-center my-6  gap-[6%] md:gap-[20px] justify-center md:w-[20%] lg:my-[5%]"
+                  className="flex gap-[10px] justify-between w-full px-[10px]"
                 >
-                  Done
-                </button>
-                {/* <Link
+                  <button
+                    onClick={() => {
+                      setFailedPopup(false);
+                      setInputPin("");
+                      handleResetFields();
+                      setPurchaseElectricityErrorType("");
+                      navigate("/aedc");
+                    }}
+                    // className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-xs font-extrabold h-[40px] text-white rounded-[6px] md:px-[50px] md:w-[70%] md:rounded-[8px] md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%] `}
+                    className="bg-[#04177f] w-[50%] max-w-xs mx-auto py-2 text-white rounded-md font-medium"
+                  >
+                    Done
+                  </button>
+                  {/* <Link
                 to="/aedc-receipt-failed"
                 state={{
                   selectedNetworkProduct: selectedAedcMeterType,
@@ -1952,20 +1984,34 @@ const AEDC = () => {
                   showDescription: aedcShowDescription,
                 }}
               > */}
+                  <button
+                    onClick={handleFailedData}
+                    // className={`border w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-xs font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:px-[50px] md:rounded-[8px] md:text-base px-8 lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                    style={{
+                      boxShadow: "0px 0px 2.0368096828460693px 0px #00000040",
+                    }}
+                    className={`w-[50%] max-w-xs mx-auto border py-2  rounded-md font-medium transition-colors ${
+                      isDarkMode ? "bg-black hover:bg-slate-800 " : "bg-white"
+                    }`}
+                  >
+                    Receipt
+                  </button>
+                  {/* </Link> */}
+                </div>
+              ) : (
                 <button
-                  onClick={handleFailedData}
-                  // className={`border w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-xs font-extrabold h-[40px] rounded-[6px] md:w-[80px] md:px-[50px] md:rounded-[8px] md:text-base px-8 lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
-                  style={{
-                    boxShadow: "0px 0px 2.0368096828460693px 0px #00000040",
+                  onClick={() => {
+                    setFailedPopup(false);
+                    setInputPin("");
+                    handleResetFields();
+                    setPurchaseElectricityErrorType("");
+                    navigate("/aedc");
                   }}
-                  className={`w-[50%] max-w-xs mx-auto border py-2  rounded-md font-medium transition-colors ${
-                    isDarkMode ? "bg-black hover:bg-slate-800 " : "bg-white"
-                  }`}
+                  className="bg-[#04177f] w-full max-w-xs mx-auto py-2 text-white rounded-md font-medium"
                 >
-                  Receipt
+                  Done
                 </button>
-                {/* </Link> */}
-              </div>
+              )}
             </div>
           </div>
         </Modal>
@@ -1975,11 +2021,10 @@ const AEDC = () => {
           <Loader />
         </Modal>
       )}
-      {sessionModal 
-      && <InternalLoginSession setExpiredSessionLogin ={setSessionModal} />}
-      {restrictUser && sessionModal === false && (
-        <RestrictionPopUp/>
-      ) }
+      {sessionModal && (
+        <InternalLoginSession setExpiredSessionLogin={setSessionModal} />
+      )}
+      {restrictUser && sessionModal === false && <RestrictionPopUp />}
     </DashBoardLayout>
   );
 };

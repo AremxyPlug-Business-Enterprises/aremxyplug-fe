@@ -31,14 +31,14 @@ import {
   PostFunction,
   VerifyTransPin,
   RestrictionPopUp,
-  InternalLoginSession
+  InternalLoginSession,
 } from "../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../Loader/Loader";
 import { validateNigerianNumberByNetwork } from "./waecEducationPin";
 import { GetLocalStorage } from "../LocalStorage/LocalStorage";
 
 export default function NecoEducationPins() {
-  const Data = GetLocalStorage()
+  const Data = GetLocalStorage();
   const {
     isDarkMode,
 
@@ -73,8 +73,8 @@ export default function NecoEducationPins() {
     setNecoQuantityAmount,
     necoWalletBalance,
     setNecoWalletBalance,
-    setEducationPinStatus,
-     necoEduResponse,
+    // setEducationPinStatus,
+    necoEduResponse,
     setNecoEduResponse,
     newBalance,
     setNewBalance,
@@ -107,7 +107,7 @@ export default function NecoEducationPins() {
   const [sessionModal, setSessionModal] = useState(false);
   const [passDataBalance, setPassDataBalance] = useState({});
   const [checkNetworkError, setCheckNetworkError] = useState(false);
-  const [restrictUser, setRestrictUser] = useState(false)
+  const [restrictUser, setRestrictUser] = useState(false);
 
   const necoOptions = [
     {
@@ -194,10 +194,13 @@ export default function NecoEducationPins() {
           setIsLoading,
           SuccessHandler,
           (ErrorType) => {
-              if (ErrorType === "Sever error") {
-           alert("Unable to get NECO PINS. Please try again later");
-            }else if(ErrorType === "Network error" || ErrorType === "User error"){
-          alert("Your internet connection is quite unstable.")
+            if (ErrorType === "Sever error") {
+              alert("Unable to get NECO PINS. Please try again later");
+            } else if (
+              ErrorType === "Network error" ||
+              ErrorType === "User error"
+            ) {
+              alert("Your internet connection is quite unstable.");
             }
           },
           setNecoEduResponse
@@ -213,144 +216,175 @@ export default function NecoEducationPins() {
       setNecoEduResponse
     );
   };
-const GetBalance = async () => {
-    if(!navigator.onLine) return setCheckNetworkError(true)
-      const SuccessHandler = () => {
-        //alert("Successful");
-        console.log("successfully retrieved balance");
-        //alert("Successful")
-      };
-      const FailedHandler = async (ErrorType) => {
-        if (ErrorType === "unauthorised") {
-          await GetFunction(
-            `balance`,
-            setIsLoading,
-            SuccessHandler,
-            //Handling the error Use Cases of the Unauthorised inside
-            // of the statement.
-            async(ErrorType) => {
-              if (ErrorType === "unauthorised") {
-                return setSessionModal(true);
-              }else if(ErrorType === "Server error"){
-                  await GetFunction(
-        "balance",
-        setIsLoading,
-        SuccessHandler,
-       async(ErrorType)=> {
-        if(ErrorType === "Server error"){
-          alert("Failed to retrieve the balance.")
-        }else if(ErrorType === "Network error" || ErrorType === "User error"){
-           setCheckNetworkError(true);
-              alert("Kindly check your internet connection to retrieve balance.")
-        }else {
-          alert("An unexpected error has occured on attempt to retrieve balance.")
-        }
-       },
-        setPassDataBalance
-      );
-       }else if(ErrorType === "Network error" || ErrorType === "User error"){
-         setCheckNetworkError(true);
-           alert("Kindly check your internet connection to retrieve balance");
-           setCheckNetworkError(true);
-       }else {
-        alert("An unexpected error has occured on attempt to retrieve the balance")
-       }
-            },
-             setPassDataBalance
-          );
-        }else if(ErrorType === "Server error"){
-            await GetFunction(
-        "balance",
-        setIsLoading,
-        SuccessHandler,
-       async(ErrorType)=> {
-         if(ErrorType === "unauthorised"){
-            await GetFunction(
-        "balance",
-        setIsLoading,
-        SuccessHandler,
-        async(ErrorType)=> {
-          if(ErrorType === "unauthorised"){
-            return setSessionModal(true)
-          }else if(ErrorType === "Server error"){
-               await GetFunction(
-        "balance",
-        setIsLoading,
-        SuccessHandler,
-       async(ErrorType)=> {
-        //if Statements
-      //We run again cause the previous one was interrupted by 401
-      //Let us re-run server error
-      if(ErrorType === "Server error"){
-        alert("Failed to retrieve the balance")
-      }else if(ErrorType === "unauthorised"){
-        return sessionModal(true)
-      }else if(ErrorType === "Network error" || ErrorType === "User error"){
-         setCheckNetworkError(true);
-       alert("Kindly check your internet connection to retrieve balance")
-      }else{
-       // console.log("yeah bro i am the one running blehh")
-        alert("An Unexpected error occured in attempt to retrieve balance")
-      }
-
-       },
-        setPassDataBalance
-      );
-          }else if(ErrorType === "Network error" || ErrorType === "User error"){
-             setCheckNetworkError(true);
-            alert("Kindly check your internet connection to retrieve the balance")
-          }else if(ErrorType === "Server error"){
-            alert("Failed to retrieve the balance.")
-          }else{
-            alert("An Unexpected error occured in attempt to retrieve balance")
-          }
-        },
-        setPassDataBalance
-      );
-    }
-          else if(ErrorType === "Network error" || ErrorType === "User error"){
-            //The operation was interrupted by a network error
-             setCheckNetworkError(true);
-            alert("Kindly check your internet connection to retrieve balance.")
-         }else {
-          //Place 
-          //An alien error has occured with the re-run of the "Server error" ErrorType
-          alert("An unexpected error occured in attempt to retrieve the balance.")
-         }
-       },
-        setPassDataBalance
-      );
-        }else if(ErrorType === "Network error" || ErrorType === "User error"){
-            setCheckNetworkError(true);
-        }else{
-           
-          alert("An unexpected error occured in attempt to retrieve balance.")
-        }
-      }
-      await GetFunction(
-        "balance",
-        setIsLoading,
-        SuccessHandler,
-        FailedHandler,
-        setPassDataBalance
-      );
+  const GetBalance = async () => {
+    if (!navigator.onLine) return setCheckNetworkError(true);
+    const SuccessHandler = () => {
+      //alert("Successful");
+      console.log("successfully retrieved balance");
+      //alert("Successful")
     };
+    const FailedHandler = async (ErrorType) => {
+      if (ErrorType === "unauthorised") {
+        await GetFunction(
+          `balance`,
+          setIsLoading,
+          SuccessHandler,
+          //Handling the error Use Cases of the Unauthorised inside
+          // of the statement.
+          async (ErrorType) => {
+            if (ErrorType === "unauthorised") {
+              return setSessionModal(true);
+            } else if (ErrorType === "Server error") {
+              await GetFunction(
+                "balance",
+                setIsLoading,
+                SuccessHandler,
+                async (ErrorType) => {
+                  if (ErrorType === "Server error") {
+                    alert("Failed to retrieve the balance.");
+                  } else if (
+                    ErrorType === "Network error" ||
+                    ErrorType === "User error"
+                  ) {
+                    setCheckNetworkError(true);
+                    alert(
+                      "Kindly check your internet connection to retrieve balance."
+                    );
+                  } else {
+                    alert(
+                      "An unexpected error has occured on attempt to retrieve balance."
+                    );
+                  }
+                },
+                setPassDataBalance
+              );
+            } else if (
+              ErrorType === "Network error" ||
+              ErrorType === "User error"
+            ) {
+              setCheckNetworkError(true);
+              alert(
+                "Kindly check your internet connection to retrieve balance"
+              );
+              setCheckNetworkError(true);
+            } else {
+              alert(
+                "An unexpected error has occured on attempt to retrieve the balance"
+              );
+            }
+          },
+          setPassDataBalance
+        );
+      } else if (ErrorType === "Server error") {
+        await GetFunction(
+          "balance",
+          setIsLoading,
+          SuccessHandler,
+          async (ErrorType) => {
+            if (ErrorType === "unauthorised") {
+              await GetFunction(
+                "balance",
+                setIsLoading,
+                SuccessHandler,
+                async (ErrorType) => {
+                  if (ErrorType === "unauthorised") {
+                    return setSessionModal(true);
+                  } else if (ErrorType === "Server error") {
+                    await GetFunction(
+                      "balance",
+                      setIsLoading,
+                      SuccessHandler,
+                      async (ErrorType) => {
+                        //if Statements
+                        //We run again cause the previous one was interrupted by 401
+                        //Let us re-run server error
+                        if (ErrorType === "Server error") {
+                          alert("Failed to retrieve the balance");
+                        } else if (ErrorType === "unauthorised") {
+                          return sessionModal(true);
+                        } else if (
+                          ErrorType === "Network error" ||
+                          ErrorType === "User error"
+                        ) {
+                          setCheckNetworkError(true);
+                          alert(
+                            "Kindly check your internet connection to retrieve balance"
+                          );
+                        } else {
+                          // console.log("yeah bro i am the one running blehh")
+                          alert(
+                            "An Unexpected error occured in attempt to retrieve balance"
+                          );
+                        }
+                      },
+                      setPassDataBalance
+                    );
+                  } else if (
+                    ErrorType === "Network error" ||
+                    ErrorType === "User error"
+                  ) {
+                    setCheckNetworkError(true);
+                    alert(
+                      "Kindly check your internet connection to retrieve the balance"
+                    );
+                  } else if (ErrorType === "Server error") {
+                    alert("Failed to retrieve the balance.");
+                  } else {
+                    alert(
+                      "An Unexpected error occured in attempt to retrieve balance"
+                    );
+                  }
+                },
+                setPassDataBalance
+              );
+            } else if (
+              ErrorType === "Network error" ||
+              ErrorType === "User error"
+            ) {
+              //The operation was interrupted by a network error
+              setCheckNetworkError(true);
+              alert(
+                "Kindly check your internet connection to retrieve balance."
+              );
+            } else {
+              //Place
+              //An alien error has occured with the re-run of the "Server error" ErrorType
+              alert(
+                "An unexpected error occured in attempt to retrieve the balance."
+              );
+            }
+          },
+          setPassDataBalance
+        );
+      } else if (ErrorType === "Network error" || ErrorType === "User error") {
+        setCheckNetworkError(true);
+      } else {
+        alert("An unexpected error occured in attempt to retrieve balance.");
+      }
+    };
+    await GetFunction(
+      "balance",
+      setIsLoading,
+      SuccessHandler,
+      FailedHandler,
+      setPassDataBalance
+    );
+  };
   // get the amount and balance on entering the page
   useEffect(() => {
-    if(Data?.ConfirmAcc === "true"){
-    getAmount();
-   GetBalance();
+    if (Data?.ConfirmAcc === "true") {
+      getAmount();
+      GetBalance();
       if (GetBalance) {
         setNewBalance(
           passDataBalance?.data?.data
             ? passDataBalance?.data?.data?.data?.balance
             : ""
         );
-      
+      }
+    } else {
+      setRestrictUser(true);
     }
-  }else {
-    setRestrictUser(true)
-  }
     // handleResetFields();
     // eslint-disable-next-line
   }, []);
@@ -542,10 +576,10 @@ const GetBalance = async () => {
   // const necoReceipt = () => {
   //   setTransactSuccessPopUp(false);
   // };
-  const necoEduPinSuccess = () => {
-    setTransactSuccessPopUp(true);
-    setNecoEducationConfirm(false);
-  };
+  // const necoEduPinSuccess = () => {
+  //   setTransactSuccessPopUp(true);
+  //   setNecoEducationConfirm(false);
+  // };
   const necoEduPinFailed = () => {
     setNecoEducationConfirm(false);
     setNecoFailedTransaction(true);
@@ -565,9 +599,29 @@ const GetBalance = async () => {
         quantity: parseInt(necoQuantityResult.split(" (")[0].slice(0, 1)),
       };
       const SuccessHandler = (response) => {
-        necoEduPinSuccess();
-        setEducationPinStatus(true);
+        // necoEduPinSuccess();
+        // setEducationPinStatus(true);
         setNecoOrderId(response?.data?.data?.data?.order_id);
+        if (
+          response?.data?.data?.data?.status === "success" ||
+          response?.data?.data?.data?.status === "delivered" ||
+          response?.data?.data?.data?.status === "successful" ||
+          response?.data?.data?.data?.status === "Successful"
+        ) {
+          setPurchaseEduErrorType("");
+          setTransactSuccessPopUp(true);
+          setNecoEducationConfirm(false);
+          setInputPin("");
+        } else if (
+          response?.data?.data?.data?.status === "failed" ||
+          response?.data?.data?.data?.status === "Failed" ||
+          response?.data?.data?.data?.status === "unsuccessful"
+        ) {
+          setPurchaseEduErrorType("E-Pins Unavailable: Purchase Failed");
+          setNecoFailedTransaction(true);
+          setNecoEducationConfirm(false);
+          setInputPin("");
+        }
       };
       const FailedHandler = async (ErrorType) => {
         if (ErrorType === "Bad request") {
@@ -581,24 +635,37 @@ const GetBalance = async () => {
             (ErrorType) => {
               if (ErrorType === "unauthorised") {
                 return setSessionModal(true);
+              } else if (ErrorType === "Server error") {
+                setPurchaseEduErrorType("Server Error: Purchase Failed");
+              } else if (
+                ErrorType === "Network error" ||
+                ErrorType === "User error"
+              ) {
+                setPurchaseEduErrorType("Network Error : Purchase Failed");
+              } else {
+                setPurchaseEduErrorType("An Unexpected error has occured");
               }
             },
             setFetchedPurchaseResponse
           );
         } else if (ErrorType === "Server error") {
-          setPurchaseEduErrorType(
-            "Failed to process your request, try again some other time"
-          );
+          setPurchaseEduErrorType("Server Error: Purchase Failed");
+          setInputPin("");
           setNecoFailedTransaction(true);
           setNecoEducationConfirm(false);
         } else if (
           ErrorType === "Network error" ||
           ErrorType === "User error"
         ) {
-          setPurchaseEduErrorType("An internet connection error");
+          setPurchaseEduErrorType("Network Error : Purchase Failed");
           setNecoFailedTransaction(true);
           setNecoEducationConfirm(false);
+          setInputPin("");
         } else {
+          setPurchaseEduErrorType("An Unexpected error has occured");
+          setNecoFailedTransaction(true);
+          setNecoEducationConfirm(false);
+          setInputPin("");
         }
       };
 
@@ -692,24 +759,30 @@ const GetBalance = async () => {
     setIsFocused(false);
   };
 
-
   //Function to check if the user has an account
-  //Then runs if the user is online, then checks if the 
+  //Then runs if the user is online, then checks if the
   //if CheckNetwork error is true.
-    if(Data?.ConfirmAcc === "true"){
-  window.addEventListener("online", ()=> {
-   if(checkNetworkError === true &&
-     (updateBalance === undefined || updateBalance === null || updateBalance === "")
-    && (newBalance === null || newBalance === undefined || newBalance === "") ){
-   return GetBalance();
-   }
-   if(checkNetworkError === true &&
-     (necoEduResponse?.data?.data?.Amount === undefined  || necoEduResponse?.data?.data?.Amount === null) ) {
-    return getAmount();
-   }
-  })
-}
-console.log(necoEduResponse?.data?.data?.Amount);
+  if (Data?.ConfirmAcc === "true") {
+    window.addEventListener("online", () => {
+      if (
+        checkNetworkError === true &&
+        (updateBalance === undefined ||
+          updateBalance === null ||
+          updateBalance === "") &&
+        (newBalance === null || newBalance === undefined || newBalance === "")
+      ) {
+        return GetBalance();
+      }
+      if (
+        checkNetworkError === true &&
+        (necoEduResponse?.data?.data?.Amount === undefined ||
+          necoEduResponse?.data?.data?.Amount === null)
+      ) {
+        return getAmount();
+      }
+    });
+  }
+  console.log(necoEduResponse?.data?.data?.Amount);
   return (
     <DashBoardLayout>
       <div className="flex flex-col justify-between lg:h-[120%] h-[115%]">
@@ -1214,9 +1287,7 @@ console.log(necoEduResponse?.data?.data?.Amount);
                             Exam Type
                           </h2>
                           <div className="flex gap-1 items-center">
-                            <div
-                              className=" w-[12.02px] h-[12.02px] md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]"
-                            >
+                            <div className=" w-[12.02px] h-[12.02px] md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]">
                               <img
                                 src={NecoImg}
                                 alt=""
@@ -1337,7 +1408,11 @@ console.log(necoEduResponse?.data?.data?.Amount);
                             >
                               Available Balance {"  "}
                             </p>
-                            <span className={`${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+                            <span
+                              className={`${
+                                isDarkMode ? "text-white" : "text-[#7C7C7C]"
+                              }`}
+                            >
                               {necoWalletBalance !== ""
                                 ? necoWalletBalance
                                 : "₦"}
@@ -1406,41 +1481,43 @@ console.log(necoEduResponse?.data?.data?.Amount);
                         Input PIN to complete transaction
                       </p>
                       <div className="flex flex-col items-center lg:gap-[0px] gap-[5px] font-extrabold">
-                  {/* dashboard(bg-color), acct upgrade(end user- regular, merchant), card issuing(click on get ur card now-show the pop up this feature is coming soon), data topup, data bundle(smile and spectranet- onclick(popup- this feature is currently unavailable), login(wen it shows the verification code has been sent there shld be the X to close d pop up, wen u switch from email to login the request for d email 4 e.g shld be made without waiting for the 60 secs to elapse)), payments(international payments onclick-popup- this feature is currently unavailable ), conversion(only  wat is avaible is points redeem), all withdrawals shld be currently unavailable, display the balance anywhere there is balance, the bg for hero section gradient alongside navbar, replicate using figma for everywhere including sidebar */}
+                        {/* dashboard(bg-color), acct upgrade(end user- regular, merchant), card issuing(click on get ur card now-show the pop up this feature is coming soon), data topup, data bundle(smile and spectranet- onclick(popup- this feature is currently unavailable), login(wen it shows the verification code has been sent there shld be the X to close d pop up, wen u switch from email to login the request for d email 4 e.g shld be made without waiting for the 60 secs to elapse)), payments(international payments onclick-popup- this feature is currently unavailable ), conversion(only  wat is avaible is points redeem), all withdrawals shld be currently unavailable, display the balance anywhere there is balance, the bg for hero section gradient alongside navbar, replicate using figma for everywhere including sidebar */}
                         <div className="flex items-center gap-2.5">
                           {" "}
-                            <OtpInput
-                              value={inputPin}
-                              // inputType="tel"
-                              inputType={!isVisible ? "tel":"password"}
-                              onChange={setInputPin}
-                              numInputs={4}
-                              shouldAutoFocus={true}
-                              inputStyle={{
-                                // color: isDarkMode ? "#ffffff" : "#403f3f",
-                                color: isDarkMode ? "#ffffff" : "#000000",
-                                fontWeight: 700,
-                                borderRadius: 4,
-                                height: "35px",
-                                width: "35px",
-                                backgroundColor: isDarkMode ? "black" : "white",
-                                border: isDarkMode
-                                  ? "1px solid white"
-                                  : "1px solid #ccc",
-                              }}
-                              renderInput={(props) => (
-                                <input
-                                  {...props}
-                                  className={`inputOTP mx-[2px] ${
-                                    isFocused ? "focused" : ""
-                                  }`}
-                                  onFocus={handleFocus}
-                                  onBlur={handleBlur}
-                                />
-                              )}
-                            />
+                          <OtpInput
+                            value={inputPin}
+                            // inputType="tel"
+                            inputType={!isVisible ? "tel" : "password"}
+                            onChange={setInputPin}
+                            numInputs={4}
+                            shouldAutoFocus={true}
+                            inputStyle={{
+                              // color: isDarkMode ? "#ffffff" : "#403f3f",
+                              color: isDarkMode ? "#ffffff" : "#000000",
+                              fontWeight: 700,
+                              borderRadius: 4,
+                              height: "35px",
+                              width: "35px",
+                              backgroundColor: isDarkMode ? "black" : "white",
+                              border: isDarkMode
+                                ? "1px solid white"
+                                : "1px solid #ccc",
+                            }}
+                            renderInput={(props) => (
+                              <input
+                                {...props}
+                                className={`inputOTP mx-[2px] ${
+                                  isFocused ? "focused" : ""
+                                }`}
+                                onFocus={handleFocus}
+                                onBlur={handleBlur}
+                              />
+                            )}
+                          />
                           <div
-                            className="text-[#0003]"
+                            className={`cursor-pointer ${
+                              isDarkMode ? "text-white" : "text-[#003]"
+                            }`}
                             onClick={toggleVisibility}
                           >
                             {isVisible ? (
@@ -1663,7 +1740,7 @@ console.log(necoEduResponse?.data?.data?.Amount);
                           boxShadow:
                             "0px 0px 2.0368096828460693px 0px #00000040",
                         }}
-                        className={`border w-[111px] lg:w-[200px] md:w-[99px] h-[40px] md:h-[24px] lg:h-[42px] lg:my-[2%] flex justify-center items-center cursor-pointer text-xs md:text-xs lg:text-base font-semibold rounded-[6px] md:rounded-[7px] lg:rounded-[12px]`}
+                        className={`border w-[111px] lg:w-[200px] md:w-[99px] h-[40px] md:h-[24px] lg:h-[42px] lg:my-[2%] flex justify-center items-center cursor-pointer text-xs md:text-xs lg:text-base font-semibold rounded-[6px] md:rounded-[7px] lg:rounded-[12px] border-[#04177f]`}
                       >
                         Receipt
                       </Link>
@@ -1743,6 +1820,7 @@ console.log(necoEduResponse?.data?.data?.Amount);
                     setInputPin("");
                     handleResetFields();
                     setPurchaseEduErrorType("");
+                    setFetchedPurchaseResponse({});
                     navigate("/NecoEducationPin");
                   }}
                   className="w-[18px] h-[18px] md:w-[25px] cursor-pointer md:h-[25px] lg:w-[35px] lg:h-[35px]"
@@ -1762,55 +1840,79 @@ console.log(necoEduResponse?.data?.data?.Amount);
                 {/* <p className="text-center text-[#F95252]  lg:text-base lg:leading-[20.8px] font-semibold text-xs md:text-[13px] md:leading-[20px] leading-[16px]">
                   An unexpected error has occurred, please try again.
                 </p> */}
-                <p className={`text-sm mb-8 ${isDarkMode ? "text-white":"text-gray-600"}`}>
-                {purchaseEduErrorType}
-              </p>
-                <div className="flex gap-[10px] justify-between w-full px-[10px]"
+                <p
+                  className={`text-sm mb-8 ${
+                    isDarkMode ? "text-white" : "text-gray-600"
+                  }`}
                 >
+                  {purchaseEduErrorType}
+                </p>
+                {fetchedPurchaseResponse?.data?.status ? (
+                  <div className="flex gap-[10px] justify-between w-full px-[10px]">
+                    <Link
+                      to="/NecoEducationPin"
+                      onClick={() => {
+                        setNecoFailedTransaction(false);
+                        setInputPin("");
+                        handleResetFields();
+                        setPurchaseEduErrorType("");
+                        setFetchedPurchaseResponse({});
+                      }}
+                      className="bg-[#04177f] w-[50%] max-w-xs mx-auto py-2 text-white rounded-md font-medium"
+                    >
+                      Done
+                    </Link>
+                    <Link
+                      to="/NecoFailedReceipt"
+                      onClick={handleFailedData}
+                      style={{
+                        boxShadow: "0px 0px 2.0368096828460693px 0px #00000040",
+                      }}
+                      className={`w-[50%] max-w-xs mx-auto border py-2  rounded-md font-medium transition-colors ${
+                        isDarkMode ? "bg-black hover:bg-slate-800 " : "bg-white"
+                      }`}
+                    >
+                      Receipt
+                    </Link>
+                  </div>
+                ) : (
                   <Link
                     to="/NecoEducationPin"
                     onClick={() => {
                       setNecoFailedTransaction(false);
                       setInputPin("");
                       handleResetFields();
-                    setPurchaseEduErrorType("");
+                      setPurchaseEduErrorType("");
+                      setFetchedPurchaseResponse({});
                     }}
                     className="bg-[#04177f] w-[50%] max-w-xs mx-auto py-2 text-white rounded-md font-medium"
                   >
                     Done
                   </Link>
-                  <Link
-                    to="/NecoFailedReceipt"
-                    onClick={handleFailedData}
-                    style={{boxShadow: "0px 0px 2.0368096828460693px 0px #00000040",}}
-                    className={`w-[50%] max-w-xs mx-auto border py-2  rounded-md font-medium transition-colors ${isDarkMode ?"bg-black hover:bg-slate-800 ":"bg-white"}`}
-                  >
-                    Receipt
-                  </Link>
-                </div>
+                )}
               </div>
             </div>
           </Modal>
         )}
 
         <div className="mt-[38rem] md:mt-[15rem]">
-        <div className={style.help}>
-          <h2>You need help?</h2>
-          <Link to={`/ContactUs`} className={style.btnContact}>
-            Contact Us
-          </Link>
+          <div className={style.help}>
+            <h2>You need help?</h2>
+            <Link to={`/ContactUs`} className={style.btnContact}>
+              Contact Us
+            </Link>
+          </div>
         </div>
-      </div>
       </div>
       {isLoading && (
         <Modal>
           <Loader />
         </Modal>
       )}
-      {sessionModal && <InternalLoginSession setExpiredSessionModal ={setSessionModal} />}
-      {sessionModal === false && restrictUser &&(
-        <RestrictionPopUp/>
-      ) }
+      {sessionModal && (
+        <InternalLoginSession setExpiredSessionModal={setSessionModal} />
+      )}
+      {sessionModal === false && restrictUser && <RestrictionPopUp />}
     </DashBoardLayout>
   );
 }

@@ -40,6 +40,7 @@ export const NabtebFailedReceipt = () => {
     setNabtebPinsGenerated,
     purchaseEduErrorType,
     setPurchaseEduErrorType,
+    setFetchedPurchaseResponse
   } = useContext(ContextProvider);
 
   const { toggleSideBar, isDarkMode, date } = useContext(ContextProvider);
@@ -73,6 +74,7 @@ export const NabtebFailedReceipt = () => {
     setNabtebPinsGenerated([]);
     setNabtebTransactionProduct("");
     setPurchaseEduErrorType("");
+    setFetchedPurchaseResponse({});
     navigate("/NabtebEducationPin");
   };
 

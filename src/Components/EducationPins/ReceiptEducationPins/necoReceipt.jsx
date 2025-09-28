@@ -38,6 +38,7 @@ export default function NecoReceipt() {
     setNecoTransactionProduct,
     necoPinsGenerated,
     setNecoPinsGenerated,
+    setFetchedPurchaseResponse
   } = useContext(ContextProvider);
 
   const { toggleSideBar, isDarkMode, date } = useContext(ContextProvider);
@@ -67,6 +68,7 @@ export default function NecoReceipt() {
     setNecoShowDescription("");
     setNecoPinsGenerated([]);
     setNecoTransactionProduct("");
+    setFetchedPurchaseResponse({});
     navigate("/NecoEducationPin");
   };
 

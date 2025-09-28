@@ -69,8 +69,8 @@ export default function JambEducationPin() {
     setJambEducationPinEmail,
     jambWalletBalance,
     setJambWalletBalance,
-    setEducationPinStatus,
-     jambEduResponse,
+    // setEducationPinStatus,
+    jambEduResponse,
     setJambEduResponse,
     newBalance,
     setNewBalance,
@@ -87,7 +87,7 @@ export default function JambEducationPin() {
     purchaseEduErrorType,
     setPurchaseEduErrorType,
   } = useContext(ContextProvider);
-  const Data = GetLocalStorage()
+  const Data = GetLocalStorage();
   // UseStates
   const [jambImageState, setJambImageState] = useState(arrowDown);
   const [jambEducationProceed, setJambEducationProceed] = useState(false);
@@ -95,7 +95,7 @@ export default function JambEducationPin() {
   const [jambEducationConfirm, setJambEducationConfirm] = useState(false);
   const [jambFailedTransaction, setJambFailedTransaction] = useState(false);
   const [restrictUser, setRestrictUser] = useState(false);
-  const [checkNetworkError, setCheckNetworkError] = useState(false)
+  const [checkNetworkError, setCheckNetworkError] = useState(false);
   // const [receipt] = useState(false);
 
   // Get Amount
@@ -204,144 +204,180 @@ export default function JambEducationPin() {
     );
   };
   const GetBalance = async () => {
-      if(!navigator.onLine) return setCheckNetworkError(true)
-        const SuccessHandler = () => {
-          //alert("Successful");
-          console.log("successfully retrieved balance");
-          //alert("Successful")
-        };
-        const FailedHandler = async (ErrorType) => {
-          if (ErrorType === "unauthorised") {
-            await GetFunction(
-              `balance`,
-              setIsLoading,
-              SuccessHandler,
-              //Handling the error Use Cases of the Unauthorised inside
-              // of the statement.
-              async(ErrorType) => {
-                if (ErrorType === "unauthorised") {
-                  return setSessionModal(true);
-                }else if(ErrorType === "Server error"){
-                    await GetFunction(
-          "balance",
+    if (!navigator.onLine) return setCheckNetworkError(true);
+    const SuccessHandler = () => {
+      //alert("Successful");
+      console.log("successfully retrieved balance");
+      //alert("Successful")
+    };
+    const FailedHandler = async (ErrorType) => {
+      if (ErrorType === "unauthorised") {
+        await GetFunction(
+          `balance`,
           setIsLoading,
           SuccessHandler,
-         async(ErrorType)=> {
-          if(ErrorType === "Server error"){
-            alert("Failed to retrieve the balance.")
-          }else if(ErrorType === "Network error" || ErrorType === "User error"){
-             setCheckNetworkError(true);
-                alert("Kindly check your internet connection to retrieve balance.")
-          }else {
-            alert("An unexpected error has occured on attempt to retrieve balance.")
-          }
-         },
-          setPassDataBalance
-        );
-         }else if(ErrorType === "Network error" || ErrorType === "User error"){
-           setCheckNetworkError(true);
-             alert("Kindly check your internet connection to retrieve balance");
-             setCheckNetworkError(true);
-         }else {
-          alert("An unexpected error has occured on attempt to retrieve the balance")
-         }
-              },
-               setPassDataBalance
-            );
-          }else if(ErrorType === "Server error"){
+          //Handling the error Use Cases of the Unauthorised inside
+          // of the statement.
+          async (ErrorType) => {
+            if (ErrorType === "unauthorised") {
+              return setSessionModal(true);
+            } else if (ErrorType === "Server error") {
               await GetFunction(
-          "balance",
-          setIsLoading,
-          SuccessHandler,
-         async(ErrorType)=> {
-           if(ErrorType === "unauthorised"){
-              await GetFunction(
-          "balance",
-          setIsLoading,
-          SuccessHandler,
-          async(ErrorType)=> {
-            if(ErrorType === "unauthorised"){
-              return setSessionModal(true)
-            }else if(ErrorType === "Server error"){
-                 await GetFunction(
-          "balance",
-          setIsLoading,
-          SuccessHandler,
-         async(ErrorType)=> {
-          //if Statements
-        //We run again cause the previous one was interrupted by 401
-        //Let us re-run server error
-        if(ErrorType === "Server error"){
-          alert("Failed to retrieve the balance")
-        }else if(ErrorType === "unauthorised"){
-          return sessionModal(true)
-        }else if(ErrorType === "Network error" || ErrorType === "User error"){
-           setCheckNetworkError(true);
-         alert("Kindly check your internet connection to retrieve balance")
-        }else{
-         // console.log("yeah bro i am the one running blehh")
-          alert("An Unexpected error occured in attempt to retrieve balance")
-        }
-  
-         },
-          setPassDataBalance
-        );
-            }else if(ErrorType === "Network error" || ErrorType === "User error"){
-               setCheckNetworkError(true);
-              alert("Kindly check your internet connection to retrieve the balance")
-            }else if(ErrorType === "Server error"){
-              alert("Failed to retrieve the balance.")
-            }else{
-              alert("An Unexpected error occured in attempt to retrieve balance")
+                "balance",
+                setIsLoading,
+                SuccessHandler,
+                async (ErrorType) => {
+                  if (ErrorType === "Server error") {
+                    alert("Failed to retrieve the balance.");
+                  } else if (
+                    ErrorType === "Network error" ||
+                    ErrorType === "User error"
+                  ) {
+                    setCheckNetworkError(true);
+                    alert(
+                      "Kindly check your internet connection to retrieve balance."
+                    );
+                  } else {
+                    alert(
+                      "An unexpected error has occured on attempt to retrieve balance."
+                    );
+                  }
+                },
+                setPassDataBalance
+              );
+            } else if (
+              ErrorType === "Network error" ||
+              ErrorType === "User error"
+            ) {
+              setCheckNetworkError(true);
+              alert(
+                "Kindly check your internet connection to retrieve balance"
+              );
+              setCheckNetworkError(true);
+            } else {
+              alert(
+                "An unexpected error has occured on attempt to retrieve the balance"
+              );
             }
           },
           setPassDataBalance
         );
-      }
-            else if(ErrorType === "Network error" || ErrorType === "User error"){
-              //The operation was interrupted by a network error
-               setCheckNetworkError(true);
-              alert("Kindly check your internet connection to retrieve balance.")
-           }else {
-            //Place 
-            //An alien error has occured with the re-run of the "Server error" ErrorType
-            alert("An unexpected error occured in attempt to retrieve the balance.")
-           }
-         },
-          setPassDataBalance
-        );
-          }else if(ErrorType === "Network error" || ErrorType === "User error"){
-              setCheckNetworkError(true);
-          }else{
-             
-            alert("An unexpected error occured in attempt to retrieve balance.")
-          }
-        }
+      } else if (ErrorType === "Server error") {
         await GetFunction(
           "balance",
           setIsLoading,
           SuccessHandler,
-          FailedHandler,
+          async (ErrorType) => {
+            if (ErrorType === "unauthorised") {
+              await GetFunction(
+                "balance",
+                setIsLoading,
+                SuccessHandler,
+                async (ErrorType) => {
+                  if (ErrorType === "unauthorised") {
+                    return setSessionModal(true);
+                  } else if (ErrorType === "Server error") {
+                    await GetFunction(
+                      "balance",
+                      setIsLoading,
+                      SuccessHandler,
+                      async (ErrorType) => {
+                        //if Statements
+                        //We run again cause the previous one was interrupted by 401
+                        //Let us re-run server error
+                        if (ErrorType === "Server error") {
+                          alert("Failed to retrieve the balance");
+                        } else if (ErrorType === "unauthorised") {
+                          return sessionModal(true);
+                        } else if (
+                          ErrorType === "Network error" ||
+                          ErrorType === "User error"
+                        ) {
+                          setCheckNetworkError(true);
+                          alert(
+                            "Kindly check your internet connection to retrieve balance"
+                          );
+                        } else {
+                          // console.log("yeah bro i am the one running blehh")
+                          alert(
+                            "An Unexpected error occured in attempt to retrieve balance"
+                          );
+                        }
+                      },
+                      setPassDataBalance
+                    );
+                  } else if (
+                    ErrorType === "Network error" ||
+                    ErrorType === "User error"
+                  ) {
+                    setCheckNetworkError(true);
+                    alert(
+                      "Kindly check your internet connection to retrieve the balance"
+                    );
+                  } else if (ErrorType === "Server error") {
+                    alert("Failed to retrieve the balance.");
+                  } else {
+                    alert(
+                      "An Unexpected error occured in attempt to retrieve balance"
+                    );
+                  }
+                },
+                setPassDataBalance
+              );
+            } else if (
+              ErrorType === "Network error" ||
+              ErrorType === "User error"
+            ) {
+              //The operation was interrupted by a network error
+              setCheckNetworkError(true);
+              alert(
+                "Kindly check your internet connection to retrieve balance."
+              );
+            } else {
+              //Place
+              //An alien error has occured with the re-run of the "Server error" ErrorType
+              alert(
+                "An unexpected error occured in attempt to retrieve the balance."
+              );
+            }
+          },
           setPassDataBalance
         );
-      };
+      } else if (ErrorType === "Network error" || ErrorType === "User error") {
+        setCheckNetworkError(true);
+      } else {
+        alert("An unexpected error occured in attempt to retrieve balance.");
+      }
+    };
+    await GetFunction(
+      "balance",
+      setIsLoading,
+      SuccessHandler,
+      FailedHandler,
+      setPassDataBalance
+    );
+  };
   // get the amount and balance on entering the page
   useEffect(() => {
-    if(Data?.ConfirmAcc === "true"){
-    getAmount();
-    GetBalance();
-    if (newBalance === "" || newBalance === null || newBalance === undefined) {
+    if (Data?.ConfirmAcc === "true") {
+      getAmount();
       GetBalance();
-      if (GetBalance) {
-        setNewBalance(
-          passDataBalance?.data?.data
-            ? passDataBalance?.data?.data?.data?.balance
-            : ""
-        );
+      if (
+        newBalance === "" ||
+        newBalance === null ||
+        newBalance === undefined
+      ) {
+        GetBalance();
+        if (GetBalance) {
+          setNewBalance(
+            passDataBalance?.data?.data
+              ? passDataBalance?.data?.data?.data?.balance
+              : ""
+          );
+        }
       }
-    }
-  }else{
-   setRestrictUser(true)
+    } else {
+      setRestrictUser(true);
     }
     // handleResetFields();
     // eslint-disable-next-line
@@ -529,10 +565,10 @@ export default function JambEducationPin() {
     setJambEducationConfirm(true);
   };
 
-  const jambEduPinSuccess = (e) => {
-    setTransactSuccessPopUp(true);
-    setJambEducationConfirm(false);
-  };
+  // const jambEduPinSuccess = (e) => {
+  //   setTransactSuccessPopUp(true);
+  //   setJambEducationConfirm(false);
+  // };
   const jambEduPinFailed = () => {
     setJambEducationConfirm(false);
     setJambFailedTransaction(true);
@@ -558,9 +594,29 @@ export default function JambEducationPin() {
         quantity: parseInt(jambQuantityResult.split(" (")[0].slice(0, 1)),
       };
       const SuccessHandler = (response) => {
-        jambEduPinSuccess();
-        setEducationPinStatus(true);
+        // jambEduPinSuccess();
+        // setEducationPinStatus(true);
         setJambOrderId(response?.data?.data?.data?.order_id);
+        if (
+          response?.data?.data?.data?.status === "success" ||
+          response?.data?.data?.data?.status === "delivered" ||
+          response?.data?.data?.data?.status === "successful" ||
+          response?.data?.data?.data?.status === "Successful"
+        ) {
+          setPurchaseEduErrorType("");
+          setTransactSuccessPopUp(true);
+          setJambEducationConfirm(false);
+          setInputPin("");
+        } else if (
+          response?.data?.data?.data?.status === "failed" ||
+          response?.data?.data?.data?.status === "Failed" ||
+          response?.data?.data?.data?.status === "unsuccessful"
+        ) {
+          setPurchaseEduErrorType("E-Pins Unavailable: Purchase Failed");
+          setJambFailedTransaction(true);
+          setJambEducationConfirm(false);
+          setInputPin("");
+        }
       };
       const FailedHandler = async (ErrorType) => {
         if (ErrorType === "Bad request") {
@@ -574,24 +630,37 @@ export default function JambEducationPin() {
             (ErrorType) => {
               if (ErrorType === "unauthorised") {
                 return setSessionModal(true);
+              } else if (ErrorType === "Server error") {
+                setPurchaseEduErrorType("Server Error: Purchase Failed");
+              } else if (
+                ErrorType === "Network error" ||
+                ErrorType === "User error"
+              ) {
+                setPurchaseEduErrorType("Network Error : Purchase Failed");
+              } else {
+                setPurchaseEduErrorType("An Unexpected error has occured");
               }
             },
             setFetchedPurchaseResponse
           );
         } else if (ErrorType === "Server error") {
-          setPurchaseEduErrorType(
-            "Failed to process your request, try again some other time"
-          );
+          setPurchaseEduErrorType("Server Error: Purchase Failed");
+          setInputPin("");
           setJambFailedTransaction(true);
           setJambEducationConfirm(false);
         } else if (
           ErrorType === "Network error" ||
           ErrorType === "User error"
         ) {
-          setPurchaseEduErrorType("An internet connection error");
+          setPurchaseEduErrorType("Network Error : Purchase Failed");
           setJambFailedTransaction(true);
           setJambEducationConfirm(false);
+          setInputPin("");
         } else {
+          setPurchaseEduErrorType("An Unexpected error has occured");
+          setJambFailedTransaction(true);
+          setJambEducationConfirm(false);
+          setInputPin("");
         }
       };
 
@@ -685,19 +754,26 @@ export default function JambEducationPin() {
   const handleBlur = () => {
     setIsFocused(false);
   };
-    if(Data?.ConfirmAcc === "true"){
-  window.addEventListener("online", ()=> {
-   if(checkNetworkError === true &&
-     (updateBalance === undefined || updateBalance === null || updateBalance === "")
-    && (newBalance === null || newBalance === undefined || newBalance === "") ){
-   return GetBalance();
-   }
-   if(checkNetworkError === true &&
-     (jambEduResponse?.data?.data?.Amount === undefined  || jambEduResponse?.data?.data?.Amount === null) ) {
-    return getAmount();
-   }
-  })
-}
+  if (Data?.ConfirmAcc === "true") {
+    window.addEventListener("online", () => {
+      if (
+        checkNetworkError === true &&
+        (updateBalance === undefined ||
+          updateBalance === null ||
+          updateBalance === "") &&
+        (newBalance === null || newBalance === undefined || newBalance === "")
+      ) {
+        return GetBalance();
+      }
+      if (
+        checkNetworkError === true &&
+        (jambEduResponse?.data?.data?.Amount === undefined ||
+          jambEduResponse?.data?.data?.Amount === null)
+      ) {
+        return getAmount();
+      }
+    });
+  }
 
   return (
     <DashBoardLayout>
@@ -1386,7 +1462,10 @@ export default function JambEducationPin() {
                               )}
                             />
                             <div
-                              className="text-[#0003]"
+                              className={`cursor-pointer ${
+                                isDarkMode ? "text-white" : "text-[#0003]"
+                              }`}
+                              aria-hidden="true"
                               onClick={toggleVisibility}
                             >
                               {isVisible ? (
@@ -1468,6 +1547,7 @@ export default function JambEducationPin() {
                           setTransactSuccessPopUp(false);
                           handleResetFields();
                           setInputPin("");
+                          setFetchedPurchaseResponse({})
                           navigate("/JambEducationPin");
                         }}
                         className=" w-[25px] h-[25px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px] cursor-pointer"
@@ -1595,6 +1675,7 @@ export default function JambEducationPin() {
                         to="/JambEducationPin"
                         onClick={() => {
                           jambTransactionSuccessClose();
+                          setFetchedPurchaseResponse({})
                           // window.location.reload();
                         }}
                         className={`bg-[#04177f] w-[111px] lg:w-[200px] md:w-[99px] h-[40px] md:h-6 lg:h-[42px] lg:my-[2%] flex justify-center items-center cursor-pointer text-xs md:text-xs lg:text-base font-semibold text-white rounded-[6px] md:rounded-[7px] lg:rounded-[12px]`}
@@ -1609,7 +1690,7 @@ export default function JambEducationPin() {
                           boxShadow:
                             "0px 0px 2.0368096828460693px 0px #00000040",
                         }}
-                        className={`border w-[111px] lg:w-[200px] md:w-[99px] h-[40px] md:h-[24px] lg:h-[42px] lg:my-[2%] flex justify-center items-center cursor-pointer text-xs md:text-xs lg:text-base font-semibold rounded-[6px] md:rounded-[7px] lg:rounded-[12px]`}
+                        className={`border w-[111px] lg:w-[200px] md:w-[99px] h-[40px] md:h-[24px] lg:h-[42px] lg:my-[2%] flex justify-center items-center cursor-pointer text-xs md:text-xs lg:text-base font-semibold rounded-[6px] md:rounded-[7px] lg:rounded-[12px] border-[#04177f]`}
                       >
                         Receipt
                       </Link>
@@ -1707,7 +1788,36 @@ export default function JambEducationPin() {
                 >
                   {purchaseEduErrorType}
                 </p>
-                <div className="flex gap-[10px] justify-between w-full px-[10px]">
+                {fetchedPurchaseResponse?.data?.status ? (
+                  <div className="flex gap-[10px] justify-between w-full px-[10px]">
+                    <Link
+                      to="/JambEducationPin"
+                      onClick={() => {
+                        setJambFailedTransaction(false);
+                        setInputPin("");
+                        handleResetFields();
+                        setPurchaseEduErrorType("");
+                        setFetchedPurchaseResponse({})
+                      }}
+                      className="bg-[#04177f] w-[50%] max-w-xs mx-auto py-2 text-white rounded-md font-medium"
+                    >
+                      Done
+                    </Link>
+                    {/* RECEIPT FAILED */}
+                    <Link
+                      to="/JambReceipt"
+                      onClick={handleFailedData}
+                      style={{
+                        boxShadow: "0px 0px 2.0368096828460693px 0px #00000040",
+                      }}
+                      className={`w-[50%] max-w-xs mx-auto border py-2  rounded-md font-medium transition-colors ${
+                        isDarkMode ? "bg-black hover:bg-slate-800 " : "bg-white"
+                      }`}
+                    >
+                      Receipt
+                    </Link>
+                  </div>
+                ) : (
                   <Link
                     to="/JambEducationPin"
                     onClick={() => {
@@ -1715,25 +1825,13 @@ export default function JambEducationPin() {
                       setInputPin("");
                       handleResetFields();
                       setPurchaseEduErrorType("");
+                      setFetchedPurchaseResponse({})
                     }}
                     className="bg-[#04177f] w-[50%] max-w-xs mx-auto py-2 text-white rounded-md font-medium"
                   >
                     Done
                   </Link>
-                  {/* RECEIPT FAILED */}
-                  <Link
-                    to="/JambReceipt"
-                    onClick={handleFailedData}
-                    style={{
-                      boxShadow: "0px 0px 2.0368096828460693px 0px #00000040",
-                    }}
-                    className={`w-[50%] max-w-xs mx-auto border py-2  rounded-md font-medium transition-colors ${
-                      isDarkMode ? "bg-black hover:bg-slate-800 " : "bg-white"
-                    }`}
-                  >
-                    Receipt
-                  </Link>
-                </div>
+                )}
               </div>
             </div>
           </Modal>
@@ -1753,10 +1851,10 @@ export default function JambEducationPin() {
           <Loader />
         </Modal>
       )}
-      {sessionModal && <InternalLoginSession setExpiredSessionLogin={setSessionModal} />}
-      {sessionModal === false && restrictUser && (
-        <RestrictionPopUp/>
+      {sessionModal && (
+        <InternalLoginSession setExpiredSessionLogin={setSessionModal} />
       )}
+      {sessionModal === false && restrictUser && <RestrictionPopUp />}
     </DashBoardLayout>
   );
 }

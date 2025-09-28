@@ -38,6 +38,7 @@ export const WaecFailedReceipt = () => {
     setWaecPinsGenerated,
     purchaseEduErrorType,
     setPurchaseEduErrorType,
+    setFetchedPurchaseResponse
   } = useContext(ContextProvider);
 
   const { toggleSideBar, isDarkMode, date } = useContext(ContextProvider);
@@ -70,6 +71,7 @@ export const WaecFailedReceipt = () => {
     setWaecPinsGenerated([]);
     setWaecTransactionProduct("");
     setPurchaseEduErrorType("");
+    setFetchedPurchaseResponse({});
     navigate("/WaecEducationPin");
   };
 

@@ -38,6 +38,7 @@ export default function NabtebReceipt() {
     setNabtebTransactionProduct,
     nabtebPinsGenerated,
     setNabtebPinsGenerated,
+    setFetchedPurchaseResponse
   } = useContext(ContextProvider);
 
   const { toggleSideBar, isDarkMode, date } = useContext(ContextProvider);
@@ -69,6 +70,7 @@ export default function NabtebReceipt() {
     setNabtebShowDescription("");
     setNabtebPinsGenerated([]);
     setNabtebTransactionProduct("");
+    setFetchedPurchaseResponse({});
     navigate("/NabtebEducationPin");
   };
 
