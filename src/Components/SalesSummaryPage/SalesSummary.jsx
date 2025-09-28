@@ -58,7 +58,13 @@ export default function SalesSummaryPage ()  {
 //    balance += salesResponse[i]?.tota_amount
 // }
 // console.log(balance);
-
+const supposedResponseFromBackend = [
+  {Categories : "Data Top-up", Quantity : 50, Amount :"N100,000", Products : 10},
+  {Categories : "Airtime", Quantity : 40, Amount : "N50,000", Products : 15},
+  {Categories : "TV Subscription", Quantity : 30, Amount : "N40,000", Products : 14},
+  {Categories : "Education Pins", Quantity : 20, Amount : "N30,000", Products : 11},
+  {Categories : "Electricity Bills", Quantity : 10, Amount : "N20, 0000", Products : 165}
+  ]
 
       const [selectedProduct, setSelectedProduct] = useState('Filter by product');
       
@@ -100,7 +106,8 @@ export default function SalesSummaryPage ()  {
         setLoading, 
         SuccessHandler,
          FailedHandler,
-          setSalesResponse)}
+          setSalesResponse
+        )}
 
           const GetBalance =   async()=> {
                                   const SuccessHandler = ()=> {
@@ -508,7 +515,7 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
                       <p className={` text-[11px] text-center leading-[14px] font-[500] 
                       lg:text-[18px] lg:leading-[24px]
                         ${toggleSideBar ? "lg:text-[18px]" : ""}`}>
-                        Total Inflows
+                        Total Products
                       </p>
                       <img
                         className="h-[10.3px] w-[10.3px] md:h-[18px] md:w-[18px] lg:w-[24px] lg:h-[24px]"
@@ -535,7 +542,7 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
                     <div className="flex gap-1 justify-center items-center ">
                       <p className={`  text-[11px] text-center leading-[14px] font-[500] 
                       lg:text-[18px] lg:leading-[24px] ${toggleSideBar ? "lg:text-[18px]" : ""}`}>
-                        Total Transactions{" "}
+                        Total Quantity{" "}
                       </p>
                       <img
                         className="h-[10.3px] w-[10.3px] md:h-[18px] md:w-[18px] lg:w-[24px] lg:h-[24px]"
@@ -559,7 +566,7 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
                     <div className="flex gap-1 justify-center items-center">
                       <p className={`text-[11px] text-center leading-[14px] font-[500] 
                       lg:text-[18px] lg:leading-[24px] ${toggleSideBar ? "lg:text-[18px]" : ""}`}>
-                        Total Outflows
+                        Total Amount
                       </p>
                       <img
                         className="h-[10.3px] w-[10.3px] md:h-[18px] md:w-[18px] lg:w-[24px] lg:h-[24px]"
@@ -604,7 +611,7 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
         items-center lg:justify-between 
         lg:gap-[300px]  md:gap-[113.44px] flex">
           <div className={`w-[33.33%] flex  justify-center items-center h-full`}>
-      <p className={`text-[12px] leading-[14px ] font-[500] leading-[16px] lg:leading-[20px] text-center`}>Product</p>
+      <p className={`text-[12px] leading-[14px ] font-[500] leading-[16px] lg:leading-[20px] text-center`}>Categories  </p>
       </div>
        <div className={`w-[33.33%] flex  justify-center items-center h-full`}>
       <p className={`text-[12px] leading-[14px]  font-[500] lg:leading-20px] text-center`}>Quantity</p>
@@ -614,14 +621,36 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
       </div>
         </div>
         {/* {salesResponse?.data?.data?.data} */}
-         {salesResponse?.data?.data?.data?.data !== undefined && salesResponse?.data?.data?.data?.data?.length > 0 ? (
-           salesResponse?.data?.data?.data?.data.map((item, index)=>{
-          if(index < salesResponse?.data?.data?.data?.data?.length ){
-          //   balance += item?.total_amount;
-           // setTotalOutFlow(balance);
-            }
+        {supposedResponseFromBackend?.length > 0 && selectedProduct === "Filter by product" ? (
+          supposedResponseFromBackend.map((data)=> (
+             <div className ="w-[100%] flex flex-col gap-[5px]
+              bg-white border border-gray-400 rounded-[10px] py-[20px] px-[20px] mb-[20px]">
+     <div className="w-[100%] flex justify-between gap-[5px]">
+  <div className="flex flex-col gap-[5px] w-1/3">
+     <p className='text-[12px] font-[600] text-black leading-[16px]'>{data.Categories}</p>
 
-            return (
+      <p className='text-[10px] font-[400] leading-[15px] text-gray-400'>{`Products: ${data.Products}`}</p>
+     </div>
+   
+        <p className='w-1/3 text-[12px] font-[600] text-center lg:text-left text-black leading-[16px] '>{data.Quantity}</p>
+           <p className='w-/3 text-[10px] font-[400] text-center leading-[15px] text-gray-400'>{data.Amount}</p>
+          
+      
+       </div>
+    
+           <p className="text-right text-[10px] font-[500] text-gray-400 ">
+            {`Show ${data.Categories} products...`}
+           </p>
+          
+       </div>
+
+     
+      
+          ))
+        ) : (
+          selectedProduct!== "Filter by product" && salesResponse?.data?.data?.data?.data !== undefined 
+          && salesResponse?.data?.data?.data?.data?.length > 0 ? (
+           salesResponse?.data?.data?.data?.data.map((item, index)=> (
             <div className=" justify-between md:w-full 
         w-full h-[25px] lg:pr-0 pl-[8.67px] pr-[1.33px] 
     lg:w-full lg:pl-[23px] 
@@ -646,11 +675,11 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
       </div>
  
     </div>
-)})) :(
-        <img className="lg:w-full lg:h-[456px] flex self-center w-[" src={NoRecordImage} alt="No record found"/> 
-            )}
-   
-  </div>
+))) :(
+     <img className="lg:w-full lg:h-[456px] flex self-center w-[" src={NoRecordImage} alt="No record found"/> 
+            ))}
+    </div>
+          
 
 
 

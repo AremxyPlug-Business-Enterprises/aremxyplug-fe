@@ -4,7 +4,7 @@ import { RiArrowDropUpLine } from "react-icons/ri";
 import { SiLinkedin } from "react-icons/si";
 import { ImFacebook2 } from "react-icons/im";
 import { ImInstagram } from "react-icons/im";
-import { SiTwitter } from "react-icons/si";
+import { SiX } from "react-icons/si";
 import { GrMail } from "react-icons/gr";
 import { Link } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
@@ -304,7 +304,7 @@ export const Footer = () => {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <SiTwitter />
+                  <SiX />
                 </a>
               </div>
               <div className="text-lg">
@@ -621,7 +621,7 @@ export const Footer = () => {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <SiTwitter />
+                  <SiX />
                 </a>
               </div>
               <div className="text-[20px] lg:text-3xl">

@@ -186,6 +186,12 @@ export const Context = ({ children }) => {
     }
   };
 
+
+  
+  
+
+
+
   // ========form validation using regex=======
   const schema = Joi.object({
     country: Joi.string().required(),
@@ -245,7 +251,11 @@ export const Context = ({ children }) => {
     localStorage.setItem("ActiveSignUp", true);
   };
 
+
+   const [errorSpecialCharacterUsername, setErrorSpecialCharacterUsername] = useState(false)
   const handleSubmit = (event) => {
+   
+   
     event.preventDefault();
 
     const {
@@ -827,6 +837,7 @@ export const Context = ({ children }) => {
 
   // ===================== MTN  DATABUNDLE========================
   const [selectedOptionMtn, setSelectedOptionMtn] = useState("");
+  const [purchaseMtnErrorType, setPurchaseMtnErrorType] = useState("")
   const [selectedNetworkProduct, setSelectedNetworkProduct] = useState("");
   const [recipientPhoneNumberMtn, setRecipientPhoneNumberMtn] = useState("");
   const [selectedProductMtn, setSelectedProductMtn] = useState("");
@@ -838,6 +849,7 @@ export const Context = ({ children }) => {
   const [emailId, setEmailId] = useState("");
 
   //==================GLO DataBundle ===============
+  const [gloPurchaseErrorType, setGloPurchaseErrorType] = useState("")
   const [selectedOptionGlo, setSelectedOptionGlo] = useState("");
   const [selectedProductGlo, setSelectedProductGlo] = useState("");
   const [selectedNetworkProductGlo, setSelectedNetworkProductGlo] =
@@ -848,6 +860,8 @@ export const Context = ({ children }) => {
   const [walletNameGlo, setWalletNameGlo] = useState("initialWalletName");
 
   //================Etisalat =====================
+  const [ setEtisaltPurchaseErrorType,
+    etisalatPurchaseErrorType] = useState("");
   const [selectedOptionEtisalat, setSelectedOptionEtisalat] = useState("");
   const [selectedNetworkProductEtisalat, setSelectedNetworkProductEtisalat] =
     useState("");
@@ -860,6 +874,8 @@ export const Context = ({ children }) => {
   const [selectedProductEtisalat, setSelectedProductEtisalat] = useState("");
 
   // ================ Airtel ================
+  const   [airtelPurchaseErrorType,
+    setAirtelPurchaseErrorType] = useState("");
   const [selectedOptionAirtel, setSelectedOptionAirtel] = useState("");
   const [selectedNetworkProductAirtel, setSelectedNetworkProductAirtel] =
     useState("");
@@ -1385,6 +1401,8 @@ export const Context = ({ children }) => {
 
 
   const hold = {
+    errorSpecialCharacterUsername,
+     setErrorSpecialCharacterUsername,
     tvSubscriptionResponse,
     setTvSubscriptionResponse,
     gotvOrderId,
@@ -1732,6 +1750,8 @@ export const Context = ({ children }) => {
     setProductId,
 
     // ==============MTN DataBundle===============
+    purchaseMtnErrorType,
+     setPurchaseMtnErrorType,
     selectedOptionMtn,
     setSelectedOptionMtn,
     selectedProductMtn,
@@ -1768,8 +1788,12 @@ export const Context = ({ children }) => {
     setSelectedNetworkProductGlo,
     selectedProductGlo,
     setSelectedProductGlo,
+    gloPurchaseErrorType, 
+    setGloPurchaseErrorType,
 
     // =============== Etisalat ==========
+    setEtisaltPurchaseErrorType,
+    etisalatPurchaseErrorType,
     selectedOptionEtisalat,
     setSelectedOptionEtisalat,
     selectedNetworkProductEtisalat,
@@ -1786,6 +1810,8 @@ export const Context = ({ children }) => {
     setSelectedProductEtisalat,
 
     //============ Airtel ==============
+      airtelPurchaseErrorType,
+    setAirtelPurchaseErrorType,
     selectedOptionAirtel,
     setSelectedOptionAirtel,
     selectedNetworkProductAirtel,

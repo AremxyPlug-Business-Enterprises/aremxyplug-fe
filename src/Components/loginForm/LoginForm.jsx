@@ -83,6 +83,9 @@ function LoginForm() {
          RemoveLocalStorage();
          window.location.reload()
       }
+      if((localStorage.getItem("getToken") || localStorage.getItem("authorisedLogin")) && open2StepOTP === true){
+         RemoveLocalStorage();
+      }
     const handleResize = () => {
       const width = window.innerWidth;
       let newSize = "";
@@ -166,9 +169,6 @@ function LoginForm() {
     }
   };
 
-  //SetLocalStorage for input Pin flow
- 
-// Function to Verify user's Virtual Account situation 2
 
 
 
@@ -337,7 +337,7 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
   
       }}
 
-
+const [errorSpecialCharacterUsername, setErrorSpecialCharacterUsername] = useState(false)
 
   
   return (
@@ -457,6 +457,12 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
                   {errors.email}
                 </div>
               )}
+              {(!errors.username && !errors.email &&  errorSpecialCharacterUsername) &&(
+                                <p className="text-[12px] text-red-500
+                 italic lg:text-[14px]">
+                     The Username should 
+                </p>
+              ) }
             </div>
             {/* Email ends here*/}
             {/* Password starts here 268455*/}

@@ -22,17 +22,15 @@ import OtpInput from "react-otp-input";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import Joi from "joi";
-import airtimestyles from "../../../../../AirTimePage/AirtimeVtu.module.css";
-import Failed from "../MtnDataTopUpBundle/MtnDataTopUpBundleImages/Failed.svg";
+ import airtimestyles from "../../../../../AirTimePage/AirtimeVtu.module.css";
 import axiosInstance from "../../../../../ApiCollection.jsx/apiClient";
 import { InternalLoginSession, VerifyTransPin } from "../../../../../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../../../../../Loader/Loader";
 import {
-  GetFunction,
- 
-  RestrictionPopUp
+  GetFunction,RestrictionPopUp
 } from "../../../../../ApiCollection.jsx/ApiBuck";
 import { GetLocalStorage } from "../../../../../LocalStorage/LocalStorage";
+import { BalanceLoading } from "../../../../../Loader/Loader";
 
 
 const EtisalatDataBundle = () => {
@@ -62,6 +60,8 @@ const EtisalatDataBundle = () => {
     toggleVisibility,
     isVisible,
     setSelectedProductEtisalat,
+    etisalatPurchaseErrorType,
+    setEtisalatPurchaseErrorType
   } = useContext(ContextProvider);
   const [showProductList, setShowProductList] = useState(false);
   const [showOptionList, setShowOptionList] = useState(false);
@@ -90,20 +90,23 @@ const EtisalatDataBundle = () => {
   const [sessionModal, setSessionModal] = useState(false);
   const [restrictUser, setRestrictUser] = useState(false);
   const [checkNetworkError, setCheckNetworkError] = useState(false)
-
-
- let balanceStringToNum = Number(newBalance);
+const [balanceLoader, setBalanceLoader] = useState(false)
+const [etisalatSuccessfulResponse,
+   setEtisalatSuccessfulResponse] = useState({})
 const assumedString = selectedAmountEtisalat?.toString()
   let etisalatDataAmount = Number(selectedAmountEtisalat?.toString()
   ?.slice(0, assumedString?.length - 3)
   ?.replace(/\D/g, ""));
-    const updateBalance = passDataBalance?.data
+    const updateBalance = passDataBalance?.data?.data?.data
     ? passDataBalance?.data?.data?.data?.balance
     : "";
-  let cleanUpBalanceToNumeric = Number(updateBalance.replace(/\D/g, ""));
+  const updateBalanceToNumber = Number(updateBalance);
+  const newBalanceToNumber = Number(newBalance);
+  const balanceOption = newBalance === "" || newBalance === null
+   ? updateBalanceToNumber : newBalanceToNumber;
   let CheckSufficiency =
     etisalatDataAmount >
-    (newBalance === "" ? cleanUpBalanceToNumeric : balanceStringToNum);
+    balanceOption;
 
 
     //Fetch product for Etisalat
@@ -168,6 +171,7 @@ const assumedString = selectedAmountEtisalat?.toString()
     };
 
     HandleBalanceStatus();
+    //eslint-disable-next-line
   }, [CheckSufficiency]);
 
   // Fetch plans when product is selected
@@ -274,32 +278,17 @@ const assumedString = selectedAmountEtisalat?.toString()
     setPaymentSelected(false);
   };
 
-  // const handleSelectPayment = (code, flag, amount, id) => {
-  //   if (code === "NGN" && id === 1) {
-  //     setWalletNameEtisalat(code);
-  //     setImage(flag);
-  //     setPaymentAmount(amount);
-  //     setShowPayment(false);
-  //     setPaymentSelected(true);
-  //   }
-  // };
 
-const updateBalanceToNumber = Number(updateBalance)
-  const newBalanceToNumber = Number(newBalance)
-  const balanceOption = newBalance === "" || newBalance === null ? updateBalanceToNumber : newBalanceToNumber
+
     const methodOptions = [
       {
         method: "Nigeria",
         balance:
-          newBalance === "" || newBalance === null || newBalance === undefined
-            ? `(${updateBalance?.length > 1 ? updateBalanceToNumber?.toLocaleString("en-NG", {
+           balanceOption !== undefined || balanceOption !== null ? 
+            `(${ balanceOption?.toLocaleString("en-NG", {
                  style : "currency",
                  currency : "NGN"
-            }) : ""})`
-            : `(${newBalance?.length > 1 ? newBalanceToNumber?.toLocaleString("en-Ng", {
-              style : "currency",
-              currency : "NGN"
-            }) : ""})`,
+             })})`  : "()",
         flag:  require("../DataBundles-Images/ng.svg").default,
         id: 1,
         code : "NGN Wallet"
@@ -340,7 +329,7 @@ const updateBalanceToNumber = Number(updateBalance)
         if (ErrorType === "unauthorised") {
           await GetFunction(
             `balance`,
-            setLoading,
+            setBalanceLoader,
             SuccessHandler,
             //Handling the error Use Cases of the Unauthorised inside
             // of the statement.
@@ -350,7 +339,7 @@ const updateBalanceToNumber = Number(updateBalance)
               }else if(ErrorType === "Server error"){
                   await GetFunction(
         "balance",
-        setLoading,
+        setBalanceLoader,
         SuccessHandler,
        async(ErrorType)=> {
         if(ErrorType === "Server error"){
@@ -377,13 +366,13 @@ const updateBalanceToNumber = Number(updateBalance)
         }else if(ErrorType === "Server error"){
             await GetFunction(
         "balance",
-        setLoading,
+        setBalanceLoader,
         SuccessHandler,
        async(ErrorType)=> {
          if(ErrorType === "unauthorised"){
             await GetFunction(
         "balance",
-        setLoading,
+        setBalanceLoader,
         SuccessHandler,
         async(ErrorType)=> {
           if(ErrorType === "unauthorised"){
@@ -391,7 +380,7 @@ const updateBalanceToNumber = Number(updateBalance)
           }else if(ErrorType === "Server error"){
                await GetFunction(
         "balance",
-        setLoading,
+        setBalanceLoader,
         SuccessHandler,
        async(ErrorType)=> {
         //if Statements
@@ -445,7 +434,7 @@ const updateBalanceToNumber = Number(updateBalance)
       }
       await GetFunction(
         "balance",
-        setLoading,
+        setBalanceLoader,
         SuccessHandler,
         FailedHandler,
         setPassDataBalance
@@ -504,14 +493,14 @@ const updateBalanceToNumber = Number(updateBalance)
     if (!mtnRegex.test(inputValue)) {
       return "Invalid 9MOBILE number. Please enter a valid 9MOBILE number.";
     }
-    console.log("its me");
+ 
 
     return null;
   };
 
   const handleChange = (e) => {
     const value = e.target.value;
-    const numericValue = value.replace(/\D/g, "").slice(0, 11);
+    const numericValue = value.replace(/\D/g, "");
     setInputValue(numericValue);
 
     // Validate phone number if it's complete
@@ -614,22 +603,55 @@ for (let network in networks) {
         setEtisalatRefNumber(resData?.reference_number);
         setEtisalatOrderID(resData?.order_id); // No `order_id`, using `id` instead
         setEtisalatDescription(`${resData?.network} - ${resData?.plan_name}`); // Fabricated description
-        if (response.statusCode === 200 || response.statusCode === 201) {
-          // Success response
-          setTransactSuccessPopUp(true); // Show success popup
+        if (response.status === 200 || response.status === 201) {
+          setEtisalatSuccessfulResponse(response?.data?.data?.data);
+          if(response?.data?.data?.data?.Status === "success"
+            || response?.data?.data?.data?.Status === "successfull"
+            || response?.data?.data?.data?.Status === "delivered"
+            || response?.data?.data?.data?.Status === "successfully"
+          ){
+            setEtisalatPurchaseErrorType("");
+            setTransactSuccessPopUp(true); // Show success popup
           setConfirm(false);
           setInputPin("");
+          }else if(response?.data?.data?.data?.Status === "failed"
+            || response?.data?.data?.data?.Status === "Failed"
+            || response?.data?.data?.data?.Status === "unsuccess"
+            || response?.data?.data?.data?.Status === "unsuccessful"){
+               setEtisalatPurchaseErrorType("Plan Available: Purchase Failed")
+            setEtisalatPurchaseStatus(true); // Show success popup
+          setConfirm(false);
+          setInputPin("");
+          }
+          // Success response
+       
         }
         // console.log(response.data);
       } catch (error) {
-        if (
-          error &&
-          (error.response.status === 500 || error.response.status === 400)
-        ) {
+        if(error && error.response === undefined){
           setEtisalatPurchaseStatus(true); // Show failure popup
           setConfirm(false);
           setInputPin("");
-          return { statusCode: error?.response?.status, data: null };
+          setEtisalatPurchaseErrorType("'Network error: Purchase Failed")
+        }
+       else if (
+          error &&
+          error.response.status === 500)
+        {
+          setEtisalatPurchaseErrorType("Server error: Purchase Failed")
+          setEtisalatPurchaseStatus(true); // Show failure popup
+          setConfirm(false);
+          setInputPin("");
+            return { statusCode: error?.response?.status, data: null };
+        }   else if (
+          error &&
+          error.response.status === 404)
+        {
+          setEtisalatPurchaseErrorType("Network error: Purchase Failed")
+          setEtisalatPurchaseStatus(true); // Show failure popup
+          setConfirm(false);
+          setInputPin("");
+            return { statusCode: error?.response?.status, data: null };
         } else if (error && error.response.status === 401) {
           if (
             error.response.headers["x-new-auth-token"] ||
@@ -657,11 +679,22 @@ for (let network in networks) {
           } else {
             return setSessionModal(true);
           }
-        } else if (error && error.response === undefined) {
-          alert("Your internet connection is quite unstable.");
-        } else {
-          alert("Kindly check your internet connection.");
+        }else if (
+          error &&
+          error.response.status === 400)
+        {
+          setEtisalatPurchaseErrorType("Unexpected error: Purchase Failed")
+          setEtisalatPurchaseStatus(true); // Show failure popup
+          setConfirm(false);
+          setInputPin("");
+            return { statusCode: error?.response?.status, data: null };
+        }  else {
+             setEtisalatPurchaseErrorType("Unexpected error: Purchase Failed")
+          setEtisalatPurchaseStatus(true); // Show failure popup
+          setConfirm(false);
+          setInputPin("");
         }
+        
       } finally {
         setLoading(false);
       }
@@ -942,7 +975,7 @@ if(Data?.ConfirmAcc === "true"){
                   bg-[#FFF] z-[10] `}
                   >
                     {loadingProducts ? (
-                      <div>Loading products...</div>
+                      <p className={`"bg-white text-black`}>Loading products...</p>
                     ) : (
                       products.map((product) => (
                         <div
@@ -1194,7 +1227,8 @@ if(Data?.ConfirmAcc === "true"){
             </div>
 
             <div>
-              <div onClick={handleShowPayment}>
+              <div className="flex flex-col gap-[7px] lg:gap-[12px]"
+               onClick={handleShowPayment}>
                 <h2
                   className={`lg:text-[18px] mt-[5px] lg:leading-[24px] mb-2 text-[15px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
                     isDarkMode ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
@@ -1352,9 +1386,8 @@ if(Data?.ConfirmAcc === "true"){
                
                                            
                                              
-                                               {methodOption.code +
-                                                 " " +
-                                                 methodOption.balance}
+                                               {methodOption.code} {" "} 
+                                               {balanceLoader === true && methodOption.id === 1 ? <BalanceLoading/> : methodOption.balance}
                                              
                                            </div>
                                          );
@@ -1622,12 +1655,18 @@ if(Data?.ConfirmAcc === "true"){
                         numInputs={4}
                         shouldAutoFocus={true}
                        inputStyle={{
-                      color: "#000000",
-                      fontSize: '14px',
-                      fontWeight: 700,
-                      borderRadius: 4,
-                      height: '35px',
-                      width: '35px',
+                       color: isDarkMode ? "#ffffff" : "#000000",
+                        // width: 30,
+                        // height: 30,
+                        // borderRadius: 3,
+                        fontWeight: 700,
+                        borderRadius: 4,
+                        height: "35px",
+                        width: "35px",
+                        backgroundColor: isDarkMode ? "black" : "white",
+                        border: isDarkMode
+                          ? "1px solid white"
+                          : "1px solid #ccc",
                     }}
                         renderInput={(props) => (
                           <input {...props} className="inputOTP mx-[3px]" />
@@ -1637,7 +1676,10 @@ if(Data?.ConfirmAcc === "true"){
                         className="text-[#0003] text-[13px] md:text-3xl"
                         onClick={toggleVisibility}
                       >
-                        {isVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
+                       {isVisible ? <AiFillEye className={`w-[16px] h-[16px]
+                                          lg:w-[24px] lg:h-[24px]  ${isDarkMode ? " text-white" : "text-black" }`}/> : <AiFillEyeInvisible  
+                                          className={`w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]
+                                          ${isDarkMode ? " text-white" : "text-black" }`}/>}
                       </div>
                     </div>
                      <Link to={{
@@ -1660,9 +1702,9 @@ if(Data?.ConfirmAcc === "true"){
                 <button
                   onClick={(e) => {
                     console.log("inputPin", inputPin);
-                    const DataHandler = () => {
+                    const DataHandler = async() => {
                       // Close modal on PIN success
-                      inputPinHandler(); // Proceed with purchase
+                     await inputPinHandler(); // Proceed with purchase
                     };
                     const setFailed = (ErrorType) => {
                       if (ErrorType === "unauthorised") {
@@ -1709,40 +1751,49 @@ if(Data?.ConfirmAcc === "true"){
           )}
 
           {etisalatpurchaseStatus && (
-            <Modal>
-              <div
-                className={` ${
-                  toggleSideBar ? "confirm02" : "confirm2"
-                } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px] my-[20px]
-                  h-[200px] overflow-y-scroll md:overflow-y-auto md:h-auto`}
-              >
-                <hr
-                  className="h-[8px] bg-[#04177f] lg:mt-[30px] border-none  
-                md:mt-[2%] mt-[30px] md:h-[10px]"
-                />
-                <div className="md:mt-[15%] lg:mt-[10%]">
-                  <p className="text-[10px] md:text-[16px] lg:text-[18px] font-extrabold text-center my-[8%] md:my-[5%] lg:my-[3%]">
-                    Transaction Failed
-                  </p>
-                  <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
-                    <img src={Failed} alt="" />
-                    <p className="text-[8px] md:text-[12px] text-[#04177f]">
-                      An unexpected error has occurred, please try again.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex justify-center items-center gap-[20px]">
-                  <button
-                    onClick={() => {
-                      DoneChangeHandler();
-                    }}
-                    className="bg-[#04177f] my-[%] w-[100px] cursor-pointer text-[10px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[%] md:rounded-[8px] md:text-[16px] lg:w-[px] lg:h-[38px] lg:my-[2%]"
-                  >
-                    Done
-                  </button>
-
-                  <Link
+           <Modal>
+          <div className={`w-[90%] md:w-[50%] lg:w-[35%] mx-auto 
+           rounded-lg overflow-hidden
+            ${isDarkMode ? "bg-black border-[1px] rounded-[7px] border-white": "bg-white"}`}>
+            <div className="flex justify-between items-center p-4">
+              <img
+              
+                className={`w-6 h-6  `}
+                src="/Images/login/arpLogo.png"
+                alt="Logo"
+              />
+              <img
+                onClick={() => setEtisalatPurchaseStatus(false)}
+                className="w-6 h-6 cursor-pointer"
+                src="/Images/transferImages/close-circle.png"
+                alt="Close"
+              />
+            </div>
+            <hr className="h-1 bg-[#04177f] border-none" />
+            <div className="p-4 text-center">
+              <h2 className="text-lg md:text-xl font-semibold my-4">
+                Transaction Failed
+              </h2>
+              <img
+                className={`w-32 h-32 mx-auto my-6 
+                   ${isDarkMode ? "bg-black rounded-full border-[0.1px] border-black": "bg-white"}`}
+                src="./Images/failed.png"
+                alt="Failed"
+              />
+              <p className="text-sm text-red-500 font-[600] mb-8">
+                {etisalatPurchaseErrorType}
+              </p>
+              {etisalatSuccessfulResponse?.Status  ?
+               (
+              <div className="flex gap-[10px] justify-between w-full px-[10px]">
+                <button
+                  onClick={() => DoneChangeHandler()}
+                  className="bg-[#04177f] w-[50%] max-w-xs mx-auto py-2
+           text-white rounded-md font-medium"
+                >
+                  Done
+                </button>
+              <Link
                     to="/EtisalatFailedReceipt"
                     state={{
                       networkName: "9MOBILE",
@@ -1758,25 +1809,32 @@ if(Data?.ConfirmAcc === "true"){
                       etisalatdescription: etisalatdescription,
                       etisalatReceiptInfo: etisalatReceiptInfo,
                     }}
-                  >
-                    <button
-                      onClick={() => {
-                        // e.preventDefault();
-                        setEtisalatPurchaseStatus(false);
-                      }}
-                      className="bg-white my-[%] w-[100px] cursor-pointer 
-                      text-[10px] font-extrabold h-[px] rounded-[6px] 
-                      md:w-[%] md:rounded-[8px] md:text-[16px] lg:w-[px] 
-                      lg:h-[38px] lg:my-[2%]"
-                    >
-                      Receipt
-                    </button>
-                  </Link>
-                </div>
+                  
+                  className={`w-[50%]  max-w-xs 
+                  mx-auto py-2 
+           rounded-md font-medium ${isDarkMode 
+            ? "text-white bg-black border-[0.2px] border-blue-900 rounded-[10px]"
+             :  "bg-white border-[0.2px]  rounded-[2px] text-black border-blue-900"}`}
+                >
+                  Receipt
+                </Link>
               </div>
-            </Modal>
+         
+                ): (
+                   <button
+                  onClick={() => DoneChangeHandler()}
+                  className="bg-[#04177f] w-[100%] max-w-xs mx-auto py-2
+           text-white rounded-md font-medium"
+                >
+                  Done
+                </button>
+                 )}
+                 </div>
+                
+          </div>
+        </Modal>
           )}
-
+        
           {transactSuccessPopUp && (
             <Modal>
               {/* <TransactFailedPopUp/> */}

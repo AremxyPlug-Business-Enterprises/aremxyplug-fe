@@ -339,14 +339,14 @@ function LoginPopUp() {
   };
 
 //=======Session Management of the User========//
-   const currentStandardTimeInMilliSeconds = Date.now();
- const SessionStandard = 1000 * 900;
+//    const currentStandardTimeInMilliSeconds = Date.now();
+//  const SessionStandard = 1000 * 900;
 
- function SessionTiming(){
-  const expirationTime = SessionStandard + currentStandardTimeInMilliSeconds;
-  localStorage.setItem("SessionExpiration", expirationTime)
-   return expirationTime;
-   }
+//  function SessionTiming(){
+//   const expirationTime = SessionStandard + currentStandardTimeInMilliSeconds;
+//   localStorage.setItem("SessionExpiration", expirationTime)
+//    return expirationTime;
+//    }
 
   //Function to help set the user's account details such as bank name,
   //account name and account Number
@@ -375,7 +375,7 @@ function LoginPopUp() {
       ConfirmVirtualState
     );
     if (CheckVirtualAcc) {
-      SessionTiming();
+     // SessionTiming();
       navigate("/dashboard");
       //  document.cookie = `sessionToken=${AuthUsed}; path=/; max-age=900`;
       //   }
@@ -584,7 +584,7 @@ function LoginPopUp() {
             },
           }
         );
-        if (response.status === 200 || 201) {
+        if (response.status === 200 || response.status === 201) {
           console.log(response);
           SetLocalStorageInputPin();
           // navigate("/dashboard");
@@ -596,10 +596,6 @@ function LoginPopUp() {
           alert("Check your internet connection");
         }
         if (error && error.response.status === 401) {
-          console.log(error.response.headers);
-          console.log(error.response.headers.get("x-new-auth-token"));
-          console.log(error.response.headers["x-new-auth-token"]);
-          console.log(error.response.headers.hasAuthorization());
           // console.log(error.response.headers.hasAuthorization);
           if (
             error.response.headers["x-new-auth-token"] === "" ||
@@ -868,6 +864,7 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
                 <img
                   onClick={() => {
                     setOpen2StepOTP(false);
+                    RemoveLocalStorage()
                     }}
                   src={CloseIcon}
                   className="w-[18px] h-[18px]  md:w-[25px] cursor-pointer
@@ -991,6 +988,7 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
                 <img
                   onClick={() => {
                     setOpen2StepOTP(false);
+                    RemoveLocalStorage();
                     }}
                   src={CloseIcon}
                   className="w-[18px] h-[18px]  md:w-[25px] cursor-pointer
