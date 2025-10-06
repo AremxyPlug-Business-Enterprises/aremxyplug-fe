@@ -66,6 +66,9 @@ const setNav = () => {
   }else if(ActiveSignUp === "true" && !PhoneData){
     localStorage.removeItem("ActiveSignUp")
   }
+  if(localStorage.getItem("PasswordResetActive")){
+      localStorage.removeItem("PasswordRestActive")
+  }
   
     return () => {
       setHideNavbar(false);
@@ -107,7 +110,7 @@ const ContinueSignUp = ()=> {
 
 
 const ChangeEventFunctionUsername = (value)=> {
-       if(value?.length > 1 && value?.includes("@")){
+       if(value?.length > 0 && value?.includes("@")  ){
       setErrorSpecialCharacterUsername(true)
    }else{
     setErrorSpecialCharacterUsername(false)

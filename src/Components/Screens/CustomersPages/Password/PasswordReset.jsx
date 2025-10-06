@@ -12,7 +12,7 @@ import SecondModal from './SecondModal';
 import { Modal } from '../../Modal/Modal';
 
 const PasswordReset = () => {
-    const { hideNavbar, setHideNavbar } = useContext(ContextProvider);
+    const { setHideNavbar } = useContext(ContextProvider);
    
     const {inputForgetEmail,
         forgetPassCountdown,
@@ -33,10 +33,10 @@ const PasswordReset = () => {
         setSelectionType('otp');
     }
  // TO SET THE VALUE TO LINK
-  const handleSubmitEmail =()=> {
-        setSelect(true);
-        setSelectionType('link');
-    }
+  // const handleSubmitEmail =()=> {
+  //       setSelect(true);
+  //       setSelectionType('link');
+  //   }
 
 // FUNCTION TO START THRE COUNTDOWN TO RESND OTP
 
@@ -66,7 +66,7 @@ const PasswordReset = () => {
     const setNav = () => {
         setHideNavbar(true);
       };
-      console.log(hideNavbar);
+    
     
       useEffect(() => {
         setNav();
@@ -106,15 +106,18 @@ const resetPasswordOtp = async(url, alertMessage)=> {
    const body = {
     email : inputForgetEmail
    }
+   if(!navigator.onLine) return alert("Kindly check your internet connection.")
+   if(navigator.onLine){
     try{
     const response = await axios.post(url, body)
-if(response.status === 200 || 201){
+if(response.status === 200 || response.status ===  201){
  handleSubmit();
-  console.log(response);
  alert(alertMessage)
 } 
  }catch(error){
-  if(error.response && error.response.status === 404){
+ if(error && error.response === undefined ){
+        alert("Your internet connection is quite unstable.")
+    }else if(error.response && error.response.status === 404){
   alert("User Account not found");
   } else if(error.response && error.response.status === 500){
     alert(`INTERNAL_SERVER_ERROR`)
@@ -127,10 +130,13 @@ if(response.status === 200 || 201){
     setForgetPassCountdown(60)
   }
 }
+}
 
 
 
-
+if(inputForgetEmail?.length < 1){
+  return window.location.href ="/Login"
+}
 
 
 
@@ -162,11 +168,19 @@ if(response.status === 200 || 201){
                     <h2 className='text-[11.5px] font-bold leading-normal '>Reset Password</h2>
                     <h2 className='text-[9.16px] font-bold leading-normal'>Select how you want to reset your password ?</h2>
                     <div className='flex flex-col gap-[14.32px]'>
-                        <button className={selectionType === 'link' ? `text-[9.16px] py-[9.17px] px-[5px] rounded border-[#d166ff] border` : `text-[9.16px] py-[9.17px] px-[5px] rounded`}  style={{boxShadow: `0px 0px 11.5px 0px rgba(0, 0, 0, 0.25)`}} onClick={handleSubmitEmail}>Send a verification link to my email- {inputForgetEmail}</button>
+                        <button  onClick ={()=> {
+                              alert("The reset Password via link to your email is disabled for now")
+                            }}
+                         className={selectionType === 'link' ? `text-[9.16px] py-[9.17px] px-[5px] rounded border-[#d166ff] border` : `text-[9.16px] py-[9.17px] px-[5px] rounded`}  style={{boxShadow: `0px 0px 11.5px 0px rgba(0, 0, 0, 0.25)`}} >Send a verification link to my email- {inputForgetEmail}</button>
                         <button className={selectionType === 'otp' ? `text-[9.16px] py-[9.17px] px-[5px] rounded border-[#d166ff] border` : `text-[9.16px] py-[9.17px] px-[5px] rounded`} style={{boxShadow: `0px 0px 11.5px 0px rgba(0, 0, 0, 0.25)`}} onClick={handleSubmitNumber}>Send a verification code to email- {inputForgetEmail}</button>
                     </div>
                     <div className='flex justify-center my-[14.32px] lg:my-[35px]'>
-                        <button className='py-[5.729px] px-[20.052px] border rounded-[4.583px] disabled:bg-[#ccc] font-bold text-white text-[6.875px] leading-normal bg-primary lg:py-[10px] lg:px-[35px] lg:text-[12px] lg:rounded-[8px]' disabled={!select} onClick={userForgetPasswordSystem}>Send</button>
+                        <button 
+                       className={`bg-[#04177F] w-full flex justify-center
+                         items-center mr-auto cursor-pointer text-[14px] 
+                         font-extrabold h-[40px] text-white rounded-[6px]
+                          md:w-[25%] md:rounded-[8px] md:text-[20px]
+                           lg:text-[16px] lg:h-[38px] lg:my-[4%] disabled:bg-[#ccc]`} disabled={!select} onClick={userForgetPasswordSystem}>Send</button>
                     </div>
                 </div>
             </div>
@@ -198,11 +212,23 @@ if(response.status === 200 || 201){
                         <h2 className='text-[11.5px] font-bold leading-normal lg:text-[20px]'>Reset Password</h2>
                         <h2 className='text-[9.16px] font-bold leading-normal lg:text-[16px]'>Select how you want to reset your password ?</h2>
                         <div className='flex flex-col gap-[14.32px]'>
-                            <button className={selectionType === 'link' ? `text-[9.16px] py-[9.17px] lg:text-[16px] px-[5px] rounded border-[#d166ff] border` : `text-[9.16px] py-[9.17px] lg:text-[16px] px-[5px] rounded`}  style={{boxShadow: `0px 0px 11.5px 0px rgba(0, 0, 0, 0.25)`}} onClick={handleSubmitEmail}>Send a verification link to my email-{inputForgetEmail}</button>
-                            <button className={selectionType === 'otp' ? `text-[9.16px] py-[9.17px] lg:text-[16px] px-[5px] rounded border-[#d166ff] border` : `text-[9.16px] py-[9.17px] lg:text-[16px] px-[5px] rounded`}  style={{boxShadow: `0px 0px 11.5px 0px rgba(0, 0, 0, 0.25)`}} onClick={handleSubmitNumber}>Send a verification code to my email-{inputForgetEmail}</button>
+                            <button
+                            onClick ={()=> {
+                              alert("The reset Password via link to your email is disabled for now")
+                            }}
+
+                  className={selectionType === 'link' ? `text-[9.16px] py-[9.17px] lg:text-[16px] px-[5px] rounded border-[#d166ff] border` : `text-[9.16px] py-[9.17px] lg:text-[16px] px-[5px] rounded`}  style={{boxShadow: `0px 0px 11.5px 0px rgba(0, 0, 0, 0.25)`}} >
+                    Send a verification link to my email-{inputForgetEmail}</button>
+                            <button
+                              className={selectionType === 'otp' ? `text-[9.16px] py-[9.17px] lg:text-[16px] 
+                              px-[5px] rounded border-[#d166ff] border` : `text-[9.16px] py-[9.17px] lg:text-[16px] px-[5px] rounded`}  style={{boxShadow: `0px 0px 11.5px 0px rgba(0, 0, 0, 0.25)`}} onClick={handleSubmitNumber}>Send a verification code to my email-{inputForgetEmail}</button>
                         </div>
                         <div className='flex justify-center my-[14.32px] lg:my-[35px]'>
-                            <button className='py-[5.729px] px-[20.052px] border rounded-[4.583px] disabled:bg-[#ccc] font-bold text-white text-[6.875px] lg:text-[12px]leading-normal bg-primary lg:py-[10px] lg:px-[35px] lg:text-[12px] lg:rounded-[8px]' disabled={!select} onClick={userForgetPasswordSystem}>Send</button>
+                            <button className={`bg-[#04177F] w-full flex justify-center
+                         items-center mr-auto cursor-pointer text-[14px] 
+                         font-extrabold h-[40px] text-white rounded-[6px]
+                          md:w-[25%] md:rounded-[8px] md:text-[20px]
+                           lg:text-[16px] lg:h-[38px] lg:my-[4%] disabled:bg-[#ccc]`} disabled={!select} onClick={userForgetPasswordSystem}>Send</button>
                         </div>
                     </div>
                 </div>

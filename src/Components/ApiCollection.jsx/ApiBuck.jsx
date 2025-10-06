@@ -176,7 +176,7 @@ console.log(authToken);
 }
     const  functionAtFailed =(ErrorType)=> {
      if(ErrorType === "unauthorised" ){
-      alert("Incorrect Password: You are only allowed to try 5 times");
+      alert("Incorrect Password: You are only allowed to try 5 times.");
      }else if(ErrorType === "Server error"){
       alert("Failed to process your request")
      }else if(ErrorType === "User Blocked"){
@@ -349,8 +349,15 @@ const SubmitUserLoginDetails = ()=> {
 //Function to help check user virtual bank account details and set in the main dashboard \
 // as necessary
 
-export const CheckVirtualAcc = async(authToken, customerDetail, setLoading,
-    setVirtualAccCreated, setBankNameState, setAccountNameState, setAccountNumberState,TwoStep,setTwoStepVerificationSuccess,
+export const CheckVirtualAcc = async(authToken,
+   customerDetail,
+    setLoading,
+    setVirtualAccCreated, 
+    setBankNameState,
+     setAccountNameState, 
+     setAccountNumberState,
+     TwoStep,
+     setTwoStepVerificationSuccess,
     confirmVirtualState) => {
      if(!navigator.onLine) return alert("Check your internet Connection")
   if (authToken && navigator.onLine ) {
@@ -521,7 +528,7 @@ export const VerifyTransPin = async (
    }catch(error){
         if(error && error.response === undefined){
      alert("Kindly check your internet connection")
-     setFailed("Network error")
+     setFailed("Network error");
       } else if(error && error.response.status === 400){
          setFailed("Bad request");
          setErrorMessage(true);
@@ -555,6 +562,7 @@ if (error.response.headers["x-new-auth-token"] ||
    setErrorMessage(true);
       }else if(error && error.response.status === 404){
    setFailed("User error");
+   // alert("Kindly check your internet connection")
    setErrorMessage(true);
       }else if(error && error.response.status === 403){
    setFailed("User Blocked");
@@ -829,10 +837,8 @@ export const ThemeHandler =()=> {
     const isDarkMode = localStorage.getItem("darkModeEnabled");
     const UserStatus = localStorage.getItem("UserStatus")
     const metaname = document.querySelector("meta[name=theme-color]");
-    
-  useEffect(()=> {
-
-  if(  !UserStatus){
+      useEffect(()=> {
+  if(!UserStatus){
      metaname.setAttribute("content", "#04177f")
    }else if(  isDarkMode === "false" && UserStatus === "true"){
       metaname.setAttribute("content", "#fff");

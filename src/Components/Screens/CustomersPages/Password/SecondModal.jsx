@@ -1,4 +1,3 @@
-import React from 'react';
 import { useState } from 'react';
 import OtpInput from "react-otp-input";
 import { Navigate } from 'react-router-dom';
@@ -38,6 +37,10 @@ const SecondModal = ({value, userForgetPasswordSystem}) => {
    // console.log(e.target)
   }
 
+const dateAsAtAllocation =  Date.now();
+
+
+
     const VerifyOtpFunction = async()=>{
         setLoading(true);
         const body = {
@@ -47,8 +50,10 @@ const SecondModal = ({value, userForgetPasswordSystem}) => {
             const url =  `https://aremxyplug.onrender.com/api/v1/verify-otp/resetpassword?email=${inputForgetEmail}`
        const response = await axios.post(url,body,{ headers : {"Content-Type" : "application/json"}})
       
-          if((response.status === 200 || 201)  && response.headers.hasAuthorization){
+          if((response.status === 200 || response.status === 201)  && response.headers.hasAuthorization){
             const getAuthorisation = response.headers.get("Authorization");
+ localStorage.setItem("PasswordResetActive", dateAsAtAllocation)
+ alert("You are being redirected to a page where you reset your password, and have a limited time of 5 minutes, kindly make use of the allocated time or you will be redirected to the login.")
               setPasswordAuthorisation(getAuthorisation);
           successVerifyPassword();
           setOtpSent('');
@@ -165,9 +170,11 @@ const SecondModal = ({value, userForgetPasswordSystem}) => {
           disabled={ otpSent.length < 6 ? true : false}
           className={`${
              otpSent.length < 6 ? "bg-[#0003]" : "bg-[#04177f]"
-          } cursor-pointer mt-[5%] mx-auto w-[80px] py-[8px] flex justify-center items-center text-[#ffffff] 
-            text-[10px] font-[400] lg:font-[600] rounded-md md:w-[95px] md:h-[26px] md:p-[2%]
-             lg:w-[113px] lg:h-[38px] lg:text-[13px]`}
+          } inline-flex justify-center items-center text-[#fff] text-center font-bold
+                 w-full py-[20px] text-[14px] leading-[18px] rounded-[4px]
+                  lg:text-[14px] lg:leading-[24px] lg:py-[5px]  lg:w-[140px] 
+                   lg:rounded-[7px] lg:px-[37px]
+`}
         >
           Continue
         </button>

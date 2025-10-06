@@ -459,6 +459,8 @@ const GetBalance = async () => {
 };
 
 //  console.log(amtToTransfer)
+ const FirstUserIcon = "./Images/UserIcon/FirstUserIcon.png"
+const UserImage = localStorage.getItem("UserIcon") ?  localStorage.getItem("UserIcon") : FirstUserIcon
   return (
    
     <div
@@ -747,9 +749,17 @@ const GetBalance = async () => {
 
         <div className="flex md:justify-start justify-center
          gap-[7.042px] lg:gap-[12px] my-[40px]">
-          <div className="relative">
+          <div className={`relative  ${ Data?.aremxyUsername?.toLowerCase()?.startsWith("a" || "b" || "c" )
+                                            ? "bg-[#228be6] bg-opacity-5 p-5 rounded-full" : Data?.aremxyUsername?.toLowerCase()?.startsWith("d" || "e" || "f") 
+                                           ?"bg-[#40c057] bg-opacity-5 p-5 rounded-full" : Data?.aremxyUsername?.toLowerCase()?.startsWith("g" || "h" || "i") 
+                                         ? "bg-[#fab005]  bg-opacity-5 p-5 rounded-full" : Data?.aremxyUsername?.toLowerCase()?.startsWith("j" || "k" || "l")
+                                        ? "bg-[#fa5252]  bg-opacity-5 p-5 rounded-full":  Data?.aremxyUsername?.toLowerCase()?.startsWith("m" || "n" || "o")
+                                      ? "bg-[#7850f2]  bg-opacity-5 p-5 rounded-full" : Data?.aremxyUsername?.toLowerCase()?.startsWith("p" || "q" || "r")
+                                   ? "bg-[#e70f0f]  bg-opacity-5 p-5 rounded-full" : Data?.aremxyUsername?.toLowerCase()?.startsWith("s" || "t" || "u")
+                                  ? "bg-[#804a4a]  bg-opacity-5 p-5 rounded-full": Data?.aremxyUsername?.toLowerCase()?.startsWith("v" || "w" || "x") 
+                              ? "bg-[#545893]  bg-opacity-5 p-5 rounded-full" : "bg-[#8a9354]  bg-opacity-5  p-5 rounded-full"}`}>
             <img
-              src="/Images/transferImages/man-fold.png"
+              src={UserImage}
               className="h-[48px] w-[46.753px] rounded-[48px]
               lg:h-[150px] lg:w-[150px] 
               md:h-[88.801px]  md:w-[88.801px]

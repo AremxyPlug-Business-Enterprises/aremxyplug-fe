@@ -11,7 +11,8 @@ import { GetFunction, InternalLoginSession} from "../../../../ApiCollection.jsx/
 import { Loader} from "../../../../Loader/Loader";
 import NoRecordImage  from "../../../../Add&SelectRecipient/RecipientImages/NoRecordImage.svg";
 import { GetLocalStorage } from "../../../../LocalStorage/LocalStorage";
-import cancelIcon from "../../../../EducationPins/imagesEducation/close-circle.svg"
+import cancelIcon from "../../../../EducationPins/imagesEducation/close-circle.svg";
+
 
 export default function AremxySelectUser({setTransferValue, setSelectRecipientPopUp, HandleIdentifyCredentials}) {
 const Data = GetLocalStorage();
@@ -91,7 +92,49 @@ const Data = GetLocalStorage();
     const handleRemove = () => {
         setRemove(true);
     }
-   
+
+      const FirstUserIcon = "./Images/UserIcon/FirstUserIcon.png"
+const SecondUserIcon = "./Images/UserIcon/ SecondUserIcon.png"
+const  ThirdUserIcon = "./Images/UserIcon/ThirdUserIcon.png"
+const FourthUserIcon = "./Images/UserIcon/FourthUserIcon.png"
+const FifthUserIcon = "./Images/UserIcon/FifthUserIcon.png"
+const SixthUserIcon = "./Images/UserIcon/SixthUserIcon.png"
+const SeventhUserIcon ="./Images/UserIcon/SeventhUserIcon.png"
+const EighthUserIcon = "./Images/UserIcon/EighthUserIcon.png"
+const NinethUserIcon ="./Images/UserIcon/NinethUserIcon.png"
+ 
+//const alphabetsName = "abcdefghijklmnopqrstuvwxyz".split("");
+  
+//     const UserIconFormat = (username)=> {
+
+// const alphabetPlacementIndex = alphabetsName?.indexOf(firstCharacter);
+// //default Value/ Image
+// let UserImage; 
+// if(alphabetPlacementIndex >= 0 && alphabetPlacementIndex < 3){
+//    UserImage = FirstUserIcon;
+// }else if(alphabetPlacementIndex >= 6 && alphabetPlacementIndex < 9){
+//  UserImage = SecondUserIcon
+// }else if(alphabetPlacementIndex >= 9 && alphabetPlacementIndex < 12){
+//   UserImage = ThirdUserIcon
+// }else if(alphabetPlacementIndex >=12 && alphabetPlacementIndex < 15){
+//    UserImage =FourthUserIcon
+// }else if(alphabetPlacementIndex >= 15  && alphabetPlacementIndex < 18){
+//   UserImage = FifthUserIcon
+// }else if(alphabetPlacementIndex >= 18 && alphabetPlacementIndex < 21){
+//   UserImage =SixthUserIcon
+// }else if(alphabetPlacementIndex >= 21 && alphabetPlacementIndex < 24){
+//  UserImage = SeventhUserIcon
+// }else if(alphabetPlacementIndex >=  24 && alphabetPlacementIndex <= 27){
+//    UserImage = EighthUserIcon
+// }else if(alphabetPlacementIndex >= 3 && alphabetPlacementIndex < 6){
+//   UserImage = NinethUserIcon
+// }else {
+//  UserImage =FirstUserIcon
+// }
+//     }
+
+
+
 const GetRecipient = async()=> {
   if(recipientResponse?.data?.data?.data === undefined){
       
@@ -107,7 +150,7 @@ setLoading, ()=> {},
       }else if(ErrorType === "Server error"){
          alert("Unable to get your saved recipients at the moment")
       }else if(ErrorType === "Network error" || ErrorType === "User error"){
-        alert("Check your internet connection")
+        alert("Check your internet connection");
       }
       }
 await GetFunction("bank-recipient", 
@@ -121,6 +164,7 @@ setLoading, ()=> {},
     }
   if(Data?.ConfirmAcc === "true"){
     fetchRecipient();
+    
   }
   
     //eslint-disable-next-line
@@ -237,8 +281,9 @@ return (
           bvnQuery border-[0.1px] border-gray-100 rounded-[10px] px-[5px]">
                 { activeTab === 'tab_1'  && (
                     <div className={styled.containAir}>
-                      {SearchFilter?.length > 0 ? (
+                      {SearchFilter?.length > 0 ?(
                      SearchFilter?.map(( recipient,index) => (
+                       
                         <div
                          onClick={()=> {
                                HandleSelectedUser(recipient?.username)
@@ -248,9 +293,27 @@ return (
                              py-2 px-2 rounded-[10px] md:rounded-[10px] lg:py-2 lg:px-5"
                         >
                             <div
-                             className="flex md:justify-start justify-center gap-[7.042px] lg:gap-[12px]">
-                                    <div className='relative'>
-                                        <img src="/Images/transferImages/man-fold.png" className='h-[38px] w-[36.753px] rounded-[38px]
+                             className="flex md:justify-start justify-center 
+                             gap-[7.042px] lg:gap-[12px]">
+                                    <div className={`relative ${ recipient?.username?.toLowerCase()?.startsWith("a" || "b" || "c" )
+                                            ? "bg-[#228be6] bg-opacity-5 p-3 rounded-full" : recipient?.username?.toLowerCase()?.startsWith("d" || "e" || "f") 
+                                           ?"bg-[#40c057] bg-opacity-5 p-3 rounded-full" : recipient?.username?.toLowerCase()?.startsWith("g" || "h" || "i") 
+                                         ? "bg-[#fab005]  bg-opacity-5 p-3 rounded-full" : recipient?.username?.toLowerCase()?.startsWith("j" || "k" || "l")
+                                        ? "bg-[#fa5252]  bg-opacity-5 p-3 rounded-full":  recipient?.username?.toLowerCase()?.startsWith("m" || "n" || "o")
+                                      ? "bg-[#7850f2]  bg-opacity-5 p-3 rounded-full" : recipient?.username?.toLowerCase()?.startsWith("p" || "q" || "r")
+                                   ? "bg-[#e70f0f]  bg-opacity-5 p-3 rounded-full" : recipient?.username?.toLowerCase()?.startsWith("s" || "t" || "u")
+                                  ? "bg-[#804a4a]  bg-opacity-5 p-3 rounded-full": recipient?.username?.toLowerCase()?.startsWith("v" || "w" || "x") 
+                              ? "bg-[#545893]  bg-opacity-5 p-3 rounded-full" : "bg-[#8a9354]  bg-opacity-5  p-3 rounded-full"}`} >
+                                        <img src={recipient?.username?.toLowerCase()?.startsWith("a" || "b" || "c" )
+                                            ? FirstUserIcon : recipient?.username?.toLowerCase()?.startsWith("d" || "e" || "f") 
+                                           ? SecondUserIcon : recipient?.username?.toLowerCase()?.startsWith("g" || "h" || "i") 
+                                         ? ThirdUserIcon : recipient?.username?.toLowerCase()?.startsWith("j" || "k" || "l")
+                                        ? FourthUserIcon :  recipient?.username?.toLowerCase()?.startsWith("m" || "n" || "o")
+                                      ? FifthUserIcon : recipient?.username?.toLowerCase()?.startsWith("p" || "q" || "r")
+                                   ? SixthUserIcon : recipient?.username?.toLowerCase()?.startsWith("s" || "t" || "u")
+                                  ? SeventhUserIcon : recipient?.username?.toLowerCase()?.startsWith("v" || "w" || "x") 
+                              ? EighthUserIcon : NinethUserIcon } 
+                                        className='h-[38px] w-[36.753px] rounded-[38px]
                                         lg:h-[80px] lg:w-[80px] 
                                         md:h-[68.801px]  md:w-[68.801px]
                                         md:rounded-[68.201px] lg:rounded-[80px]' alt="profilePic"/>
@@ -855,7 +918,11 @@ return (
                     className={`w-full h-[38px] mt-[40px] px-[20px] md:mx-[35%] md:mt-[10px]`}
                   >
                     <button
-                      className={`bg-[#04177F] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
+                      className={`bg-[#04177F] w-full flex justify-center
+                         items-center mr-auto cursor-pointer text-[14px] 
+                         font-extrabold h-[40px] text-white rounded-[6px]
+                          md:w-[25%] md:rounded-[8px] md:text-[20px]
+                           lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
                       onClick={() => {
                         setSuccessDeleted(false);
                         window.location.reload();

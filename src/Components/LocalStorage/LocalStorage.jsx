@@ -81,9 +81,11 @@ export const RemoveLocalStorage = () => {
  localStorage.removeItem("ReferralLink");
  localStorage.removeItem("ReferralCode");
  localStorage?.removeItem("aremxyPassword");
-  localStorage?.removeItem("aremxyUsername");
-   localStorage?.removeItem("3232");    
-     localStorage?.removeItem("SessionExpiration") 
+localStorage?.removeItem("aremxyUsername");
+localStorage.removeItem("UserIcon");
+  localStorage?.removeItem("3232");    
+     localStorage?.removeItem("SessionExpiration");
+     localStorage?.removeItem("PasswordResetActive");
  const AccCreated = localStorage.getItem("AccCreated")
  const getToken = localStorage.getItem("getToken");
  if(getToken){

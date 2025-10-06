@@ -702,11 +702,7 @@ const Data = GetLocalStorage();
              alert("The server is currently experiencing a downtime, try again some other time.")
            }else if(ErrorType === "User error" || ErrorType === "Network error"){
              alert("Kindly check your internet connection")
-           }else{
-            if(ErrorType !== "Bad request" || ErrorType !== "User Blocked"){
-             alert("Failed to process your request, try some other time.")
-            }
-          }
+           }
           },
          setIsLoading,
          setErrorMessage,
@@ -717,11 +713,7 @@ const Data = GetLocalStorage();
     }else if(ErrorType === "User error" || ErrorType === "Network error"){
      //A network error occured  during trying to re-try the code on server error
      alert("Kindly check your internet connection");
-   }else{
-            if(ErrorType !== "Bad request" || ErrorType !== "User Blocked"){
-             alert("Failed to process your request, try some other time.")
-            }
-          }
+   }
          },
          setIsLoading,
          setErrorMessage,
@@ -731,11 +723,7 @@ const Data = GetLocalStorage();
          }else if( ErrorType === "User error"
        || ErrorType === "Network error" ){
      alert("Kindly check your internet connection")
-     }else{
-            if(ErrorType !== "Bad request" || ErrorType !== "User Blocked"){
-             alert("Failed to process your request, try some other time.")
-            }
-          }
+     }
          }
    
     await VerifyTransPin(

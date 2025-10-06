@@ -26,7 +26,7 @@ export const TopBar = () => {
     <div
       className={`z-40 flex fixed top-0 border-b-[2px] 
           border-gray-200  w-[100%] 
-        justify-between h-[5.75rem] lg:gap-[20%] gap-[20px]
+        justify-between h-[4.75rem] md:h-[5.75rem] lg:gap-[20%] gap-[20px]
         lg:pl-[8%] lg:pr-[5%] px-[3%]  
       ${
         isDarkMode
@@ -48,7 +48,8 @@ export const TopBar = () => {
           className={`${
             isDarkMode ? "border border-[#fff]" : "border-[#0000004D]"
           } cursor-pointer flex justify-between items-center px-[2%] w-[8rem] 
-           border-[0.5px] rounded-[8.47px] md:rounded-[10px] md:h-[33.8px] md:w-[202px] lg:border-[1.5px]  opacity-50 lg:rounded-[10px] lg:w-[358px] lg:h-[60px]`}
+           border-[0.5px] rounded-[8.47px] md:rounded-[10px] md:h-[33.8px] md:w-[202px] lg:border-[1.5px] 
+            opacity-50 lg:rounded-[10px] lg:w-[358px] lg:h-[60px]`}
           // bg-gray-300 w-[60%]
         >
           <div className={`flex justify-center py-1 
@@ -56,7 +57,8 @@ export const TopBar = () => {
           // border-gray-300
           >
             <img
-              className="w-[15px] h-[15px] md:h-[15.75px] md:w-[15.75] lg:h-[24px] lg:w-[24px]"
+              className="w-[15px] h-[15px]
+               md:h-[15.75px] md:w-[15.75] lg:h-[24px] lg:w-[24px]"
               src="./Images/dashboardImages/largeprofile.png"
               alt="/"
             />
@@ -81,12 +83,12 @@ export const TopBar = () => {
           Dashboard
         </p> */}
 
-        <div className="flex justify-between items-center gap-4"
+        <div className="flex justify-between items-center gap-4 lg:gap-[20px]"
         //  w-[50%]
         >
           
           <div className="cursor-pointer flex items-center font-[500] 
-          text-[12px] md:text-[13.8px] lg:text-[12px] lg:font-extrabold gap-[3px] 
+          text-[8px] md:text-[13.8px] lg:text-[12px] lg:font-extrabold gap-[3px] 
           md:gap-[6px]">
             <p>Light</p>
             <DarkModeToggle />
