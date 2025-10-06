@@ -50,6 +50,8 @@ export const SideBar = ({ fullname, userId, BvnVerify, NinVerify }) => {
       dropdown6: dropdownName === "dropdown6" ? !prevState.dropdown6 : false,
     }));
   };
+  const UserIcon = localStorage.getItem("UserIcon") ? 
+  localStorage.getItem("UserIcon") : "";
 
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
@@ -58,6 +60,42 @@ export const SideBar = ({ fullname, userId, BvnVerify, NinVerify }) => {
       document.removeEventListener("click", handleClickOutside);
     };
   })
+  const UserData = Data?.aremxyUsername?.toString();
+
+  console.log(Data?.aremxyUsername?.toLowerCase()?.startsWith("m"||"o"))
+ const UserBgFormatting = ()=> {
+  const alphabetsName = "abcdefghijklmnopqrstuvwxyz".split("");
+  
+  const Username =  UserData !== null && UserData !== undefined ? UserData?.toString()?.toLowerCase()  : "";
+const firstCharacter = Username?.charAt(0);
+const alphabetPlacementIndex = alphabetsName?.indexOf(firstCharacter)
+let assignBgByUsername ;//default Value/ Image
+if(alphabetPlacementIndex >= 0 && alphabetPlacementIndex < 3){
+   assignBgByUsername = "bg-[#228be6] bg-opacity-10 p-5 rounded-full"
+}else if(alphabetPlacementIndex >= 3 && alphabetPlacementIndex < 6){
+  assignBgByUsername = "bg-[#40c057] bg-opacity-10 p-5 rounded-full"
+}else if(alphabetPlacementIndex >= 6 && alphabetPlacementIndex < 9){
+  assignBgByUsername ="bg-[#fab005]  bg-opacity-19 p-5 rounded-full" 
+}else if(alphabetPlacementIndex >= 9 && alphabetPlacementIndex < 12){
+  assignBgByUsername = "bg-[#fa5252]  bg-opacity-10 p-5 rounded-full";
+}else if(alphabetPlacementIndex >=12 && alphabetPlacementIndex < 15){
+assignBgByUsername ="bg-[#7850f2]  bg-opacity-10 p-5 rounded-full"
+}else if(alphabetPlacementIndex >= 15  && alphabetPlacementIndex < 18){
+  assignBgByUsername =  "bg-[#e70f0f]  bg-opacity-10 p-5 rounded-full"
+}else if(alphabetPlacementIndex >= 18 && alphabetPlacementIndex < 21){
+  assignBgByUsername ="bg-[#804a4a]  bg-opacity-10 p-5 rounded-full"
+}else if(alphabetPlacementIndex >= 21 && alphabetPlacementIndex < 24){
+  assignBgByUsername ="bg-[#804a4a]  bg-opacity-10 p-5 rounded-full"
+}else if(alphabetPlacementIndex >=  24 && alphabetPlacementIndex <= 27){
+    assignBgByUsername =" bg-opacity-10  p-5 rounded-full"
+}else {
+  assignBgByUsername ="bg-[#228be6] bg-opacity-10 p-5 rounded-full"
+}
+
+return assignBgByUsername 
+} 
+
+const bgUsername = UserBgFormatting()
   return (
       <div
       className={`bvnQuery fixed overflow-auto ${
@@ -77,7 +115,7 @@ export const SideBar = ({ fullname, userId, BvnVerify, NinVerify }) => {
               isDarkMode
                 ? "border-b-[0.3px]"
                 : "border-b-[0.3px] border-b-[#fff]"
-            } flex w-[100%] justify-between h-[5.7rem] 
+            } flex w-[100%] justify-between lg:h-[5.7rem] h-[4.75rem]
             items-center px-[10px] md:gap-[55px] `}
             // h-[13.97px] lg:py-[15%] py-[13%]
           >
@@ -99,13 +137,15 @@ export const SideBar = ({ fullname, userId, BvnVerify, NinVerify }) => {
           <div className="px-[5%] pt-[5%] ">
             {/* ======Profile picture and name======== */}
             <div className="sticky top-0">
-              <div className="flex gap-[20px] md:gap-[5px] justify-left
+              <div className="flex gap-[10px] md:gap-[5px] justify-left
                items-center ">
+                <div className={`${bgUsername} bg-opacity-10`}>
                 <img
                   className="w-[20.97px] h-[20.97px] md:w-[30px] md:h-[30px] lg:w-[40px] lg:h-[40px]"
-                  src="./Images/dashboardImages/habib.png"
+                  src={UserIcon}
                   alt="DP"
                 />
+                </div>
                 <div className="flex flex-col gap-[3px] justify-center mt-[4%]">
                   <p className="text-[8px] font-semibold md:text-[14px] lg:text-[14px]">
                     {full_name ? full_name : fullname}

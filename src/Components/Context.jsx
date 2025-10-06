@@ -1398,9 +1398,12 @@ export const Context = ({ children }) => {
 
     // ========== Transfer to aremxyPlug======
     const [recipientResponse, setRecipientResponse] = useState([]);
-
+      const [dateEdit, setDateEdit] = useState(new Date());
+    //Date for the Calenders
 
   const hold = {
+    dateEdit, 
+    setDateEdit,
     errorSpecialCharacterUsername,
      setErrorSpecialCharacterUsername,
     tvSubscriptionResponse,

@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import "../../../App.css";
-import ProfilePic from "../ProfileImages/ProfilePic.svg";
+
 import pickPinIcon from "../ProfileImages/pickPinIcon.svg";
 import naijaFlag from "../../EducationPins/imagesEducation/Nigeriaflag.svg";
 import messageQuestion from "../ProfileImages/message-question.svg";
@@ -12,7 +12,7 @@ export default function ProfileUpdate(  {fullname, Email, Phone, Username} ) {
   const { profilePage, customerDetail } = useContext(ContextProvider);
   const { isDarkMode } = useContext(ContextProvider);
   const { full_name, username, email, phone } = customerDetail;
-
+const UserIcon = localStorage.getItem("UserIcon") ? localStorage.getItem("UserIcon") : "";
 // Data = GetLocalStorage()
   return (
     <div className="">
@@ -23,7 +23,7 @@ export default function ProfileUpdate(  {fullname, Email, Phone, Username} ) {
             <div className="flex md:justify-start justify-center gap-[7.042px] lg:gap-[12px]">
               <div className="relative pt-[30px]">
                 <img
-                  src={ProfilePic}
+                  src={UserIcon}
                   className="h-[48px] w-[46.753px] rounded-[48px] lg:h-[150px] lg:w-[150px] md:h-[88.801px]  md:w-[88.801px] md:rounded-[88.201px] lg:rounded-[150px]"
                   alt="profilePic"
                 />

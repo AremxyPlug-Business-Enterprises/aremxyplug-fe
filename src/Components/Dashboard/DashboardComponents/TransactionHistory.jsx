@@ -14,12 +14,14 @@ const TransactionHistory = ({
   transactionResponse,
   transactionHistoryError,
   loading,
+ stateDateEdit
 }) => {
   const {
     isDarkMode,
     toggleSideBar,
     setOrderIdResponse,
     setElectricityTransErrorType,
+    dateEdit
   } = useContext(ContextProvider);
 
   const navigate = useNavigate();
@@ -47,7 +49,7 @@ const TransactionHistory = ({
 
   const [orderLoading, setOrderLoading] = useState(false);
   const [sessionModal, setSessionModal] = useState(false);
-
+  
   const getTransactionByOrderId = async (orderId, product) => {
     if (!orderId || !product) return;
     const productType =
@@ -121,13 +123,17 @@ const TransactionHistory = ({
 
   const filteredTransactions =
     transactionResponse?.data?.data?.data?.transactions !== null
+    && stateDateEdit === "Filter By Date"
       ? transactionResponse?.data?.data?.data?.transactions?.filter(
           (transaction, index) => {
          //   console.log(transaction);
             return index < 10;
           }
         )
-      : [];
+      :  transactionResponse?.data?.data?.data?.transactions !== null
+       &&  stateDateEdit !== "Filter By Date" ? transactionResponse?.data?.data?.data?.transactions.filter( transaction => (
+      transaction?.created_at?.slice(0,10) === dateEdit?.slice(0,10)
+      )) : [];
 
   //Variable types to handle the filtering of the recent transaction history
   //which is viewed or displays the transaction receipt

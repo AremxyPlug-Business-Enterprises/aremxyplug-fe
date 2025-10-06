@@ -1,7 +1,10 @@
 
 import { Navigate } from 'react-router-dom';
 import { RemoveLocalStorage } from './LocalStorage/LocalStorage';
+import { useLocation } from 'react-router-dom';
 export const ProtectedRoute = ({children}) => {
+  const locationObj = useLocation();
+const pathname = locationObj.pathname;
 // The aim is to create three different situation when the user will
 // will be logged from the page
 // 1. The point in which the authToken is not gotten through cookies after a request from
@@ -42,6 +45,8 @@ const UserStatus = localStorage.getItem("UserStatus");
      return <Navigate to ="/login" replace/>
   }
 
+
+    
 // const TrackSessionActicty = ()=> {
 //     const expiryTime = localStorage.getItem("SessionExpiration");
 //     if(!expiryTime) return false;

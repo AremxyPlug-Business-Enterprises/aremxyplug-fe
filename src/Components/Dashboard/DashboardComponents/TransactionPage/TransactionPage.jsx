@@ -18,6 +18,7 @@ import NoRecordImage from "../../../Add&SelectRecipient/RecipientImages/NoRecord
 import { useNavigate } from "react-router-dom";
 import { Modal } from "../../../Screens/Modal/Modal";
 
+
 const TransactionPage = () => {
   const navigate = useNavigate();
   const {
@@ -25,11 +26,12 @@ const TransactionPage = () => {
     toggleSideBar,
     setOrderIdResponse,
     setElectricityTransErrorType,
-    // orderIdResponse,
+    dateEdit,
+   
   } = useContext(ContextProvider);
 
   const [showCategories, setShowCategories] = useState(false);
-
+  const [stateDateEdit, setStateDateEdit] = useState("Filter By Date")
   const [showStatus, setShowStatus] = useState(false);
   const [calender, setCalender] = useState(false);
 
@@ -110,6 +112,7 @@ const TransactionPage = () => {
   };
 
   useEffect(() => {
+    setSelectedStatus("All Transactions")
     if (transactionResponse?.data?.data?.data === undefined) {
       GetTransactionInformation();
     }
@@ -151,26 +154,75 @@ const TransactionPage = () => {
     setShowStatus(false);
     window.scrollTo({top : window.innerWidth < 1024 ? 500 : 700, behavior : "smooth"})
   };
-  const filteredTransactions =
-    transactionResponse?.data?.data?.data?.transactions !== null
-      ? transactionResponse?.data?.data?.data?.transactions.filter(
-          (transaction) => {
-         const handleStatus =  selectedStatus === "Successful" ? 
-              "success" : selectedStatus === "Failed" ? "failed" :
-               selectedStatus === "Pending" ? "pending" : selectedStatus === "Refunded" ? 
-               "refunded" : selectedStatus;
+
+//console.log(filteredTransactions?.length/ transactionResponse?.data?.data?.data?.transactions?.length * 100)
+//       const TransactionStatusUpdates =(percentage, color)=> {
+// const totalLength = transactionResponse?.data?.data?.data?.transactions?.length
+// console.log(filteredTransactions?.length)
+//         if(transactionResponse?.data?.data?.data?.transactions?.length && (selectedStatus === "All Transactions" || selectedStatus === "")){
+//           // Calaculate the percentage for each status 
+//           percentage = 100
+//    color="text-[#04177F]"
+//           }else if(filteredTransactions?.length  && selectedStatus === "Failed"){
+//                percentage = filteredTransactions?.length / totalLength * 100
+//    color="text-[#F95252]"
+//           }else if(filteredTransactions?.length  && selectedStatus === "Successful"){
             
-            if (
-              selectedStatus === "" ||
-              selectedStatus === "All Transactions"
-            ) {
-              return transaction;
-            } else {
-              return transaction.status === handleStatus;
-            }
-          }
-        )
-      : [];
+//      percentage = filteredTransactions?.length / totalLength * 100
+//      console.log(percentage)
+//    color="text-[#17E506]"
+//           }else if(filteredTransactions?.length  && selectedStatus === "Refunded"){
+//       percentage = filteredTransactions?.length / totalLength * 100;
+//       console.log(percentage)
+//    color="text-[#1C0CF9]"
+//           }else if(filteredTransactions?.length  && selectedStatus === "Cancelled"){
+//      percentage = filteredTransactions?.length / totalLength * 100
+//    color="text-[#E62E05]"
+//    console.log(percentage)
+//           }else if(filteredTransactions?.length  && selectedStatus === "Pending"){
+//      percentage = filteredTransactions?.length / totalLength * 100
+//    color="text-[#FFA733]";
+//    console.log(percentage);
+//           }else{
+//             percentage = 0;
+//             color="text-black";
+//           }
+//         return(
+//       <div className="flex flex-col md:flex-row gap-[10px]">
+//          <CircularProgress 
+//         percentage={percentage} 
+//         strokeWidth={12}
+//          width={140}
+//          size={140}
+//          color={color}/>
+       
+//          <div className="flex flex-col gap-[5px] items-center justify-center">
+//          <p className={`text-[12px] font-[600]
+//                  leading-[16px] capitalize md:text-[13.17px]
+//                   md:leading-[16.92px] lg:text-[16px] lg:leading-[24px]
+//                   ${isDarkMode ? "text-white" : "text-[#7E7E7E]"}`}>
+//                     {selectedStatus}
+//                   </p>
+//          <p className={`text-[12px] font-[600]
+//                  leading-[16px] capitalize md:text-[13.17px]
+//                   md:leading-[16.92px] lg:text-[16px] lg:leading-[24px]
+//                   ${isDarkMode ? "text-white" : "text-black"}`}>
+//         Volume: {filteredTransactions?.length}
+
+//          </p>
+//          {selectedStatus !== "All Transactions" && (
+//          <p className={`text-[12px] font-[600]
+//                  leading-[16px] capitalize md:text-[13.17px]
+//                   md:leading-[16.92px] lg:text-[16px] lg:leading-[24px]
+//                   ${isDarkMode ? "text-black" : "text-[#7E7E7E]"}`}
+//                   >
+//          Value: 20
+//          </p>
+//          )}
+//          </div>
+//          </div>
+//         )
+//       }
 
   const chooseStatus = [
     "All Transactions",
@@ -264,6 +316,8 @@ const TransactionPage = () => {
     return result;
   };
 
+    
+
 
   //The formatting of the dates and times.
    function formatDate(isoString) {
@@ -285,10 +339,45 @@ return date?.toISOString()?.slice(0, 10);
 }
 
 
+
+
+  
+  
+  const filteredTransactions =
+    transactionResponse?.data?.data?.data?.transactions !== null 
+    && stateDateEdit === "Filter By Date"
+      ? transactionResponse?.data?.data?.data?.transactions.filter(
+          (transaction) => {
+         const handleStatus =  selectedStatus === "Successful" ? 
+              "success" : selectedStatus === "Failed" ? "failed" :
+               selectedStatus === "Pending" ? "pending" : selectedStatus === "Refunded" ? 
+               "refunded" : selectedStatus;
+            //console.log(transaction?.created_at?.slice(0, 10) === dateFiltered);
+            if (
+              selectedStatus === "" ||
+              selectedStatus === "All Transactions"
+            ) {
+              return transaction;
+            } else {
+              return transaction.status === handleStatus
+             
+            }
+          }
+        )
+      :  transactionResponse?.data?.data?.data?.transactions !== null
+       &&  stateDateEdit !== "Filter By Date"
+      ? transactionResponse?.data?.data?.data?.transactions.filter( transaction => (
+      transaction?.created_at?.slice(0,10) === dateEdit?.slice(0,10)
+      ))  : [];
+      
+
+     
+
+
   return (
     <DashBoardLayout>
       <div
-        className={`bg-[#FFF] relative lg:ml-[20px] 2xl:ml-0 ${
+        className={`relative lg:ml-[20px] 2xl:ml-0 ${
           isDarkMode
             ? "bg-[#000] text-[#fff] border-[#fff]"
             : "bg-[#ffffff] text-[#000] "
@@ -350,7 +439,9 @@ return date?.toISOString()?.slice(0, 10);
                   setCalender(false);
                 }}
               >
-                <h2 className="text-[10px] font-[600] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                <h2 className="text-[10px] font-[600] 
+                leading-[12px] capitalize md:text-[9.17px] 
+                md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
                   {selectedCategory}
                 </h2>
                 <button className="lg:w-6 lg:h-6 w-[11px] h-[11px]">
@@ -775,9 +866,9 @@ return date?.toISOString()?.slice(0, 10);
               </h2>
               <div
                 className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
-                         sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px]
-                          pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
-                          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+                 sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px]
+                  pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+                 leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
       isDarkMode
         ? "bg-black text-white border border-white"
@@ -787,6 +878,7 @@ return date?.toISOString()?.slice(0, 10);
                   setShowStatus(!showStatus);
                   setShowCategories(false);
                   setCalender(false);
+                  setStateDateEdit("Filter By Date")
                 }}
               >
                 <h2
@@ -844,30 +936,53 @@ return date?.toISOString()?.slice(0, 10);
            border-gray-300 lg:border-gray-400 rounded-[5px]  lg:rounded-[15px] lg:h-[70px] "
           >
             <div
-              onClick={() => {
-                setCalender((prev) => !prev);
-              }}
-              // className={`cursor-pointer bg-gray-100  ${
-              //   isDarkMode ? "border" : ""
-              // } flex items-center gap-[1px] px-[1px]
-              //  md:px-[8px] lg:rounded-[15px] rounded-[5px] w-[25%] h-full `}
-              className={`cursor-pointer ${styles.filter} ${
+             
+              className={`relative cursor-pointer ${styles.filter} ${
                 isDarkMode ? "border" : ""
-              } flex items-center gap-[1px] px-[2px] py-1.5 rounded-[3px] md:px-[8px]`}
+              } flex items-center gap-[1px] px-[2px] 
+              py-1.5 rounded-[3px] md:px-[8px]`}
             >
               <p
-                // className={`text-[#04177f] text-[11px]
-                // leading-[14px] font-[500]
-                //   lg:text-[16px]`}
-                className={`text-[#04177f] md:text-[9.16px] md:font-semibold text-[8px] font-extrabold lg:text-base lg:font-extrabold`}
+               onClick={() => {
+                if(calender === false){
+                setCalender(true);
+                }else{
+                  setCalender(false)
+                }
+              }}
+      
+                className={`text-[#04177f] md:text-[9.16px]
+                   md:font-semibold text-[8px] font-extrabold lg:text-base lg:font-extrabold`}
               >
-                Filter by Date{" "}
+                {stateDateEdit}{" "}
               </p>
               <img
                 className="w-[15px] h-[15px] md:w-[17px] md:h-[17px] lg:w-[20px] lg:h-[20px]"
                 src="./Images/dashboardImages/dateImg.png"
                 alt=""
               />
+                {calender && (
+              <div className="absolute  bg-white rounded-[15px] 
+              md:mt-[40px] w-full h-auto p-2
+              lg:mt-[55px]  flex flex-col gap-[10px] font-[400]">
+                {" "}
+                <Calender />
+                {" "}
+                <div onClick={()=> {
+                   setCalender(false);
+                   setStateDateEdit(dateEdit?.slice(0,10))
+                  }}
+                className="flex justify-center 
+                items-center w-[300px]">
+                  <button 
+                  className={`w-full bg-blue-900 py-[10px]  rounded-[15px]
+                    ${isDarkMode ? "text-white bg-black border-[0.2px] border-white" :
+                     "text-white bg-blue-900"}`}>
+                  Done
+                  </button>
+                  </div>
+              </div>
+            )}
             </div>
             <div
               className={`w-[25%] flex flex-col md:flex-row md:gap-[5px]
@@ -949,17 +1064,13 @@ return date?.toISOString()?.slice(0, 10);
                 alt=""
               />
             </div>
-            {calender && (
-              <div className="absolute mt-[40px] md:mt-[40px] lg:mt-[55px] z-[1000] font-[400]">
-                {" "}
-                <Calender />{" "}
-              </div>
-            )}
+          
           </div>
 
           <div>
             <div
-              className={` flex w-full gap-[5px] h-[70px] lg:h-[100px] md:items-center 
+              className={` flex flex-row w-full gap-[5px] h-[70px] 
+                lg:h-[100px] md:items-center 
               lg:mt-[5%] lg:items-center my-[30px]`}
             >
               <select
@@ -977,7 +1088,13 @@ return date?.toISOString()?.slice(0, 10);
                 <option value="KES">KES</option>
               </select>
 
-              <div
+
+
+{/* <div className="flex justify-center items-center h-[400px] 
+w-[100%] py-[30px] mb-[100px]">
+   <TransactionStatusUpdates/> 
+</div>  */}
+             <div
                 className={`w-[33.3%] rounded-[3px] lg:rounded-[5px] flex flex-col h-full justify-center items-center
                    gap-[3px] ${isDarkMode ? "border " : " bg-[#D5F6E3]"}   ${
                   toggleSideBar ? "lg:text-[14px]" : "lg:text-[px]"
@@ -1013,9 +1130,9 @@ return date?.toISOString()?.slice(0, 10);
                       : "₦"
                     : `${symbolValue}0.00`}
                 </p>
-              </div>
+              </div> 
 
-              <div
+               <div
                 className={`w-[33.3%] rounded-[3px] lg:rounded-[5px]  flex flex-col h-full justify-center items-center
                    gap-[3px] ${
                      isDarkMode ? "border " : " bg-[#92abfe81]"
@@ -1047,9 +1164,9 @@ return date?.toISOString()?.slice(0, 10);
                       : ""
                     : 0}{" "}
                 </p>
-              </div>
+              </div> 
 
-              <div
+               <div
                 className={`w-[33.3%] rounded-[3px] lg:rounded-[5px] flex flex-col h-full justify-center items-center
                    gap-[3px] ${
                      isDarkMode ? "border " : " bg-[#FDCECE]"
@@ -1091,12 +1208,12 @@ return date?.toISOString()?.slice(0, 10);
           </div>
 
           <div>
-            <div className="flex items-center gap-[10px] md:">
-              <p className="text-[10px] md:text-[12px] lg:text-[16px] text-[#7C7C7C] font-semibold">
+            <div className="flex items-center gap-[10px] ">
+              <p className="text-[10px] md:text-[12px] lg:text-[16px] text-[#7C7C7C] mt-[10px] font-semibold">
                 Transaction History
               </p>
               <img
-                className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
+                className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px] mt-[10px]"
                 src="./Images/dashboardImages/arrowright.png"
                 alt="/"
               />

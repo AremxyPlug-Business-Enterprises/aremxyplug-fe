@@ -28,6 +28,7 @@ export const WalletInOutFlows = ({className}) => {
     false,
   ]);
 
+
   const handleClick = (index) => {
     const updatedButtons = activeButtons.map((isActive, i) => i === index);
     setActiveButtons(updatedButtons);

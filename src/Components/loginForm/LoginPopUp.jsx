@@ -9,15 +9,15 @@ import axios from "axios";
 import CloseIcon from "../EducationPins/imagesEducation/close-circle.svg";
 import { Loader } from "../Loader/Loader";
 import { useNavigate } from "react-router-dom";
-//import {  SetLocalStorage } from "../LocalStorage/LocalStorage";
 import { RemoveLocalStorage } from "../LocalStorage/LocalStorage";
-//import { GetLocalStorage } from "../LocalStorage/LocalStorage";
 import { CheckVirtualAcc } from "../ApiCollection.jsx/ApiBuck";
 import VerificationSuccess from "../My Profile & Account Settings/ProfileImages/user-tick.svg";
 import NotVerifiedImage from "../My Profile & Account Settings/ProfileImages/NotVerifiedIcon.svg";
 import { SetLocalStorage } from "../LocalStorage/LocalStorage";
+import { GetLocalStorage } from "../LocalStorage/LocalStorage";
+
 function LoginPopUp() {
-  // Data = GetLocalStorage();
+  const  Data = GetLocalStorage();
   const {
     openTranspin,
     setOpenTranspinSuccessful,
@@ -140,15 +140,17 @@ function LoginPopUp() {
       setCountdown(60);
     }
   };
+
   // Function to help store get the url and send-otp type
-  const getOtpSmsorEmail = async (url, body) => {
+  const getOtpSmsorEmail = async (paramSmsOrEmail) => {
     // const [sendSmsOrEmail, setSendSmsOrEmail] = useState("")
-    if (smsOrEmail === "sms") {
+    const holdOtpDetails = async(url, body)=> {
+    if (smsOrEmail === "sms" || paramSmsOrEmail === "sms") {
       body = {
         phone_number: phone,
       };
       url = "https://aremxyplug.onrender.com/api/v1/sms/send";
-    } else if (smsOrEmail === "email") {
+    } else if (smsOrEmail === "email" || paramSmsOrEmail === "email") {
       body = {
         email: email,
       };
@@ -158,6 +160,8 @@ function LoginPopUp() {
     if (navigator.onLine) {
       await gettingOtpFunction(url, body);
     }
+  }
+  holdOtpDetails();
   };
   // Function to help resetthe login and local storage authToenand getToken to help for User LoogIn
   const Close2StepPopUp = () => {
@@ -350,6 +354,48 @@ function LoginPopUp() {
 
   //Function to help set the user's account details such as bank name,
   //account name and account Number
+  const FirstUserIcon = "./Images/UserIcon/FirstUserIcon.png"
+const SecondUserIcon = "./Images/UserIcon/ SecondUserIcon.png"
+const  ThirdUserIcon = "./Images/UserIcon/ThirdUserIcon.png"
+const FourthUserIcon = "./Images/UserIcon/FourthUserIcon.png"
+const FifthUserIcon = "./Images/UserIcon/FifthUserIcon.png"
+const SixthUserIcon = "./Images/UserIcon/SixthUserIcon.png"
+const SeventhUserIcon ="./Images/UserIcon/SeventhUserIcon.png"
+const EighthUserIcon = "./Images/UserIcon/EighthUserIcon.png"
+const NinethUserIcon ="./Images/UserIcon/NinethUserIcon.png"
+const UserIconFormatting = ()=> {
+  const alphabetsName = "abcdefghijklmnopqrstuvwxyz".split("");
+  const {username} = customerDetail
+  const Username =  username !== null && username !== undefined ? username?.toString()?.toLowerCase()  : "";
+const firstCharacter = Username?.charAt(0);
+const alphabetPlacementIndex = alphabetsName?.indexOf(firstCharacter)
+let assignImageByUsername ;//default Value/ Image
+if(alphabetPlacementIndex >= 0 && alphabetPlacementIndex < 3){
+   assignImageByUsername = FirstUserIcon;
+}else if(alphabetPlacementIndex >= 3 && alphabetPlacementIndex < 6){
+  assignImageByUsername = SecondUserIcon
+}else if(alphabetPlacementIndex >= 6 && alphabetPlacementIndex < 9){
+  assignImageByUsername = ThirdUserIcon;
+}else if(alphabetPlacementIndex >= 9 && alphabetPlacementIndex < 12){
+  assignImageByUsername = FourthUserIcon;
+}else if(alphabetPlacementIndex >=12 && alphabetPlacementIndex < 15){
+assignImageByUsername = FifthUserIcon;
+}else if(alphabetPlacementIndex >= 15  && alphabetPlacementIndex < 18){
+  assignImageByUsername =SixthUserIcon;
+}else if(alphabetPlacementIndex >= 18 && alphabetPlacementIndex < 21){
+  assignImageByUsername = SeventhUserIcon;
+}else if(alphabetPlacementIndex >= 21 && alphabetPlacementIndex < 24){
+  assignImageByUsername = EighthUserIcon;
+}else if(alphabetPlacementIndex >=  24 && alphabetPlacementIndex <= 27){
+    assignImageByUsername = NinethUserIcon;
+}else {
+  assignImageByUsername = FirstUserIcon
+}
+localStorage.setItem("UserIcon", assignImageByUsername)
+return assignImageByUsername
+}
+
+
   const handleAccountDetails = async (AuthUsed) => {
     const authToken = localStorage.getItem("authorisedLogin");
     const getToken = localStorage.getItem("getToken");
@@ -376,7 +422,10 @@ function LoginPopUp() {
     );
     if (CheckVirtualAcc) {
      // SessionTiming();
+     UserIconFormatting()
+     if(UserIconFormatting){
       navigate("/dashboard");
+     }
       //  document.cookie = `sessionToken=${AuthUsed}; path=/; max-age=900`;
       //   }
     }
@@ -389,13 +438,11 @@ function LoginPopUp() {
       body = {
         otp: otp3,
       };
-      console.log(otp3);
-    } else if (smsOrEmail === "sms") {
+    } else if(smsOrEmail === "sms") {
       url = `https://aremxyplug.onrender.com/api/v1/sms/verify/signin?phone=${phone}`;
       body = {
         otp: otp3,
       };
-      console.log(otp3);
     }
     console.log(`URL:${url}`, `BODY:${body}`);
     if (!navigator.onLine) return alert("Check your internet connection");
@@ -411,7 +458,7 @@ function LoginPopUp() {
       const response = await axios.post(url, body, {
         headers: { "Content-Type": "application/json" },
       });
-      if (response.status === 200 || 201) {
+      if (response.status === 200 || response.status ===  201) {
         handleVerificationOTP();
       }
     } catch (error) {
@@ -427,25 +474,16 @@ function LoginPopUp() {
         setOtp3("");
       } else if (error && error.response.status === 401) {
         setOtp3("");
-        console.log(error.response.headers);
-
-        console.log(error.response.headers.get("x-new-auth-token"));
-        console.log(error.response.headers["x-new-auth-token"]);
-        console.log(error.response.headers.hasAuthorization());
+        console.log(error?.response?.headers);
         // console.log(error.response.headers.hasAuthorization);
         if (
           error.response.headers["x-new-auth-token"] === "" ||
           error.response.headers.get("x-new-auth-token")
         ) {
-          const newToken =
-            error.response.headers.get("x-new-auth-token") ||
+          const newToken = error.response.headers.get("x-new-auth-token") ||
             error.response.headers["x-new-auth-token"];
-
-          if (
-            newToken !== "" &&
-            localStorage.getItem("authorisedLogin") === "true"
+if (newToken !== "" && localStorage.getItem("authorisedLogin") === "true"
           ) {
-            console.log(newToken);
             localStorage.setItem("authorisedLogin", newToken);
             if (localStorage.getItem("authorisedLogin")?.length > 1) {
               await gettingSmsOrEmailFunctionOtp();
@@ -680,7 +718,10 @@ function LoginPopUp() {
                 <div
                   className="flex items-center  min-h-[60px] w-full px-[10px] cursor-pointer rounded-[7.5px] p-[7px]   gap-[5px] 
                 lg:rounded-[8px] md:w-[161px] lg:h-[60px]"
-                  onClick={() => setSmsOrEmail("sms")}
+                  onClick={() => {
+                    setSmsOrEmail("sms")
+                    
+                  }}
                   style={{
                     borderWidth: 1,
                     borderColor: smsOrEmail === "sms" ? "#d166ff" : "#b3b3b3",
@@ -883,7 +924,7 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
                 onClick={(e) => {
                   setCountdown2(60);
                   setSmsOrEmail("email");
-                  getOtpSmsorEmail();
+                  getOtpSmsorEmail("email");
                 }}
               >
                 Use email address instead
@@ -1008,7 +1049,7 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
                 onClick={() => {
                   setCountdown(60);
                   setSmsOrEmail("sms");
-                  getOtpSmsorEmail();
+                  getOtpSmsorEmail("sms");
                 }}
               >
                 Use phone number instead

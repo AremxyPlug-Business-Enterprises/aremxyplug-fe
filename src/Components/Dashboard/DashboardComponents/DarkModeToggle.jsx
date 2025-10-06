@@ -22,12 +22,12 @@ handleToggle()
     <div>
       <div
         onClick={toggleDarkMode}
-        className={` w-[15px] h-[6.4px] md:w-[30px] md:h-[12px] lg:w-[50px] lg:h-[22px] lg:rounded-full rounded ${
+        className={` w-[30px] h-[14.4px] md:w-[30px] md:h-[12px] lg:w-[50px] lg:h-[22px] lg:rounded-full rounded-full ${
           isDarkMode ? "bg-[#b1b0b0]" : "bg-[#0003]"
         }`}
       >
         <div
-          className={`rounded-full w-[7.5px] h-[6.4px] md:w-[14px] md:h-[12px] lg:h-[22px] lg:w-[21px] lg:drop-shadow-md bg-[#fff] ${
+          className={`rounded-full w-[12.5px] h-full md:w-[14px] md:h-[12px] lg:h-[22px] lg:w-[21px] lg:drop-shadow-md bg-[#fff] ${
             isDarkMode ? "float-right" : "float-left"
           }`}
         ></div>

@@ -8,9 +8,9 @@ import styles from "./component.module.css";
 import TransactionHistory from "./TransactionHistory";
 
 export const RecentTransaction = ({transactionResponse, transactionHistoryError, loading}) => {
-  const { toggleSideBar, isDarkMode } = useContext(ContextProvider);
+  const { toggleSideBar, isDarkMode , dateEdit} = useContext(ContextProvider);
   const [calender, setCalender] = useState(false);
- 
+ const [stateDateEdit, setStateDateEdit] = useState("Filter By Date")
   return (
     <div className="mt-[15%] lg:mt-[5%]">
       <div className="flex items-center gap-[10px] md:">
@@ -30,19 +30,46 @@ export const RecentTransaction = ({transactionResponse, transactionHistoryError,
         } my-[5%] flex text-[8px] font-extrabold gap-[8px] justify-between md:my-[5%] md:text-[20px] md:gap-[39px] `}
       >
         <div
-          onClick={() => {
-            setCalender((prev) => !prev);
-          }}
-          className={`cursor-pointer ${styles.filter} ${
+          className={`relative cursor-pointer ${styles.filter} ${
             isDarkMode ? "border" : ""
           } flex items-center gap-[1px] px-[2px] rounded-[3px] md:px-[8px]`}
         >
-          <div className={`text-[#04177f] md:text-[9.16px] md:font-semibold lg:text-base lg:font-extrabold`}>Filter by Date </div>
+          <p   onClick={() => {
+                if(calender === false){
+                setCalender(true);
+                }else{
+                  setCalender(false)
+                }
+              }}
+          className={`text-[#04177f] md:text-[9.16px]
+             md:font-semibold lg:text-base lg:font-extrabold`}>{stateDateEdit} </p>
           <img
             className="w-[15px] h-[15px] md:w-[17px] md:h-[17px] lg:w-[20px] lg:h-[20px]"
             src="./Images/dashboardImages/dateImg.png"
             alt=""
           />
+          {calender && (
+                   <div className="absolute  bg-white rounded-[15px] 
+                   md:mt-[40px] w-full h-auto p-2
+                   lg:mt-[55px]  flex flex-col gap-[10px] font-[400]">
+                     {" "}
+                     <Calender />
+                     {" "}
+                     <div onClick={()=> {
+                        setCalender(false);
+                        setStateDateEdit(dateEdit?.slice(0,10))
+                       }}
+                     className="flex justify-center 
+                     items-center w-[300px]">
+                       <button 
+                       className={`w-full bg-blue-900 py-[10px]  rounded-[15px]
+                         ${isDarkMode ? "text-white bg-black border-[0.2px] border-white" :
+                          "text-white bg-blue-900"}`}>
+                       Done
+                       </button>
+                       </div>
+                   </div>
+                 )}
         </div>
         <div className="flex justify-between gap-[10.3px] md:gap-[17.75px] lg:gap-[31px]">
           <Link to="/TransactionPage">
@@ -76,35 +103,11 @@ export const RecentTransaction = ({transactionResponse, transactionHistoryError,
         </div>
       </div>
 
-      {calender && <Calender />}
-      {/* <div
-        className={`${styles.viewTransact} ${
-          isDarkMode ? "bg-black border" : "bg-white"
-        }`}
-      >
-        <div
-          className={`${
-            toggleSideBar
-              ? "lg:text-[15px] "
-              : "lg:text-[20px] lg:h-[44px] lg:md:gap-[10%]"
-          } ${
-            isDarkMode ? "bg-black border" : " bg-[#ced9ff] "
-          } hidden font-extrabold md:flex md:h-[34px] md:justify-center md:items-center md:gap-[9%] mb-[13%] md `}
-        >
-          <div>Products</div>
-          <div>Description</div>
-          <div>Order No</div>
-          <div>Amount</div>
-          <div>Date & Time</div>
-          <div>Status</div>
-        </div
-        <div className={`${styles.viewTransactions} `}>
-         
-        </div>
-      </div> */}
+       
+     
 
       <TransactionHistory transactionResponse = {transactionResponse} 
-      transactionHistoryError= {transactionHistoryError} loading={loading}/>
+      transactionHistoryError= {transactionHistoryError} loading={loading}  stateDateEdit={stateDateEdit}/>
     </div>
   );
 };

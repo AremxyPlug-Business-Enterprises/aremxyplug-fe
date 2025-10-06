@@ -118,13 +118,12 @@
 }
 
 .calender {
-  position: absolute;
-  width: 170px;
+  width: 300px;
   /* height: 209px; */
-  height: 219px;
+  height: auto;
   background: #fff;
   box-shadow: 0px 0px 15.634516716003418px 0px rgba(139, 67, 255, 0.5);
-  margin-top: -2%;
+  overflow-x: scroll;
 }
 
 .toMyAcct {
@@ -317,7 +316,6 @@ td {
   }
 
   .calender {
-    margin-top: -3.5%;
     width: 270px;
     /* height: 260px; */
     height: 230px;
@@ -409,7 +407,6 @@ td {
   }
 
   .calender {
-    margin-top: -3.5%;
     width: 270px;
     height: 260px;
   }
@@ -512,11 +509,9 @@ td {
   }
 
   .calender {
-    position: absolute;
     width: 300px;
     height: 340px;
     box-shadow: 0px 0px 15.634516716003418px 0px rgba(139, 67, 255, 0.5);
-    margin-top: -3.5%;
   }
 
   .toMyAcct {

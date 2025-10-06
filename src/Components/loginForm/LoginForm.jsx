@@ -12,7 +12,11 @@ import axios from "axios";
 import { Loader } from "../Loader/Loader";
 import { Modal } from "../Screens/Modal/Modal";
 import { RemoveLocalStorage } from "../LocalStorage/LocalStorage";
+
+
 function LoginForm() {
+  
+
 
   const { setOpenTranspin,
     // setOpenResetTranspin,
@@ -24,7 +28,7 @@ function LoginForm() {
       open2StepOTP,
       openTranspin ,
     //  setLoginAuthorisation,
-    //  customerDetail,
+      
       setCustomerDetail,
       } = useContext(ContextProvider);
 
@@ -83,9 +87,11 @@ function LoginForm() {
          RemoveLocalStorage();
          window.location.reload()
       }
-      if((localStorage.getItem("getToken") || localStorage.getItem("authorisedLogin")) && open2StepOTP === true){
-         RemoveLocalStorage();
+
+      if(localStorage.getItem("PasswordResetActive")){
+     localStorage.removeItem("PasswordResetActive");
       }
+      
     const handleResize = () => {
       const width = window.innerWidth;
       let newSize = "";
@@ -118,6 +124,7 @@ function LoginForm() {
      if(ActiveSignUp === "true" && !PhoneData){
    return localStorage.removeItem("ActiveSignUp")
   }
+  
     const handleResize = () => {
       const width = window.innerWidth;
       let newSize = "";
@@ -337,7 +344,7 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
   
       }}
 
-const [errorSpecialCharacterUsername, setErrorSpecialCharacterUsername] = useState(false)
+
 
   
   return (
@@ -457,12 +464,7 @@ const [errorSpecialCharacterUsername, setErrorSpecialCharacterUsername] = useSta
                   {errors.email}
                 </div>
               )}
-              {(!errors.username && !errors.email &&  errorSpecialCharacterUsername) &&(
-                                <p className="text-[12px] text-red-500
-                 italic lg:text-[14px]">
-                     The Username should 
-                </p>
-              ) }
+            
             </div>
             {/* Email ends here*/}
             {/* Password starts here 268455*/}

@@ -1,28 +1,41 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import Calendar from "react-calendar";
 import styles from "./component.module.css";
 // import "react-calendar/dist/Calendar.css";
 import { format } from "date-fns";
 import "./custom_calendar.css";
+import { ContextProvider } from "../../Context";
 
 export const Calender = () => {
-  const [date, setDate] = useState(new Date());
+  const {dateEdit, setDateEdit} = useContext(ContextProvider);
+ console.log(dateEdit)
   return (
     <div
-      className={`${styles.calender} pt-2`}
+      className={`${styles.calender} pt-2 `}
       // py-2 px-2
     >
       <div
-        className="text-[12px] flex justify-center items-center mt-[3%] w-[90%] mx-auto border border-[#E0E0E0] lg:text-[16px]"
+        className="text-[12px] flex justify-center items-center 
+        mt-[3%] w-[90%] mx-auto border border-[#E0E0E0]
+         lg:text-[16px]"
         // p-2
       >
         {/* {date.toLocaleDateString()} */}
-        {format(date, "yyyy-MM-dd")}
+        {format(dateEdit, "yyyy-MM-dd")}
       </div>
-      <div className="p-2 md:p-0 ">
+      <div className="p-2 md:p-0">
         <Calendar
-          onChange={setDate}
-          value={date}
+          onChange={(value)=> {
+            console.log(value)
+             const dateValue = new Date(value);
+            const localDateValue = dateValue?.toLocaleString("sv-SE", {
+              timeZone : "Africa/Lagos",
+              hour12 : false
+            })
+            setDateEdit(localDateValue);
+          }}
+         
+          value={dateEdit}
           tileClassName={({ date: tileDate, view }) => {
             if (view === "month") {
               const today = new Date();
@@ -46,6 +59,7 @@ export const Calender = () => {
             }
           }}
         />
+      
       </div>
     </div>
   );
