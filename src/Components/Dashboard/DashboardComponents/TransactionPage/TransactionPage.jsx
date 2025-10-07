@@ -946,13 +946,16 @@ return date?.toISOString()?.slice(0, 10);
                onClick={() => {
                 if(calender === false){
                 setCalender(true);
+                 setSelectedStatus("")
                 }else{
                   setCalender(false)
+                   setSelectedStatus("")
                 }
               }}
       
-                className={`text-[#04177f] md:text-[9.16px]
-                   md:font-semibold text-[8px] font-extrabold lg:text-base lg:font-extrabold`}
+                className={` md:text-[9.16px]
+                   md:font-semibold text-[8px] font-extrabold lg:text-base
+                    lg:font-extrabold ${isDarkMode ? "text-white": "text-[#04177f]"}`}
               >
                 {stateDateEdit}{" "}
               </p>
@@ -971,7 +974,8 @@ return date?.toISOString()?.slice(0, 10);
                 <div onClick={()=> {
                    setCalender(false);
                    setStateDateEdit(dateEdit?.slice(0,10))
-                  }}
+                  
+               }}
                 className="flex justify-center 
                 items-center w-[300px]">
                   <button 

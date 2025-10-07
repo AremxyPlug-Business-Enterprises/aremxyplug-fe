@@ -63,19 +63,56 @@ export const GotvReceipt = (Data) => {
   };
 
   // ==============Share pdf Function=============
-  const handleShareClick = () => {
-    if (navigator.share) {
+  const handleShareClick = async() => {
+    const content = contentRef.current;
+    if(!content) return alert("Receipt not recorded")
+    if(content){
+      try {
+     const pdf = new jsPDF("p", "mm", "a4");
+      const canvas = await html2canvas(content,
+         {scale : 2,
+           useCORS : true,
+           backgroundColor : `${isDarkMode ? "#000" : "#fff"}`
+        }
+          )
+      const bgPdf = pdf.setFillColor(isDarkMode ? 0 : 255, isDarkMode ? 0 : 255, isDarkMode ? 0 : 255 )
+      if(bgPdf){
+        const pageHeight = pdf.internal.pageSize.getHeight();
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const imgWidth = pageWidth;
+        const imgHeight = (canvas.height * imgWidth)/ canvas.width;
+        const imgData = canvas.toDataURL("image/PNG");
+      
+     const y = (pageHeight - imgHeight) / 2;
+     const yPositioning = y> 0 ? y : 0;
+        pdf.addImage(imgData, "PNG",0, yPositioning, imgWidth, imgHeight);
+      
+     //Get the amount or mm that remaininHeight has surpassed pageHeight
+     // 
+        
+     
+      
+        
+      }
+    
+    const pdfBlob = pdf.output("blob");
+   
+    const file = new File([pdfBlob], "AremxyPlug_Receipt.pdf", {type : "application/pdf"})
+    if (navigator.canShare && navigator.canShare({files : [file]})) {
       navigator
         .share({
-          title: "Receipt",
-          text: "Check out this receipt!",
-          url: "https://example.com", // Replace with the actual URL of your receipt
+          title: "AremxyPlug Receipt",
+          text: "TransactionReceipt",
+          files : [file], // Replace with the actual URL of your receipt
         })
         .then(() => console.log("Shared successfully"))
         .catch((error) => console.error("Error sharing:", error));
-    } else {
-      console.log("Web Share API not supported.");
-      // Handle sharing fallback for unsupported browsers
+    }else{
+    alert("Sharing this pdf isn't supported in your browser.")
+    }
+  }catch(error){
+   alert(error)
+  }
     }
   };
 

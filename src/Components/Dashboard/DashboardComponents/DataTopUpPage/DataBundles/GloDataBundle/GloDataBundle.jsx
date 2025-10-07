@@ -122,7 +122,7 @@ const assumedString = selectedAmountGlo?.toString();
         const response = await axiosInstance.get("/products/telecom/list/2");
         if (response.status === 201 || response.status === 200) {
           setProducts(response?.data?.data?.products || []);
-          console.log(response?.data?.data?.plans)
+         // console.log(response?.data?.data?.plans)
            if (
           response?.data?.data?.plans === null ||
           response?.data?.data?.length < 1
@@ -590,7 +590,7 @@ fetchProducts();
 
   const [glopurchaseStatus, setGloPurchaseStatus] = useState(null); // State to hold purchase status
 
-  const inputPinHandler = async () => {
+  const inputPinHandler = async() => {
     async function buyData(network, mobileNumber, plan, name) {
       // Add validation for selected plan
       if (!selectedPlan) {
@@ -616,14 +616,14 @@ try {
 
         // No `order_id`, using `id` instead
 
-        setGloDescription(`${resData?.network} - ${resData?.plan_name}`); // Fabricated description
+        setGloDescription(resData?.transaction_description); // Fabricated description
         if (response.status === 200 || response.status === 201) {
           setGloSuccessfulResponse(response?.data?.data?.data)
           if(response?.data?.data?.data?.Status === "success"
             || response?.data?.data?.data?.Status === "successful"
             || response?.data?.data?.data?.Status === "delivered"
             || response?.data?.data?.data?.Status === "successfully"
-          )
+          ){
           // Success response
           setGloPurchaseErrorType("")
           setTransactSuccessPopUp(true); // Show success popup
@@ -634,10 +634,20 @@ try {
           || response?.data?.data?.data?.Status === "unsuccessful"){
               
            setGloPurchaseErrorType("Plan Unavailable: Purchase Failed")
-          setTransactSuccessPopUp(true); // Show success popup
+          setGloPurchaseStatus(true); // Show success popup
           setConfirm(false);
           setInputPin("");
         }
+           const resData = response?.data?.data?.data; // Accessing the nested `data` object
+      setPlan(resData?.plan_name);
+       setGloTransactionID(resData?.transaction_id);
+        setGloRefNumber(resData?.reference_number);
+       setGloOrderID(resData?.order_id);
+
+        // No `order_id`, using `id` instead
+
+        setGloDescription(`${resData?.network} - ${resData?.plan_name}`);
+      }
 
         return { statusCode: response.status, data: response.data };
         // console.log(response.data);
@@ -1623,7 +1633,10 @@ try {
                 <div className="pr-3 lg:pr-2 py-[5px] 
                 flex justify-end">
                   <img
-                    onClick={() => setConfirm(false)}
+                    onClick={() => {
+                      setConfirm(false);
+                      setGloPurchaseErrorType("");
+                    }}
                      className="w-[25px] h-[25px]  md:w-[35px] md:h-[35px] 
                 lg:w-[25px] lg:h-[25px]"
                     src={Cancel}
@@ -1699,7 +1712,7 @@ try {
                   onClick={(e) => {
                     console.log("inputPin", inputPin);
                     const DataHandler = async() => {
-
+                    //alert("I am running what could be the error.")
                       // Close modal on PIN success
                     await  inputPinHandler(); // Proceed with purchase
                     };

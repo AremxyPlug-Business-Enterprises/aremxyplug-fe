@@ -13,7 +13,7 @@ export const GloFailedReceipt = (Data) => {
   Data = GetLocalStorage()
   const location = useLocation();
   const {
-    selectedNetworkProduct,
+   
     // recipientPhoneNumber,
     inputValue,
     recipientNames,
@@ -21,9 +21,9 @@ export const GloFailedReceipt = (Data) => {
     glotransactionID,
     glorefNumber,
     gloorderID,
-    selectedOption,
-    gloReceiptInfo,
-    selectedProduct
+   
+    selectedProduct,
+    glodescription
   } = location.state;
 
   const {
@@ -222,7 +222,7 @@ export const GloFailedReceipt = (Data) => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Description</p>
-                  <span>{gloReceiptInfo}</span>
+                  <span>{glodescription}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Order Number</p>
