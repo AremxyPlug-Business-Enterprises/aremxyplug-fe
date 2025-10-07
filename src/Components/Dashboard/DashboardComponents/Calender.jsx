@@ -20,8 +20,7 @@ export const Calender = () => {
          lg:text-[16px]"
         // p-2
       >
-        {/* {date.toLocaleDateString()} */}
-        {format(dateEdit, "yyyy-MM-dd")}
+           {dateEdit}
       </div>
       <div className="p-2 md:p-0">
         <Calendar
@@ -32,7 +31,7 @@ export const Calender = () => {
               timeZone : "Africa/Lagos",
               hour12 : false
             })
-            setDateEdit(localDateValue);
+            setDateEdit(localDateValue?.slice(0,10));
           }}
          
           value={dateEdit}

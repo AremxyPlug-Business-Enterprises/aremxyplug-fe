@@ -128,7 +128,7 @@ function LoginPopUp() {
           }
         }
       } else if (error.response.status === 404) {
-        alert(`ERROR: ${error.response.data.data.message.toUpperCase()}`);
+        alert(`ERROR: Not Found`);
       } else if (error.response && error.response.status === 500) {
         alert(`SERVER ERROR`);
       } else {
@@ -145,21 +145,28 @@ function LoginPopUp() {
   const getOtpSmsorEmail = async (paramSmsOrEmail) => {
     // const [sendSmsOrEmail, setSendSmsOrEmail] = useState("")
     const holdOtpDetails = async(url, body)=> {
-    if (smsOrEmail === "sms" || paramSmsOrEmail === "sms") {
+
+      //The 2 Step OTP to select without the function of getOtpSmsOrEmail
+    
+      //Without the 2Step which triggers the function without the getOtpSmsOrEmail
+    if ( paramSmsOrEmail === "sms") {
+     
       body = {
         phone_number: phone,
       };
       url = "https://aremxyplug.onrender.com/api/v1/sms/send";
-    } else if (smsOrEmail === "email" || paramSmsOrEmail === "email") {
+    } else if ( paramSmsOrEmail === "email") {
       body = {
         email: email,
       };
       url = "https://aremxyplug.onrender.com/api/v1/send-otp/signin";
     }
     if (!navigator.onLine) return alert("Check your internet connection");
-    if (navigator.onLine) {
+    if(paramSmsOrEmail === undefined) alert("Select medium to receive your otp")
+    if (navigator.onLine && paramSmsOrEmail !== undefined) {
       await gettingOtpFunction(url, body);
     }
+   
   }
   holdOtpDetails();
   };
@@ -538,7 +545,7 @@ if (newToken !== "" && localStorage.getItem("authorisedLogin") === "true"
   const handleResendOTP = () => {
     if (!navigator.onLine) return alert("Check your internet connection.");
     if (navigator.onLine) {
-      getOtpSmsorEmail();
+      getOtpSmsorEmail("sms");
       setCanResend(false);
       setVerificationPinError("");
     }
@@ -547,7 +554,7 @@ if (newToken !== "" && localStorage.getItem("authorisedLogin") === "true"
   const handleResendOTP2 = () => {
     if (!navigator.onLine) return alert("Check your internet connection.");
     if (navigator.onLine) {
-      getOtpSmsorEmail();
+      getOtpSmsorEmail("email");
       setCanResend2(false);
       setVerificationPinError("");
     }
@@ -775,7 +782,9 @@ if (newToken !== "" && localStorage.getItem("authorisedLogin") === "true"
 
                 <div className="w-full flex justify-center mt-[30px] md:mt-[35px] lg:mt-[50px]">
                   <button
-                    onClick={getOtpSmsorEmail}
+                    onClick={()=>{
+                      getOtpSmsorEmail(smsOrEmail === "sms" ? "sms" : "email")
+                    }}
                     type="submit"
                     disabled={smsOrEmail === "" ? true : false}
                     className={` ${

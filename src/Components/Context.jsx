@@ -1398,7 +1398,16 @@ export const Context = ({ children }) => {
 
     // ========== Transfer to aremxyPlug======
     const [recipientResponse, setRecipientResponse] = useState([]);
-      const [dateEdit, setDateEdit] = useState(new Date());
+     const formatDateISO = ()=> {
+            const HoldInitialDate = new Date();
+              const ISOStringDateFormat = HoldInitialDate?.toLocaleString("sv-SE", {
+                      timeZone : "Africa/Lagos",
+                      hour12 : false
+                     })
+                     return ISOStringDateFormat?.slice(0,10)
+                    }
+             
+      const [dateEdit, setDateEdit] = useState(formatDateISO());
     //Date for the Calenders
 
   const hold = {

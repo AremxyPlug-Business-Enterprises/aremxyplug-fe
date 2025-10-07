@@ -86,10 +86,12 @@ localStorage.removeItem("UserIcon");
   localStorage?.removeItem("3232");    
      localStorage?.removeItem("SessionExpiration");
      localStorage?.removeItem("PasswordResetActive");
+     localStorage.removeItem("getToken");
+      localStorage.removeItem("authorisedLogin");
  const AccCreated = localStorage.getItem("AccCreated")
  const getToken = localStorage.getItem("getToken");
  if(getToken){
-   localStorage.removeItem("getToken");
+   
    const userTransactionOtp = localStorage.getItem("userTransactionOtp")
   if(userTransactionOtp){
     localStorage.removeItem("userTransactionOtp")
@@ -100,7 +102,7 @@ localStorage.removeItem("UserIcon");
  }
  }
  else {
- localStorage.removeItem("authorisedLogin");
+
  const userTransactionOtp = localStorage.getItem("userTransactionOtp")
  if(userTransactionOtp){
   localStorage.removeItem("userTransactionOtp")
