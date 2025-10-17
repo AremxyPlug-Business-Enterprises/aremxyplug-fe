@@ -134,7 +134,7 @@ export const DataTransReceipt = () => {
               >
                 {/* {["delivered", "successful", "success"].includes(receiptData?.status) */}
                 {["delivered", "successful", "success"].includes(
-                  receiptData?.Status
+                  receiptData?.status
                 )
                   ? "Purchase Successful on"
                   : receiptData?.status === "pending"
@@ -160,7 +160,7 @@ export const DataTransReceipt = () => {
              ${
                //    ["delivered", "successful", "success"].includes(receiptData?.status)
                ["delivered", "successful", "success"].includes(
-                 receiptData?.Status
+                 receiptData?.status
                )
                  ? "border-[#27AE60] text-[#27AE60] bg-[#D5F6E3]"
                  : receiptData?.status === "pending"
@@ -174,9 +174,9 @@ export const DataTransReceipt = () => {
               >
                 {/* {["delivered", "successful", "success"].includes(receiptData?.status) */}
                 {["delivered", "successful", "success"].includes(
-                  receiptData?.Status
+                  receiptData?.status
                 )
-                  ? "You have successfully purchased "
+                  ? `You have successfully purchased`
                   : receiptData?.status === "pending"
                   ? "Your purchase is under process please wait while the system confirm."
                   : receiptData?.status === "refunded"
@@ -187,12 +187,12 @@ export const DataTransReceipt = () => {
 
                 {/* {["delivered", "successful", "success"].includes(receiptData?.status) && ( */}
                 {["delivered", "successful", "success"].includes(
-                  receiptData?.Status
+                  receiptData?.status
                 ) && (
                   <span className="">
                     <span className="font-extrabold text-[10.9px]
                      md:text-[14.9px] lg:text-[16.9px] capitalize">
-                      {description}  (
+                   {" "}   {description}  (
                       {`${String(
                         amountToNumber.toLocaleString("en-NG", {
                           style: "currency",

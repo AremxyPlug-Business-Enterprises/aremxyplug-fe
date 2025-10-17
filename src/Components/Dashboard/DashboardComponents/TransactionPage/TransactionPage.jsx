@@ -17,9 +17,10 @@ import { Loader } from "../../../Loader/Loader";
 import NoRecordImage from "../../../Add&SelectRecipient/RecipientImages/NoRecordImage.svg";
 import { useNavigate } from "react-router-dom";
 import { Modal } from "../../../Screens/Modal/Modal";
-
-
+import { CircularProgress } from "../../../CircularProgress";
+import { GetLocalStorage } from "../../../LocalStorage/LocalStorage";
 const TransactionPage = () => {
+  const Data = GetLocalStorage();
   const navigate = useNavigate();
   const {
     isDarkMode,
@@ -112,19 +113,27 @@ const TransactionPage = () => {
   };
 
   useEffect(() => {
+   
     setSelectedStatus("All Transactions")
+    if(Data?.ConfirmAcc === "true"){
     if (transactionResponse?.data?.data?.data === undefined) {
       GetTransactionInformation();
     }
+  }else{
+     setTransactionResponse(null)
+  }
     setSelected("NGN");
 
     //eslint-disable-next-line
   }, []);
+
+  if(Data?.ConfirmAcc ==="true"){
   window.addEventListener("online", () => {
-    if (transactionHistoryError === "Network error") {
+    if (transactionHistoryError === "Network error" && loading === false) {
       GetTransactionInformation();
     }
   });
+}
 
   const getBackgroundColor = (status) => {
     if (
@@ -156,8 +165,9 @@ const TransactionPage = () => {
   };
 
 //console.log(filteredTransactions?.length/ transactionResponse?.data?.data?.data?.transactions?.length * 100)
+const totalLength = transactionResponse?.data?.data?.data?.total_count;
 //       const TransactionStatusUpdates =(percentage, color)=> {
-// const totalLength = transactionResponse?.data?.data?.data?.transactions?.length
+
 // console.log(filteredTransactions?.length)
 //         if(transactionResponse?.data?.data?.data?.transactions?.length && (selectedStatus === "All Transactions" || selectedStatus === "")){
 //           // Calaculate the percentage for each status 
@@ -187,45 +197,42 @@ const TransactionPage = () => {
 //             percentage = 0;
 //             color="text-black";
 //           }
-//         return(
-//       <div className="flex flex-col md:flex-row gap-[10px]">
-//          <CircularProgress 
-//         percentage={percentage} 
-//         strokeWidth={12}
-//          width={140}
-//          size={140}
-//          color={color}/>
-       
-//          <div className="flex flex-col gap-[5px] items-center justify-center">
-//          <p className={`text-[12px] font-[600]
-//                  leading-[16px] capitalize md:text-[13.17px]
-//                   md:leading-[16.92px] lg:text-[16px] lg:leading-[24px]
-//                   ${isDarkMode ? "text-white" : "text-[#7E7E7E]"}`}>
-//                     {selectedStatus}
-//                   </p>
-//          <p className={`text-[12px] font-[600]
-//                  leading-[16px] capitalize md:text-[13.17px]
-//                   md:leading-[16.92px] lg:text-[16px] lg:leading-[24px]
-//                   ${isDarkMode ? "text-white" : "text-black"}`}>
-//         Volume: {filteredTransactions?.length}
+//         return {
+//           percentage : percentage,
 
-//          </p>
-//          {selectedStatus !== "All Transactions" && (
-//          <p className={`text-[12px] font-[600]
-//                  leading-[16px] capitalize md:text-[13.17px]
-//                   md:leading-[16.92px] lg:text-[16px] lg:leading-[24px]
-//                   ${isDarkMode ? "text-black" : "text-[#7E7E7E]"}`}
-//                   >
-//          Value: 20
-//          </p>
-//          )}
-//          </div>
-//          </div>
-//         )
+//         }
 //       }
+const transactionStatusMetrics = transactionResponse?.data?.data?.data?.status_metrics;
+console.log(transactionStatusMetrics?.success?.volume)
+const successStatusMetricsPercentage = (transactionStatusMetrics?.success?.volume / totalLength) * 100;
+const failedStatusMetricsPercentage = (transactionStatusMetrics?.failed?.volume / totalLength) * 100;
+const  refundedStatusMetricsPercentage = (transactionStatusMetrics?.refunded?.volume / totalLength) * 100;
 
+console.log(transactionStatusMetrics?.refunded?.value)
+      const pictorialStatus = [
+        { status : "All Transaction",
+           percentage : totalLength > 1 ? 100 : 0, 
+           volume : transactionResponse?.data?.data?.data?.total_count
+           , color : "text-[#04177F]"},
+         { status : "success",
+           percentage : Math.round(successStatusMetricsPercentage) ,
+             volume : transactionStatusMetrics?.success?.volume,
+              value : transactionStatusMetrics?.success?.value, 
+              color : "text-[#17E506]"},
+          { status : "failed", 
+            percentage : Math.round(failedStatusMetricsPercentage), 
+            volume : transactionStatusMetrics?.failed?.volume,
+             value :  transactionStatusMetrics?.failed?.value, 
+             color : "text-[#F95252]"},
+
+           { status : "refunded",
+             percentage : Math.round(refundedStatusMetricsPercentage), 
+             volume : transactionStatusMetrics?.refunded?.volume,
+               value : transactionStatusMetrics?.refunded?.value,
+                color : "text-[#1C0CF9]" },
+      ]
   const chooseStatus = [
-    "All Transactions",
+    "All Transactions", 
     "Successful",
     "Failed",
     "Pending",
@@ -371,7 +378,7 @@ return date?.toISOString()?.slice(0, 10);
       ))  : [];
       
 
-     
+  
 
 
   return (
@@ -944,6 +951,7 @@ return date?.toISOString()?.slice(0, 10);
             >
               <p
                onClick={() => {
+                if(Data?.ConfirmAcc === "true"){
                 if(calender === false){
                 setCalender(true);
                  setSelectedStatus("")
@@ -951,6 +959,7 @@ return date?.toISOString()?.slice(0, 10);
                   setCalender(false)
                    setSelectedStatus("")
                 }
+              }
               }}
       
                 className={` md:text-[9.16px]
@@ -965,9 +974,11 @@ return date?.toISOString()?.slice(0, 10);
                 alt=""
               />
                 {calender && (
-              <div className="absolute  bg-white rounded-[15px] 
-              md:mt-[40px] w-full h-auto p-2
-              lg:mt-[55px]  flex flex-col gap-[10px] font-[400]">
+              <div className={`absolute rounded-[20px] 
+                   md:mt-[40px] w-[300px] h-auto p-2   border-[0.2px]
+                   lg:mt-[55px]  flex flex-col gap-[10px] font-[400]
+                    ${isDarkMode ? "bg-black text-white  border-white" 
+                    : "bg-white text-black border-gray-300"}`}>
                 {" "}
                 <Calender />
                 {" "}
@@ -977,11 +988,13 @@ return date?.toISOString()?.slice(0, 10);
                   
                }}
                 className="flex justify-center 
-                items-center w-[300px]">
+                items-center w-[270px]">
                   <button 
-                  className={`w-full bg-blue-900 py-[10px]  rounded-[15px]
-                    ${isDarkMode ? "text-white bg-black border-[0.2px] border-white" :
-                     "text-white bg-blue-900"}`}>
+                  className={`w-full bg-blue-900 py-[15px]
+                     text-[12px] md:text-[14px] font-[500] 
+                         rounded-[15px]
+                         ${isDarkMode ? "text-white bg-black border-[0.2px] border-white" :
+                          "text-white bg-blue-900"}`}>
                   Done
                   </button>
                   </div>
@@ -1071,12 +1084,13 @@ return date?.toISOString()?.slice(0, 10);
           
           </div>
 
-          <div>
+          <div className="w-full">
             <div
-              className={` flex flex-row w-full gap-[5px] h-[70px] 
-                lg:h-[100px] md:items-center 
-              lg:mt-[5%] lg:items-center my-[30px]`}
+              className={` flex flex-col w-full gap-[5px] h-[70px] 
+                lg:h-[100px] items-start
+              lg:mt-[5%]  my-[30px]`}
             >
+              
               <select
                 name="curr"
                 id="curr"
@@ -1094,11 +1108,59 @@ return date?.toISOString()?.slice(0, 10);
 
 
 
-{/* <div className="flex justify-center items-center h-[400px] 
-w-[100%] py-[30px] mb-[100px]">
-   <TransactionStatusUpdates/> 
-</div>  */}
-             <div
+<div className="flex flex-wrap w-[100%]
+ gap-[20px] items-center md:justify-between">
+  {transactionStatusMetrics  ?  (
+   pictorialStatus.map((statusArray)=> {
+   return <div className="flex flex-col gap-[10px]">
+  
+     <CircularProgress 
+        percentage={statusArray?.percentage} 
+        strokeWidth={12}  
+         width={140}
+         size={140}
+         color={statusArray?.color}/>
+      <p  className={`text-[14px] text-center leading-[14px] font-[700] 
+                  lg:text-[18px] lg:leading-[24px] ${isDarkMode ?"text-white"  : "text-[#7C7C7C]"}
+                    ${toggleSideBar ? "lg:text-[18px]" : ""}`}>
+        {statusArray?.status}
+      </p>
+         <p  className={` text-[12px] text-center leading-[14px] font-[600] 
+                  lg:text-[18px] lg:leading-[24px] 
+                    ${toggleSideBar ? "lg:text-[18px]" : ""}`}>
+     Volume {" "} {statusArray?.volume}
+      </p>
+       {((statusArray?.value ||
+         statusArray?.value === 0)  && statusArray?.value !== undefined && statusArray?.value !== null) ? (
+                <p  className={`text-[12px] text-center leading-[14px]  
+                  lg:text-[18px] lg:leading-[24px] font-[600] 
+                    ${toggleSideBar ? "lg:text-[18px]" : ""}`}>
+                  Value {" "}{statusArray?.value !== null && statusArray?.value !== undefined
+                   ? statusArray?.value?.toLocaleString("en-NG", {
+      style : "currency",
+      currency : "NGN"
+     }) : ""}
+                  </p>
+        ) : (
+             <p  className={`text-[12px] text-center leading-[14px]  
+                  lg:text-[18px] lg:leading-[24px] font-[600] 
+                    ${toggleSideBar ? "lg:text-[18px]" : ""}`}>
+                      {""}
+                    </p>
+        )}
+
+      </div>
+   } )
+  ): (
+    <p  className="text-sm text-red-500 font-[600] mb-8">
+     {Data?.ConfirmAcc === "true" 
+     ? "An error occured: unable to retrieve transaction status-metrics" 
+     : "No transactions, no account created"}
+      </p>
+
+  )}
+</div> 
+             {/* <div
                 className={`w-[33.3%] rounded-[3px] lg:rounded-[5px] flex flex-col h-full justify-center items-center
                    gap-[3px] ${isDarkMode ? "border " : " bg-[#D5F6E3]"}   ${
                   toggleSideBar ? "lg:text-[14px]" : "lg:text-[px]"
@@ -1134,9 +1196,9 @@ w-[100%] py-[30px] mb-[100px]">
                       : "₦"
                     : `${symbolValue}0.00`}
                 </p>
-              </div> 
+              </div>  */}
 
-               <div
+               {/* <div
                 className={`w-[33.3%] rounded-[3px] lg:rounded-[5px]  flex flex-col h-full justify-center items-center
                    gap-[3px] ${
                      isDarkMode ? "border " : " bg-[#92abfe81]"
@@ -1207,11 +1269,11 @@ w-[100%] py-[30px] mb-[100px]">
                       : "₦"
                     : `${symbolValue}0.00`}
                 </p>
-              </div>
+              </div> */}
             </div>
           </div>
 
-          <div>
+          <div className={`${transactionStatusMetrics ? "mt-[500px] md:mt-[200px]" : ""} `}>
             <div className="flex items-center gap-[10px] ">
               <p className="text-[10px] md:text-[12px] lg:text-[16px] text-[#7C7C7C] mt-[10px] font-semibold">
                 Transaction History
@@ -1483,14 +1545,14 @@ w-[100%] py-[30px] mb-[100px]">
                 ))
               ) : (filteredTransactions && filteredTransactions?.length < 1) ||
                 transactionResponse?.data?.data?.data?.transactions?.length <
-                  1 || transactionResponse?.data?.data?.data?.transactions === null ||
-                  transactionResponse?.data?.data?.data?.transactions === undefined ? (
+                  1 || transactionResponse?.data?.data?.data?.transactions === null || transactionResponse === null
+                 ? (
                 <img
                   className="lg:w-[517px] lg:h-[456px]"
                   src={NoRecordImage}
                   alt="No record found"
                 />
-              ) : transactionHistoryError === "Network error" ? (
+              ) : transactionHistoryError === "Network error" && loading === false ? (
                 <p
                   className={`text-[20px] text-black font-[500] 
                 ${isDarkMode ? "text-white" : "text-black"}`}
@@ -1498,7 +1560,7 @@ w-[100%] py-[30px] mb-[100px]">
                   An internet connection error has occured, kindly check your
                   internet connection.
                 </p>
-              ) : transactionHistoryError === "Server error" ? (
+              ) : transactionHistoryError === "Server error" && loading === false ? (
                 <p
                   className={`text-[20px] text-black font-[500] 
               ${isDarkMode ? "text-white" : "text-black"}`}
@@ -1618,7 +1680,7 @@ w-[100%] py-[30px] mb-[100px]">
                       }  hidden  font-semibold md:flex md:h-[60px] lg:h-[85px] md:justify-start md:px-[20px] md:items-center  md:mt-[20px] md:pb-[2%] border-b-[1px]`}
                     >
                       <div
-                        className={`md:text-[#000000] ${
+                        className={`md:text-[#7C7C7C] ${
                           toggleSideBar ? "md:w-[16.5%]" : "md:w-[17%]"
                         }`}
                       >
@@ -1707,7 +1769,7 @@ w-[100%] py-[30px] mb-[100px]">
             ) : filteredTransactions?.length < 1 ||
  transactionResponse?.data?.data?.data?.transactions?.length < 1 ||
               transactionResponse?.data?.data?.data?.transactions === null 
-              ||  transactionResponse?.data?.data?.data?.transactions === undefined
+            
               ? (
               <img
                 className="lg:w-full lg:h-[456px] flex self-center w-["

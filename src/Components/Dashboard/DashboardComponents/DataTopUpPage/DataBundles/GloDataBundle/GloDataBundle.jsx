@@ -148,7 +148,7 @@ const assumedString = selectedAmountGlo?.toString();
 
             if (
               newToken !== "" &&
-              localStorage.getItem("authorisedLogin") === "true"
+              localStorage.getItem("authorisedLogin") 
             ) {
               const setAuthorisedToken = localStorage.setItem(
                 "authorisedLogin",
@@ -220,7 +220,7 @@ fetchProducts();
 
           if (
             newToken !== "" &&
-            localStorage.getItem("authorisedLogin") === "true"
+            localStorage.getItem("authorisedLogin")
           ) {
             const setAuthorisedToken = localStorage.setItem(
               "authorisedLogin",
@@ -619,19 +619,19 @@ try {
         setGloDescription(resData?.transaction_description); // Fabricated description
         if (response.status === 200 || response.status === 201) {
           setGloSuccessfulResponse(response?.data?.data?.data)
-          if(response?.data?.data?.data?.Status === "success"
-            || response?.data?.data?.data?.Status === "successful"
-            || response?.data?.data?.data?.Status === "delivered"
-            || response?.data?.data?.data?.Status === "successfully"
+          if(response?.data?.data?.data?.status === "success"
+            || response?.data?.data?.data?.status === "successful"
+            || response?.data?.data?.data?.status === "delivered"
+            || response?.data?.data?.data?.status === "successfully"
           ){
           // Success response
           setGloPurchaseErrorType("")
           setTransactSuccessPopUp(true); // Show success popup
           setConfirm(false);
           setInputPin("");
-        }else if(  response?.data?.data?.data?.Status === "failed"
-          || response?.data?.data?.data?.Status === "Failed"
-          || response?.data?.data?.data?.Status === "unsuccessful"){
+        }else if(  response?.data?.data?.data?.status === "failed"
+          || response?.data?.data?.data?.status === "Failed"
+          || response?.data?.data?.data?.status === "unsuccessful"){
               
            setGloPurchaseErrorType("Plan Unavailable: Purchase Failed")
           setGloPurchaseStatus(true); // Show success popup
@@ -675,7 +675,7 @@ try {
 
             if (
               newToken !== "" &&
-              localStorage.getItem("authorisedLogin") === "true"
+              localStorage.getItem("authorisedLogin")
             ) {
               const setAuthorisedToken = localStorage.setItem(
                 "authorisedLogin",
@@ -942,7 +942,7 @@ try {
             <div className="flex flex-col lg:gap-[12px] gap-[7px]">
               <h2
                 className={`lg:text-[18px] lg:leading-[24px] mb-1 text-[14px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
-                  isDarkMode ? "text-[#7E7E7E]" : "text-black"
+                  isDarkMode ? "text-white" : "text-black"
                 }`}
               >
                 Select Product
@@ -1027,8 +1027,8 @@ try {
 
             <div className="flex flex-col lg:gap-[12px] gap-[7px]">
               <h2
-                className={`lg:text-[18px] md:text-[12px] lg:leading-[24px] mb-1 text-[14px] md:font-[600] font-[400] leading-[12px] ${
-                  isDarkMode ? "!text-[#7E7E7E]" : "!text-black"
+                 className={`lg:text-[18px] lg:leading-[24px] mb-1 text-[14px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
+                  isDarkMode ? "text-white" : "text-black"
                 }`}
               >
                 Select Plan
@@ -1124,8 +1124,9 @@ try {
 
             <div className="flex flex-col lg:gap-[12px] gap-[7px]">
               <h2
-                className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
-                  isDarkMode ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                className={`lg:text-[18px] lg:leading-[24px] mb-1 text-[14px]
+                   md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
+                  isDarkMode ? "text-white" : "text-black"
                 }`}
               >
                 Phone Number{" "}
@@ -1171,8 +1172,8 @@ try {
 
             <div className="flex flex-col lg:gap-[12px] gap-[7px]">
               <h2
-                className={`text-[14px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
-                  isDarkMode ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                className={`lg:text-[18px] lg:leading-[24px] mb-1 text-[14px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
+                  isDarkMode ? "text-white" : "text-black"
                 }`}
               >
                 Recipient Name<span className="text-[#7C7C7C]">(optional)</span>{" "}
@@ -1205,8 +1206,8 @@ try {
 
             <div className="flex flex-col lg:gap-[12px] gap-[7px]">
               <h2
-                className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
-                  isDarkMode ? "!text-[#7E7E7E]" : "text-black"
+                className={`lg:text-[18px] lg:leading-[24px] mb-1 text-[14px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
+                  isDarkMode ? "text-white" : "text-black"
                 }`}
               >
                 Amount
@@ -1235,9 +1236,10 @@ try {
             <div>
               <div className="flex flex-col lg:gap-[12px] gap-[7px]" onClick={handleShowPayment}>
                 <h2
-                  className={`lg:text-[18px] mt-[5px] lg:leading-[24px] mb-2 text-[15px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
-                    isDarkMode ? "!text-[#7E7E7E]" : "!text-black"
-                  }`} 
+                 className={`lg:text-[18px] lg:leading-[24px]
+                   mb-1 text-[14px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
+                  isDarkMode ? "text-white" : "text-black"
+                }`}
                 >
                   Payment Method
                 </h2>
@@ -1260,15 +1262,15 @@ try {
                                        onClick={handleShowPayment}
                                        className={airtimestyles.labelInput}
                                      >
-                                       <h2  className= {`${isDarkMode ?  "text-white" : "text-[#7E7E7E]"}`}>{walletNameGlo}</h2>
-                                       <h2 className= {`${isDarkMode ?  "text-white" : "text-[#7E7E7E]"}`}>
+                                       <h2  className= {`text-[#7E7E7E]`}>{walletNameGlo}</h2>
+                                       <h2 className= {`text-[#7E7E7E]`}>
                                         {paymentAmount.toLocaleString()}
                                        </h2>
                                      </li>
                                    ) : (
                                      <h2
                                        onClick={handleShowPayment}
-                                       className="text-[13.2px] lg:text-[14px]"
+                                       className= {`text-[#7E7E7E]`}
                                      >
                                        Select Payment Method
                                      </h2>
@@ -1793,7 +1795,7 @@ try {
                         <p className="text-sm text-red-500 font-[600] mb-8">
                           {gloPurchaseErrorType}
                         </p>
-                        {gloSuccessfulResponse?.Status  ?
+                        {gloSuccessfulResponse?.status  ?
                          (
                         <div className="flex gap-[10px] justify-between w-full px-[10px]">
                           <button

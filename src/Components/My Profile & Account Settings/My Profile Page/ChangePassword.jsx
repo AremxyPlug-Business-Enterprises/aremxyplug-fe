@@ -54,7 +54,7 @@ const [sessionModal, setSessionModal] = useState(false)
              setLoading(true)
          const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
         
-         if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
+         if(newToken !== "" && localStorage.getItem("authorisedLogin")){
              console.log(newToken)
           localStorage.setItem("authorisedLogin", newToken);
           

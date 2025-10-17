@@ -145,11 +145,14 @@ const navigate = useNavigate()
                 hour12: true,
               })}
             </span>
-            <p className="text-[9px] text-[#27AE60] bg-[#D5F6E3] 
-            rounded-[11px] border-2 border-[#27AE60] w-[100%]
-            py-[5px] px-[2px] text-center mx-[5px]  my-2 md:text-[14px] lg:text-[14px]">
+            <p lassName={`text-[10px] p-[5.729px] border-[0.573px] rounded-[6.302px]
+             md:p-[5.868px] md:border-[0.578px] md:rounded-[6.455px]  lg:border-[1px] lg:rounded-[11px]
+                   leading-[15px] md:leading-[20px] font-[600] 
+                    lg:p-[10px] text-center my-2 md:text-sm
+                    lg:text-base  lg:leading-[24px]  md:mb-7
+                     border-[#27AE60] text-[#27AE60] bg-[#D5F6E3]`}>
               You have successfully purchased{" "}
-              <span className=" font-extrabold text-[10px]
+              <span className="font-extrabold text-[10px]
                md:text-[16px] lg:text-[16px]">
                 {`${selectedProduct + " " + selectedOption}`}
               </span>

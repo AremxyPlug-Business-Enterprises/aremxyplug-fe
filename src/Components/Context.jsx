@@ -1410,7 +1410,12 @@ export const Context = ({ children }) => {
       const [dateEdit, setDateEdit] = useState(formatDateISO());
     //Date for the Calenders
 
+                //Transfer Data
+                  const [transferValue, setTransferValue] = useState("");
   const hold = {
+    //Transfer Data
+    transferValue,
+     setTransferValue,
     dateEdit, 
     setDateEdit,
     errorSpecialCharacterUsername,

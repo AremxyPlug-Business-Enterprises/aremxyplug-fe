@@ -339,9 +339,14 @@ export const StarTimesReceipt= (Data) => {
                 
               </div>
             </div>
-            <div className="rounded-[8px] text-black bg-[#E2F3FF] mx-4 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]">
-              <p className={`text-[8px] text-center mx-auto w-[200px] md:text-[14px] 
-              md:w-[80%] lg:text-[16px] `}>
+             <div className={`bg-[#F2FAFF] w-[90%]   mx-auto p-[8px] my-5 flex justify-between 
+        items-center md:p-[9px] lg:p-[10px] rounded-[5px] lg:rounded-[10px]
+         ${
+                isDarkMode ? "bg-slate-800 " : "bg-[#F2FAFF]"
+              }`}>
+              <p  className={`text-[10px] leading-[13px] text-center
+             md:text-[14px] md:leading-[18px] lg:text-[14px]  font-semibold 
+             ${isDarkMode ? "text-white" : "text-black"}`}>
                 Earn free points on every successful transactions, redeem your
                 earned points to real money, withdrawn to your bank account
                 instantly.
@@ -362,7 +367,14 @@ export const StarTimesReceipt= (Data) => {
               onClick={() => {
                 handleSaveAsPDFClick();
               }}
-              className={`bg-[#ffffff] border-[1px] w-[111px] border-[#0003] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+              className={` border-[1px] w-[111px]
+                   border-[#0003] flex justify-center 
+                   items-center  cursor-pointer text-[12px]
+                    font-extrabold h-[40px] rounded-[6px] 
+                    md:w-[25%] md:rounded-[8px] md:text-base
+                     lg:w-[163px] lg:h-[38px] lg:my-[2%]
+                     ${isDarkMode ? "bg-black border-[0.2px] text-white border-[#04177f]" 
+                      : "text-black bg-white border-[0.2px] border-black"}`}
             >
               Save as PDF
             </button>

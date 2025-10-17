@@ -174,10 +174,13 @@ import { Link } from "react-router-dom";
               
                 <button onClick={()=> {handleReceipt()}}
                 style={{boxShadow : '0px 0px 2.0368096828460693px 0px #00000040'}} 
-                className={`border-[1px]  w-[111px] lg:w-[200px] md:w-[99px]
-                   h-[40px] md:h-[24px] lg:h-[42px] lg:my-[2%] flex justify-center
-                    items-center cursor-pointer text-[12px] md:text-[12px] lg:text-[16px]
-                     font-semibold rounded-[6px] md:rounded-[7px] lg:rounded-[12px]`}
+                  className={` border-[1px] w-[111px]
+                   border-[#0003] flex justify-center 
+                   items-center  cursor-pointer text-[12px]
+                    font-extrabold h-[40px] rounded-[6px] 
+                    md:w-[25%] md:rounded-[8px] md:text-base
+                     lg:w-[163px] lg:h-[38px] lg:my-[2%]
+                     ${isDarkMode ? "bg-black border-[0.2px] text-white border-[#04177f]" : "text-black bg-white border-[0.2px] border-black"}`}
                 >
                   Receipt
                 </button>

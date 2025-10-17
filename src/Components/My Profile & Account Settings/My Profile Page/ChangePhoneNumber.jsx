@@ -88,7 +88,7 @@ const VerifyPopUpHandler =async()=> {
       const FailedHandler= async(Error)=> {
         if(Error === "Server error" ){
      setVerificationPinError(true);
-        }else if(Error  === "Network error" || Error === "user error"){
+        }else if(Error  === "Network error" || Error === "User error"){
         alert("Kindly check your internet connection.")
       }else if(Error === "unauthorised"){
       await PostFunction("change-phone/update",
@@ -140,7 +140,7 @@ const VerifyPopUpHandler =async()=> {
       if(ErrorType === "Server error" ){
    //  setVerificationPinError(true)
    alert("Failed to process your request, please try again later.")
-      }else if(ErrorType  === "Network error" || ErrorType === "user error"){
+      }else if(ErrorType  === "Network error" || ErrorType === "User error"){
         alert("Kindly check your internet connection.")
       }else if(ErrorType === "unauthorised"){
      await PostFunction("change-phone",

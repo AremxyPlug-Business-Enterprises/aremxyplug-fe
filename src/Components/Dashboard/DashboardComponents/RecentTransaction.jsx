@@ -6,8 +6,10 @@ import { ContextProvider } from "../../Context";
 import { Calender } from "./Calender";
 import styles from "./component.module.css";
 import TransactionHistory from "./TransactionHistory";
+import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 
 export const RecentTransaction = ({transactionResponse, transactionHistoryError, loading}) => {
+  const Data = GetLocalStorage()
   const { toggleSideBar, isDarkMode , dateEdit} = useContext(ContextProvider);
   const [calender, setCalender] = useState(false);
  const [stateDateEdit, setStateDateEdit] = useState("Filter By Date")
@@ -24,7 +26,7 @@ export const RecentTransaction = ({transactionResponse, transactionHistoryError,
        <div className="flex justify-between gap-[5.3px] 
         md:gap-[17.75px] lg:gap-[31px] w-[100%] ">
       <div
-        className={`${
+        className={`  h-[35px] lg:h-[40px]  ${
           toggleSideBar
             ? "lg:gap-[px] lg:text-[20px] md:justify-between"
             : "md:justify-between lg:text-[23px]"
@@ -33,24 +35,27 @@ export const RecentTransaction = ({transactionResponse, transactionHistoryError,
         justify-between md:my-[5%] md:text-[20px] md:gap-[10px] `}
       >
         <div
-          className={`relative cursor-pointer 
+          className={`relative cursor-pointer h-[100%]
            ${stateDateEdit !== "Filter By Date" ? "w-[20%]" : "w-[25%]"}
              ${styles.filter} ${
             isDarkMode ? "border" : ""
           } flex items-center gap-[1px] px-[2px] rounded-[3px] md:px-[8px]`}
         >
+          
           <p   onClick={() => {
+            if(Data?.ConfirmAcc === "true"){
                 if(calender === false){
                 setCalender(true);
                 }else{
                   setCalender(false)
                 }
+              }
               }}
-  className={` md:text-[9.16px] text-center
+  className={` md:text-[9.16px] text-center py-[2px]
                    md:font-semibold text-[8px] font-extrabold lg:text-base
                     lg:font-extrabold ${isDarkMode ? "text-white": "text-[#04177f]"}`}>
                        { stateDateEdit}
-                       </p>
+      </p>
                      
           <img
             className="w-[15px] h-[15px] md:w-[17px] md:h-[17px] lg:w-[20px] lg:h-[20px]"
@@ -59,9 +64,11 @@ export const RecentTransaction = ({transactionResponse, transactionHistoryError,
           />
 
           {calender && (
-                   <div className="absolute  bg-white rounded-[15px] 
-                   md:mt-[40px] w-full h-auto p-2
-                   lg:mt-[55px]  flex flex-col gap-[10px] font-[400]">
+                   <div className={`absolute rounded-[20px] 
+                   md:mt-[40px] w-[300px] h-auto p-2   border-[0.2px]
+                   lg:mt-[55px]  flex flex-col gap-[10px] font-[400]
+                    ${isDarkMode ? "bg-black text-white  border-white" 
+                    : "bg-white text-black border-gray-300"}`}>
                      {" "}
                      <Calender />
                      {" "}
@@ -70,9 +77,10 @@ export const RecentTransaction = ({transactionResponse, transactionHistoryError,
                         setStateDateEdit(dateEdit?.slice(0,10))
                        }}
                      className="flex justify-center 
-                     items-center w-[300px]">
+                     items-center w-[270px]">
                        <button 
-                       className={`w-full bg-blue-900 py-[10px]  rounded-[15px]
+                       className={`w-full bg-blue-900 py-[15px] text-[12px] md:text-[14px] font-[500] 
+                         rounded-[15px]
                          ${isDarkMode ? "text-white bg-black border-[0.2px] border-white" :
                           "text-white bg-blue-900"}`}>
                        Done
@@ -89,8 +97,8 @@ export const RecentTransaction = ({transactionResponse, transactionHistoryError,
               }}
   className={`${
               isDarkMode ? "border" : "bg-[#04177f] text-center text-align"
-            } text-white  rounded-[7px]  w-[20%]
-              py-[5px] flex items-center cursor-pointer
+            } text-white  rounded-[7px]  w-[20%] h-[100%]
+             flex items-center cursor-pointer py-[2px]
              justify-center md:rounded-[10px]  md:py-[8px] 
              g:rounded-[13px] 
              lg:py-[10px]  md:text-[9.16px] px-[5px]
@@ -106,8 +114,8 @@ export const RecentTransaction = ({transactionResponse, transactionHistoryError,
              className={`${
               isDarkMode ? "border" : "bg-[#04177f]"
             } text-white  w-full text-center
-             rounded-[7px]  py-[5px] flex items-center justify-center
-              md:rounded-[10px]  md:py-[8px] px-[5px]
+             rounded-[7px] py-[2px] flex items-center justify-center
+              md:rounded-[10px]  md:py-[8px] px-[5px] h-[100%]
               lg:rounded-[13px] lg:py-[10px] lg:px-[18px]
                md:text-[9.16px] md:font-semibold lg:text-base 
                lg:font-extrabold`}
@@ -121,8 +129,8 @@ export const RecentTransaction = ({transactionResponse, transactionHistoryError,
           <p
           className={`${
               isDarkMode ? "border" : "bg-[#04177f]"
-            } text-white  w-full text-center
-             rounded-[7px]  py-[5px] flex items-center justify-center
+            } text-white  w-full text-center py-[2px] h-[100%]
+             rounded-[7px]   flex items-center justify-center
               md:rounded-[10px]  md:py-[8px] px-[5px]
               lg:rounded-[13px] lg:py-[10px] lg:px-[18px]
                md:text-[9.16px] md:font-semibold lg:text-base 
@@ -136,8 +144,8 @@ export const RecentTransaction = ({transactionResponse, transactionHistoryError,
           flex justify-center items-center`}>
           <p  className={`${
               isDarkMode ? "border" : "bg-[#04177f]"
-            } text-white  w-full text-center
-             rounded-[7px]  py-[5px] flex items-center justify-center
+            } text-white  w-full text-center py-[2px] h-[100%]
+             rounded-[7px]  flex items-center justify-center
               md:rounded-[10px] md:px-[7px] md:py-[8px] px-[5px]
               lg:rounded-[13px] lg:py-[10px] lg:px-[18px]
                md:text-[9.16px] md:font-semibold lg:text-base 

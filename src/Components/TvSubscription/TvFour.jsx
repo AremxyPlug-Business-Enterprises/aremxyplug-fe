@@ -783,7 +783,10 @@ const Decoders  = [
         <div className="flex flex-col gap-[20px] md:gap-0">
           <div className="flex flex-col md:flex-row gap-[20px] md:gap-[12px] lg:gap-[22px] md:my-2 lg:my-4">
             <div className="relative flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
-              <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] md:font-[600] font-[400]">
+              <label htmlFor="decoderType" 
+               className={` ${isDarkMode ? "text-white" : "text-black"} text-[14px] lg:text-[17px]
+                       md:text-[13px]
+                      md:font-[600] font-[400`}>
                 Confirm Decoder Type</label>
               {/* <button className="border-[0.23px] lg:border-[0.4px] w-full md:w-1/2 h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C]">Showmax</button> */}
               <div onClick ={decoderDropdown} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.5px]  sm:p-3 sm:text-lg relative flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
@@ -792,9 +795,7 @@ const Decoders  = [
         ? "bg-black text-white border !border-white"
         : "border border-[#0003] hover:bg-[#EDEAEA] border-[#9C9C9C] text-[#7C7C7C]"
     }
-  `}
-   >
-                {showMaxDecoderType}
+  `}>  {showMaxDecoderType}
                 <img className="absolute left-[90%] lg:left-[94%] self-center align-middle decdrop md:h-[14.038px] md:w-[14.038px] 
       lg:h-[24px] lg:w-[24px] w-[14px] h-[16px]" src={arrowDown} alt="" />
               </div>
@@ -842,7 +843,10 @@ const Decoders  = [
             </div>
 
             <div className="relative flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
-              <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] md:font-[600] font-[400]">
+              <label htmlFor="decoderType" 
+               className={` ${isDarkMode ? "text-white" : "text-black"} text-[14px] lg:text-[17px]
+                       md:text-[13px]
+                      md:font-[600] font-[400`}>
                 Select Package</label>
 
               <div onClick={packageDropdown} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.5px] sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
@@ -898,7 +902,10 @@ const Decoders  = [
           <div className="flex flex-col md:flex-row gap-[20px] md:gap-[12px lg:gap-[22px]] md:my-2 lg:my-4">
            
             <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
-              <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] md:font-[600] font-[400]">
+              <label htmlFor="decoderType"
+                className={` ${isDarkMode ? "text-white" : "text-black"} text-[14px] lg:text-[17px]
+                       md:text-[13px]
+                      md:font-[600] font-[400`}>
                 Smart Card / IUC Number</label>
               <input type="tel"
                     value={showMaxSmartCard}
@@ -946,7 +953,10 @@ const Decoders  = [
           </div>
           <div className="flex flex-col md:flex-row gap-[20px] md:gap-[12px] lg:gap-[22px] md:my-2 lg:my-4">
             <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
-              <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] md:font-[600] font-[400]">
+              <label htmlFor="decoderType"
+                className={` ${isDarkMode ? "text-white" : "text-black"} text-[14px] lg:text-[17px]
+                       md:text-[13px]
+                      md:font-[600] font-[400`}>
                 Phone Number</label>
               <input id="val" value={showMaxMobileNumber}
                 onChange={handleShowmaxMobileNumberChange}
@@ -963,7 +973,8 @@ const Decoders  = [
                 
                    })}
                    placeholder="XXX XXXX XXXX"
-                type="tel" maxLength={11} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[600] leading-[10.4px] md:text-[13px] md:leading-[12.206px] 
+                type="tel" maxLength={11} 
+                className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[600] leading-[10.4px] md:text-[13px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] self-center ${
       isDarkMode 
         ? "bg-black text-white border border-white" 
@@ -973,7 +984,10 @@ const Decoders  = [
                 {errors.ShowMaxMobileNumber}</p>}
             </div>
             <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
-              <label htmlFor="Email" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] font-[400] md:font-[600]">
+              <label htmlFor="Email"
+                className={` ${isDarkMode ? "text-white" : "text-black"} text-[14px] lg:text-[17px]
+                       md:text-[13px]
+                      md:font-[600] font-[400`}>
                 Email</label>
               <input value={showMaxEmail}
               type="email" onChange={handleTvEmail}
@@ -997,7 +1011,10 @@ const Decoders  = [
           </div>
           <div className="flex flex-col md:flex-row gap-[20px] md:gap-[12px] lg:gap-[22px] md:my-2 lg:my-4">
             <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
-              <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] font-[400] md:font-[600]">
+              <label htmlFor="decoderType" 
+               className={` ${isDarkMode ? "text-white" : "text-black"} text-[14px] lg:text-[17px]
+                       md:text-[13px]
+                      md:font-[600] font-[400`}>
                 Amount</label>
 
 
@@ -1020,7 +1037,10 @@ const Decoders  = [
             </div>
 
             <div className="flex relative flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
-              <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] font-[400] md:font-[600]">
+              <label htmlFor="decoderType"
+                 className={` ${isDarkMode ? "text-white" : "text-black"} text-[14px] lg:text-[17px]
+                       md:text-[13px]
+                      md:font-[600] font-[400`}>
                 Payment Method</label>
               <div onClick={methodDropDown} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px] sm:p-3 sm:text-lg flex items-center justify-between border-[0.23px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] ${
       isDarkMode 

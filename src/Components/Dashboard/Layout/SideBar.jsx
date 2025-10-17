@@ -68,7 +68,7 @@ export const SideBar = ({ fullname, userId, BvnVerify, NinVerify }) => {
   
   const Username =  UserData !== null && UserData !== undefined ? UserData?.toString()?.toLowerCase()  : "";
 const firstCharacter = Username?.charAt(0);
-const alphabetPlacementIndex = alphabetsName?.indexOf(firstCharacter)
+const alphabetPlacementIndex = alphabetsName?.indexOf(firstCharacter);
 let assignBgByUsername ;//default Value/ Image
 if(alphabetPlacementIndex >= 0 && alphabetPlacementIndex < 3){
    assignBgByUsername = "bg-[#228be6] bg-opacity-10 p-5 rounded-full"

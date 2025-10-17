@@ -208,7 +208,7 @@ export default function IdVerification(Data) {
              setLoading(true)
          const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
         
-         if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
+         if(newToken !== "" && localStorage.getItem("authorisedLogin")){
              //console.log(newToken)
           localStorage.setItem("authorisedLogin", newToken);
           
@@ -248,7 +248,7 @@ export default function IdVerification(Data) {
     // eslint-disable-next-line
   }, [Data]);
  // console.log(Data);
-console.log( verificationResponse?.data?.data?.address)
+
   
 
   return (
@@ -835,12 +835,15 @@ border-[0.4px]  border-[#7E7E7E] opacity-50 cursor-pointer ${isDarkMode ? "bg-bl
         {idCustomerQuery && (
           <Modal>
              <div className='h-[100%] flex flex-col w-[100%] items-center justify-center  pb-[30px]'>
-            <div className='idVerify  flex  flex-col bg-white shadow-[0px_0px_8.3274px_0px_rgba(0 0 0,0.25)] rounded-[8px] 
+            <div className={`idVerify  flex  flex-col  shadow-[0px_0px_8.3274px_0px_rgba(0 0 0,0.25)] rounded-[8px] 
              shadow-[0px_0px_8.3274px_0px_rgba(0 0 0,0.25)] md:rounded-[11.736px]  lg:rounded-[20px]   md:w-[55%]
             md:shadow-[0px_0px_11.73611px_0px_rgba(0,0,0,0.25) lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] 
             justify-center lg:justify-normal items-center  px-[18px] md:px-[30px] md:h-[550px]   
             h-[430px]  md:mx-[0px] mx-[19px]  gap-[18px] md:gap-[40px] lg:gap-[70px] 
-            overflow-y-scroll md:py-[30px] lg:pt-[30px]  md:pt-[180px] pt-[210px]'>
+            overflow-y-scroll md:py-[30px] lg:pt-[30px]  md:pt-[180px] pt-[210px]
+             ${
+              isDarkMode ? "bg-black border border-white" : "bg-white"
+            }`}>
            
           <div className='flex flex-col lg:gap-[25px] gap-[10px] md:gap-[15px] items-center'>
        <p className='font-[400] text-[13px] text-center leading-[16.206px] 

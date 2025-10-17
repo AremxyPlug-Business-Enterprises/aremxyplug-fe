@@ -27,7 +27,6 @@ const UserEmail = JSON.parse(localStorage.getItem("userEmail"));
  const idVerification = localStorage.getItem("idVerification");
  const bvnVerification = localStorage.getItem("bvnVerification");
  const userTransactionOtp = localStorage.getItem("userTransactionOtp");
-
    const AccCreated = localStorage.getItem("AccCreated");
   if(idVerification && bvnVerification && !AccCreated){
  ConfirmId = localStorage.getItem("idVerification");

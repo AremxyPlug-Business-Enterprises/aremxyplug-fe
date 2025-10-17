@@ -455,7 +455,7 @@ const GetBalance = async () => {
     { examType: "NECO", id: 1 },
     { examType: "WAEC", path: "/WaecEducationPin", id: 2 },
     { examType: "NABTEB", path: "/NabtebEducationPin", id: 3 },
-    { examType: "JAMB", path: "/JambEducationPin", id: 4 },
+  //  { examType: "JAMB", path: "/JambEducationPin", id: 4 },
   ];
   function necoExamDropDown() {
     setNecoExamActive(!necoExamActive);
@@ -587,7 +587,7 @@ const GetBalance = async () => {
           );
         } else if (ErrorType === "Server error") {
           setPurchaseEduErrorType(
-            "Failed to process your request, try again some other time"
+            "Server error: Purchase Failed"
           );
           setNecoFailedTransaction(true);
           setNecoEducationConfirm(false);
@@ -642,7 +642,9 @@ const GetBalance = async () => {
           "The server is currently experiencing a downtime, try again some other time."
         );
       } else {
+        if(ErrorType !== "Bad request"){
         alert("An unexpected has occured try again some other time.");
+        }
       }
     };
     await VerifyTransPin(
@@ -753,9 +755,9 @@ console.log(necoEduResponse?.data?.data?.Amount);
                 <div className="relative flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
                   {/* header */}
                   <h2
-                    className={`md:font-semibold font-normal text-sm lg:text-base md:text-[13px] ${
-                      isDarkMode ? "text-white" : "text-[#7E7E7E]"
-                    }`}
+                    className={` ${isDarkMode ? "text-white" : "text-black"} text-[14px] lg:text-[17px]
+                       md:text-[13px]
+                      md:font-[600] font-[400`}
                   >
                     Confirm Exam Type
                   </h2>
@@ -827,9 +829,9 @@ console.log(necoEduResponse?.data?.data?.Amount);
                 <div className="relative flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
                   {/* header */}
                   <h2
-                    className={`md:font-semibold font-normal text-sm md:text-[13px] lg:text-base ${
-                      isDarkMode ? "text-white" : "text-[#7E7E7E]"
-                    }`}
+                    className={` ${isDarkMode ? "text-white" : "text-black"} text-[14px] lg:text-[17px]
+                       md:text-[13px]
+                      md:font-[600] font-[400`}
                   >
                     Quantity
                   </h2>
@@ -932,9 +934,9 @@ console.log(necoEduResponse?.data?.data?.Amount);
                 {/* LeftSide */}
                 <div className=" container-phone flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2 ">
                   <h2
-                    className={`md:font-semibold font-normal text-sm md:text-[13px] lg:text-base ${
-                      isDarkMode ? "text-white" : "text-[#7E7E7E]"
-                    }`}
+                     className={` ${isDarkMode ? "text-white" : "text-black"} text-[14px] lg:text-[17px]
+                       md:text-[13px]
+                      md:font-[600] font-[400`}
                   >
                     Phone Number
                   </h2>
@@ -981,9 +983,9 @@ console.log(necoEduResponse?.data?.data?.Amount);
                 {/* right-side */}
                 <div className="flex flex-col relative gap-[3px] lg:gap-[5px] w-full md:w-1/2">
                   <h2
-                    className={`md:font-semibold font-normal text-sm md:text-[13px] lg:text-base ${
-                      isDarkMode ? "text-white" : "text-[#7E7E7E]"
-                    }`}
+                     className={` ${isDarkMode ? "text-white" : "text-black"} text-[14px] lg:text-[17px]
+                       md:text-[13px]
+                      md:font-[600] font-[400`}
                   >
                     Email
                   </h2>
@@ -1022,9 +1024,9 @@ console.log(necoEduResponse?.data?.data?.Amount);
                 <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
                   {/* header */}
                   <label
-                    className={`md:font-semibold font-normal  text-sm md:text-[13px]  lg:text-base ${
-                      isDarkMode ? "text-white" : "text-[#7E7E7E]"
-                    }`}
+                      className={` ${isDarkMode ? "text-white" : "text-black"} text-[14px] lg:text-[17px]
+                       md:text-[13px]
+                      md:font-[600] font-[400`}
                   >
                     Amount
                   </label>
@@ -1048,9 +1050,9 @@ console.log(necoEduResponse?.data?.data?.Amount);
                 <div className="flex flex-col relative gap-[3px] lg:gap-[5px] w-full md:w-1/2">
                   {/* header */}
                   <label
-                    className={`md:font-semibold font-normal text-sm md:text-[13px] lg:text-base ${
-                      isDarkMode ? "text-white" : "text-[#7E7E7E]"
-                    }`}
+                    className={` ${isDarkMode ? "text-white" : "text-black"} text-[14px] lg:text-[17px]
+                       md:text-[13px]
+                      md:font-[600] font-[400`}
                   >
                     Payment Method
                   </label>
@@ -1762,7 +1764,7 @@ console.log(necoEduResponse?.data?.data?.Amount);
                 {/* <p className="text-center text-[#F95252]  lg:text-base lg:leading-[20.8px] font-semibold text-xs md:text-[13px] md:leading-[20px] leading-[16px]">
                   An unexpected error has occurred, please try again.
                 </p> */}
-                <p className={`text-sm mb-8 ${isDarkMode ? "text-white":"text-gray-600"}`}>
+                <p className="text-sm text-red-500 font-[600] mb-8">
                 {purchaseEduErrorType}
               </p>
                 <div className="flex gap-[10px] justify-between w-full px-[10px]"

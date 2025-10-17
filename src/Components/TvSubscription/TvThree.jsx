@@ -626,6 +626,7 @@ const VerifyPinHandler = async () => {
  //Function to help Verify users account
  const VerifyUserAccount = async(UserTvSubscription)=> {
   setStarTimesVerifyResponse({});
+  setStateInvalidDecoderNumber(false);
      const body = {
             decoder_type : starTimesDecoderType.toLowerCase(),
            iuc_number : UserTvSubscription
@@ -641,13 +642,91 @@ const VerifyPinHandler = async () => {
   setStarTimesLoading,
    bodyToJson,
    SuccessHandler,
-   (ErrorType)=> {
+   async (ErrorType)=> {
     if(ErrorType === "unauthorised"){
     return setSessionModal(true)
+    }else if(ErrorType === "Server error"){
+            //A server error returns only if the auth Token
+            //has been retrieved then communication with the server occurs
+            //which wouldn't have returned "Server error", if the 
+            //"unauthorised" ErrorType occured as a result of authToken
+            //being expired and not retrieved through cookies
+            //  but 401 returning as error cause.
+            //hence we are running again in the ErrorType "Server error" statememt
+            //from the unauthorization which was the error from
+            //inception or beginning.
+            //Not also leaving handling the other ErrorTypes the UI 
+            //could be vulnerable to on re-try on server error.
+           await PostFunction("bills/verify", setStarTimesLoading, 
+      bodyToJson,
+      SuccessHandler, 
+     (ErrorType)=> {
+      if(ErrorType === "Server error"){
+        alert("Failed to process your request, try again some other time.")
+      }else if(ErrorType === "Network error" || ErrorType === "User error"
+         ){
+          alert("Kindly check your internet connection")
+         }
+     },
+       setStarTimesVerifyResponse)
+       //2.Handlingt the ErrorType "Server error" on the general conditional statement
+          
+          }else if(ErrorType === "Network error" || ErrorType === "User error"){
+          //3. Handling the ErrorType "Network error, User error" for the general "unauthorised" 
+          //function
+          alert("Kindly check your internet connection.")
+          }
+    
+       }, setStarTimesVerifyResponse);
+      //2. Handling the server for the general conditional 
+            // statement under the failedHandler then re-running 
+      }else if(ErrorType === "Server error"){
+             await PostFunction("bills/verify", setStarTimesLoading, 
+      bodyToJson,
+      SuccessHandler, 
+      async(ErrorType)=> {
+       if(ErrorType === "Server error"){
+         alert("Failed to process your request, try again some other time.")
+       }else if(ErrorType === "unauthorised"){
+        //The ErrorType "unauthorised" can occur on trying to
+        //re-run the code due aforementioned reason
+            await PostFunction("bills/verify", setStarTimesLoading, 
+      bodyToJson,
+      SuccessHandler, 
+     (ErrorType)=> {
+      if(ErrorType==="unauthorised"){
+        setSessionModal(true);
+      }else if(ErrorType === "Server error"){
+       alert("Failed to process your request, try again some other time")
+      }else if(ErrorType === "Network error" || ErrorType === "User error"){
+        alert("Kindly check your internet connection")
+      }else{
+        alert("An unexpected error has occured.")
+      }
+     },
+       setStarTimesVerifyResponse)
+       }else if(ErrorType === "Network error" || ErrorType === "User error") {
+    //Handling the network error for the server error of the general function
+    alert("Kindly check your internet connection.")
+       }else{
+        //When an alien errorType occured
+        alert("An unexpected error has occured, try again some other time.")
+       }
+      },
+       setStarTimesVerifyResponse)
+       //3.Handling the ErrorType "Network error, User error"
+    }else if(ErrorType === "Network error" || ErrorType === "User error"){
+      alert("Kindly check your internet connection")
+    }  else if(ErrorType === "Bad request"){
+          setStateInvalidDecoderNumber(true)
+         }else {
+      //4. Handling the "alien" ErrorType.
+       alert("An unexpected error has occured, try again some other time.")
     }
-   },
-   setStarTimesVerifyResponse )
-  }}
+ 
+  
+  }  
+  
      
  
      if(UserTvSubscription?.length === 10 && 
@@ -737,7 +816,10 @@ window.addEventListener("online", ()=> {
         <div className="flex flex-col gap-[20px] md:gap-0">
           <div className="flex flex-col md:flex-row gap-[20px] md:gap-[12px] lg:gap-[22px] md:my-2 lg:my-4">
             <div className="relative flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
-              <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] font-[400] md:font-[600]">
+              <label htmlFor="decoderType" 
+                className={` ${isDarkMode ? "text-white" : "text-black"} text-[14px] lg:text-[17px]
+                       md:text-[13px]
+                      md:font-[600] font-[400`}>
                 Confirm Decoder Type</label>
               {/* <button className="border-[0.23px] lg:border-[0.4px] w-full md:w-1/2 h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C]">StarTimes</button> */}
               <div onClick={decoderDropdown} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.5px] sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
@@ -787,7 +869,10 @@ window.addEventListener("online", ()=> {
             </div>
 
             <div className="relative flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
-              <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] md:font-[600] font-[400]">
+              <label htmlFor="decoderType" 
+               className={` ${isDarkMode ? "text-white" : "text-black"} text-[14px] lg:text-[17px]
+                       md:text-[13px]
+                      md:font-[600] font-[400`}>
                 Select Package</label>
 
               <div onClick ={packageDropdown} className={`mt-2 md:mt-0 
@@ -853,7 +938,10 @@ window.addEventListener("online", ()=> {
           </div>
           <div className="flex flex-col md:flex-row gap-[20px] md:gap-[12px lg:gap-[22px]] md:my-2 lg:my-4">
             <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
-              <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] font-[400] md:font-[600]">
+              <label htmlFor="decoderType" 
+                className={` ${isDarkMode ? "text-white" : "text-black"} text-[14px] lg:text-[17px]
+                       md:text-[13px]
+                      md:font-[600] font-[400`}>
                 Smart Card / IUC Number</label>
               <input type="tel"
               maxLength ={10}
@@ -880,7 +968,10 @@ window.addEventListener("online", ()=> {
             
 
             <div className="flex flex-col relative gap-[3px] lg:gap-[5px] w-full md:w-1/2">
-              <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] font-[400] md:font-[600]">
+              <label htmlFor="decoderType"
+                className={` ${isDarkMode ? "text-white" : "text-black"} text-[14px] lg:text-[17px]
+                       md:text-[13px]
+                      md:font-[600] font-[400`}>
                 Card Name</label>
               <input type="text"
                placeholder="Input card number to get verified name"
@@ -901,7 +992,10 @@ window.addEventListener("online", ()=> {
           </div>
           <div className="flex flex-col md:flex-row gap-[20px] md:gap-[12px] lg:gap-[22px] md:my-2 lg:my-4">
             <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
-              <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] font-[400] md:font-[600]">
+              <label htmlFor="decoderType" 
+               className={` ${isDarkMode ? "text-white" : "text-black"} text-[14px] lg:text-[17px]
+                       md:text-[13px]
+                      md:font-[600] font-[400`}>
                 Phone Number</label>
               <input id="val" value={starTimesMobileNumber}
                 onInput={(e =>{
@@ -927,7 +1021,10 @@ window.addEventListener("online", ()=> {
                 {errors.starTimesMobileNumber}</p>}
             </div>
             <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
-              <label htmlFor="Email" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] font-[400] md:font-[600]">
+              <label htmlFor="Email" 
+               className={` ${isDarkMode ? "text-white" : "text-black"} text-[14px] lg:text-[17px]
+                       md:text-[13px]
+                      md:font-[600] font-[400`}>
                 Email</label>
               <input type="email" onChange={handleTvEmail} placeholder="example@gmail.com"
                required className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[14px] sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
@@ -943,8 +1040,10 @@ window.addEventListener("online", ()=> {
           </div>
           <div className="flex flex-col md:flex-row gap-[20px] md:gap-[12px] lg:gap-[22px] md:my-2 lg:my-4">
             <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
-              <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px]
-               md:text-[13px] font-[400] md:font-[600]">
+              <label htmlFor="decoderType"
+                className={` ${isDarkMode ? "text-white" : "text-black"} text-[14px] lg:text-[17px]
+                       md:text-[13px]
+                      md:font-[600] font-[400`}>
                 Amount</label>
 
 
@@ -967,10 +1066,18 @@ window.addEventListener("online", ()=> {
             </div>
 
             <div className="flex relative flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
-              <label htmlFor="decoderType" className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] font-[400] md:font-[600]">
+              <label htmlFor="decoderType" 
+               className={` ${isDarkMode ? "text-white" : "text-black"} text-[14px] lg:text-[17px]
+                       md:text-[13px]
+                      md:font-[600] font-[400`}>
                 Payment Method</label>
-              <div onClick={methodDropDown} className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px]  sm:p-3 sm:text-lg flex items-center justify-between border-[0.23px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] ${
-       isDarkMode 
+              <div onClick={methodDropDown}
+               className={`mt-2 md:mt-0 rounded-[10px] 
+                md:rounded-0 p-[20px] md:p-0 text-[13px] 
+                 sm:p-3 sm:text-lg flex items-center justify-between
+                  border-[0.23px] lg:border-[0.4px] w-full h-[40.927px]
+                   md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px]
+                    ${ isDarkMode 
        ? "bg-black text-white border border-white" 
        : " border-[#9C9C9C]"
    }`}     >

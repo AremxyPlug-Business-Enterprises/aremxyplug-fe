@@ -65,7 +65,7 @@ const TransactionHistory = ({
         ? "electric-sub"
         : product === "Virtual Account"
         ? "deposit"
-        : product === "Money Transfer"
+        : product === "Internal Transfer"
         ? "transfer"
         : "";
 
@@ -218,7 +218,7 @@ const FormatTime =(DateValue)=> {
                               ? "/AirtimeTransReceipt"
                               : transaction?.product === "Data Top-up"
                               ? "/DataTransReceipt"
-                              : transaction?.product === "Money Transfer"
+                              : transaction?.product === "Internal Transfer"
                               ? "/TransferReceipt"
                               : transaction?.product === "Virtual Account"
                               ? "/VirtualAccountReceipt"

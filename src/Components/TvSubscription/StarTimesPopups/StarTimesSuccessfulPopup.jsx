@@ -3,8 +3,7 @@ import "../../TvSubscription/TvSubscription.css";
 import { useContext } from "react";
 import { ContextProvider } from "../../Context";
 import { Modal } from "../../Screens/Modal/Modal";
-import { Link } from "react-router-dom";
-import styles from "../../AirTimePage/AirtimeVtu.module.css";
+
 
 
  const StarTimesSuccessfulPopup = ({handleReceivedData, userVerifiedName}) => {
@@ -14,7 +13,6 @@ import styles from "../../AirTimePage/AirtimeVtu.module.css";
      setStarTimesSuccessful,
      toggleSideBar,
      starTimesMobileNumber,
-     flagResult,
     // cardName,
      starTimesSmartCard,
      starTimesEmail,
@@ -83,7 +81,7 @@ import styles from "../../AirTimePage/AirtimeVtu.module.css";
             <div className="flex mt-4 flex-col gap-2 lg:gap-4">
             <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between 
             lg:text-[15px] font-[500]">
-                    <span className="text-[#7C7C7C]">Decoder Type</span>
+                    <span className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Decoder Type</span>
                     <div className="flex">
                       <img src="./Images/TvSubscription/startimesIcon.svg" alt="" className="md:w-[74px] md:h-[27px] lg:w-[90px] lg:h-[35px]" />
                       <span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>StarTimes</span>
@@ -92,32 +90,32 @@ import styles from "../../AirTimePage/AirtimeVtu.module.css";
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between 
             lg:text-[15px] font-[500]">
-                    <span className="text-[#7C7C7C]">Package</span>
+                    <span className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Package</span>
                     <span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>{selectedOptionStarTimes}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between 
             lg:text-[15px] font-[500]">
-                    <span className="text-[#7C7C7C]">Smartcard / IUC Number</span>
+                    <span className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Smartcard / IUC Number</span>
                     <span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>{starTimesSmartCard}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between 
             lg:text-[15px] font-[500]">
-                    <span className="text-[#7C7C7C]">Card Name</span>
+                    <span className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Card Name</span>
                     <span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>{userVerifiedName}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between 
             lg:text-[15px] font-[500]">
-                    <span className="text-[#7C7C7C]">Phone Number</span>
+                    <span className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Phone Number</span>
                     <span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>{starTimesMobileNumber}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between 
             lg:text-[15px] font-[500]">
-                    <span className="text-[#7C7C7C]">Email</span>
+                    <span className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Email</span>
                     <span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>{starTimesEmail}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between 
             lg:text-[15px] font-[500]">
-                    <span className="text-[#7C7C7C]">Payment Method</span>
+                    <span className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Payment Method</span>
                     <span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>{starTimesFlagResult}</span>
                 </div>
                 {/* <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between font-semibold lg:text-[15px]">
@@ -158,10 +156,13 @@ import styles from "../../AirTimePage/AirtimeVtu.module.css";
              
                 <button onClick={()=> handleReceipt()}
                 style={{boxShadow : '0px 0px 2.0368096828460693px 0px #00000040'}} 
-                className={`border-[1px]  w-[111px] lg:w-[200px] md:w-[99px]
-                   h-[40px] md:h-[24px] lg:h-[42px] lg:my-[2%] flex justify-center 
-                   items-center cursor-pointer text-[12px] md:text-[12px] 
-                   lg:text-[16px] font-semibold rounded-[6px] md:rounded-[7px] lg:rounded-[12px]`}
+               className={` border-[1px] w-[111px]
+                   border-[#0003] flex justify-center 
+                   items-center  cursor-pointer text-[12px]
+                    font-extrabold h-[40px] rounded-[6px] 
+                    md:w-[25%] md:rounded-[8px] md:text-base
+                     lg:w-[163px] lg:h-[38px] lg:my-[2%]
+                     ${isDarkMode ? "bg-black border-[0.2px] text-white border-[#04177f]" : "text-black bg-white border-[0.2px] border-black"}`}
                 >
                   Receipt
                 </button>

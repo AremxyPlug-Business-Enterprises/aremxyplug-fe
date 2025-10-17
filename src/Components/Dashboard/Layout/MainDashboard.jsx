@@ -50,7 +50,7 @@ export const MainDashboard = (Data) => {
 // const ImageLoadingExecution = useImageHook(DashBoardImages);
 
      const [loading, setLoading] = useState(false)
-    const [userPoints, setUserPoints] = useState(0);
+    const [userPoints, setUserPoints] = useState(null);
    
    
   
@@ -59,7 +59,7 @@ export const MainDashboard = (Data) => {
     dashLoading, bankNameState, accountNameState, accountNumberState,
     customerDetail, setDashLoading, setVirtualAccCreated, 
     setBankNameState, setAccountNameState, setAccountNumberState, 
-    twoStepVerificationSuccess,setTwoStepVerificationSuccess, 
+    twoStepVerificationSuccess,setTwoStepVerificationSuccess, setDateEdit,
     newBalance, setNewBalance
   } = useContext(ContextProvider);
   //const {account_no, bank_name, account_name} = virtualAccCreated;
@@ -184,24 +184,24 @@ if((clickedoption === "NGN")){
              setDashLoading(true)
          const newToken = error?.response?.headers.get("x-new-auth-token") ||error?.response?.headers["x-new-auth-token"];
         
-         if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
+         if(newToken !== "" && localStorage.getItem("authorisedLogin") ){
              console.log(newToken)
     localStorage.setItem("authorisedLogin", newToken);
-          if( localStorage.setItem("authorisedLogin")?.length > 1){
+     
            GenerateVirtualAccount();
              if(GenerateVirtualAccount){
                setDashLoading(false)
             }
-          }
+  
            }else{
       localStorage.setItem("getToken", newToken);
     
-        if( localStorage.getItem("getToken")?.length > 1){
+   
              GenerateVirtualAccount();
             if(GenerateVirtualAccount){
                setDashLoading(false)
             }
-          }
+         
         }
       }else{
       setDashLoading(false)
@@ -250,19 +250,16 @@ if((clickedoption === "NGN")){
              setBalanceLoading(true)
          const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
         
-         if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
+         if(newToken !== "" && localStorage.getItem("authorisedLogin") ){
              console.log(newToken)
           localStorage.setItem("authorisedLogin", newToken);
-          
-          if( localStorage.getItem("authorisedLogin")?.length > 1){
-            return GenerateAccountBalance();
-          }
+          return GenerateAccountBalance();
+      
            }else{
       localStorage.setItem("getToken", newToken);
        console.log(getToken);
-          if(localStorage.getItem("getToken")?.length > 1){
-            return GenerateAccountBalance();
-          }
+       return GenerateAccountBalance();
+          
       }}else{
         return setSessionModal(true);
       }
@@ -295,10 +292,23 @@ const ValueRef = useRef()
     ValueRef.current = Data;
     if(Data?.ConfirmAcc === "true"){
     GenerateAccountBalance();
+    setDateEdit((value)=>{
+      const valueReset = new Date()
+   const valueIsoFormat =
+     valueReset !== undefined || valueReset !== null ?
+        valueReset?.toLocaleString("sv-SE", {
+          timeZone : "Africa/Lagos",
+          hour12 : false
+        }) : value
+        return valueIsoFormat !== undefined ? valueIsoFormat?.slice(0,10) : ""
+    }) 
+  
+    
     }
     setNav();
     setSelected("NGN"); 
     setSelected2("NGN");
+    
    // HandleNetworkStatus()
   //    let resetInActivityTimer;
   //   const resetInactivityOnSession = ()=> {
@@ -324,54 +334,63 @@ const ValueRef = useRef()
        }
     //eslint-disable-next-line
    }, [])
-// window.addEventListener("online", ()=> {
-//   if(balanceValue?.length > 1 && 
-//     (balanceValue === "Check your internet connection" ||  balanceValue === "Your internet connection is quite unstable.")
-//   &&  Data?.ConfirmAcc === "true"){
-//     GenerateAccountBalance();
-//   }
-  
-// })
 
-  //Fetch Points
-   useEffect(() => {
+
+
+  const ExecutePointFunction = async()=> {
+  if(!navigator.onLine) return setUserPoints("Connection error.")
+ 
      const  successHandler = (response) => {
         if (!response?.data?.data) return;
         // console.log("fetch points succefully");
-   const available = response?.data?.data?.point?.available_points ?? 0;
+   const available = response?.data?.data?.point?.available_points ?? "Points refresh failed";
     setUserPoints(available);
      };
      const FailedHandler = (ErrorType) => {
       if(ErrorType === "unauthorised"){
       GetFunction("extra/point",
-         setLoading,  
+         setPointsLoading,  
          successHandler,
           (ErrorType)=> {
             if(ErrorType ==="Server error"){
              alert("Failed to retrieve points balance at the moment.")
             }else if(ErrorType === "unauthorised"){
-              if(Data?.ConfirmAcc === "false"){
-                return setSessionModal(true)
-              }
-            }
+             return setSessionModal(true)
+             }
           },
            ()=> {})
       }else if(ErrorType === "Network error" || ErrorType === "User error"){
-       setBalanceValue("Your internet connection is quite unstable.")
+       setUserPoints("Connection error")
       }else if(ErrorType === "Server error"){
-        alert("Failed to retrieve points balance at the moment.")
+        alert("Points refresh failed");
       }
      };
- 
-    
-       GetFunction("extra/point",
-         setLoading,  
+      await GetFunction("extra/point",
+         setPointsLoading,  
          successHandler,
           FailedHandler,
            ()=> {})
+       
+ }
+  //Fetch Points
+  const [pointsLoading, setPointsLoading] = useState(false)
+   useEffect(() => {
+ if(Data?.ConfirmAcc === "true"){
+      ExecutePointFunction();
+      }
         
            //eslint-disable-next-line
     }, []);
+
+    window.addEventListener("online", ()=> {
+  if((balanceValue === "Check your internet connection." ||  balanceValue === "Your internet connection is quite unstable.")
+  &&  Data?.ConfirmAcc === "true"){
+    GenerateAccountBalance();
+     ExecutePointFunction()
+  }
+
+  
+})
 // if(!ImageLoadingExecution) {
 //     return (
 // <div className ="h-[100%] w-[100%] items-center justify-center">
@@ -595,12 +614,21 @@ return (
                  )
                 // Fiat Wallets
               ) : (
+                 userPoints === "Connection error." ? (
+                 <p className=" text-[10px] leading-[16px] text-center
+                  lg:leading-[24px] font-[400] lg:font-[500] mt-[5px]">
+               {userPoints}
+                 </p>
+                 
+                  ) : (
                 <div
                   className={`${toggleSideBar ? "lg:pt-[7%]" : ""} ${
                     styles.viewBalance
                   }`}
                 >
-                  {visible ? (
+                
+                  { visible ? (
+                    
                     <span
                       className={` ${
                         toggleSideBar ? "lg:text-[19px]" : "lg:text-[37px]"
@@ -610,21 +638,22 @@ return (
                     </span>
                   ) : (
                      <span className="flex items-center text-[19px] leading-normal lg:text-[37px]">
-                      {loading === true ? (
+                      {pointsLoading === true ? (
                         <BalanceLoading/>
                       ): (
                     userPoints  !== null 
                     && userPoints !== undefined ? userPoints?.toLocaleString("en-NG", {
                       style : "currency",
                       currency : "NGN"
-                    }) : userPoints?.length > 1 ? Number(userPoints)?.toLocaleString("en-NG", {
+                    }) : userPoints?.length > 0 && Number(userPoints) !== isNaN ? Number(userPoints)?.toLocaleString("en-NG", {
                       style : "currency",
                       currency : "NGN"
-                    }) : userPoints
+                    }) :  ""
                       )}
                      </span>
             
                   )}
+                
                   <div onClick={visibilityHandler} className=" text-[#92ABFE]">
                     {visible ? (
                       <div className={`lg:text-[40px] ${styles.eye}`}>
@@ -637,7 +666,7 @@ return (
                     )}
                   </div>
                 </div>
-              )}
+              ))}
               {/* ==================== */}
               <div
                 className={`${toggleSideBar ? "lg:mt-[20%]" : ""} ${

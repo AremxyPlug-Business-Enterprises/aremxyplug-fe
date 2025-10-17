@@ -25,7 +25,6 @@ export const MainInputPinPop = ({fetchedResponse}) => {
        authenticationOpen
       } =
     useContext(ContextProvider);
-
   const [inputPin, setInputPin] = useState("");
   const [transactSuccessToOtherBank, setTransactSuccessToOtherBank] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -369,8 +368,8 @@ if(ErrorType === "Server error"){
       <AremxyMainSuccess
         transactSuccessToOtherBank={transactSuccessToOtherBank}
         setTransactSuccessToOtherBank={setTransactSuccessToOtherBank}
-        emailUsername={fetchedResponse?.data?.data?.data?.userDetails?.username}
-        userPhoneNumber={fetchedResponse?.data?.data?.data?.userDetails?.phone}
+        
+      
       />
     </div>
   );
