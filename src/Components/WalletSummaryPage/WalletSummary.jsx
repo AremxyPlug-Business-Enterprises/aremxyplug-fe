@@ -749,7 +749,7 @@ console.log(walletTransactionResponse?.data?.data?.data?.data?.total_outflow)
                         lg:text-[18px] lg:leading-[24px]
                           ${toggleSideBar ? "lg:text-[18px]" : ""}`}
                     >
-                      Total Inflows
+                      Total Deposits
                     </p>
                     <img
                       className="h-[10.3px] w-[10.3px] md:h-[18px] md:w-[18px] lg:w-[24px] lg:h-[24px]"
@@ -823,7 +823,7 @@ console.log(walletTransactionResponse?.data?.data?.data?.data?.total_outflow)
                           toggleSideBar ? "lg:text-[18px]" : ""
                         }`}
                     >
-                      Total Outflows
+                      Total Transfers
                     </p>
                     <img
                       className="h-[10.3px] w-[10.3px] md:h-[18px] md:w-[18px] lg:w-[24px] lg:h-[24px]"
