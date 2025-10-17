@@ -231,6 +231,8 @@ setDateEdit(()=> {
          ? passDataBalance?.data?.data?.data?.balance : "");
          }
          GetCategoryInformation()
+        }else{
+           setSalesOverview(null)
         }
      
 
@@ -626,9 +628,10 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
                       lg:text-[18px] lg:leading-[24px]">
                    
                    
-                    {selected === "NGN" && salesOverview?.data?.data?.data ?
+                    {selected === "NGN" &&  salesOverview?.data?.data?.data ?
            salesOverview?.data?.data?.data?.total_product
-            : `` } 
+            : salesOverview?.data?.data?.data === undefined && Data?.ConfirmAccc === "true" ? 
+            "" : "0" } 
                     </p>
                   </div>
     
@@ -653,7 +656,9 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
                       lg:text-[18px] lg:leading-[24px]">
                        {selected === "NGN" &&
                       salesOverview?.data?.data?.data ?
-                       salesOverview?.data?.data?.data?.total_quantity: "" }
+                       salesOverview?.data?.data?.data?.total_quantity:
+                        salesOverview?.data?.data?.data === undefined && Data?.ConfirmAccc === "true" ? 
+            "" : "0" }
                     
                           </p>
                   </div>
@@ -677,11 +682,14 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
                     </div>
                     <p className="text-center  text-[10px] leading-[13px] font-[500] 
                       lg:text-[18px] lg:leading-[24px]">
-                    {selected === "NGN"  ? salesOverview?.data?.data?.data ?
+                    {selected === "NGN"  ?
+                     salesOverview?.data?.data?.data  ?
             salesOverview?.data?.data?.data?.total_amount?.toLocaleString("en-NG", {
               style : "currency",
               currency : "NGN"
-            }) :   "₦"  : `${symbolValue}0.00`}
+            }) :  salesOverview?.data?.data?.data === undefined && Data?.ConfirmAccc === "true" ? 
+            "₦" : "₦0.00"
+               : `${symbolValue}0.00`}
            
                     </p>
                   </div>
@@ -822,7 +830,7 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
       </div>
  
     </div>
-))) : (loading === false && productByCategories?.length > 0) && (
+))) : (loading === false && (productByCategories?.length < 1 || salesOverview === null)) && (
      <img className="lg:w-full lg:h-[456px] flex self-center w-[" src={NoRecordImage} alt="No record found"/> 
             ))}
           

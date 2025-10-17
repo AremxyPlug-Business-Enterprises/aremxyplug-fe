@@ -113,19 +113,27 @@ const TransactionPage = () => {
   };
 
   useEffect(() => {
+   
     setSelectedStatus("All Transactions")
+    if(Data?.ConfirmAcc === "true"){
     if (transactionResponse?.data?.data?.data === undefined) {
       GetTransactionInformation();
     }
+  }else{
+     setTransactionResponse(null)
+  }
     setSelected("NGN");
 
     //eslint-disable-next-line
   }, []);
+
+  if(Data?.ConfirmAcc ==="true"){
   window.addEventListener("online", () => {
-    if (transactionHistoryError === "Network error") {
+    if (transactionHistoryError === "Network error" && loading === false) {
       GetTransactionInformation();
     }
   });
+}
 
   const getBackgroundColor = (status) => {
     if (
@@ -200,14 +208,14 @@ const successStatusMetricsPercentage = (transactionStatusMetrics?.success?.volum
 const failedStatusMetricsPercentage = (transactionStatusMetrics?.failed?.volume / totalLength) * 100;
 const  refundedStatusMetricsPercentage = (transactionStatusMetrics?.refunded?.volume / totalLength) * 100;
 
-console.log(transactionStatusMetrics?.success?.volume)
+console.log(transactionStatusMetrics?.refunded?.value)
       const pictorialStatus = [
         { status : "All Transaction",
            percentage : totalLength > 1 ? 100 : 0, 
            volume : transactionResponse?.data?.data?.data?.total_count
            , color : "text-[#04177F]"},
          { status : "success",
-           percentage : Math.round(successStatusMetricsPercentage) || "error" ,
+           percentage : Math.round(successStatusMetricsPercentage) ,
              volume : transactionStatusMetrics?.success?.volume,
               value : transactionStatusMetrics?.success?.value, 
               color : "text-[#17E506]"},
@@ -216,10 +224,12 @@ console.log(transactionStatusMetrics?.success?.volume)
             volume : transactionStatusMetrics?.failed?.volume,
              value :  transactionStatusMetrics?.failed?.value, 
              color : "text-[#F95252]"},
+
            { status : "refunded",
+             percentage : Math.round(refundedStatusMetricsPercentage), 
              volume : transactionStatusMetrics?.refunded?.volume,
-              percentage : Math.round(refundedStatusMetricsPercentage), 
-              value : transactionStatusMetrics?.refunded?.value, color : "text-[#1C0CF9]" },
+               value : transactionStatusMetrics?.refunded?.value,
+                color : "text-[#1C0CF9]" },
       ]
   const chooseStatus = [
     "All Transactions", 
@@ -368,13 +378,7 @@ return date?.toISOString()?.slice(0, 10);
       ))  : [];
       
 
-    if(Data?.ComfirmAcc === "true"){
-      window.addEventListener("online", async()=> {
-        if(transactionHistoryError === "Network error"){
-    await GetTransactionInformation();
-        }
-      })
-    } 
+  
 
 
   return (
@@ -1106,12 +1110,8 @@ return date?.toISOString()?.slice(0, 10);
 
 <div className="flex flex-wrap w-[100%]
  gap-[20px] items-center md:justify-between">
-  {transactionStatusMetrics ?  (
+  {transactionStatusMetrics  ?  (
    pictorialStatus.map((statusArray)=> {
-   
-   
-
-    console.log(totalLength)
    return <div className="flex flex-col gap-[10px]">
   
      <CircularProgress 
@@ -1130,24 +1130,32 @@ return date?.toISOString()?.slice(0, 10);
                     ${toggleSideBar ? "lg:text-[18px]" : ""}`}>
      Volume {" "} {statusArray?.volume}
       </p>
-       {statusArray?.value && (
-                <p  className={` text-[12px] text-center leading-[14px]  
-                  lg:text-[18px] lg:leading-[24px] font-[600]
+       {((statusArray?.value ||
+         statusArray?.value === 0)  && statusArray?.value !== undefined && statusArray?.value !== null) ? (
+                <p  className={`text-[12px] text-center leading-[14px]  
+                  lg:text-[18px] lg:leading-[24px] font-[600] 
                     ${toggleSideBar ? "lg:text-[18px]" : ""}`}>
                   Value {" "}{statusArray?.value !== null && statusArray?.value !== undefined
-                   ? Number(statusArray?.value)?.toLocaleString("en-NG", {
+                   ? statusArray?.value?.toLocaleString("en-NG", {
       style : "currency",
       currency : "NGN"
      }) : ""}
                   </p>
+        ) : (
+             <p  className={`text-[12px] text-center leading-[14px]  
+                  lg:text-[18px] lg:leading-[24px] font-[600] 
+                    ${toggleSideBar ? "lg:text-[18px]" : ""}`}>
+                      {""}
+                    </p>
         )}
 
       </div>
    } )
   ): (
     <p  className="text-sm text-red-500 font-[600] mb-8">
-     An error occured
-:Unable to retrieve status metrics 
+     {Data?.ConfirmAcc === "true" 
+     ? "An error occured: unable to retrieve transaction status-metrics" 
+     : "No transactions, no account created"}
       </p>
 
   )}
@@ -1537,14 +1545,14 @@ return date?.toISOString()?.slice(0, 10);
                 ))
               ) : (filteredTransactions && filteredTransactions?.length < 1) ||
                 transactionResponse?.data?.data?.data?.transactions?.length <
-                  1 || transactionResponse?.data?.data?.data?.transactions === null 
+                  1 || transactionResponse?.data?.data?.data?.transactions === null || transactionResponse === null
                  ? (
                 <img
                   className="lg:w-[517px] lg:h-[456px]"
                   src={NoRecordImage}
                   alt="No record found"
                 />
-              ) : transactionHistoryError === "Network error" ? (
+              ) : transactionHistoryError === "Network error" && loading === false ? (
                 <p
                   className={`text-[20px] text-black font-[500] 
                 ${isDarkMode ? "text-white" : "text-black"}`}
@@ -1552,7 +1560,7 @@ return date?.toISOString()?.slice(0, 10);
                   An internet connection error has occured, kindly check your
                   internet connection.
                 </p>
-              ) : transactionHistoryError === "Server error" ? (
+              ) : transactionHistoryError === "Server error" && loading === false ? (
                 <p
                   className={`text-[20px] text-black font-[500] 
               ${isDarkMode ? "text-white" : "text-black"}`}

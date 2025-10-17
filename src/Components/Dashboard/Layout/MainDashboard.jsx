@@ -59,7 +59,7 @@ export const MainDashboard = (Data) => {
     dashLoading, bankNameState, accountNameState, accountNumberState,
     customerDetail, setDashLoading, setVirtualAccCreated, 
     setBankNameState, setAccountNameState, setAccountNumberState, 
-    twoStepVerificationSuccess,setTwoStepVerificationSuccess, 
+    twoStepVerificationSuccess,setTwoStepVerificationSuccess, setDateEdit,
     newBalance, setNewBalance
   } = useContext(ContextProvider);
   //const {account_no, bank_name, account_name} = virtualAccCreated;
@@ -292,10 +292,23 @@ const ValueRef = useRef()
     ValueRef.current = Data;
     if(Data?.ConfirmAcc === "true"){
     GenerateAccountBalance();
+    setDateEdit((value)=>{
+      const valueReset = new Date()
+   const valueIsoFormat =
+     valueReset !== undefined || valueReset !== null ?
+        valueReset?.toLocaleString("sv-SE", {
+          timeZone : "Africa/Lagos",
+          hour12 : false
+        }) : value
+        return valueIsoFormat !== undefined ? valueIsoFormat?.slice(0,10) : ""
+    }) 
+  
+    
     }
     setNav();
     setSelected("NGN"); 
     setSelected2("NGN");
+    
    // HandleNetworkStatus()
   //    let resetInActivityTimer;
   //   const resetInactivityOnSession = ()=> {
