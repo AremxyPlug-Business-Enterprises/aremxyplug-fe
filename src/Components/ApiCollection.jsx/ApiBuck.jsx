@@ -153,8 +153,7 @@ export const InternalLoginSession = ({ setExpiredSessionLogin})=> {
    const authorisedLogin = localStorage.getItem("authorisedLogin");
    const getToken = localStorage.getItem("getToken");
    const HoldValue = getToken && !authorisedLogin ? getUsername : UserEmail;
-   
-
+ 
 
  const functionAtSuccess = async(response)=> {
   console.log(response);
@@ -162,15 +161,17 @@ export const InternalLoginSession = ({ setExpiredSessionLogin})=> {
   alert("Successful");
    const authToken = response.headers.get('Authorization');
 console.log(authToken);
-     if(localStorage.getItem("getToken", authToken) ){
+     if(localStorage.getItem("getToken") && !localStorage.getItem("authorisedLogin")  ){
+       localStorage.setItem("getToken", authToken)
       setExpiredSessionLogin(false);
-  //    alert("Yeah i am present.")
-         localStorage.setItem("getToken", authToken)
-        //await RequestReRun()
      
       }else { 
+       
+         localStorage.setItem("authorisedLogin", authToken)
+
+        
         setExpiredSessionLogin(false);
-      localStorage.setItem("authorisedLogin", authToken)
+     
     // await RequestReRun();
       } 
 }
@@ -412,7 +413,7 @@ export const CheckVirtualAcc = async(authToken,
 
           if (
             newToken !== "" &&
-            localStorage.getItem("authorisedLogin") === "true"
+            localStorage.getItem("authorisedLogin") 
           ) {
             console.log(newToken);
             localStorage.setItem("authorisedLogin", newToken);
@@ -531,6 +532,7 @@ export const VerifyTransPin = async (
      setFailed("Network error");
       } else if(error && error.response.status === 400){
          setFailed("Bad request");
+         alert("You allowed to attempt 5 times, kindly ensure your pin is correct.")
          setErrorMessage(true);
       }else if(error && error.response.status === 401){
          console.log(error?.response?.headers);
@@ -544,7 +546,7 @@ if (error.response.headers["x-new-auth-token"] ||
 
           if (
             newToken !== "" &&
-            localStorage.getItem("authorisedLogin") === "true"
+            localStorage.getItem("authorisedLogin") 
           ) {
             console.log(newToken);
             localStorage.setItem("authorisedLogin", newToken);
@@ -651,7 +653,7 @@ export const PostFunction = async (
 
           if (
             newToken !== "" &&
-            localStorage.getItem("authorisedLogin") === "true"
+            localStorage.getItem("authorisedLogin") 
           ) {
             console.log(newToken);
             localStorage.setItem("authorisedLogin", newToken);
@@ -728,11 +730,9 @@ export const GetFunction = async(path, setLoading, functionAtSuccess,
          setLoading(true);
          const newToken = error?.response?.headers.get("x-new-auth-token") ||error?.response?.headers["x-new-auth-token"];
         
-         if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
-             console.log(newToken)
+         if(newToken !== "" && localStorage.getItem("authorisedLogin")){
             localStorage.setItem("authorisedLogin", newToken);
             functionAtFailed("unauthorised");
-          
    }else{
       localStorage.setItem("getToken", newToken);
         functionAtFailed("unauthorised");
@@ -804,7 +804,7 @@ export const PutFunction = async (
 
           if (
             newToken !== "" &&
-            localStorage.getItem("authorisedLogin") === "true"
+            localStorage.getItem("authorisedLogin")
           ) {
             console.log(newToken);
             localStorage.setItem("authorisedLogin", newToken);

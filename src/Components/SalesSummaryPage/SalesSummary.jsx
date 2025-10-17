@@ -21,9 +21,12 @@ import { GetFunction, InternalLoginSession } from '../ApiCollection.jsx/ApiBuck'
 import { Loader } from '../Loader/Loader';
 import { Modal } from '../Screens/Modal/Modal';
 import NoRecordImage from "../Add&SelectRecipient/RecipientImages/NoRecordImage.svg";
+import { GetLocalStorage } from '../LocalStorage/LocalStorage';
+import { BalanceLoading } from '../Loader/Loader';
 
 export default function SalesSummaryPage ()  {
-
+  const Data = GetLocalStorage()
+  const [balanceLoader, setBalanceLoader] = useState(false) 
     const [isOpen1, setIsOpen1] = useState(false); 
     // const [isOpen2, setIsOpen2] = useState(false);
     // const [isOpen3, setIsOpen3] = useState(false); 
@@ -38,8 +41,9 @@ export default function SalesSummaryPage ()  {
     const [selected, setSelected] = useState("NGN");
     const [methodImage, setMethodImage] = useState(flagpage);
     const [methodBalance, setMethodBalance] = useState(false);
+    const [stateDateEdit , setStateDateEdit] = useState("Filter By Date")
     //  const [totalOutFlow, setTotalOutFlow] = useState('')
-         const { isDarkMode, toggleSideBar } =
+         const { isDarkMode, toggleSideBar, dateEdit, setDateEdit } =
   useContext(ContextProvider);
     // const toggleDropdown1 = () => { setIsOpen1(true); };
 // 
@@ -58,15 +62,9 @@ export default function SalesSummaryPage ()  {
 //    balance += salesResponse[i]?.tota_amount
 // }
 // console.log(balance);
-const supposedResponseFromBackend = [
-  {Categories : "Data Top-up", Quantity : 50, Amount :"N100,000", Products : 10},
-  {Categories : "Airtime", Quantity : 40, Amount : "N50,000", Products : 15},
-  {Categories : "TV Subscription", Quantity : 30, Amount : "N40,000", Products : 14},
-  {Categories : "Education Pins", Quantity : 20, Amount : "N30,000", Products : 11},
-  {Categories : "Electricity Bills", Quantity : 10, Amount : "N20, 0000", Products : 165}
-  ]
 
-      const [selectedProduct, setSelectedProduct] = useState('Filter by product');
+
+      const [selectedProduct, setSelectedProduct] = useState('Filtered Product');
       
            
  const GetTransactionInformation = async(product)=> {
@@ -79,9 +77,16 @@ const supposedResponseFromBackend = [
              setSelectedProduct("Airtime Top-up")
           }else if(product === "data"){
           setSelectedProduct("Data Top-up")
-          }else if(product === "bills"){
-           setSelectedProduct("Bills payment")
+          }else if(product === "data"){
+          setSelectedProduct("Data Top-up")
+          }else if(product === "tv"){
+           setSelectedProduct("Tv Subscription")
+          }else if(product === "electric"){
+           setSelectedProduct("Electricity Bills")
+          }else if(product === "edu"){
+             setSelectedProduct("Education Pins")
           }
+
       
 }
       const FailedHandler = async(ErrorType)=> {
@@ -96,7 +101,7 @@ const supposedResponseFromBackend = [
      setTransactionHistoryError("Network error")
     }else if(ErrorType === "Server error"){
       setTransactionHistoryError("Server error")
- alert(`Error providing ${product} sales analysis.`)
+ alert(`Error providing ${product === "electric" ? "electricity" : product} sales analysis.`)
                               
     }else {
       setTransactionHistoryError(null)
@@ -109,6 +114,42 @@ const supposedResponseFromBackend = [
           setSalesResponse
         )}
 
+
+
+        //Function to obtain the general category info sucg as the category name, quantity and amount
+       // for Data Top-up, Airtime Top-up, Tv subscription, Education Pins and Electricity Bills
+       const [salesOverview,  setSalesOverview] = useState([])
+        const GetCategoryInformation = async()=> {
+      if(!navigator.onLine) return setTransactionHistoryError("Network error")
+      const path =`transactions/sales-overview`
+      const SuccessHandler =()=>{
+          console.log("Sales over-view successfully fetched.")
+}
+      const FailedHandler = async(ErrorType)=> {
+    if(ErrorType === "unauthorised"){
+      setTransactionHistoryError("unauthorised");
+      await GetFunction(path, setLoading, SuccessHandler, (ErrorType)=> {
+        if(ErrorType === "unauthorised"){
+       setSessionModal(true);
+        }
+      }, setSalesOverview)
+    }else if(ErrorType === "Network error" || ErrorType === "User error" || ErrorType === "Bad request"){
+     setTransactionHistoryError("Network error")
+    }else if(ErrorType === "Server error"){
+      setTransactionHistoryError("Server error")
+ alert(`Error providing sales analysis Overview.`)
+                              
+    }else {
+      setTransactionHistoryError(null)
+    }
+      }   
+      await GetFunction(path, 
+        setLoading, 
+        SuccessHandler,
+         FailedHandler,
+          setSalesOverview
+        )}
+
           const GetBalance =   async()=> {
                                   const SuccessHandler = ()=> {
                                 //alert("Successful");
@@ -119,7 +160,7 @@ const supposedResponseFromBackend = [
                               console.log(`Failed to retrieve balance`)
                               if(ErrorType === "unauthorised"){
                               await GetFunction("balance", 
-                                setLoading, 
+                                setBalanceLoader, 
                                 SuccessHandler,
                                 (ErrorType)=> {
                                   if(ErrorType === "unauthorised"){
@@ -131,7 +172,7 @@ const supposedResponseFromBackend = [
                             
                             }
                             await GetFunction("balance",
-                               setLoading,
+                               setBalanceLoader,
                                 SuccessHandler,
                                  FailedHandler,
                                  setPassDataBalance)
@@ -147,7 +188,8 @@ const supposedResponseFromBackend = [
  })
 
  //HandleDropDown
-  const updateBalance = passDataBalance?.data?.data  ? passDataBalance?.data?.data?.data?.balance : "";
+  const updateBalance = passDataBalance?.data?.data 
+   ? passDataBalance?.data?.data?.data?.balance : "";
    const updateBalanceToNumber = Number(updateBalance);
    const newBalanceToNumber = Number(newBalance);
     const [selectedBalance, setSelectedBalance] = useState("")   
@@ -172,12 +214,24 @@ const supposedResponseFromBackend = [
 //     if(salesResponse?.data?.data?.data === undefined){
 //  GetTransactionInformation()
 //     }
+
+setDateEdit(()=> {
+    const setToCurrentDate = new Date();
+ const setToISOFormat = setToCurrentDate.toLocaleString("sv-SE", {
+      timeZone : "Africa/Lagos",
+      hour12  : false
+  })
+  return setToISOFormat.slice(0,10);
+})
     setSelected("NGN");
+    if(Data?.ConfirmAcc === "true"){
       GetBalance();
          if(GetBalance){
           setNewBalance(passDataBalance?.data?.data?.data !== undefined 
          ? passDataBalance?.data?.data?.data?.balance : "");
          }
+         GetCategoryInformation()
+        }
      
 
  //eslint-disable-next-line
@@ -202,8 +256,8 @@ const supposedResponseFromBackend = [
 const symbolValue = selected === "USD" ? "$" : selected === "AUD" ? 
  "AU$" : selected === "KES" ?   "KSh" : selected === "EUR" ? "€" : selected === "GBP" ? "£" : "₦";
 
-
-const product = ["Airtime Top-up", "Data Top-up", "Bills payment"]
+const productByCategories = salesOverview?.data?.data?.data?.categories
+// const product = ["Airtime Top-up", "Data Top-up", "Bills payment"]
     return (
      <DashBoardLayout>
         <>
@@ -253,8 +307,8 @@ const product = ["Airtime Top-up", "Data Top-up", "Bills payment"]
 
         </div>
         {/* available balance */}
-        <div className='flex flex-col gap-[20px] relative '>
-        <div className="lg:px-[] lg:py-[25px] lg:h-[120px] py-[10px] lg:gap-2.5  
+        <div className='flex flex-col gap-[20px] relative'>
+        <div className="lg:px-[] lg:py-[25px] lg:h-[120px] py-[14px] lg:gap-2.5  
 gap-[5px] lg:mt-[25px] bg-indigo-300 
  bg-opacity-20 md:rounded-[11.46px] lg:rounded-[20px] rounded-[6px]
   justify-center lg:w-full w-full md:w-full md:mt-[9px] md:h-[68.75px] 
@@ -274,29 +328,39 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
                            }
                         }
        }
-       className="justify-center items-start mt-[5px] 
+       className="justify-center items-center mt-[5px] 
               md:mt-[12px] gap-[5.5px] cursor-pointer  lg:gap-[11px] md:gap-[6.30px]  flex">
 <img className="h-[16px] w-[14px] 
     md:h-[14.038px] md:w-[14.038px] lg:h-[24px] lg:w-[24px]"
  src={methodImage} alt="" />
-                <p className="text-black lg:text-[20px] 
-                text-[10px] md:text-[13px] md:whitespace-nowrap font-semibold lg:leading-relaxed md:leading-[14.90px] leading-[10.40px] ">
+                <p className = {`lg:text-[20px] 
+                text-[12px] md:text-[13px]  md:whitespace-nowrap font-semibold 
+                lg:leading-relaxed md:leading-[14.90px] leading-[14.40px]
+                ${isDarkMode ? "text-white" : "text-black"}`}>
                   Available Balance
                 </p>
-                <p className="text-neutral-500 lg:text-[20px] text-[10px] md:text-[13px] font-medium  lg:leading-relaxed md:leading-[14.90px] leading-[10.40px]">
-                {selectedBalance?.length < 1 ? newBalance === "" || newBalance === null || newBalance === undefined  ? `(${updateBalanceToNumber?.toLocaleString("en-NG",{
+                <p className={` lg:text-[20px] text-[14px] md:text-[13px] font-[700]
+                  lg:leading-relaxed md:leading-[14.90px] leading-[10.40px]
+                 ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+                  {balanceLoader === false ? (
+                selectedBalance?.length < 1 ? newBalance === "" 
+                || newBalance === null || newBalance === undefined
+                  ? `(${updateBalanceToNumber?.toLocaleString("en-NG",{
          style : "currency",
          currency : "NGN"
         })})` : `(${ newBalanceToNumber?.toLocaleString("en-NG",{
          style : "currency",
          currency : "NGN"
-        }) })` : selectedBalance }
+        }) })` : selectedBalance 
+      ) : (
+     <BalanceLoading/>
+      )}
                 </p>
             
             
 
               
-    <img className="methodDrop h-[16px] w-[14px] 
+    <img className="methodDrop h-[16px] w-[14px]  rounded-full
     md:h-[14.038px] md:w-[14.038px] lg:h-[24px] lg:w-[24px]"
      src={arrows} alt="Arrow " />
  </div>
@@ -342,7 +406,7 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
                     md:h-[16.77px] ' src={method.flag} alt="" />
                   
     
-                 {method.method} : {method.balance}
+                 {method.method} {" "}{method.id === 1 && balanceLoader === true?  <BalanceLoading/> : method.balance}
                 
               
             </div>
@@ -360,42 +424,77 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
     {/* filter by date and product*/}
     <div className={`${toggleSideBar
   ? " md:w-[550px]"
-  : "  md:w-full"} w-full h-[50px] py-[5px] px-[5px]  mt-[2px] lg:mt-[30px]  md:py-[11px]
+  : "  md:w-full"}
+    ${isDarkMode ? " bg-black border-[0.5px] border-white rounded-[12px]" : "bg-white"}
+  w-full h-[50px] py-[5px] px-[5px]  mt-[2px] lg:mt-[30px]  md:py-[11px]
     lg:h-[72px] lg:pl-4 lg:pr-[459.30px] lg:gap-[50.53px] lg:py-[11px]
     md:h-[41.25px] md:pl-[9.17px] md:pr-[277.40px] md:pt-[8.39px] lg:w-full
-    md:pb-[6.40px] bg-white shadow-md border-[1px] border-black rounded-[7px]
+    md:pb-[6.40px]  shadow-md border-[1px] border-black rounded-[7px]
     border-opacity-30 justify-start items-center gap-[52.80px] flex relative`}>
   {/* filter by date */}
 
-  <div onClick={() => {
-  setCalender((prev) => !prev);
-
-  setIsOpen1(false)
-}}  className={`cursor-pointer ${styles.filter}  ${
-  isDarkMode ? "border" : ""} flex  md:gap-[6px] items-center
+  <div  className={`cursor-pointer ${styles.filter}  ${
+  isDarkMode ? "border-[0.5px] border-white rounded-[12px]" : ""} flex  md:gap-[6px] items-center
    justify-center md:w-[145px] h-[100%] w-[100%]
   lg:w-[300px] gap-[1px]
-   px-[2px] rounded-[3px] md:px-[8px] flex-row`}>
-        <p className="text-[#04177f] text-[11px] 
+   px-[2px] rounded-[10px] md:px-[8px] flex-row`}>
+        <p onClick = {()=> {
+           if(Data?.ConfirmAcc === "true"){
+                if(calender === false){
+                setCalender(true);
+                setIsOpen1(false)
+                }else{
+                  setCalender(false)
+                }
+              }
+            }}
+        className={`${isDarkMode ? "text-white" :"text-[#04177f]"} text-[11px] 
                 leading-[14px] font-[500] 
-                  lg:text-[16px] ">Filter by Date</p>
+                  lg:text-[16px]`}>{stateDateEdit}</p>
       
             <img src="./Images/dashboardImages/dateImg.png" 
             className="w-[12px] h-[12px] md:w-[17px] md:h-[17px] lg:w-[20px] lg:h-[20px]" alt="" />
 
+
+ { calender &&
+  <div className={`absolute rounded-[20px] left-0
+                   md:mt-[40px] w-[300px] h-auto p-2   border-[0.2px]
+                   lg:mt-[55px]  flex flex-col gap-[10px] font-[400]
+                    ${isDarkMode ? "bg-black text-white  border-white" 
+                    : "bg-white text-black border-gray-300"}`}>
+    <Calender/>
+       <div onClick={()=> {
+                        setCalender(false);
+                        setStateDateEdit(dateEdit?.slice(0,10))
+                       }}
+                     className="flex justify-center 
+                     items-center w-[270px]">
+                       <button 
+                       className={`w-full bg-blue-900 py-[15px] text-[12px] md:text-[14px] font-[500] 
+                         rounded-[15px]
+                         ${isDarkMode ? "text-white bg-black border-[0.2px] border-white" :
+                          "text-white bg-blue-900"}`}>
+                       Done
+                       </button>
+                       </div>
+    </div> }
  </div>
 
     {/* filter by product */}
-        <div  onClick={() => {
-     setMethodBalance(false)
-   setCalender(false)
-  // setIsOpen5(false)
-   if(isOpen1 === false){
-    setIsOpen1(true)
-   }else{
-    setIsOpen1(false);
-   }
- }} className={`flex flex-col cursor-pointer h-[100%] w-[100%] lg:w-[50%] ${styles.filter}`}>
+        <div 
+//          onClick={() => {
+//      setMethodBalance(false)
+//    setCalender(false)
+//   // setIsOpen5(false)
+//    if(isOpen1 === false){
+//     setIsOpen1(true)
+//    }else{
+//     setIsOpen1(false);
+//    }
+//  }} 
+ className={`flex flex-col cursor-pointer rounded-[12px]
+ ${ isDarkMode ? "border-[0.5px] border-white " : ""}
+  h-[100%] w-[100%] lg:w-[50%] ${styles.filter}`}>
        <div class="h-[100%] w-[100%] justify-center items-center
              lg:gap-[5px] gap-[2.86px] flex">
         <img className='w-[11.37px] h-[11.37px]  md:w-[20px] md:h-[19px]
@@ -403,12 +502,12 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
                    
                 
                 <p
-                  className="text-[#04177f] text-[11px] 
+                  className={`${isDarkMode ? "text-white" :"text-[#04177f]"} text-[11px] 
                 leading-[14px] font-[500] 
-                  lg:text-[16px]">{selectedProduct}</p>
+                  lg:text-[16px]`}>{selectedProduct}</p>
             
             
-                <div  class="w-[11.37px] h-[11.37px] md:w-[17px] 
+                {/* <div  class="w-[11.37px] h-[11.37px] md:w-[17px] 
                 md:h-[17px] lg:w-[19.85px] lg:h-[19.85px] justify-center items-center flex">
                                     {isOpen1 ? (
    <img src={arrow44} className="h-[100%] w-[100%]" alt="Arrow44" />
@@ -416,13 +515,13 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
    <img className="h-[100%] w-[100%]" src={arrow11} alt="arrow11" />
  )}
 
-            </div>
+            </div> */}
             </div>
        
        
 
         {/*filter by product dropdown */}
-          {    isOpen1 && (
+          {/* {    isOpen1 && (
                 <ul className={`dropdown-options z-[2] absolute left-0 md:left-auto top-[100%]
                  w-full md:w-[50%] lg:w-[30%] bg-white cursor-pointer`}>
                   {product?.map((option, index) => (
@@ -464,14 +563,14 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
                     </li>
                   ))}
                 </ul>
-              )}
+              )} */}
        
     </div>
     </div>
     
 
 
-    { calender && <div className=" absolute top-[100%]  z-50 "><Calender/></div> }
+   
     </div>
    
     <div className="">
@@ -525,11 +624,11 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
                     </div>
                     <p className="text-center text-[10px] leading-[13px] font-[500] 
                       lg:text-[18px] lg:leading-[24px]">
-                      {selected === "NGN" ?  salesResponse?.data?.data?.data ?
-           salesResponse?.data?.data?.data?.total_inflow?.toLocaleString("en-NG", {
-              style : "currency",
-              currency : "NGN"
-            }) :   "₦"  : `${symbolValue}0.00` }
+                   
+                   
+                    {selected === "NGN" && salesOverview?.data?.data?.data ?
+           salesOverview?.data?.data?.data?.total_product
+            : `` } 
                     </p>
                   </div>
     
@@ -551,10 +650,12 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
                       />
                     </div>
                     <p className="text-center  text-[10px] leading-[13px] font-[500] 
-                      lg:text-[18px] lg:leading-[24px]">{selected === "NGN" ? 
-                      salesResponse?.data?.data?.data?.total_count
-                       || salesResponse?.data?.status === 200 || salesResponse?.data?.status === 201  ?
-                        salesResponse?.data?.data?.data?.total: "" : 0}  </p>
+                      lg:text-[18px] lg:leading-[24px]">
+                       {selected === "NGN" &&
+                      salesOverview?.data?.data?.data ?
+                       salesOverview?.data?.data?.data?.total_quantity: "" }
+                    
+                          </p>
                   </div>
     
                   <div
@@ -576,11 +677,12 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
                     </div>
                     <p className="text-center  text-[10px] leading-[13px] font-[500] 
                       lg:text-[18px] lg:leading-[24px]">
-                      {selected === "NGN"  ? salesResponse?.data?.data?.data ?
-            salesResponse?.data?.data?.data?.total_outflow?.toLocaleString("en-NG", {
+                    {selected === "NGN"  ? salesOverview?.data?.data?.data ?
+            salesOverview?.data?.data?.data?.total_amount?.toLocaleString("en-NG", {
               style : "currency",
               currency : "NGN"
             }) :   "₦"  : `${symbolValue}0.00`}
+           
                     </p>
                   </div>
                 </div>
@@ -599,47 +701,89 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
       </div>
 
      
- {/* product, quantity and total amount */}
+ {/* product || Categories, quantity and total amount */}
     <div className="flex md:w-full w-full border-opacity-100 
       lg:w-full shadow border-black  flex-col">
 
-        <div className="justify-between md:w-full 
-        w-full h-[25px] lg:pr-0 pl-[8.67px] pr-[1.33px] pt-[8.17px] pb-[6.83px]
-    lg:w-full lg:pl-[23px]
-     lg:h-[42px] md:h-[24.06px]  md:pl-[14.90px] md:pr-[2.29px]
-      md:pt-[6.32px] md:pb-[5.74px] bg-indigo-200 
+        <div className={`justify-between md:w-full 
+        w-full h-[25px]   py-[20px] lg:py-[15px]
+    lg:w-full px-[20px]
+     lg:h-[42px] md:h-[24.06px]   
+      bg-indigo-200 
         items-center lg:justify-between 
-        lg:gap-[300px]  md:gap-[113.44px] flex">
-          <div className={`w-[33.33%] flex  justify-center items-center h-full`}>
-      <p className={`text-[12px] leading-[14px ] font-[500] leading-[16px] lg:leading-[20px] text-center`}>Categories  </p>
+        lg:gap-[300px]  md:gap-[113.44px] flex
+      `}>
+          <div className={`w-1/3 flex  justify-start  items-center h-full`}>
+      <p className={`text-[12px] lg:text-[14px]
+         font-[600] leading-[16px] lg:leading-[20px] text-start ${isDarkMode ? "text-[#7C7C7C]" : "text-black"} `}>
+         {selectedProduct !== "Filtered Product" ? 
+      "Products" : "Categories"}  </p>
       </div>
-       <div className={`w-[33.33%] flex  justify-center items-center h-full`}>
-      <p className={`text-[12px] leading-[14px]  font-[500] lg:leading-20px] text-center`}>Quantity</p>
+       <div className={`w-1/3 flex justify-center  items-center h-full`}>
+      <p className={`text-[12px] leading-[14px]  font-[600]
+         lg:leading-20px] text-center  ${isDarkMode ? "text-[#7C7C7C]" : "text-black"}`}>Quantity</p>
       </div>
-       <div className={`w-[33.33%] flex  justify-center items-center h-full`}>
-      <p className={`text-[12px] font-[500] leading-[16px]`}>Amount</p>
+       <div className={`w-1/3 flex  justify-end items-center h-full`}>
+      <p className={`text-[12px] text-end font-[600] 
+        leading-[16px]  ${isDarkMode ? "text-[#7C7C7C]" : "text-black"}`}>Amount</p>
       </div>
         </div>
         {/* {salesResponse?.data?.data?.data} */}
-        {supposedResponseFromBackend?.length > 0 && selectedProduct === "Filter by product" ? (
-          supposedResponseFromBackend.map((data)=> (
-             <div className ="w-[100%] flex flex-col gap-[5px]
-              bg-white border border-gray-400 rounded-[10px] py-[20px] px-[20px] mb-[20px]">
-     <div className="w-[100%] flex justify-between gap-[5px]">
-  <div className="flex flex-col gap-[5px] w-1/3">
-     <p className='text-[12px] font-[600] text-black leading-[16px]'>{data.Categories}</p>
+      {loading === true ? (
+      <div className="h-[150px] flex items-center justify-center">
+                  <Loader />
+                </div>
+      )  : productByCategories?.length > 0 && selectedProduct === "Filtered Product" && loading === false ? (
+          productByCategories.map((data, index)=> (
+             <div onClick={()=> {
+               if(data.category === "airtime"){
+                        GetTransactionInformation("airtime")
+                }else if(data.category === "data"){
+                          GetTransactionInformation("data")
+                           }else if(data.category === "tv-sub"){
+                         GetTransactionInformation("tv")
+                   }else if(data.category === "edu"){
+                          GetTransactionInformation("edu");
+                    }else if(data.category === "electric-sub"){
+                         GetTransactionInformation("electric")
+                       }
+             }}
+             className={`w-[100%] flex flex-col gap-[5px]
+           border border-gray-400   
+            ${isDarkMode ? "text-white border-[0.5px] border-white bg-black" : "text-black bg-white"}
+              ${index === 0 ? "rounded-b-[10px]" : " rounded-[10px]"}
+              py-[20px] px-[20px] mb-[20px]`}>
+     <div className="w-[100%] flex justify-between gap-[2px]">
+  <div className="flex flex-col gap-[5px] w-1/3 justify-start">
+     <p className={`text-[12px] font-[600] k leading-[16px] 
+     text-start ${isDarkMode ? "text-white" : "text-black"}`}>
+      {data.category=== "airtime" 
+      ? "Airtime" : data.category === "data"
+      ? "Data Top-up" : data.category === "tv-sub" ? "TV subscriptions"
+      :  data.category === "electric-sub" ? "Electricity Bills" 
+      : data.category === "edu" ? "Education Pins" : ""
+      }
+      </p>
 
-      <p className='text-[10px] font-[400] leading-[15px] text-gray-400'>{`Products: ${data.Products}`}</p>
+      <p className={`text-[10px] font-[400]  lg:text-[14px] lg:leading-[20px]
+      leading-[15px] ${isDarkMode ? "text-white" : "text-[#7C7C7C] "}`}>{`Products: ${data.product}`}</p>
      </div>
    
-        <p className='w-1/3 text-[12px] font-[600] text-center lg:text-left text-black leading-[16px] '>{data.Quantity}</p>
-           <p className='w-/3 text-[10px] font-[400] text-center leading-[15px] text-gray-400'>{data.Amount}</p>
+        <p className={`w-1/3 text-[12px] lg:text-[14px] lg:leading-[20px] font-[600] text-center leading-[16px]
+          ${isDarkMode ? "text-white" : "text-[#7C7C7C] "} `}>{data.quantity}</p>
+           <p className={`w-1/3 text-[10px] font-[600] lg:text-[14px] lg:leading-[20px]
+            text-end leading-[15px]  ${isDarkMode ? "text-white " : "text-[#7C7C7C] "}`}>{data.amount !== null && data.amount !== undefined
+               ? data.amount?.toLocaleString("en-NG", {
+            style : "currency",
+            currency : "NGN"
+               }) : ""}</p>
           
       
        </div>
     
-           <p className="text-right text-[10px] font-[500] text-gray-400 ">
-            {`Show ${data.Categories} products...`}
+           <p className={`text-right text-[10px] font-[500]
+            text-gray-400  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+            {data.category &&  data.quantity > 0  ? `Show ${data.category} products>>` :`No ${data.category} product purchased>>`} 
            </p>
           
        </div>
@@ -648,25 +792,28 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
       
           ))
         ) : (
-          selectedProduct!== "Filter by product" && salesResponse?.data?.data?.data?.data !== undefined 
-          && salesResponse?.data?.data?.data?.data?.length > 0 ? (
-           salesResponse?.data?.data?.data?.data.map((item, index)=> (
-            <div className=" justify-between md:w-full 
-        w-full h-[25px] lg:pr-0 pl-[8.67px] pr-[1.33px] 
-    lg:w-full lg:pl-[23px] 
-     lg:h-[42px] md:h-[24.06px]  md:pl-[14.90px] md:pr-[2.29px]
-      md:pt-[6.32px] md:pb-[5.74px] 
+          selectedProduct!== "Filtered Product" 
+          && salesResponse?.data?.data?.data?.data?.summary !== undefined 
+          && salesResponse?.data?.data?.data?.data?.summary?.length > 0 ? (
+           salesResponse?.data?.data?.data?.data?.summary.map((item, index)=> (
+            <div className={`justify-between md:w-full 
+        w-full h-[25px]  px-[20px]
+    lg:w-full  
+     lg:h-[42px] md:h-[24.06px]  
+     md:py-[20px]
         items-center  lg:justify-between  py-[20px]
-        lg:gap-[300px] md:gap-[113.44px] flex">
+        lg:gap-[300px] md:gap-[113.44px] flex
+         ${isDarkMode ? " border-[0.5px] border-white bg-black" : "text-black bg-white"}`}>
          
-      <div className={`w-[33.33%] flex  justify-center items-center h-full`}>
-      <p className={`text-[10px] font-[500] leading-[16px] text-center`}>{ item?.product}</p>
+      <div className={`w-1/3 flex  justify-start items-center h-full`}>
+      <p className={`text-[10px] uppercase lg:text-[12px] lg:leading-[16px] font-[500] leading-[16px] text-start`}>{ item?.product}</p>
       </div>
-       <div className={`w-[33.33%] flex  justify-center items-center h-full `}>
-      <p className={`text-[10px] font-[500] leading-[16px] text-center`}>{item?.quantity}</p>
+       <div className={`w-1/3 flex  justify-center items-center h-full `}>
+      <p className={`text-[10px]   lg:text-[12px] lg:leading-[16px] font-[500] text-center leading-[16px] `}>{item?.quantity}</p>
       </div>
-       <div className={`w-[33.33%] flex  justify-center items-center h-full`}>
-      <p className={`text-[10px] font-[500] leading-[16px]`}>{item?.total_amount !== null ||
+       <div className={`w-1/3 flex  justify-end items-center h-full`}>
+      <p className={`text-[10px]  lg:text-[12px] lg:leading-[16px] 
+      text-end font-[500] leading-[16px]`}>{item?.total_amount !== null ||
       item?.total_amount !== undefined || item?.total_amount !== "" ? 
       item?.total_amount?.toLocaleString("en-NG", {
         style : "currency",
@@ -675,10 +822,31 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
       </div>
  
     </div>
-))) :(
+))) : (loading === false && productByCategories?.length > 0) && (
      <img className="lg:w-full lg:h-[456px] flex self-center w-[" src={NoRecordImage} alt="No record found"/> 
             ))}
-    </div>
+          
+            </div>
+         
+
+            {selectedProduct !== "Filtered Product" && (
+              <div
+              onClick ={()=> {
+                  setSelectedProduct("Filtered Product")
+              }}
+               className="flex w-[100%] lg:justify-start mt-[20px] ">
+                 <button 
+                       className={`w-full bg-blue-900 py-[15px] text-[12px] md:text-[14px] font-[500] 
+                         rounded-[15px] md:w-[300px] md:py-[8px]
+                         ${isDarkMode ? "text-white bg-black border-[0.2px] border-white" :
+                          "text-white bg-blue-900"}`}>
+                       {"<<"} Categories
+                       </button>
+                </div>
+            )}
+           
+
+  
           
 
 
@@ -722,12 +890,7 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
 
 {/* airtime top-up dropdown */}
 
-{loading && (
-  <Modal>
-  <Loader/>
-  </Modal>
 
-)}
 {sessionModal && (
    <InternalLoginSession setExpiredSessionLogin={setSessionModal}/>
 )}

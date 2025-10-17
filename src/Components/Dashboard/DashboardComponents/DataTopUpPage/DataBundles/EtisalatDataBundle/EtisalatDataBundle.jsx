@@ -135,7 +135,7 @@ const assumedString = selectedAmountEtisalat?.toString()
 
             if (
               newToken !== "" &&
-              localStorage.getItem("authorisedLogin") === "true"
+              localStorage.getItem("authorisedLogin") 
             ) {
               localStorage.setItem("authorisedLogin", newToken);
               if (localStorage.getItem("authorisedLogin")?.length > 1) {
@@ -205,7 +205,7 @@ const assumedString = selectedAmountEtisalat?.toString()
 
           if (
             newToken !== "" &&
-            localStorage.getItem("authorisedLogin") === "true"
+            localStorage.getItem("authorisedLogin")
           ) {
             localStorage.setItem("authorisedLogin", newToken);
             if (localStorage.getItem("authorisedLogin")?.length > 1) {
@@ -605,19 +605,19 @@ for (let network in networks) {
         setEtisalatDescription(`${resData?.network} - ${resData?.plan_name}`); // Fabricated description
         if (response.status === 200 || response.status === 201) {
           setEtisalatSuccessfulResponse(response?.data?.data?.data);
-          if(response?.data?.data?.data?.Status === "success"
-            || response?.data?.data?.data?.Status === "successfull"
-            || response?.data?.data?.data?.Status === "delivered"
-            || response?.data?.data?.data?.Status === "successfully"
+          if(response?.data?.data?.data?.status === "success"
+            || response?.data?.data?.data?.status === "successfull"
+            || response?.data?.data?.data?.status === "delivered"
+            || response?.data?.data?.data?.status === "successfully"
           ){
             setEtisalatPurchaseErrorType("");
             setTransactSuccessPopUp(true); // Show success popup
           setConfirm(false);
           setInputPin("");
-          }else if(response?.data?.data?.data?.Status === "failed"
-            || response?.data?.data?.data?.Status === "Failed"
-            || response?.data?.data?.data?.Status === "unsuccess"
-            || response?.data?.data?.data?.Status === "unsuccessful"){
+          }else if(response?.data?.data?.data?.status === "failed"
+            || response?.data?.data?.data?.status === "Failed"
+            || response?.data?.data?.data?.status === "unsuccess"
+            || response?.data?.data?.data?.status === "unsuccessful"){
                setEtisalatPurchaseErrorType("Plan Available: Purchase Failed")
             setEtisalatPurchaseStatus(true); // Show success popup
           setConfirm(false);
@@ -664,7 +664,7 @@ for (let network in networks) {
 
             if (
               newToken !== "" &&
-              localStorage.getItem("authorisedLogin") === "true"
+              localStorage.getItem("authorisedLogin") 
             ) {
               localStorage.setItem("authorisedLogin", newToken);
               if (localStorage.getItem("authorisedLogin")?.length > 1) {
@@ -1783,7 +1783,7 @@ if(Data?.ConfirmAcc === "true"){
               <p className="text-sm text-red-500 font-[600] mb-8">
                 {etisalatPurchaseErrorType}
               </p>
-              {etisalatSuccessfulResponse?.Status  ?
+              {etisalatSuccessfulResponse?.status  ?
                (
               <div className="flex gap-[10px] justify-between w-full px-[10px]">
                 <button

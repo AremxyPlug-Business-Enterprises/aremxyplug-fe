@@ -6,8 +6,10 @@ import { ContextProvider } from "../../Context";
 import { Calender } from "./Calender";
 import styles from "./component.module.css";
 import TransactionHistory from "./TransactionHistory";
+import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 
 export const RecentTransaction = ({transactionResponse, transactionHistoryError, loading}) => {
+  const Data = GetLocalStorage()
   const { toggleSideBar, isDarkMode , dateEdit} = useContext(ContextProvider);
   const [calender, setCalender] = useState(false);
  const [stateDateEdit, setStateDateEdit] = useState("Filter By Date")
@@ -39,18 +41,21 @@ export const RecentTransaction = ({transactionResponse, transactionHistoryError,
             isDarkMode ? "border" : ""
           } flex items-center gap-[1px] px-[2px] rounded-[3px] md:px-[8px]`}
         >
+          
           <p   onClick={() => {
+            if(Data?.ConfirmAcc === "true"){
                 if(calender === false){
                 setCalender(true);
                 }else{
                   setCalender(false)
                 }
+              }
               }}
   className={` md:text-[9.16px] text-center
                    md:font-semibold text-[8px] font-extrabold lg:text-base
                     lg:font-extrabold ${isDarkMode ? "text-white": "text-[#04177f]"}`}>
                        { stateDateEdit}
-                       </p>
+      </p>
                      
           <img
             className="w-[15px] h-[15px] md:w-[17px] md:h-[17px] lg:w-[20px] lg:h-[20px]"
@@ -59,9 +64,11 @@ export const RecentTransaction = ({transactionResponse, transactionHistoryError,
           />
 
           {calender && (
-                   <div className="absolute  bg-white rounded-[15px] 
-                   md:mt-[40px] w-full h-auto p-2
-                   lg:mt-[55px]  flex flex-col gap-[10px] font-[400]">
+                   <div className={`absolute rounded-[20px] 
+                   md:mt-[40px] w-[300px] h-auto p-2   border-[0.2px]
+                   lg:mt-[55px]  flex flex-col gap-[10px] font-[400]
+                    ${isDarkMode ? "bg-black text-white  border-white" 
+                    : "bg-white text-black border-gray-300"}`}>
                      {" "}
                      <Calender />
                      {" "}
@@ -70,9 +77,10 @@ export const RecentTransaction = ({transactionResponse, transactionHistoryError,
                         setStateDateEdit(dateEdit?.slice(0,10))
                        }}
                      className="flex justify-center 
-                     items-center w-[300px]">
+                     items-center w-[270px]">
                        <button 
-                       className={`w-full bg-blue-900 py-[10px]  rounded-[15px]
+                       className={`w-full bg-blue-900 py-[15px] text-[12px] md:text-[14px] font-[500] 
+                         rounded-[15px]
                          ${isDarkMode ? "text-white bg-black border-[0.2px] border-white" :
                           "text-white bg-blue-900"}`}>
                        Done

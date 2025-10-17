@@ -6,24 +6,27 @@ import { format } from "date-fns";
 import "./custom_calendar.css";
 import { ContextProvider } from "../../Context";
 
+
 export const Calender = () => {
-  const {dateEdit, setDateEdit} = useContext(ContextProvider);
- console.log(dateEdit)
+  const {dateEdit, setDateEdit, isDarkMode} = useContext(ContextProvider);
+
   return (
     <div
-      className={`${styles.calender} pt-2 `}
+      className={`pt-2 bvnQuery
+      ${isDarkMode ? "text-white bg-black" : "text-black bg-white"} `}
       // py-2 px-2
     >
       <div
-        className="text-[12px] flex justify-center items-center 
+        className={`text-[12px] flex justify-center items-center 
         mt-[3%] w-[90%] mx-auto border border-[#E0E0E0]
-         lg:text-[16px]"
+         lg:text-[16px] ${isDarkMode ? "text-white bg-black" : "text-black bg-white"} `}
         // p-2
       >
            {dateEdit}
       </div>
-      <div className="p-2 md:p-0">
+      <div className={`p-2 md:p-0 ${isDarkMode ? "text-white bg-black" : "text-black bg-white"}`}>
         <Calendar
+        className={`${isDarkMode ? "text-white bg-black" :  "text-black bg-white"}`}
           onChange={(value)=> {
             console.log(value)
              const dateValue = new Date(value);

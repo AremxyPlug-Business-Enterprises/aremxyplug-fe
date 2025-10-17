@@ -9,11 +9,11 @@ import { Link } from "react-router-dom";
 export const AremxyMainSuccess = ({
   transactSuccessToOtherBank,
   setTransactSuccessToOtherBank,
-
+   
 }) => {
   const {
     toggleSideBar,
-   
+     transferValue,
     transferAmount,
   
     isDarkMode,
@@ -23,7 +23,6 @@ export const AremxyMainSuccess = ({
     setTransactSuccessToOtherBank(false);
     window.location.reload();
   };
-
   const handleTransactionSuccessReciept = () => {
     setTransactSuccessToOtherBank(false);
   };
@@ -90,7 +89,12 @@ export const AremxyMainSuccess = ({
                w-[90%] mx-auto justify-between 
             lg:text-[15px] font-[500]">
                 <p  className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Username or Email</p>
-                <span className={`${isDarkMode ? "text-white" : "text-black"}`}>{transferResponse?.data?.username}</span>
+                <span className={`${isDarkMode ? "text-white" : "text-black"}`}>{transferValue}</span>
+              </div>
+               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between 
+            lg:text-[15px] font-[500]">
+                <p  className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Fullname</p>
+                <span className={`${isDarkMode ? "text-white" : "text-black"}`}>{transferResponse?.data?.customer_name}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between 
             lg:text-[15px] font-[500]">
@@ -100,7 +104,7 @@ export const AremxyMainSuccess = ({
               <div className="flex text-[10px] md:text-[14px] w-[90%]
                mx-auto justify-between 
             lg:text-[15px] font-[500]">
-                <p className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Transfaction fee</p>
+                <p className={`  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Transaction fee</p>
                 <span className={`${isDarkMode ? "text-white" : "text-black"}`}>&#8358;0.00</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] 
@@ -139,13 +143,18 @@ export const AremxyMainSuccess = ({
               >
                 Done
               </button>
-              <Link to="/to-aremxymain-receipt">
+              <Link 
+              state={{transferValue : transferValue}}
+              to="/to-aremxymain-receipt">
                 <button
                   onClick={handleTransactionSuccessReciept}
-                   className={`border-[1px]  w-[111px] lg:w-[200px] md:w-[99px]
-                   h-[40px] md:h-[24px] lg:h-[42px] lg:my-[2%] flex justify-center
-                    items-center cursor-pointer text-[12px] md:text-[12px] lg:text-[16px]
-                     font-semibold rounded-[6px] md:rounded-[7px] lg:rounded-[12px]`}
+                    className={` border-[1px] w-[111px]
+                   border-[#0003] flex justify-center 
+                   items-center  cursor-pointer text-[12px]
+                    font-extrabold h-[40px] rounded-[6px] 
+                    md:w-[25%] md:rounded-[8px] md:text-base
+                     lg:w-[163px] lg:h-[38px] lg:my-[2%]
+                     ${isDarkMode ? "bg-black border-[0.2px] text-white border-[#04177f]" : "text-black bg-white border-[0.2px] border-black"}`}
                 >
                 
                   Receipt

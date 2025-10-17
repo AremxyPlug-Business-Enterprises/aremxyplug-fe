@@ -141,11 +141,11 @@ const Data = GetLocalStorage();
     };
 
     const SubscriptionPresent = () => {
-      if ((fetchedDstvPlans.status === 200 || 201) && id === 2) {
+      if ((fetchedDstvPlans.status === 200 ||  fetchedDstvPlans.status ===201) && id === 2) {
         return navigate(path);
-      } else if ((fetchedStarTimesPlans.status === 200 || 201) && id === 3) {
+      } else if ((fetchedStarTimesPlans.status === 200 || fetchedStarTimesPlans.status === 201) && id === 3) {
         return navigate(path);
-      } else if ((fetchedShowMaxPlans.status === 200 || 201) && id === 4) {
+      } else if ((fetchedShowMaxPlans.status === 200 || fetchedShowMaxPlans.status === 201) && id === 4) {
         return navigate(path);
       }
     };
@@ -227,7 +227,7 @@ const Data = GetLocalStorage();
         }
         else if(ErrorType === "Network error" || ErrorType === "User error"){
            setCheckNetworkError(true);
-              alert("Kindly check your internet connection to retrieve balance.")
+            
         }else {
           alert("An unexpected error has occured on attempt to retrieve balance.")
         }
@@ -236,7 +236,7 @@ const Data = GetLocalStorage();
       );
        }else if(ErrorType === "Network error" || ErrorType === "User error"){
          setCheckNetworkError(true);
-           alert("Kindly check your internet connection to retrieve balance");
+          
            setCheckNetworkError(true);
        }else {
         alert("An unexpected error has occured on attempt to retrieve the balance")
@@ -273,7 +273,7 @@ const Data = GetLocalStorage();
         return sessionModal(true)
       }else if(ErrorType === "Network error" || ErrorType === "User error"){
          setCheckNetworkError(true);
-       alert("Kindly check your internet connection to retrieve balance")
+    
       }else{
        // console.log("yeah bro i am the one running blehh")
         alert("An Unexpected error occured in attempt to retrieve balance")
@@ -284,7 +284,7 @@ const Data = GetLocalStorage();
       );
           }else if(ErrorType === "Network error" || ErrorType === "User error"){
              setCheckNetworkError(true);
-            alert("Kindly check your internet connection to retrieve the balance")
+          
           }else if(ErrorType === "Server error"){
             alert("Failed to retrieve the balance.")
           }else{
@@ -297,7 +297,7 @@ const Data = GetLocalStorage();
           else if(ErrorType === "Network error" || ErrorType === "User error"){
             //The operation was interrupted by a network error
              setCheckNetworkError(true);
-            alert("Kindly check your internet connection to retrieve balance.")
+          
          }else {
           //Place 
           //An alien error has occured with the re-run of the "Server error" ErrorType
@@ -337,12 +337,16 @@ const Data = GetLocalStorage();
               setIsLoading,
               SuccessHandler,
               (ErrorType) => {
+               
                if(ErrorType === "User error" || ErrorType === "Network error"){
              setCheckNetworkError(true);
           }else if(ErrorType === "Server error"){
              alert("Failed to fetch Gotv Plans, try again later")
           }else{
+              if(ErrorType !== "unauthorised"){
             alert("An unexpected error has occured try again later.")
+              }
+         
           }
               },
               setFetchedGotvPlans
@@ -352,6 +356,7 @@ const Data = GetLocalStorage();
           }else if(ErrorType === "Server error"){
              alert("Failed to fetch Gotv Plans, try again later")
           }else{
+           
             alert("An unexpected error has occured try again later.")
           }
         };
@@ -904,7 +909,6 @@ const Data = GetLocalStorage();
    }
   })
 }
-console.log(tvSubscriptionResponse?.data?.status)
 
   return (
     <div>
@@ -963,9 +967,9 @@ console.log(tvSubscriptionResponse?.data?.status)
                    lg:gap-[5px] w-full md:w-1/2">
                     <label
                       htmlFor="decoderType"
-                      className="text-[#7E7E7E] text-[14px] lg:text-[17px]
-                       md:text-[13px] '
-                      md:font-[600] font-[400]"
+                      className={` ${isDarkMode ? "text-white" : "text-black"} text-[14px] lg:text-[17px]
+                       md:text-[13px]
+                      md:font-[600] font-[400`}
                     >
                       Confirm Decoder Type
                     </label>
@@ -975,7 +979,12 @@ console.log(tvSubscriptionResponse?.data?.status)
                          sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px]
                           pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
                           leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] 
+    md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] 
+    lg:pl-[10px]  items-center cursor-pointer outline-0 
+    border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] 
+    md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] 
+    md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
       isDarkMode
         ? "bg-black text-white border border-white"
         : "hover:bg-[#EDEAEA]"
@@ -1048,8 +1057,9 @@ console.log(tvSubscriptionResponse?.data?.status)
             lg:gap-[5px] w-full md:w-1/2">
                     <label
                       htmlFor="decoderType"
-                      className="text-[#7E7E7E] text-[15px] lg:text-[17px]
-                       md:text-[13px] md:font-[600] font-[400]"                   >
+                      className={` ${isDarkMode ? "text-white" : "text-black"} text-[14px] lg:text-[17px]
+                       md:text-[13px]
+                      md:font-[600] font-[400`}>
                       Select Package
                     </label>
 
@@ -1090,9 +1100,7 @@ console.log(tvSubscriptionResponse?.data?.status)
                    }`}
                       >
                         {GotvOptionalPlan.map((option) => {
-                          // const duration = option.duration;
-
-                          return (
+                        return (
                             <li
                               className={` pb-[20px] pt-[20px] md:pb-[14px] md:pt-[14px] font-weight-bold text-[15px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500] text-[#7C7C7C]  
                       md:text-[13.227px] md:leading-[17.195px] 
@@ -1128,7 +1136,9 @@ console.log(tvSubscriptionResponse?.data?.status)
                   <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
                     <label
                       htmlFor="decoderType"
-                      className="text-[#7E7E7E] text-[14px] lg:text-[17px] md:text-[13px] md:font-[600] font-[400]"
+                     className={` ${isDarkMode ? "text-white" : "text-black"} text-[14px] lg:text-[17px]
+                       md:text-[13px]
+                      md:font-[600] font-[400`}
                     >
                       Smart Card / IUC Number
                     </label>
@@ -1170,7 +1180,9 @@ console.log(tvSubscriptionResponse?.data?.status)
                   <div className="flex  flex-col relative gap-[3px] lg:gap-[5px] w-full md:w-1/2">
                     <label
                       htmlFor="decoderType"
-                      className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] md:font-[600] font-[400]"
+                       className={` ${isDarkMode ? "text-white" : "text-black"} text-[14px] lg:text-[17px]
+                       md:text-[13px]
+                      md:font-[600] font-[400`}
                     >
                       Card Name
                     </label>
@@ -1179,8 +1191,14 @@ console.log(tvSubscriptionResponse?.data?.status)
                        placeholder="Input card number to get verified name"
                       value={userVerifiedName}
                       readOnly
-                      className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[13px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
+                      className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]
+                         md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between
+                          pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400]
+                           leading-[10.4px] md:text-[13px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px]
+     md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center
+      cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] 
+      md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
       isDarkMode
         ? "bg-black text-white border border-white"
         : "border border-[#0003] border-[#9C9C9C] hover:bg-[#EDEAEA] text-[#7C7C7C]"
@@ -1197,8 +1215,9 @@ console.log(tvSubscriptionResponse?.data?.status)
                   <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
                     <label
                       htmlFor="decoderType"
-                      className="text-[#7E7E7E] text-[15px] 
-                      lg:text-[17px] md:text-[13px] md:font-[600] font-[400]"
+                      className={` ${isDarkMode ? "text-white" : "text-black"} text-[14px] lg:text-[17px]
+                       md:text-[13px]
+                      md:font-[600] font-[400`}
                     >
                       Phone Number
                     </label>
@@ -1222,7 +1241,7 @@ console.log(tvSubscriptionResponse?.data?.status)
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
       isDarkMode
         ? "bg-black text-white border border-white text-[12px]"
-        : "border border-[#0003] border-[#9C9C9C] hover:bg-[#EDEAEA] text-[#7C7C7C]"
+        : "border border-[#0003] border-[#9C9C9C] hover:bg-[#EDEAEA] text-[#7E7E7E]"
     }`}
                     />
                     {errors.mobileNumber && (
@@ -1234,7 +1253,9 @@ console.log(tvSubscriptionResponse?.data?.status)
                   <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
                     <label
                       htmlFor="Email"
-                      className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] md:font-[600] font-[400]"
+                       className={` ${isDarkMode ? "text-white" : "text-black"} text-[14px] lg:text-[17px]
+                       md:text-[13px]'
+                      md:font-[600] font-[400`}
                     >
                       Email
                     </label>
@@ -1256,7 +1277,7 @@ console.log(tvSubscriptionResponse?.data?.status)
       self-center ${
       isDarkMode
         ? "bg-black text-white border border-white"
-        : "border border-[#0003] hover:bg-[#EDEAEA] border-[#9C9C9C] text-[#7C7C7C]"
+        : "border border-[#0003] hover:bg-[#EDEAEA] border-[#9C9C9C] text-[#7E7E7E]"
     }`}
                     />
                     {errors.tvEmail && (
@@ -1270,8 +1291,9 @@ console.log(tvSubscriptionResponse?.data?.status)
                   <div className="flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
                     <label
                       htmlFor="decoderType"
-                      className="text-[#7E7E7E] text-[15px] 
-                      lg:text-[16px] md:text-[12px] md:font-[600] font-[400]"
+                      className={` ${isDarkMode ? "text-white" : "text-black"} text-[14px] lg:text-[17px]
+                       md:text-[13px]
+                      md:font-[600] font-[400`}
                     >
                       Amount
                     </label>
@@ -1303,16 +1325,21 @@ console.log(tvSubscriptionResponse?.data?.status)
                   lg:gap-[5px] w-full md:w-1/2">
                     <label
                       htmlFor="decoderType"
-                      className="text-[#7E7E7E] text-[15px] lg:text-[17px] md:text-[13px] md:font-[600] font-[400]"
+                      className={` ${isDarkMode ? "text-white" : "text-black"} text-[14px] lg:text-[17px]
+                       md:text-[13px]
+                      md:font-[600] font-[400`}
                     >
                       Payment Method
                     </label>
                     <div
                       onClick={methodDropDown}
-                      className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13px]  sm:p-3 sm:text-lg flex items-center justify-between border-[0.23px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px]  ${
+                      className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] 
+                        md:p-0 text-[13px]  sm:p-3 sm:text-lg flex items-center 
+                        justify-between border-[0.23px] lg:border-[0.4px]
+                         w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px]  ${
                         isDarkMode
-                          ? "bg-black text-white border border-white"
-                          : "border-[#9C9C9C]"
+                          ? "bg-black text-white  border border-white"
+                          : "border-[#9C9C9C] text-black"
                       }`}
                     >
                       <p className={`font-[500] text-[13px] leading-[10.4px] 

@@ -317,7 +317,7 @@ export const TransferReceipt = () => {
                     >
                       Message
                     </p>
-                    <span className="capitalize">{message}</span>
+                    <span className="capitalize">{message === "" || message === null ? "NIL" : message}</span>
                   </div>
                   <div className="flex text-[10px] font-medium md:text-sm w-[90%] mx-auto justify-between  lg:text-base">
                     <p
@@ -339,24 +339,7 @@ export const TransferReceipt = () => {
                     </p>
                     <span>{transaction_id}</span>
                   </div>
-                  <div className="flex text-[10px] md:text-sm w-[90%] mx-auto font-medium justify-between items-center lg:text-base">
-                    <p
-                      className={` ${
-                        isDarkMode ? "text-white" : "text-[#7C7C7C]"
-                      }`}
-                    >
-                      Session ID
-                    </p>
-                    <div className="flex items-center">
-                      <span ref={textRef}>{session_id}</span>
-                      <div
-                        onClick={handleCopyClick}
-                        className="text-[#92abfec3] text-[13px] font-extrabold lg:text-base"
-                      >
-                        <RiFileCopyFill />
-                      </div>
-                    </div>
-                  </div>
+               
                 </div>
               </div>
               <div
@@ -388,7 +371,13 @@ export const TransferReceipt = () => {
                 onClick={() => {
                   handleSaveAsPDFClick();
                 }}
-                className={`bg-[#ffffff] border-[1px] w-[111px] border-[#0003] flex justify-center items-center mx-auto cursor-pointer text-xs font-extrabold h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+               className={` border-[1px] w-[111px]
+                   border-[#0003] flex justify-center 
+                   items-center  cursor-pointer text-[12px]
+                    font-extrabold h-[40px] rounded-[6px] 
+                    md:w-[25%] md:rounded-[8px] md:text-base
+                     lg:w-[163px] lg:h-[38px] lg:my-[2%]
+                     ${isDarkMode ? "bg-black border-[0.2px] text-white border-[#04177f]" : "text-black bg-white border-[0.2px] border-black"}`}
               >
                 Save as PDF
               </button>

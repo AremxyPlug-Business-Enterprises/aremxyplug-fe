@@ -87,7 +87,6 @@ const assumedString = selectedAmountMtn?.toString()
   ?.slice(0, assumedString?.length - 3)
   ?.replace(/\D/g, ""));
 
-  console.log(mtnDataAmount)
   const updateBalance = passDataBalance?.data
     ? passDataBalance?.data?.data?.data?.balance
     : "";
@@ -126,7 +125,7 @@ const assumedString = selectedAmountMtn?.toString()
 
             if (
               newToken !== "" &&
-              localStorage.getItem("authorisedLogin") === "true"
+              localStorage.getItem("authorisedLogin")
             ) {
               localStorage.setItem("authorisedLogin", newToken);
               if (localStorage.getItem("authorisedLogin")?.length > 1) {
@@ -198,7 +197,7 @@ const assumedString = selectedAmountMtn?.toString()
 
           if (
             newToken !== "" &&
-            localStorage.getItem("authorisedLogin") === "true"
+            localStorage.getItem("authorisedLogin") 
           ) {
             localStorage.setItem("authorisedLogin", newToken);
             if (localStorage.getItem("authorisedLogin")?.length > 1) {
@@ -628,17 +627,17 @@ const assumedString = selectedAmountMtn?.toString()
           setMtnSuccessfulResponse(response?.data?.data?.data);
          
           // Success response
-          if(response?.data?.data?.data?.Status === "success"
-            || response?.data?.data?.data?.Status === "delivered"
-            || response?.data?.data?.data?.Status === "successful"
-            || response?.data?.data?.data?.Status === "successfully"
+          if(response?.data?.data?.data?.status === "success"
+            || response?.data?.data?.data?.status === "delivered"
+            || response?.data?.data?.data?.status === "successful"
+            || response?.data?.data?.data?.status === "successfully"
           ){
           setTransactSuccessPopUp(true);
           setPurchaseMtnErrorType("")
           setInputPin("");
           setConfirm(false);
-          }else if(response?.data?.data?.data?.Status === "failed"
-            || response?.data?.data?.data?.Status === "Failed"
+          }else if(response?.data?.data?.data?.status === "failed"
+            || response?.data?.data?.data?.status === "Failed"
            ){
             setPurchaseMtnErrorType("Plan Unavailable: Purchase Failed")
          setPurchaseStatus(true);
@@ -649,9 +648,9 @@ const assumedString = selectedAmountMtn?.toString()
         }
       } catch (error) {
         if (error && error.response === undefined) {
-          setPurchaseMtnErrorType("Network error: Purchase Failed")
+          setPurchaseMtnErrorType("Network error: Purchase Failed");
         setPurchaseStatus(true)
-              setConfirm(false);
+         setConfirm(false);
           setInputPin("");
         } else if (
           error &&
@@ -673,7 +672,7 @@ const assumedString = selectedAmountMtn?.toString()
 
             if (
               newToken !== "" &&
-              localStorage.getItem("authorisedLogin") === "true"
+              localStorage.getItem("authorisedLogin")
             ) {
               localStorage.setItem("authorisedLogin", newToken);
               if (localStorage.getItem("authorisedLogin")?.length > 1) {
@@ -1694,7 +1693,7 @@ const assumedString = selectedAmountMtn?.toString()
               <p className="text-sm text-red-500 font-[600] mb-8">
                 {purchaseMtnErrorType}
               </p>
-              {mtnSuccessfulResponse?.Status  ?
+              {mtnSuccessfulResponse?.status  ?
                (
               <div className="flex gap-[10px] justify-between w-full px-[10px]">
                 <button

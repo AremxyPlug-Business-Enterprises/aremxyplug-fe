@@ -21,7 +21,7 @@ import { RestrictionPopUp } from "../../../../ApiCollection.jsx/ApiBuck";
 import { InternalLoginSession } from "../../../../ApiCollection.jsx/ApiBuck";
 // import { useNavigate } from "react-router-dom";
 
-export default function ToAremxyMain(Data) {
+export default function ToAremxyMain() {
   const navigate = useNavigate()
 //  identityMessage ="hello"
   const { showList,
@@ -41,13 +41,15 @@ export default function ToAremxyMain(Data) {
     setMessageTransfer,
     transferAmount,
     setTransferAmount,
-    isDarkMode
+    isDarkMode,
+    transferValue,
+    setTransferValue
   } = useContext(ContextProvider);
 
   const [addToRecipient, SetAddToRecipient] = useState(false);
   const [saveToFavorite, setSaveTofavorite] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [transferValue, setTransferValue] = useState("");
+
   const [loading, setLoading] = useState(false);
   const [sessionModal, setSessionModal] = useState(false);
   const [fetchedResponse, setFetchedResponse] = useState({});
@@ -60,7 +62,7 @@ export default function ToAremxyMain(Data) {
   const [restrictUser, setRestrictUser] = useState(false)
      //const [errors, setErrors] = useState({});
 
-Data = GetLocalStorage();
+const Data = GetLocalStorage();
 //console.log(Data?.UserEmail);
   const updateBalance = passDataBalance?.data?.data?.data !== undefined
     ? passDataBalance?.data?.data?.data?.balance
@@ -107,7 +109,13 @@ Data = GetLocalStorage();
 const testUsername = new RegExp( /^[a-zA-Z0-9_]{3,20}$/);
 
 const GetUserDetails = async(value, transferIdentity)=> {
-if(((transferIdentity === "email" && value !== Data?.UserEmail) ||( transferIdentity === "username" && Data?.aremxyUsername !== value) )
+  const valueTransfer = value?.toLowerCase();
+  const customerUsername = Data?.aremxyUsername?.toString()?.toLowerCase();
+  const customerEmail = Data?.UserEmail?.toString()?.toLowerCase();
+  
+   
+if(((transferIdentity === "email" && valueTransfer !== customerEmail)
+   ||( transferIdentity === "username" && customerUsername !== valueTransfer) )
   && value?.length > 2 ){
   const SuccessHandler =()=> {
 setVerifiedUser(true);
@@ -131,7 +139,7 @@ setErrorMessage("");
       setLoading, 
       SuccessHandler, ()=> {
         setSessionModal(true);
-      }, setFetchedResponse);
+      }, setFetchedResponse); 
       }else if(Error === undefined){
        setErrorMessage("Your internet connection is quite unstable.")
           setVerifiedUser(false)
@@ -151,7 +159,7 @@ setErrorMessage("");
      SuccessHandler,
       FailedHandler,
        setFetchedResponse);
-}else if(value === Data?.aremxyUsername || value === Data?.UserEmail){
+}else if(valueTransfer=== customerUsername || valueTransfer === customerEmail){
  setErrorMessage(`${value} is your transfer identity, you can only send to other aremxyplug wallet.`)
   setVerifiedUser(false);
 }}
@@ -160,11 +168,12 @@ setErrorMessage("");
 // console.log(timer);
 const HandleIdentifyCredentials = async(value)=> {
 const TestingTransferIdentify = async(transferIdentity)=> {
-if(value?.length < 3){
+if(value?.length < 2){
   setTimeout(()=> {
     setErrorMessage("");
+  setFetchedResponse({});
     setVerifiedUser(false);
-  },1000)
+  },500)
   // setErrorMessage("");
 
 }else if(testEmail.test(value) && value?.endsWith(".com") && value?.length > 7 ){
@@ -178,7 +187,7 @@ setErrorMessage("");
 testUsername.test(value) === false && value?.endsWith(".com") === false
  && value?.length > 7){
      setVerifiedUser(false);
-  setErrorMessage(`Your email address does not include the ${`${".com"}`} extension `)
+  setErrorMessage(`Your email address does not include the '${`${".com"}`}' extension `)
 setFetchedResponse({})
 transferIdentity = null;
 }else if(testEmail.test(value) === false && 
@@ -252,7 +261,6 @@ testUsername.test(value) === false && value?.endsWith(".com") === true
   const [currencyAvailable, setCurrencyAvailable] = useState(false);
 
   
-
   // const handleCountryClick = (name, flag, id, code) => {
   //   setFlag(flag);
   //   setShowList(false);
@@ -261,8 +269,22 @@ testUsername.test(value) === false && value?.endsWith(".com") === true
   //   setCountryCode(code);
   //   setCurrencyAvailable(id !== 1);
   // };
+const AppendValueWithPlus = ()=> {
+const splitValue = fetchedResponse?.data?.data ?
+ fetchedResponse?.data?.data?.userDetails?.phone
+: "";
+const holdSplitValueArrayValue = splitValue.split("");
+if(Array.isArray(holdSplitValueArrayValue)){
+ holdSplitValueArrayValue.unshift("+")
+if(holdSplitValueArrayValue?.length === 14){
+return holdSplitValueArrayValue.join("");
+ }
+}
+}
 
-
+// console.log(AppendValueWithPlus());
+const standardPhoneNumber = AppendValueWithPlus()
+ 
 
 
 
@@ -459,8 +481,8 @@ const GetBalance = async () => {
 };
 
 //  console.log(amtToTransfer)
- const FirstUserIcon = "./Images/UserIcon/FirstUserIcon.png"
-const UserImage = localStorage.getItem("UserIcon") ?  localStorage.getItem("UserIcon") : FirstUserIcon
+//  const FirstUserIcon = "./Images/UserIcon/FirstUserIcon.png"
+// const UserImage = localStorage.getItem("UserIcon") ?  localStorage.getItem("UserIcon") : FirstUserIcon
   return (
    
     <div
@@ -478,8 +500,9 @@ const UserImage = localStorage.getItem("UserIcon") ?  localStorage.getItem("User
           {/* <p className="text-[10px] font-extrabold md:text-[14px] lg:text-[20px]"> */}
           <p
             id ="selectCountry"
-            className="text-[#7E7E7E] text-[15px] lg:text-[17px]
-                       md:text-[13px] md:font-[600] font-[400]">
+            className={`text-[#7E7E7E] text-[15px] lg:text-[17px]
+                       md:text-[13px] md:font-[600] font-[400]
+                       ${isDarkMode ? "text-white" : "text-black"}`}>
             Select Country
           </p>
           <div
@@ -631,8 +654,9 @@ const UserImage = localStorage.getItem("UserIcon") ?  localStorage.getItem("User
           
           <p
             // className="text-[10px] font-extrabold md:text-[14px] lg:text-[20px]"
-            className="text-[#7E7E7E] text-[15px] lg:text-[17px]
-                       md:text-[13px] md:font-[600] font-[400]"
+             className={`text-[#7E7E7E] text-[15px] lg:text-[17px]
+                       md:text-[13px] md:font-[600] font-[400]
+                       ${isDarkMode ? "text-white" : "text-black"}`}
           >
             Country's Currency
           </p>
@@ -723,33 +747,10 @@ const UserImage = localStorage.getItem("UserIcon") ?  localStorage.getItem("User
       </div>
 
       {/* User details section */}
-{/*     
-        <div className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] 
-                        md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] 
-                        pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px]
-                         md:text-[11px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
-    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
-     items-center cursor-pointer 
-     outline-0 border-[0.24px] lg:border-[0.4px] 
-     w-full md:w-1/2 h-[40.927px] md:h-[35px] lg:h-[50px] 
-      px-[11px] md:px-[6px] lg:px-[10px] ${
-      isDarkMode
-        ? "bg-black text-white border border-white"
-        : "border border-[#0003] border-[#9C9C9C] text-[#7C7C7C]"
-    }`}>
-          <p className="text-[#7E7E7E] text-[15px] lg:text-[17px]
-                       md:text-[13px] md:font-[600] font-[400]">User Details </p>
-          <img
-            className="w-[15px] h-[15px] lg:w-[20px] lg:h-[20px]"
-            src="./Images/dashboardImages/arrowright.png"
-            alt="/"
-          />
-        </div> */}
 
-        <div className="flex md:justify-start justify-center
-         gap-[7.042px] lg:gap-[12px] my-[40px]">
-          <div className={`relative  ${ Data?.aremxyUsername?.toLowerCase()?.startsWith("a" || "b" || "c" )
+
+      
+          {/* <div className={`relative  ${ Data?.aremxyUsername?.toLowerCase()?.startsWith("a" || "b" || "c" )
                                             ? "bg-[#228be6] bg-opacity-5 p-5 rounded-full" : Data?.aremxyUsername?.toLowerCase()?.startsWith("d" || "e" || "f") 
                                            ?"bg-[#40c057] bg-opacity-5 p-5 rounded-full" : Data?.aremxyUsername?.toLowerCase()?.startsWith("g" || "h" || "i") 
                                          ? "bg-[#fab005]  bg-opacity-5 p-5 rounded-full" : Data?.aremxyUsername?.toLowerCase()?.startsWith("j" || "k" || "l")
@@ -772,24 +773,10 @@ const UserImage = localStorage.getItem("UserIcon") ?  localStorage.getItem("User
               md:h-[25.82px] md:w-[25.82px] lg:h-[44px] lg:w-[44px]"
               alt=""
             />
-          </div>
+          </div> */}
           {/* Profile text */}
-          <div className="flex flex-col justify-center gap-[3.52px] lg:gap-[12px]">
-            <p
-              className="font-[500] text-[10px] leading-[15px] md:text-[9.389px] md:leading-[12.206px] 
-              lg:text-[16px] lg:leading-[20.8px]"
-            >
-              {Data?.UserFullName}
-            </p>
-            <p
-              className="font-[500] text-[#7C7C7C] text-[10px] leading-[15px]
-              md:text-[7.042px] md:leading-[9.154px]
-              lg:text-[12px] lg:leading-[15.6px]"
-            >
-              {Data?.UserEmail}
-            </p>
-          </div>
-        </div>
+          
+        
       
 
       {/* <div className={` ${styles.inputBox}`}> 
@@ -797,12 +784,13 @@ const UserImage = localStorage.getItem("UserIcon") ?  localStorage.getItem("User
         *
       */}
 
-      <div className='flex flex-col lg:gap-[25px] gap-[20px]  w-[100%] mb-[50px]'>
+      <div className='flex flex-col lg:gap-[25px] gap-[20px] w-[100%] mb-[50px]'>
       <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-full">
         <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]">
-          <p className="text-[#7E7E7E] text-[15px] lg:text-[17px]
-                       md:text-[13px] md:font-[600] font-[400]">
-            Email or Username
+          <p     className={`text-[#7E7E7E] text-[15px] lg:text-[17px]
+                       md:text-[13px] md:font-[600] font-[400]
+                       ${isDarkMode ? "text-white" : "text-black"}`}>
+            Email\Username\UID
           </p>
             <div className="relative flex flex-col h-full 
             gap-[3px] lg:gap-[5px] w-full ">
@@ -859,12 +847,58 @@ const UserImage = localStorage.getItem("UserIcon") ?  localStorage.getItem("User
 
         {/* ======================Phone Number================== */}
         {/* <div className={styles.inputBox}> */}
-        <div className="flex flex-col md:w-[50%]
+          <div className="flex flex-col md:w-[50%]
          w-[100%] md:gap-[10px] gap-[5.868px]">
           <p
             // className="text-[10px] font-extrabold md:text-[14px] lg:text-[20px]"
-          className="text-[#7E7E7E] text-[15px] lg:text-[17px]
-                       md:text-[13px] md:font-[600] font-[400]"
+          className={`text-[#7E7E7E] text-[15px] lg:text-[17px]
+                       md:text-[13px] md:font-[600] font-[400]
+                       ${isDarkMode ? "text-white" : "text-black"}`}
+          >
+           FullName
+          </p>
+          <div
+            // className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]"
+          className="relative flex flex-col h-full 
+            gap-[3px] lg:gap-[5px] w-full ">
+            <input
+            //  onChange={handleMainInputChange}
+              name="userFullName"
+               readOnly
+              value={fetchedResponse?.data?.data?.userDetails?.full_name !== undefined ?
+            fetchedResponse?.data?.data?.userDetails?.full_name : "" }
+        className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] 
+     md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] 
+     pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px]
+      md:text-[11px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px]
+       md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] 
+    lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  
+    items-center cursor-pointer outline-0 border-[0.24px]
+     lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] 
+      px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "border border-[#0003] border-[#9C9C9C] text-[#7C7C7C]"
+    }`}
+  type="text"
+            />
+            <img
+             className=" absolute left-[90%] top-[40%] md:top-[30%]
+                         lg:left-[94%] self-center align-middle md:h-[14.038px] md:w-[14.038px] 
+      lg:h-[24px] lg:w-[24px] w-[14px] h-[16px] "
+              src="/Images/transferImages/call.png"
+              alt="dropdown"
+            />
+          </div>
+         
+          </div>
+        {/* <div className="flex flex-col md:w-[50%]
+         w-[100%] md:gap-[10px] gap-[5.868px]">
+          <p
+            // className="text-[10px] font-extrabold md:text-[14px] lg:text-[20px]"
+          className={`text-[#7E7E7E] text-[15px] lg:text-[17px]
+                       md:text-[13px] md:font-[600] font-[400]
+                       ${isDarkMode ? "text-white" : "text-black"}`}
           >
             Phone Number
           </p>
@@ -907,16 +941,71 @@ const UserImage = localStorage.getItem("UserIcon") ?  localStorage.getItem("User
               {mainTransferErrors.userPhoneNumber}
             </div>
           )}
-          </div>
+          </div> */}
           </div>
 
         {/* =========================Amount To Transfer==================== */}
         
         <div className="flex flex-col md:flex-row lg:gap-[22px] 
         gap-[20px] w-[100%]">
+          {/* Phone Number */}
+      <div className="flex flex-col md:w-[50%]
+         w-[100%] md:gap-[10px] gap-[5.868px]">
+          <p
+            // className="text-[10px] font-extrabold md:text-[14px] lg:text-[20px]"
+          className={`text-[#7E7E7E] text-[15px] lg:text-[17px]
+                       md:text-[13px] md:font-[600] font-[400]
+                       ${isDarkMode ? "text-white" : "text-black"}`}
+          >
+            Phone Number
+          </p>
+          <div
+            // className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]"
+          className="relative flex flex-col h-full 
+            gap-[3px] lg:gap-[5px] w-full ">
+            <input
+            //  onChange={handleMainInputChange}
+              name="userPhoneNumber"
+            
+              readOnly
+              value={standardPhoneNumber?.length > 1
+                 && standardPhoneNumber !== undefined && fetchedResponse?.data?.data
+                 ?  standardPhoneNumber: ""}
+        className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] 
+     md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] 
+     pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px]
+      md:text-[11px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px]
+       md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] 
+    lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  
+    items-center cursor-pointer outline-0 border-[0.24px]
+     lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] 
+      px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "border border-[#0003] border-[#9C9C9C] text-[#7C7C7C]"
+    }`}
+  type="text"
+            />
+            <img
+             className=" absolute left-[90%] top-[40%] md:top-[30%]
+                         lg:left-[94%] self-center align-middle md:h-[14.038px] md:w-[14.038px] 
+      lg:h-[24px] lg:w-[24px] w-[14px] h-[16px] "
+              src="/Images/transferImages/call.png"
+              alt="dropdown"
+            />
+          </div>
+          {mainTransferErrors.userPhoneNumber && (
+            <div className="text-[12px] text-red-500 italic lg:text-[14px]">
+              {mainTransferErrors.userPhoneNumber}
+            </div>
+          )}
+          </div>
+
+          {/* Phone Number end */}
             <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px] ">
-            <p className="text-[#7E7E7E] text-[15px] lg:text-[17px]
-                       md:text-[13px] md:font-[600] font-[400]">
+            <p    className={`text-[#7E7E7E] text-[15px] lg:text-[17px]
+                       md:text-[13px] md:font-[600] font-[400]
+                       ${isDarkMode ? "text-white" : "text-black"}`}>
           {/* <p className="text-[10px] font-extrabold md:text-[16px] lg:text-[20px]"> */}
             Amount To Transfer
           </p>
@@ -990,12 +1079,20 @@ const UserImage = localStorage.getItem("UserIcon") ?  localStorage.getItem("User
           )}
           </div>
 
-        {/* ===========================Available Balance===================== */}
+       
            
-            <div className="flex flex-col md:w-[50%] 
+            
+        
+       </div>
+ {/* ===========================Available Balance===================== */}
+       
+          <div className="flex flex-col md:flex-row lg:gap-[22px] 
+        gap-[20px] w-[100%]">
+          <div className="flex flex-col md:w-[50%] 
             w-[100%] md:gap-[10px] gap-[5.868px]">
-          <p className="text-[#7E7E7E] text-[15px] lg:text-[17px]
-                       md:text-[13px] md:font-[600] font-[400]">
+          <p    className={`text-[#7E7E7E] text-[15px] lg:text-[17px]
+                       md:text-[13px] md:font-[600] font-[400]
+                       ${isDarkMode ? "text-white" : "text-black"}`}>
             Available Balance
           </p>
           <div onClick={()=> {
@@ -1044,15 +1141,13 @@ const UserImage = localStorage.getItem("UserIcon") ?  localStorage.getItem("User
            )}
           </div>
         </div>
-        
-       </div>
 
-        {/* =============================Message======================= */}
-        <div className="flex flex-col md:w-[50%] w-[100%] 
+  <div className="flex flex-col md:w-[50%] w-[100%] 
         md:gap-[10px] gap-[5.868px]">
           <p
-           className="text-[#7E7E7E] text-[15px] lg:text-[17px]
-                       md:text-[13px] md:font-[600] font-[400]"
+            className={`text-[#7E7E7E] text-[15px] lg:text-[17px]
+                       md:text-[13px] md:font-[600] font-[400]
+                       ${isDarkMode ? "text-white" : "text-black"}`}
           >
             Message
           </p>
@@ -1074,6 +1169,7 @@ const UserImage = localStorage.getItem("UserIcon") ?  localStorage.getItem("User
         : "border border-[#0003] border-[#9C9C9C] text-[#7C7C7C]"
     }`}
           ></textarea>
+        </div>
         </div>
       </div>
 

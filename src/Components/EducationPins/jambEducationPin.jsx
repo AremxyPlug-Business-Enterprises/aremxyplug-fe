@@ -580,7 +580,7 @@ export default function JambEducationPin() {
           );
         } else if (ErrorType === "Server error") {
           setPurchaseEduErrorType(
-            "Failed to process your request, try again some other time"
+            "Server error: Purchase Failed"
           );
           setJambFailedTransaction(true);
           setJambEducationConfirm(false);
@@ -1701,9 +1701,7 @@ export default function JambEducationPin() {
                   An unexpected error has occurred, please try again.
                 </p> */}
                 <p
-                  className={`text-sm mb-8 ${
-                    isDarkMode ? "text-white" : "text-gray-600"
-                  }`}
+                  className="text-sm text-red-500 font-[600] mb-8"
                 >
                   {purchaseEduErrorType}
                 </p>

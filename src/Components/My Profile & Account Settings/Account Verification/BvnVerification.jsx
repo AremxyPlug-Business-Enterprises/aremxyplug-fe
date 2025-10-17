@@ -163,7 +163,7 @@ export default function BvnVerification(Data) {
              setLoading(true)
          const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
         
-         if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
+         if(newToken !== "" && localStorage.getItem("authorisedLogin") ){
              console.log(newToken)
           localStorage.setItem("authorisedLogin", newToken);
           
@@ -715,8 +715,14 @@ export default function BvnVerification(Data) {
               <div className=" h-[100%] flex flex-col w-[100%]
                items-center justify-center  ">
                 <div
-                  className={`bvnQuery flex flex-col shadow-[0px_0px_8.3274px_0px_rgba(0 0 0,0.25)] rounded-[8px] shadow-[0px_0px_8.3274px_0px_rgba(0,0,0,0.25)] md:rounded-[11.736px]  lg:rounded-[20px] md:w-[55%]
-            md:shadow-[0px_0px_11.73611px_0px_rgba(0,0,0,0.25)] lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] justify-center  items-center px-[18px] md:px-[30px] md:h-[550px] h-[430px] gap-[10px] md:gap-[40px] lg:gap-[50px] lg:justify-normal md:mx-[0px] mx-[19px]  lg:pt-[30px]  md:pt-[270px] pt-[270px] ${
+                  className={`bvnQuery flex flex-col shadow-[0px_0px_8.3274px_0px_rgba(0 0 0,0.25)]
+                     rounded-[8px] shadow-[0px_0px_8.3274px_0px_rgba(0,0,0,0.25)] md:rounded-[11.736px]  
+                     lg:rounded-[20px] md:w-[55%]
+            md:shadow-[0px_0px_11.73611px_0px_rgba(0,0,0,0.25)]
+             lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] justify-center 
+              items-center px-[18px] md:px-[30px] md:h-[550px] h-[430px]
+              gap-[10px] md:gap-[40px] lg:gap-[50px] lg:justify-normal md:mx-[0px]
+               mx-[19px]  lg:pt-[30px]  md:pt-[270px] pt-[270px] ${
               isDarkMode ? "bg-black border border-white" : "bg-white"
             }`}
                 >

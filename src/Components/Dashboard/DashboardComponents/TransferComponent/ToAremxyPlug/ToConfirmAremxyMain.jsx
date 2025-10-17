@@ -11,7 +11,6 @@ export const ToConfirmAremxyMain = ({transferValue, fetchedResponse ,passDataBal
     setEmailPhoneNumberConfirmation,
     isDarkMode,
    newBalance,
-    otherInputPinPopUp,
      setOtherInputPinPopUp,
      transferAmount
   } = useContext(ContextProvider);
@@ -88,6 +87,11 @@ let CheckSufficiency = amountUsable > updateBalance;
          justify-between font-[500] lg:text-[16px]">
                 <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Username or Email</p>
                 <span>{transferValue}</span>
+              </div>
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
+         justify-between font-[500] lg:text-[16px]">
+                <p className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>FullName</p>
+                <span>{fetchedResponse?.data?.data?.userDetails?.full_name}</span>
               </div>
               <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto 
          justify-between font-[500] lg:text-[16px]">
@@ -189,8 +193,6 @@ let CheckSufficiency = amountUsable > updateBalance;
       )}
   <MainInputPinPop
    fetchedResponse={fetchedResponse}
-        otherInputPinPopUp={otherInputPinPopUp}
-        setOtherInputPinPopUp={setOtherInputPinPopUp}
       />
 
     </div>

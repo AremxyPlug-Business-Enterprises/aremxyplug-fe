@@ -142,7 +142,7 @@ const assumedString = selectedAmountAirtel?.toString()
 
             if (
               newToken !== "" &&
-              localStorage.getItem("authorisedLogin") === "true"
+              localStorage.getItem("authorisedLogin")
             ) {
               localStorage.setItem("authorisedLogin", newToken);
               if (localStorage.getItem("authorisedLogin")?.length > 1) {
@@ -212,7 +212,7 @@ const assumedString = selectedAmountAirtel?.toString()
 
           if (
             newToken !== "" &&
-            localStorage.getItem("authorisedLogin") === "true"
+            localStorage.getItem("authorisedLogin") 
           ) {
             localStorage.setItem("authorisedLogin", newToken);
             if (localStorage.getItem("authorisedLogin")?.length > 1) {
@@ -644,17 +644,17 @@ const path = "/data";
         if (response.status === 200 || response.status === 201) {
           setAirtelSuccessfulResponse(response?.data?.data?.data)
           // Success response
-          if(response?.data?.data?.data?.Status === "success"
-            || response?.data?.data?.data?.Status === "delivered"
-            || response?.data?.data?.data?.Status === "successful"
-            || response?.data?.data?.data?.Status === "successfully"
+          if(response?.data?.data?.data?.status === "success"
+            || response?.data?.data?.data?.status === "delivered"
+            || response?.data?.data?.data?.status === "successful"
+            || response?.data?.data?.data?.status === "successfully"
           ){
           setTransactSuccessPopUp(true); // Show success popup
           setConfirm(false);
           setInputPin("");
-          }else if(response?.data?.data?.data?.Status === "failed"
-            || response?.data?.data?.data?.Status === "Failed"
-            || response?.data?.data?.data?.Status === "unsuccessful"
+          }else if(response?.data?.data?.data?.status === "failed"
+            || response?.data?.data?.data?.status === "Failed"
+            || response?.data?.data?.data?.status === "unsuccessful"
           ){
             setAirtelPurchaseErrorType("Plan Unavailable: Purchase Failed")
            setAirtelPurchaseStatus(true); // Show success popup
@@ -706,7 +706,7 @@ const path = "/data";
 
             if (
               newToken !== "" &&
-              localStorage.getItem("authorisedLogin") === "true"
+              localStorage.getItem("authorisedLogin")
             ) {
               localStorage.setItem("authorisedLogin", newToken);
               if (localStorage.getItem("authorisedLogin")?.length > 1) {
@@ -1665,7 +1665,7 @@ const path = "/data";
               <p className="text-sm text-red-500 font-[600] mb-8">
                 {airtelPurchaseErrorType}
               </p>
-              {airtelSuccessfulResponse?.Status  ?
+              {airtelSuccessfulResponse?.status  ?
                (
               <div className="flex gap-[10px] justify-between w-full px-[10px]">
                 <button

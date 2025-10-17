@@ -145,7 +145,12 @@ Data = GetLocalStorage()
                 hour12: true,
               })}
             </span>
-            <p className="text-[9px] text-[#27AE60] bg-[#D5F6E3] rounded-[11px] border-2 border-[#27AE60] py-[5px] px-[2px] text-center mx-[5px] lg:mx-[150px] md:mx-[100px] my-2 md:text-[14px] lg:text-[14px]">
+            <p className={`text-[10px] p-[5.729px] border-[0.573px] rounded-[6.302px]
+             md:p-[5.868px] md:border-[0.578px] md:rounded-[6.455px]  lg:border-[1px] lg:rounded-[11px]
+                   leading-[15px] md:leading-[20px] font-[600] 
+                    lg:p-[10px] text-center my-2 md:text-sm
+                    lg:text-base  lg:leading-[24px]  md:mb-7
+                     border-[#27AE60] text-[#27AE60] bg-[#D5F6E3]`}>
               You have successfully purchased{" "}
               <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[16px]">
                 {selectedProduct + " " +selectedOption}
@@ -241,11 +246,20 @@ Data = GetLocalStorage()
                 </div>
               </div>
             </div>
-            <div className="rounded-[8px] bg-[#E2F3FF] mx-4 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]">
-              <p className="text-[8px] text-center mx-auto w-[200px] md:text-[14px] md:w-[80%] lg:text-[16px]">
-              Earn free points on every successful transactions, redeem your earned points to real money, withdrawn to your bank account instantly.
-              </p>
-            </div>
+           <div className={`bg-[#F2FAFF] w-[90%]   mx-auto p-[8px] my-5 flex justify-between 
+        items-center md:p-[9px] lg:p-[10px] rounded-[5px] lg:rounded-[10px]
+         ${
+                isDarkMode ? "bg-slate-800 " : "bg-[#F2FAFF]"
+              }`}>
+            <p className={`text-[10px] leading-[13px] text-center
+             md:text-[14px] md:leading-[18px] lg:text-[14px]  font-semibold 
+             ${isDarkMode ? "text-white" : "text-black"}`}>
+           Earn free points on every successful transactions,
+            redeem your earned points to real money,
+             withdrawn to your bank account instantly.
+            </p>
+        
+                </div>
           </div>
 
           <div className="flex w-full px-[20px] mx-auto mb-[5%] md:w-[60%] ">

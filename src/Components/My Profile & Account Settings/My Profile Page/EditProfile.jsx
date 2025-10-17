@@ -16,6 +16,7 @@ import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 export default function EditProfile(Data) {
   const { openImage, setOpenImage, isDarkMode, customerDetail } = useContext(ContextProvider);
   const {phone, email} = customerDetail;
+  const UserIcon = localStorage.getItem("UserIcon")
  Data = GetLocalStorage();
   return (
     <div>
@@ -43,7 +44,7 @@ export default function EditProfile(Data) {
               <div className="flex md:justify-start justify-center gap-[7.042px] lg:gap-[12px]">
                 <div className="relative">
                   <img
-                    src={EditPic}
+                    src={UserIcon}
                     className="h-[48px] w-[46.753px] rounded-[48px]
       lg:h-[150px] lg:w-[150px] 
       md:h-[88.801px]  md:w-[88.801px]

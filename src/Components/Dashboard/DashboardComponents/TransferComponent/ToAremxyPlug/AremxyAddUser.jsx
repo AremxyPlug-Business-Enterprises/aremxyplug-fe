@@ -14,8 +14,9 @@ import kenyaFlag from"../../../../Dashboard/DashboardComponents/flagsImages/keny
 import britainFlag from "../../../../Dashboard/DashboardComponents/flagsImages/ukFlag.png";
 import audFlag from "../../../../Dashboard/DashboardComponents/flagsImages/australiaFlag.png";
 import euroFlag from "../../../DashboardComponents/flagsImages/europeanFlag.png";
+
 //import currencyImage from  "../../../../EducationPins/imagesEducation/arrow-down.svg";
-const AremxyAddUser = (Data) => {
+const AremxyAddUser = () => {
   const { toggleSideBar, isDarkMode, newBalance, setNewBalance} = useContext(ContextProvider);
 //  const [emailUsername, setEmailUserName] = useState("");
   const [mainCountry, setMainCountry] = useState("");
@@ -31,8 +32,8 @@ const AremxyAddUser = (Data) => {
  const [transferValue, setTransferValue] = useState("");
   const [restrictUser, setRestrictUser] = useState(false);
 // const [recipientResponse, setRecipientResponse] = useState({})
- Data = GetLocalStorage()
-
+ const Data = GetLocalStorage();
+const UserIcon = localStorage.getItem("UserIcon") ?  localStorage.getItem("UserIcon") : ""
 
   const [passDataBalance, setPassDataBalance] = useState({})
       const [currencyBalance,  setCurrencyBalance] = useState("");
@@ -439,7 +440,7 @@ const GetBalance = async () => {
           <div className="flex md:justify-start justify-center gap-[7.042px] lg:gap-[12px]">
             <div className="relative">
               <img
-                src="/Images/transferImages/man-fold.png"
+                src={UserIcon}
                 className="h-[48px] w-[46.753px] rounded-[48px]
                 lg:h-[100px] lg:w-[100px] 
                 md:h-[68.801px]  md:w-[68.801px]

@@ -548,7 +548,7 @@ const handleProceed = (e) => {
          setIsLoading(true)
          const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
         
-         if(newToken !== "" && localStorage.getItem("authorisedLogin") === "true"){
+         if(newToken !== "" && localStorage.getItem("authorisedLogin") ){
            const setAuthorisedToken = localStorage.setItem("authorisedLogin", newToken);
            if(setAuthorisedToken){
             await handleTransactionSuccessClose()
@@ -747,8 +747,9 @@ const handleProceed = (e) => {
                         {/* <div className={styles.mainGridCol}> */}
                             <div className="relative flex flex-col gap-[3px]
                    lg:gap-[5px] w-full md:w-1/2">
-       <h2 className="text-[#7E7E7E] text-[14px] lg:text-[17px]
-                       md:text-[13px] md:font-[600] font-[400]">
+       <h2     className={` ${isDarkMode ? "text-white" : "text-black"} text-[14px] lg:text-[17px]
+                       md:text-[13px]
+                      md:font-[600] font-[400`}>
                         Select Network</h2>
                 <div  className={`mt-2  md:mt-0 rounded-[10px] 
              md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
@@ -825,9 +826,9 @@ className={`flex justify-left  w-[100%] items-center`}>
                             {/* <div className={styles.headPro}> */}
                         <div className="relative z-0 flex flex-col gap-[3px]
                    lg:gap-[5px] w-full md:w-1/2">
-                                <h2  className="text-[#7E7E7E] 
-                                text-[14px] lg:text-[17px] md:text-[13px] md:font-[600] font-[400]
-                                    "> Product</h2>
+                                <h2    className={` ${isDarkMode ? "text-white" : "text-black"} text-[14px] lg:text-[17px]
+                       md:text-[13px]
+                      md:font-[600] font-[400`}> Product</h2>
                                 <div 
                                className={` mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]
                                  md:p-0 text-[13.2px] 
@@ -857,8 +858,9 @@ className={`flex justify-left  w-[100%] items-center`}>
                  md:gap-[12px] lg:gap-[22px] md:my-2 lg:my-4">
                             <div  className="relative flex flex-col gap-[3px]
                    lg:gap-[5px] w-full md:w-1/2">
-                                <h2 className="text-[#7E7E7E] text-[14px] lg:text-[17px]
-                       md:text-[13px] md:font-[600] font-[400]">Discount</h2>
+                                <h2     className={` ${isDarkMode ? "text-white" : "text-black"} text-[14px] lg:text-[17px]
+                       md:text-[13px]
+                      md:font-[600] font-[400`}>Discount</h2>
                                 <div className={` mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]
                                  md:p-0 text-[13.2px] 
                          sm:p-3 sm:text-lg  z-4  flex justify-between pt-[8.803px]
@@ -891,8 +893,9 @@ className={`flex justify-left  w-[100%] items-center`}>
                             
                     <div className="relative flex flex-col gap-[3px]
                    lg:gap-[5px] w-full md:w-1/2"> 
-                                <h2 className="text-[#7E7E7E] text-[15px] 
-                      lg:text-[17px] md:text-[13px] md:font-[600] font-[400]"
+                                <h2     className={` ${isDarkMode ? "text-white" : "text-black"} text-[14px] lg:text-[17px]
+                       md:text-[13px]
+                      md:font-[600] font-[400`}
                                          >Phone Number <span
                                     className={`text-blue-800`}>
                                         <Link to="/select-vtu-recipient"> (Select Recipient) </Link>
@@ -949,8 +952,10 @@ className={`flex justify-left  w-[100%] items-center`}>
                  md:gap-[12px] lg:gap-[22px] md:my-2 lg:my-4">
                             <div className=" flex flex-col gap-[3px]
                    lg:gap-[5px] w-full md:w-1/2"> 
-                                <h2 className="text-[#7E7E7E] text-[15px] 
-                      lg:text-[17px] md:text-[13px] md:font-[600] font-[400]">Recipient Name <span className={`${styles.span4} !text-[15px] md:!text-base`}>(optional)</span></h2>
+                                <h2    className={` ${isDarkMode ? "text-white" : "text-black"} text-[14px] lg:text-[17px]
+                       md:text-[13px]
+                      md:font-[600] font-[400`}>Recipient Name 
+                    <span className={`${styles.span4} !text-[15px] md:!text-base`}>(optional)</span></h2>
                                 <div className={`relative `}>
                                    
                <input type='text' className={`mt-2 md:mt-0 rounded-[10px]
@@ -980,8 +985,9 @@ className={`flex justify-left  w-[100%] items-center`}>
                             <div  className="relative flex flex-col gap-[3px]
                    lg:gap-[5px] w-full md:w-1/2"> 
                             {/* <div className="flex flex-col lg:gap-[14px] gap-[7px] mt-8 md:mt-10"> */}
-                                <h2 className="text-[#7E7E7E] text-[15px] 
-                      lg:text-[17px] md:text-[13px] md:font-[600] font-[400]">
+                                <h2     className={` ${isDarkMode ? "text-white" : "text-black"} text-[14px] lg:text-[17px]
+                       md:text-[13px]
+                      md:font-[600] font-[400`}>
                         Type Amount</h2>
                               
                                     <div className={`relative
@@ -1034,8 +1040,9 @@ className={`flex justify-left  w-[100%] items-center`}>
 
       <div className="relative flex flex-col gap-[3px] 
       lg:gap-[5px] w-full md:w-1/2">
-      <h2 className='text-[#7E7E7E] text-[15px] 
-                      lg:text-[17px] md:text-[13px] md:font-[600] font-[400]'>
+      <h2     className={` ${isDarkMode ? "text-white" : "text-black"} text-[14px] lg:text-[17px]
+                       md:text-[13px]
+                      md:font-[600] font-[400`}>
                         Total Amount
                       </h2>
         <div className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.8px]
@@ -1064,8 +1071,9 @@ className={`flex justify-left  w-[100%] items-center`}>
                             <div  className="relative flex flex-col gap-[3px] 
       lg:gap-[5px] w-full md:w-1/2">
                                 {/* <div className="flex flex-col lg:gap-[14px] gap-[7px] md:mt-10 mt-8"> */}
-                                    <h2 className='text-[#7E7E7E] text-[15px] 
-                      lg:text-[17px] md:text-[13px] md:font-[600] font-[400]'>Payment Method</h2>
+                                    <h2     className={` ${isDarkMode ? "text-white" : "text-black"} text-[14px] lg:text-[17px]
+                       md:text-[13px]
+                      md:font-[600] font-[400`}>Payment Method</h2>
                         <div onClick={handleShowPayment}
                                      className={`mt-2 md:mt-0 relative rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.8px]
                  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
