@@ -382,7 +382,7 @@ export const VirtualAccountReceipt = () => {
                     <span
                       className={` ${isDarkMode ? "text-white" : "text-black"}`}
                     >
-                      {message}
+                      {message === "" ? "NIL"  : message }
                     </span>
                   </div>
                   <div className="flex text-[10px] font-medium md:text-sm w-[90%] mx-auto justify-between lg:text-base">

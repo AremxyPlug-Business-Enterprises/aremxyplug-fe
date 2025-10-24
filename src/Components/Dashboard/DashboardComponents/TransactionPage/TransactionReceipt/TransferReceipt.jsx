@@ -393,9 +393,9 @@ export const TransferReceipt = () => {
             </div>
             <Link to="/ContactUs">
               <div
-                className={`${isDarkMode ? "" : "bg-[#04177f]"} ${
-                  styles.contactus
-                } text-[8px] p-1 text-white rounded-[8px] lg:p-[10%] lg:text-sm`}
+                className={`${isDarkMode ? "bg-[#04177f]" : "bg-[#04177f]"} 
+                  text-[8px] p-1 text-white rounded-[8px] 
+                  lg:p-[10%] lg:text-sm`}
               >
                 Contact Us
               </div>

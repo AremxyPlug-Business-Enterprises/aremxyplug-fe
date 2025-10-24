@@ -17,8 +17,8 @@ import { Loader } from "../../../Loader/Loader";
 import NoRecordImage from "../../../Add&SelectRecipient/RecipientImages/NoRecordImage.svg";
 import { useNavigate } from "react-router-dom";
 import { Modal } from "../../../Screens/Modal/Modal";
-import { CircularProgress } from "../../../CircularProgress";
 import { GetLocalStorage } from "../../../LocalStorage/LocalStorage";
+import { all } from "axios";
 const TransactionPage = () => {
   const Data = GetLocalStorage();
   const navigate = useNavigate();
@@ -32,17 +32,22 @@ const TransactionPage = () => {
   } = useContext(ContextProvider);
 
   const [showCategories, setShowCategories] = useState(false);
-  const [stateDateEdit, setStateDateEdit] = useState("Filter By Date")
-  const [showStatus, setShowStatus] = useState(false);
-  const [calender, setCalender] = useState(false);
+const [stateDateEdit, setStateDateEdit] = useState("Filter By Date")
+ const [showStatus, setShowStatus] = useState(false);
+const [calender, setCalender] = useState(false);
 
-  const [isActive, setIsActive] = useState(false);
-
-  const [selected, setSelected] = useState("NGN");
+const [isActive, setIsActive] = useState(false);
+ const [selected, setSelected] = useState("NGN");
   const [selectedCategory, setSelectedCategory] = useState("");
-
   const [activeCategory, setActiveCategory] = useState("");
-
+  const [cardIssuingCategoryDisplay, setCardIssuingCategoryDisplay] = useState(false);
+  const [paymentCategoryDisplay, setPaymentCategoryDisplay] = useState(false);
+ const [telecomCategoryDisplay, setTelecomCategoryDisplay] = useState(false);
+   const [allCategoryDisplay, setAllCategoryDisplay] = useState(false);
+   const [allCategoryValue, setAllCategoryValue] = useState("");
+    const [paymentCategoryValue, setPaymentCategoryValue] = useState("")
+     const [telecomCategoryValue, setTelecomCategoryValue] = useState("")
+      const [cardIssuingCategoryValue, setCardIssuingCategoryValue] = useState("")
   const [activeTab, setActiveTab] = useState("");
   const { transactionResponse, setTransactionResponse } =
     useContext(ContextProvider);
@@ -58,10 +63,7 @@ const TransactionPage = () => {
     setIsActive(!isActive);
   };
 
-  const handleFilterButtonClick = () => {
-    setSelectedCategory(activeCategory);
-    setShowCategories(false);
-  };
+  
 
   const handleSelectedOption = (event) => {
     const clickedoption = event.target.value;
@@ -71,9 +73,67 @@ const TransactionPage = () => {
 
   //Funcntio to help get the transaction details
   //  which include necessary query parameters for search
-  const GetTransactionInformation = async () => {
+  const GetTransactionInformation = async (value) => {
     if (!navigator.onLine) return setTransactionHistoryError("Network error");
-    const path = "transactions";
+   
+    const pathQueryFunction = ()=> {
+    const telecomDataForRequest
+     = telecomCategoryValue === "Data Top-up" ? "data" :
+     telecomCategoryValue === "Airtime Top-up" ? "airtime" :
+     telecomCategoryValue === "Education Pins" ? "edu" 
+     : telecomCategoryValue === "Electricity Bills" ? "elect" : telecomCategoryValue === "Tv Subscriptions" 
+     ? "tv-sub" : "";
+const paymentDataForRequest
+     = paymentCategoryValue === "Virtual Accounts" ? "virtual accounts" :
+     paymentCategoryValue === "Money Transfer" ? "money transfer" :
+     paymentCategoryValue === "wallet Transfer" ? "virtual accounts" 
+     : paymentCategoryValue === "Points Redeem" ? "points" : "";
+
+      const categoryDetermination = telecomCategoryValue?.length > 1?
+      "telecom" : paymentCategoryValue?.length > 1 ? "payment" : undefined
+       const valueCategoryDetermination
+        = categoryDetermination === "telecom"
+        ? telecomDataForRequest : categoryDetermination === "payment"
+        ?  paymentDataForRequest : undefined;
+
+      const allCategoryRequest = `?flow=${allCategoryValue === "Inflows"
+         ? "inflow" : allCategoryValue === "Outflows" ? "outflow" : allCategoryValue === "Transactions" ? "transactions" : "" }`
+   
+   const CategoryQuery =
+    (allCategoryValue?.length < 1 || allCategoryValue === undefined)
+     && (categoryDetermination !== undefined && categoryDetermination?.length > 1)
+? `?category=${categoryDetermination}&subcategory=${valueCategoryDetermination}` : `&category=${categoryDetermination}&subcategory=${valueCategoryDetermination}`;
+const fullQuery = `?flow=${allCategoryValue}&category=${categoryDetermination}&subcategory=${valueCategoryDetermination}`
+    //    const startDateQuery =
+    // (allCategoryValue?.length < 1 || allCategoryValue === undefined)
+    //  && (telecomCategoryValue?.length < 1 || telecomCategoryValue === undefined)
+    //  &&  (paymentCategoryValue?.length < 1 || paymentCategoryValue === undefined)
+    //   ? `?start_date=${paymentCategoryValue}` : `&start_date=${paymentCategoryValue}`;
+
+    //      const endDateQuery =  (allCategoryValue?.length < 1 || allCategoryValue === undefined)
+    //  && (telecomCategoryValue?.length < 1 || telecomCategoryValue === undefined)
+    //   &&  (paymentCategoryValue?.length < 1 || paymentCategoryValue === undefined)
+    //  ? `?end_date=${paymentCategoryValue}` : `&end_date= ${paymentCategoryValue}`
+
+
+      if(allCategoryValue?.length > 1 
+        && telecomCategoryValue?.length  < 1 
+      && paymentCategoryValue?.length < 1
+     ){
+      return allCategoryRequest
+      } else if(allCategoryValue?.length < 1
+        && categoryDetermination?.length ){
+          return CategoryQuery
+        }else if(allCategoryValue?.length > 1
+        && categoryDetermination !== undefined ){
+     return  fullQuery
+      }else{
+        return  ""
+      }
+      
+    }
+     const path =`transactions${pathQueryFunction()}`
+    
     const SuccessHandler = () => {
       console.log("user transaction details fetched");
     };
@@ -110,6 +170,15 @@ const TransactionPage = () => {
       FailedHandler,
       setTransactionResponse
     );
+  };
+
+  const handleFilterButtonClick = () => {
+    setSelectedCategory(allCategoryValue + "-" 
+      + telecomCategoryValue + "-"
+       + paymentCategoryValue + ""
+        + cardIssuingCategoryValue);
+    setShowCategories(false);
+  GetTransactionInformation()
   };
 
   useEffect(() => {
@@ -166,70 +235,40 @@ const TransactionPage = () => {
 
 //console.log(filteredTransactions?.length/ transactionResponse?.data?.data?.data?.transactions?.length * 100)
 const totalLength = transactionResponse?.data?.data?.data?.total_count;
-//       const TransactionStatusUpdates =(percentage, color)=> {
 
-// console.log(filteredTransactions?.length)
-//         if(transactionResponse?.data?.data?.data?.transactions?.length && (selectedStatus === "All Transactions" || selectedStatus === "")){
-//           // Calaculate the percentage for each status 
-//           percentage = 100
-//    color="text-[#04177F]"
-//           }else if(filteredTransactions?.length  && selectedStatus === "Failed"){
-//                percentage = filteredTransactions?.length / totalLength * 100
-//    color="text-[#F95252]"
-//           }else if(filteredTransactions?.length  && selectedStatus === "Successful"){
-            
-//      percentage = filteredTransactions?.length / totalLength * 100
-//      console.log(percentage)
-//    color="text-[#17E506]"
-//           }else if(filteredTransactions?.length  && selectedStatus === "Refunded"){
-//       percentage = filteredTransactions?.length / totalLength * 100;
-//       console.log(percentage)
-//    color="text-[#1C0CF9]"
-//           }else if(filteredTransactions?.length  && selectedStatus === "Cancelled"){
-//      percentage = filteredTransactions?.length / totalLength * 100
-//    color="text-[#E62E05]"
-//    console.log(percentage)
-//           }else if(filteredTransactions?.length  && selectedStatus === "Pending"){
-//      percentage = filteredTransactions?.length / totalLength * 100
-//    color="text-[#FFA733]";
-//    console.log(percentage);
-//           }else{
-//             percentage = 0;
-//             color="text-black";
-//           }
-//         return {
-//           percentage : percentage,
-
-//         }
-//       }
 const transactionStatusMetrics = transactionResponse?.data?.data?.data?.status_metrics;
 console.log(transactionStatusMetrics?.success?.volume)
 const successStatusMetricsPercentage = (transactionStatusMetrics?.success?.volume / totalLength) * 100;
 const failedStatusMetricsPercentage = (transactionStatusMetrics?.failed?.volume / totalLength) * 100;
-const  refundedStatusMetricsPercentage = (transactionStatusMetrics?.refunded?.volume / totalLength) * 100;
+const  refundedStatusMetricsPercentage = (transactionStatusMetrics?.refunded?.volume / totalLength) * 100
+const  pendingStatusMetricsPercentage = (transactionStatusMetrics?.pending?.volume / totalLength) * 100;
 
 console.log(transactionStatusMetrics?.refunded?.value)
       const pictorialStatus = [
-        { status : "All Transaction",
+        { status : "All Transactions",
            percentage : totalLength > 1 ? 100 : 0, 
            volume : transactionResponse?.data?.data?.data?.total_count
-           , color : "text-[#04177F]"},
+           , color : "bg-[#D5F6E3]"},
          { status : "success",
            percentage : Math.round(successStatusMetricsPercentage) ,
              volume : transactionStatusMetrics?.success?.volume,
               value : transactionStatusMetrics?.success?.value, 
-              color : "text-[#17E506]"},
+              color : "bg-[#97E8B9]"},
           { status : "failed", 
             percentage : Math.round(failedStatusMetricsPercentage), 
             volume : transactionStatusMetrics?.failed?.volume,
              value :  transactionStatusMetrics?.failed?.value, 
-             color : "text-[#F95252]"},
-
+             color : "bg-[#FB9393]"},
+{ status : "pending", 
+            percentage : Math.round(pendingStatusMetricsPercentage), 
+            volume : transactionStatusMetrics?.pending?.volume,
+             value :  transactionStatusMetrics?.pending?.value, 
+             color : "bg-[#FFD98F]"},
            { status : "refunded",
              percentage : Math.round(refundedStatusMetricsPercentage), 
              volume : transactionStatusMetrics?.refunded?.volume,
                value : transactionStatusMetrics?.refunded?.value,
-                color : "text-[#1C0CF9]" },
+                color : "bg-[#92ABFE]" },
       ]
   const chooseStatus = [
     "All Transactions", 
@@ -267,10 +306,11 @@ console.log(transactionStatusMetrics?.refunded?.value)
         ? "edu"
         : product === "Electricity Bills"
         ? "electric-sub"
-        : product === "Virtual Account"
+        : product === "Internal Deposit"
         ? "deposit"
-        : product === "Money Transfer"
-        ? "transfer"
+        : product === "Internal Transfer"
+        ? "transfer" : product === "Point Redeem"
+        ? "point"
         : "";
 
     const path = `transactions/${orderId}?product=${productType}`;
@@ -433,9 +473,18 @@ return date?.toISOString()?.slice(0, 10);
               <div
                 className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
                          sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px]
-                          pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
-                          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+                          pb-[7.794px] pr-[13px] pl-[10.876px]
+                           font-[400]  
+                          leading-[10.4px] md:text-[11px] 
+                          md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px]
+     md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] 
+     lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] 
+    lg:pl-[10px]  items-center cursor-pointer outline-0
+     border-[0.24px] lg:border-[0.4px] w-full h-[40.927px]
+      md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px]
+       md:px-[6px] lg:px-[10px] text-[#7C7C7C] 
+       self-center  ${
       isDarkMode
         ? "bg-black text-white border border-white"
         : "hover:bg-[#EDEAEA]"
@@ -454,19 +503,51 @@ return date?.toISOString()?.slice(0, 10);
                 <button className="lg:w-6 lg:h-6 w-[11px] h-[11px]">
                   <img src={ArrowDown} alt="" className="w-full h-full" />
                 </button>
-              </div>
-              {showCategories && (
-                <div className="border md:rounded-[10px] text-[10px] md:text-[12px] lg:text-[16px] lg:mt-2 rounded-[4px] absolute right-0 w-[70%] md:w-full bg-[#FFF] z-[10]">
-                  <p className="pl-[5px] py-[7px] text-[10px] lg:text-[15px] font-semibold text-[#7C7C7C]">
-                    All
-                  </p>
+               </div>
 
+
+<div className="relative w-full mt-[10px]">
+              {showCategories && (
+                  <div
+                className="border md:rounded-[10px] text-[10px]
+                 md:text-[12px] absolute lg:text-[16px] lg:mt-2
+                  rounded-[4px] right-0 w-full
+                   md:w-full bg-[#FFF] z-[10]">
+         <div  onClick={()=> {
+                    if(allCategoryDisplay === false){
+                    setAllCategoryDisplay(true);
+                    }else {
+                      setAllCategoryDisplay(false)
+                    }
+                    setTelecomCategoryDisplay(false);
+                    setCardIssuingCategoryDisplay(false);
+                    setPaymentCategoryDisplay(false)
+                }}
+          className="flex  cursor-pointer
+   justify-between w-full items-center px-[5px] py-[12px]">
+                  <p 
+                  className=" text-[12px] font-[500] leading-[18px]
+                   lg:text-[15px] lg:leading-[20px] 
+                  text-[#7C7C7C]">
+                    All : {allCategoryValue}
+                  </p>
+                     <button className="lg:w-6 lg:h-6 w-[11px] h-[11px]">
+                  <img src={ArrowDown} alt="" className="w-full h-full" />
+                </button>
+    </div>
+    
                   <hr />
 
-                  <div className="flex justify-center py-[10px] gap-[5px]">
+                  <div className="relative">
+         {allCategoryDisplay  && (
+                            <div className="flex justify-center gap-[25px] py-[10px]">
                     <p
-                      onClick={() => handleTabClick("Inflows")}
-                      className={`rounded-[2px] text-[10px] lg:text-[15px] px-[5px] font-semibold 
+                      onClick={() =>{
+                         handleTabClick("Inflows")
+                         setAllCategoryValue("Inflows")
+                      }}
+                      className={`rounded-[2px] text-[10px] lg:text-[15px]
+                         px-[5px] cursor-pointer font-semibold 
                                    ${
                                      activeTab === "Inflows"
                                        ? "text-[#fff] bg-[#04177F]"
@@ -477,8 +558,12 @@ return date?.toISOString()?.slice(0, 10);
                       Inflows
                     </p>
                     <p
-                      onClick={() => handleTabClick("Transactions")}
-                      className={`rounded-[2px] text-[10px] lg:text-[15px] px-[5px] font-semibold 
+                      onClick={() => {
+                        handleTabClick("Transactions")
+                        setAllCategoryValue("Transactions")
+                      }}
+                      className={`rounded-[2px] text-[10px]  cursor-pointerlg:text-[15px] px-[5px]
+                         font-semibold  cursor-pointer
                                    ${
                                      activeTab === "Transactions"
                                        ? "text-[#fff] bg-[#04177F]"
@@ -489,8 +574,12 @@ return date?.toISOString()?.slice(0, 10);
                       Transactions
                     </p>
                     <p
-                      onClick={() => handleTabClick("Outflows")}
-                      className={`rounded-[2px] text-[10px] lg:text-[15px] px-[5px] font-semibold 
+                      onClick={() => {
+                        handleTabClick("Outflows")
+                        setAllCategoryValue("Outflows")
+                      }}
+                      className={`rounded-[2px] text-[10px] lg:text-[15px]
+                         px-[5px] font-semibold  cursor-pointer
                                     ${
                                       activeTab === "Outflows"
                                         ? "text-[#fff] bg-[#04177F]"
@@ -501,10 +590,11 @@ return date?.toISOString()?.slice(0, 10);
                       Outflows
                     </p>
                   </div>
-
+         )}
+         </div>
                   <hr />
 
-                  <div className="flex justify-start py-[10px] pl-[5px] gap-[5px]">
+                  {/* <div className="flex justify-start py-[10px] pl-[5px] gap-[5px]">
                     <p
                       onClick={() => handleCategoryFilter("All Categories")}
                       className={`rounded-[2px] text-[10px] lg:text-[15px] px-[5px] font-semibold ${
@@ -515,24 +605,54 @@ return date?.toISOString()?.slice(0, 10);
                     >
                       All Categories
                     </p>
-                  </div>
+               <button className="lg:w-6 lg:h-6 w-[11px] h-[11px]">
+                  <img src={ArrowDown} alt="" className="w-full h-full" />
+                </button>
 
-                  <hr />
+                  </div> */}
 
-                  <p
-                    className="text-[#7C7C7C] text-[10px] lg:text-[15px] 
-                  font-semibold pl-[5px] py-[7px]"
+               
+    <div className= "relative">
+
+      <div  onClick={()=> {
+                    if(telecomCategoryDisplay === false){
+                    setTelecomCategoryDisplay(true);
+                    }else {
+                      setTelecomCategoryDisplay(false)
+                    }
+                    setPaymentCategoryValue("")
+                    setAllCategoryDisplay(false);
+                    setCardIssuingCategoryDisplay(false);
+                    setPaymentCategoryDisplay(false)
+               
+                }}
+    className="flex justify cursor-pointer
+   justify-between w-full items-center px-[5px] py-[12px]">
+                  <p 
+                    className=" text-[12px] font-[500] leading-[18px]
+                   lg:text-[15px] lg:leading-[20px] 
+                  text-[#7C7C7C]"
                   >
-                    Telecom
+                    Telecom : {telecomCategoryValue}
                   </p>
-
+                     <button className="lg:w-6 lg:h-6 w-[11px] h-[11px]">
+                  <img src={ArrowDown} alt="" className="w-full h-full" />
+                </button>
+    </div>
                   <hr />
+               {telecomCategoryDisplay && (
+                  <div className="flex flex-col justify-center items-center 
+                   gap-[5px] pt-[10px] pb-[20px]">
+                    <div className="flex justify-center gap-[25px] py-[10px]">
+                      <p 
 
-                  <div className="flex flex-col justify-center items-center gap-[5px] pt-[10px] pb-[20px]">
-                    <div className="flex justify-center gap-[5px]">
-                      <p
-                        onClick={() => handleCategoryFilter("Airtime Top-up")}
-                        className={`rounded-[2px] text-[10px] lg:text-[15px] px-[5px] font-semibold ${
+                        onClick={() =>{
+                           handleCategoryFilter("Airtime Top-up")
+                           setTelecomCategoryValue("Airtime Top-up")
+
+                          }}
+                        className={`rounded-[2px] text-[10px] lg:text-[15px]
+                           px-[5px] font-semibold cursor-pointer ${
                           activeCategory === "Airtime Top-up"
                             ? "text-[#fff] bg-[#04177F]"
                             : "text-[#7C7C7C] bg-[#F2FAFF]"
@@ -541,8 +661,11 @@ return date?.toISOString()?.slice(0, 10);
                         Airtime Top-up
                       </p>
                       <p
-                        onClick={() => handleCategoryFilter("Data Top-up")}
-                        className={`rounded-[2px] text-[10px] lg:text-[15px] px-[5px] font-semibold ${
+                        onClick={() => {
+                          handleCategoryFilter("Data Top-up")
+                            setTelecomCategoryValue("Data Top-up")
+                        }}
+                        className={`rounded-[2px] text-[10px] cursor-pointer lg:text-[15px] px-[5px] font-semibold ${
                           activeCategory === "Data Top-up"
                             ? "text-[#fff] bg-[#04177F]"
                             : "text-[#7C7C7C] bg-[#F2FAFF]"
@@ -552,10 +675,13 @@ return date?.toISOString()?.slice(0, 10);
                       </p>
                     </div>
 
-                    <div className="flex justify-center gap-[5px]">
+                    <div className="flex justify-center gap-[25px] py-[10px]">
                       <p
-                        onClick={() => handleCategoryFilter("Education Pins")}
-                        className={`rounded-[2px] text-[10px] lg:text-[15px] px-[5px] font-semibold ${
+                        onClick={() =>  { 
+                          handleCategoryFilter("Education Pins")
+                           setTelecomCategoryValue("Education Pins")
+                          }}
+                        className={`rounded-[2px] text-[10px] cursor-pointer lg:text-[15px] px-[5px] font-semibold ${
                           activeCategory === "Education Pins"
                             ? "text-[#fff] bg-[#04177F]"
                             : "text-[#7C7C7C] bg-[#F2FAFF]"
@@ -564,8 +690,12 @@ return date?.toISOString()?.slice(0, 10);
                         Education Pins
                       </p>
                       <p
-                        onClick={() => handleCategoryFilter("Tv Subscription")}
-                        className={`rounded-[2px] text-[10px] lg:text-[15px] px-[5px] font-semibold ${
+                        onClick={() =>{
+                           handleCategoryFilter("Tv Subscription")
+                           setTelecomCategoryValue("Tv Subscriptions")
+                        }}
+                        className={`rounded-[2px] text-[10px] cursor-pointer
+                           lg:text-[15px] px-[5px] font-semibold ${
                           activeCategory === "Tv Subscription"
                             ? "text-[#fff] bg-[#04177F]"
                             : "text-[#7C7C7C] bg-[#F2FAFF]"
@@ -575,12 +705,15 @@ return date?.toISOString()?.slice(0, 10);
                       </p>
                     </div>
 
-                    <div className="flex justify-center gap-[5px]">
+                    <div className="flex justify-center gap-[25px] py-[10px]">
                       <p
-                        onClick={() =>
+                        onClick={() =>{
                           handleCategoryFilter("Electricity Bills")
+                          setTelecomCategoryValue("Electricity Bills")
                         }
-                        className={`rounded-[2px] text-[10px] lg:text-[15px] px-[5px] font-semibold ${
+                        }
+                        className={`rounded-[2px] text-[10px]  cursor-pointer lg:text-[15px]
+                           px-[5px] font-semibold   ${
                           activeCategory === "Electricity Bills"
                             ? "text-[#fff] bg-[#04177F]"
                             : "text-[#7C7C7C] bg-[#F2FAFF]"
@@ -588,28 +721,21 @@ return date?.toISOString()?.slice(0, 10);
                       >
                         Electricity Bills
                       </p>
-                      <p
-                        onClick={() =>
-                          handleCategoryFilter("Airtime Conversion")
-                        }
-                        className={`rounded-[2px] text-[10px] lg:text-[15px] px-[5px] font-semibold ${
-                          activeCategory === "Airtime Conversion"
-                            ? "text-[#fff] bg-[#04177F]"
-                            : "text-[#7C7C7C] bg-[#F2FAFF]"
-                        }`}
-                      >
+                      
+                      <p  className={`rounded-[2px] text-[10px] lg:text-[15px] cursor-not-allowed
+                          px-[5px] font-semibold  text-[#7C7C7C]
+                           text-opacity-50 bg-gray-100`}>
                         Airtime Conversion
                       </p>
-                    </div>
+                 </div>
 
-                    <div className="flex justify-center gap-[5px]">
+                    <div className="flex justify-center gap-[25px] py-[10px]">
                       <p
                         onClick={() => handleCategoryFilter("Bulk SMS")}
-                        className={`rounded-[2px] text-[10px] lg:text-[15px] px-[5px] font-semibold ${
-                          activeCategory === "Bulk SMS"
-                            ? "text-[#fff] bg-[#04177F]"
-                            : "text-[#7C7C7C] bg-[#F2FAFF]"
-                        }`}
+                        className={`rounded-[2px] text-[10px] lg:text-[15px] cursor-not-allowed
+                          ] px-[5px] font-semibold  text-[#7C7C7C]
+                           text-opacity-50 bg-gray-100
+                         `}
                       >
                         Bulk SMS
                       </p>
@@ -617,30 +743,54 @@ return date?.toISOString()?.slice(0, 10);
                         onClick={() =>
                           handleCategoryFilter("Recharge Card Printing")
                         }
-                        className={`rounded-[2px] text-[10px] lg:text-[15px] px-[5px] font-semibold ${
-                          activeCategory === "Recharge Card Printing"
-                            ? "text-[#fff] bg-[#04177F]"
-                            : "text-[#7C7C7C] bg-[#F2FAFF]"
-                        }`}
+                      className={`rounded-[2px] text-[10px] lg:text-[15px] cursor-not-allowed
+                          ] px-[5px] font-semibold  text-[#7C7C7C]
+                           text-opacity-50 bg-gray-100
+                         `}
                       >
                         Recharge Card Printing
                       </p>
                     </div>
                   </div>
-
+      
+                      )}
+                      </div>
                   <hr />
-
-                  <p className="text-[#7C7C7C] text-[10px] lg:text-[15px] font-semibold pl-[5px] py-[7px]">
-                    Payments
+             <div  onClick={()=> {
+                    if(paymentCategoryDisplay === false){
+                    setPaymentCategoryDisplay(true);
+                    setTelecomCategoryValue("");
+                    }else {
+                      setPaymentCategoryDisplay(false)
+                    }
+                    setAllCategoryDisplay(false);
+                    setCardIssuingCategoryDisplay(false);
+                    setTelecomCategoryDisplay(false)
+                }}
+             className="flex justify cursor-pointer
+   justify-between w-full items-center px-[5px] py-[12px]">
+                  <p className="text-[#7C7C7C] text-[12px] font-[500] leading-[18px]
+                   lg:text-[15px] lg:leading-[20px] 
+                  ">
+                    Payments : {paymentCategoryValue}
                   </p>
-
-                  <hr />
-
+   <button className="lg:w-6 lg:h-6 w-[11px] h-[11px]">
+                  <img src={ArrowDown} alt="" className="w-full h-full" />
+                </button>
+              </div>   
+       <div className="relative">
+         <hr />
+      {paymentCategoryDisplay && (
                   <div className="flex flex-col justify-center items-center gap-[5px] pt-[10px] pb-[20px]">
-                    <div className="flex justify-center gap-[5px]">
+                    <div className="flex justify-center gap-[25px] py-[10px]">
                       <p
-                        onClick={() => handleCategoryFilter("Virtual Accounts")}
-                        className={`rounded-[2px] text-[10px] lg:text-[15px] px-[5px] font-semibold ${
+
+                        onClick={() =>{
+                           handleCategoryFilter("Virtual Accounts");
+                           setPaymentCategoryValue("Virtual Accounts")
+                        }}
+                        className={`rounded-[2px] cursor-pointer  
+                          text-[10px] lg:text-[15px] px-[5px] font-semibold ${
                           activeCategory === "Virtual Accounts"
                             ? "text-[#fff] bg-[#04177F]"
                             : "text-[#7C7C7C] bg-[#F2FAFF]"
@@ -649,8 +799,11 @@ return date?.toISOString()?.slice(0, 10);
                         Virtual Accounts
                       </p>
                       <p
-                        onClick={() => handleCategoryFilter("Money Transfer")}
-                        className={`rounded-[2px] text-[10px] lg:text-[15px] px-[5px] font-semibold ${
+                        onClick={() =>{
+                    handleCategoryFilter("Money Transfer")
+                    setPaymentCategoryValue("Money Transfer")     
+                        }}
+                        className={`rounded-[2px] text-[10px] cursor-pointer lg:text-[15px] px-[5px] font-semibold ${
                           activeCategory === "Money Transfer"
                             ? "text-[#fff] bg-[#04177F]"
                             : "text-[#7C7C7C] bg-[#F2FAFF]"
@@ -660,93 +813,92 @@ return date?.toISOString()?.slice(0, 10);
                       </p>
                     </div>
 
-                    <div className="flex justify-center gap-[5px]">
+                    <div className="flex justify-center gap-[25px] py-[10px]">
                       <p
-                        onClick={() => handleCategoryFilter("Wallet Transfer")}
-                        className={`rounded-[2px] text-[10px] lg:text-[15px] px-[5px] font-semibold ${
+                      onClick={() =>{
+                    handleCategoryFilter("Wallet Transfer")
+                    setPaymentCategoryValue("Wallet Transfer")     
+                        }}
+                        className={`rounded-[2px] text-[10px] cursor-pointer lg:text-[15px] px-[5px] font-semibold ${
                           activeCategory === "Wallet Transfer"
                             ? "text-[#fff] bg-[#04177F]"
                             : "text-[#7C7C7C] bg-[#F2FAFF]"
-                        }`}
-                      >
+                        }`}>
                         Wallet Transfer
                       </p>
                       <p
-                        onClick={() => handleCategoryFilter("Card Payments")}
-                        className={`rounded-[2px] text-[10px] lg:text-[15px] px-[5px] font-semibold ${
-                          activeCategory === "Card Payments"
-                            ? "text-[#fff] bg-[#04177F]"
-                            : "text-[#7C7C7C] bg-[#F2FAFF]"
-                        }`}
+                       
+                        className={`rounded-[2px] text-[10px]
+                           lg:text-[15px]  cursor-not-allowed
+                           px-[5px] font-semibold text-[#7C7C7C]
+                           text-opacity-50 bg-gray-100`}
                       >
                         Card Payments
                       </p>
                     </div>
 
-                    <div className="flex justify-center gap-[5px]">
+                    <div className="flex justify-center gap-[25px] py-[10px]">
                       <p
-                        onClick={() =>
-                          handleCategoryFilter("International Transfer")
-                        }
-                        className={`rounded-[2px] text-[10px] lg:text-[15px] px-[5px] font-semibold ${
-                          activeCategory === "International Transfer"
-                            ? "text-[#fff] bg-[#04177F]"
-                            : "text-[#7C7C7C] bg-[#F2FAFF]"
-                        }`}
+                       
+                        className={`rounded-[2px] text-[10px] cursor-not-allowed
+                           lg:text-[15px] px-[5px] font-semibold
+                            text-[#7C7C7C]
+                           text-opacity-50 bg-gray-100
+                        `}
                       >
                         International Transfer
                       </p>
                       <p
-                        onClick={() => handleCategoryFilter("Withdrawal")}
-                        className={`rounded-[2px] text-[10px] lg:text-[15px] px-[5px] font-semibold ${
-                          activeCategory === "Withdrawal"
-                            ? "text-[#fff] bg-[#04177F]"
-                            : "text-[#7C7C7C] bg-[#F2FAFF]"
-                        }`}
+                       
+                        className={`rounded-[2px] text-[10px] cursor-not-allowed
+                           lg:text-[15px] px-[5px] font-semibold 
+                           text-[#7C7C7C]
+                           text-opacity-50 bg-gray-100
+                        `}
                       >
                         Withdrawal
                       </p>
                     </div>
 
-                    <div className="flex justify-center gap-[5px]">
+                    <div className="flex justify-center gap-[25px] py-[10px]">
                       <p
-                        onClick={() => handleCategoryFilter("Fiat Conversion")}
-                        className={`rounded-[2px] text-[10px] lg:text-[15px] px-[5px] font-semibold ${
-                          activeCategory === "Fiat Conversion"
-                            ? "text-[#fff] bg-[#04177F]"
-                            : "text-[#7C7C7C] bg-[#F2FAFF]"
-                        }`}
+                      
+                        className={`rounded-[2px] text-[10px]
+                           lg:text-[15px] cursor-not-allowed
+                           px-[5px] font-semibold  text-[#7C7C7C]
+                           text-opacity-50 bg-gray-100`}
                       >
                         Fiat Conversion
                       </p>
                       <p
-                        onClick={() =>
-                          handleCategoryFilter("Crypto Conversion")
-                        }
-                        className={`rounded-[2px] text-[10px] lg:text-[15px] px-[5px] font-semibold ${
-                          activeCategory === "Crypto Conversion"
-                            ? "text-[#fff] bg-[#04177F]"
-                            : "text-[#7C7C7C] bg-[#F2FAFF]"
-                        }`}
+                       
+                        className={`rounded-[2px] text-[10px]  cursor-not-allowed
+                          lg:text-[15px] px-[5px] font-semibold  text-[#7C7C7C]
+                           text-opacity-50 bg-gray-100
+                          `}
                       >
                         Crypto Conversion
                       </p>
                     </div>
 
-                    <div className="flex justify-center gap-[5px]">
+                    <div className="flex justify-center gap-[25px] py-[10px]">
                       <p
-                        onClick={() => handleCategoryFilter("Crypto Top-up")}
-                        className={`rounded-[2px] text-[10px] lg:text-[15px] px-[5px] font-semibold ${
-                          activeCategory === "Crypto Top-up"
-                            ? "text-[#fff] bg-[#04177F]"
-                            : "text-[#7C7C7C] bg-[#F2FAFF]"
-                        }`}
+                        className={`rounded-[2px] text-[10px]
+                           lg:text-[15px]  cursor-not-allowed
+                          px-[5px] font-semibold  text-[#7C7C7C]
+                           text-opacity-50 bg-gray-100
+                         `}
                       >
                         Crypto Top-up
                       </p>
-                      <p
-                        onClick={() => handleCategoryFilter("Points Redeem")}
-                        className={`rounded-[2px] text-[10px] lg:text-[15px] px-[5px] font-semibold ${
+                      <p   
+                                    
+                        onClick={() => { 
+                          handleCategoryFilter("Points Redeem")
+                          setPaymentCategoryValue("Points Redeem")
+                        }}
+                        className={`rounded-[2px] text-[10px] cursor-pointer 
+                          lg:text-[15px] px-[5px] font-semibold ${
                           activeCategory === "Points Redeem"
                             ? "text-[#fff] bg-[#04177F]"
                             : "text-[#7C7C7C] bg-[#F2FAFF]"
@@ -756,80 +908,91 @@ return date?.toISOString()?.slice(0, 10);
                       </p>
                     </div>
 
-                    <div className="flex justify-center gap-[5px]">
+                    <div className="flex justify-center gap-[25px] py-[10px]">
                       <p
-                        onClick={() => handleCategoryFilter("Bank USSD")}
-                        className={`rounded-[2px] text-[10px] lg:text-[15px] px-[5px] font-semibold ${
-                          activeCategory === "Bank USSD"
-                            ? "text-[#fff] bg-[#04177F]"
-                            : "text-[#7C7C7C] bg-[#F2FAFF]"
-                        }`}
+                        className={`rounded-[2px] text-[10px] cursor-not-allowed
+                           lg:text-[15px] px-[5px] font-semibold
+                            text-[#7C7C7C]
+                           text-opacity-50 bg-gray-100`}
                       >
                         Bank USSD
                       </p>
                       <p
-                        onClick={() => handleCategoryFilter("Request Money")}
-                        className={`rounded-[2px] text-[10px] lg:text-[15px] px-[5px] font-semibold ${
-                          activeCategory === "Request Money"
-                            ? "text-[#fff] bg-[#04177F]"
-                            : "text-[#7C7C7C] bg-[#F2FAFF]"
-                        }`}
+                        className={`rounded-[2px] text-[10px]  cursor-not-allowed
+                          lg:text-[15px] px-[5px] font-semibold
+                            text-[#7C7C7C]
+                           text-opacity-50 bg-gray-100`}
                       >
                         Request Money
                       </p>
                     </div>
 
-                    <div className="flex justify-center gap-[5px]">
+                    <div className="flex justify-center gap-[25px] py-[10px]">
                       <p
-                        onClick={() => handleCategoryFilter("Payment Link")}
-                        className={`rounded-[2px] text-[10px] lg:text-[15px] px-[5px] font-semibold ${
-                          activeCategory === "Payment Link"
-                            ? "text-[#fff] bg-[#04177F]"
-                            : "text-[#7C7C7C] bg-[#F2FAFF]"
-                        }`}
+                       
+                        className={`rounded-[2px] text-[10px] lg:text-[15px] cursor-not-allowed
+                           px-[5px] font-semibold  text-[#7C7C7C]
+                           text-opacity-50 bg-gray-100`}
                       >
                         Payment Link
                       </p>
                       <p
-                        onClick={() => handleCategoryFilter("Scan QR Code")}
-                        className={`rounded-[2px] text-[10px] lg:text-[15px] px-[5px] font-semibold ${
-                          activeCategory === "Scan QR Code"
-                            ? "text-[#fff] bg-[#04177F]"
-                            : "text-[#7C7C7C] bg-[#F2FAFF]"
-                        }`}
+                        className={`rounded-[2px] text-[10px] lg:text-[15px] cursor-not-allowed
+                          ] px-[5px] font-semibold  text-[#7C7C7C]
+                           text-opacity-50 bg-gray-100
+                         `}
                       >
                         Scan QR Code
                       </p>
                     </div>
                   </div>
-
-                  <hr />
-
-                  <p className="text-[#7C7C7C] text-[10px] lg:text-[15px] font-semibold pl-[5px] py-[7px]">
-                    Card Issuing
+      )}
+      </div>
+                
+             
+  <hr />
+  <div  className="flex justify cursor-pointer
+   justify-between w-full items-center px-[5px] py-[12px]"  
+  onClick={()=> {
+                    if(cardIssuingCategoryDisplay === false){
+                    setCardIssuingCategoryDisplay(true);
+                    }else {
+                      setCardIssuingCategoryDisplay(false)
+                    }
+                    setAllCategoryDisplay(false);
+                    setPaymentCategoryDisplay(false);
+                    setTelecomCategoryDisplay(false)
+                }}>
+                  <p className="text-[#7C7C7C]
+               text-[12px] font-[500] leading-[18px]
+                   lg:text-[15px] lg:leading-[20px] 
+                  ">
+                    
+                    Card Issuing : {cardIssuingCategoryValue}
                   </p>
-
+                   <button className="lg:w-6 lg:h-6 w-[11px] h-[11px]">
+                  <img src={ArrowDown} alt="" className="w-full h-full" />
+                </button>
+           </div>
                   <hr />
-
+      <div>
+        {cardIssuingCategoryDisplay && (
                   <div className="flex flex-col justify-center items-center gap-[5px] pt-[10px] pb-[20px]">
-                    <div className="flex justify-center gap-[5px]">
+                    <div className="flex justify-center gap-[25px] py-[10px]">
                       <p
-                        onClick={() => handleCategoryFilter("Card Top-up")}
-                        className={`rounded-[2px] text-[10px] lg:text-[15px] px-[5px] font-semibold ${
-                          activeCategory === "Card Top-up"
-                            ? "text-[#fff] bg-[#04177F]"
-                            : "text-[#7C7C7C] bg-[#F2FAFF]"
-                        }`}
+                         className={`rounded-[2px] text-[10px] lg:text-[15px] cursor-not-allowed
+                          ] px-[5px] font-semibold  text-[#7C7C7C]
+                           text-opacity-50 bg-gray-100
+                         `}
                       >
                         Card Top-up
                       </p>
                       <p
-                        onClick={() => handleCategoryFilter("Card Withdrawal")}
-                        className={`rounded-[2px] text-[10px] lg:text-[15px] px-[5px] font-semibold ${
-                          activeCategory === "Card Withdrawal"
-                            ? "text-[#fff] bg-[#04177F]"
-                            : "text-[#7C7C7C] bg-[#F2FAFF]"
-                        }`}
+                        
+                         className={`rounded-[2px] text-[10px] lg:text-[15px] cursor-not-allowed
+                          ] px-[5px] font-semibold  text-[#7C7C7C]
+                           text-opacity-50 bg-gray-100
+                         `}
                       >
                         Card Withdrawal
                       </p>
@@ -837,31 +1000,38 @@ return date?.toISOString()?.slice(0, 10);
 
                     <div className="flex justify-center gap-[5px]">
                       <p
-                        onClick={() => handleCategoryFilter("Card Transfer")}
-                        className={`rounded-[2px] text-[10px] lg:text-[15px] px-[5px] font-semibold ${
-                          activeCategory === "Card Transfer"
-                            ? "text-[#fff] bg-[#04177F]"
-                            : "text-[#7C7C7C] bg-[#F2FAFF]"
-                        }`}
+                       
+                        className={`rounded-[2px] text-[10px] lg:text-[15px] cursor-not-allowed
+                          ] px-[5px] font-semibold  text-[#7C7C7C]
+                           text-opacity-50 bg-gray-100
+                         `}
                       >
                         Card Transfer
                       </p>
                     </div>
                   </div>
-
+        )}
+        </div>
                   <hr />
 
-                  <div className="flex justify-center py-[10px]">
+                  <div className="flex justify-center px-[10px] py-[10px]">
                     <button
-                      onClick={handleFilterButtonClick}
-                      className="text-[#FFFFFF] bg-[#04177F] rounded-[5px] lg:text-[15px] text-[10px] px-[10px] py-[3px] font-semibold"
+                      onClick={()=> {
+                        handleFilterButtonClick()
+
+                      }}
+                      className="text-[#FFFFFF] bg-[#04177F]
+                       rounded-[5px] lg:text-[15px] text-[10px] mt-[20px]
+                        w-full md:w-[200px] py-[12px] font-semibold"
                     >
                       Filter
                     </button>
                   </div>
                 </div>
               )}
+              </div>
             </div>
+            
 
             <div className="relative  md:w-1/2">
               <h2
@@ -1002,7 +1172,8 @@ return date?.toISOString()?.slice(0, 10);
             )}
             </div>
             <div
-              className={`w-[25%] flex flex-col md:flex-row md:gap-[5px]
+              className={`w-[25%] flex flex-col 
+                md:flex-row md:gap-[5px] cursor-pointer
                justify-center items-center
                rounded-[7px] h-full
                   md:rounded-[11px] md:py-[8px] ${
@@ -1032,7 +1203,7 @@ return date?.toISOString()?.slice(0, 10);
             <div
               className={`w-[25%] flex flex-col md:flex-row 
                     justify-center items-center md:gap-[5px]
-               rounded-[7px] h-full
+               rounded-[7px] h-full cursor-pointer
                   md:rounded-[11px] md:py-[8px] ${
                     isDarkMode ? "border" : "bg-[#04177f]"
                   }
@@ -1059,15 +1230,12 @@ return date?.toISOString()?.slice(0, 10);
 
             <div
               className={`w-[25%] flex flex-col justify-center items-center
-                md:flex-row md:gap-[5px]
+                md:flex-row md:gap-[5px] cursor-not-allowed
                text-white rounded-[7px] h-full
                   md:rounded-[11px] md:py-[8px] ${
                     isDarkMode ? "border" : "bg-[#04177f]"
-                  }
-                  lg:rounded-[13px] lg:py-[10px] lg:px-[19px]`}
-            >
-              <p
-                className={`text-white text-center
+                  } lg:rounded-[13px] lg:py-[10px] lg:px-[19px]`}>
+   <p className={`text-white text-center
                   text-[10px] leading-[13px]
                    lg:leading-[24px] lg:text-[12px] font-[500] `}
               >
@@ -1083,15 +1251,13 @@ return date?.toISOString()?.slice(0, 10);
             </div>
           
           </div>
-
+    <div className={`${transactionStatusMetrics ? "flex flex-col md:gap-[100px] gap-[500px]"  : ""} `}>
           <div className="w-full">
             <div
               className={` flex flex-col w-full gap-[5px] h-[70px] 
                 lg:h-[100px] items-start
-              lg:mt-[5%]  my-[30px]`}
-            >
-              
-              <select
+              lg:mt-[5%]  my-[30px]`}>
+       <select
                 name="curr"
                 id="curr"
                 onChange={handleSelectedOption}
@@ -1099,59 +1265,68 @@ return date?.toISOString()?.slice(0, 10);
                 className={`${styles.selected} w-[25%]`}
               >
                 <option value="NGN">NGN</option>
-                <option value="USD">USD</option>
-                <option value="GBP">GBP</option>
-                <option value="EUR">EUR</option>
-                <option value="AUD">AUD</option>
-                <option value="KES">KES</option>
+                <option disabled value="USD">USD</option>
+                <option disabled value="GBP">GBP</option>
+                <option disabled value="EUR">EUR</option>
+                <option disabled value="AUD">AUD</option>
+                <option disabled value="KES">KES</option>
               </select>
 
 
 
 <div className="flex flex-wrap w-[100%]
- gap-[20px] items-center md:justify-between">
+ gap-[5px] items-center md:gap-[10px] md:flex-nowrap">
   {transactionStatusMetrics  ?  (
    pictorialStatus.map((statusArray)=> {
-   return <div className="flex flex-col gap-[10px]">
-  
-     <CircularProgress 
-        percentage={statusArray?.percentage} 
-        strokeWidth={12}  
-         width={140}
-         size={140}
-         color={statusArray?.color}/>
-      <p  className={`text-[14px] text-center leading-[14px] font-[700] 
-                  lg:text-[18px] lg:leading-[24px] ${isDarkMode ?"text-white"  : "text-[#7C7C7C]"}
-                    ${toggleSideBar ? "lg:text-[18px]" : ""}`}>
-        {statusArray?.status}
-      </p>
-         <p  className={` text-[12px] text-center leading-[14px] font-[600] 
-                  lg:text-[18px] lg:leading-[24px] 
-                    ${toggleSideBar ? "lg:text-[18px]" : ""}`}>
-     Volume {" "} {statusArray?.volume}
-      </p>
-       {((statusArray?.value ||
-         statusArray?.value === 0)  && statusArray?.value !== undefined && statusArray?.value !== null) ? (
-                <p  className={`text-[12px] text-center leading-[14px]  
-                  lg:text-[18px] lg:leading-[24px] font-[600] 
-                    ${toggleSideBar ? "lg:text-[18px]" : ""}`}>
-                  Value {" "}{statusArray?.value !== null && statusArray?.value !== undefined
-                   ? statusArray?.value?.toLocaleString("en-NG", {
-      style : "currency",
-      currency : "NGN"
-     }) : ""}
+   return  <div className={`w-[200px] md:w-[20%] ${statusArray.color}  rounded-[12px] flex flex-col
+                  h-[100px] lg:h-[150px]  justify-center items-center gap-[3px]
+                   ${isDarkMode ? "" : `${statusArray.color}`}   ${
+                  toggleSideBar ? "lg:text-[14px]" : "lg:text-[px]"
+                }`}
+              >
+                <div className="flex gap-1  justify-center items-center  ">
+                  <div className ="flex flex-col gap-[2px]">
+                  <p
+                    className={`text-black text-[12px] text-center leading-[14px] font-[600] 
+                  lg:text-[18px] lg:leading-[24px] capitalize
+                    ${toggleSideBar ? "lg:text-[18px]" : ""}`}
+                  >
+                    {statusArray?.status  === "success" ? "Successfully" : statusArray?.status}
                   </p>
-        ) : (
-             <p  className={`text-[12px] text-center leading-[14px]  
-                  lg:text-[18px] lg:leading-[24px] font-[600] 
-                    ${toggleSideBar ? "lg:text-[18px]" : ""}`}>
-                      {""}
-                    </p>
-        )}
-
-      </div>
-   } )
-  ): (
+                    <p
+                    className={`text-black text-[11px] black text-center leading-[14px] font-[500] 
+                  lg:text-[18px] lg:leading-[24px]
+                    ${toggleSideBar ? "lg:text-[18px]" : ""}`}
+                  >
+                   Volume:   {statusArray?.volume}
+                  </p>
+                  {(statusArray?.value === 0 || statusArray?.value) 
+                  && statusArray?.value !== undefined
+                   && statusArray?.value !== null && (
+                    <p
+                    className={`text-[11px] text-black text-center leading-[14px] font-[500] 
+                  lg:text-[18px] lg:leading-[24px] 
+                    ${toggleSideBar ? "lg:text-[18px]" : ""}`}
+                  >
+                   Value: {statusArray?.value !== undefined && statusArray?.value !== null ? statusArray?.value?.toLocaleString("en-NG", {
+                    style : "currency",
+                    currency : "NGN"
+                   }) : ""}
+                  </p>
+                  )}
+                  </div>
+                  <img
+                    className="h-[10.3px] w-[10.3px] md:h-[18px] md:w-[18px] lg:w-[24px] lg:h-[24px]"
+                    src="./Images/dashboardImages/newarrow-down.png"
+                    alt="dropdown"
+                  />
+                </div>
+              
+            </div>
+           
+      
+      
+   })): (
     <p  className="text-sm text-red-500 font-[600] mb-8">
      {Data?.ConfirmAcc === "true" 
      ? "An error occured: unable to retrieve transaction status-metrics" 
@@ -1160,43 +1335,9 @@ return date?.toISOString()?.slice(0, 10);
 
   )}
 </div> 
-             {/* <div
-                className={`w-[33.3%] rounded-[3px] lg:rounded-[5px] flex flex-col h-full justify-center items-center
-                   gap-[3px] ${isDarkMode ? "border " : " bg-[#D5F6E3]"}   ${
-                  toggleSideBar ? "lg:text-[14px]" : "lg:text-[px]"
-                }`}
-              >
-                <div className="flex gap-1  justify-center items-center  ">
-                  <p
-                    className={` text-[11px] text-center leading-[14px] font-[500] 
-                  lg:text-[18px] lg:leading-[24px]
-                    ${toggleSideBar ? "lg:text-[18px]" : ""}`}
-                  >
-                    Total Inflows
-                  </p>
-                  <img
-                    className="h-[10.3px] w-[10.3px] md:h-[18px] md:w-[18px] lg:w-[24px] lg:h-[24px]"
-                    src="./Images/dashboardImages/newarrow-down.png"
-                    alt="dropdown"
-                  />
-                </div>
-                <p
-                  className="text-center text-[10px] leading-[13px] font-[500] 
-                  lg:text-[18px] lg:leading-[24px]"
-                >
-                  {selected === "NGN"
-                    ? transactionResponse?.data?.data?.data
-                      ? transactionResponse?.data?.data?.data?.total_inflow?.toLocaleString(
-                          "en-NG",
-                          {
-                            style: "currency",
-                            currency: "NGN",
-                          }
-                        )
-                      : "₦"
-                    : `${symbolValue}0.00`}
-                </p>
-              </div>  */}
+</div>
+</div>
+            
 
                {/* <div
                 className={`w-[33.3%] rounded-[3px] lg:rounded-[5px]  flex flex-col h-full justify-center items-center
@@ -1269,12 +1410,12 @@ return date?.toISOString()?.slice(0, 10);
                       : "₦"
                     : `${symbolValue}0.00`}
                 </p>
-              </div> */}
+              </div>
             </div>
-          </div>
+          </div> */}
 
-          <div className={`${transactionStatusMetrics ? "mt-[500px] md:mt-[200px]" : ""} `}>
-            <div className="flex items-center gap-[10px] ">
+          <div>
+            <div className="flex items-center gap-[10px]">
               <p className="text-[10px] md:text-[12px] lg:text-[16px] text-[#7C7C7C] mt-[10px] font-semibold">
                 Transaction History
               </p>
@@ -1284,6 +1425,7 @@ return date?.toISOString()?.slice(0, 10);
                 alt="/"
               />
             </div>
+          </div>
           </div>
 
           {/* <div className="flex w-full justify-between mt-[20px]">
@@ -1378,11 +1520,12 @@ return date?.toISOString()?.slice(0, 10);
                               ? "/AirtimeTransReceipt"
                               : transaction?.product === "Data Top-up"
                               ? "/DataTransReceipt"
-                              : transaction?.product === "Money Transfer"
+                              : transaction?.product === "Internal Transfer"
                               ? "/TransferReceipt"
-                              : transaction?.product === "Virtual Account"
+                              : transaction?.product === "Internal Deposit"
                               ? "/VirtualAccountReceipt"
-                              : null,
+                              :  transaction?.product ===  "Point Redeem" 
+                              ? "/PointRedeemReceipt"  : null,
                             { state: { orderData, transaction } }
                           );
                         }

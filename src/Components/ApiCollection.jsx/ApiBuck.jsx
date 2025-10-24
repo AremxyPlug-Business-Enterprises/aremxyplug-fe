@@ -532,7 +532,7 @@ export const VerifyTransPin = async (
      setFailed("Network error");
       } else if(error && error.response.status === 400){
          setFailed("Bad request");
-         alert("You allowed to attempt 5 times, kindly ensure your pin is correct.")
+         alert("You are allowed to attempt 5 times, kindly ensure your pin is correct.")
          setErrorMessage(true);
       }else if(error && error.response.status === 401){
          console.log(error?.response?.headers);

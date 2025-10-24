@@ -66,8 +66,11 @@ export default function WalletSummaryPage() {
   // console.log(totalOutFlow);
 
   const [calender, setCalender] = useState(false);
-   const [selectedStatus, setSelectedStatus] = useState("Filter by Status");
-
+   const [selectedStatus, setSelectedStatus] = useState("All Transactions");
+   const [selectCollection, setSelectCollection] = useState("All Collections");
+    const [selectRecords, setSelectRecords] = useState("All Records");
+    const [selectRecordDropDown, setSelectRecordDropDown] = useState(false)
+     const [selectCollectionDropDown, setSelectCollectionDropDown] = useState(false)
 
 
 
@@ -271,9 +274,9 @@ export default function WalletSummaryPage() {
         ? "edu"
         : product === "Electricity Bills"
         ? "electric-sub"
-        : product === "Virtual Account"
+        : product === "Internal Deposit"
         ? "deposit"
-        : product === "Money Transfer"
+        : product === "Internal Transfer"
         ? "transfer"
         : "";
 
@@ -340,14 +343,19 @@ export default function WalletSummaryPage() {
       ? "£"
       : "₦";
 
-  const filteredWalletTransactions =
-  ( walletTransactionResponse?.data?.data?.data?.data?.transactions !== null 
-   || walletTransactionResponse?.data?.data?.data?.data?.transactions ) && stateDateEdit === "Filter By Date"
-   ? walletTransactionResponse?.data?.data?.data?.data?.transactions?.filter((transaction) => {
-   const handleStatus =  selectedStatus === "Successful" ? 
+      const handleStatus =  selectedStatus === "Successful" ? 
               "success" : selectedStatus === "Failed" ? "failed" :
                selectedStatus === "Pending" ? "pending" : selectedStatus === "Refunded" ? 
                "refunded" : selectedStatus;
+  const filteredWalletTransactions =
+  ( walletTransactionResponse?.data?.data?.data?.data?.transactions !== null 
+   || walletTransactionResponse?.data?.data?.data?.data?.transactions )
+   
+    && stateDateEdit === "Filter By Date" 
+    && selectRecords === "All Records" 
+    && selectCollection === "All Collections"
+   ? walletTransactionResponse?.data?.data?.data?.data?.transactions?.filter((transaction) => {
+   
             //console.log(transaction?.created_at?.slice(0, 10) === dateFiltered);
             if (
               selectedStatus === "" ||
@@ -359,17 +367,183 @@ export default function WalletSummaryPage() {
              
             }
           }
-        ) :  walletTransactionResponse?.data?.data?.data?.data?.transactions !== null
+        ) :    walletTransactionResponse?.data?.data?.data?.data?.transactions !== null
        &&  stateDateEdit !== "Filter By Date"
       ? walletTransactionResponse?.data?.data?.data?.data?.transactions.filter( (transaction) => {
-        console.log(transaction?.created_at.slice(0,10))
-        return transaction?.created_at?.slice(0, 10) === dateEdit
+        if(selectedStatus === "All Transactions" &&
+            selectRecords === "All Records" 
+            && selectCollection === "All Collections"){
+          return transaction?.created_at?.slice(0, 10) === dateEdit
+        }else if( selectedStatus !== "All Transactions" &&
+            selectRecords === "All Records" && selectCollection === "All Collections"){
+         return (transaction?.status === handleStatus)
+          && ( transaction?.created_at?.slice(0, 10) === dateEdit)
+        }else if( selectedStatus !== "All Transactions" &&
+            selectRecords !== "All Records" && selectCollection === "All Collections"){
+         return (transaction?.status === handleStatus)
+          && ( transaction?.created_at?.slice(0, 10) === dateEdit)
+          &&  ( selectRecords  === "Deposits"
+            ? transaction?.description === "NGN Wallet Top-Up"
+          :  transaction?.description === "From NGN Wallet"
+        )
+        }else if( selectedStatus !== "All Transactions" &&
+            selectRecords !== "All Records" && selectCollection !== "All Collections"){
+    return  (transaction?.status === handleStatus)
+          && ( transaction?.created_at?.slice(0, 10) === dateEdit)
+          &&  ( selectRecords  === "Deposits"
+            ? transaction?.description === "NGN Wallet Top-Up"
+          :  transaction?.description === "From NGN Wallet"
+        ) && (selectCollection === "Virtual Accounts"
+          ? (transaction?.product === "Internal Transfer"
+             || transaction?.product === "Internal Deposits") 
+             : transaction?.product=== "Point Redeem")
+        }else if(selectedStatus === "All Transactions" &&
+            selectRecords === "All Records" && selectCollection !== "All Collections"){
+         return  (transaction?.status === handleStatus)
+          && ( transaction?.created_at?.slice(0, 10) === dateEdit)
+           (selectCollection === "Virtual Accounts"
+          ? (transaction?.product === "Internal Transfer"
+             || transaction?._product === "Internal Deposits") 
+             : transaction?.product=== "Point Redeem")
+        }else if(selectedStatus === "All Transactions" &&
+            selectRecords !== "All Records" && selectCollection === "All Collections"){
+         return  (transaction?.status === handleStatus)
+          && ( transaction?.created_at?.slice(0, 10) === dateEdit)
+          &&  ( selectRecords  === "Deposits"
+            ? transaction?.description === "NGN Wallet Top-Up"
+          :  transaction?.description === "From NGN Wallet"
+        ) 
+        }
       }
-    ) : [];
-      
+      //
+    ) :    selectCollection !== "All Collections" 
+   &&   walletTransactionResponse?.data?.data?.data?.data?.transactions !== null
+     && walletTransactionResponse?.data?.data?.data?.transactions?.length > 1  ? 
+        walletTransactionResponse?.data?.data?.data?.transactions?.filter((transaction)=> {
+          if(selectedStatus === "All Transactions" &&
+            selectRecords === "All Records" 
+            && stateDateEdit === "Filter By Date"){
+              alert("On bro")
+        return (selectCollection === "Virtual Accounts"
+          ? (transaction?.product === "Internal Transfer"
+             || transaction?.product === "Internal Deposits") 
+             : transaction?.product=== "Point Redeem")
+   
+        }else if( selectedStatus !== "All Transactions" &&
+            selectRecords === "All Records" && stateDateEdit === "Filter By Date"){
+         return (transaction?.status === handleStatus)
+          && (selectCollection === "Virtual Accounts"
+          ? (transaction?.product === "Internal Transfer"
+             || transaction?.product === "Internal Deposits") 
+             : transaction?.product=== "Point Redeem")
+        }else if( selectedStatus !== "All Transactions" &&
+            selectRecords !== "All Records" && stateDateEdit === "Filter By Date"){
+         return (transaction?.status === handleStatus)
+          &&  (selectCollection === "Virtual Accounts"
+          ? (transaction?.product === "Internal Transfer"
+             || transaction?.product === "Internal Deposits") 
+             : transaction?.product=== "Point Redeem")
+          &&  ( selectRecords  === "Deposits"
+            ? transaction?.description === "NGN Wallet Top-Up"
+          :  transaction?.description === "From NGN Wallet"
+        )
+        }else if( selectedStatus !== "All Transactions" &&
+            selectRecords !== "All Records" && stateDateEdit !== "Filter By Date"){
+    return  (transaction?.status === handleStatus)
+    ( transaction?.created_at?.slice(0, 10) === dateEdit)
+          && (selectCollection === "Virtual Accounts"
+          ? (transaction?.product === "Internal Transfer"
+             || transaction?.product === "Internal Deposits") 
+             : transaction?.product=== "Point Redeem")
+          &&  ( selectRecords  === "Deposits"
+            ? transaction?.description === "NGN Wallet Top-Up"
+          :  transaction?.description === "From NGN Wallet"
+        ) && (selectCollection === "Virtual Accounts"
+          ? (transaction?.product === "Internal Transfer"
+             || transaction?.product === "Internal Deposits") 
+             : transaction?.product=== "Point Redeem")
+        }else if(selectedStatus === "All Transactions" &&
+            selectRecords === "All Records" && stateDateEdit !== "Filter By Date"){
+         return  (transaction?.status === handleStatus)
+          && ( transaction?.created_at?.slice(0, 10) === dateEdit)
+           (selectCollection === "Virtual Accounts"
+          ? (transaction?.product === "Internal Transfer"
+             || transaction?.product === "Internal Deposits") 
+             : transaction?.product=== "Point Redeem")
+             &&     ( transaction?.created_at?.slice(0, 10) === dateEdit)
+        }else if(selectedStatus === "All Transactions" &&
+            selectRecords !== "All Records" && stateDateEdit === "Filter By Date"){
+         return   ( selectRecords  === "Deposits"
+            ? transaction?.description === "NGN Wallet Top-Up"
+          :  transaction?.description === "From NGN Wallet"
+        ) &&   (selectCollection === "Virtual Accounts"
+          ? (transaction?.product === "Internal Transfer"
+             || transaction?.product === "Internal Deposits") 
+             : transaction?.product=== "Point Redeem")
+        }
+        //Handling the records for user transactions based on the filtered info
+        })  :  (selectRecords !== "All Records" && selectRecords?.length > 1) 
+        &&   walletTransactionResponse?.data?.data?.data?.data?.transactions !== null
+     && walletTransactionResponse?.data?.data?.data?.transactions?.length > 1  ? 
+        walletTransactionResponse?.data?.data?.data?.transactions?.filter((transaction)=> {
+           if(selectedStatus === "All Transactions" &&
+            stateDateEdit === "Filter By Date" 
+            && selectCollection === "All Collections"){
+        return   ( selectRecords  === "Deposits"
+            ? transaction?.description === "NGN Wallet Top-Up"
+          :  transaction?.description === "From NGN Wallet"
+        )
+        }else if( selectedStatus !== "All Transactions" &&
+            stateDateEdit === "Filter By Date" && selectCollection === "All Collections"){
+         return (transaction?.status === handleStatus)
+          &&  ( selectRecords  === "Deposits"
+            ? transaction?.description === "NGN Wallet Top-Up"
+          :  transaction?.description === "From NGN Wallet"
+        )
+        }else if( selectedStatus !== "All Transactions" &&
+            stateDateEdit !== "Filter By Date" && selectCollection === "All Collections"){
+         return (transaction?.status === handleStatus)
+          && ( transaction?.created_at?.slice(0, 10) === dateEdit)
+          &&  ( selectRecords  === "Deposits"
+            ? transaction?.description === "NGN Wallet Top-Up"
+          :  transaction?.description === "From NGN Wallet"
+        )
+        }else if( selectedStatus !== "All Transactions" &&
+            stateDateEdit !== "Filter By Date" && selectCollection !== "All Collections"){
+    return  (transaction?.status === handleStatus)
+          && ( transaction?.created_at?.slice(0, 10) === dateEdit)
+          &&  ( selectRecords  === "Deposits"
+            ? transaction?.description === "NGN Wallet Top-Up"
+          :  transaction?.description === "From NGN Wallet"
+        ) && (selectCollection === "Virtual Accounts"
+          ? (transaction?.product === "Internal Transfer"
+             || transaction?.product === "Internal Deposits") 
+             : transaction?.product=== "Point Redeem")
+        }else if(selectedStatus === "All Transactions" &&
+            stateDateEdit === "Filter By Date" && selectCollection !== "All Collections"){
+         return  (transaction?.status === handleStatus)
+          &&( selectRecords  === "Deposits"
+            ? transaction?.description === "NGN Wallet Top-Up"
+          :  transaction?.description === "From NGN Wallet"
+        )
+           (selectCollection === "Virtual Accounts"
+          ? (transaction?.product === "Internal Transfer"
+             || transaction?.product === "Internal Deposits") 
+             : transaction?.product=== "Point Redeem")
+        }else if(selectedStatus === "All Transactions" &&
+            stateDateEdit !== "Filter By Date" && selectCollection === "All Collections"){
+         return  (transaction?.status === handleStatus)
+          && ( transaction?.created_at?.slice(0, 10) === dateEdit)
+          &&  ( selectRecords  === "Deposits"
+            ? transaction?.description === "NGN Wallet Top-Up"
+          :  transaction?.description === "From NGN Wallet"
+        ) 
+        }
+        }) : [] ;
+    
 
   //console.log(walletTransactionResponse?.data?.data?.data?.data);
-  const product = [
+  const productStatus = [
     "All Transactions",
     "Successful",
     "Failed",
@@ -377,6 +551,19 @@ export default function WalletSummaryPage() {
     "Refunded",
     "Cancelled",
   ];
+
+  const CollectionWallet =[
+    "All Collections",
+    "Virtual Accounts",
+    "Point Redeem",
+  ]
+
+  const RecordsWallet = [
+    "All Records",
+    "Deposits",
+    "Transfers",
+  ]
+
 
   //=======Format Date ======
   const FormatDate =(DateValue)=> {
@@ -397,7 +584,7 @@ const FormatTime =(DateValue)=> {
   })
   return TimePart;
 }
-console.log(walletTransactionResponse?.data?.data?.data?.data?.total_outflow)
+
   return (
     <DashBoardLayout>
       <>
@@ -457,8 +644,9 @@ console.log(walletTransactionResponse?.data?.data?.data?.data?.total_outflow)
                         .classList.remove("DropIt");
                     }
                   }}
-                  className="justify-center items-center mt-[5px] 
-              md:mt-[12px] gap-[5.5px] cursor-pointer  lg:gap-[11px] md:gap-[6.30px]  flex"
+                  className="justify-center w-full items-center mt-[5px] 
+              md:mt-[12px] gap-[5.5px] cursor-pointer relative 
+              lg:gap-[11px] md:gap-[6.30px]  flex"
                 >
                   <img
                     className="h-[16px] w-[14px] md:h-[14.038px] md:w-[14.038px] lg:h-[24px] lg:w-[24px]"
@@ -498,18 +686,14 @@ console.log(walletTransactionResponse?.data?.data?.data?.data?.total_outflow)
 
                 {methodBalance && (
                   <div
-                    className={`absolute top-[60%] z-[2] flex
-                     flex-col w-[100%] lg:w-[30%] md:w-[50%]  cursor-pointer 
-                     justify-center bg-slate-600   ${
+                    className={`absolute top-[1%] z-[2] flex
+                     flex-col w-[100%] cursor-pointer  md:top-[100px] lg:top-[150px]
+                      bg-slate-600 lg:w-[40%] md:w-[50%]   ${
                        isDarkMode
                          ? "bg-black border-white rounded-[7px] text-white"
                          : "text-[#7C7C7C] bg-white rounded-br-[7px] rounded-bl-[7px] lg:rounded-br-[14px] lg:rounded-bl-[14px]"
                      }
-                      ${
-                        toggleSideBar
-                          ? "lg:w-[31.5%] lg:top-[100.5%]"
-                          : "lg:w-[38.5%] lg:top-[105.3%]"
-                      } shadow-xl border w-full lg:w-full  flex flex-col divide-y absolute top-20`}
+                    shadow-xl border  flex flex-col divide-y `}
                   >
                     {methodOptions.map((method) => (
                       <div
@@ -559,42 +743,43 @@ console.log(walletTransactionResponse?.data?.data?.data?.data?.total_outflow)
               </div>
             </div>
 
-            {/* filter by date and product*/}
+            {/* filter by date, product, collection and status*/}
             <div
               className={`${toggleSideBar
   ? " md:w-[550px]"
   : "  md:w-full"}
-    ${isDarkMode ? " bg-black border-[0.5px] border-white rounded-[12px]" : "bg-white"}
-  w-full h-[50px] py-[5px] px-[5px]  mt-[2px] lg:mt-[30px]  md:py-[11px]
-    lg:h-[72px] lg:pl-4 lg:pr-[459.30px] lg:gap-[50.53px] lg:py-[11px]
-    md:h-[41.25px] md:pl-[9.17px] md:pr-[277.40px] md:pt-[8.39px] lg:w-full
-    md:pb-[6.40px]  shadow-md border-[1px] border-black rounded-[7px]
-    border-opacity-30 justify-start items-center gap-[52.80px] flex relative`}
+    ${isDarkMode ? " bg-black border-[0.5px] border-white rounded-[12px]"
+       : "bg-gray-100"} 
+  w-full  px-[5px]  mt-[2px] lg:mt-[30px]  md:py-[11px] h-auto py-[5px]
+    lg:h-[72px] lg:pl-4  lg:py-[11px]  md:flex-row
+    md:h-[41.25px] md:pl-[9.17px]  md:pt-[8.39px] lg:w-full
+    md:pb-[6.40px]  shadow-md rounded-[7px] flex-col
+    border-opacity-30  items-center gap-[15.80px] flex 
+    md:justify-between relative`}
             >
               {/* filter by date */}
 
               <div
-             
-              className={`cursor-pointer ${styles.filter}  ${
-                isDarkMode ? "border-[0.5px] border-white rounded-[12px]" : ""} flex  md:gap-[6px] items-center
+                className={`cursor-pointer shadow-[0px_1.3290735483169556px_1.3290735483169556px_0p_rgba(0,0,0,0.25)] ${
+                isDarkMode ? "border-[0.5px]   border-white rounded-[12px]" : "border-[0.5px] bg-white rounded-[12px]"} 
+                flex  md:gap-[6px] items-center py-[15px]
                  justify-center md:w-[145px] h-[100%] w-[100%]
-                lg:w-[300px] gap-[1px]
-                 px-[2px] rounded-[10px] md:px-[8px] flex-row`}>
-                <p
-                
-                   onClick={() => {
+                lg:w-[25%] gap-[1px]
+                 px-[2px] rounded-[10px] md:px-[8px] flex-row relative md:static`}>
+                <p   onClick={() => {
                     if(Data?.ConfirmAcc === "true"){
                       if(calender === false){
                   setCalender(true);
-                 
-                  setIsOpen5(false);
-                  setIsOpen1(false);
+                   setSelectRecordDropDown(false)
+                    setIsOpen1(false);
+                    setSelectCollectionDropDown(false);
+                
                       }else{
                         setCalender(false)
                       }
                     }
                 }}
-                  className={`${isDarkMode ? "text-white" :"text-[#04177f]"} text-[11px] 
+               className={`${isDarkMode ? "text-white" :"text-[#04177f]"} text-[11px] 
                 leading-[14px] font-[500] 
                   lg:text-[16px]`}>
                   {stateDateEdit}
@@ -606,24 +791,36 @@ console.log(walletTransactionResponse?.data?.data?.data?.data?.total_outflow)
                   alt=""
                 />
                   {calender && (
-              <div className={`absolute rounded-[20px] left-0
-                   md:mt-[40px] w-[300px] h-auto p-2   border-[0.2px]
+              <div className={`absolute rounded-[20px] z-[2] left-0
+                   md:mt-[40px] w-[300px]  h-auto p-2   border-[0.2px]
                    lg:mt-[55px]  flex flex-col gap-[10px] font-[400]
                     ${isDarkMode ? "bg-black text-white  border-white" 
                     : "bg-white text-black border-gray-300"}`}>
                 <Calender />
-                   <div onClick={()=> {
+                   <div
+                     className="flex justify-center 
+                     items-center w-[270px] gap-[10px]">
+                       <button  onClick={()=> {
+                        setCalender(false);
+                       setStateDateEdit("Filter By Date")
+                       //  setSelectedStatus("Filter by Status")
+                       }}
+                       className={`w-[50%] bg-blue-white py-[15px] text-[12px] 
+                        md:text-[14px] font-[500] 
+                         rounded-[15px] border-[0.2px] border-blue-900
+             ${isDarkMode ? "text- bg-black  " :
+                          " bg-white text-blue-900 " }`}>
+                       Cancel
+                       </button>
+                       <button 
+                        onClick={()=> {
                         setCalender(false);
                         setStateDateEdit(dateEdit?.slice(0,10))
-                         setSelectedStatus("Filter by Status")
+                       //  setSelectedStatus("Filter by Status")
                        }}
-                     className="flex justify-center 
-                     items-center w-[270px]">
-                       <button 
-                       className={`w-full bg-blue-900 py-[15px] text-[12px] md:text-[14px] font-[500] 
-                         rounded-[15px]
-                         ${isDarkMode ? "text-white bg-black border-[0.2px] border-white" :
-                          "text-white bg-blue-900"}`}>
+                       className={`w-[50%] bg-blue-900 py-[15px] text-[12px] md:text-[14px] font-[500] 
+                         rounded-[15px] text-white
+                       `}>
                        Done
                        </button>
                        </div>
@@ -631,19 +828,205 @@ console.log(walletTransactionResponse?.data?.data?.data?.data?.total_outflow)
             )}
               </div>
 
-              {/* filter by Status */}
+              {/* filter by Collection */}
               <div
                 onClick={() => {
+                 
+                 
+                  if (selectCollectionDropDown === false) {
+                    setSelectCollectionDropDown(true);
+                         setCalender(false);
+                  setSelectRecordDropDown(false)   
+                    setIsOpen1(false);
+                     
+                  setCalender(false)
+                  } else {
+                    setSelectCollectionDropDown(false);
+                  }
+                }}
+                 className={`cursor-pointer shadow-[0px_1.3290735483169556px_1.3290735483169556px_0p_rgba(0,0,0,0.25)] ${
+                isDarkMode ? "border-[0.5px]   border-white rounded-[12px]" : "border-[0.5px] bg-white rounded-[12px]"} 
+                flex  md:gap-[6px] items-center py-[15px]
+                 justify-center md:w-[145px] h-[100%] w-[100%]
+                lg:w-[25%] gap-[1px] 
+                 px-[2px] rounded-[10px] md:px-[8px] flex-row relative md:static`}>
+                <div class="h-[100%] w-[100%] justify-center items-center lg:gap-[5px] gap-[2.86px] flex">
+                  <img
+                    className="w-[11.37px] h-[11.37px]  md:w-[20px] md:h-[19px]
+                       lg:w-[19.85px] lg:h-[19.85px]"
+                    src={menusales}
+                    alt=""
+                  />
+
+                  <p
+                    className={`${isDarkMode ? "text-white" :"text-[#04177f]"} text-[11px] 
+                leading-[14px] font-[500] 
+                  lg:text-[16px]`}
+                  >
+                    {selectCollection}
+                  </p>
+
+                  <div
+                    class="w-[11.37px] h-[11.37px] md:w-[17px] 
+                  md:h-[17px] lg:w-[19.85px] lg:h-[19.85px] justify-center items-center flex"
+                  >
+                    {selectCollectionDropDown ? (
+                      <img
+                        src={arrow44}
+                        className="h-[100%] w-[100%]"
+                        alt="Arrow44"
+                      />
+                    ) : (
+                      <img
+                        className="h-[100%] w-[100%]"
+                        src={arrow11}
+                        alt="arrow11"
+                      />
+                    )}
+                  </div>
+                </div>
+
+                {/*filter by product dropdown */}
+                {selectCollectionDropDown && (
+                  <ul
+                    className={`dropdown-options z-[2] absolute left-0 md:left-auto top-[100%]
+                   w-full md:w-[50%] lg:w-[30%] bg-white cursor-pointer`}
+                  >
+                    {CollectionWallet?.map((collection, index) => (
+                      <li
+                        className={`pb-[20px] pt-[20px] md:pb-[14px] md:pt-[14px] font-weight-bold text-[14px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-medium md:text-[13.227px] md:leading-[17.195px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
+                        lg:text-[16px] lg:leading-[20.8px] cursor-pointer  dropdownCSS ${
+                          isDarkMode
+                            ? "bg-black text-white border border-white"
+                            : "hover:bg-[#EDEAEA] border-[#9C9C9C]  bg-white text-[#7C7C7C] "
+                        }`}
+                        key={index}
+                        onClick={() => {
+                          setSelectCollectionDropDown(false);
+                          setIsOpen1(false);
+                          setSelectCollection(collection)
+                        //  setStateDateEdit("Filter By Date")
+                          setCalender(false);
+                          setSelectRecordDropDown(false)
+                        }}
+                      >
+                        {collection}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+               
+           
+
+
+
+{/* =================   Select Records ============= */}
+            <div
+                onClick={() => {
                   setCalender(false);
+                  setSelectCollectionDropDown(false);
+                   setIsOpen1(false)
+                  if (selectRecordDropDown === false) {
+                  setSelectRecordDropDown(true)
+                    setIsOpen1(false);
+                    setSelectCollectionDropDown(false);
+                  setCalender(false)
+
+                  } else {
+                    setSelectRecordDropDown(false)
+                  }
+                }}
+                 className={`cursor-pointer shadow-[0px_1.3290735483169556px_1.3290735483169556px_0p_rgba(0,0,0,0.25)] ${
+                isDarkMode ? "border-[0.5px]   border-white rounded-[12px]" : "border-[0.5px] bg-white rounded-[12px]"} 
+                flex  md:gap-[6px] items-center py-[15px]
+                 justify-center md:w-[145px] h-[100%] w-[100%]
+                lg:w-[25%] gap-[1px]
+                 px-[2px] rounded-[10px] md:px-[8px] flex-row relative md:static`}>
+                <div class="h-[100%] w-[100%] justify-center items-center lg:gap-[5px] gap-[2.86px] flex">
+                  <img
+                    className="w-[11.37px] h-[11.37px]  md:w-[20px] md:h-[19px]
+                       lg:w-[19.85px] lg:h-[19.85px]"
+                    src={menusales}
+                    alt=""
+                  />
+
+                  <p
+                    className={`${isDarkMode ? "text-white" :"text-[#04177f]"} text-[11px] 
+                leading-[14px] font-[500] 
+                  lg:text-[16px]`}
+                  >
+                    {selectRecords}
+                  </p>
+
+                  <div
+                    class="w-[11.37px] h-[11.37px] md:w-[17px] 
+                  md:h-[17px] lg:w-[19.85px] lg:h-[19.85px] justify-center items-center flex"
+                  >
+                    {selectRecordDropDown ? (
+                      <img
+                        src={arrow44}
+                        className="h-[100%] w-[100%]"
+                        alt="Arrow44"
+                      />
+                    ) : (
+                      <img
+                        classname="h-[100%] w-[100%]"
+                        src={arrow11}
+                        alt="arrow11"
+                      />
+                    )}
+                  </div>
+                </div>
+
+                {/*filter by records */}
+                {selectRecordDropDown && (
+                  <ul
+                    className={`dropdown-options z-[2] absolute left-0 md:left-auto top-[100%]
+                   w-full md:w-[50%] lg:w-[30%] bg-white cursor-pointer`}
+                  >
+                    {RecordsWallet?.map((records, index) => (
+                      <li
+                        className={`pb-[20px] pt-[20px] md:pb-[14px] md:pt-[14px] font-weight-bold text-[14px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-medium md:text-[13.227px] md:leading-[17.195px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
+                        lg:text-[16px] lg:leading-[20.8px] cursor-pointer  dropdownCSS ${
+                          isDarkMode
+                            ? "bg-black text-white border border-white"
+                            : "hover:bg-[#EDEAEA] border-[#9C9C9C]  bg-white text-[#7C7C7C] "
+                        }`}
+                        key={index}
+                        onClick={() => {
+                          setSelectRecords(records);
+                          setIsOpen1(false);
+                          setSelectRecordDropDown(false)
+                         // setStateDateEdit("Filter By Date")
+                          setCalender(false);
+                        }}
+                      >
+                        {records}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+           
+ {/* Select by status */}
+  <div
+                onClick={() => {
+                  setCalender(false);
+                  setSelectRecordDropDown(false)
+                   setSelectCollectionDropDown(false)
                   if (isOpen1 === false) {
                     setIsOpen1(true);
                   } else {
                     setIsOpen1(false);
                   }
                 }}
-                className={`flex flex-col cursor-pointer rounded-[12px]
-                 ${ isDarkMode ? "border-[0.5px] border-white " : ""}
-                  h-[100%] w-[100%] lg:w-[50%] ${styles.filter}`}>
+                 className={`cursor-pointer shadow-[0px_1.3290735483169556px_1.3290735483169556px_0p_rgba(0,0,0,0.25)] ${
+                isDarkMode ? "border-[0.5px]   border-white rounded-[12px]" : "border-[0.5px] bg-white rounded-[12px]"} 
+                flex  md:gap-[6px] items-center py-[15px]
+                 justify-center md:w-[145px] h-[100%] w-[100%]
+                lg:w-[25%] gap-[1px]
+                 px-[2px] rounded-[10px] md:px-[8px] flex-row relative md:static`}>
                 <div class="h-[100%] w-[100%] justify-center items-center lg:gap-[5px] gap-[2.86px] flex">
                   <img
                     className="w-[11.37px] h-[11.37px]  md:w-[20px] md:h-[19px]
@@ -664,7 +1047,7 @@ console.log(walletTransactionResponse?.data?.data?.data?.data?.total_outflow)
                     class="w-[11.37px] h-[11.37px] md:w-[17px] 
                   md:h-[17px] lg:w-[19.85px] lg:h-[19.85px] justify-center items-center flex"
                   >
-                    {isOpen1 ? (
+                    {isOpen1? (
                       <img
                         src={arrow44}
                         className="h-[100%] w-[100%]"
@@ -686,7 +1069,7 @@ console.log(walletTransactionResponse?.data?.data?.data?.data?.total_outflow)
                     className={`dropdown-options z-[2] absolute left-0 md:left-auto top-[100%]
                    w-full md:w-[50%] lg:w-[30%] bg-white cursor-pointer`}
                   >
-                    {product?.map((option, index) => (
+                    {productStatus?.map((option, index) => (
                       <li
                         className={`pb-[20px] pt-[20px] md:pb-[14px] md:pt-[14px] font-weight-bold text-[14px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-medium md:text-[13.227px] md:leading-[17.195px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
                         lg:text-[16px] lg:leading-[20.8px] cursor-pointer  dropdownCSS ${
@@ -698,8 +1081,9 @@ console.log(walletTransactionResponse?.data?.data?.data?.data?.total_outflow)
                         onClick={() => {
                           setSelectedStatus(option);
                           setIsOpen1(false);
-                          setStateDateEdit("Filter By Date")
                           setCalender(false);
+                           setSelectRecordDropDown(false)
+                         setSelectCollectionDropDown(false)
                         }}
                       >
                         {option}
@@ -708,11 +1092,8 @@ console.log(walletTransactionResponse?.data?.data?.data?.data?.total_outflow)
                   </ul>
                 )}
               </div>
-            </div>
-
           
-          </div>
-
+    </div>
           <div className="">
             {/* ==============================Sale Analysis Indicator====================== */}
 
@@ -904,9 +1285,9 @@ console.log(walletTransactionResponse?.data?.data?.data?.data?.total_outflow)
                               ? "/AirtimeTransReceipt"
                               : transaction?.product === "Data Top-up"
                               ? "/DataTransReceipt"
-                              : transaction?.product === "Money Transfer"
+                              : transaction?.product === "Internal Transfer"
                               ? "/TransferReceipt"
-                              : transaction?.product === "Virtual Account"
+                              : transaction?.product === "Internal Deposit"
                               ? "/VirtualAccountReceipt"
                               : "/SuccessfullReceipt",
                             { state: { orderData, transaction } }
@@ -1318,6 +1699,7 @@ console.log(walletTransactionResponse?.data?.data?.data?.data?.total_outflow)
             </Modal>
           )}
           {sessionModal && <InternalLoginSession setExpiredSessionLogin = {setSessionModal} />}
+        </div>
         </div>
       </>
     </DashBoardLayout>

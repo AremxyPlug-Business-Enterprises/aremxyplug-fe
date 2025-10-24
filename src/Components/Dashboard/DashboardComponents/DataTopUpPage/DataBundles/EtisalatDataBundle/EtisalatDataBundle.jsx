@@ -934,10 +934,9 @@ if(Data?.ConfirmAcc === "true"){
           <div className="grid grid-cols-1 mt-[25px] md:grid-cols-2 gap-y-[20px] md:gap-x-[58.68px] lg:gap-x-[100px] md:gap-y-[15px] lg:gap-y-[25px] pb-[30px] lg:py-[30px] md:mt-[20px]">
             <div className="flex flex-col lg:gap-[12px] gap-[7px]">
               <h2
-                className={`lg:text-[18px] lg:leading-[24px] mb-1 text-[14px]
-               md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
-                 isDarkMode ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
-               }`}
+                className={`lg:text-[18px] lg:leading-[24px] mb-1 text-[14px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
+                  isDarkMode ? "text-white" : "text-black"
+                }`}
               >
                 Select Product
               </h2>
@@ -1023,8 +1022,8 @@ if(Data?.ConfirmAcc === "true"){
 
             <div className="flex flex-col lg:gap-[12px] gap-[7px]">
               <h2
-                className={`lg:text-[18px] md:text-[14px] lg:leading-[24px] mb-1 text-[12px] md:font-[600] font-[400] leading-[12px] ${
-                  isDarkMode ? "!text-[#7E7E7E]" : "!text-black"
+               className={`lg:text-[18px] lg:leading-[24px] mb-1 text-[14px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
+                  isDarkMode ? "text-white" : "text-black"
                 }`}
               >
                 Select Plan
@@ -1112,8 +1111,8 @@ if(Data?.ConfirmAcc === "true"){
             </div>
             <div className="flex flex-col lg:gap-[12px] gap-[7px]">
               <h2
-                className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
-                  isDarkMode ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                 className={`lg:text-[18px] lg:leading-[24px] mb-1 text-[14px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
+                  isDarkMode ? "text-white" : "text-black"
                 }`}
               >
                 Phone Number{" "}
@@ -1160,8 +1159,8 @@ if(Data?.ConfirmAcc === "true"){
 
             <div className="flex flex-col lg:gap-[12px] gap-[7px]">
               <h2
-                className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
-                  isDarkMode ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                 className={`lg:text-[18px] lg:leading-[24px] mb-1 text-[14px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
+                  isDarkMode ? "text-white" : "text-black"
                 }`}
               >
                 Recipient Name<span className="text-[#7C7C7C]">(optional)</span>{" "}
@@ -1194,8 +1193,8 @@ if(Data?.ConfirmAcc === "true"){
 
             <div className="flex flex-col gap-[7px] lg:gap-[12px]">
               <h2
-                className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
-                  isDarkMode ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                className={`lg:text-[18px] lg:leading-[24px] mb-1 text-[14px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
+                  isDarkMode ? "text-white" : "text-black"
                 }`}
               >
                 Amount
@@ -1230,9 +1229,9 @@ if(Data?.ConfirmAcc === "true"){
               <div className="flex flex-col gap-[7px] lg:gap-[12px]"
                onClick={handleShowPayment}>
                 <h2
-                  className={`lg:text-[18px] mt-[5px] lg:leading-[24px] mb-2 text-[15px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
-                    isDarkMode ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
-                  }`}
+                  className={`lg:text-[18px] lg:leading-[24px] mb-1 text-[14px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
+                  isDarkMode ? "text-white" : "text-black"
+                }`}
                 >
                   Payment Method
                 </h2>
@@ -1260,7 +1259,7 @@ if(Data?.ConfirmAcc === "true"){
                                   ) : (
                                     <h2
                                       onClick={handleShowPayment}
-                                      className="text-[13.2px] lg:text-[14px]"
+                                      className="text-[13.2px] text-[#7C7C7C] lg:text-[14px]"
                                     >
                                       Select Payment Method
                                     </h2>

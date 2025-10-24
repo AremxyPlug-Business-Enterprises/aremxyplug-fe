@@ -191,6 +191,7 @@ import { DataTransReceipt } from "./Components/Dashboard/DashboardComponents/Tra
 import { TransferReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/TransferReceipt";
 import { VirtualAccountReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/VirtualAccountReceipt";
 import { ThemeHandler } from "./Components/ApiCollection.jsx/ApiBuck";
+import { PointRedeemReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/PointRedeemReceipt";
 
 export const Router = () => {
 
@@ -876,6 +877,11 @@ export const Router = () => {
         <Route path="/TvSubReceipt" element={
           <ProtectedRoute>
           <TvSubReceipt/>
+          </ProtectedRoute>
+          } />
+            <Route path="/PointRedeemReceipt" element={
+          <ProtectedRoute>
+          <PointRedeemReceipt/>
           </ProtectedRoute>
           } />
         <Route path="/AirtimeTransReceipt" element={

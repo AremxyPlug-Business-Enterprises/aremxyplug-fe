@@ -1052,7 +1052,8 @@ try {
                   }
                 }}
               >
-                <h2 className="text-[12px] font-[400] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                <h2 className="text-[12px] font-[400] 
+                leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
                   {selectedOptionGlo}
                 </h2>
                 <button className="lg:w-6 lg:h-6 w-[11px] h-[12px]">

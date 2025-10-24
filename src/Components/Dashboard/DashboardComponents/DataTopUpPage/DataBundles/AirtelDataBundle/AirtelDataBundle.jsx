@@ -947,8 +947,8 @@ const path = "/data";
           <div className="grid grid-cols-1 mt-[25px] md:grid-cols-2 gap-y-[20px] md:gap-x-[58.68px] lg:gap-x-[100px] md:gap-y-[15px] lg:gap-y-[25px] pb-[30px] lg:py-[30px] md:mt-[20px]">
             <div className="flex flex-col lg:gap-[14px] gap-[7px]">
               <h2
-                className={`lg:text-[18px] lg:leading-[24px] mb-1 text-[15px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
-                  isDarkMode ? "text-[#7E7E7E]" : "text-black"
+                className={`lg:text-[18px] lg:leading-[24px] mb-1 text-[14px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
+                  isDarkMode ? "text-white" : "text-black"
                 }`}
               >
                 Select Product
@@ -969,7 +969,9 @@ const path = "/data";
                     setSelectedOptionAirtel("") 
                 }}
               >
-                <h2 className="text-[12px] font-[400] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                <h2 className="text-[12px] font-[400] leading-[12px]
+                 capitalize md:text-[9.17px] md:leading-[11.92px] 
+                 lg:text-[16px] lg:leading-[24px]">
                   {selectedProductAirtel}
                 </h2>
                 <button className="lg:w-6 lg:h-6 w-[11px] h-[12px]">
@@ -1037,8 +1039,8 @@ const path = "/data";
 
             <div className="flex flex-col lg:gap-[14px] gap-[7px]">
               <h2
-                className={`lg:text-[18px] md:text-[14px] lg:leading-[24px] mb-1 text-[16px] md:font-[600] font-[400] leading-[12px] ${
-                  isDarkMode ? "!text-[#7E7E7E]" : "!text-black"
+                className={`lg:text-[18px] lg:leading-[24px] mb-1 text-[14px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
+                  isDarkMode ? "text-white" : "text-black"
                 }`}
               >
                 Select Plan
@@ -1135,8 +1137,8 @@ const path = "/data";
 
             <div className="flex flex-col lg:gap-[14px] gap-[7px]">
               <h2
-                className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
-                  isDarkMode ? "!text-[#7E7E7E]" : "!text-black"
+                 className={`lg:text-[18px] lg:leading-[24px] mb-1 text-[14px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
+                  isDarkMode ? "text-white" : "text-black"
                 }`}
               >
                 Phone Number{" "}
@@ -1182,8 +1184,8 @@ const path = "/data";
 
             <div className="flex flex-col lg:gap-[14px] gap-[7px]">
               <h2
-                className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
-                  isDarkMode ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                 className={`lg:text-[18px] lg:leading-[24px] mb-1 text-[14px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
+                  isDarkMode ? "text-white" : "text-black"
                 }`}
               >
                 Recipient Name<span className="text-[#7C7C7C]">(optional)</span>{" "}
@@ -1216,8 +1218,8 @@ const path = "/data";
 
             <div className="flex flex-col lg:gap-[14px] gap-[7px]">
               <h2
-                className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
-                  isDarkMode ? "text-[#7E7E7E]" : "text-black"
+                  className={`lg:text-[18px] lg:leading-[24px] mb-1 text-[14px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
+                  isDarkMode ? "text-white" : "text-black"
                 }`}
               >
                 Amount
@@ -1247,11 +1249,9 @@ const path = "/data";
               <div className="flex flex-col lg:gap-[14px] gap-[7px]"
                onClick={handleShowPayment}>
                 <h2
-                  className={`lg:text-[18px] mt-[5px] lg:leading-[24px] 
-                mb-2 text-[15px] md:text-[12px] md:font-[600]
-                 font-[400] leading-[12px] ${
-                   isDarkMode ? "text-[#7E7E7E]" : "text-black"
-                 }`}
+                   className={`lg:text-[18px] lg:leading-[24px] mb-1 text-[14px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
+                  isDarkMode ? "text-white" : "text-black"
+                }`}
                 >
                   Payment Method
                 </h2>
@@ -1279,7 +1279,7 @@ const path = "/data";
                                    ) : (
                                      <h2
                                        onClick={handleShowPayment}
-                                       className="text-[13.2px] lg:text-[14px]"
+                                      className="text-[13.2px] text-[#7C7C7C] lg:text-[14px]"
                                      >
                                        Select Payment Method
                                      </h2>
