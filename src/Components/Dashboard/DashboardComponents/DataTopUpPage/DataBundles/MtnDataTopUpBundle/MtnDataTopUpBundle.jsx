@@ -971,10 +971,9 @@ const assumedString = selectedAmountMtn?.toString()
           >
             <div className=" flex flex-col lg:gap-[12px] gap-[7px]">
               <h2
-                className={`lg:text-[18px] lg:leading-[24px]
-               text-[14px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
-                 isDarkMode ? "!text-[#7E7E7E]" : "!text-black"
-               }`}
+                className={`lg:text-[18px] lg:leading-[24px] mb-1 text-[14px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
+                  isDarkMode ? "text-white" : "text-black"
+                }`}
               >
                 Select Product
               </h2>
@@ -1064,8 +1063,8 @@ const assumedString = selectedAmountMtn?.toString()
 
             <div className=" flex flex-col lg:gap-[12px] gap-[7px]">
               <h2
-                className={`lg:text-[18px] md:text-[12px] lg:leading-[24px] mb-1 text-[14px] md:font-[600] font-[400] leading-[12px] ${
-                  isDarkMode ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                 className={`lg:text-[18px] lg:leading-[24px] mb-1 text-[14px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
+                  isDarkMode ? "text-white" : "text-black"
                 }`}
               >
                 Select Plan
@@ -1159,10 +1158,9 @@ const assumedString = selectedAmountMtn?.toString()
 
             <div className="flex flex-col lg:gap-[12px] gap-[7px]">
               <h2
-                className={`text-[15px] md:font-[600] font-[400] 
-              md:text-[12px] lg:text-[18px] ${
-                isDarkMode ? "!text-[#7E7E7E]" : "!text-black"
-              }`}
+                className={`lg:text-[18px] lg:leading-[24px] mb-1 text-[14px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
+                  isDarkMode ? "text-white" : "text-black"
+                }`}
               >
                 Phone Number{" "}
                 <span className="text-[#04177F]">
@@ -1208,8 +1206,8 @@ const assumedString = selectedAmountMtn?.toString()
 
             <div className="flex flex-col lg:gap-[12px] gap-[7px]">
               <h2
-                className={`text-[15px] font-[400] md:text-[12px] lg:text-[18px] ${
-                  isDarkMode ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                 className={`lg:text-[18px] lg:leading-[24px] mb-1 text-[14px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
+                  isDarkMode ? "text-white" : "text-black"
                 }`}
               >
                 Recipient Name<span className="text-[#7C7C7C]">(optional)</span>{" "}
@@ -1242,8 +1240,8 @@ const assumedString = selectedAmountMtn?.toString()
 
             <div className="flex flex-col lg:gap-[12px] gap-[7px]">
               <h2
-                className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
-                  isDarkMode ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
+                 className={`lg:text-[18px] lg:leading-[24px] mb-1 text-[14px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
+                  isDarkMode ? "text-white" : "text-black"
                 }`}
               >
                 Amount
@@ -1274,9 +1272,9 @@ const assumedString = selectedAmountMtn?.toString()
               <div className="flex flex-col lg:gap-[12px] gap-[7px]"
                onClick={handleShowPayment}>
                 <h2
-                  className={`lg:text-[18px] mt-[5px] lg:leading-[24px] mb-2 text-[15px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
-                    isDarkMode ? "!text-[#7E7E7E]" : "!text-text-[#7E7E7E]"
-                  }`}
+                  className={`lg:text-[18px] lg:leading-[24px] mb-1 text-[14px] md:text-[12px] md:font-[600] font-[400] leading-[12px] ${
+                  isDarkMode ? "text-white" : "text-black"
+                }`}
                 >
                   Payment Method
                 </h2>
@@ -1305,7 +1303,7 @@ const assumedString = selectedAmountMtn?.toString()
                   ) : (
                     <h2
                       onClick={handleShowPayment}
-                      className="text-[13.2px] lg:text-[14px]"
+                     className="text-[13.2px] text-[#7C7C7C] lg:text-[14px]"
                     >
                       Select Payment Method
                     </h2>

@@ -69,22 +69,32 @@ export default function SalesSummaryPage ()  {
            
  const GetTransactionInformation = async(product)=> {
       if(!navigator.onLine) return setTransactionHistoryError("Network error")
-      const path =`transactions/sales-summary?category=${product}`
-      const SuccessHandler =()=>{
+        let path;
+        if(product === "All Products"){
+        path ="transactions/sales-overview";
+        console.log(product)
+        }else{
+          path =`transactions/sales-summary?category=${product}`
+        }
+      const SuccessHandler =(response)=>{
        console.log("Sales Summary fetched");
        console.log(product)
           if(product === "airtime"){
+            setSalesResponse(response?.data?.data?.data?.data)
+             console.log(response?.data?.data?.data?.data);
              setSelectedProduct("Airtime Top-up")
+          }else if(product === "bills"){
+            setSalesResponse(response?.data?.data?.data?.data)
+          setSelectedProduct("Bills Payment");
+          setSalesResponse(response?.data?.data?.data?.data)
           }else if(product === "data"){
-          setSelectedProduct("Data Top-up")
-          }else if(product === "data"){
-          setSelectedProduct("Data Top-up")
-          }else if(product === "tv"){
-           setSelectedProduct("Tv Subscription")
-          }else if(product === "electric"){
-           setSelectedProduct("Electricity Bills")
-          }else if(product === "edu"){
-             setSelectedProduct("Education Pins")
+            setSalesResponse(response?.data?.data?.data?.data)
+          setSelectedProduct("Data Top-up");
+          setSalesResponse(response?.data?.data?.data?.data)
+          }else if(product === "All Products"){
+        setSelectedProduct("All Products");
+      
+     setSalesResponse(response?.data?.data?.data)
           }
 
       
@@ -96,7 +106,7 @@ export default function SalesSummaryPage ()  {
         if(ErrorType === "unauthorised"){
        setSessionModal(true);
         }
-      }, setSalesResponse)
+      }, ()=>{})
     }else if(ErrorType === "Network error" || ErrorType === "User error" || ErrorType === "Bad request"){
      setTransactionHistoryError("Network error")
     }else if(ErrorType === "Server error"){
@@ -111,44 +121,19 @@ export default function SalesSummaryPage ()  {
         setLoading, 
         SuccessHandler,
          FailedHandler,
-          setSalesResponse
+          ()=> {}
         )}
+
+
+     
+
+
 
 
 
         //Function to obtain the general category info sucg as the category name, quantity and amount
        // for Data Top-up, Airtime Top-up, Tv subscription, Education Pins and Electricity Bills
-       const [salesOverview,  setSalesOverview] = useState([])
-        const GetCategoryInformation = async()=> {
-      if(!navigator.onLine) return setTransactionHistoryError("Network error")
-      const path =`transactions/sales-overview`
-      const SuccessHandler =()=>{
-          console.log("Sales over-view successfully fetched.")
-}
-      const FailedHandler = async(ErrorType)=> {
-    if(ErrorType === "unauthorised"){
-      setTransactionHistoryError("unauthorised");
-      await GetFunction(path, setLoading, SuccessHandler, (ErrorType)=> {
-        if(ErrorType === "unauthorised"){
-       setSessionModal(true);
-        }
-      }, setSalesOverview)
-    }else if(ErrorType === "Network error" || ErrorType === "User error" || ErrorType === "Bad request"){
-     setTransactionHistoryError("Network error")
-    }else if(ErrorType === "Server error"){
-      setTransactionHistoryError("Server error")
- alert(`Error providing sales analysis Overview.`)
-                              
-    }else {
-      setTransactionHistoryError(null)
-    }
-      }   
-      await GetFunction(path, 
-        setLoading, 
-        SuccessHandler,
-         FailedHandler,
-          setSalesOverview
-        )}
+      //  
 
           const GetBalance =   async()=> {
                                   const SuccessHandler = ()=> {
@@ -183,7 +168,7 @@ export default function SalesSummaryPage ()  {
   
  window.addEventListener("online", ()=> {
    if(transactionHistoryError === "Network error"){
-    GetTransactionInformation();
+    GetTransactionInformation("All Products");
    }
  })
 
@@ -211,9 +196,11 @@ export default function SalesSummaryPage ()  {
    ];
 
    useEffect(()=> {
-//     if(salesResponse?.data?.data?.data === undefined){
-//  GetTransactionInformation()
-//     }
+    setSelectedProduct("All Products")
+    if(salesResponse?.data?.data?.data === undefined){
+ GetTransactionInformation("All Products");
+ 
+    }
 
 setDateEdit(()=> {
     const setToCurrentDate = new Date();
@@ -230,14 +217,15 @@ setDateEdit(()=> {
           setNewBalance(passDataBalance?.data?.data?.data !== undefined 
          ? passDataBalance?.data?.data?.data?.balance : "");
          }
-         GetCategoryInformation()
+      
         }else{
-           setSalesOverview(null)
+           setSalesResponse(null)
         }
      
 
  //eslint-disable-next-line
  }, [])
+
  
 
     //Filtering the sales Summary data
@@ -253,13 +241,13 @@ setDateEdit(()=> {
 // const BalanceValue = newBalance === "" || newBalance === null 
 // || newBalance === undefined 
 // ? Number(passDataBalance?.data?.data?.data?.balance) : Number(newBalance) 
-
+console.log(salesResponse?.data?.data?.data?.summary);
 
 const symbolValue = selected === "USD" ? "$" : selected === "AUD" ? 
  "AU$" : selected === "KES" ?   "KSh" : selected === "EUR" ? "€" : selected === "GBP" ? "£" : "₦";
 
-const productByCategories = salesOverview?.data?.data?.data?.categories
-// const product = ["Airtime Top-up", "Data Top-up", "Bills payment"]
+
+const product = ["All Products", "Airtime Top-up", "Data Top-up", "Bills payment"]
     return (
      <DashBoardLayout>
         <>
@@ -435,8 +423,8 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
     border-opacity-30 justify-start items-center gap-[52.80px] flex relative`}>
   {/* filter by date */}
 
-  <div  className={`cursor-pointer ${styles.filter}  ${
-  isDarkMode ? "border-[0.5px] border-white rounded-[12px]" : ""} flex  md:gap-[6px] items-center
+  <div  className={`cursor-pointer ${styles.filter} 
+   ${isDarkMode ? "border-[0.5px] border-white rounded-[12px]" : ""} flex  md:gap-[6px] items-center
    justify-center md:w-[145px] h-[100%] w-[100%]
   lg:w-[300px] gap-[1px]
    px-[2px] rounded-[10px] md:px-[8px] flex-row`}>
@@ -484,16 +472,16 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
 
     {/* filter by product */}
         <div 
-//          onClick={() => {
-//      setMethodBalance(false)
-//    setCalender(false)
-//   // setIsOpen5(false)
-//    if(isOpen1 === false){
-//     setIsOpen1(true)
-//    }else{
-//     setIsOpen1(false);
-//    }
-//  }} 
+         onClick={() => {
+     setMethodBalance(false)
+   setCalender(false)
+  // setIsOpen5(false)
+   if(isOpen1 === false){
+    setIsOpen1(true)
+   }else{
+    setIsOpen1(false);
+   }
+ }} 
  className={`flex flex-col cursor-pointer rounded-[12px]
  ${ isDarkMode ? "border-[0.5px] border-white " : ""}
   h-[100%] w-[100%] lg:w-[50%] ${styles.filter}`}>
@@ -523,7 +511,7 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
        
 
         {/*filter by product dropdown */}
-          {/* {    isOpen1 && (
+          {    isOpen1 && (
                 <ul className={`dropdown-options z-[2] absolute left-0 md:left-auto top-[100%]
                  w-full md:w-[50%] lg:w-[30%] bg-white cursor-pointer`}>
                   {product?.map((option, index) => (
@@ -557,6 +545,9 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
                            GetTransactionInformation("bills")
                           setIsOpen1(false);
                          
+                        }else if(option === "All Products"){
+                       GetTransactionInformation("All Products");
+                       setIsOpen1(false)
                         }
                       }
                       }
@@ -565,7 +556,7 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
                     </li>
                   ))}
                 </ul>
-              )} */}
+              )}
        
     </div>
     </div>
@@ -628,9 +619,9 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
                       lg:text-[18px] lg:leading-[24px]">
                    
                    
-                    {selected === "NGN" &&  salesOverview?.data?.data?.data ?
-           salesOverview?.data?.data?.data?.total_product
-            : salesOverview?.data?.data?.data === undefined && Data?.ConfirmAccc === "true" ? 
+                    {selected === "NGN" &&  salesResponse ?
+           salesResponse?.total_product
+            : salesResponse === undefined && Data?.ConfirmAccc === "true" ? 
             "" : "0" } 
                     </p>
                   </div>
@@ -655,9 +646,9 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
                     <p className="text-center  text-[10px] leading-[13px] font-[500] 
                       lg:text-[18px] lg:leading-[24px]">
                        {selected === "NGN" &&
-                      salesOverview?.data?.data?.data ?
-                       salesOverview?.data?.data?.data?.total_quantity:
-                        salesOverview?.data?.data?.data === undefined && Data?.ConfirmAccc === "true" ? 
+                      salesResponse?
+                       salesResponse?.total_quantity:
+                        salesResponse === undefined && Data?.ConfirmAccc === "true" ? 
             "" : "0" }
                     
                           </p>
@@ -683,11 +674,11 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
                     <p className="text-center  text-[10px] leading-[13px] font-[500] 
                       lg:text-[18px] lg:leading-[24px]">
                     {selected === "NGN"  ?
-                     salesOverview?.data?.data?.data  ?
-            salesOverview?.data?.data?.data?.total_amount?.toLocaleString("en-NG", {
+                     salesResponse  ?
+            salesResponse.total_amount?.toLocaleString("en-NG", {
               style : "currency",
               currency : "NGN"
-            }) :  salesOverview?.data?.data?.data === undefined && Data?.ConfirmAccc === "true" ? 
+            }) :  salesResponse?.data?.data?.data === undefined && Data?.ConfirmAccc === "true" ? 
             "₦" : "₦0.00"
                : `${symbolValue}0.00`}
            
@@ -724,8 +715,7 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
           <div className={`w-1/3 flex  justify-start  items-center h-full`}>
       <p className={`text-[12px] lg:text-[14px]
          font-[600] leading-[16px] lg:leading-[20px] text-start ${isDarkMode ? "text-[#7C7C7C]" : "text-black"} `}>
-         {selectedProduct !== "Filtered Product" ? 
-      "Products" : "Categories"}  </p>
+        Products </p>
       </div>
        <div className={`w-1/3 flex justify-center  items-center h-full`}>
       <p className={`text-[12px] leading-[14px]  font-[600]
@@ -741,69 +731,11 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
       <div className="h-[150px] flex items-center justify-center">
                   <Loader />
                 </div>
-      )  : productByCategories?.length > 0 && selectedProduct === "Filtered Product" && loading === false ? (
-          productByCategories.map((data, index)=> (
-             <div onClick={()=> {
-               if(data.category === "airtime"){
-                        GetTransactionInformation("airtime")
-                }else if(data.category === "data"){
-                          GetTransactionInformation("data")
-                           }else if(data.category === "tv-sub"){
-                         GetTransactionInformation("tv")
-                   }else if(data.category === "edu"){
-                          GetTransactionInformation("edu");
-                    }else if(data.category === "electric-sub"){
-                         GetTransactionInformation("electric")
-                       }
-             }}
-             className={`w-[100%] flex flex-col gap-[5px]
-           border border-gray-400   
-            ${isDarkMode ? "text-white border-[0.5px] border-white bg-black" : "text-black bg-white"}
-              ${index === 0 ? "rounded-b-[10px]" : " rounded-[10px]"}
-              py-[20px] px-[20px] mb-[20px]`}>
-     <div className="w-[100%] flex justify-between gap-[2px]">
-  <div className="flex flex-col gap-[5px] w-1/3 justify-start">
-     <p className={`text-[12px] font-[600] k leading-[16px] 
-     text-start ${isDarkMode ? "text-white" : "text-black"}`}>
-      {data.category=== "airtime" 
-      ? "Airtime" : data.category === "data"
-      ? "Data Top-up" : data.category === "tv-sub" ? "TV subscriptions"
-      :  data.category === "electric-sub" ? "Electricity Bills" 
-      : data.category === "edu" ? "Education Pins" : ""
-      }
-      </p>
-
-      <p className={`text-[10px] font-[400]  lg:text-[14px] lg:leading-[20px]
-      leading-[15px] ${isDarkMode ? "text-white" : "text-[#7C7C7C] "}`}>{`Products: ${data.product}`}</p>
-     </div>
-   
-        <p className={`w-1/3 text-[12px] lg:text-[14px] lg:leading-[20px] font-[600] text-center leading-[16px]
-          ${isDarkMode ? "text-white" : "text-[#7C7C7C] "} `}>{data.quantity}</p>
-           <p className={`w-1/3 text-[10px] font-[600] lg:text-[14px] lg:leading-[20px]
-            text-end leading-[15px]  ${isDarkMode ? "text-white " : "text-[#7C7C7C] "}`}>{data.amount !== null && data.amount !== undefined
-               ? data.amount?.toLocaleString("en-NG", {
-            style : "currency",
-            currency : "NGN"
-               }) : ""}</p>
-          
-      
-       </div>
-    
-           <p className={`text-right text-[10px] font-[500]
-            text-gray-400  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
-            {data.category &&  data.quantity > 0  ? `Show ${data.category} products>>` :`No ${data.category} product purchased>>`} 
-           </p>
-          
-       </div>
-
-     
-      
-          ))
-        ) : (
+      )   : (
           selectedProduct!== "Filtered Product" 
-          && salesResponse?.data?.data?.data?.data?.summary !== undefined 
-          && salesResponse?.data?.data?.data?.data?.summary?.length > 0 ? (
-           salesResponse?.data?.data?.data?.data?.summary.map((item, index)=> (
+          && salesResponse?.summary !== undefined 
+          && salesResponse?.summary?.length > 0 ? (
+           salesResponse?.summary.map((item, index)=> (
             <div className={`justify-between md:w-full 
         w-full h-[25px]  px-[20px]
     lg:w-full  
@@ -830,28 +762,17 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
       </div>
  
     </div>
-))) : (loading === false && (productByCategories?.length < 1 || salesOverview === null)) && (
+))) : (loading === false && (salesResponse=== null
+   ||  salesResponse?.summary === null 
+   || salesResponse?.summary?.length < 1
+    )) && (
      <img className="lg:w-full lg:h-[456px] flex self-center w-[" src={NoRecordImage} alt="No record found"/> 
             ))}
           
             </div>
          
 
-            {selectedProduct !== "Filtered Product" && (
-              <div
-              onClick ={()=> {
-                  setSelectedProduct("Filtered Product")
-              }}
-               className="flex w-[100%] lg:justify-start mt-[20px] ">
-                 <button 
-                       className={`w-full bg-blue-900 py-[15px] text-[12px] md:text-[14px] font-[500] 
-                         rounded-[15px] md:w-[300px] md:py-[8px]
-                         ${isDarkMode ? "text-white bg-black border-[0.2px] border-white" :
-                          "text-white bg-blue-900"}`}>
-                       {"<<"} Categories
-                       </button>
-                </div>
-            )}
+           
            
 
   

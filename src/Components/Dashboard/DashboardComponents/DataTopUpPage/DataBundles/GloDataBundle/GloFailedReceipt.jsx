@@ -3,7 +3,7 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { Link } from "react-router-dom";
 import { useContext, useRef } from "react";
-import styles from "../../../../../AirTimePage/AirtimeVtu.module.css";
+import styles from "../../../TransferComponent/transfer.module.css";
 import { ContextProvider } from "../../../../../Context";
 import { useLocation } from "react-router-dom";
 import { DashBoardLayout } from "../../../../Layout/DashBoardLayout";
@@ -21,8 +21,9 @@ export const GloFailedReceipt = (Data) => {
     glotransactionID,
     glorefNumber,
     gloorderID,
-   
-    selectedProduct,
+     selectedProductGlo,
+     walletNameGlo,
+    selectedOptionGlo,
     glodescription
   } = location.state;
 
@@ -100,11 +101,13 @@ export const GloFailedReceipt = (Data) => {
     <DashBoardLayout>
       <div className="flex flex-col gap-[35px] lg:gap-[85px]">
         <div
-          className={` ${styles.receipt} ${
-            toggleSideBar ? "" : "lg:w-[880px] "
-          } w-full lg:mx-auto`}
+         className={` ${styles.receipt} ${
+                                      toggleSideBar ? "" : "lg:w-[880px] "
+                                    } w-full lg:mx-auto ${isDarkMode ? "border border-white bg-black" : ""}`}
         >
-          <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
+          <div 
+          className="flex justify-between items-center mx-[3%]
+           my-[2%] lg:my-[1%]">
             <Link to="/">
               <img
                 className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[35px] lg:h-[29px]"
@@ -125,7 +128,9 @@ export const GloFailedReceipt = (Data) => {
           <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
           <div ref={contentRef}>
             {" "}
-            <h3 className="font-extrabold text-[12px] my-[2%] text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
+            <h3 className="font-extrabold text-[12px] my-[2%] 
+            text-center md:text-[20px] md:my-[3%] lg:text-[16px] 
+            lg:my-[2%]">
               Transaction Receipt
             </h3>
             <div className="w-full flex justify-center ">
@@ -149,9 +154,20 @@ export const GloFailedReceipt = (Data) => {
                 hour12: true,
               })}
             </span>
-            <p className="text-[9px] text-[#F95252] bg-[#FDCECE] rounded-[11px] border-2 border-[#F95252] py-[5px] px-[2px] text-center mx-[3px] lg:mx-[130px] md:mx-[80px] my-2 md:text-[14px] lg:text-[14px]">
+           <p className={`text-[10px] p-[5.729px] border-[0.573px] rounded-[6.302px]
+             md:p-[5.868px] md:border-[0.578px] md:rounded-[6.455px]  lg:border-[1px] lg:rounded-[11px]
+                   leading-[15px] md:leading-[20px] font-[600] 
+                    lg:p-[10px] text-center my-2 md:text-sm
+                    lg:text-base  lg:leading-[24px]  md:mb-7
+                     border-red-500 text-red-500 bg-red-100`}>
               Purchase Failed due to an unexpected error that occured. Please
               try again.
+                <span  className="font-extrabold text-[10.9px] md:text-[14.9px] 
+              lg:text-[16.9px]">
+              {" "}  {selectedProductGlo + " " + selectedOptionGlo}{" "}
+              </span>
+              from your {" "}
+              <span>{walletNameGlo} to </span>
             </p>
             <div className="flex flex-col gap-3">
               {/* ========================Recipient Info================== */}
@@ -170,7 +186,7 @@ export const GloFailedReceipt = (Data) => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Product</p>
-                  <span>{selectedProduct}</span>
+                  <span>{selectedProductGlo}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Phone Number</p>
@@ -238,13 +254,19 @@ export const GloFailedReceipt = (Data) => {
                 </div>
               </div>
             </div>
-            <div className="rounded-[8px] bg-[#E2F3FF] mx-4 h-[45px] my-5 flex justify-between items-center px-[4%] md:h-[65px] lg:h-[75px]">
-              <p className="text-[8px] text-center mx-auto w-[200px] md:text-[14px] md:w-[80%] lg:text-[16px]">
-                Earn free points on every successful transactions, redeem your
-                earned points to real money, withdrawn to your bank account
-                instantly.
-              </p>
-            </div>
+           <div className={`bg-[#F2FAFF] w-[90%]   mx-auto p-[8px] my-5 flex justify-between 
+        items-center md:p-[9px] lg:p-[10px] rounded-[5px] lg:rounded-[10px]
+         ${
+                isDarkMode ? "bg-slate-800 " : "bg-[#F2FAFF]"
+              }`}>
+            <p className={`text-[10px] leading-[13px] text-center
+             md:text-[14px] md:leading-[18px] lg:text-[14px]  font-semibold 
+             ${isDarkMode ? "text-white" : "text-black"}`}>
+           Earn free points on every successful transactions,
+            redeem your earned points to real money, withdrawn to your bank account instantly.
+            </p>
+        
+                </div>
           </div>
 
           <div className="flex w-[70%] mx-auto mb-[5%] md:w-[60%] ">
@@ -260,8 +282,14 @@ export const GloFailedReceipt = (Data) => {
               onClick={() => {
                 handleSaveAsPDFClick();
               }}
-              className={`bg-[#ffffff] border-[1px] w-[111px] border-[#0003] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
-            >
+               className={` border-[1px] w-[111px]
+                   border-[#0003] flex justify-center 
+                   items-center mx-auto cursor-pointer text-[12px]
+                    font-extrabold h-[40px] rounded-[6px] 
+                    md:w-[25%] md:rounded-[8px] md:text-base
+                     lg:w-[163px] lg:h-[38px] lg:my-[2%]
+                     ${isDarkMode ? "bg-black border-[0.2px] text-white border-[#04177f]"
+                       : "text-black bg-white border-[0.2px] border-black"}`}>
               Save as PDF
             </button>
           </div>

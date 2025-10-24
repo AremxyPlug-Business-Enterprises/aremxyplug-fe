@@ -133,8 +133,9 @@ const navigate = useNavigate()
           `}>
               Transaction Successful on
             </h3>
-            <span className="text-[11px] text-[#0008] font-extrabold 
-            flex justify-center items-center">
+            <span className={`text-[11px] ${isDarkMode ? "text-white" : "text-black"}
+             font-extrabold flex justify-center items-center
+            `}>
               {date.toLocaleDateString(undefined, {
                 year: "numeric",
                 month: "long",
@@ -145,7 +146,7 @@ const navigate = useNavigate()
                 hour12: true,
               })}
             </span>
-            <p lassName={`text-[10px] p-[5.729px] border-[0.573px] rounded-[6.302px]
+            <p className={`text-[10px] p-[5.729px] border-[0.573px] rounded-[6.302px]
              md:p-[5.868px] md:border-[0.578px] md:rounded-[6.455px]  lg:border-[1px] lg:rounded-[11px]
                    leading-[15px] md:leading-[20px] font-[600] 
                     lg:p-[10px] text-center my-2 md:text-sm
@@ -172,31 +173,31 @@ const navigate = useNavigate()
                   />
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Network</p>
-                  <span>MTN</span>
+                  <p  className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Network</p>
+                  <span  className={` ${isDarkMode ? "text-white" : "text-black"}`}>MTN</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Product</p>
-                  <span>{selectedProduct}</span>
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Product</p>
+                  <span  className={` ${isDarkMode ? "text-white" : "text-black"}`}>{selectedProduct}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Phone Number</p>
-                  <span>{inputValue}</span>
+                  <p  className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Phone Number</p>
+                  <span  className={` ${isDarkMode ? "text-white" : "text-black"}`}>{inputValue}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Recipient Name</p>
-                  <span>{recipientNames}</span>
+                  <p  className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Recipient Name</p>
+                  <span  className={` ${isDarkMode ? "text-white" : "text-black"}`}>{recipientNames}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Amount</p>
-                  <span>{selectedAmount}</span>
+                  <p  className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Amount</p>
+                  <span  className={` ${isDarkMode ? "text-white" : "text-black"}`}>{selectedAmount}</span>
                 </div>
               </div>
               
               {/* ===================Sender Info====================== */}
               <div className="flex flex-col gap-[3px] w-[90%] mx-auto lg:gap-[5px]">
                 <div className="flex gap-[5px] items-center text-[10px] lg:text-[16px] font-extrabold">
-                  <p>Sender Info</p>
+                  <p  className={` ${isDarkMode ? "text-white" : "text-black"}`}>Sender Info</p>
                   <img
                     className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
                     src="./Images/dashboardImages/arrowright.png"
@@ -204,19 +205,19 @@ const navigate = useNavigate()
                   />
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Customer Name</p>
-                  <span>{Data.aremxyUsername}</span>
+                  <p  className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Customer Name</p>
+                  <span  className={` ${isDarkMode ? "text-white" : "text-black"}`}>{Data.aremxyUsername}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Wallet Type</p>
-                  <span>NGN Wallet</span>
+                  <p  className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Wallet Type</p>
+                  <span  className={` ${isDarkMode ? "text-white" : "text-black"}`}>NGN Wallet</span>
                 </div>
               </div>
 
               {/* ===================Transaction Info==================== */}
               <div className="flex flex-col gap-[3px] w-[90%] mx-auto lg:gap-[5px]">
                 <div className="flex gap-[5px] items-center text-[10px] lg:text-[16px] font-extrabold">
-                  <p>Transaction Info</p>
+                  <p  className={` ${isDarkMode ? "text-white" : "text-black"}`}>Transaction Info</p>
                   <img
                     className="w-[13px] h-[13px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
                     src="./Images/dashboardImages/arrowright.png"
@@ -224,24 +225,24 @@ const navigate = useNavigate()
                   />
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Product</p>
-                  <span>Data top-up</span>
+                  <p  className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Product</p>
+                  <span  className={` ${isDarkMode ? "text-white" : "text-black"}`}>Data top-up</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Description</p>
-                  <span>{mtnReceiptInfo}</span>
+                  <p  className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Description</p>
+                  <span  className={` ${isDarkMode ? "text-white" : "text-black"}`}>{mtnReceiptInfo}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Order Number</p>
-                  <span>{mtnorderID}</span>
+                  <p  className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Order Number</p>
+                  <span  className={` ${isDarkMode ? "text-white" : "text-black"}`}>{mtnorderID}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Transaction ID</p>
-                  <span>{mtntransactionID}</span>
+                  <p  className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Transaction ID</p>
+                  <span  className={` ${isDarkMode ? "text-white" : "text-black"}`}>{mtntransactionID}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Reference Number</p>
-                  <span>{mtnrefNumber}</span>
+                  <p  className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Reference Number</p>
+                  <span  className={` ${isDarkMode ? "text-white" : "text-black"}`}>{mtnrefNumber}</span>
                 </div>
               </div>
             </div>
@@ -294,10 +295,19 @@ const navigate = useNavigate()
           className={`${isDarkMode ? "mb-[1%]" : "mb-[5%]"
             } flex gap-[15px] justify-center items-center lg:mb-[%]`}
         >
-          <div className={styles.help}>
-            <h2>You need help?</h2>
-            <Link to={`/ContactUs`} className={styles.btnContact}>Contact Us</Link>
-          </div>
+        <div className="text-[10px] md:text-[12px] lg:text-base">
+                          You need help ?
+                        </div>
+                        <Link to="/ContactUs">
+                          <div
+                            className={`${isDarkMode ? "" : "bg-[#04177f]"} ${
+                              styles.contactus
+                            } text-[8px] p-1 text-white rounded-[8px] lg:text-sm`}
+                          >
+                            Contact Us
+                          </div>
+                        </Link>
+                      
         </div>
       </div>
     </DashBoardLayout>

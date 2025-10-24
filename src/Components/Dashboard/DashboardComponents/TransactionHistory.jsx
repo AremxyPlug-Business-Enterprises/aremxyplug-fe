@@ -63,7 +63,7 @@ const TransactionHistory = ({
         ? "edu"
         : product === "Electricity Bills"
         ? "electric-sub"
-        : product === "Virtual Account"
+        : product === "Internal Deposit"
         ? "deposit"
         : product === "Internal Transfer"
         ? "transfer"
@@ -220,7 +220,7 @@ const FormatTime =(DateValue)=> {
                               ? "/DataTransReceipt"
                               : transaction?.product === "Internal Transfer"
                               ? "/TransferReceipt"
-                              : transaction?.product === "Virtual Account"
+                              : transaction?.product === "Internal Deposit"
                               ? "/VirtualAccountReceipt"
                               : "/SuccessfullReceipt",
                             { state: { orderData, transaction } }
@@ -484,9 +484,9 @@ const FormatTime =(DateValue)=> {
                           ? "/AirtimeTransReceipt"
                           : transaction?.product === "Data Top-up"
                           ? "/DataTransReceipt"
-                          : transaction?.product === "Money Transfer"
+                          : transaction?.product === "Internal Transfer"
                           ? "/TransferReceipt"
-                          : transaction?.product === "Virtual Account"
+                          : transaction?.product === "Internal Deposit"
                           ? "/VirtualAccountReceipt"
                           : "/SuccessfullReceipt",
                         { state: { orderData, transaction } }
