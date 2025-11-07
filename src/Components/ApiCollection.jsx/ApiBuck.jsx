@@ -4,7 +4,8 @@ import axios from "axios";
 import { Modal } from "../Screens/Modal/Modal";
 import { Link } from "react-router-dom";
 import { BalanceLoading } from "../Loader/Loader";
-import { useState, useEffect} from "react";
+import { useState, useEffect, useRef, useContext} from "react";
+import { ContextProvider } from "../Context";
 
 
 //To set the different states for  virtual account
@@ -100,44 +101,81 @@ export const InActionVirtualAccountState = (
 
   // A reusable component to handle user session management.
   export const HandleUserSession = ()=> {
-   const isDarkMode = localStorage.getItem("darkModeEnabled")
+    const {sec, setSec, setSessionExpiration}= useContext(ContextProvider)
+    const holdSecRef = useRef(null);
+    const isDarkMode = localStorage.getItem("darkModeEnabled");
+    console.log(sec);
+    useEffect(()=> {
+    if(holdSecRef.current) return clearInterval(holdSecRef.current)
+    if(sec > 0){
+     holdSecRef.current = setInterval(()=> {
+    setSec((prev)=> {
+    return prev > 0 ? prev -1 : prev;
+      })
+     }, 1000)
+    }
+   return ()=> clearInterval(holdSecRef.current);
+  //eslint-disable-next-line
+   }, [])
+
+   //Resets the timer on user activity using the event click as an example 
+function ResetTimer(e){
+    if(!localStorage.getItem("UserStatus")) return;
+  const Reset = 800  *  1000;
+    const resetExpiration = Date.now() + Reset;
+return localStorage.setItem("SessionExpiration", resetExpiration);
+ }
   return (
    
-   <div className={`w-full h-full justify-center items-center
-   flex`}>
+   <div className={`w-full h-full flex-col justify-center items-center flex`}>
     <Modal>
-              <div className={`w-full flex  justify-center items-center 
-             `}>
-            <div className = {`flex flex-col justify-center items-center
-             py-[20px] px-[12px] gap-[20px] w-[80%] md:w-[60%] lg:w-[30%] md:h-[300px]  rounded-[10px]
-             lg:rounded-[20px]   ${isDarkMode === "true" ? "bg-black border border-white rounded-[10px]" 
+              <div className = {`flex flex-col h-[300px] justify-center items-center
+             py-[20px] px-[12px] gap-[20px] w-[90%] md:w-[60%] lg:w-[30%] md:h-[300px] 
+              rounded-[10px] lg:rounded-[20px]  
+               ${isDarkMode === "true" ? "bg-black border border-white rounded-[10px]" 
                : "bg-white"}`}>
                <div className ="flex flex-col  gap-[20px]">
                <h2 className={`text-[14px] text-center font-[600] leading-[18px]
-               text-black lg:text-[16px] lg:leading-[22px] ${isDarkMode === "true" ? "text-white" : "text-black"}`}>
-                  Your Session has expired.
+               text-black lg:text-[16px] lg:leading-[22px]  ${isDarkMode === "true"  ? "text-white" : "text-black"}`}>
+                  Warning⚠️
                   </h2>
               <p className ={`text-[14px] text-center font-[400] leading-[18px]
                text-black lg:text-[16px] lg:leading-[22px] ${isDarkMode === "true" ? "text-white" : "text-black"}`}>
-            User Sessions are used to ensure safe and secure transactions, kindly repeat the login
-            process to continue using the platform.
+          You are being logged out of your session due to inactivity,
+           for your safety we carry this out to reduce or prevent unauthorised access,
+           click on "<b>Stay</b>" to avoid being logged out.
+
+    <p className = "text-[14px] font-[700] text-end leading-[20px]" > {sec  > 1 ? `${sec}secs` : `${sec}sec`} </p>
+        
+      
                </p>
+
+                  
                </div>
-             
-              <button onClick ={()=> {
-                    RemoveLocalStorage();
-                    return window.location.replace("/Login");
+                <div className = "flex flex-col gap-[10px]  w-full">
+            <button onClick ={(e)=> {
+                   ResetTimer(e);
+                   if(ResetTimer){
+                    setSessionExpiration(false);
+                   }
                 }}
-                 className="bg-red-700  cursor-pointer mt-[5%] mx-auto w-full py-[12px] flex justify-center items-center text-[#ffffff] 
-               text-[11px] font-[600] rounded-md md:w-[95px] md:h-[26px]
-                   md:p-[2%] lg:w-[113px] lg:h-[38px] lg:text-[13px]"
-            >
-              Okay
-            </button>
+                 className="bg-[#04177f]  cursor-pointer 
+                 mx-auto w-full py-[12px] flex justify-center items-center text-[#ffffff] 
+               text-[14px] font-[700] rounded-md md:w-[95px] md:h-[26px] 
+                   md:p-[2%] lg:w-[113px] lg:h-[38px] lg:text-[13px]">
+            Stay
+           </button>
+       
+      
+      </div>
+       
+         
           </div>
-        </div>
+        
+        
       </Modal>
     </div>
+  
   );
 
   
@@ -209,7 +247,7 @@ const SubmitUserLoginDetails = ()=> {
 
   return (
    
-   <div className={`w-full h-full  justify-center items-center
+   <div className={`w-full h-full justify-center items-center
    flex`}>
     <Modal>
               <div className={`w-full flex px-[17px] lg:px-[20px] justify-center items-center 
@@ -716,7 +754,6 @@ export const GetFunction = async(path, setLoading, functionAtSuccess,
      functionAtFailed("Network error");
       } else if(error && error.response.status === 400){
          functionAtFailed("Bad request")
-       alert("Invalid request")
       }
       else if(error && error.response.status === 401){
          setFetchedResponse(error?.response);

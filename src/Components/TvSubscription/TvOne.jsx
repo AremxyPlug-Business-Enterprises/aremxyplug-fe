@@ -748,6 +748,7 @@ const Data = GetLocalStorage();
   //Function to help Verify users account
   const VerifyUserAccount = async (UserTvSubscription) => {
     setGotvVerifyResponse({});
+    setStateInvalidDecoderNumber(false)
 
     if (
       UserTvSubscription?.length === 10 &&

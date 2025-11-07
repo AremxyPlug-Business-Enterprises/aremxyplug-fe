@@ -9,7 +9,17 @@ import  { RecentTransaction } from  "./RecentTransaction";
 
 
 export const WalletInOutFlows = ({className}) => {
-  const { volumeValueToggle, isValue, isDarkMode, toggleSideBar } =
+  const { volumeValueToggle, 
+    isValue,
+     isDarkMode,
+      toggleSideBar,
+       editCalenderOne, 
+       editCalenderTwo, 
+      handleStateCalender,
+      startDateValueState,
+      endDateValueState
+
+  } =
     useContext(ContextProvider);
   const [blur] = useState(false);
  // console.log(setBlur)
@@ -55,11 +65,45 @@ export const WalletInOutFlows = ({className}) => {
         : ""
     );
   };
+     
   // const [inflowAmount, setInflowAmount] = useState("");
   // const [outflowAmount, setOutflowAmount] = useState("")
-   const GetTransactionInformation = async()=> {
-        if(!navigator.onLine) return setTransactionHistoryError("Network error")
-        const path ="transactions"
+          console.log(editCalenderOne);
+        
+   const GetTransactionInformation = async(calenderState)=> {
+    console.log(calenderState);
+            if(!navigator.onLine) return setTransactionHistoryError("Network error");
+       
+        
+const handleDateFilter = ()=> {
+const currentDate = new Date();
+  const isoFormat = currentDate ? currentDate?.toLocaleString("sv-SE", {
+    timeZone : "Africa/Lagos",
+    hour12 : false
+  }) : "";
+  const getSlicedDate = isoFormat?.slice(0,10);
+  if((editCalenderOne !== "Start Date" && editCalenderOne !== undefined) 
+          && (editCalenderTwo === "End Date" && editCalenderTwo !== undefined) && calenderState === true){
+        console.log("I am running 1")
+          return `?start_date=${startDateValueState}`
+        }else if ((editCalenderOne !== "Start Date" && editCalenderOne !== undefined) 
+          && (editCalenderTwo !== "End Date" && editCalenderTwo !== undefined) && calenderState === true){
+            console.log("I am running2")
+         return `?start_date=${startDateValueState}&end_date=${endDateValueState}`
+        }else if((editCalenderOne === "Start Date" && editCalenderOne !== undefined) 
+          && (editCalenderTwo === "End Date" && editCalenderTwo !== undefined) && calenderState === true){
+            console.log("I am running3")
+          return `?start_date=${getSlicedDate}`
+        }else if(((editCalenderOne === "Start Date" && editCalenderOne !== undefined)  || (editCalenderOne !== "Start Date" && editCalenderOne !== undefined))
+          && ((editCalenderTwo === "End Date" && editCalenderTwo !== undefined) || (editCalenderTwo !== "End Date" && editCalenderTwo !== undefined))
+           && calenderState === false){
+          return ""
+        }else{
+          console.log("I am running the else")
+          return "";
+        }
+      }
+        const path =`transactions${handleDateFilter()}`
         const SuccessHandler =()=>{
         setTransactionHistoryError("");
         }
@@ -528,7 +572,8 @@ export const WalletInOutFlows = ({className}) => {
   {/* ========================Chart End========================= */}
      </div>
        <RecentTransaction transactionResponse = {transactionResponse} 
-       transactionHistoryError={transactionHistoryError} loading={loading} />
+       transactionHistoryError={transactionHistoryError} loading={loading}
+        GetTransactionInformation ={GetTransactionInformation} handleStateCalender= {handleStateCalender}/>
        
        
       

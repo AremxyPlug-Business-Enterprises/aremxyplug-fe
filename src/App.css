@@ -244,6 +244,30 @@ border-radius : 10px;
     -ms-overflow-style : none;
     scrollbar-color: transparent transparent;
   }
+
+  @keyframes animate-metric {
+  0% {
+       transform : translateX("300px")
+    }50%{
+      transfom : translateX("-300px")
+    }100%{
+      transform : translateX("0px")
+    }
+  }
+  .transaction-metrics{
+    overflow-x : scroll;
+    overflow-y : hidden;
+    scrollbar-width : none;
+    -ms-overflow-style : none;
+    scrollbar-color : transparent transparent;
+    animation : animate-metric 2s ease-in-out 1 alternate;
+  }
+
+  
+  .transaction-metrics::-webkit-scrollbar{
+    display : none;
+    width : 0px;
+  }
   .bvnQuery::-webkit-scrollbar{
     display : none;
     width: 0px;

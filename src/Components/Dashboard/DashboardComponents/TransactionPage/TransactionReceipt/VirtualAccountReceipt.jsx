@@ -32,7 +32,7 @@ export const VirtualAccountReceipt = () => {
   const amount = receiptData?.amount !== undefined ? receiptData?.amount : "";
   const amountToNumber = Number(amount);
   const account_name =
-    receiptData?.account_name?.length > 0 ? receiptData?.account_name : "";
+    receiptData?.account_name?.length > 0 ? receiptData?.account_name?.slice(11) : "";
   const account_no =
     receiptData?.account_no?.length > 0 ? receiptData?.account_no : "";
   const order_id =
@@ -285,6 +285,60 @@ export const VirtualAccountReceipt = () => {
                       alt="/"
                     />
                   </div>
+                  {transaction_product === "Internal Deposit" ? ( 
+                    <div className="flex flex-col gap-[5px] ">
+                  <div className="flex text-[10px] font-medium md:text-sm w-[90%] mx-auto justify-between lg:text-base">
+                    <p
+                      className={` ${
+                        isDarkMode ? "text-white" : "text-[#7C7C7C]"
+                      }`}
+                    >
+                       Customer Name
+                    </p>
+                    <span
+                      className={` ${isDarkMode ? "text-white" : "text-black"}`}
+                    >
+                      {account_name}
+                    </span>
+                  </div>
+                  <div className="flex text-[10px] font-medium md:text-sm w-[90%] mx-auto justify-between lg:text-base">
+                    <p
+                      className={` ${
+                        isDarkMode ? "text-white" : "text-[#7C7C7C]"
+                      }`}
+                    >
+                      Amount Sent
+                    </p>
+                    <span
+                      className={` ${isDarkMode ? "text-white" : "text-black"}`}
+                    >
+                       {`${String(
+                        amountToNumber.toLocaleString("en-NG", {
+                          style: "currency",
+                          currency: "NGN",
+                          // minimumFractionDigits: 0,
+                        })
+                      )}`}
+                    </span>
+                  </div>
+                  <div className="flex text-[10px] font-medium md:text-sm w-[90%] mx-auto justify-between lg:text-base">
+                    <p
+                      className={` ${
+                        isDarkMode ? "text-white" : "text-[#7C7C7C]"
+                      }`}
+                    >
+                      Wallet Type
+                    </p>
+                    <span
+                      className={` ${isDarkMode ? "text-white" : "text-black"}`}
+                    >
+                      Nigerian NGN Wallet
+                    </span>
+                  </div>
+                  </div>
+
+                  ) : (
+                          <div className="flex flex-col gap-[5px] ">
                   <div className="flex text-[10px] font-medium md:text-sm w-[90%] mx-auto justify-between lg:text-base">
                     <p
                       className={` ${
@@ -327,6 +381,8 @@ export const VirtualAccountReceipt = () => {
                       {account_no}
                     </span>
                   </div>
+                  </div>
+                  )}
                 </div>
 
                 {/* ===================Transaction Info==================== */}

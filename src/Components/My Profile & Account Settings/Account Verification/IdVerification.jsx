@@ -758,7 +758,7 @@ export default function IdVerification(Data) {
     }`}
     placeholder=''
     type="text" inputMode='numeric' maxLength={11} onInvalid={validId}  required/>
-    {(verificationReason?.length > 1 && idNumber?.length < 1) && (
+    {(verificationReason?.length > 1 ) && (
   <p  className="text-[12px] font-[600] leading-[12px] text-red-500
   capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
   {verificationReason}

@@ -10,7 +10,7 @@ export default function AccountVerficationPage() {
     const {verificationOpen} = useContext(ContextProvider);
     const {idVerificationOpen, setIdVerificationOpen} = useContext(ContextProvider);
     const {bvnVerificationOpen, setBvnVerificationOpen} = useContext(ContextProvider);
-  const { accountUpgrade, setAccountUpgrade } = useContext(ContextProvider);
+  const { accountUpgrade, setAccountUpgrade, setVerificationReason } = useContext(ContextProvider);
   const {isDarkMode} = useContext(ContextProvider);
   return (
     
@@ -35,6 +35,7 @@ src={Arrowright} alt="" />
         setIdVerificationOpen(true);
         setBvnVerificationOpen(false);
         setAccountUpgrade(false);
+        setVerificationReason("")
     }}
     className= {`w-1/3 md:py-[10px] py-[5.868px] cursor-pointer
        ${idVerificationOpen 
@@ -49,6 +50,7 @@ src={Arrowright} alt="" />
         setIdVerificationOpen(false);
         setBvnVerificationOpen(true);
         setAccountUpgrade(false);
+        setVerificationReason("")
     }}
     className= {`w-1/3 lg:py-[10px] py-[5.868px] cursor-pointer
        ${bvnVerificationOpen 

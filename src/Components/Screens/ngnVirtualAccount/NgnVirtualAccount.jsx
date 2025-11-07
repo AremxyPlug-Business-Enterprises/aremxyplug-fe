@@ -134,10 +134,15 @@ function NgnVirtualAccount(Data) {
       <div className="flex flex-col justify-between h-full">
         <div>
           {/* HERO HEADER STARTS HERE */}
-          <div className="w-full h-[90px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] flex px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px] bg-[#4cb133]">
-            <div className="py-[13px] lg:py-[40px]">
-              <h2 className="text-[10px] md:text-[13.75px] font-bold mb-3 lg:text-[24px] lg:mb-4">NIGERIAN NGN ACCOUNT.</h2>
-              <h2 className="text-[7px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px] mb-3">The below account details is reserved to fund your NGN Wallet almost instantly with 1% funding fee only.</h2>
+          <div className="min-h-[90px] py-[15px]
+                         lg:h-[196px] md:h-[112.29px] rounded-[6.6px] md:rounded-[11.46px] lg:rounded-[20px]
+                          mx-auto  flex gap-6 justify-between px-[16.51px] md:px-[28.65px] lg:px-[50px] bg-[#4cb133]">
+            <div className="py-[13px] lg:py-[40px] gap-[5px] flex flex-col">
+              <h2 className="text-[11px] leading-[16px] lg:leading-[30px]
+                                 lg:text-[24px] md:text-[13.75px] font-semibold">NIGERIAN NGN ACCOUNT.</h2>
+              <h2 className="text-[10px] leading-[13px] 
+                                lg:leading-[25px] lg:text-[20px]
+                                 md:text-[11.46px]">The below account details is reserved to fund your NGN Wallet almost instantly with 1% funding fee only.</h2>
             </div>
             <div className="h-[66px] lg:h-[170px]">
               <img
@@ -203,7 +208,7 @@ function NgnVirtualAccount(Data) {
           ) : (
         <div className="flex flex-col justify-between py-[15px] lg:py-[20px] gap-[30px]"> 
         <h2 className={`text-[14px] leading-[20px] font-[500] lg:text-[16px] lg:leading-[22px] text-start ${isDarkMode ? "text-white" : "text-black"}`}>
-       { (Data.ConfirmId === "true" || Data.ConfirmBvn === "true") && Data.ConfirmAcc === "false" ? "Brilliant, Now we know who you are, kindly generate a Ngn Virtual account" : "To generate a virtual account, kindly verify your account in the profile settings page or your dashboard." }
+       { (Data.ConfirmId === "true" || Data.ConfirmBvn === "true") && Data.ConfirmAcc === "false" ?`Brilliant, Now we know who you are, kindly generate a NGN Virtual account.` : "To generate a virtual account, kindly verify your account in the profile settings page or your dashboard." }
        </h2>
        <div onClick={()=> {
         if((Data.ConfirmId === "true" || Data.ConfirmBvn === "true") && Data.ConfirmAcc === "false"){
@@ -225,25 +230,25 @@ function NgnVirtualAccount(Data) {
           </div>
 
           <div className='mt-[25.39px] md:mt-[35px] lg:mt-[60px] flex items-center justify-between'>
-            <Link to= { (Data.ConfirmId === "false" && Data.ConfirmBvn === "false") || (!Data.ConfirmId && !Data.ConfirmBvn) ? null : '/CardPayment'} 
+            <Link to= { Data.ConfirmAcc === "false"  || !Data.ConfirmAcc  ? null : '/CardPayment'} 
             className={`text-white text-[7px]
              leading-[10.5px] rounded-[4px] md:rounded-[7px] md:text-[9.17px]
              md:leading-[13.75px] flex items-center lg:text-[16px]
               lg:leading-[24px] justify-center py-[5px] w-[85.5px] 
-              md:w-[124px] lg:w-[231px] lg:py-[10px]  ${(Data.ConfirmId === "false" && Data.ConfirmBvn === "false") || (!Data.ConfirmId && !Data.ConfirmBvn)  ? "bg-gray-400" : "bg-primary"}`}>
+              md:w-[124px] lg:w-[231px] lg:py-[10px]  ${Data.ConfirmAcc === "false"  || !Data.ConfirmAcc   ? "bg-gray-400" : "bg-primary"}`}>
               <div className='mr-1 w-[11.38px] h-[11.38px] md:w-[19.48px] md:h-[19.48px] lg:w-[34px] lg:h-[34px]'>
                 <img src="./Images/wallet/card-add.png" alt="" className='object-cover w-full' />
               </div>
               <h2>Fund with card</h2>
             </Link>
             <button
-             disabled ={(Data.ConfirmId === "false" && Data.ConfirmBvn === "false") || (!Data.ConfirmId && !Data.ConfirmBvn)}
+             disabled ={Data.ConfirmAcc === "false"  || !Data.ConfirmAcc }
               onClick={handleCopyCombineText}
               className= {` text-white text-[7px] leading-[10.5px] md:text-[9.17px] 
                 md:leading-[13.75px] rounded-[4px] md:rounded-[7px] 
                 flex items-center lg:text-[16px] lg:leading-[24px]
                  justify-center py-[5px] w-[85.5px] md:w-[124px]
-                  lg:w-[231px] lg:py-[10px]  ${(Data.ConfirmId === "false" && Data.ConfirmBvn === "false") || (!Data.ConfirmId && !Data.ConfirmBvn)  ? "bg-gray-400" : "bg-primary"}`}
+                  lg:w-[231px] lg:py-[10px]  ${Data.ConfirmAcc === "false" || !Data.ConfirmAcc   ? "bg-gray-400" : "bg-primary"}`}
             >
               <div className='mr-1 w-[11.38px] h-[11.38px] md:w-[19.48px] md:h-[19.48px] lg:w-[34px] lg:h-[34px]'>
                 <img src="./Images/wallet/wallet-add.png" alt="" className='object-cover w-full' />
@@ -251,12 +256,12 @@ function NgnVirtualAccount(Data) {
               <h2>Copy</h2>
             </button>
             <button
-            disabled ={(Data.ConfirmId === "false" && Data.ConfirmBvn === "false") || (!Data.ConfirmId && !Data.ConfirmBvn)}
+            disabled ={Data.ConfirmAcc=== "false" || !Data.ConfirmAcc }
               onClick={handleShareCombineText}
               className = {` text-white text-[7px] leading-[10.5px] md:text-[9.17px] md:leading-[13.75px] rounded-[4px] md:rounded-[7px] flex items-center
                  lg:text-[16px] lg:leading-[24px] justify-center py-[5px]
                   w-[85.5px] md:w-[124px]
-                   lg:w-[231px] lg:py-[10px]  ${(Data.ConfirmId === "false" && Data.ConfirmBvn === "false") || (!Data.ConfirmId && !Data.ConfirmBvn)  ? "bg-gray-400" : "bg-primary"}`}
+                   lg:w-[231px] lg:py-[10px]  ${Data.ConfirmAcc === "false" || !Data.ConfirmAcc   ? "bg-gray-400" : "bg-primary"}`}
             >
               <div className='mr-1 w-[11.38px] h-[11.38px] md:w-[19.48px] md:h-[19.48px] lg:w-[34px] lg:h-[34px]'>
                 <img src="./Images/wallet/recovery-convert.png" alt="" className='object-cover w-full' />
