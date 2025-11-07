@@ -15,7 +15,6 @@ export const SideBar = ({ fullname, userId, BvnVerify, NinVerify }) => {
     isDarkMode,
     handleClickOutside,
     customerDetail,
-    setUserStatus,
   } = useContext(ContextProvider);
 
   const { full_name, id } = customerDetail;
@@ -23,7 +22,6 @@ export const SideBar = ({ fullname, userId, BvnVerify, NinVerify }) => {
   const navigate = useNavigate();
   const RemoveLocalStorageKeys = () => {
     RemoveLocalStorage();
-    setUserStatus(false);
     const navigateLogin = () => navigate("/Login", { replace: true });
     navigateLogin();
     if (navigateLogin) {
@@ -668,7 +666,7 @@ const bgUsername = UserBgFormatting()
           className={`${styles.logouttxt} cursor-pointer text-[7px] 
           md:text-[7px] lg:text-[14px]`}
         >
-          <p className="text-[10px] lg:text-[14px] font-[500]"
+          <p className="text-[10px] LogOut lg:text-[14px] font-[500]"
            onClick={() => RemoveLocalStorageKeys()}>Logout</p>
         </p>
       </div>

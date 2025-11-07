@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { DashBoardLayout } from "../../Layout/DashBoardLayout";
 import { useContext, useEffect } from "react";
 import { ContextProvider } from "../../../Context";
@@ -18,7 +18,7 @@ import NoRecordImage from "../../../Add&SelectRecipient/RecipientImages/NoRecord
 import { useNavigate } from "react-router-dom";
 import { Modal } from "../../../Screens/Modal/Modal";
 import { GetLocalStorage } from "../../../LocalStorage/LocalStorage";
-import { all } from "axios";
+
 const TransactionPage = () => {
   const Data = GetLocalStorage();
   const navigate = useNavigate();
@@ -28,6 +28,15 @@ const TransactionPage = () => {
     setOrderIdResponse,
     setElectricityTransErrorType,
     dateEdit,
+    startDateValueState,
+    endDateValueState,
+    setStartDateValueState,
+    setEndDateValueState,
+    setEditCalenderOne,
+    setEditCalenderTwo,
+    setCurrentDateInTimeStamps,
+    editCalenderOne,editCalenderTwo, countCalender, setCountCalender
+    
    
   } = useContext(ContextProvider);
 
@@ -54,9 +63,11 @@ const [isActive, setIsActive] = useState(false);
   const [loading, setLoading] = useState(false);
   const [sessionModal, setSessionModal] = useState(false);
   const [transactionHistoryError, setTransactionHistoryError] = useState("");
+
   const handleTabClick = (tab) => {
     setActiveTab((prevTab) => (prevTab === tab ? null : tab));
   };
+
 
   const handleCategoryFilter = (category) => {
     setActiveCategory(category);
@@ -103,29 +114,82 @@ const paymentDataForRequest
     (allCategoryValue?.length < 1 || allCategoryValue === undefined)
      && (categoryDetermination !== undefined && categoryDetermination?.length > 1)
 ? `?category=${categoryDetermination}&subcategory=${valueCategoryDetermination}` : `&category=${categoryDetermination}&subcategory=${valueCategoryDetermination}`;
-const fullQuery = `?flow=${allCategoryValue}&category=${categoryDetermination}&subcategory=${valueCategoryDetermination}`
-    //    const startDateQuery =
-    // (allCategoryValue?.length < 1 || allCategoryValue === undefined)
-    //  && (telecomCategoryValue?.length < 1 || telecomCategoryValue === undefined)
-    //  &&  (paymentCategoryValue?.length < 1 || paymentCategoryValue === undefined)
-    //   ? `?start_date=${paymentCategoryValue}` : `&start_date=${paymentCategoryValue}`;
+    
+//Full or No Full Date Query
+       const startDateQuery =
+    (allCategoryValue?.length < 1 || allCategoryValue === undefined)
+     && (telecomCategoryValue?.length < 1 || telecomCategoryValue === undefined)
+     &&  (valueCategoryDetermination?.length < 1 || valueCategoryDetermination === undefined)
+      &&startDateValueState?.length > 1
+      && (endDateValueState?.length < 1 || endDateValueState === null) 
+      ? `?start_date=${startDateValueState}` 
+      //When the inflow/Outflow/trabsactions is provided and the startDatevalueState are provided
+      : (allCategoryValue?.length > 1 || allCategoryValue !== undefined)
+     && (telecomCategoryValue?.length < 1 || telecomCategoryValue === undefined)
+     &&  (valueCategoryDetermination?.length < 1 || valueCategoryDetermination === undefined)
+      && startDateValueState?.length > 1
+       &&  (endDateValueState?.length < 1 || endDateValueState === null)  ? 
+       `${allCategoryRequest}&start_date=${startDateValueState}` 
+       //When the inflow/Outflow/transaction are provided with telecom query with end query not provided
+       : (allCategoryValue?.length > 1 || allCategoryValue !== undefined)
+     && (telecomCategoryValue?.length > 1 || telecomCategoryValue !== undefined)
+     &&  (valueCategoryDetermination?.length < 1 || valueCategoryDetermination === undefined) 
+     &&startDateValueState?.length > 1
+     && (endDateValueState?.length < 1 || endDateValueState === null) 
+     ? `${allCategoryRequest}?category=${categoryDetermination}&start_date=${startDateValueState}`
+     //When the inflow/Outflow/Transaction are provided alongst with category, telecom and subcategory && startDate
+      : (allCategoryValue?.length > 1 || allCategoryValue !== undefined)
+     && (telecomCategoryValue?.length > 1 || telecomCategoryValue !== undefined)
+     &&  (valueCategoryDetermination?.length >1 || valueCategoryDetermination !== undefined) 
+     &&startDateValueState?.length > 1
+     &&  (endDateValueState?.length < 1 || endDateValueState === null) 
+       ? `${allCategoryRequest}?category=${categoryDetermination}&subcategory=${valueCategoryDetermination}&start_date=${startDateValueState}` : undefined;
 
-    //      const endDateQuery =  (allCategoryValue?.length < 1 || allCategoryValue === undefined)
-    //  && (telecomCategoryValue?.length < 1 || telecomCategoryValue === undefined)
-    //   &&  (paymentCategoryValue?.length < 1 || paymentCategoryValue === undefined)
-    //  ? `?end_date=${paymentCategoryValue}` : `&end_date= ${paymentCategoryValue}`
+      
 
-
+         const endDateQuery =  (allCategoryValue?.length < 1 || allCategoryValue === undefined)
+     && (telecomCategoryValue?.length < 1 || telecomCategoryValue === undefined)
+      &&  (valueCategoryDetermination?.length < 1 || valueCategoryDetermination === undefined) && startDateValueState?.length 
+     ? `?start_date=${startDateValueState}&end_date=${endDateValueState}`  :    (allCategoryValue?.length > 1 || allCategoryValue !== undefined)
+     && (telecomCategoryValue?.length < 1 || telecomCategoryValue === undefined)
+     &&  (valueCategoryDetermination?.length < 1 || valueCategoryDetermination === undefined)
+      && startDateValueState?.length > 1
+       && endDateValueState?.length > 1 ? 
+       `${allCategoryRequest}&start_date=${startDateValueState}&end_date=${endDateValueState}` 
+       //When the inflow/Outflow/transaction are provided with telecom query with end query  provided
+       : (allCategoryValue?.length > 1 || allCategoryValue !== undefined)
+     && (telecomCategoryValue?.length > 1 || telecomCategoryValue !== undefined)
+     &&  (valueCategoryDetermination?.length < 1 || valueCategoryDetermination === undefined) 
+     &&startDateValueState?.length > 1
+     && endDateValueState?.length > 1
+     ? `${allCategoryRequest}?category=${categoryDetermination}&start_date=${startDateValueState}&end_date=${endDateValueState}`
+        //When the inflow/Outflow/Transaction are provided alongst with category, telecom and subcategory && startDate
+     :  (allCategoryValue?.length > 1 || allCategoryValue !== undefined)
+     && (telecomCategoryValue?.length > 1 || telecomCategoryValue !== undefined)
+     &&  (valueCategoryDetermination?.length >1 || valueCategoryDetermination !== undefined) 
+     &&startDateValueState?.length > 1
+     ? `?category=${categoryDetermination}&subcategory=${valueCategoryDetermination}&start_date=${startDateValueState}&end_date=${endDateValueState}` : undefined
+    
+const fullQuery = `?flow=${allCategoryValue}&category=${categoryDetermination}&subcategory=${valueCategoryDetermination}?start_date=${startDateValueState}&end_date=${endDateValueState}`
+console.log(startDateValueState);
+console.log(startDateQuery);
       if(allCategoryValue?.length > 1 
         && telecomCategoryValue?.length  < 1 
       && paymentCategoryValue?.length < 1
+      && (startDateValueState?.length < 1 || startDateValueState === null)
      ){
       return allCategoryRequest
       } else if(allCategoryValue?.length < 1
-        && categoryDetermination?.length ){
+        && categoryDetermination?.length && (startDateValueState?.length < 1 || startDateValueState === null) ){
           return CategoryQuery
+        }else if(startDateQuery && (startDateValueState?.length > 1 && startDateValueState !== null && startDateValueState !== undefined)){
+          console.log("Start date is running yipee");
+          return startDateQuery;
+        }else if(!startDateQuery && 
+          endDateQuery && (endDateValueState?.length > 1 && endDateValueState!== null && endDateValueState!== undefined)){
+          return endDateQuery;
         }else if(allCategoryValue?.length > 1
-        && categoryDetermination !== undefined ){
+        && categoryDetermination?.length && startDateValueState?.length && endDateValueState?.length ){
      return  fullQuery
       }else{
         return  ""
@@ -181,8 +245,42 @@ const fullQuery = `?flow=${allCategoryValue}&category=${categoryDetermination}&s
   GetTransactionInformation()
   };
 
+
+  //handle Calender state
+   const handleCalenderState = async()=> {
+  // No filtering carried out.....
+  if(editCalenderOne === "Start Date" && editCalenderTwo === "End Date"){
+    setCountCalender(0);
+  setCalender(false);
+  setStateDateEdit("Filter By Date")
+}
+ //Editing Operation carried out..
+if ( (editCalenderTwo !== "End Date" && editCalenderTwo !== undefined) 
+  && (editCalenderOne !== "Start Date" && editCalenderOne !== undefined)){
+    setEditCalenderTwo("End Date");
+    setCountCalender(1);
+    setEndDateValueState("")
+    console.log("Condition1")
+  }else  if(
+      editCalenderTwo === "End Date"  &&
+     (editCalenderOne !== "Start Date" 
+      && editCalenderOne !== undefined)){
+      setEditCalenderOne("Start Date");
+      setCurrentDateInTimeStamps(0)
+      setCountCalender(0);
+      setStartDateValueState("")
+       console.log("Condition2")
+ }else {
+  setCountCalender(0);
+  setCalender(false);
+  setStateDateEdit("Filter By Date");
+  await GetTransactionInformation();
+  }
+ }
+
+ 
   useEffect(() => {
-   
+    //  slideForMoreInfo()
     setSelectedStatus("All Transactions")
     if(Data?.ConfirmAcc === "true"){
     if (transactionResponse?.data?.data?.data === undefined) {
@@ -278,18 +376,7 @@ console.log(transactionStatusMetrics?.refunded?.value)
     "Refunded",
   ];
 
-  const symbolValue =
-    selected === "USD"
-      ? "$"
-      : selected === "AUD"
-      ? "AU$"
-      : selected === "KES"
-      ? "KSh"
-      : selected === "EUR"
-      ? "€"
-      : selected === "GBP"
-      ? "£"
-      : "₦";
+
 
   const [orderLoading, setOrderLoading] = useState(false);
 
@@ -385,14 +472,17 @@ return date?.toISOString()?.slice(0, 10);
   return timePart;
 }
 
-
+const FilterByDateFunc = async()=> {
+  setCalender(false);
+  setStateDateEdit(dateEdit);
+  await GetTransactionInformation();
+}
 
 
   
   
   const filteredTransactions =
-    transactionResponse?.data?.data?.data?.transactions !== null 
-    && stateDateEdit === "Filter By Date"
+    transactionResponse?.data?.data?.data?.transactions !== null && transactionResponse?.data?.data?.data?.transactions!== undefined
       ? transactionResponse?.data?.data?.data?.transactions.filter(
           (transaction) => {
          const handleStatus =  selectedStatus === "Successful" ? 
@@ -411,11 +501,7 @@ return date?.toISOString()?.slice(0, 10);
             }
           }
         )
-      :  transactionResponse?.data?.data?.data?.transactions !== null
-       &&  stateDateEdit !== "Filter By Date"
-      ? transactionResponse?.data?.data?.data?.transactions.filter( transaction => (
-      transaction?.created_at?.slice(0,10) === dateEdit?.slice(0,10)
-      ))  : [];
+    : [];
       
 
   
@@ -775,7 +861,8 @@ return date?.toISOString()?.slice(0, 10);
                     Payments : {paymentCategoryValue}
                   </p>
    <button className="lg:w-6 lg:h-6 w-[11px] h-[11px]">
-                  <img src={ArrowDown} alt="" className="w-full h-full" />
+                  <img src={ArrowDown} alt="" 
+                  className="w-full h-full" />
                 </button>
               </div>   
        <div className="relative">
@@ -1145,29 +1232,32 @@ return date?.toISOString()?.slice(0, 10);
               />
                 {calender && (
               <div className={`absolute rounded-[20px] 
-                   md:mt-[40px] w-[300px] h-auto p-2   border-[0.2px]
+                   md:mt-[40px] w-[300px] md:w-[500px] lg:w-[600px] h-auto p-2   border-[0.2px]
                    lg:mt-[55px]  flex flex-col gap-[10px] font-[400]
                     ${isDarkMode ? "bg-black text-white  border-white" 
                     : "bg-white text-black border-gray-300"}`}>
                 {" "}
                 <Calender />
                 {" "}
-                <div onClick={()=> {
-                   setCalender(false);
-                   setStateDateEdit(dateEdit?.slice(0,10))
-                  
-               }}
-                className="flex justify-center 
-                items-center w-[270px]">
-                  <button 
-                  className={`w-full bg-blue-900 py-[15px]
-                     text-[12px] md:text-[14px] font-[500] 
-                         rounded-[15px]
-                         ${isDarkMode ? "text-white bg-black border-[0.2px] border-white" :
-                          "text-white bg-blue-900"}`}>
-                  Done
-                  </button>
-                  </div>
+                <div
+                     className="flex justify-center 
+                     items-center w-[270px] md:w-[470px] lg:w-[570px] gap-[10px]">
+                       <button  onClick={handleCalenderState}
+                       className={`w-[50%] md:w-[150px] bg-blue-white py-[15px] text-[12px] 
+                        md:text-[14px] font-[500] 
+                         rounded-[15px] border-[0.2px] border-blue-900
+             ${isDarkMode ? "text- bg-black  " :
+                          " bg-white text-blue-900" }`}>
+                       Cancel
+                       </button>
+                       <button 
+                        onClick={FilterByDateFunc}
+                       className={`w-[50%] md:w-[150px] bg-blue-900 py-[15px] text-[12px] md:text-[14px] font-[500] 
+                         rounded-[15px] text-white
+                       `}>
+                       Apply
+                       </button>
+                       </div>
               </div>
             )}
             </div>
@@ -1251,10 +1341,10 @@ return date?.toISOString()?.slice(0, 10);
             </div>
           
           </div>
-    <div className={`${transactionStatusMetrics ? "flex flex-col md:gap-[100px] gap-[500px]"  : ""} `}>
+    <div className={`${transactionStatusMetrics ? "flex flex-col lg:gap-[100px] gap-[120px] "  : ""} `}>
           <div className="w-full">
             <div
-              className={` flex flex-col w-full gap-[5px] h-[70px] 
+              className={` flex flex-col w-full gap-[20px] h-[70px] 
                 lg:h-[100px] items-start
               lg:mt-[5%]  my-[30px]`}>
        <select
@@ -1262,7 +1352,7 @@ return date?.toISOString()?.slice(0, 10);
                 id="curr"
                 onChange={handleSelectedOption}
                 value={selected}
-                className={`${styles.selected} w-[25%]`}
+                className={`${styles.selected} w-[25%] `}
               >
                 <option value="NGN">NGN</option>
                 <option disabled value="USD">USD</option>
@@ -1274,22 +1364,23 @@ return date?.toISOString()?.slice(0, 10);
 
 
 
-<div className="flex flex-wrap w-[100%]
- gap-[5px] items-center md:gap-[10px] md:flex-nowrap">
+<div className="flex w-[100%] md:w-[100%] transaction-metrics
+ gap-[10px] items-center md:gap-[10px] py-[80px] 
+h-[100px]  rounded-[12px] px-[20px] 
+ lg:px-[0px]">
   {transactionStatusMetrics  ?  (
    pictorialStatus.map((statusArray)=> {
-   return  <div className={`w-[200px] md:w-[20%] ${statusArray.color}  rounded-[12px] flex flex-col
-                  h-[100px] lg:h-[150px]  justify-center items-center gap-[3px]
-                   ${isDarkMode ? "" : `${statusArray.color}`}   ${
-                  toggleSideBar ? "lg:text-[14px]" : "lg:text-[px]"
-                }`}
-              >
-                <div className="flex gap-1  justify-center items-center  ">
-                  <div className ="flex flex-col gap-[2px]">
-                  <p
-                    className={`text-black text-[12px] text-center leading-[14px] font-[600] 
-                  lg:text-[18px] lg:leading-[24px] capitalize
-                    ${toggleSideBar ? "lg:text-[18px]" : ""}`}
+   return  <div className={`w-[260px] md:w-[20%] 
+     flex-shrink-0    ${statusArray.color}  lg:rounded-[12px] 
+     rounded-[30px] flex flex-col  h-[300px] lg:h-[150px] justify-center items-center gap-[3px]
+     ${isDarkMode ? "" : `${statusArray.color}`}   ${
+    toggleSideBar ? "lg:text-[14px]" : "lg:text-[px]"
+       }`}>
+      <div className="flex gap-1  justify-center items-center  ">
+          <div className ="flex flex-col gap-[2px]">
+            <p className={`text-black text-[12px] text-center leading-[14px] font-[600] 
+            lg:text-[18px] lg:leading-[24px] capitalize
+            ${toggleSideBar ? "lg:text-[18px]" : ""}`}
                   >
                     {statusArray?.status  === "success" ? "Successfully" : statusArray?.status}
                   </p>
@@ -1321,12 +1412,10 @@ return date?.toISOString()?.slice(0, 10);
                     alt="dropdown"
                   />
                 </div>
-              
-            </div>
-           
-      
-      
-   })): (
+                </div>
+         })
+
+ ): (
     <p  className="text-sm text-red-500 font-[600] mb-8">
      {Data?.ConfirmAcc === "true" 
      ? "An error occured: unable to retrieve transaction status-metrics" 
@@ -1416,11 +1505,13 @@ return date?.toISOString()?.slice(0, 10);
 
           <div>
             <div className="flex items-center gap-[10px]">
-              <p className="text-[10px] md:text-[12px] lg:text-[16px] text-[#7C7C7C] mt-[10px] font-semibold">
+              <p className="text-[10px] md:text-[12px] lg:text-[16px]
+               text-[#7C7C7C] mt-[10px] font-semibold">
                 Transaction History
               </p>
               <img
-                className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px] mt-[10px]"
+                className="w-[15px] h-[15px] md:w-[] md:h-[] 
+                lg:w-[20px] lg:h-[20px] mt-[10px]"
                 src="./Images/dashboardImages/arrowright.png"
                 alt="/"
               />
@@ -1456,7 +1547,7 @@ return date?.toISOString()?.slice(0, 10);
 
           <div>
             <div
-              className={`h-full md:hidden flex flex-col mt-9  w-full  border-x-[1.2px]
+              className={`h-full md:hidden flex flex-col mt-9 w-full  border-x-[1.2px]
    my-[50px]  border-b-[1.2px] px-[20px] border-opacity-[25%] shadow-md
  ${isDarkMode ? "border-white" : "border-gray-500 "}`}
             >

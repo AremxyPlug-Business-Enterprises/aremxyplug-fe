@@ -1354,7 +1354,7 @@ export const Context = ({ children }) => {
   const [bvnCountryImage, setBvnCountryImage] = useState(null);
   const [verificationReason, setVerificationReason] = useState("");
   const [verificationResponse, setVerificationResponse] = useState({});
-
+  const [countCalender, setCountCalender] = useState(0)
   //========== BUSINESS KYC =============
   const [businessPopUp, setBusinessPopUp] = useState(false);
 
@@ -1395,6 +1395,8 @@ export const Context = ({ children }) => {
   const [updateDataBalance, setUpdateDataBalance] = useState({});
   const [electricityTransErrorType, setElectricityTransErrorType] =
     useState("");
+    const [sec, setSec] = useState(0);
+
 
     // ========== Transfer to aremxyPlug======
     const [recipientResponse, setRecipientResponse] = useState([]);
@@ -1412,8 +1414,46 @@ export const Context = ({ children }) => {
 
                 //Transfer Data
                   const [transferValue, setTransferValue] = useState("");
+                  const [sessionExpiration, setSessionExpiration] = useState(false);
+                  const [editCalenderOne, setEditCalenderOne] = useState("Start Date");
+                  const [editCalenderTwo, setEditCalenderTwo] = useState("End Date");
+const [currentDateInTimeStamps, setCurrentDateInTimeStamps] = useState(0);
+ const [startDateValueState, setStartDateValueState] = useState(null);
+     const [endDateValueState, setEndDateValueState] = useState(null)
+  //Calender State
+    const handleStateCalender = (value)=> {
+           const dateConvert = new Date(value)
+          const setIsoToLocalTime = dateConvert ?  dateConvert?.toLocaleString("sv-SE", {
+            timeZone : "Africa/Lagos",
+            hour12 : false
+          }) : "";
+       setStartDateValueState(()=> {
+       return  editCalenderOne === "Start Date" && editCalenderTwo === "End Date" ? setIsoToLocalTime?.slice(0,10) : startDateValueState
+       })
+        setEndDateValueState(()=> {
+       return  editCalenderOne !== "Start Date" && editCalenderTwo === "End Date" ? setIsoToLocalTime?.slice(0,10) : endDateValueState
+       })
+      }
+
   const hold = {
     //Transfer Data
+    handleStateCalender,
+    startDateValueState, 
+    setStartDateValueState,
+   endDateValueState, 
+   setEndDateValueState,
+    currentDateInTimeStamps, 
+    setCurrentDateInTimeStamps,
+    editCalenderOne, 
+    setEditCalenderOne,
+    editCalenderTwo, 
+    setEditCalenderTwo,
+    countCalender, 
+    setCountCalender,
+  sessionExpiration,
+     setSessionExpiration, 
+    sec,
+     setSec,
     transferValue,
      setTransferValue,
     dateEdit, 

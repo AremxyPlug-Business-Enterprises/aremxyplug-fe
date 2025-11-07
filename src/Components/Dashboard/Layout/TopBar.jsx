@@ -139,7 +139,7 @@ export const TopBar = () => {
             </Link>
             <Link onClick={()=> RemoveLocalStorageKeys()}
              to="/Login">
-              <li className="z-[99px] cursor-pointer 
+              <li className="z-[99px] cursor-pointer LogOut
               hover:underline pt-3 pb-3 pl-1 text-[12px] font-medium md:border-b-[0.335px] md:text-[8px] lg:pt-[6%] lg:pb-[6%] lg:pl-[6%] lg:border-b-[0.6px] lg:text-[14px] ">
                 Logout
               </li>

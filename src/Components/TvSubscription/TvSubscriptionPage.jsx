@@ -389,7 +389,8 @@ return(
                                  lg:text-[24px] md:text-[13.75px] font-semibold">
                                     SUBSCRIBE YOUR TV CHANNELS WITH AREMXYPLUG.
                                     </p>
-                                <p className="text-[10px] leading-[13px] lg:leading-[25px] lg:text-[20px]
+                                <p className="text-[10px] leading-[13px] 
+                                lg:leading-[25px] lg:text-[20px]
                                  md:text-[11.46px]">
                                 Never miss a beat! Subscribe your tv channels on our platform to watch and stream your favorite movies without any hassle.
                                 </p>

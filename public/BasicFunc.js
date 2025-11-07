@@ -20,4 +20,7 @@ s0.parentNode.insertBefore(s1,s0);
 
 }
 
- TawkWidget()
+ TawkWidget();
+ //Checking the state of the window visibility to help TrackSessionExpiration or Activity to say...
+
+ 

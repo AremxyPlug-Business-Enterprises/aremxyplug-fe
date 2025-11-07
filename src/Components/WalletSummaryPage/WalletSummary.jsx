@@ -821,7 +821,7 @@ const FormatTime =(DateValue)=> {
                        className={`w-[50%] bg-blue-900 py-[15px] text-[12px] md:text-[14px] font-[500] 
                          rounded-[15px] text-white
                        `}>
-                       Done
+                       Apply
                        </button>
                        </div>
               </div>

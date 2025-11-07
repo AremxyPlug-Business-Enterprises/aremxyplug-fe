@@ -81,6 +81,10 @@ export default function ProfileSettingsMain(Data) {
        },
 
       setVerificationResponse)
+      }else {
+        if(ErrorType !== "Bad request"){
+        setVerificationReason(`${idVerificationOpen === true ? "Nin" : bvnVerificationOpen === true ? "Bvn" : ""} retrieval failed.`);
+        }
       }
     }
   //console.log(verificationResponse?.data?.data?.address);

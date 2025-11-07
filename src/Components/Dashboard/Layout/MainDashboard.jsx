@@ -19,7 +19,7 @@ import { Link } from "react-router-dom";
 import { Loader } from "../../Loader/Loader";
 import { BalanceLoading } from "../../Loader/Loader";
 import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
-import { CheckVirtualAcc, InternalLoginSession } from "../../ApiCollection.jsx/ApiBuck";
+import { CheckVirtualAcc, InternalLoginSession} from "../../ApiCollection.jsx/ApiBuck";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { GetFunction} from "../../../Components/ApiCollection.jsx/ApiBuck";
@@ -60,7 +60,7 @@ export const MainDashboard = (Data) => {
     customerDetail, setDashLoading, setVirtualAccCreated, 
     setBankNameState, setAccountNameState, setAccountNumberState, 
     twoStepVerificationSuccess,setTwoStepVerificationSuccess, setDateEdit,
-    newBalance, setNewBalance
+    newBalance, setNewBalance,  
   } = useContext(ContextProvider);
   //const {account_no, bank_name, account_name} = virtualAccCreated;
 const navigate = useNavigate()
@@ -1035,6 +1035,7 @@ return (
       {sessionModal && (
      <InternalLoginSession setExpiredSessionLogin={setSessionModal}/>
       )}
+      
       </div>
   
   );

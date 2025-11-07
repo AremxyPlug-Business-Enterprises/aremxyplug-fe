@@ -350,14 +350,14 @@ function LoginPopUp() {
   };
 
 //=======Session Management of the User========//
-//    const currentStandardTimeInMilliSeconds = Date.now();
-//  const SessionStandard = 1000 * 900;
+   const currentStandardTimeInMilliSeconds = Date.now();
+ const SessionStandard = 1000 * 800;
 
-//  function SessionTiming(){
-//   const expirationTime = SessionStandard + currentStandardTimeInMilliSeconds;
-//   localStorage.setItem("SessionExpiration", expirationTime)
-//    return expirationTime;
-//    }
+ function SessionTiming(){
+  const expirationTime = SessionStandard + currentStandardTimeInMilliSeconds;
+  localStorage.setItem("SessionExpiration", expirationTime)
+   return expirationTime;
+   }
 
   //Function to help set the user's account details such as bank name,
   //account name and account Number
@@ -407,15 +407,8 @@ return assignImageByUsername
     const authToken = localStorage.getItem("authorisedLogin");
     const getToken = localStorage.getItem("getToken");
     AuthUsed = authToken || getToken;
-    //   const {bank_name, account_no, account_name} = virtualAccCreated
-    //  // console.log(virtualAccCreated);
-
-    //   if(virtualAccCreated){
-    //   // setTwoStepVerificationSuccess(false);
-    //     SetLocalStorage(email, full_name,phone, username, bank_name, account_name, account_no, id);
-    //      GetVirtualAccountValue(bank_name, account_name, account_no);
-
-    await CheckVirtualAcc(
+    
+ await CheckVirtualAcc(
       AuthUsed,
       customerDetail,
       setLoading,
@@ -428,9 +421,9 @@ return assignImageByUsername
       ConfirmVirtualState
     );
     if (CheckVirtualAcc) {
-     // SessionTiming();
-     UserIconFormatting()
-     if(UserIconFormatting){
+     SessionTiming();
+     UserIconFormatting();
+     if(UserIconFormatting && SessionTiming){
       navigate("/dashboard");
      }
       //  document.cookie = `sessionToken=${AuthUsed}; path=/; max-age=900`;
