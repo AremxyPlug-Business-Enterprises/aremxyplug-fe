@@ -107,7 +107,7 @@ const [balanceStatus,setBalanceStatus] = useState("")
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto
                  justify-between font-[500] lg:text-[16px]">
                     <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Package</span>
-                    <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{selectedOptionDstv}</span>
+                    <span className={`text-end ${isDarkMode ? "text-white" : "text-black"}`}>{selectedOptionDstv}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%]
                  mx-auto justify-between font-[500] lg:text-[16px]">

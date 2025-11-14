@@ -1418,8 +1418,8 @@ export const Context = ({ children }) => {
                   const [editCalenderOne, setEditCalenderOne] = useState("Start Date");
                   const [editCalenderTwo, setEditCalenderTwo] = useState("End Date");
 const [currentDateInTimeStamps, setCurrentDateInTimeStamps] = useState(0);
- const [startDateValueState, setStartDateValueState] = useState(null);
-     const [endDateValueState, setEndDateValueState] = useState(null)
+ const [startDateValueState, setStartDateValueState] = useState("");
+     const [endDateValueState, setEndDateValueState] = useState("")
   //Calender State
     const handleStateCalender = (value)=> {
            const dateConvert = new Date(value)
@@ -1434,6 +1434,9 @@ const [currentDateInTimeStamps, setCurrentDateInTimeStamps] = useState(0);
        return  editCalenderOne !== "Start Date" && editCalenderTwo === "End Date" ? setIsoToLocalTime?.slice(0,10) : endDateValueState
        })
       }
+
+   
+      
 
   const hold = {
     //Transfer Data

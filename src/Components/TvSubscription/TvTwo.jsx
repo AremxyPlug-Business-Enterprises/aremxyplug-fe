@@ -499,7 +499,8 @@ const [errorFillDecoder, setErrorFillDecoder] = useState(false);
 };
 
 // VerifyPinHandler to handle both success and failure cases:
-const VerifyPinHandler = async () => {
+const VerifyPinHandler = async () => {;
+
     const DstvHandler = async () => {
 
       const requestData = {
@@ -714,6 +715,7 @@ if(ErrorType === "Server error"){
 //Function to help Verify users account
 const VerifyUserAccount = async(UserTvSubscription)=> {
  setDstvVerifyResponse({});
+ setStateInvalidDecoderNumber(false);
   const body = {
        decoder_type : dstvDecoderType.toLowerCase(),
        iuc_number : UserTvSubscription

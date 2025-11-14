@@ -18,6 +18,7 @@ import NoRecordImage from "../../../Add&SelectRecipient/RecipientImages/NoRecord
 import { useNavigate } from "react-router-dom";
 import { Modal } from "../../../Screens/Modal/Modal";
 import { GetLocalStorage } from "../../../LocalStorage/LocalStorage";
+import cancelIcon from "../../../EducationPins/imagesEducation/close-circle.svg"
 
 const TransactionPage = () => {
   const Data = GetLocalStorage();
@@ -85,6 +86,7 @@ const [isActive, setIsActive] = useState(false);
   //Funcntio to help get the transaction details
   //  which include necessary query parameters for search
   const GetTransactionInformation = async (value) => {
+     console.log(value);
     if (!navigator.onLine) return setTransactionHistoryError("Network error");
    
     const pathQueryFunction = ()=> {
@@ -113,7 +115,12 @@ const paymentDataForRequest
    const CategoryQuery =
     (allCategoryValue?.length < 1 || allCategoryValue === undefined)
      && (categoryDetermination !== undefined && categoryDetermination?.length > 1)
-? `?category=${categoryDetermination}&subcategory=${valueCategoryDetermination}` : `&category=${categoryDetermination}&subcategory=${valueCategoryDetermination}`;
+? `?category=${categoryDetermination}&subcategory=${valueCategoryDetermination}`
+//Query if the inflow/outflow/transactions are given included with the category and subcategory 
+: (allCategoryValue?.length > 1 || allCategoryValue !== undefined)
+     && (categoryDetermination !== undefined && categoryDetermination?.length > 1)
+     ? `${allCategoryRequest}?category=${categoryDetermination}?subcategory=${valueCategoryDetermination}` 
+: `&category=${categoryDetermination}&subcategory=${valueCategoryDetermination}`;
     
 //Full or No Full Date Query
        const startDateQuery =
@@ -134,7 +141,7 @@ const paymentDataForRequest
        : (allCategoryValue?.length > 1 || allCategoryValue !== undefined)
      && (telecomCategoryValue?.length > 1 || telecomCategoryValue !== undefined)
      &&  (valueCategoryDetermination?.length < 1 || valueCategoryDetermination === undefined) 
-     &&startDateValueState?.length > 1
+     && startDateValueState?.length > 1  
      && (endDateValueState?.length < 1 || endDateValueState === null) 
      ? `${allCategoryRequest}?category=${categoryDetermination}&start_date=${startDateValueState}`
      //When the inflow/Outflow/Transaction are provided alongst with category, telecom and subcategory && startDate
@@ -143,11 +150,9 @@ const paymentDataForRequest
      &&  (valueCategoryDetermination?.length >1 || valueCategoryDetermination !== undefined) 
      &&startDateValueState?.length > 1
      &&  (endDateValueState?.length < 1 || endDateValueState === null) 
-       ? `${allCategoryRequest}?category=${categoryDetermination}&subcategory=${valueCategoryDetermination}&start_date=${startDateValueState}` : undefined;
-
+       ? `${allCategoryRequest}?category=${categoryDetermination}&subcategory=${valueCategoryDetermination}&start_date=${startDateValueState}` : undefined
       
-
-         const endDateQuery =  (allCategoryValue?.length < 1 || allCategoryValue === undefined)
+ const endDateQuery = (allCategoryValue?.length < 1 || allCategoryValue === undefined)
      && (telecomCategoryValue?.length < 1 || telecomCategoryValue === undefined)
       &&  (valueCategoryDetermination?.length < 1 || valueCategoryDetermination === undefined) && startDateValueState?.length 
      ? `?start_date=${startDateValueState}&end_date=${endDateValueState}`  :    (allCategoryValue?.length > 1 || allCategoryValue !== undefined)
@@ -166,30 +171,36 @@ const paymentDataForRequest
         //When the inflow/Outflow/Transaction are provided alongst with category, telecom and subcategory && startDate
      :  (allCategoryValue?.length > 1 || allCategoryValue !== undefined)
      && (telecomCategoryValue?.length > 1 || telecomCategoryValue !== undefined)
-     &&  (valueCategoryDetermination?.length >1 || valueCategoryDetermination !== undefined) 
+     &&  (valueCategoryDetermination?.length > 1 || valueCategoryDetermination !== undefined) 
      &&startDateValueState?.length > 1
      ? `?category=${categoryDetermination}&subcategory=${valueCategoryDetermination}&start_date=${startDateValueState}&end_date=${endDateValueState}` : undefined
     
 const fullQuery = `?flow=${allCategoryValue}&category=${categoryDetermination}&subcategory=${valueCategoryDetermination}?start_date=${startDateValueState}&end_date=${endDateValueState}`
 console.log(startDateValueState);
 console.log(startDateQuery);
+
       if(allCategoryValue?.length > 1 
-        && telecomCategoryValue?.length  < 1 
-      && paymentCategoryValue?.length < 1
+        && (categoryDetermination === undefined || !categoryDetermination )
+      && (valueCategoryDetermination === undefined || !valueCategoryDetermination)
       && (startDateValueState?.length < 1 || startDateValueState === null)
      ){
       return allCategoryRequest
-      } else if(allCategoryValue?.length < 1
-        && categoryDetermination?.length && (startDateValueState?.length < 1 || startDateValueState === null) ){
+      } else if( categoryDetermination?.length > 1  && (startDateValueState?.length < 1 || startDateValueState === null) ){
           return CategoryQuery
-        }else if(startDateQuery && (startDateValueState?.length > 1 && startDateValueState !== null && startDateValueState !== undefined)){
-          console.log("Start date is running yipee");
-          return startDateQuery;
+        }else if((startDateQuery
+           && (startDateValueState?.length > 1
+             && startDateValueState !== null && 
+             startDateValueState !== undefined)) || value?.length > 1 ){
+          if(startDateValueState?.length > 1 && value === undefined){
+             return startDateQuery
+        }else if(value?.length > 1){
+       return `?start_date=${value}`
+          }
         }else if(!startDateQuery && 
           endDateQuery && (endDateValueState?.length > 1 && endDateValueState!== null && endDateValueState!== undefined)){
           return endDateQuery;
         }else if(allCategoryValue?.length > 1
-        && categoryDetermination?.length && startDateValueState?.length && endDateValueState?.length ){
+        && categoryDetermination?.length > 1 && startDateValueState?.length > 1 && endDateValueState?.length > 1 ){
      return  fullQuery
       }else{
         return  ""
@@ -236,16 +247,23 @@ console.log(startDateQuery);
     );
   };
 
-  const handleFilterButtonClick = () => {
+  const handleFilterButtonClick = async() => {
     setSelectedCategory(allCategoryValue + "-" 
       + telecomCategoryValue + "-"
        + paymentCategoryValue + ""
         + cardIssuingCategoryValue);
     setShowCategories(false);
-  GetTransactionInformation()
+ await  GetTransactionInformation()
   };
 
 
+
+   const dateOptional = new  Date();
+    const isoString = typeof dateOptional === "object" ? dateOptional?.toLocaleString("sv-SE", {
+      timeZone :  "Africa/Lagos",
+      hour12 : false
+      }) : "";
+    const slicedDate = isoString?.slice(0,10);
   //handle Calender state
    const handleCalenderState = async()=> {
   // No filtering carried out.....
@@ -257,18 +275,23 @@ console.log(startDateQuery);
  //Editing Operation carried out..
 if ( (editCalenderTwo !== "End Date" && editCalenderTwo !== undefined) 
   && (editCalenderOne !== "Start Date" && editCalenderOne !== undefined)){
+const currentDateFormattingCancel = new Date(startDateValueState);
+currentDateFormattingCancel.setHours(0,0,0,0);
     setEditCalenderTwo("End Date");
     setCountCalender(1);
-    setEndDateValueState("")
-    console.log("Condition1")
+    setEndDateValueState("");
+    setCurrentDateInTimeStamps(currentDateFormattingCancel);
+  
   }else  if(
       editCalenderTwo === "End Date"  &&
      (editCalenderOne !== "Start Date" 
       && editCalenderOne !== undefined)){
+        const currentDateFormattingCancel = new Date();
+currentDateFormattingCancel.setHours(0,0,0,0);
       setEditCalenderOne("Start Date");
       setCurrentDateInTimeStamps(0)
       setCountCalender(0);
-      setStartDateValueState("")
+      setStartDateValueState("");
        console.log("Condition2")
  }else {
   setCountCalender(0);
@@ -278,9 +301,18 @@ if ( (editCalenderTwo !== "End Date" && editCalenderTwo !== undefined)
   }
  }
 
+
+ const ResetDateFilterFields = ()=>{
+  setStartDateValueState("");
+    setEndDateValueState("");
+    setEditCalenderOne("");
+    setEditCalenderTwo("");
+    setCurrentDateInTimeStamps("")
+ }
  
   useEffect(() => {
     //  slideForMoreInfo()
+    ResetDateFilterFields()
     setSelectedStatus("All Transactions")
     if(Data?.ConfirmAcc === "true"){
     if (transactionResponse?.data?.data?.data === undefined) {
@@ -324,8 +356,7 @@ if ( (editCalenderTwo !== "End Date" && editCalenderTwo !== undefined)
   };
 
   const [selectedStatus, setSelectedStatus] = useState("");
-
-  const handleStatusFilter = (status) => {
+   const handleStatusFilter = (status) => {
     setSelectedStatus(status);
     setShowStatus(false);
     window.scrollTo({top : window.innerWidth < 1024 ? 500 : 700, behavior : "smooth"})
@@ -473,9 +504,15 @@ return date?.toISOString()?.slice(0, 10);
 }
 
 const FilterByDateFunc = async()=> {
+  
   setCalender(false);
   setStateDateEdit(dateEdit);
-  await GetTransactionInformation();
+  if(startDateValueState?.length && startDateValueState?.length > 1){
+     await GetTransactionInformation();
+  }else{
+    console.log("date by value...")
+   await GetTransactionInformation(slicedDate);
+  }
 }
 
 
@@ -519,12 +556,13 @@ const FilterByDateFunc = async()=> {
         <section>
           <div
             id="Transaction"
-            className="min-h-[90px] py-[15px] lg:h-[196px] md:h-[112.29px] rounded-[6.6px] md:rounded-[11.46px] lg:rounded-[20px] mx-auto  flex gap-6 justify-between
-                 px-[16.51px] md:px-[28.65px] lg:px-[50px] mb-[30px] lg:mb-[40px]"
+            className="min-h-[90px]  py-[15px] lg:h-[196px] md:h-[112.29px] 
+            rounded-[6.6px] md:rounded-[11.46px] lg:rounded-[20px] mx-auto 
+             flex gap-6 justify-between px-[16.51px] md:px-[28.65px] lg:px-[50px] mb-[30px] lg:mb-[40px]"
           >
             <div
               className="py-[9.57px] md:py-[16.61px] align-middle self-center
-                 flex flex-col gap-1.5 w-[70%]"
+                 flex flex-col gap-1.5 w-[70%] h-full"
             >
               <p
                 className="text-[11px] leading-[14px]  lg:leading-[30px]
@@ -532,17 +570,18 @@ const FilterByDateFunc = async()=> {
               >
                 MANAGE ALL YOUR TRANSACTIONS AT A TIME WITHOUT ANY HASSLE.
               </p>
-              {/* <p className="text-[7px] font-[400] leading-[9px] mb-3 md:text-[9px] md:leading-[12.2px] w-[90%] md:w-[80%] lg:w-[75%] 2xl:w-[85%] 2xl:mt-[5px] lg:mt-[20px] lg:text-[16px] lg:leading-[26px] 2xl:text-[20px] lg:mb-[20px]">
+             <p className="text-[10px] leading-[14px] font-[400]  mb-3 md:text-[9px] md:leading-[12.2px] w-[90%] md:w-[80%] lg:w-[75%] 2xl:w-[85%] 2xl:mt-[5px] lg:mt-[20px] lg:text-[16px] lg:leading-[26px] 2xl:text-[20px] lg:mb-[20px]">
                Select, filter, and manage all your transactions at a time,
                 download all transactions stats and keep a record track. 
-              </p> */}
+              </p> 
             </div>
 
-            <div className="flex w-[23%] h-[97%] pt-2 shrink-0">
+            <div className="flex w-[23%] max:h-[100px] items-center justify-center
+              pt-2 ">
               <img
                 src={Transaction}
                 alt=""
-                className="w-[55.482px] h-full md:w-[98px] md:h-[px]
+                className="w-[70.482px] h-full md:w-[98px] md:h-[px]
                  lg:w-[166.447px] lg:h-[150px]"
               />
             </div>
@@ -586,8 +625,18 @@ const FilterByDateFunc = async()=> {
                 md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
                   {selectedCategory}
                 </h2>
-                <button className="lg:w-6 lg:h-6 w-[11px] h-[11px]">
+                <button className="lg:w-6 lg:h-6 w-[20px] h-[20px]">
+                  {selectedCategory?.length < 1 ? (
                   <img src={ArrowDown} alt="" className="w-full h-full" />
+                  ) : (
+                    <img className="h-full w-full" onClick = {()=> {
+                      setSelectedCategory("");
+                      setAllCategoryValue("");
+                      setTelecomCategoryValue("");
+                      setPaymentCategoryValue("");
+                    }}
+                     src = {cancelIcon} alt = ""/>
+                  )}
                 </button>
                </div>
 
@@ -1211,7 +1260,7 @@ const FilterByDateFunc = async()=> {
                 if(Data?.ConfirmAcc === "true"){
                 if(calender === false){
                 setCalender(true);
-                 setSelectedStatus("")
+                 setSelectedStatus("");
                 }else{
                   setCalender(false)
                    setSelectedStatus("")
@@ -1250,9 +1299,10 @@ const FilterByDateFunc = async()=> {
                           " bg-white text-blue-900" }`}>
                        Cancel
                        </button>
-                       <button 
+                       <button
                         onClick={FilterByDateFunc}
-                       className={`w-[50%] md:w-[150px] bg-blue-900 py-[15px] text-[12px] md:text-[14px] font-[500] 
+                       className={`w-[50%] md:w-[150px] bg-blue-900 py-[15px] 
+                        text-[12px] md:text-[14px] font-[500] 
                          rounded-[15px] text-white
                        `}>
                        Apply
@@ -1285,7 +1335,7 @@ const FilterByDateFunc = async()=> {
                 className={` text-white
                   text-[10px] leading-[13px] font-[500]
                    lg:leading-[24px] lg:text-[12px] `}
-              >
+  >
                 Summary
               </p>
             </div>
@@ -1416,9 +1466,10 @@ h-[100px]  rounded-[12px] px-[20px]
          })
 
  ): (
-    <p  className="text-sm text-red-500 font-[600] mb-8">
-     {Data?.ConfirmAcc === "true" 
-     ? "An error occured: unable to retrieve transaction status-metrics" 
+    <p  className={ `text-sm ${Data?.ConfirmAcc === "true" && loading === true ? " text-black": "text-red-500"} py-[50px] font-[600] mb-8`}>
+     {Data?.ConfirmAcc === "true" && loading === false
+     ? "An error occured: unable to retrieve transaction status-metrics"  : 
+     Data?.ConfirmAcc === "true" && loading === true ? "Processing Transaction Status Metrics...."
      : "No transactions, no account created"}
       </p>
 
@@ -1899,7 +1950,9 @@ h-[100px]  rounded-[12px] px-[20px]
                           : transaction?.product === "Money Transfer"
                           ? "/TransferReceipt"
                           : transaction?.product === "Virtual Account"
-                          ? "/VirtualAccountReceipt"
+                          ? "/VirtualAccountReceipt" : 
+                          transaction?.product ===  "Point Redeem" 
+                              ? "/PointRedeemReceipt" 
                           : "/SuccessfullReceipt",
                         { state: { orderData, transaction } }
                       );

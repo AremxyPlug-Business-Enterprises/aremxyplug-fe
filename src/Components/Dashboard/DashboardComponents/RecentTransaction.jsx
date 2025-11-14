@@ -9,8 +9,10 @@ import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 
 export const RecentTransaction = ({transactionResponse, transactionHistoryError, loading, GetTransactionInformation}) => {
   const Data = GetLocalStorage()
-  const { toggleSideBar, isDarkMode ,setEditCalenderOne, editCalenderOne,editCalenderTwo, 
-     countCalender,dateEdit, setCountCalender, setEditCalenderTwo, setCurrentDateInTimeStamps} = useContext(ContextProvider);
+  const { toggleSideBar, isDarkMode ,setEditCalenderOne,
+     editCalenderOne,editCalenderTwo, 
+     countCalender,dateEdit, setCountCalender,
+      setEditCalenderTwo, setCurrentDateInTimeStamps, setStartDateValueState, setEndDateValueState} = useContext(ContextProvider);
   const [calender, setCalender] = useState(false);
  const [stateDateEdit, setStateDateEdit] = useState("Filter By Date");
  const handleCalenderState = ()=> {
@@ -25,7 +27,7 @@ if ( (editCalenderTwo !== "End Date" && editCalenderTwo !== undefined)
   && (editCalenderOne !== "Start Date" && editCalenderOne !== undefined)){
     setEditCalenderTwo("End Date");
     setCountCalender(1);
-    console.log("Condition1")
+    setEndDateValueState("")
   }else  if(
       editCalenderTwo === "End Date"  &&
      (editCalenderOne !== "Start Date" 
@@ -33,8 +35,9 @@ if ( (editCalenderTwo !== "End Date" && editCalenderTwo !== undefined)
       setEditCalenderOne("Start Date");
       setCurrentDateInTimeStamps(0)
       setCountCalender(0);
-       console.log("Condition2")
- }else {
+       console.log("Condition2");
+       setStartDateValueState("")
+       }else {
   setCountCalender(0);
   setCalender(false);
   setStateDateEdit("Filter By Date")

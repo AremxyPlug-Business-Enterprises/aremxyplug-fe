@@ -2,9 +2,7 @@ import React, { useState, useEffect } from "react";
 import { ContextProvider } from '../Context';
 import { useContext } from "react";
 import "../Dashboard/DashboardComponents/DataTopUpPage/DataTopUp.css"
-import styles from "../Dashboard/DashboardComponents/TransferComponent/transfer.module.css"
-import { DashBoardLayout } from '../Dashboard/Layout/DashBoardLayout';
-import { Link } from "react-router-dom";
+import styles from "../Dashboard/DashboardComponents/TransferComponent/transfer.module.css";
 import { Modal } from "../Screens/Modal/Modal";
 import airtimestyles from "./AirtimeVtu.module.css";
 import Joi from "joi";
@@ -13,9 +11,16 @@ import arrowDown from "../AirTimePage/Images/arrow-down.svg";
 import call from "../AirTimePage/Images/call.svg";
 import user from "../AirTimePage/Images/user.svg";
 import Delete from "../AirTimePage/Images/Deleted.svg";
+import { Loader } from "../Loader/Loader";
+import cancelIcon from "../EducationPins/imagesEducation/close-circle.svg";
+import NoRecordImage  from "../Add&SelectRecipient/RecipientImages/NoRecordImage.svg";
 // import { Oval } from 'react-loader-spinner';
 
-const SelectRecipient = () => {
+
+const SelectRecipient = ({recipientList, 
+  loadingRecipient, 
+   setSelectRecipientDisplay}) => {
+
   const { isDarkMode } = useContext(ContextProvider);
   const { toggleSideBar } = useContext(ContextProvider);
   const { networkName, setNetworkName } = useContext(ContextProvider);
@@ -32,29 +37,18 @@ const SelectRecipient = () => {
   const [confirm, setConfirm] = useState(false);
   const [deleted, setdeleted] = useState(false);
   const [successDeleted, setSuccessDeleted] = useState(false);
-
+  const [loading, setLoading] = useState(false)
   const [showPopup, setShowPopup] = useState(false);
   const [activeImage, setActiveImage] = useState(null);
   const [edit, setEdit] = useState("");
   const [continueState, setContinue] = useState("");
   const [editingRecipientId, setEditingRecipientId] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredRecipients, setFilteredRecipients] = useState(recipients);
+
   // const [loading, setLoading] = useState(true);
   const [inputValue, setInputValue] = useState("");
 
-  useEffect(() => {
-    if (searchQuery === "") {
-      setFilteredRecipients(recipients);
-    } else {
-      setFilteredRecipients(
-        recipients.filter((recipient) =>
-          recipient.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          recipient.phone.includes(searchQuery)
-        )
-      );
-    }
-  }, [searchQuery, recipients]);
+  
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
@@ -66,49 +60,12 @@ const SelectRecipient = () => {
   }, []);
 
   const fetchRecipients = async () => {
-    try {
-      const response = await fetch('https://aremxyplug.onrender.com/api/v1/airtime/recipient');
-      const responseData = await response.json();
-      console.log('Fetched data:', responseData);
-
-      if (responseData.status === 200 && responseData.data) {
-        const recipients = responseData.data.recipients?.recipients;
-        if (Array.isArray(recipients)) {
-          setRecipients(recipients);
-        } else {
-          console.error('Unable to find recipients array in data', recipients);
-          setRecipients([]);
-        }
-      } else {
-        console.error('Unexpected data structure:', responseData);
-        setRecipients([]);
-      }
-    } catch (error) {
-      console.error('Error fetching recipients:', error);
-      setRecipients([]);
-    }
+    
     // finally {
     //   setLoading(false);
     // }
   };
 
-  // if (loading) {
-  //   return (
-  //     <div className="flex justify-center items-center h-screen">
-  //       <Oval
-  //         height={80}
-  //         width={80}
-  //         color="#4fa94d"
-  //         wrapperStyle={{}}
-  //         wrapperClass=""
-  //         visible={true}
-  //         ariaLabel='oval-loading'
-  //         secondaryColor="#4fa94d"
-  //         strokeWidth={2}
-  //         strokeWidthSecondary={2}
-  //       />
-  //     </div>
-  //   ); // Display a loading message or spinner
   // }
 
   const updateRecipient = async (recipientId) => {
@@ -229,7 +186,7 @@ const SelectRecipient = () => {
       console.error('Failed to update recipient');
     }
   };
-
+  
   const handleDelete = (recipientId) => {
     setRecipientToDelete(recipientId);
     setdeleted(true);
@@ -374,35 +331,45 @@ const SelectRecipient = () => {
     setInputValue(numericValue);
   };
 
+   const filteredRecipients = recipientList !== null && 
+   recipientList !== undefined && recipientList?.length 
+        ?   recipientList.filter((recipient) =>
+          recipient.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          recipient.phone.includes(searchQuery)
+        ) : []
+
   return (
-    <DashBoardLayout>
-      <div className="AirtimeTops1">
-        <div className={styles.airtimeTop}>
-          <div className="w-full h-[90px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] bg-gradient-to-r from-[#73FF9A] to-[#6EDCFF] flex px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px]">
-            <div className="w-[80%] pt-[19px] lg:pt-[20px]">
-              <h2 className="text-[10px] md:text-[13.75px] font-bold mb-2 lg:text-[24px] lg:mb-4">
-                AIRTIME VTU, FAST AND AUTOMATED.</h2>
-              <h2 className="text-[7px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px] mb-3">
-                Top up your mobile sim using our automated airtime vending directly from network providers, enjoy discounts without any hassle or hidden fee.
-              </h2>
-            </div>
-            <div className="w-[91px] h-[66px] lg:w-[170px] lg:h-[150px]">
-              <img src="./Images/airtimeTopUp/young.png" className="h-full" alt="" />
-            </div>
-          </div>
-          <div className="flex text-[#7c7c7c] mt-[5%] text-[10px] leading-[26px] items-center gap-[8px] md:text-[12px] lg:text-[20px]">
-            <p>Select Recipient Details </p>
-            <img
-              className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
+  
+   <div className="h-full w-full px-[15px] 
+   bg-white">
+    <Modal>
+  <div className="pt-[15px] w-[90%] px-[20px] h-[450px]
+   bg-white rounded-[15px] lg:w-[40%] md:w-[50%] ">
+        <img onClick=  {()=> {
+          setSelectRecipientDisplay(false);
+        }}
+        src={cancelIcon} className = "h-[30px] w-[30px]" alt="" />
+      <div className="flex text-[#7c7c7c] mt-[5%] text-[10px]
+       leading-[26px] items-center gap-[8px] md:text-[12px] lg:text-[20px]">
+         <p className = "text-[12px] font-[500] leading-[16px] lg:text-[13px] lg:leading-[18px]">
+          Select Recipient Details 
+          </p>
+         <img className="w-[15px] h-[15px] md:w-[]
+          md:h-[] lg:w-[20px] lg:h-[20px]"
               src="./Images/dashboardImages/arrowright.png"
               alt="/"
             />
           </div>
           <div className={`${styles.mainGrid} mt-[5%]`}>
             <div className={styles.mainGridCol}>
-              <div className="border rounded-[5px] h-[25px] flex justify-between items-center py-1 px-3 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[7C7C7C]">
+              <div className="border rounded-[5px] h-[40px] flex 
+              justify-between items-center py-1 px-3 
+              lg:h-[45px] lg:rounded-[10px] lg:border-[1px] 
+              lg:border-[7C7C7C]">
                 <input
-                  className="text-[10px] w-[100%] h-[100%] outline-none lg:text-[14px] bg-transparent placeholder:text-[7C7C7C]"
+                  className="text-[12px] leading-[20px] w-[100%] 
+                  h-[100%] outline-none lg:text-[14px] 
+                  bg-transparent placeholder:text-[7C7C7C]"
                   type="text"
                   placeholder="Name Or Phone Number"
                   value={searchQuery}
@@ -418,13 +385,24 @@ const SelectRecipient = () => {
           </div>
 
           <div className="flex flex-col gap-5 mt-[5%]">
-            {Array.isArray(filteredRecipients) && filteredRecipients.map((recipient) => (
+            <div className="flex flex-col h-[200px] w-full 
+            overflow-y-auto py-[20px] gap-[10px] bvnQuery border-[0.1px] border-gray-100 rounded-[10px] px-[5px]">
+            {loadingRecipient === true  ? (
+              <div className="w-[100%] h-[200px] flex justify-center items-center">
+                <Loader/>
+                </div>
+            ) :  filteredRecipients?.length > 0 ?  (
+            Array.isArray(filteredRecipients)
+            && filteredRecipients.map((recipient) => (
               <div
                 key={recipient.id}
-                className="w-[100%] mx-auto flex justify-between border cursor-pointer py-2 px-2 rounded-[7px] md:rounded-[7px] lg:py-2 lg:px-5"
+                className="w-[100%] mx-auto flex justify-between 
+                border cursor-pointer py-2 px-2 rounded-[7px] 
+                 md:rounded-[7px] lg:py-2 lg:px-5"
               >
                 <div
                   onClick={() => {
+                    setSelectRecipientDisplay(false);
                     setNetworkName(recipient.network);
                     setNetworkImage(networkImages[recipient.network]);
                     setRecipientName(recipient.name);
@@ -433,7 +411,7 @@ const SelectRecipient = () => {
                   }}
                   className="flex flex-col my-auto gap-[1.67px] md:gap-[2.93px]">
                   <h2 className="lg:text-[16px] font-medium lg:leading-6 md:text-[9px] text-[9px]">
-                    {recipient.network}({recipient.phone})
+                    <span className ="capitalize"></span>({recipient.phone})
                   </h2>
                   <p className="lg:text-[14.05px] lg:font-medium lg:leading-[21.07px] text-[#7C7C7C] text-[9px] font-semibold leading-3 md:text-[8px]">
                     {recipient.name}
@@ -473,7 +451,13 @@ const SelectRecipient = () => {
                   )}
                 </div>
               </div>
-            ))}
+            ))) : loadingRecipient === false && filteredRecipients?.length < 1 && (
+              <div className='flex justify-center '>
+                                          <img  src={NoRecordImage} alt="" 
+                                          className='lg:w-[517px] lg:h-[456px]'/>
+                                              </div>
+            )  }
+            </div>
 
             {edit && (
               <Modal>
@@ -496,7 +480,7 @@ const SelectRecipient = () => {
                     <img
                       onClick={() => {
                         setEdit(false);
-                        // window.location.reload();
+                        
                         setSelected("");
                         setRecipientNumber("");
                         setRecipientName("");
@@ -927,24 +911,11 @@ const SelectRecipient = () => {
             )}
           </div>
         </div>
-        <div
-          className={`${isDarkMode ? "" : ""
-            } flex gap-[15px] justify-center items-center mt-[100%] pb-[25%] md:pb-[2%] md:mt-[40%] lg:mt-[40%] lg:pb-0`}
-        >
-          <div className="text-[10px] md:text-[12px] lg:text-[14px]">
-            You need help ?
-          </div>
-          <Link to="/ContactUs">
-            <div
-              className={`${isDarkMode ? "border" : "bg-[#04177f]"
-                } text-[10px] p-1 text-white rounded-[8px] lg:text-[18px]`}
-            >
-              Contact Us
-            </div>
-          </Link>
+      
+      </Modal>
         </div>
-      </div>
-    </DashBoardLayout>
+
+
   );
 };
 

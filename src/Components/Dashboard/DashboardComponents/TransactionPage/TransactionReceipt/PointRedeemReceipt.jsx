@@ -3,11 +3,8 @@ import styles from "../../TransferComponent/transfer.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-// import logo2 from "../../ElectricitySubscription/Electricity-sub-images/AEDC1 1.svg";
-import { GetLocalStorage } from "../../../../LocalStorage/LocalStorage";
 import { ContextProvider } from "../../../../Context";
 import { DashBoardLayout } from "../../../Layout/DashBoardLayout";
-
 // format date function
 export function formatDate(isoString) {
   if (!isoString) return "";
@@ -33,7 +30,6 @@ export function formatDate(isoString) {
 export const PointRedeemReceipt = () => {
   const navigate = useNavigate();
   const [showReceipt, setShowReceipt] = useState(true);
-  const data = GetLocalStorage();
 
   const { toggleSideBar, isDarkMode, orderIdResponse, setOrderIdResponse } =
     useContext(ContextProvider);
@@ -89,60 +85,7 @@ export const PointRedeemReceipt = () => {
       ?   receiptData?.redeemed_rate
       : "";
 
-  // const location = useLocation();
-
-  // if (!location.state || !location.state.orderData) {
-  //   return <div>Error: Transaction data not found</div>;
-  // }
-
-  // const transaction = location.state.transaction;
-  // console.log("transaction", transaction);
-
-//   const title =
-//     disco_type === "abuja-electric"
-//       ? "Abuja"
-//       : disco_type === "benin-electric"
-//       ? "Benin"
-//       : disco_type === "enugu-electric"
-//       ? "Enugu"
-//       : disco_type === "eko-electric"
-//       ? "Eko"
-//       : disco_type === "ibadan-electric"
-//       ? "Ibadan"
-//       : disco_type === "ikeja-electric"
-//       ? "Ikeja"
-//       : disco_type === "jos-electric"
-//       ? "Jos"
-//       : disco_type === "kaduna-electric"
-//       ? "Kaduna"
-//       : disco_type === "kano-electric"
-//       ? "Kano"
-//       : disco_type === "portharcourt-electric"
-//       ? "Port-Harcourt"
-//       : disco_type;
-
-//   const logo =
-//     disco_type === "abuja-electric"
-//       ? "../../ElectricitySubscription/Electricity-sub-images/AEDC1 1.svg"
-//       : disco_type === "benin-electric"
-//       ? "../../ElectricitySubscription/Electricity-sub-images/BEDC-Logo-new-dark-1 1.svg"
-//       : disco_type === "enugu-electric"
-//       ? "../../ElectricitySubscription/Electricity-sub-images/eedclogo 1.svg"
-//       : disco_type === "eko-electric"
-//       ? "../../ElectricitySubscription/Electricity-sub-images/1584714918161-ekedc-logo 1.svg"
-//       : disco_type === "ibadan-electric"
-//       ? "../../ElectricitySubscription/Electricity-sub-images/ibedc-logo 1.svg"
-//       : disco_type === "ikeja-electric"
-//       ? "../../ElectricitySubscription/Electricity-sub-images/pngaaa 1.svg"
-//       : disco_type === "jos-electric"
-//       ? "../../ElectricitySubscription/Electricity-sub-images/Jos-Electric-JED 1.svg"
-//       : disco_type === "kaduna-electric"
-//       ? "../../ElectricitySubscription/Electricity-sub-images/34-341783_kaduna-electricity-distribution-company-kaduna-electricity-distribution-company 1.svg"
-//       : disco_type === "kano-electric"
-//       ? "../../ElectricitySubscription/Electricity-sub-images/kedco-logo 1.svg"
-//       : disco_type === "portharcourt-electric"
-//       ? "../../ElectricitySubscription/Electricity-sub-images/PHED 1.svg"
-//       : "";
+  
 
   // ==============Share pdf Function=============
   const handleShareClick = () => {
@@ -208,7 +151,7 @@ export const PointRedeemReceipt = () => {
             <div ref={contentRef}>
               {" "}
               <h3 className="font-extrabold text-xs my-[2%] text-center md:text-[20px] md:my-[3%] lg:text-base lg:my-[2%]">
-                Transaction Receipt
+                Redeem Successful on
               </h3>
               <div className="w-full flex justify-center ">
                 <img
@@ -264,28 +207,29 @@ export const PointRedeemReceipt = () => {
                 {["delivered", "successful", "success", ""].includes(
                   receiptData?.status
                 )
-                  ? "You have successfully purchased "
+                  ? <p>
+                    You have successfully redeemed  <b className="font-[700px] text-[12px] leading-[14px] lg:text-[17px] lg:leading-[22px]">
+                       {receiptData?.points_redeemed} </b>  Points to
+                         <b className="font-[700px] text-[12px] leading-[14px] lg:text-[17px] lg:leading-[20px]"> {" "}{transaction_amountRedeem} {" "}</b>
+                          from your PTS Balance to 
+                    </p>
                   : receiptData?.status === "pending"
-                  ? "Your purchase is under process please wait while the system confirm."
+                   ? "Your purchase is under process please wait while the system confirm."
                   : receiptData?.status === "refunded"
                   ? "Purchase was unsuccessful and your wallet has been refunded. Please try again."
                   : receiptData?.status === "cancelled"
                   ? "Purchase Cancelled due to an unexpected error that occur. Please try again."
-                  : "Purchase Failed due to an unexpected error that occured. Please try again."}
+                  : "Transaction Failed due to an unexpected error that occured. Please try again."}
                 {/* <span className="text-[#000] font-medium text-[10px] md:text-sm"> */}
-                {["delivered", "successful", "success", ""].includes(
+                {/* {["delivered", "successful", "success", ""].includes(
                   receiptData?.status
                 ) && (
                   <span className="">
-                    <span className=" font-medium text-[10.9px] md:text-[14.9px] lg:text-[16.9px]">
-                        N100
-                      {/* {} {} Meter &#8358; 
-                      {Number(productAmount).toLocaleString()}.00{" "} */}
-                    </span>
-                    {/* from your {aedcPaymentResult.split(" (")[0]} to{" "} */}
-                    from your NGN Wallet to{" "}
+                  
+                   
+                  to your NGN Wallet {" "}
                   </span>
-                )}
+                )} */}
               </p>
               {/* gap-5 */}
               <div className="flex flex-col gap-3">
@@ -346,7 +290,7 @@ export const PointRedeemReceipt = () => {
                     >
                       Amount Received
                     </p>
-                    <span className="">{""} </span>
+                    <span className="">{transaction_amountRedeem} </span>
                   </div>
 
                   <div className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between font-medium lg:text-base">

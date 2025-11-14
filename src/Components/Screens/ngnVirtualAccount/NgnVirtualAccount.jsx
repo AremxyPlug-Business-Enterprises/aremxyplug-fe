@@ -32,7 +32,7 @@ function NgnVirtualAccount(Data) {
        const response = await axios.post(url,body,{ headers : {"Content-Type" : "application/json",
          Authorization : authToken || getToken},
       })
-        if(response.status === 200 || 201){
+        if(response.status === 200 || response.status === 201){
            alert("Virtual Account Created")
            localStorage.setItem("AccCreated","true")
            AuthUsed = authToken || getToken;
@@ -157,8 +157,8 @@ function NgnVirtualAccount(Data) {
           <div className="mt-[25.39px] md:mt-[35px] lg:mt-[60px] ">
             <div className="flex items-center">
               <p
-                className=" text-[#7c7c7c] text-[10px]  md:text-[18px] lg:text-[20px]
-           "
+                className=" text-[#7c7c7c] font-[500] text-[14px] leading-[18px] 
+                  md:text-[18px] md:leading-[24px] lg:text-[20px] lg:leading-[24px]"
               >
                 Funding Methods
               </p>
@@ -170,30 +170,37 @@ function NgnVirtualAccount(Data) {
             </div>
           </div>
            
-          <div className="flex flex-col justify-center mt-[25.39px] py-[16px] md:mt-[35px] lg:mt-[60px] w-full h-auto md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] bg-[#92abfe]/[0.5] px-[16px] lg:px-[50px] lg:rounded-[20px]">
+          <div className="flex flex-col justify-center mt-[25.39px] py-[16px]
+           md:mt-[35px] lg:mt-[60px] w-full h-[250px] md:h-[300px] lg:h-[300px] rounded-[7px]
+           md:rounded-[11.5px] bg-[#92abfe]/[0.5] px-[16px] lg:px-[50px]
+            lg:rounded-[20px]">
            {loading === true ?  (
             <div className="flex w-full h-[70px] items-center justify-center">
               <Loader/>
               </div>
            ) : (
           Data.ConfirmAcc === "true" ?  (
-            <div className="">
+            <div className="flex flex-col gap-[20px]">
               <div className="mb-[8px] lg:mb-[15px] flex lg:gap-x-[20px] gap-x-[15px] font-semibold">
-                <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[15%] md:w-[20%] w-[30%]">BANK NAME</p>
-                <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[85%] md:w-[20%] w-[70%]">{bankNameState ? bankNameState : Data.aremxyBankName ? Data.aremxyBankName : ""}</p>
+                <p className="md:text-[13px] text-[12px] lg:text-[16px] lg:w-[15%] leading-[18px] lg:leading-[22px] 
+                md:w-[20%] w-[30%]">BANK NAME</p>
+                <p className="md:text-[13px] text-[12px] lg:text-[16px]  leading-[18px] lg:leading-[22px] 
+                lg:w-[85%] md:w-[20%] w-[70%]">{bankNameState ? bankNameState : Data.aremxyBankName ? Data.aremxyBankName : ""}</p>
               </div>
               <div className="mb-[8px] lg:mb-[15px] flex lg:gap-x-[20px] gap-x-[15px] font-semibold">
-                <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[15%] md:w-[20%] w-[30%]">ACCOUNT NAME</p>
-                <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[85%] md:w-[20%] w-[70%]" >
+                <p className="md:text-[13px] text-[12px] lg:text-[16px] lg:w-[15%] leading-[18px] lg:leading-[22px]   md:w-[20%] w-[30%]">ACCOUNT NAME</p>
+                <p className="md:text-[13px] text-[12px] lg:text-[16px]  leading-[18px] lg:leading-[22px]  lg:w-[85%] md:w-[20%] w-[70%]" >
                   {accountNameState ? accountNameState : 
                   Data.aremxyAccountName ? Data.aremxyAccountName.slice(11) :
                    ""}
                   </p>
               </div>
               <div className=" flex lg:gap-x-[20px] gap-x-[15px] font-semibold">
-                <p className="md:text-[10px] text-[8px] lg:text-[16px] lg:w-[15%] md:w-[20%] w-[30%]">ACCOUNT NUMBER</p>{" "}
+                <p className="md:text-[13px] text-[12px] lg:text-[16px] lg:w-[15%] leading-[18px] lg:leading-[22px] 
+                 md:w-[20%] w-[30%]">ACCOUNT NUMBER</p>{" "}
                 <div className="flex items-center lg:w-[85%] md:w-[20%] w-[70%]">
-                  <p className="md:text-[10px] text-[8px] lg:text-[16px]">{accountNumberState ? accountNumberState : Data.aremxyAccountNumber ? Data.aremxyAccountNumber : ""}</p>
+                  <p className="md:text-[13px] text-[12px] lg:text-[16px]  leading-[18px] lg:leading-[22px] ">
+                    {accountNumberState ? accountNumberState : Data.aremxyAccountNumber ? Data.aremxyAccountNumber : ""}</p>
                   <button onClick={handleCopyText}>
                     <img
                       src="Images/virtual-account/copy.png"
@@ -229,17 +236,20 @@ function NgnVirtualAccount(Data) {
         )}
           </div>
 
-          <div className='mt-[25.39px] md:mt-[35px] lg:mt-[60px] flex items-center justify-between'>
+          <div className='mt-[25.39px] md:mt-[35px] w-[100%] flex
+           lg:mt-[60px] items-center
+           justify-between gap-[7px] md:gap-[10px] lg:gap-[20px]'>
             <Link to= { Data.ConfirmAcc === "false"  || !Data.ConfirmAcc  ? null : '/CardPayment'} 
             className={`text-white text-[7px]
              leading-[10.5px] rounded-[4px] md:rounded-[7px] md:text-[9.17px]
              md:leading-[13.75px] flex items-center lg:text-[16px]
-              lg:leading-[24px] justify-center py-[5px] w-[85.5px] 
-              md:w-[124px] lg:w-[231px] lg:py-[10px]  ${Data.ConfirmAcc === "false"  || !Data.ConfirmAcc   ? "bg-gray-400" : "bg-primary"}`}>
+              lg:leading-[24px] justify-center py-[10px] w-1/3 
+ lg:py-[10px]  ${Data.ConfirmAcc === "false"  || !Data.ConfirmAcc   ? "bg-gray-400" : "bg-primary"}`}>
               <div className='mr-1 w-[11.38px] h-[11.38px] md:w-[19.48px] md:h-[19.48px] lg:w-[34px] lg:h-[34px]'>
                 <img src="./Images/wallet/card-add.png" alt="" className='object-cover w-full' />
               </div>
-              <h2>Fund with card</h2>
+              <h2 className="text-[10px] leading-[14px] font-[400] md:text-[12px] 
+              md:leading-[16px] lg:text-[14px] lg:leading-[18px]">Fund with card</h2>
             </Link>
             <button
              disabled ={Data.ConfirmAcc === "false"  || !Data.ConfirmAcc }
@@ -247,26 +257,28 @@ function NgnVirtualAccount(Data) {
               className= {` text-white text-[7px] leading-[10.5px] md:text-[9.17px] 
                 md:leading-[13.75px] rounded-[4px] md:rounded-[7px] 
                 flex items-center lg:text-[16px] lg:leading-[24px]
-                 justify-center py-[5px] w-[85.5px] md:w-[124px]
+                 justify-center   py-[10px] w-1/3 
                   lg:w-[231px] lg:py-[10px]  ${Data.ConfirmAcc === "false" || !Data.ConfirmAcc   ? "bg-gray-400" : "bg-primary"}`}
             >
               <div className='mr-1 w-[11.38px] h-[11.38px] md:w-[19.48px] md:h-[19.48px] lg:w-[34px] lg:h-[34px]'>
                 <img src="./Images/wallet/wallet-add.png" alt="" className='object-cover w-full' />
               </div>
-              <h2>Copy</h2>
+              <h2 className="text-[10px] leading-[14px] font-[400] md:text-[12px] 
+              md:leading-[16px] lg:text-[14px] lg:leading-[18px]">Copy</h2>
             </button>
             <button
             disabled ={Data.ConfirmAcc=== "false" || !Data.ConfirmAcc }
               onClick={handleShareCombineText}
-              className = {` text-white text-[7px] leading-[10.5px] md:text-[9.17px] md:leading-[13.75px] rounded-[4px] md:rounded-[7px] flex items-center
-                 lg:text-[16px] lg:leading-[24px] justify-center py-[5px]
-                  w-[85.5px] md:w-[124px]
+              className = {` text-white rounded-[4px] md:rounded-[7px] flex items-center
+                 lg:text-[16px] lg:leading-[24px] justify-center 
+                md:w-[124px]  py-[10px] w-1/3 
                    lg:w-[231px] lg:py-[10px]  ${Data.ConfirmAcc === "false" || !Data.ConfirmAcc   ? "bg-gray-400" : "bg-primary"}`}
             >
               <div className='mr-1 w-[11.38px] h-[11.38px] md:w-[19.48px] md:h-[19.48px] lg:w-[34px] lg:h-[34px]'>
                 <img src="./Images/wallet/recovery-convert.png" alt="" className='object-cover w-full' />
               </div>
-              <h2>Share</h2>
+              <h2 className="text-[10px] leading-[14px] font-[400] md:text-[12px] 
+              md:leading-[16px] lg:text-[14px] lg:leading-[18px]">Share</h2>
             </button>
           </div>
         </div>
@@ -276,7 +288,7 @@ function NgnVirtualAccount(Data) {
 
 
 
-        <div className="flex gap-2 justify-center items-center md:mt-40 ">
+        <div className="flex gap-2 justify-center items-center mt-40 ">
           <h2 className="leading-[12px]  text-[10px] md:text-[12px] lg:text-[14px]">
             You need help?
           </h2>
