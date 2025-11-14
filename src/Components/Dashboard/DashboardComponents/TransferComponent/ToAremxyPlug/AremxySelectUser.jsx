@@ -169,8 +169,7 @@ setLoading, ()=> {},
   
     //eslint-disable-next-line
     }, [])
-const SearchFilter 
-=
+const SearchFilter =
   (recipientResponse?.data?.data?.data !== undefined 
  && recipientResponse?.data?.data?.data !== null
   && recipientResponse?.data?.data?.data?.length > 0 && Array?.isArray(recipientResponse?.data?.data?.data)) 
@@ -193,13 +192,10 @@ return (
                items-center justify-center px-[20px]">
  <div  className={`bvnQuery flex flex-col shadow-[0px_0px_8.3274px_0px_rgba(0 0 0,0.25)] 
  rounded-[8px] shadow-[0px_0px_8.3274px_0px_rgba(0,0,0,0.25)] md:rounded-[11.736px]  
- lg:rounded-[20px] md:w-[55%] w-[100%]
-            md:shadow-[0px_0px_11.73611px_0px_rgba(0,0,0,0.25)]
-             lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)]
-              justify-center  items-center px-[18px] 
-              md:px-[30px]   gap-[10px] 
-              md:gap-[40px] lg:gap-[50px] lg:justify-normal 
-              md:mx-[0px] mx-[19px]  lg:pt-[30px] h-auto pb-[20px] pt-[10px]  md:pt-[50px]  ${
+ lg:rounded-[20px] md:w-[55%] w-[100%] md:shadow-[0px_0px_11.73611px_0px_rgba(0,0,0,0.25)]
+ lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] justify-center  items-center px-[18px] 
+   md:px-[30px]  gap-[10px] md:gap-[40px] lg:gap-[50px] lg:justify-normal 
+     md:mx-[0px] mx-[19px]  lg:pt-[30px] h-auto pb-[20px] pt-[10px]  md:pt-[50px]  ${
               isDarkMode ? "bg-black border border-white" : "bg-white"
             }`}>
         <div className="flex flex-col w-[100%]

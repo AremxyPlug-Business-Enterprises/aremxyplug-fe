@@ -21,11 +21,15 @@ import { AirtimeVtuReceipt } from './AirtimeVtuReceipt';
 import { AirtimeReceiptFailed } from './AirtimeReceiptFailed';
 import axiosInstance from '../ApiCollection.jsx/apiClient';
 import { Loader } from '../Loader/Loader';
-import { VerifyTransPin, GetFunction, InternalLoginSession, RestrictionPopUp } from '../ApiCollection.jsx/ApiBuck';
+import { VerifyTransPin, 
+    GetFunction, 
+    InternalLoginSession,
+     RestrictionPopUp, PostFunction } from '../ApiCollection.jsx/ApiBuck';
 import Select from  "../Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundles-Images/Select.svg";
 import { GetLocalStorage } from '../LocalStorage/LocalStorage';
 import { BalanceLoading } from '../Loader/Loader';
 import airtimestyles from "./AirTime.module.css";
+import SelectRecipient from './SelectRecipient';
 
 
 const AirtimeVtu = () => {
@@ -40,13 +44,10 @@ const AirtimeVtu = () => {
     const { recipientNumber, setRecipientNumber } = useContext(ContextProvider);
     const { amount, setAmount } = useContext(ContextProvider);
     const { networkImage, setNetworkImage } = useContext(ContextProvider);
-    const { inputValues, setInputValues } = useContext(ContextProvider);
     const { networkId, setNetworkId, authenticationOpen } = useContext(ContextProvider);
     const [restrictUser, setRestrictUser] = useState(false)
-    const [balanceLoader, setBalanceLoader] = useState(false)
-   // const { productId, setProductId } = useContext(ContextProvider);
-
-
+    const [balanceLoader, setBalanceLoader] = useState(false);
+    const [loadingRecipient, setLoadingRecipient] = useState(false);
     const [addRecipient, setAddRecipient] = useState(false);
     const [discount, setDiscount] = useState('');
     const [proceed, setProceed] = useState(false);
@@ -54,7 +55,6 @@ const AirtimeVtu = () => {
     const [paymentSelected, setPaymentSelected] = useState(false);
     const [showList, setShowList] = useState(false);
     const [showPayment, setShowPayment] = useState(false);
-   // const [showProduct, setShowProduct] = useState(false);
     const [name, setName] = useState('');
     const [image, setImage] = useState('');
     const [paymentAmount, setPaymentAmount] = useState('');
@@ -70,15 +70,43 @@ const AirtimeVtu = () => {
    const [sessionModal, setSessionModal] = useState(false)
     const [errorMessage, setErrorMessage] = useState(false);
     const [passDataBalance, setPassDataBalance] = useState({});
-    const [balanceStatus, setBalanceStatus] = useState("")
+    const [balanceStatus, setBalanceStatus] = useState("");
+    const [selectRecipientDisplay, setSelectRecipientDisplay] = useState(false)
    const balanceStringToNum = Number(newBalance);
+   const [recipientList, setRecipientList] = useState([]);
+   const [airtimeTransactionNetwork, setAirtimeTransactionNetwork] = useState(false)
+
+
+   const GetRecipientList = async()=> {
+      const successHandler = (response)=> {
+setRecipientList(response?.data?.data?.recipients?.recipients);
+      }
+      const failedHandler = async(errorType)=> {
+   
+        if(errorType === "Network error" || errorType === "User error"){
+            alert("Check your internet connection.")
+        }else if(errorType === "unauthorised"){
+        await GetFunction("airtime/recipient", 
+            setLoadingRecipient, 
+            successHandler, 
+            failedHandler
+            ,setRecipientList)
+        }else if(errorType === "Server error"){
+    alert("Unable to fetch your recipient List try again later.")
+        }
+      }
+   await GetFunction("airtime/recipient", 
+    setLoadingRecipient, 
+    successHandler, 
+    failedHandler,()=> {})
+   }
     
       const calcAmount = (a, b) => {
         if (a === '' || b === '') {
             return ''
         } else {
             const totalAmount = ((1 - (a / 100)) * b)
-            return totalAmount
+            return totalAmount;
         }
      }
       const newAmount = calcAmount(discount, amount)
@@ -89,8 +117,9 @@ const AirtimeVtu = () => {
             //console.log(updateBalance);
                  let CheckSufficiency = newAmount  >   updateBalance
                  
-                 useEffect(() => {
-                           const GetBalance =   async()=> {
+
+//Getting The User Balance of the application.
+                 const GetBalance =   async()=> {
                                const SuccessHandler = ()=> {
                              //alert("Successful");
                         console.log("successfully retrieved balance");
@@ -114,6 +143,11 @@ const AirtimeVtu = () => {
                              FailedHandler,
                              setPassDataBalance)
                            } 
+                 useEffect(() => {
+                    setRecipientNumber("");
+                    setRecipientName("");
+                    setNetworkName("")
+                           
                             // Simulate async data loading
                                               // Simulate async data loading
                       if (Data?.ConfirmAcc === "true"){                     // Simulate async data loading
@@ -124,8 +158,7 @@ const AirtimeVtu = () => {
                     }else {
                       setRestrictUser(true);
                     }
-
-                           //eslint-disable-next-line
+                  //eslint-disable-next-line
                           }, []);
                      
    useEffect(()=> {
@@ -136,65 +169,18 @@ const AirtimeVtu = () => {
                 setBalanceStatus("");
                }
             }
+ HandleBalanceStatus();
+        },[CheckSufficiency]);
 
-            HandleBalanceStatus()
-        },[CheckSufficiency])
+        //Getting Recipient Details
+        useEffect(()=> {
+        GetRecipientList();
+        },[])
 
 
    
 
-    const handleAddRecipient = async () => {
-        if(!navigator.onLine) return alert("Check your internet Connection")
-        setIsLoading(true);
-        setErrors({});
-        try {
-
-            const requestBody = {
-                network: networkName,  // Changed from networkName
-                name: recipientName,   // Changed from recipientName
-                phone: recipientNumber // Changed from recipientNumber
-            };
-
-            const response = await fetch('https://aremxyplug.onrender.com/api/v1/airtime/recipient', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(requestBody)
-            });
-
-            if (!response.ok) {
-                // Handle non-200 responses
-                const errorData = await response.json();
-                setErrors(errorData.errors || { server: 'An error occurred' });
-                return;
-            }
-
-            // Handle successful response
-            if(response.status === 200 || 201){
-            const data = await response.json();
-            console.log('Recipient added successfully:', data);
-            }
-
-        } catch (error) {
-            console.error('Network error:', error);
-            setErrors({ network: 'Network error, please try again later.' });
-            if(error && error.response === undefined){
-             alert("Check your internet Connection, then reload the page.")
-          } else if(error && (error.response.status === 400 || 404)){
-             alert("Couldn't save recipient,please try again later.")
-          }else if(error && error.response.status === 500){
-               alert("Couldn't save recipient,please try again later.")
-          }else if(error && error.response.status === 401){
-            alert("session expired")
-          }else {
-            alert("Error occured: Kindly check your network connection.")
-          }
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
+  
 
 
 
@@ -203,32 +189,31 @@ const AirtimeVtu = () => {
             id: 1,
             name: 'MTN',
             image: require('./Images/mtn.svg').default,
-            discount: 3,
+            discount: 2,
             networkId: "1",
         },
         {
             id: 2,
             name: 'AIRTEL',
             image: require('./Images/airtel.png'),
-            discount: 4,
+            discount: 2,
             networkId: "2",
         },
         {
             id: 3,
             name: 'GLO',
             image: require('./Images/glo.png'),
-            discount: 3,
+            discount: 2,
             networkId: "3",
         },
         {
             id: 4,
             name: '9MOBILE',
             image: require('./Images/9mobile.svg').default,
-            discount: 3,
+            discount: 2,
             networkId: "4",
         },
     ];
-
     const updateBalanceToNumber = Number(updateBalance)
   const newBalanceToNumber = Number(newBalance)
   const balanceOption = newBalance === "" || newBalance === null ? updateBalanceToNumber : newBalanceToNumber
@@ -311,15 +296,6 @@ const AirtimeVtu = () => {
 
   
 
-    const handleSelectNetwork = (name, image, val, netId) => {
-        setNetworkName(name);
-        setNetworkImage(image);
-        setDiscount(val);
-        setShowList(false);
-        setSelected(true);
-        setNetworkId(netId);
-    }
-
    
     
     
@@ -343,6 +319,8 @@ const AirtimeVtu = () => {
     //     }
     // };
 
+
+   
     const handleShowPayment = () => {
         setShowPayment(!showPayment)
         setName('');
@@ -373,46 +351,11 @@ const AirtimeVtu = () => {
   paymentSelected;
 
 
-const handleProceed = (e) => {
-  e.preventDefault();
 
-  let newErrors = {};
-
-  // Validate with Joi
-  const { error } = schema.validate({
-    recipientNumber,
-    amount,
-  });
-
-  if (error) {
-    newErrors = error.details.reduce((acc, curr) => {
-      acc[curr.path[0]] = curr.message;
-      return acc;
-    }, {});
-  }
-
-  // Validate network
-  if (!networkName) {
-    newErrors.networkName = "Please select a network.";
-  }
-
-  // Validate payment option
-  if (!paymentSelected) {
-    newErrors.payment = "Please select a payment method.";
-  }
-
-  // Validate amount
-  if (!amount || amount.length < 2) {
-    newErrors.amount = "Please enter a valid amount.";
-  }
-
-  if (Object.keys(newErrors).length > 0) {
-    console.log("Validation failed", newErrors);
-    setErrors(newErrors);
-    return;
-  }
-
-  // Nigerian number validate
+   //validating the prefix of Nigeria network providers with the
+    // network name selected
+     // Nigerian number validate
+     
   function validateNigerianNumberByNetwork(number) {
     const networks = {
       'AIRTEL': ['0701', '0708', '0802', '0808', '0812', '0901', '0902', '0904', '0907', '0912', '0911'],
@@ -420,7 +363,8 @@ const handleProceed = (e) => {
       'GLO': ['0705', '0805', '0807', '0811', '0815', '0905', '0915'],
       '9MOBILE': ['0809', '0817', '0818', '0909', '0908']
     };
-
+ 
+console.log(number?.length);
     for (let network in networks) {
       for (let prefix of networks[network]) {
         if (number.startsWith(prefix) && number.length === prefix.length + 7) {
@@ -430,21 +374,124 @@ const handleProceed = (e) => {
     }
     return 'Unknown network';
   }
-
-  const detectedNetwork = validateNigerianNumberByNetwork(recipientNumber);
+const DetectAndErrorNetFunc = (value)=> {
+  if(value?.length === 11){
+    const detectedNetwork = validateNigerianNumberByNetwork(value);
   console.log("Detected network:", detectedNetwork);
 
-  if (detectedNetwork !== networkName) {
+  if ((detectedNetwork !== networkName) && networkName?.length > 1) {
     setErrors({
       recipientNumber: `Invalid ${networkName} number. Please enter a valid ${networkName} number.`,
     });
-    return;
+   return true
+   
+  }else if(networkName?.length < 1){
+       setErrors({
+      recipientNumber: `Select Network Type`,
+    });
+    return true
+  
+  }else{
+    setErrors({})
+    return false
   }
+  }
+}
 
-  setProceed(true);
+
+const CheckRecipientInfoInList =(value)=> {
+   if(value && value?.length === 11){
+   const findingRecipient = recipientList?.length > 0 && recipientList !== null && recipientList !== undefined ? 
+     recipientList?.find((item)=>{ 
+    return value === item?.phone
+   }
+) : []
+//console.log(findingRecipient);
+  return findingRecipient
+  }
+}
+
+const RecipientExistCheck = CheckRecipientInfoInList(recipientNumber)
+
+console.log(typeof CheckRecipientInfoInList(recipientNumber) === "object" 
+? CheckRecipientInfoInList(recipientNumber)?.phone : undefined);
+
+ 
+const handleProceed = (e) => {
+  e.preventDefault();
+// Validate with Joi
+  const { error } = schema.validate({
+    recipientNumber,
+    amount,
+  });
+
+  if (error) {
+    setErrors(error.details.reduce((acc, curr) => {
+      acc[curr.path[0]] = curr.message;
+      return acc;
+    }, {}))
+  }
+ setProceed(true);
   setErrors({});
-  console.log("All validation passed, proceeding...");
+
 };
+
+  const handleAddRecipient = async() => {
+      const successHandler = ()=> {
+            alert("Recipients saved successfully")
+        }
+        const failedHandler = async(ErrorType)=> {
+            if(ErrorType === "Server error"){
+              alert("Unable to save recipients at the moment")
+            }else if(ErrorType === "unauthorised"){
+               await PostFunction("airtime/recipient",
+     setIsLoading, 
+     requestBody,
+     successHandler, 
+     failedHandler, 
+     setFetchedResponse)
+            }else if(ErrorType === "User error" || ErrorType === "Network error"){
+              setAirtimeTransactionNetwork(true)
+            }else {
+              alert("Unable to save recipients at the moment.")
+            }
+        }
+        const setFetchedResponse = ()=> {
+           return;
+        }
+         const requestBody = {
+                network: networkName ? networkName?.toLowerCase() : "",  // Changed from networkName
+                name: recipientName,   // Changed from recipientName
+                phone: recipientNumber // Changed from recipientNumber
+            };
+  await PostFunction("airtime/recipient",
+     setIsLoading, 
+     requestBody,
+     successHandler, 
+     failedHandler, 
+     setFetchedResponse)
+    };
+
+//Setting the network on the user interface
+ const handleSelectNetwork = (name, image, val, netId) => {
+        setNetworkName(()=> {
+          if(networkName?.length < 1){
+          return name;
+    }else if(networkName?.length > 1 && networkName?.length
+     && (recipientNumber?.length > 1 || recipientNumber?.length === 11)){
+       DetectAndErrorNetFunc(recipientNumber);
+      return name;
+ }
+        }
+      );
+        setNetworkImage(image);
+        setDiscount(val);
+        setShowList(false);
+        setSelected(true);
+        setNetworkId(netId);
+    }
+console.log(recipientList);
+   
 
 
 
@@ -518,7 +565,7 @@ const handleProceed = (e) => {
                 setDescription(result?.description);
                 setInputPin("")
                
-                  if (response.status === 200) 
+                  if (response.status === 200 || response.status === 201) 
                     {
             // Success response
             setTransactSuccessPopUp(true); 
@@ -573,14 +620,11 @@ const handleProceed = (e) => {
         // Usage
      await buyAirtime(
             networkId, // Network (MTN)
-            inputValues, // Mobile No
+            recipientNumber, // Mobile No
             amount, // Amount
          // Airtime Type (VTU)
         );
-
-
-      
-    };
+};
 
     const [receipt] = useState(false);
     const [receiptFailed] = useState(false);
@@ -603,7 +647,7 @@ const handleProceed = (e) => {
 
         const numericValue = value.replace(/\D/g, "");
 
-        setInputValues(numericValue);
+        setRecipientNumber(numericValue);
     };
 
 //     const HandleAirtime = async()=> {
@@ -640,6 +684,7 @@ const handleProceed = (e) => {
         setSessionModal(true);
       }else if(ErrorType === "Network error" || ErrorType === "User error"){
         alert("Your internet connectiom is quite unstable.")
+        setAirtimeTransactionNetwork(true)
       }
     },
     setIsLoading,
@@ -648,6 +693,7 @@ const handleProceed = (e) => {
   );
       }else if(ErrorType === "Network error" || ErrorType === "User error"){
         alert("Your internet connectiom is quite unstable.")
+        setAirtimeTransactionNetwork(true);
       }
     },
     setIsLoading,
@@ -655,6 +701,19 @@ const handleProceed = (e) => {
     handleTransactionSuccessClose
   );
 };
+
+
+if(Data?.ConfirmAcc === "true"){
+  window.addEventListener("online", async()=> {
+    if(airtimeTransactionNetwork === true && recipientList?.length < 1){
+   await  GetRecipientList();
+  }
+  if(airtimeTransactionNetwork === true && (newBalance === ""|| newBalance === undefined) ){
+}
+  await GetBalance()
+  })
+}
+
     return (
         <DashBoardLayout>
             <div className={styles.AirtimeTops}>
@@ -687,18 +746,20 @@ const handleProceed = (e) => {
                                     }
                         ${styles.FlexPut} !h-[36.927px] md:!h-[51px]
                   `}>
-                            <Link to="/select-vtu-recipient">
-                                <div className={`
-                                ${styles.conPut} !relative !top-[12px] md:!relative md:!top-base !text-[12px] md:!text-base
-                                `}>
-                                    <h2>Select Recipient</h2>
+                            <div className='flex justify-between p-[4px] h-full items-center cursor-pointer'
+                             onClick={()=> {
+                                setSelectRecipientDisplay(true);
+                            }}>
+                             <h2 className = "text-[10px] font-[700] leading-[15px]">
+                                Select Recipient
+                                </h2>
                                     <div className={styles.FlexImg} 
                                   
                                     >
                                         <img src={weight} alt="" className='' />
                                     </div>
-                                </div>
-                            </Link>
+                            
+                            </div>
                         </div>
                         <div className={`
                                         ${
@@ -714,9 +775,7 @@ const handleProceed = (e) => {
                              
                                   `}>
                                     <h2>Add Recipient</h2>
-                                    <div className={styles.FlexImg}
-                                    
-                                    >
+                                    <div className={styles.FlexImg}>
                                         <img src={add} alt="" className='' />
                                     </div>
                                 </div>
@@ -811,7 +870,9 @@ className={`flex justify-left  w-[100%] items-center`}>
                                             <Network key={item.id} 
                                             image={item.image} 
                                             name={item.name} 
-                                            onClick={() => handleSelectNetwork(item.name, item.image, item.discount, item.networkId)}
+                                            onClick={() => {
+                                              handleSelectNetwork(item.name, item.image, item.discount, item.networkId)
+                                            }}
                                             
                                             />
                                              </div>
@@ -859,22 +920,17 @@ className={`flex justify-left  w-[100%] items-center`}>
                             <div  className="relative flex flex-col gap-[3px]
                    lg:gap-[5px] w-full md:w-1/2">
                                 <h2     className={` ${isDarkMode ? "text-white" : "text-black"} text-[14px] lg:text-[17px]
-                       md:text-[13px]
-                      md:font-[600] font-[400`}>Discount</h2>
-                                <div className={` mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]
-                                 md:p-0 text-[13.2px] 
-                         sm:p-3 sm:text-lg  z-4  flex justify-between pt-[8.803px]
-                          pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
-                          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+                       md:text-[13px]  md:font-[600] font-[400`}>Discount</h2>
+    <div className={` mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]
+  md:p-0 text-[13.2px] sm:p-3 sm:text-lg  z-4  flex justify-between pt-[8.803px]
+    pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px]
      lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
       isDarkMode
         ? "bg-black text-white border border-white"
         : "hover:bg-[#EDEAEA]"
     }`}>
-
-          
-                                    <h2 className={`text-left text-[13.2px]  font-[400] 
+<h2 className={`text-left text-[13.2px]  font-[400] 
          leading-[17.4px] md:text-[11px] md:leading-[12.206px]
             lg:text-[16px] lg:leading-[20.8px] 
          ${isDarkMode ? "text-white" : "text-[#7E7E7E]" }`}>{discount ? `${networkName + ' ' + discount}%` : ''}
@@ -893,13 +949,14 @@ className={`flex justify-left  w-[100%] items-center`}>
                             
                     <div className="relative flex flex-col gap-[3px]
                    lg:gap-[5px] w-full md:w-1/2"> 
-                                <h2     className={` ${isDarkMode ? "text-white" : "text-black"} text-[14px] lg:text-[17px]
-                       md:text-[13px]
-                      md:font-[600] font-[400`}
-                                         >Phone Number <span
-                                    className={`text-blue-800`}>
-                                        <Link to="/select-vtu-recipient"> (Select Recipient) </Link>
-                                </span>
+          <h2  
+          className={` ${isDarkMode ? "text-white" : "text-black"}
+          text-[14px] lg:text-[17px] md:text-[13px]  md:font-[600] font-[400`}>
+            Phone Number <span onClick={()=> {
+            setSelectRecipientDisplay(true)                        
+            }} className = "text-blue-800 cursor-pointer">
+                (Select Recipient)
+                    </span>
                                 </h2>
             <div className="relative flex flex-col h-full 
             gap-[3px] lg:gap-[5px] w-full ">
@@ -911,15 +968,13 @@ className={`flex justify-left  w-[100%] items-center`}>
                   isDarkMode
                     ? "bg-black text-white border border-white"
                     : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
-                }
-                  
-  `}
-                  required
-                                            placeholder='Add recipient phone number'
-                                            onChange={(event) => {
-                                                handleChange(event);
-                                                setRecipientNumber(event.target.value);
-                                            }} value={recipientNumber} />
+                } `}
+ required placeholder='Add recipient phone number' onChange={(event) => {
+     handleChange(event);
+               DetectAndErrorNetFunc(event.target.value);
+              CheckRecipientInfoInList(event.target.value)
+                     
+        }} value={recipientNumber} />
                                        
                                             <img
                                                className=" absolute left-[90%] top-[40%] md:top-[30%]
@@ -1208,10 +1263,7 @@ className={`flex justify-left  w-[100%] items-center`}>
                                                src={methodOption.flag}
                                                alt=""
                                              />
-               
-                                           
-                                             
-                                               {methodOption.code}
+                                 {methodOption.code}
                                                {""}   {balanceLoader === true && methodOption.id === 1 ? <BalanceLoading/> :  methodOption.balance}
                                              
                                            </div>
@@ -1228,13 +1280,42 @@ className={`flex justify-left  w-[100%] items-center`}>
                         {/* </div> */}
                     {/* </div> */}
                     <div className={styles.add}>
-                        <h2 className='!text-[13px] md:!text-base'>Add to Recipient?</h2>
-                        <div onClick={() => { setAddRecipient(!addRecipient); if (!addRecipient) handleAddRecipient(); }}
-                            className={`w-[16px] h-[8.4px] md:w-[30px] md:h-[12px] lg:w-[50px] lg:h-[22px] lg:rounded-full rounded cursor-pointer ${addRecipient ? "bg-[#77ff60]" : "bg-[#b1b0b0]"}`}>
-                            <div className={`rounded-full w-[8.5px] h-[7.4px] md:w-[14px] md:h-[12px] lg:h-[22px] lg:w-[21px] lg:drop-shadow-md bg-[#fff] ${addRecipient ? "float-right" : "float-left"}`}>
+                        <h2 className='!text-[13px] md:!text-base'>
+                          {RecipientExistCheck?.phone === recipientNumber 
+                          && recipientName?.length > 1 && networkName?.length > 1
+                          && !errors?.recipientNumber
+                         
+                           ? "Exists in recipients" : "Add to recipients"}
+                        </h2>
+                        {isLoading === false  ? (
+                            
+                        <div onClick={() => { 
+                       if(networkName?.length > 1 && 
+                          recipientName?.length > 1 
+                          && recipientNumber?.length > 1 && recipientNumber?.length === 11
+                           && RecipientExistCheck?.phone !== recipientNumber &&   !errors?.recipientNumber) {
+                               handleAddRecipient();
+                            }
+                         }}
+                            className={`w-[16px] h-[8.4px] md:w-[30px] md:h-[12px]
+                             lg:w-[50px] lg:h-[22px] lg:rounded-full 
+                             rounded cursor-pointer 
+                             ${
+                             (RecipientExistCheck?.phone === recipientNumber &&  recipientNumber?.length === 11   && !errors?.recipientNumber ) 
+                             ? "bg-[#77ff60]" : "bg-[#b1b0b0]"}`}>
+                            <div className={`rounded-full w-[8.5px]
+                                 h-[7.4px] md:w-[14px] md:h-[12px] lg:h-[22px] lg:w-[21px] lg:drop-shadow-md bg-[#fff]
+                                  ${
+                                    ( RecipientExistCheck?.phone === recipientNumber &&  recipientNumber?.length === 11
+                                 &&   recipientName?.length > 1 && (networkName?.length > 1 || networkName !== undefined)    && !errors?.recipientNumber)
+                            ? "float-right" : "float-left"}`}>
                             </div>
                         </div>
-                        {isLoading && <p>Loading...</p>}
+                           
+                        ) : (
+                    <BalanceLoading/>
+                        )}
+                        
                     </div>
            
                     {codes && (
@@ -1300,7 +1381,7 @@ className={`flex justify-left  w-[100%] items-center`}>
                     {proceed && (
                         <Modal>
                             
-                                                 <div className={`w-full flex justify-center h-full 
+          <div className={`w-full flex justify-center h-full 
              py-[30px] px-[15px] lg:px-[0px] lg:items-center
               items-end`}>
             <div 
@@ -1375,13 +1456,11 @@ className={`flex justify-left  w-[100%] items-center`}>
                                 </div>
 
                                   <div className={`bg-[#F6F7F7] w-[95%] h-auto my-5 lg:my-8 flex py-[7px] 
-                                                                            justify-between items-center px-[4%] mx-auto rounded-[10px]
-                                                                            ${isDarkMode ? "bg-black border rounded-[10px]  border-white" : "bg-[#F6F7F7] "}`}>
-                                                                                    <div className="flex flex-col gap-2  ">
-                                                                                      <div className="flex gap-[10px] justify-center items-center">
-                                                                                        <img
-                                                                                          className="w-[16px] h-[16px] bg-white"
-                                                                                          src={image}
+                                  justify-between items-center px-[4%] mx-auto rounded-[10px]
+                                    ${isDarkMode ? "bg-black border rounded-[10px]  border-white" : "bg-[#F6F7F7] "}`}>
+                                     <div className="flex flex-col gap-2 ">
+                                    <div className="flex gap-[10px] justify-center items-center">
+                 <img className="w-[16px] h-[16px] bg-white" src={image}
                                                                                           alt="/"
                                                                                         />
                                                                                         <div className="flex gap-[10px] items-center">
@@ -1590,7 +1669,7 @@ className={`flex justify-left  w-[100%] items-center`}>
                                     </div>
                                     <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                                         <p className="text-[#0008]">Phone Number</p>
-                                        <span>{inputValues}</span>
+                                        <span>{recipientNumber}</span>
                                     </div>
                                     <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                                         <p className="text-[#0008]">Recipient Name</p>
@@ -1622,7 +1701,7 @@ className={`flex justify-left  w-[100%] items-center`}>
                                             // window.location.reload();
                                             setNetworkName("");
                                             setSelected("");
-                                            setInputValues("");
+                                            setRecipientNumber("");
                                             setRecipientName("");
                                             setSelectedProduct("");
                                             setAmount("");
@@ -1636,7 +1715,7 @@ className={`flex justify-left  w-[100%] items-center`}>
                                     <Link to="/airtime-vtu-receipt" state={{
                                         networkName: networkName,
                                         selectedProduct: selectedProduct,
-                                        inputValues: inputValues,
+                                        recipientNumber: recipientNumber,
                                         recipientName: recipientName,
                                         amount: amount,
                                         transactionID: transactionID,
@@ -1700,7 +1779,7 @@ className={`flex justify-left  w-[100%] items-center`}>
                                             // window.location.reload();
                                             setNetworkName("");
                                             setSelected("");
-                                            setInputValues("");
+                                            setRecipientNumber("");
                                             setRecipientName("");
                                             setSelectedProduct("");
                                             setAmount("");
@@ -1714,7 +1793,7 @@ className={`flex justify-left  w-[100%] items-center`}>
                                     <Link to="/airtime-receipt-failed" state={{
                                         networkName: networkName,
                                         selectedProduct: selectedProduct,
-                                        inputValues: inputValues,
+                                          recipientNumber: recipientNumber,
                                         recipientName: recipientName,
                                         amount: amount,
                                     }}>
@@ -1787,6 +1866,10 @@ className={`flex justify-left  w-[100%] items-center`}>
                 <InternalLoginSession setExpiredSessionLogin={setSessionModal}/>
             )}
             {restrictUser && <RestrictionPopUp/>}
+            {selectRecipientDisplay && <SelectRecipient 
+            recipientList = {recipientList} 
+            loadingRecipient ={loadingRecipient}
+             setSelectRecipientDisplay = {setSelectRecipientDisplay}/>}
         </DashBoardLayout>
     );
 }

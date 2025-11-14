@@ -106,8 +106,9 @@ export const RedeemReceipt = () => {
           `}> 
             Redeem Successful on
             </h3>
-            <span className={`text-[12px] text-[#0008] pt-1 font-extrabold flex justify-center items-center
-            ${isDarkMode ? "text-white" : "text-black"}`}
+            <span className={`text-[12px] text-[#0008] pt-1 font-extrabold'
+             flex justify-center items-center
+            =`}
             >
               {date.toLocaleDateString(undefined, {
                 year: "numeric",
@@ -119,15 +120,18 @@ export const RedeemReceipt = () => {
                 hour12: true,
               })}
             </span>
-             <p className={`mt-5 text-[12px] text-[#0008] text-center md:text-[16px] lg:text-[14px]
-               ${isDarkMode ? "text-white" : "text-black" }
+             <p className={`text-[10px] p-[5.729px] border-[0.573px] rounded-[6.302px] md:p-[5.868px] md:border-[0.578px] md:rounded-[6.455px] lg:border lg:rounded-[11px] leading-[15px] md:leading-[20px] lg:p-2.5 text-center 
+             my-2 md:text-sm lg:text-base lg:leading-6 
+             font-medium md:mb-7 
+             border-[#27AE60] text-[#27AE60]
+              bg-[#D5F6E3]
               `}>
               You have successfully redeemed{" "}
-              <span className={` ${isDarkMode? "text-white" : "text-black"} text-[#000] font-extrabold text-[10px] md:text-[12px] lg:text-[14px]`}>
+              <span className={` font-extrabold text-[10px] md:text-[12px] lg:text-[14px]`}>
                    {isLoading ? "Loading..." : pointAmountRedeemed}.00
               </span>{" "}
               Points to{" "}
-             <span className={` ${isDarkMode? "text-white" : "text-black"} text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[14px]`}>
+             <span className={`  font-extrabold text-[10px] md:text-[16px] lg:text-[14px]`}>
                    &#8358;{isLoading ? "Loading..." : pointAmountRedeemed}.00
               </span>{" "}
               from your PTS balance{" "} to

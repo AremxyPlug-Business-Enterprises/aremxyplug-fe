@@ -69,7 +69,8 @@ const TransactionHistory = ({
         ? "deposit"
         : product === "Internal Transfer"
         ? "transfer"
-        : "";
+         : product === "Point Redeem" ?
+        "point" : ""
 
     const path = `transactions/${orderId}?product=${productType}`;
     let result;
@@ -221,8 +222,9 @@ const FormatTime =(DateValue)=> {
                               : transaction?.product === "Internal Transfer"
                               ? "/TransferReceipt"
                               : transaction?.product === "Internal Deposit"
-                              ? "/VirtualAccountReceipt"
-                              : "/SuccessfullReceipt",
+                              ? "/VirtualAccountReceipt" 
+                              : transaction?.product === "Point Redeem"
+                              ? "/PointRedeemReceipt" : "/SuccessfullReceipt",
                             { state: { orderData, transaction } }
                           );
                         }
@@ -488,7 +490,8 @@ const FormatTime =(DateValue)=> {
                           ? "/TransferReceipt"
                           : transaction?.product === "Internal Deposit"
                           ? "/VirtualAccountReceipt"
-                          : "/SuccessfullReceipt",
+                           : transaction?.product === "Point Redeem" ?
+                            "/PointRedeemReceipt" : "/SuccessfullReceipt",
                         { state: { orderData, transaction } }
                       );
                     }

@@ -3,8 +3,6 @@ import { DashBoardLayout } from '../Dashboard/Layout/DashBoardLayout';
 import receiptA from "./assets/cash receipt from online shopping on mobile phone (3)A.png";
 import arrowsales from "./assets/arrow-square-rightsales.png";
 import menusales from "./assets/menusales.png";
-import arrow44 from "./assets/arrow-down@4x.png";
-import arrow11 from "./assets/arrow-down@1x.png";
 import flagpage from "./assets/Country Flagspage.png";
 import flagpage1 from "./assets/Country Flagspage1.png";
 import flagpage2 from "./assets/Countryflag2.svg";
@@ -19,7 +17,6 @@ import { Calender } from "../Dashboard/DashboardComponents/Calender";
 import { Link } from "react-router-dom/dist/react-router-dom.development";
 import { GetFunction, InternalLoginSession } from '../ApiCollection.jsx/ApiBuck';
 import { Loader } from '../Loader/Loader';
-import { Modal } from '../Screens/Modal/Modal';
 import NoRecordImage from "../Add&SelectRecipient/RecipientImages/NoRecordImage.svg";
 import { GetLocalStorage } from '../LocalStorage/LocalStorage';
 import { BalanceLoading } from '../Loader/Loader';
@@ -28,10 +25,6 @@ export default function SalesSummaryPage ()  {
   const Data = GetLocalStorage()
   const [balanceLoader, setBalanceLoader] = useState(false) 
     const [isOpen1, setIsOpen1] = useState(false); 
-    // const [isOpen2, setIsOpen2] = useState(false);
-    // const [isOpen3, setIsOpen3] = useState(false); 
-    // const [isOpen4, setIsOpen4] = useState(false);
-   //const [isOpen5, setIsOpen5] = useState(false);
     const [loading, setLoading] = useState(false);
     const [sessionModal, setSessionModal] = useState(false);
     const [transactionHistoryError, setTransactionHistoryError] = useState("");
@@ -43,7 +36,14 @@ export default function SalesSummaryPage ()  {
     const [methodBalance, setMethodBalance] = useState(false);
     const [stateDateEdit , setStateDateEdit] = useState("Filter By Date")
     //  const [totalOutFlow, setTotalOutFlow] = useState('')
-         const { isDarkMode, toggleSideBar, dateEdit, setDateEdit } =
+         const { isDarkMode, toggleSideBar, dateEdit, setDateEdit,  startDateValueState,
+    endDateValueState,
+    setStartDateValueState,
+    setEndDateValueState,
+    setEditCalenderOne,
+    setEditCalenderTwo,
+    setCurrentDateInTimeStamps,
+    editCalenderOne,editCalenderTwo, countCalender, setCountCalender } =
   useContext(ContextProvider);
     // const toggleDropdown1 = () => { setIsOpen1(true); };
 // 
@@ -67,14 +67,34 @@ export default function SalesSummaryPage ()  {
       const [selectedProduct, setSelectedProduct] = useState('Filtered Product');
       
            
- const GetTransactionInformation = async(product)=> {
+ const GetTransactionInformation = async(startDate, endDate, product)=> {
       if(!navigator.onLine) return setTransactionHistoryError("Network error")
         let path;
+
+      //Path Query of the sales Summary
+       const pathQuery = ()=> {
+    
+      //Queries for the different combination of filters
+       const dateQueries = 
+       //when selectRecords is either of deposits or transfer,
+       // and startDateValueState and endDateValueState aren't used or given
+     
+    product?.length && 
+    (startDate?.length > 1 && startDate !== undefined)
+    &&  (endDate?.length< 1 || endDate === undefined)
+      ? `?start_date=${startDate}` 
+      :  (product?.length  )
+     && product?.length &&
+     (startDate?.length > 1 && startDate !== undefined)
+      &&  (endDate?.length> 1 || endDate !== undefined)
+      ? `?start_date=${startDate}&end_date=${endDate}` : ""
+      return dateQueries;
+    }
         if(product === "All Products"){
-        path ="transactions/sales-overview";
-        console.log(product)
+        path =`transactions/sales-overview${pathQuery()}`;
+       
         }else{
-          path =`transactions/sales-summary?category=${product}`
+          path =`transactions/sales-summary?category=${product}${pathQuery()}`;
         }
       const SuccessHandler =(response)=>{
        console.log("Sales Summary fetched");
@@ -93,11 +113,8 @@ export default function SalesSummaryPage ()  {
           setSalesResponse(response?.data?.data?.data?.data)
           }else if(product === "All Products"){
         setSelectedProduct("All Products");
-      
-     setSalesResponse(response?.data?.data?.data)
+       setSalesResponse(response?.data?.data?.data)
           }
-
-      
 }
       const FailedHandler = async(ErrorType)=> {
     if(ErrorType === "unauthorised"){
@@ -195,10 +212,31 @@ export default function SalesSummaryPage ()  {
        { method: 'KES Wallet', balance: '(KSh0.00)', flag: flagpage5, id: 6 }
    ];
 
+
+   const date = new Date();
+   const isoString = typeof date === "object" ? date?.toLocaleString("sv-SE", {
+      timeZone : "Africa/Lagos",
+      hour12 : false
+   }) : "";
+   //11 Slices of stringed bread
+   const slicedBread = isoString?.slice(0,10);
+
+
+   //Resetting the variables used in date filtering
+  const ResetDateFilterFields = ()=>{
+  setStartDateValueState("");
+    setEndDateValueState("");
+    setEditCalenderOne("");
+    setEditCalenderTwo("");
+    setCurrentDateInTimeStamps("")
+ }
    useEffect(()=> {
-    setSelectedProduct("All Products")
+    ResetDateFilterFields();
+  
     if(salesResponse?.data?.data?.data === undefined){
- GetTransactionInformation("All Products");
+ GetTransactionInformation(slicedBread ,
+  endDateValueState,
+    "All Products" );
  
     }
 
@@ -225,6 +263,81 @@ setDateEdit(()=> {
 
  //eslint-disable-next-line
  }, [])
+
+
+
+ //Handle The Cancel State of the Date Filter
+ const handleCalenderState = async()=> {
+  // No filtering carried out.....
+  if(editCalenderOne === "Start Date" && editCalenderTwo === "End Date"){
+    setCountCalender(0);
+  setCalender(false);
+  setStateDateEdit("Filter By Date")
+}
+ //Editing Operation carried out..
+if ( (editCalenderTwo !== "End Date" && editCalenderTwo !== undefined) 
+  && (editCalenderOne !== "Start Date" && editCalenderOne !== undefined)){
+const currentDateFormattingCancel = new Date(startDateValueState);
+currentDateFormattingCancel.setHours(0,0,0,0);
+    setEditCalenderTwo("End Date");
+    setCountCalender(1);
+    setEndDateValueState("");
+    setCurrentDateInTimeStamps(currentDateFormattingCancel);
+  
+  }else  if(
+      editCalenderTwo === "End Date"  &&
+     (editCalenderOne !== "Start Date" 
+      && editCalenderOne !== undefined)){
+        const currentDateFormattingCancel = new Date();
+currentDateFormattingCancel.setHours(0,0,0,0);
+      setEditCalenderOne("Start Date");
+      setCurrentDateInTimeStamps(0)
+      setCountCalender(0);
+      setStartDateValueState("");
+       console.log("Condition2")
+ }else {
+  setCountCalender(0);
+  setCalender(false);
+  setStateDateEdit("Filter By Date");
+  if(startDateValueState?.length > 1 ){
+  await GetTransactionInformation(startDateValueState,
+     endDateValueState,
+      selectedProduct);
+  }
+  }
+ }
+ //Filter By Date
+ const FilterByDateFunc = async()=> {
+  const optionalDate = new Date();
+  const isoString = typeof optionalDate === "object" ?
+   optionalDate?.toLocaleString("sv-SE", {
+    timeZone : "Africa/Lagos",
+    hour12 : false
+  }) : "";
+ //Bread type into ten
+  const slicedDate = isoString?.slice(0,10);
+  const startDateOptions 
+  = startDateValueState?.length && startDateValueState !== ""
+   ? startDateValueState : slicedDate;
+  const endDateOptions
+   = endDateValueState?.length && endDateValueState !== ""
+    ? endDateValueState : "";
+  setCalender(false);
+   console.log(startDateOptions)
+  
+     await GetTransactionInformation(
+      startDateOptions,
+       endDateOptions,
+       selectedProduct
+       );
+       if(editCalenderOne === "Start Date"){
+        setStateDateEdit(slicedDate);
+        setStartDateValueState(slicedDate);
+       }else{
+        setStateDateEdit(dateEdit);
+       }
+ 
+}
 
  
 
@@ -448,23 +561,28 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
 
  { calender &&
   <div className={`absolute rounded-[20px] left-0
-                   md:mt-[40px] w-[300px] h-auto p-2   border-[0.2px]
+                   md:mt-[40px] w-[300px] md:w-[500px] lg:w-[600px] h-auto p-2   border-[0.2px]
                    lg:mt-[55px]  flex flex-col gap-[10px] font-[400]
                     ${isDarkMode ? "bg-black text-white  border-white" 
                     : "bg-white text-black border-gray-300"}`}>
     <Calender/>
-       <div onClick={()=> {
-                        setCalender(false);
-                        setStateDateEdit(dateEdit?.slice(0,10))
-                       }}
+       <div
                      className="flex justify-center 
-                     items-center w-[270px]">
+                     items-center w-[270px] gap-[10px] md:w-[470px] lg:w-[570px]">
+                       <button  onClick={handleCalenderState}
+                       className={`w-[50%] md:w-[150px] bg-blue-white py-[15px] text-[12px] 
+                        md:text-[14px] font-[500] 
+                         rounded-[15px] border-[0.2px] border-blue-900
+             ${isDarkMode ? "text- bg-black  " :
+                          " bg-white text-blue-900 " }`}>
+                       Cancel
+                       </button>
                        <button 
-                       className={`w-full bg-blue-900 py-[15px] text-[12px] md:text-[14px] font-[500] 
-                         rounded-[15px]
-                         ${isDarkMode ? "text-white bg-black border-[0.2px] border-white" :
-                          "text-white bg-blue-900"}`}>
-                       Done
+                        onClick={FilterByDateFunc}
+                       className={` w-[50%] md:w-[150px] bg-blue-900 py-[15px] text-[12px] md:text-[14px] font-[500] 
+                         rounded-[15px] text-white
+                       `}>
+                       Apply
                        </button>
                        </div>
     </div> }
@@ -530,23 +648,16 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
                       onClick={() =>{
                       
                         if(option === "Airtime Top-up"){
-                        
-                          GetTransactionInformation("airtime")
+                         GetTransactionInformation(startDateValueState, endDateValueState, "airtime")
                           setIsOpen1(false);
-                          
-                         
-                        }else if(option === "Data Top-up"){
-                         
-                          GetTransactionInformation("data")
+                      }else if(option === "Data Top-up"){
+                     GetTransactionInformation(startDateValueState, endDateValueState, "data", )
                              setIsOpen1(false);
-                        
-                        }else if(option === "Bills payment"){
-                         
-                           GetTransactionInformation("bills")
+                     }else if(option === "Bills payment"){
+                     GetTransactionInformation(startDateValueState, endDateValueState, "bills")
                           setIsOpen1(false);
-                         
-                        }else if(option === "All Products"){
-                       GetTransactionInformation("All Products");
+                      }else if(option === "All Products"){
+                       GetTransactionInformation(startDateValueState, endDateValueState, "All Products");
                        setIsOpen1(false)
                         }
                       }

@@ -12,12 +12,11 @@ export const AirtimeReceiptFailed = (Data) => {
   const location = useLocation();
   Data = GetLocalStorage()
   const navigate = useNavigate();
-  const { networkName, selectedProduct, inputValues, amount} = location.state
+  const { networkName, selectedProduct, recipientNumber, amount} = location.state
 
   const { 
     recipientName, 
     setSelectedProduct,
-    setInputValues,
     setAmount,
     setRecipientName
   } = useContext(ContextProvider);
@@ -25,7 +24,7 @@ export const AirtimeReceiptFailed = (Data) => {
 
   function handleClick() {
     setSelectedProduct("");
-    setInputValues("");
+ 
     setRecipientName("");
     setAmount("");
     navigate('/airtime-topup');
@@ -40,17 +39,7 @@ export const AirtimeReceiptFailed = (Data) => {
   const contentRef = useRef(null);
 
   // ===============Copy to Clipboard Function============
-  // const handleCopyClick = () => {
-  //   const text = textRef.current.innerText;
-  //   navigator.clipboard
-  //     .writeText(text)
-  //     .then(() => {
-  //       alert("Copied to clipboard");
-  //     })
-  //     .catch((err) => {
-  //       console.error("Error copying text: ", err);
-  //     });
-  // };
+
 
   // ==============Share pdf Function=============
   const handleShareClick = () => {
@@ -160,7 +149,7 @@ export const AirtimeReceiptFailed = (Data) => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className={`text-[#0008] ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Phone Number</p>
-                  <span>{inputValues}</span>
+                  <span>{recipientNumber}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Recipient Name</p>
@@ -211,16 +200,16 @@ export const AirtimeReceiptFailed = (Data) => {
                   <span className={`${isDarkMode ? "text-white" : "text-black"}`}>Failed</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}text-[#0008]`}>Order Number</p>
-                  <span className={`${isDarkMode ? "text-white" : "text-black"}`}>1256478999</span>
+                  <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}text-[rgba(0,0,0,0.53)]`}>Order Number</p>
+                  <span className={`${isDarkMode ? "text-white" : "text-black"}`}></span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className={`text-[#0008] ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Transaction ID</p>
-                  <span className={`${isDarkMode ? "text-white" : "text-black"}`}>0331njokdhtf55</span>
+                  <span className={`${isDarkMode ? "text-white" : "text-black"}`}></span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}text-[#0008]`}>Reference Number</p>
-                  <span className={`${isDarkMode ? "text-white" : "text-black"}`}>235488526097423118APDA</span>
+                  <span className={`${isDarkMode ? "text-white" : "text-black"}`}></span>
                 </div>
               </div>
             </div>
@@ -244,7 +233,7 @@ export const AirtimeReceiptFailed = (Data) => {
             >
               Share Receipt
             </button>
-            <button
+            <button  
               onClick={() => {
                 handleSaveAsPDFClick();
               }}

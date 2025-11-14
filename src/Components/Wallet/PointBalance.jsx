@@ -58,18 +58,53 @@ const [fetchedResponse, setFetchedResponse] = useState([]);
   const faqList = [
     {
       id: 1,
-      question: "Are there any benefits to upgrading my account?",
-      answer: "Yes, upgrading your AremxyPlug account gives you access to additional features and services, such as higher transaction limits and lower fees."
+      question: "How does the point system work?",
+      answer: "Our point system rewards users for engagement and activities on the platform. You can earn points through sign-ups, referrals, verification, and transactions."
     },
     {
       id: 2,
-      question: "What are the benefits of becoming an agent?",
-      answer: "As an AremxyPlug agent, you can earn commissions on transactions made by your customers and increase your revenue streams."
+      question: "How many points do I get when I sign up?",
+      answer: " Every new user automatically receives 100 points upon registration."
     },
     {
       id: 3,
-      question: "Do I need a bank account to carry out any transactions?",
-      answer: "No, you don't need a bank account to carry out transactions on AremxyPlug. However, you can link your bank account to your AremxyPlug account to make transactions more convenient."
+      question: "What do I earn for verifying my account?",
+      answer: " Once your account is successfully verified, you’ll earn an additional 100 points."
+    },
+     {
+      id: 4,
+      question: "How does the referral bonus work?",
+      answer: " You’ll earn 100 points for every user you refer — but only when the referred user verifies their account."
+    },
+     {
+      id: 5,
+      question: " Do I earn points for transactions?",
+      answer: " Yes! You’ll automatically earn 2 points for every successful transaction you carry out."
+    },
+     {
+      id: 6,
+      question: "What is the minimum number of points I can redeem?",
+      answer: "You can start redeeming your points once you reach 1,000 points."
+    },
+     {
+      id: 7,
+      question: "What currency can I redeem my points in?",
+      answer: " All earned points are redeemed in Nigerian Naira (NGN) only."
+    },
+     {
+      id: 8,
+      question: " What is the point conversion ratio?",
+      answer: " Our conversion rate is 1:1 — which means 1 PTS = 1 NGN."
+    },
+     {
+      id: 9,
+      question: "How fast will I receive my redeemed points?",
+      answer: " Your redeemed points are instantly settled into your NGN wallet once you redeem them."
+    },
+     {
+      id: 10,
+      question: "Can the point system change over time?",
+      answer: "Yes. Points and reward structures are subject to change to support marketing and promotional campaigns"
     },
   ]
   
@@ -88,7 +123,9 @@ const [fetchedResponse, setFetchedResponse] = useState([]);
                     </div>
                 </div>
                 <div className='lg:my-14 md:my-9 my-8 flex items-center gap-1'>
-                    <h2 className='md:text-[18px] lg:text-[20px] text-[#7c7c7c] text-[10px] leading-[130%]'>Points Analysis</h2>
+                    <h2 className='md:text-[18px] lg:text-[20px] md:leading-[24px] font-[500]
+                     lg:leading-[26px] text-[#7c7c7c] 
+                    text-[13px] leading-[18px]'>Points Analysis</h2>
                     <div className='lg:w-6 lg:h-6 w-4 h-4'>
                         <img src='./Images/wallet/arrow-square-right.svg' alt="" className='h-full'/>
                     </div>
@@ -133,7 +170,9 @@ const [fetchedResponse, setFetchedResponse] = useState([]);
                 </div>
                 <div className='mt-4 lg:mt-12'>
                     <div className='lg:mb-8 flex items-center gap-1 mb-5'>
-                        <h2 className='md:text-[18px] lg:text-[20px] text-[#7c7c7c] text-[10px] leading-[130%]'>Quick FAQs</h2>
+                        <h2 className='md:text-[18px] lg:text-[20px] md:leading-[24px] lg:leading-[26px]
+                         text-[#7c7c7c] text-[12px] leading-[16px] font-[500]'>
+                            Referral and Point Redeem FAQ's</h2>
                         <div className='lg:w-6 lg:h-6 w-4 h-4'>
                             <img src='./Images/wallet/arrow-square-right.svg' alt="" className='h-full'/>
                         </div>

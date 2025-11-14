@@ -8,6 +8,10 @@ import Joi from "joi";
 import call from './Images/call.svg';
 import user from './Images/user.svg';
 import { Modal } from "../Screens/Modal/Modal";
+import SelectRecipient from './SelectRecipient';
+import { PostFunction, InternalLoginSession } from '../ApiCollection.jsx/ApiBuck';
+import { BalanceLoading } from '../Loader/Loader';
+
 
 const AddRecipient = () => {
 
@@ -15,6 +19,8 @@ const AddRecipient = () => {
     const { recipientName, setRecipientName } = useContext(ContextProvider);
     const { recipientNumber, setRecipientNumber } = useContext(ContextProvider);
     const { networkImage, setNetworkImage } = useContext(ContextProvider);
+    const [selectRecipientDisplay, setSelectRecipientDisplay] = useState(false);
+    const [sessionActivity, setSessionActivity] = useState(false)
 
     const [errors, setErrors] = useState({});
     const [save, setSave] = useState(false);
@@ -24,6 +30,7 @@ const AddRecipient = () => {
     const [inputValue, setInputValue] = useState("");
     const [saveRecipient, setSaveRecipient] = useState(false);
     const [isLoading, setIsLoading] = useState(false); // For managing loading state
+    
   const { isDarkMode } = useContext(ContextProvider);
 
     const networkList = [
@@ -137,7 +144,7 @@ const AddRecipient = () => {
 
         setInputValue(numericValue);
     };
-
+ const [recipientList, setRecipientList] = useState(false)
     const {
         toggleSideBar,
         // inputPin,
@@ -145,54 +152,60 @@ const AddRecipient = () => {
         // toggleVisibility,
         // isVisible,
     } = useContext(ContextProvider);
-
+  const [loadingRecipient, setLoadingRecipient] = useState(false)
     const handleConfirm = async () => {
+    setErrors({});
+
+const setFetchedResponse = ()=> {
+    return;
+}
+        const body = {
+            name  : recipientName,
+            network : networkName,
+            phone : recipientNumber
+        }
+       await PostFunction("airtime/recipient",
+       setLoadingRecipient, 
+        body, ()=> {
+        alert("Saved Recipients Successfully.");
         setSave(false);
         setConfirm(true);
         setSelected("");
         setRecipientNumber("");
         setRecipientName("");
 
-        setIsLoading(true);
-        setErrors({});
-
-        try {
-
-            const requestBody = {
-                network: networkName,  // Changed from networkName
-                name: recipientName,   // Changed from recipientName
-                phone: recipientNumber // Changed from recipientNumber
-            };
-
-            const response = await fetch('https://aremxyplug.onrender.com/api/v1/airtime/recipient', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(requestBody)  // Use the new object here
-            });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                setErrors(errorData.errors || { server: 'An error occurred' });
-                return;
-            }
-
-            // Handle successful response
-            const data = await response.json();
-            console.log('Recipient added successfully:', data, requestBody);
-            setSave(false);
-            setConfirm(true);
-            setSelected(false);
-            setRecipientNumber("");
-            setRecipientName("");
-
-        } catch (error) {
-            console.error('Network error:', error);
-            setErrors({ network: 'Network error, please try again later.' });
-        } finally {
-            setIsLoading(false);
-        }
+       }, async(ErrorType)=> {
+          if(ErrorType === "unauthorised"){
+             await PostFunction("airtime/recipient",
+                 setLoadingRecipient,
+                body, 
+                ()=> {
+        alert("Saved Recipient Successfully");
+        setSave(false);
+        setConfirm(true);
+        setSelected("");
+        setRecipientNumber("");
+        setRecipientName("");
+                }, (ErrorType)=> {
+                if(ErrorType === "Unauthorised"){
+                    setSessionActivity(true)
+                }else if(ErrorType === "Server error"){
+                    alert("Unable to save recipients, try again later")
+                }else if(ErrorType === "Network error" || ErrorType === "User error"){
+                 alert("Check your internet connection.");
+                }else{
+                    alert("Unable to save recipients try again later.")
+                }
+                }, setFetchedResponse
+             )
+          }else if(ErrorType === "Network error" || ErrorType === "User error"){
+        alert("Check your internet connection")
+          }else if(ErrorType === "Server error"){
+          alert("Unable to save recipients try again later.")
+          }else {
+            alert("Unable to save recipients try again later.")
+          }
+       }, setFetchedResponse)
     };
 
 
@@ -302,7 +315,10 @@ const AddRecipient = () => {
                                 <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
                                             isDarkMode 
                                               ? "!text-[#7c7c7c]" : "!text-[#7c7c7c]"
-                                          }`}>Phone Number <span className={`
+                                          }`}>Phone Number <span onClick = {()=> {
+                                           setSelectRecipientDisplay(true);
+                                          }}
+                                          className={`
                                        
                                        
                                     ${styles.span3} !text-[15px] md:!text-base`}>(Select Recipient)</span></h2>
@@ -445,10 +461,11 @@ const AddRecipient = () => {
                                 </div>
 
                                 <button
-                                    onClick={() => { setSaveRecipient(!saveRecipient); if (!saveRecipient) handleConfirm(); }}
+                                    onClick={() => { setSaveRecipient(!saveRecipient);
+                                         if (!saveRecipient) handleConfirm(); }}
                                     className={`bg-[#04177f] my-[5%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:mt-[8%]`}
                                 >
-                                    Confirmed
+                                  {loadingRecipient === false ? "Confirmed" : <BalanceLoading/>}  
                                 </button>
                                 {isLoading && <p>Loading...</p>}
                             </div>
@@ -487,7 +504,6 @@ const AddRecipient = () => {
 
                                     <Link to="/airtime-vtu">
                                         <button
-                                            onClick={handleConfirm}
                                             className={`bg-[#04177f] mt-[10%] w-[88%] flex justify-center items-center mx-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:text-[14px] lg:w-[163px] lg:h-[38px] lg:mt-[20%]`}
                                         >
                                             Continue
@@ -508,6 +524,16 @@ const AddRecipient = () => {
                     <Link to={`/ContactUs`} className={styles.btnContact}>Contact Us</Link>
                 </div>
             </div>
+            {selectRecipientDisplay && (
+                <SelectRecipient 
+                loadingRecipient={loadingRecipient}
+                 recipientList = {recipientList} 
+                  setSelectRecipientDisplay={setSelectRecipientDisplay}
+                  />
+            )}
+            {sessionActivity && (
+                <InternalLoginSession   setExpiredSessionLogin={setSessionActivity}/>
+            )}
         </DashBoardLayout>
     )
 }

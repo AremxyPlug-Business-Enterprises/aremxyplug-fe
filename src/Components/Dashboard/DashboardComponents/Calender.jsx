@@ -75,13 +75,16 @@ export const Calender = () => {
         className={`${isDarkMode ? "text-white bg-black" :  "text-black bg-white"}`}
           onChange={(value)=> {
              onChangeValue(value);
-             const dateValue = new Date(value);
-            const localDateValue = dateValue?.toLocaleString("sv-SE", {
+           handleStateCalender(value);
+             const localDateValue = new Date(value);
+             const IsoString = typeof localDateValue === "object" ? 
+              localDateValue?.toLocaleString("sv-SE", {
               timeZone : "Africa/Lagos",
               hour12 : false
-            })
-            setDateEdit(localDateValue?.slice(0,10));
-            handleStateCalender(value);
+             }) :"";
+             const slicedValue = IsoString?.slice(0,10)
+             setDateEdit(slicedValue)
+             console.log(IsoString)
         }}
          
           value={dateEdit}
@@ -113,8 +116,7 @@ export const Calender = () => {
             if(view === "month" && editCalenderOne !== "Start Date" && countCalender === 1){
             return tileDates < currentDateInTimeStamps;
             }
-        }}
-        />
+        }}/>
       
    
        <Calendar
@@ -155,9 +157,10 @@ export const Calender = () => {
         tileDisabled={({date, view})=> {
             const tileDates = new Date(date);
             tileDates.setHours(0,0,0,0);
-            if(view === "month" && editCalenderOne !== "Start Date" && countCalender === 1){
+            if(view === "month" && editCalenderOne!== "Start Date" && countCalender === 1){
             return tileDates < currentDateInTimeStamps;
             }
+         
         }}
         />
         </div>

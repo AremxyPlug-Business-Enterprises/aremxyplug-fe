@@ -584,10 +584,11 @@ return (
       </div>
                       ) :(
                       
-                        symbol === "₦" && newBalance !== "" ? `${Number(newBalance).toLocaleString("en-NG",{
+                        symbol === "₦" && newBalance !== "" ?
+                         `${Number(newBalance).toLocaleString("en-NG",{
                           style : "currency",
                           currency : "NGN"
-                        })}` : `${symbol}`
+                        })}` : symbol !==   "₦" ? `${symbol}0.00` :  ""
                       )}
                     </span>
                     )}
@@ -641,14 +642,8 @@ return (
                       {pointsLoading === true ? (
                         <BalanceLoading/>
                       ): (
-                    userPoints  !== null 
-                    && userPoints !== undefined ? userPoints?.toLocaleString("en-NG", {
-                      style : "currency",
-                      currency : "NGN"
-                    }) : userPoints?.length > 0 && Number(userPoints) !== isNaN ? Number(userPoints)?.toLocaleString("en-NG", {
-                      style : "currency",
-                      currency : "NGN"
-                    }) :  ""
+                    userPoints  !== undefined ? userPoints : ""
+                   
                       )}
                      </span>
             

@@ -48,7 +48,15 @@ export default function WalletSummaryPage() {
     setNewBalance,
     setElectricityTransErrorType,
     dateEdit,
-    setDateEdit
+    setDateEdit,
+     startDateValueState,
+    endDateValueState,
+    setStartDateValueState,
+    setEndDateValueState,
+    setEditCalenderOne,
+    setEditCalenderTwo,
+    setCurrentDateInTimeStamps,
+    editCalenderOne,editCalenderTwo,  setCountCalender
   } = useContext(ContextProvider);
   const [passDataBalance, setPassDataBalance] = useState({});
   const [selected, setSelected] = useState("NGN");
@@ -74,9 +82,44 @@ export default function WalletSummaryPage() {
 
 
 
-  const GetTransactionInformation = async () => {
+  const GetTransactionInformation = async (startDate, endDate , record) => {
+   console.log(startDate);
     if (!navigator.onLine) return setTransactionHistoryError("Network error");
-    const path = `transactions/wallet-summary`;
+      const pathQuery = ()=> {
+      const parseRecordValues 
+      = record === "Deposits"
+       ? "deposit" :
+        record === "Transfers" ? "transfer" : "All Records"
+      //Queries for the different combination of filters
+       const requestQueries = 
+       //when selectRecords is either of deposits or transfer,
+       // and startDateValueState and endDateValueState aren't used or given
+       (record?.length && record !== "All Records") 
+       && (startDate?.length < 1 || startDate === undefined)
+       &&  (endDate.length <1 || endDate === undefined )
+       ? `?record=${parseRecordValues}`
+       //when selectRecords is either deposits or transfer
+       // and ony startDateValueState is used
+    :(record?.length && record !== "All Records")
+     &&(startDate?.length > 1 && startDate!== undefined)
+      &&  (endDate?.length < 1 || endDate === undefined)
+    ? `?record=${parseRecordValues}&start_date=${startDate}`
+    //when selectRecords is used and both date queries are used
+    :  (record?.length && record !== "All Records")
+     &&(startDate?.length > 1 && startDate !== undefined)
+      &&  (endDate?.length > 1 || endDate!== undefined )
+      ? `?record=${parseRecordValues}&start_date=${startDate}&end_date=${endDate}`
+      : (record?.length  && record === "All Records")
+    && (startDate?.length > 1 && startDate !== undefined)
+    &&  (endDate?.length< 1 || endDate === undefined)
+      ? `?start_date=${startDate}` 
+      :  (record?.length  && record === "All Records")
+     && (startDate?.length > 1 && startDate !== undefined)
+      &&  (endDate?.length> 1 || endDate !== undefined)
+      ? `?start_date=${startDate}&end_date=${endDate}` : ""
+      return requestQueries;
+    }
+     const path = `transactions/wallet-summary${pathQuery()}`;
     const SuccessHandler = () => {
        setTransactionHistoryError("");
       console.log("Wallet Summary fetched");
@@ -162,6 +205,82 @@ export default function WalletSummaryPage() {
     }
   });
 
+  //Handle Calender State (The cancel Button)
+   const handleCalenderState = async()=> {
+  // No filtering carried out.....
+  if(editCalenderOne === "Start Date" && editCalenderTwo === "End Date"){
+    setCountCalender(0);
+  setCalender(false);
+  setStateDateEdit("Filter By Date")
+}
+ //Editing Operation carried out..
+if ( (editCalenderTwo !== "End Date" && editCalenderTwo !== undefined) 
+  && (editCalenderOne !== "Start Date" && editCalenderOne !== undefined)){
+const currentDateFormattingCancel = new Date(startDateValueState);
+currentDateFormattingCancel.setHours(0,0,0,0);
+    setEditCalenderTwo("End Date");
+    setCountCalender(1);
+    setEndDateValueState("");
+    setCurrentDateInTimeStamps(currentDateFormattingCancel);
+  
+  }else  if(
+      editCalenderTwo === "End Date"  &&
+     (editCalenderOne !== "Start Date" 
+      && editCalenderOne !== undefined)){
+        const currentDateFormattingCancel = new Date();
+currentDateFormattingCancel.setHours(0,0,0,0);
+      setEditCalenderOne("Start Date");
+      setCurrentDateInTimeStamps(0)
+      setCountCalender(0);
+      setStartDateValueState("");
+       console.log("Condition2")
+ }else {
+  setCountCalender(0);
+  setCalender(false);
+  setStateDateEdit("Filter By Date");
+  if(startDateValueState?.length > 1 ){
+  await GetTransactionInformation(startDateValueState,
+     endDateValueState,
+      selectRecords);
+  }
+  }
+ }
+
+
+
+ //The Apply Button Functiom
+ const FilterByDateFunc = async()=> {
+  const optionalDate = new Date();
+  const isoString = typeof optionalDate === "object" ?
+   optionalDate?.toLocaleString("sv-SE", {
+    timeZone : "Africa/Lagos",
+    hour12 : false
+  }) : "";
+ //Bread type into ten
+  const slicedDate = isoString?.slice(0,10);
+  const startDateOptions 
+  = startDateValueState?.length && startDateValueState !== ""
+   ? startDateValueState : slicedDate;
+  const endDateOptions
+   = endDateValueState?.length && endDateValueState !== ""
+    ? endDateValueState : "";
+  setCalender(false);
+   console.log(startDateOptions)
+  
+     await GetTransactionInformation(
+      startDateOptions,
+       endDateOptions,
+       selectRecords 
+       );
+       if(editCalenderOne === "Start Date"){
+        setStateDateEdit(slicedDate);
+        setStartDateValueState(slicedDate);
+       }else{
+        setStateDateEdit(dateEdit);
+       }
+ 
+}
+
   //HandleDropDown
   const updateBalance =
     passDataBalance?.data?.data?.data !== undefined
@@ -193,10 +312,19 @@ export default function WalletSummaryPage() {
     { method: "KES Wallet", balance: "(0.00)", flag: flagpage5, id: 6 },
   ];
 
+
+  const ResetDateFilterFields = ()=>{
+  setStartDateValueState("");
+    setEndDateValueState("");
+    setEditCalenderOne("");
+    setEditCalenderTwo("");
+    setCurrentDateInTimeStamps("")
+ }
   useEffect(() => {
     //     if(salesResponse?.data?.data?.data === undefined){
     //  GetTransactionInformation()
     //     }
+    ResetDateFilterFields()
     setSelectedStatus("All Transactions")
     setDateEdit(()=> {
       const setDate = new Date()
@@ -217,7 +345,9 @@ export default function WalletSummaryPage() {
         );
       }
     
-    GetTransactionInformation();
+    GetTransactionInformation("",
+       endDateValueState,
+        selectRecords);
     //eslint-disable-next-line
   }, []);
   
@@ -277,8 +407,8 @@ export default function WalletSummaryPage() {
         : product === "Internal Deposit"
         ? "deposit"
         : product === "Internal Transfer"
-        ? "transfer"
-        : "";
+        ? "transfer" : product === "Point Redeem" ?
+         "point" : "";
 
     const path = `transactions/${orderId}?product=${productType}`;
     let result;
@@ -350,10 +480,6 @@ export default function WalletSummaryPage() {
   const filteredWalletTransactions =
   ( walletTransactionResponse?.data?.data?.data?.data?.transactions !== null 
    || walletTransactionResponse?.data?.data?.data?.data?.transactions )
-   
-    && stateDateEdit === "Filter By Date" 
-    && selectRecords === "All Records" 
-    && selectCollection === "All Collections"
    ? walletTransactionResponse?.data?.data?.data?.data?.transactions?.filter((transaction) => {
    
             //console.log(transaction?.created_at?.slice(0, 10) === dateFiltered);
@@ -367,179 +493,7 @@ export default function WalletSummaryPage() {
              
             }
           }
-        ) :    walletTransactionResponse?.data?.data?.data?.data?.transactions !== null
-       &&  stateDateEdit !== "Filter By Date"
-      ? walletTransactionResponse?.data?.data?.data?.data?.transactions.filter( (transaction) => {
-        if(selectedStatus === "All Transactions" &&
-            selectRecords === "All Records" 
-            && selectCollection === "All Collections"){
-          return transaction?.created_at?.slice(0, 10) === dateEdit
-        }else if( selectedStatus !== "All Transactions" &&
-            selectRecords === "All Records" && selectCollection === "All Collections"){
-         return (transaction?.status === handleStatus)
-          && ( transaction?.created_at?.slice(0, 10) === dateEdit)
-        }else if( selectedStatus !== "All Transactions" &&
-            selectRecords !== "All Records" && selectCollection === "All Collections"){
-         return (transaction?.status === handleStatus)
-          && ( transaction?.created_at?.slice(0, 10) === dateEdit)
-          &&  ( selectRecords  === "Deposits"
-            ? transaction?.description === "NGN Wallet Top-Up"
-          :  transaction?.description === "From NGN Wallet"
-        )
-        }else if( selectedStatus !== "All Transactions" &&
-            selectRecords !== "All Records" && selectCollection !== "All Collections"){
-    return  (transaction?.status === handleStatus)
-          && ( transaction?.created_at?.slice(0, 10) === dateEdit)
-          &&  ( selectRecords  === "Deposits"
-            ? transaction?.description === "NGN Wallet Top-Up"
-          :  transaction?.description === "From NGN Wallet"
-        ) && (selectCollection === "Virtual Accounts"
-          ? (transaction?.product === "Internal Transfer"
-             || transaction?.product === "Internal Deposits") 
-             : transaction?.product=== "Point Redeem")
-        }else if(selectedStatus === "All Transactions" &&
-            selectRecords === "All Records" && selectCollection !== "All Collections"){
-         return  (transaction?.status === handleStatus)
-          && ( transaction?.created_at?.slice(0, 10) === dateEdit)
-           (selectCollection === "Virtual Accounts"
-          ? (transaction?.product === "Internal Transfer"
-             || transaction?._product === "Internal Deposits") 
-             : transaction?.product=== "Point Redeem")
-        }else if(selectedStatus === "All Transactions" &&
-            selectRecords !== "All Records" && selectCollection === "All Collections"){
-         return  (transaction?.status === handleStatus)
-          && ( transaction?.created_at?.slice(0, 10) === dateEdit)
-          &&  ( selectRecords  === "Deposits"
-            ? transaction?.description === "NGN Wallet Top-Up"
-          :  transaction?.description === "From NGN Wallet"
-        ) 
-        }
-      }
-      //
-    ) :    selectCollection !== "All Collections" 
-   &&   walletTransactionResponse?.data?.data?.data?.data?.transactions !== null
-     && walletTransactionResponse?.data?.data?.data?.transactions?.length > 1  ? 
-        walletTransactionResponse?.data?.data?.data?.transactions?.filter((transaction)=> {
-          if(selectedStatus === "All Transactions" &&
-            selectRecords === "All Records" 
-            && stateDateEdit === "Filter By Date"){
-              alert("On bro")
-        return (selectCollection === "Virtual Accounts"
-          ? (transaction?.product === "Internal Transfer"
-             || transaction?.product === "Internal Deposits") 
-             : transaction?.product=== "Point Redeem")
-   
-        }else if( selectedStatus !== "All Transactions" &&
-            selectRecords === "All Records" && stateDateEdit === "Filter By Date"){
-         return (transaction?.status === handleStatus)
-          && (selectCollection === "Virtual Accounts"
-          ? (transaction?.product === "Internal Transfer"
-             || transaction?.product === "Internal Deposits") 
-             : transaction?.product=== "Point Redeem")
-        }else if( selectedStatus !== "All Transactions" &&
-            selectRecords !== "All Records" && stateDateEdit === "Filter By Date"){
-         return (transaction?.status === handleStatus)
-          &&  (selectCollection === "Virtual Accounts"
-          ? (transaction?.product === "Internal Transfer"
-             || transaction?.product === "Internal Deposits") 
-             : transaction?.product=== "Point Redeem")
-          &&  ( selectRecords  === "Deposits"
-            ? transaction?.description === "NGN Wallet Top-Up"
-          :  transaction?.description === "From NGN Wallet"
-        )
-        }else if( selectedStatus !== "All Transactions" &&
-            selectRecords !== "All Records" && stateDateEdit !== "Filter By Date"){
-    return  (transaction?.status === handleStatus)
-    ( transaction?.created_at?.slice(0, 10) === dateEdit)
-          && (selectCollection === "Virtual Accounts"
-          ? (transaction?.product === "Internal Transfer"
-             || transaction?.product === "Internal Deposits") 
-             : transaction?.product=== "Point Redeem")
-          &&  ( selectRecords  === "Deposits"
-            ? transaction?.description === "NGN Wallet Top-Up"
-          :  transaction?.description === "From NGN Wallet"
-        ) && (selectCollection === "Virtual Accounts"
-          ? (transaction?.product === "Internal Transfer"
-             || transaction?.product === "Internal Deposits") 
-             : transaction?.product=== "Point Redeem")
-        }else if(selectedStatus === "All Transactions" &&
-            selectRecords === "All Records" && stateDateEdit !== "Filter By Date"){
-         return  (transaction?.status === handleStatus)
-          && ( transaction?.created_at?.slice(0, 10) === dateEdit)
-           (selectCollection === "Virtual Accounts"
-          ? (transaction?.product === "Internal Transfer"
-             || transaction?.product === "Internal Deposits") 
-             : transaction?.product=== "Point Redeem")
-             &&     ( transaction?.created_at?.slice(0, 10) === dateEdit)
-        }else if(selectedStatus === "All Transactions" &&
-            selectRecords !== "All Records" && stateDateEdit === "Filter By Date"){
-         return   ( selectRecords  === "Deposits"
-            ? transaction?.description === "NGN Wallet Top-Up"
-          :  transaction?.description === "From NGN Wallet"
-        ) &&   (selectCollection === "Virtual Accounts"
-          ? (transaction?.product === "Internal Transfer"
-             || transaction?.product === "Internal Deposits") 
-             : transaction?.product=== "Point Redeem")
-        }
-        //Handling the records for user transactions based on the filtered info
-        })  :  (selectRecords !== "All Records" && selectRecords?.length > 1) 
-        &&   walletTransactionResponse?.data?.data?.data?.data?.transactions !== null
-     && walletTransactionResponse?.data?.data?.data?.transactions?.length > 1  ? 
-        walletTransactionResponse?.data?.data?.data?.transactions?.filter((transaction)=> {
-           if(selectedStatus === "All Transactions" &&
-            stateDateEdit === "Filter By Date" 
-            && selectCollection === "All Collections"){
-        return   ( selectRecords  === "Deposits"
-            ? transaction?.description === "NGN Wallet Top-Up"
-          :  transaction?.description === "From NGN Wallet"
-        )
-        }else if( selectedStatus !== "All Transactions" &&
-            stateDateEdit === "Filter By Date" && selectCollection === "All Collections"){
-         return (transaction?.status === handleStatus)
-          &&  ( selectRecords  === "Deposits"
-            ? transaction?.description === "NGN Wallet Top-Up"
-          :  transaction?.description === "From NGN Wallet"
-        )
-        }else if( selectedStatus !== "All Transactions" &&
-            stateDateEdit !== "Filter By Date" && selectCollection === "All Collections"){
-         return (transaction?.status === handleStatus)
-          && ( transaction?.created_at?.slice(0, 10) === dateEdit)
-          &&  ( selectRecords  === "Deposits"
-            ? transaction?.description === "NGN Wallet Top-Up"
-          :  transaction?.description === "From NGN Wallet"
-        )
-        }else if( selectedStatus !== "All Transactions" &&
-            stateDateEdit !== "Filter By Date" && selectCollection !== "All Collections"){
-    return  (transaction?.status === handleStatus)
-          && ( transaction?.created_at?.slice(0, 10) === dateEdit)
-          &&  ( selectRecords  === "Deposits"
-            ? transaction?.description === "NGN Wallet Top-Up"
-          :  transaction?.description === "From NGN Wallet"
-        ) && (selectCollection === "Virtual Accounts"
-          ? (transaction?.product === "Internal Transfer"
-             || transaction?.product === "Internal Deposits") 
-             : transaction?.product=== "Point Redeem")
-        }else if(selectedStatus === "All Transactions" &&
-            stateDateEdit === "Filter By Date" && selectCollection !== "All Collections"){
-         return  (transaction?.status === handleStatus)
-          &&( selectRecords  === "Deposits"
-            ? transaction?.description === "NGN Wallet Top-Up"
-          :  transaction?.description === "From NGN Wallet"
-        )
-           (selectCollection === "Virtual Accounts"
-          ? (transaction?.product === "Internal Transfer"
-             || transaction?.product === "Internal Deposits") 
-             : transaction?.product=== "Point Redeem")
-        }else if(selectedStatus === "All Transactions" &&
-            stateDateEdit !== "Filter By Date" && selectCollection === "All Collections"){
-         return  (transaction?.status === handleStatus)
-          && ( transaction?.created_at?.slice(0, 10) === dateEdit)
-          &&  ( selectRecords  === "Deposits"
-            ? transaction?.description === "NGN Wallet Top-Up"
-          :  transaction?.description === "From NGN Wallet"
-        ) 
-        }
-        }) : [] ;
+        )  : [] ;
     
 
   //console.log(walletTransactionResponse?.data?.data?.data?.data);
@@ -556,6 +510,10 @@ export default function WalletSummaryPage() {
     "All Collections",
     "Virtual Accounts",
     "Point Redeem",
+     "Card Payments",
+     "Payment Links",
+      "QR Code",
+       "Bank USSD",
   ]
 
   const RecordsWallet = [
@@ -563,6 +521,7 @@ export default function WalletSummaryPage() {
     "Deposits",
     "Transfers",
   ]
+
 
 
   //=======Format Date ======
@@ -585,6 +544,7 @@ const FormatTime =(DateValue)=> {
   return TimePart;
 }
 
+   
   return (
     <DashBoardLayout>
       <>
@@ -792,20 +752,16 @@ const FormatTime =(DateValue)=> {
                 />
                   {calender && (
               <div className={`absolute rounded-[20px] z-[2] left-0
-                   md:mt-[40px] w-[300px]  h-auto p-2   border-[0.2px]
+                   md:mt-[40px] w-[300px] md:w-[500px] lg:w-[600px]  h-auto p-2   border-[0.2px]
                    lg:mt-[55px]  flex flex-col gap-[10px] font-[400]
                     ${isDarkMode ? "bg-black text-white  border-white" 
                     : "bg-white text-black border-gray-300"}`}>
                 <Calender />
                    <div
                      className="flex justify-center 
-                     items-center w-[270px] gap-[10px]">
-                       <button  onClick={()=> {
-                        setCalender(false);
-                       setStateDateEdit("Filter By Date")
-                       //  setSelectedStatus("Filter by Status")
-                       }}
-                       className={`w-[50%] bg-blue-white py-[15px] text-[12px] 
+                     items-center w-[270px] gap-[10px] md:w-[470px] lg:w-[570px]">
+                       <button  onClick={handleCalenderState}
+                       className={`w-[50%] md:w-[150px] bg-blue-white py-[15px] text-[12px] 
                         md:text-[14px] font-[500] 
                          rounded-[15px] border-[0.2px] border-blue-900
              ${isDarkMode ? "text- bg-black  " :
@@ -813,12 +769,8 @@ const FormatTime =(DateValue)=> {
                        Cancel
                        </button>
                        <button 
-                        onClick={()=> {
-                        setCalender(false);
-                        setStateDateEdit(dateEdit?.slice(0,10))
-                       //  setSelectedStatus("Filter by Status")
-                       }}
-                       className={`w-[50%] bg-blue-900 py-[15px] text-[12px] md:text-[14px] font-[500] 
+                        onClick={FilterByDateFunc}
+                       className={` w-[50%] md:w-[150px] bg-blue-900 py-[15px] text-[12px] md:text-[14px] font-[500] 
                          rounded-[15px] text-white
                        `}>
                        Apply
@@ -897,17 +849,19 @@ const FormatTime =(DateValue)=> {
                         className={`pb-[20px] pt-[20px] md:pb-[14px] md:pt-[14px] font-weight-bold text-[14px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-medium md:text-[13.227px] md:leading-[17.195px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
                         lg:text-[16px] lg:leading-[20.8px] cursor-pointer  dropdownCSS ${
                           isDarkMode
-                            ? "bg-black text-white border border-white"
-                            : "hover:bg-[#EDEAEA] border-[#9C9C9C]  bg-white text-[#7C7C7C] "
+                            ? `bg-black text-white border border-white ${index > 2 ? "bg-black opacity-50" : "bg-black"}`
+                            : `hover:bg-[#EDEAEA] border-[#9C9C9C]   text-[#7C7C7C] ${index > 2 ? "bg-gray-100" : "bg-white"}`
                         }`}
                         key={index}
                         onClick={() => {
+                          if(index <= 2){
                           setSelectCollectionDropDown(false);
                           setIsOpen1(false);
                           setSelectCollection(collection)
                         //  setStateDateEdit("Filter By Date")
                           setCalender(false);
                           setSelectRecordDropDown(false)
+                          }
                         }}
                       >
                         {collection}
@@ -985,24 +939,28 @@ const FormatTime =(DateValue)=> {
                     className={`dropdown-options z-[2] absolute left-0 md:left-auto top-[100%]
                    w-full md:w-[50%] lg:w-[30%] bg-white cursor-pointer`}
                   >
-                    {RecordsWallet?.map((records, index) => (
+                    {RecordsWallet?.map((record, index) => (
                       <li
                         className={`pb-[20px] pt-[20px] md:pb-[14px] md:pt-[14px] font-weight-bold text-[14px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-medium md:text-[13.227px] md:leading-[17.195px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
-                        lg:text-[16px] lg:leading-[20.8px] cursor-pointer  dropdownCSS ${
-                          isDarkMode
-                            ? "bg-black text-white border border-white"
-                            : "hover:bg-[#EDEAEA] border-[#9C9C9C]  bg-white text-[#7C7C7C] "
+                        lg:text-[16px] lg:leading-[20.8px] cursor-pointer  dropdownCSS 
+                        ${
+                          isDarkMode 
+                            ?` text-white border border-white opacity-10 bg-black`
+                            : `hover:bg-[#EDEAEA] border-[#9C9C9C]  bg-white text-[#7C7C7C]  `
                         }`}
                         key={index}
-                        onClick={() => {
-                          setSelectRecords(records);
+                        onClick={async() => {
+                            setSelectRecords(record);
                           setIsOpen1(false);
                           setSelectRecordDropDown(false)
                          // setStateDateEdit("Filter By Date")
                           setCalender(false);
+                          if(record === "Deposits" || record === "Transfers"){
+                          await GetTransactionInformation(startDateValueState, endDateValueState, record);
+                          }
                         }}
                       >
-                        {records}
+                        {record}
                       </li>
                     ))}
                   </ul>
@@ -1288,8 +1246,9 @@ const FormatTime =(DateValue)=> {
                               : transaction?.product === "Internal Transfer"
                               ? "/TransferReceipt"
                               : transaction?.product === "Internal Deposit"
-                              ? "/VirtualAccountReceipt"
-                              : "/SuccessfullReceipt",
+                              ? "/VirtualAccountReceipt" 
+                              : transaction?.product === "Point Redeem" ?
+                             "/PointRedeemReceipt" : "/SuccessfullReceipt",
                             { state: { orderData, transaction } }
                           );
                         }
@@ -1539,10 +1498,11 @@ const FormatTime =(DateValue)=> {
                           ? "/AirtimeTransReceipt"
                           : transaction?.product === "Data Top-up"
                           ? "/DataTransReceipt"
-                          : transaction?.product === "Money Transfer"
+                          : transaction?.product === "Internal Transfer"
                           ? "/TransferReceipt"
-                          : transaction?.product === "Virtual Account"
+                          : transaction?.product === "Internal Deposit"
                           ? "/VirtualAccountReceipt"
+                           : transaction?.product === "Point Redeem" ? "/PointRedeemReceipt"
                           : "/SuccessfullReceipt",
                         { state: { orderData, transaction } }
                       );

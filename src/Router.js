@@ -334,11 +334,11 @@ export const Router = () => {
           <AddRecipient />
           </ProtectedRoute>
           } />
-        <Route path="/select-vtu-recipient" element={
+        {/* <Route path="/select-vtu-recipient" element={
           <ProtectedRoute>
           <SelectRecipient />
           </ProtectedRoute>
-          } />
+          } /> */}
         <Route path="/add-account" element={
           <ProtectedRoute>
           <AddAccount />
