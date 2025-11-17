@@ -2,13 +2,16 @@ import React, { useContext, useState } from "react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ContextProvider } from "../../Context";
+import { useLocation} from "react-router-dom"
+
 
 export const NavBar = () => {
   const [navOpen, setNavOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-
-  const { hideNavbar } = useContext(ContextProvider);
-
+  const location = useLocation();
+  const currentLocation = location?.pathname
+  const { hideNavbar, setHideNavbar } = useContext(ContextProvider);
+console.log(currentLocation)
   function handleScroll() {
     if (
       (document.documentElement && document.documentElement.scrollTop > 70) ||
@@ -21,6 +24,7 @@ export const NavBar = () => {
   }
 
   useEffect(() => {
+   
     window.addEventListener("scroll", handleScroll);
 
     return () => {
@@ -28,13 +32,30 @@ export const NavBar = () => {
     };
   }, []);
 
+
   return (
     <>
+      
+     
+            
       {/* Mobile View */}
+      <div className={`${currentLocation !== "/TestingPhase" ? "mb-[50px]" : ""}  ${hideNavbar === true ? "hidden" : "flex "}`}>
+        {currentLocation !== "/TestingPhase" && (
+         <Link to="/TestingPhase" className = "fixed bg-[#FFF8B0] w-full top-[0px] z-[55]">
+       <div  className=" text-[12px] lg:text-[14px] py-[20px]
+     text-center font-[500] leading-[18px] lg:leading-[20px] px-[20px]">
+       🔔 AremxyPlug Testing Phase: <span className="font-[800]">Live from 24 Nov – 07 Dec.</span>
+         Click to view details, eligibility, terms & rewards. 
+       </div>
+            </Link>
+        )}
+            
       <div
         className={`${
-          scrolled ? "bg-[#ffffff]" : "bg-transparent"
-        } sticky top-0 flex justify-between p-[5%] md:hidden lg:hidden h-[70px]
+          scrolled ? "bg-[#ffffff]" : "bg-transparent" 
+        } fixed  ${currentLocation === "/TestingPhase" ? "top-[0px]" : "mt-[20px] top-[50px]"}
+         flex w-full justify-between p-[5%] md:hidden
+         lg:hidden h-[70px]
         ${hideNavbar === true ? "hidden" : "flex md:hidden lg:hidden"}
         `}
         style={{
@@ -56,6 +77,7 @@ export const NavBar = () => {
           alt="/aremxyplug"
         />
       </div>
+      
       {navOpen && (
         <div
           className={` bg-[#04177f] fixed z-[50] left-[60%] text-[12px] text-center text-[#ffffff] p-6 w-[35%]`}
@@ -93,11 +115,17 @@ export const NavBar = () => {
       )}
       
       {/* Tablet & Desktop View */}
+     
+     
       <div
         className={`${
           scrolled ? "bg-[#ffffff]" : "bg-transparent"
-        } z-[55] sticky top-0 hidden md:flex justify-between p-[3%] px-[6%] lg:flex lg:justify-between lg:p-[2%] lg:px-[8%]
-        ${hideNavbar === true ? "hidden md:hidden lg:hidden" : "md:flex "}
+        }  ${currentLocation === "/TestingPhase"
+           ? "top-[0px] " : "mt-[20px] top-[40px]"}
+        fixed   w-full hidden 
+        md:flex justify-between p-[3%] px-[6%] lg:flex lg:justify-between 
+        lg:p-[2%] lg:px-[8%]
+        ${hideNavbar === true ? "hidden md:hidden lg:hidden" : "md:flex"}
         `}
       >
         <Link to="/">
@@ -139,6 +167,7 @@ export const NavBar = () => {
         <div className="flex justify-center bg-[#04177F] rounded-md text-[#ffffff] text-[7px] p-[1%] w-[14%] lg:w-[14.5%] lg:text-[13px]">
           <Link to="/ContactUs">Contact Us</Link>
         </div>
+      </div>
       </div>
     </>
   );

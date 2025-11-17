@@ -93,7 +93,6 @@ import { SmileReceipt } from "./Components/Dashboard/DashboardComponents/DataTop
 import SpectranetDataBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/SpectranetDataBundle/SpectranetDataBundle";
 import { SpectranetReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/SpectranetDataBundle/SpectranetReceipt";
 import AddRecipient from "./Components/AirTimePage/AddRecipient";
-import SelectRecipient from "./Components/AirTimePage/SelectRecipient";
 import DataBundleSelectRecipient from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundleSelectRecipient";
 import DataBundleAddRecipient from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundleAddRecipient";
 import ElectricitySubscription from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/ElectricitySubscription";
@@ -192,6 +191,7 @@ import { TransferReceipt } from "./Components/Dashboard/DashboardComponents/Tran
 import { VirtualAccountReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/VirtualAccountReceipt";
 import { ThemeHandler } from "./Components/ApiCollection.jsx/ApiBuck";
 import { PointRedeemReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/PointRedeemReceipt";
+import { TestingDesign } from "./Components/TestingPhase/TestingDesign";
 
 export const Router = () => {
 
@@ -236,7 +236,8 @@ export const Router = () => {
           <MainDashboard />
           </ProtectedRoute>
           } />
-        {/* To redirect the user back to the login page if there is attempt without login or authoorisation Token */}
+          <Route path = "/TestingPhase" element = {<TestingDesign/>}/>
+        {/* To redirect the user back to the login page if there is any attempt without login or authoorisation Token */}
 
         <Route path="/wallet" element={
           <ProtectedRoute>
