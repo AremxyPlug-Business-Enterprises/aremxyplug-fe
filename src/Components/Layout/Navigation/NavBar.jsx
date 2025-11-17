@@ -10,7 +10,7 @@ export const NavBar = () => {
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
   const currentLocation = location?.pathname
-  const { hideNavbar, setHideNavbar } = useContext(ContextProvider);
+  const { hideNavbar,} = useContext(ContextProvider);
 console.log(currentLocation)
   function handleScroll() {
     if (
