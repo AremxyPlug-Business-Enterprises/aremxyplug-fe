@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Home.module.css";
 import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
@@ -26,6 +26,7 @@ import Successful from "./Images/Success.gif";
 import FeedBack from "./Images/Feedback.svg";
 import Quote1 from "./Images/Quote1.svg";
 import { HashLink } from "react-router-hash-link";
+import { RemoveLocalStorage } from "../../LocalStorage/LocalStorage";
 
 // import HeroImage from "./Images/HeroImage.svg"
 // import Hero from "./Images/desktop_phone.png"
@@ -264,10 +265,16 @@ export const Home = () => {
       setError("Invalid email");
     }
   };
-
+const UserStatus = localStorage.getItem("UserStatus");
+useEffect(()=> {
+  if(UserStatus){
+  RemoveLocalStorage()
+  }
+})
   return (
     <>
-      <div className="fixed top-[9.5%] left-0 right-0 z-50 md:top-[55%] lg:top-[45%]">
+      <div className="fixed top-[25.5%] left-0 right-0 z-50 md:top-[55%] lg:top-[45%]">
+      
         <CookieBanner />
       </div>
       {/* <div className={styles.hero}>
@@ -300,7 +307,7 @@ export const Home = () => {
 
       <div className={`${styles.hero}`}>
       <div className=" w-[90%] pt-[40%] mx-auto md:pt-[10%] md:w-[] lg:pt-[25%]">
-      <div className="text-justify w-[100%] text-[#04177F] text-[20px] font-extrabold md:text-[25px] md:font-bold lg:text-[45px] lg:font-extrabold lg:leading-[px]">
+      <div className="text-left w-[100%] text-[#04177F] text-[20px] font-extrabold md:text-[25px] md:font-bold lg:text-[45px] lg:font-extrabold lg:leading-[px]">
             The One-Stop Shop for Individuals and Businesses for Telecom,
             Payments, and Digital Services.
           </div>

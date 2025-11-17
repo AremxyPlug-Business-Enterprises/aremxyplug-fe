@@ -364,7 +364,7 @@ currentDateFormattingCancel.setHours(0,0,0,0);
 
 //console.log(filteredTransactions?.length/ transactionResponse?.data?.data?.data?.transactions?.length * 100)
 const totalLength = transactionResponse?.data?.data?.data?.total_count;
-
+const totalValue = transactionResponse?.data?.data?.data?.total_value;
 const transactionStatusMetrics = transactionResponse?.data?.data?.data?.status_metrics;
 console.log(transactionStatusMetrics?.success?.volume)
 const successStatusMetricsPercentage = (transactionStatusMetrics?.success?.volume / totalLength) * 100;
@@ -375,8 +375,9 @@ const  pendingStatusMetricsPercentage = (transactionStatusMetrics?.pending?.volu
 console.log(transactionStatusMetrics?.refunded?.value)
       const pictorialStatus = [
         { status : "All Transactions",
-           percentage : totalLength > 1 ? 100 : 0, 
-           volume : transactionResponse?.data?.data?.data?.total_count
+           percentage : totalLength > 0 ? 100 : 0, 
+           volume : totalLength,
+           value: totalValue === undefined || totalValue === 0 ? 0 : totalValue
            , color : "bg-[#D5F6E3]"},
          { status : "success",
            percentage : Math.round(successStatusMetricsPercentage) ,
