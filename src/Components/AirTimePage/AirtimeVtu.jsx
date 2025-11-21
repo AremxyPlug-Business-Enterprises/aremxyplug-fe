@@ -591,25 +591,12 @@ console.log(recipientList);
                   setTransactFailedPopUp(true); 
             setConfirm(false)// 
           }else if(error && error.response.status === 401){
-            if(error.response.headers["x-new-auth-token"] || error.response.headers.get("x-new-auth-token")){
-         setIsLoading(true)
-         const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
-        
-         if(newToken !== "" && localStorage.getItem("authorisedLogin") ){
-           const setAuthorisedToken = localStorage.setItem("authorisedLogin", newToken);
-           if(setAuthorisedToken){
-            await handleTransactionSuccessClose()
-           }
-            }else{
-    const setGetToken = localStorage.setItem("getToken", newToken);
-      if(setGetToken){
-        await handleTransactionSuccessClose();
-      }
-      }
-            setInputPin("") 
-          }else {
-            alert("Error occured: Kindly check your network connection.")
-          }
+        setInputPin("");
+        setSessionModal(true)
+        //handleTransactionSuccessClose()
+        //setIsLoading(false)
+        //RefreshToken function to be ran here
+
                 return { statusCode: error.response.status, data: null };
         }
             }finally {

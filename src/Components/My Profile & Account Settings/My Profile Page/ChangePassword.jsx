@@ -28,10 +28,10 @@ const [sessionModal, setSessionModal] = useState(false)
 
   //Function to Change the password
   const ChangeUserPin = async()=> {
-    const getToken = localStorage.getItem("getToken");
-    const authToken = localStorage.getItem("authorisedLogin");
+    const usernameToken = localStorage.getItem("xcss{}");
+    const emailToken = localStorage.getItem("authorisedLogin");
     if(!navigator.onLine) return alert("Check your internet connection");
-    if((authToken || getToken) && navigator.onLine){
+    if((usernameToken || emailToken) && navigator.onLine){
       setLoading(true)
     try{
     const data ={
@@ -40,8 +40,7 @@ const [sessionModal, setSessionModal] = useState(false)
      }
      const url = "https://aremxyplug.onrender.com/api/v1/update-password";
      const response = await axios.patch(url,data,{headers : {"Content-Type":"application/json",
-      Authorization : getToken || authToken
-     }})
+     }, withCredentials : true})
      if(response.status === 200 || response.status === 201){
       setUpdate(true);
      }
@@ -50,26 +49,8 @@ const [sessionModal, setSessionModal] = useState(false)
        if(error.response.status === 400){
         alert("Invalid Old Password")
        }else if(error && error.response.status === 401){
-        if(error.response?.headers.get("x-new-auth-token") || error.response?.headers["x-new-auth-token"]){
-             setLoading(true)
-         const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
-        
-         if(newToken !== "" && localStorage.getItem("authorisedLogin")){
-             console.log(newToken)
-          localStorage.setItem("authorisedLogin", newToken);
-          
-          if( localStorage.getItem("authorisedLogin")?.length > 1){
-            return ChangeUserPin();
-          }
-           }else{
-      localStorage.setItem("getToken", newToken);
-       console.log(getToken);
-          if(localStorage.getItem("getToken")?.length > 1){
-            return ChangeUserPin();
-          }
-      }}else{
         return setSessionModal(true);
-      }
+      
         
        }else if(error.response.status === 404){
         alert("Check your internet connection")

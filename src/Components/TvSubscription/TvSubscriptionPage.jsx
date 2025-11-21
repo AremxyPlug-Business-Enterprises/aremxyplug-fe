@@ -191,112 +191,27 @@ const GetFunctionHandler = async(GlobalTvSubscription,tvPage, TvSubscriptionValu
    //Handle the re-running of gotv to check if at the second time
    //the request would be successful.
       if(GlobalTvSubscription === 0){
-    await GetFunction(`products/tvsub/gotv`, setLoading, SuccessHandler, async(ErrorType)=> {
-        if(ErrorType === "unauthorised"){
-          await GetFunction(path, setLoading, SuccessHandler, (ErrorType)=> {
-            if(ErrorType === "unauthorised"){
-               return setSessionModal(true);
-            }else if(ErrorType === "Server error"){
-              alert("Failed to process your request, try again again some other time")
-            }else if(ErrorType === "Network error" || ErrorType === "User error"){
-             alert("Kindly check your internet connection")
-            }else{
-                alert("An unexpected error has occured")
-            }
-          }, fetchedPlans);
-        }else if(ErrorType === "Network error" || ErrorType === "User error"){
-               alert("Kindly check your internet connection.")
-        }else if(ErrorType === "Server error"){
-            alert("Failed to process your request, try again some other time.") 
-        }else{
-       alert("An unexpected error has occured")
-        }
-    }, setFetchedGotvPlans)
+         alert(` Gotv Plans are unavailable at the moments`)
+        
 
       //Handle the re-running of gotv to check if at the second time
    //the request would be successful.
      }else if(GlobalTvSubscription === 1){
-        await GetFunction(`products/tvsub/dstv`, setLoading, SuccessHandler, async(ErrorType)=> {
-        if(ErrorType === "unauthorised"){
-          await GetFunction(path, setLoading, SuccessHandler, (ErrorType)=> {
-            if(ErrorType === "unauthorised"){
-               return setSessionModal(true);
-            }else if(ErrorType === "Server error"){
-              alert("Failed to process your request, try again again some other time")
-            }else if(ErrorType === "Network error" || ErrorType === "User error"){
-             alert("Kindly check your internet connection")
-            }else{
-                alert("An unexpected error has occured")
-            }
-          }, fetchedPlans);
-        }else if(ErrorType === "Network error" || ErrorType === "User error"){
-               alert("Kindly check your internet connection.")
-        }else if(ErrorType === "Server error"){
-            alert("Failed to process your request, try again some other time.") 
-        }else{
-            alert("An unexpected error has occured")
-        }
-    }, setFetchedDstvPlans)
-      //Handle the re-running of gotv to check if at the second time
-   //the request would be successful.
+       alert("Dstv Plans are unavailable at the moment")
      }else if(GlobalTvSubscription === 2 ){
-         await GetFunction(`products/tvsub/startimes`, setLoading, SuccessHandler, async(ErrorType)=> {
-        if(ErrorType === "unauthorised"){
-          await GetFunction(path, setLoading, SuccessHandler, (ErrorType)=> {
-            if(ErrorType === "unauthorised"){
-               return setSessionModal(true);
-            }else if(ErrorType === "Server error"){
-              alert("Failed to process your request, try again again some other time")
-            }else if(ErrorType === "Network error" || ErrorType === "User error"){
-             alert("Kindly check your internet connection")
-            }else{
-                alert("An unexpected error has occured")
-            }
-          }, fetchedPlans);
-        }else if(ErrorType === "Network error" || ErrorType === "User error"){
-               alert("Kindly check your internet connection.")
-        }else if(ErrorType === "Server error"){
-            alert("Failed to process your request, try again some other time.") 
-        }else{
-            alert("An unexpected error has occured")
-        }
-    }, setFetchedStarTimesPlans)
+        alert("StarTimes Plans are unavailable at the moment")
       //Handle the re-running of gotv to check if at the second time
    //the request would be successful.
      }else if(GlobalTvSubscription === 3){
-  await GetFunction(`products/tvsub/showmax`, setLoading, SuccessHandler, async(ErrorType)=> {
-        if(ErrorType === "unauthorised"){
-          await GetFunction(path, setLoading, SuccessHandler, (ErrorType)=> {
-            if(ErrorType === "unauthorised"){
-               return setSessionModal(true)
-            }else if(ErrorType === "Server error"){
-              alert("Failed to process your request, try again again some other time")
-            }else if(ErrorType === "Network error" || ErrorType === "User error"){
-             alert("Kindly check your internet connection")
-            }else if(ErrorType === "Server error"){
-            alert("Failed to process your request, try again some other time.") 
-        }else{
-                alert("An unexpected error has occured")
-            }
-          }, fetchedPlans);
-        }else if(ErrorType === "Network error" || ErrorType === "User error"){
-               alert("Kindly check your internet connection.")
-        }else{
-            alert("An unexpected error has occured")
-        }
-    }, setFetchedShowMaxPlans)
+ alert("ShowMax plans are unavailable at the moment")
      }
-    
-
-     }else if(DetectAuthorisation === "User error" || DetectAuthorisation === "Network error" ){
+  }
+else if(DetectAuthorisation === "User error" || DetectAuthorisation === "Network error" ){
          alert("Kindly check your internet connection")
-     }else if(DetectAuthorisation === "Server error"){
-            alert("Failed to process your request, try again some other time.") 
-        }else{
+     }else{
         alert("An unexpected error has occured, try some other time.")
      }
-
-    }
+ }
 
     let path;
     let fetchedPlans;

@@ -1,5 +1,5 @@
 import { DashBoardLayout } from "../../Layout/DashBoardLayout";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { ContextProvider } from "../../../Context";
 import { useState } from "react";
 import styles from "../TransferComponent/transfer.module.css";
@@ -372,7 +372,7 @@ const BEDC = () => {
     async function HandleMeterNumber() {
       const path = "bills/verify";
       if (
-        meterNumber?.length === 13 &&
+        meterNumber?.length >= 10 &&
         meterNumber !== "" &&
         meterNumber !== null &&
         meterNumber !== undefined
@@ -437,7 +437,7 @@ const BEDC = () => {
   };
 
   const handleVerifiedName =
-    bedcMeterNumber?.length === 13 &&
+    bedcMeterNumber?.length >= 10 &&
     isFailedMeterNumber === false &&
     verifyMeterNumber &&
     bedcCustomerName === ""
@@ -638,6 +638,8 @@ const BEDC = () => {
     setIsFocused(false);
   };
 
+  const timer = useRef(null)
+
   return (
     <DashBoardLayout>
       <div
@@ -791,11 +793,10 @@ const BEDC = () => {
                   type="text"
                   placeholder="XXXXXXXXXXXXX"
                   value={bedcMeterNumber}
-                  maxLength={13}
                   onInput={(e) => {
                     const numericValue = e.target.value.replace(/\D/g, "");
                     e.target.value = numericValue;
-                    if (numericValue?.length === 13) {
+                    if (numericValue?.length >= 10) {
                       e.target.style.border = "1px solid green";
                     } else {
                       e.target.style.border = "1px solid red";
@@ -803,7 +804,15 @@ const BEDC = () => {
                     setIsFailedMeterNumber(false);
                     setErrors((prev) => ({ ...prev, bedcMeterNumber: "" }));
                   }}
-                  onChange={handleBedcMeterNumber}
+                  onChange={(e)=> {
+                    setBedcMeterNumber(e.target.value)
+                  if(timer.current) clearTimeout(timer.current)   
+                timer.current = setTimeout(()=> {
+                //Run every 5 seconds
+              handleBedcMeterNumber(e);
+            },500)
+  return ()=> clearTimeout(timer.current);
+                  }}
                   onClick={() => setShowProductList(false)}
                   className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-5 md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-normal leading-[10.4px] md:text-[11px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center focus:outline-0 outline-0 border lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px]  self-center
                     ${
@@ -873,9 +882,9 @@ const BEDC = () => {
                   placeholder="XXX XXXX XXXX"
                   value={bedcPhoneNumber}
                   onInput={(e) => {
-                    if (bedcPhoneNumber?.length === 10) {
+                    if (bedcPhoneNumber?.length === 11) {
                       e.target.style.border = "1px solid green";
-                    } else if (e.target.value?.length < 10) {
+                    } else if (e.target.value?.length < 11) {
                       e.target.style.border = "1px solid red";
                     }
                     setErrors((prev) => ({ ...prev, bedcPhoneNumber: "" }));

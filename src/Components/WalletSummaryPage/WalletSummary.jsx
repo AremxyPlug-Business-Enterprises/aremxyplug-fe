@@ -126,26 +126,8 @@ export default function WalletSummaryPage() {
     };
     const FailedHandler = async (ErrorType) => {
       if (ErrorType === "unauthorised") {
-         
-        await GetFunction(
-          path,
-          setLoading,
-          SuccessHandler,
-          (ErrorType) => {
-            if (
-        ErrorType === "Network error" ||
-        ErrorType === "User error" ||
-        ErrorType === "Bad request"
-      ) {
-        setTransactionHistoryError("Network error");
-      } else if (ErrorType === "Server error") {
-        setTransactionHistoryError("Server error");
-      } else {
-        setTransactionHistoryError(null);
-      }
-          },
-          setWalletTransactionResponse
-        );
+      if(sessionModal) return;
+      if(sessionModal === false ) return setSessionModal(true)
       } else if (
         ErrorType === "Network error" ||
         ErrorType === "User error" ||
@@ -208,42 +190,14 @@ export default function WalletSummaryPage() {
   //Handle Calender State (The cancel Button)
    const handleCalenderState = async()=> {
   // No filtering carried out.....
-  if(editCalenderOne === "Start Date" && editCalenderTwo === "End Date"){
-    setCountCalender(0);
-  setCalender(false);
-  setStateDateEdit("Filter By Date")
-}
- //Editing Operation carried out..
-if ( (editCalenderTwo !== "End Date" && editCalenderTwo !== undefined) 
-  && (editCalenderOne !== "Start Date" && editCalenderOne !== undefined)){
-const currentDateFormattingCancel = new Date(startDateValueState);
-currentDateFormattingCancel.setHours(0,0,0,0);
-    setEditCalenderTwo("End Date");
-    setCountCalender(1);
-    setEndDateValueState("");
-    setCurrentDateInTimeStamps(currentDateFormattingCancel);
-  
-  }else  if(
-      editCalenderTwo === "End Date"  &&
-     (editCalenderOne !== "Start Date" 
-      && editCalenderOne !== undefined)){
-        const currentDateFormattingCancel = new Date();
-currentDateFormattingCancel.setHours(0,0,0,0);
-      setEditCalenderOne("Start Date");
-      setCurrentDateInTimeStamps(0)
-      setCountCalender(0);
-      setStartDateValueState("");
-       console.log("Condition2")
- }else {
+   setStartDateValueState("");
+  setEndDateValueState("");
+  setCurrentDateInTimeStamps(0);
   setCountCalender(0);
   setCalender(false);
+  setEditCalenderOne("Start Date");
+  setEditCalenderTwo("End Date");
   setStateDateEdit("Filter By Date");
-  if(startDateValueState?.length > 1 ){
-  await GetTransactionInformation(startDateValueState,
-     endDateValueState,
-      selectRecords);
-  }
-  }
  }
 
 
@@ -266,18 +220,26 @@ currentDateFormattingCancel.setHours(0,0,0,0);
     ? endDateValueState : "";
   setCalender(false);
    console.log(startDateOptions)
+  setStateDateEdit(()=> {
+    if(editCalenderOne !== "Start Date" && editCalenderTwo === "End Date" ){
+     return <p>{startDateValueState}</p>
+    }else if(editCalenderOne !== "Start Date" && editCalenderTwo !== "End Date" ){
+   return <div className="flex  gap-[5px]">
+    <p className  ="lg:text-[12px] lg:leading-[16px] text-[#04177f] text-[10px] leading-[16px]">
+      {startDateValueState}
+      </p>
+    <p  className  ="lg:text-[12px] text-[#04177f] lg:leading-[16px] text-[10px] leading-[16px]">
+      {" - "}{endDateValueState}</p>
+   </div>
+    }
+  })
   
      await GetTransactionInformation(
       startDateOptions,
        endDateOptions,
        selectRecords 
        );
-       if(editCalenderOne === "Start Date"){
-        setStateDateEdit(slicedDate);
-        setStartDateValueState(slicedDate);
-       }else{
-        setStateDateEdit(dateEdit);
-       }
+       
  
 }
 
@@ -316,10 +278,11 @@ currentDateFormattingCancel.setHours(0,0,0,0);
   const ResetDateFilterFields = ()=>{
   setStartDateValueState("");
     setEndDateValueState("");
-    setEditCalenderOne("");
-    setEditCalenderTwo("");
-    setCurrentDateInTimeStamps("")
- }
+    setEditCalenderOne("Start Date");
+    setEditCalenderTwo("End Date");
+    setCurrentDateInTimeStamps(0);
+    setCountCalender(0);
+}
   useEffect(() => {
     //     if(salesResponse?.data?.data?.data === undefined){
     //  GetTransactionInformation()
@@ -419,32 +382,12 @@ currentDateFormattingCancel.setHours(0,0,0,0);
     const FailedHandler = async (ErrorType) => {
       // if (!navigator.online) alert("Kindly check your internet connection");
       if (ErrorType === "unauthorised") {
-        await GetFunction(
-          path,
-          setOrderLoading,
-          SuccessHandler,
-          (ErrorType) => {
-            if (ErrorType === "unauthorised") {
-              setSessionModal(true);
-            }
-          },
-          setOrderIdResponse
-        );
+     if(sessionModal) return;
+      if(sessionModal === false) return setSessionModal(true)
       } else if (ErrorType === "Server error") {
-        await GetFunction(
-          path,
-          setOrderLoading,
-          SuccessHandler,
-          (ErrorType) => {
-            if (ErrorType === "Server error") {
-              alert("A server error occured, please try again later");
-              setElectricityTransErrorType(
+                    setElectricityTransErrorType(
                 "Failed to process your request, try again some other time"
               );
-            }
-          },
-          setOrderIdResponse
-        );
       } else if (ErrorType === "Network error" || ErrorType === "User error") {
         setElectricityTransErrorType("An internet connection error");
       }

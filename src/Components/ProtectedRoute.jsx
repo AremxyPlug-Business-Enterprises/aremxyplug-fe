@@ -1,13 +1,15 @@
 
 import { Navigate } from 'react-router-dom';
 import { RemoveLocalStorage } from './LocalStorage/LocalStorage';
- import { useEffect, useRef, useState, useContext } from 'react';
-import { Modal } from './Screens/Modal/Modal';
-import { HandleUserSession } from './ApiCollection.jsx/ApiBuck';
+ import { useEffect, useRef,  useContext } from 'react';
+
+import { HandleUserSession, refreshToken} from './ApiCollection.jsx/ApiBuck';
 import { ContextProvider } from './Context';
 export const ProtectedRoute = ({children}) => {
  const SessionIntervalHold = useRef(null);
-  const {sessionExpiration, setSessionExpiration, sec, setSec} = useContext(ContextProvider);
+  const {sessionExpiration, 
+    setSessionExpiration,
+     sec, setSec} = useContext(ContextProvider);
   ;
 // The aim is to create three different situation when the user will
 // will be logged from the page
@@ -19,28 +21,6 @@ export const ProtectedRoute = ({children}) => {
 // for the opened tab a cookie present in the frontend is to check the time when it was created,
 // then does it substraction to know if expired or not.
 //4. The authorisedLogin, getToken and userStatus is not found in the local Storage.
-
-//The immediate function below is to check for user activity
-//    const CheckUserActivity =(timeoutValue)=>{
-//   let TimeOut;
-//   const [numberCount, setNumberCount] = useState(6000)
-//     const events =["scroll", "click"];
-//    events.forEach((event)=> {
-//       console.log(event);
-//   window.addEventListener(event, ()=> {
-   
-//  setNumberCount(60)
-//    console.log(numberCount);
-//   TimeOut =  setTimeout(()=> {
-//      // console.log(window)
-//   return <Navigate to = "/Login" replace/>
-//    },numberCount)
-//    console.log(TimeOut)
-//    //return clearTimeout(TimeOut)
-
-//   })
-//  })
-// }'
 
 const TrackSessionExpiration = ()=> {
   const expiryTime = localStorage.getItem("SessionExpiration");
@@ -59,7 +39,7 @@ if(HandleUserSessionPopUpTime && sessionExpiration === false){
 
 //Resets the timer on user activity using the event click as an example 
 function ResetTimer(e){
-    if(!localStorage.getItem("UserStatus")) return;
+    if(!localStorage.getItem("cxccxfd")) return;
     if((e?.target?.innerText && e?.target ?
    e?.target?.innerText !== "Logout"   : true)  && TrackSessionExpiration() === false && sessionExpiration=== false){
     const Reset = 800  *  1000;
@@ -67,10 +47,19 @@ function ResetTimer(e){
 return localStorage.setItem("SessionExpiration", resetExpiration);
  }
 }
+const refresh = useRef(null);
 
 useEffect (()=> {
+//Refresh Token Functiom
+if(refresh.current) return clearInterval(refresh.current);
+refresh.current = setInterval(async()=> {
+ await refreshToken();
+},300000);
+
+
+
 const checkForIntervalCallBack = ()=> {
-    console.log(sec);
+    
      const sessionExpirationValue = TrackSessionExpiration();
     const clearSessionExpirationMemory = ()=> {
          RemoveLocalStorage();
@@ -83,17 +72,20 @@ const checkForIntervalCallBack = ()=> {
   }
   checkForIntervalCallBack();
     SessionIntervalHold.current =  setInterval(checkForIntervalCallBack, 30000);
-  return ()=> clearInterval(SessionIntervalHold.current);
+  return ()=> {
+    clearInterval(SessionIntervalHold.current);
+    clearInterval(refresh.current);
+  }
       // eslint-disable-next-line
 }, [])
 
 
   window.onclick = ResetTimer;
-// window.onload = ResetTimer;
+ window.onload = ResetTimer;
 window.onkeyup = ResetTimer;
 window.onkeydown = ResetTimer;
 // window.onmousedown = ResetTimer;
-// window.onmouseenter = ResetTimer;
+ window.onmouseenter = ResetTimer;
 
 // if(TrackSessionExpiration() === true){
 //   window.location.href= "/Login"
@@ -101,10 +93,11 @@ window.onkeydown = ResetTimer;
 // }
 
 
- const authToken = localStorage.getItem("authorisedLogin")
- const getToken = localStorage.getItem("getToken");
-const UserStatus = localStorage.getItem("UserStatus");
- if(((!authToken && !getToken) || !UserStatus)  ){
+ const authToken = localStorage.getItem("xcss{}")//On Username Login
+ const emailToken = localStorage.getItem("xcss[]");// on Email Login
+const UserStatus = localStorage.getItem("cxccxfd");//Tracking The UserStatus from the frontend
+ if(((!authToken && !emailToken) || !UserStatus) 
+  || ((!authToken && !emailToken) && !UserStatus)   ){
  RemoveLocalStorage();
  return <Navigate to ="/Login" replace/>
 }

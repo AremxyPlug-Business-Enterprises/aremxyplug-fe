@@ -120,7 +120,7 @@ export const InActionVirtualAccountState = (
 
    //Resets the timer on user activity using the event click as an example 
 function ResetTimer(e){
-    if(!localStorage.getItem("UserStatus")) return;
+    if(!localStorage.getItem("cxccxfd")) return;
   const Reset = 800  *  1000;
     const resetExpiration = Date.now() + Reset;
 return localStorage.setItem("SessionExpiration", resetExpiration);
@@ -188,30 +188,17 @@ export const InternalLoginSession = ({ setExpiredSessionLogin})=> {
    const isDarkMode = localStorage.getItem("darkModeEnabled");
    const getUsername = JSON.parse(localStorage.getItem("aremxyUserName"));
    const UserEmail = JSON.parse(localStorage.getItem("userEmail"))
-   const authorisedLogin = localStorage.getItem("authorisedLogin");
-   const getToken = localStorage.getItem("getToken");
-   const HoldValue = getToken && !authorisedLogin ? getUsername : UserEmail;
+   const emailToken = localStorage.getItem("xcss[]");
+   const usernameToken = localStorage.getItem("xcss{}");
+   const HoldValue = usernameToken && !emailToken ? getUsername : UserEmail;
  
 
  const functionAtSuccess = async(response)=> {
-  console.log(response);
-  
-  alert("Successful");
-   const authToken = response.headers.get('Authorization');
-console.log(authToken);
-     if(localStorage.getItem("getToken") && !localStorage.getItem("authorisedLogin")  ){
-       localStorage.setItem("getToken", authToken)
-      setExpiredSessionLogin(false);
-     
-      }else { 
-       
-         localStorage.setItem("authorisedLogin", authToken)
-
-        
-        setExpiredSessionLogin(false);
+   alert("Successful");
+  setExpiredSessionLogin(false);
      
     // await RequestReRun();
-      } 
+      
 }
     const  functionAtFailed =(ErrorType)=> {
      if(ErrorType === "unauthorised" ){
@@ -224,9 +211,7 @@ console.log(authToken);
      RemoveLocalStorage()
      }
    }
-    const  setFetchedResponse =(response)=> {
-    console.log("fetched Data successfully.")
-   }
+  
 
 
 const SubmitUserLoginDetails = ()=> {
@@ -240,7 +225,7 @@ const SubmitUserLoginDetails = ()=> {
   body,
   functionAtSuccess,
   functionAtFailed,
-  setFetchedResponse)
+  ()=> {})
   }
 //console.log(requestObjectConfirm)
 
@@ -273,7 +258,7 @@ const SubmitUserLoginDetails = ()=> {
                <div className="flex flex-col gap-[5px] lg:gap-[10px] ">
                <p className={`text-[14px] text-start font-[600] leading-[18px]
                text-black lg:text-[16px] lg:leading-[22px] ${isDarkMode === "true" ? "text-white" : "text-black"}`}>
-                {getToken && !authorisedLogin ? "Username" : "Email"}
+                {usernameToken && !emailToken ? "Username" : "Email"}
                </p>
              
                <input
@@ -345,6 +330,22 @@ const SubmitUserLoginDetails = ()=> {
   );
 };
 
+
+//RefreshTojen EndPoint
+export const refreshToken = async()=> {
+    const setLoading = ()=> {}
+  await GetFunction("refresh-token",setLoading, ()=> {
+    console.log("Token refreshed successfully")
+  }, (ErrorType)=> {
+    if(ErrorType === "Network error" || ErrorType === "User error"){
+      alert("Your internet connection is quite unstable.")
+      }else if(ErrorType === "Server error"){
+    return;
+    }else if(ErrorType === "unauthorised"){
+   console.log("Unauthorised issue");
+    }
+  }, ()=> {} )
+}
 // ======  The Restriction-PopUp for Users that doesn't have an account
   export const RestrictionPopUp = ()=> {
    const isDarkMode = localStorage.getItem("darkModeEnabled")
@@ -352,8 +353,7 @@ const SubmitUserLoginDetails = ()=> {
   <div className={`w-full h-full justify-center items-center
    flex`}>
     <Modal>
-              <div className={`w-full flex  justify-center items-center 
-             `}>
+     <div className={`w-full flex  justify-center items-center `}>
             <div className = {`flex flex-col justify-center items-center
              py-[20px] px-[12px] gap-[20px] w-[80%] md:w-[60%] lg:w-[30%] md:h-[300px]  rounded-[10px]
              lg:rounded-[20px]   ${isDarkMode === "true" ? "bg-black border border-white rounded-[10px]" 
@@ -388,7 +388,12 @@ const SubmitUserLoginDetails = ()=> {
 //Function to help check user virtual bank account details and set in the main dashboard \
 // as necessary
 
-export const CheckVirtualAcc = async(authToken,
+
+//Generate a random variable for authStorage
+
+
+export const CheckVirtualAcc = async(
+  authToken,
    customerDetail,
     setLoading,
     setVirtualAccCreated, 
@@ -399,13 +404,12 @@ export const CheckVirtualAcc = async(authToken,
      setTwoStepVerificationSuccess,
     confirmVirtualState) => {
      if(!navigator.onLine) return alert("Check your internet Connection")
-  if (authToken && navigator.onLine ) {
+  if (authToken  && navigator.onLine) {
     const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc';
      // console.log(data)
      try{
     setLoading(true);
           const response = await axios.get(url, {headers : {"Content-Type" : "application/json",
-      Authorization : authToken
       }, withCredentials : true})
         if (response.status === 201 || response.status === 200 ) {
              const virtualAccCreated = response?.data?.data?.acc_details;
@@ -417,7 +421,7 @@ export const CheckVirtualAcc = async(authToken,
                 ,setBankNameState, setAccountNameState, setAccountNumberState);
                 // alert("Sign in virtual running")
                 if(SignInVirtualAccountState){
-                  localStorage.setItem("UserStatus",true)
+                  localStorage.setItem("cxccxfd",true)
                   await confirmVirtualState();
                   }
                 }}else{
@@ -437,28 +441,8 @@ export const CheckVirtualAcc = async(authToken,
       else if(error.status === 401){
 
         // console.log(error.response.headers.hasAuthorization);
-        console.log(error.response.headers);
-        console.log(error.response.headers.get("x-new-auth-token"));
-
-        if (
-          error.response.headers["x-new-auth-token"] ||
-          error.response.headers.get("x-new-auth-token")
-        ) {
-          setLoading(true);
-          const newToken =
-            error.response.headers.get("x-new-auth-token") ||
-            error.response.headers["x-new-auth-token"];
-
-          if (
-            newToken !== "" &&
-            localStorage.getItem("authorisedLogin") 
-          ) {
-            console.log(newToken);
-            localStorage.setItem("authorisedLogin", newToken);
-          } else {
-            localStorage.setItem("getToken", newToken);
-          }
-        }
+       
+        
         console.log(error.response);
       } else if (error.status === 404) {
         alert("Network Error, Please Check your Connection and try again");
@@ -545,10 +529,10 @@ export const VerifyTransPin = async (
   setErrorMessage,
   asyncFuncAtSuccess
 ) => {
-  const authToken = localStorage.getItem("authorisedLogin");
-  const getToken = localStorage.getItem("getToken");
+  const usernameToken = localStorage.getItem("xcss{}");
+  const emailToken = localStorage.getItem("xcss[]");
   if (!navigator.onLine) return alert("Check your internet connection");
-  if ((authToken || getToken) && navigator.onLine) {
+  if ((usernameToken || emailToken) && navigator.onLine) {
     try {
       setLoading(true);
       const body = {
@@ -556,7 +540,6 @@ export const VerifyTransPin = async (
       }
       const url = "https://aremxyplug.onrender.com/api/v1/pin/verify"
       const response = await axios.post(url, body, {headers: {"Content-Type" :"application/json",
-         Authorization : authToken || getToken
       },withCredentials : true
    })
       if(response.status === 201 || response.status ===  200){
@@ -573,29 +556,7 @@ export const VerifyTransPin = async (
          alert("You are allowed to attempt 5 times, kindly ensure your pin is correct.")
          setErrorMessage(true);
       }else if(error && error.response.status === 401){
-         console.log(error?.response?.headers);
-      console.log(error?.response?.headers.get("x-new-auth-token"));
-if (error.response.headers["x-new-auth-token"] ||
-          error.response.headers.get("x-new-auth-token")) {
-          setLoading(true);
-          const newToken =
-            error.response.headers.get("x-new-auth-token") ||
-            error.response.headers["x-new-auth-token"];
-
-          if (
-            newToken !== "" &&
-            localStorage.getItem("authorisedLogin") 
-          ) {
-            console.log(newToken);
-            localStorage.setItem("authorisedLogin", newToken);
-            setFailed("unauthorised")
-           }else{
-      localStorage.setItem("getToken", newToken);
-      setFailed("unauthorised");
-    } }else{
-      setFailed("unauthorised")
-    }
-       console.log(error.response);
+        setFailed("unauthorised")
          
       }else if(error && error.response.status === 500){
    setFailed("Server error")
@@ -627,17 +588,16 @@ export const PostFunction = async (
   functionAtFailed,
   setFetchedResponse
 ) => {
-  const authToken = localStorage.getItem("authorisedLogin");
-  const getToken = localStorage.getItem("getToken");
+  const usernameToken = localStorage.getItem("xcss{}");
+  const emailToken = localStorage.getItem("xcss[]");
   if (!navigator.onLine) return alert("Check your internet connection");
-  if ((authToken || getToken) && navigator.onLine){
+  if ((usernameToken || emailToken ) && navigator.onLine){
     try {
       setLoading(true);
       const url = `https://aremxyplug.onrender.com/api/v1/${path}`;
       const response = await axios.post(url, body, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: authToken || getToken,
         },
         withCredentials: true,
       });
@@ -675,42 +635,7 @@ export const PostFunction = async (
             
          }
       }else if(error && error.response.status === 401){
-     
-
-        console.log(error.response.headers);
-        console.log(error.response.headers.get("x-new-auth-token"));
-
-        if (
-          error.response.headers["x-new-auth-token"] ||
-          error.response.headers.get("x-new-auth-token")
-        ) {
-          setLoading(true);
-          const newToken =
-            error.response.headers.get("x-new-auth-token") ||
-            error.response.headers["x-new-auth-token"];
-
-          if (
-            newToken !== "" &&
-            localStorage.getItem("authorisedLogin") 
-          ) {
-            console.log(newToken);
-            localStorage.setItem("authorisedLogin", newToken);
-
-            functionAtFailed("unauthorised")
-             if(functionAtFailed) {
-            setFetchedResponse(error?.response?.data?.data)
-           }
-   }else{
-      localStorage.setItem("getToken", newToken);
-      functionAtFailed("unauthorised")
-    if(functionAtFailed) {
-            setFetchedResponse(error?.response?.data.data)
-           }
-   }
-        }else{
-         functionAtFailed("unauthorised")
- }
-        console.log(error.response);
+    functionAtFailed("unauthorised")
       } else if (error && error.response.status === 500) {
         functionAtFailed("Server error");
       //  alert("Server error: Try some other time");
@@ -732,16 +657,15 @@ export const PostFunction = async (
 // A general Function to get useful data from the backend
 export const GetFunction = async(path, setLoading, functionAtSuccess,
   functionAtFailed,setFetchedResponse)=> {
-   const authToken = localStorage.getItem("authorisedLogin");
-   const getToken = localStorage.getItem("getToken");
+   const usernameToken = localStorage.getItem("xcss{}");
+   const emailToken = localStorage.getItem("xcss[]");
    if(!navigator.onLine) return alert("Check your internet connection");
-   if((authToken || getToken) && navigator.onLine){
+   if((usernameToken || emailToken) && navigator.onLine){
       try{
          setLoading(true);
     const url = `https://aremxyplug.onrender.com/api/v1/${path}`
       const response = await axios.get(url, {headers: {"Content-Type" :"application/json",
-         Authorization : authToken || getToken
-      }, withCredentials : true})
+         }, withCredentials : true})
     if(response.status === 201 || response.status ===  200){
      functionAtSuccess(response);
      if(functionAtSuccess){
@@ -756,30 +680,8 @@ export const GetFunction = async(path, setLoading, functionAtSuccess,
          functionAtFailed("Bad request")
       }
       else if(error && error.response.status === 401){
-         setFetchedResponse(error?.response);
- //  console.log(error.response);
-        console.log(error.response.headers);
-        console.log(error.response.headers.get("x-new-auth-token"));
-        //  console.log(error.response.headers.hasAuthorization());
-        // console.log(error.response.headers.hasAuthorization);
-        if(error?.response?.headers["x-new-auth-token"] || error?.response?.headers.get("x-new-auth-token")){
-
-         setLoading(true);
-         const newToken = error?.response?.headers.get("x-new-auth-token") ||error?.response?.headers["x-new-auth-token"];
-        
-         if(newToken !== "" && localStorage.getItem("authorisedLogin")){
-            localStorage.setItem("authorisedLogin", newToken);
-            functionAtFailed("unauthorised");
-   }else{
-      localStorage.setItem("getToken", newToken);
-        functionAtFailed("unauthorised");
-     }
-        }else{
-         functionAtFailed("unauthorised");
-
-        }
-        console.log(error.response);
-      } else if (error && error.response.status === 404) {
+    functionAtFailed("unauthorised");
+} else if (error && error.response.status === 404) {
         functionAtFailed("User error");
         alert("Check your internet connection");
       } else if (error && error.response.status === 500) {
@@ -803,18 +705,18 @@ export const PutFunction = async (
   functionAtSuccess,
   functionAtFailed
 ) => {
-  const authToken = localStorage.getItem("authorisedLogin");
-  const getToken = localStorage.getItem("getToken");
+  const usernameToken = localStorage.getItem("xcss{}");
+  const emailToken = localStorage.getItem("xcss[]");
   if (!navigator.onLine) return alert("Check your internet connection");
-  if ((authToken || getToken) && navigator.onLine) {
+  if ((usernameToken || emailToken) && navigator.onLine) {
     try {
       setLoading(true);
       const url = `https://aremxyplug.onrender.com/api/v1/${path}`;
       const response = await axios.put(url, body, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: authToken || getToken,
-        },
+         
+        }, withCredentials : true
       });
       if (response.status === 201 || response.status === 200) {
         functionAtSuccess();
@@ -827,32 +729,8 @@ export const PutFunction = async (
          functionAtFailed("Bad request");
        alert("Invalid request");
       }else if(error && error.response.status === 401){
-     
-        //  console.log(error.response.headers.hasAuthorization());
-        // console.log(error.response.headers.hasAuthorization);
-        if (
-          error.response.headers["x-new-auth-token"] ||
-          error.response.headers.get("x-new-auth-token")
-        ) {
-          setLoading(true);
-          const newToken =
-            error.response.headers.get("x-new-auth-token") ||
-            error.response.headers["x-new-auth-token"];
-
-          if (
-            newToken !== "" &&
-            localStorage.getItem("authorisedLogin")
-          ) {
-            console.log(newToken);
-            localStorage.setItem("authorisedLogin", newToken);
-             functionAtFailed("unauthorised");
-   }else{
-      localStorage.setItem("getToken", newToken);
-     functionAtFailed("unauthorised");
-   
-}
-        }
-         }else if(error && error.response.status === 404){
+    functionAtFailed("unauthorised");
+  }else if(error && error.response.status === 404){
          functionAtFailed("User error")
          alert("Check your internet connection")
       }else if(error && error.response.status === 500){
@@ -872,7 +750,7 @@ export const PutFunction = async (
 
 export const ThemeHandler =()=> {
     const isDarkMode = localStorage.getItem("darkModeEnabled");
-    const UserStatus = localStorage.getItem("UserStatus")
+    const UserStatus = localStorage.getItem("cxccxfd")
     const metaname = document.querySelector("meta[name=theme-color]");
       useEffect(()=> {
   if(!UserStatus){
@@ -887,122 +765,3 @@ export const ThemeHandler =()=> {
   return null;
 }
 
-//A re-usable components to handle user session management
-
-//To set the different states for  virtual account
-// This function is to assist the custom api to fetch the page location set it to
-// to know the following product type that comes with such location(service) then eventually
-// provides the url for the custm api to get
-// const handleServiceProduct = (ErrorHandling,location, productType, url)=> {
-//    //TV SUBSCRIPTIONS
-
-//    if(location === "/TvSubscription"){
-//       if(productType === "GOTV"){
-//     url = `https://aremxyplug.onrender.com/api/v1/products/tvsubs/${productType}`
-
-//       }
-
-//       else if(productType === "DSTV"){
-//           url = `https://aremxyplug.onrender.com/api/v1/products/tvsubs/${productType}`
-
-//       }
-//    else if(productType === "SHOWMAX"){
-//        url = `https://aremxyplug.onrender.com/api/v1/products/tvsubs/${productType}`
-//  }
-// else if(productType === "STARTIMES"){
-//     url = `https://aremxyplug.onrender.com/api/v1/products/tvsubs/${productType}`
-//    }
-//    // DATA BUNDLES
-//       }else if(location === "/data-bundles"){
-//          if(productType === "MTN"){
-//             url = `https://aremxyplug.onrender.com/api/v1/products/tvsubs/${productType}`
-//               }
-//               else if(productType === "AIRTEL"){
-//                   url = `https://aremxyplug.onrender.com/api/v1/products/tvsubs/${productType}`
-//               }
-//            else if(productType === "GLO"){
-//                url = `https://aremxyplug.onrender.com/api/v1/products/tvsubs/${productType}`
-//          }
-//         else if(productType === "9MOBILE"){
-//             url = `https://aremxyplug.onrender.com/api/v1/products/tvsubs/${productType}`
-//            } else if(productType === "SMILE"){
-//             url = `https://aremxyplug.onrender.com/api/v1/products/tvsubs/${productType}`
-//            } else if(productType === "SPECTRANET"){
-//             url = `https://aremxyplug.onrender.com/api/v1/products/tvsubs/${productType}`
-//            }
-//            // EDUCATION PINs
-//       }else if(location === "/EducationPins"){
-//          if(productType === "WAEC"){
-//             url = `https://aremxyplug.onrender.com/api/v1/products/tvsubs/${productType}`
-//               }
-//               else if(productType === "NECO"){
-//                   url = `https://aremxyplug.onrender.com/api/v1/products/tvsubs/${productType}`
-//               }
-//            else if(productType === "NABTEB"){
-//                url = `https://aremxyplug.onrender.com/api/v1/products/tvsubs/${productType}`
-//          }
-//         else if(productType === "JAMB"){
-//             url = `https://aremxyplug.onrender.com/api/v1/products/tvsubs/${productType}`
-//            }
-
-//       }
-// }
-
-// const handleResponseStatus = (productType, setConfirmGotvPopup)=> {
-//    if(productType === "GOTV"){
-//      setConfirmGotvPopup(true)
-//    } else if(productType === "DSTV"){
-//       setConfirmGotvPopup(true)
-//     } else if(productType === "STARTIMES"){
-//       setConfirmGotvPopup(true)
-//     } else if(productType === "SHOWMAX"){
-//       setConfirmGotvPopup(true)
-//     } else if(productType === "MTN"){
-//       setConfirmGotvPopup(true)
-//     }else if(productType === "AIRTEL"){
-//       setConfirmGotvPopup(true)
-//     }else if(productType === "GLO"){
-//       setConfirmGotvPopup(true)
-//     }else if(productType === "9MOBILE"){
-//       setConfirmGotvPopup(true)
-//     }else if(productType === "SMILE"){
-//       setConfirmGotvPopup(true)
-//     }else if(productType === "SPECTRANET"){
-//       setConfirmGotvPopup(true)
-//     }else if(productType === "WAEC"){
-//       setConfirmGotvPopup(true)
-//     }else if(productType === "NECO"){
-//       setConfirmGotvPopup(true)
-//     }else if(productType === "NABTEB"){
-//       setConfirmGotvPopup(true)
-//     }else if(productType === "JAMB"){
-//       setConfirmGotvPopup(true)
-//     }
-//    }
-
-// // AXIOS CUSTOM API REQUEST FOR TV SUBSCRIPTIONS,DATA AND EDUCATIONPINS
-// const RequestServiceDrop = async(location,productType, url,)=> {
-//    const getToken = localStorage.getItem("getToken")
-//    const authToken = localStorage.getItem("authorisedLogin")
-//    if((authToken || getToken ) && navigator.onLine){
-//       try{
-//          const response = await axios.get(url, {headers: {"Content-Type" : "application/json",
-//             Authorization : authToken || getToken
-//          }})
-//          if(response.status == 201 || 200){
-//          alert(` In ${productType}`)
-//          }
-//       }catch(error){
-//          if(error && error.response.status == 404 || 400){
-//             alert(`Check network connection to get ${productType}`)
-//             }else if(error && error.response.status === 401){
-//           alert(`Your session has expired`)
-//             }else if(error && error.response.status === 500){
-//                alert(`Couldn't get ${productType} due to server error `)
-//                  }
-//       }
-//    }
-// }
-
-//Create a log Out function and pop up for user interaction on logging
-// out user due to their inactivity. This functionality is meant to run across every page.

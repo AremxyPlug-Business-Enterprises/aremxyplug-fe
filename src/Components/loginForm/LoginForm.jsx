@@ -83,7 +83,7 @@ function LoginForm() {
       twoStepVerificationSuccess === false &&
       openTranspinSuccessful === false &&
       open2StepOTP === false &&
-      openTranspin === false && localStorage.getItem("UserStatus") === "true" ){
+      openTranspin === false && localStorage.getItem("cxccxfd") === "true" ){
          RemoveLocalStorage();
          window.location.reload()
       }
@@ -179,6 +179,7 @@ function LoginForm() {
 
 
 
+
 // ==========Login Handler===========
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -221,25 +222,20 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
               config
             )
               if (response.status === 202 && response.headers.hasAuthorization) {
+                 localStorage.setItem("xcss{}", true);
                 setOpenTranspin(true);
-                const authToken = response.headers.get('Authorization');
-                  const customer  =  response?.data?.data?.customer;
-            
-                if(authToken){
-                 localStorage.setItem("getToken", authToken);
-                  if(customer){
+              const customer  =  response?.data?.data?.customer;
+             if(customer){
                    setCustomerDetail(customer);
-               } }
+               } 
      } else if(response.status === 200){
                   setOpen2StepVerification(true);
+                   localStorage.setItem("xcss{}", true);
                   const customer  =  response?.data?.data?.customer;
-                  const authToken = response?.headers.get('Authorization');
-                   if(authToken){
-                localStorage.setItem("getToken", authToken);
-               if(customer){
+            if(customer){
                setCustomerDetail(customer);
                console.log(customer);
-                  }} }
+                  }} 
             } catch(error){
              if(error && error.response === undefined){
                 alert("Your internet connection is quite unstable.");
@@ -297,29 +293,20 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
               loginData,
               config
             )
-          
-              if (response.status === 202  && response?.headers?.hasAuthorization) {
+        if (response.status === 202  && response?.headers?.hasAuthorization) {
+           localStorage.setItem("xcss[]", true);
                 setOpenTranspin(true);
-                const authToken = response.headers.get('Authorization');
-                const customer = response?.data?.data?.customer;
-                if(authToken){
-                 // localStorage.setItem("UserStatus",false)
-                  localStorage.setItem("authorisedLogin", authToken);
-                   if(customer){
+           const customer = response?.data?.customer;
+              if(customer){
                setCustomerDetail(customer);
                   }
-              }
-    }
-  
-               else if(response.status === 200){
+              }  else if(response.status === 200){
+                 localStorage.setItem("xcss[]", true);
                 setOpen2StepVerification(true);
              const customer  =  response?.data?.data?.customer;
-             const authToken = response.headers.get('Authorization');
-             if(authToken){
-             localStorage.setItem("authorisedLogin", authToken);
              if(customer){
               setCustomerDetail(customer);
-             }
+             
               }
          } 
             }catch(error){

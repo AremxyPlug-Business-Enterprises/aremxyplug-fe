@@ -2,7 +2,6 @@
 
 
 export const SetLocalStorage = (email, fullName,phone, username,bankName, accountName, accountNumber, id) => {
-
    localStorage.setItem("userEmail", JSON.stringify(email))
    localStorage.setItem("userFullName", JSON.stringify(fullName))
    localStorage.setItem("userPhone", JSON.stringify(phone));
@@ -72,11 +71,12 @@ export const RemoveLocalStorage = () => {
  localStorage.removeItem("aremxyAccountName")
  localStorage.removeItem("aremxyAccountNumber");
  localStorage.removeItem("aremxyUserId");
- localStorage.removeItem("UserStatus");
- localStorage.removeItem("authorisedLogin");
- localStorage.removeItem("getToken");
+ localStorage.removeItem("cxccxfd");//The UserStatus
+ localStorage.removeItem("xcss{}");//The authToken(username)
+ localStorage.removeItem("xcss[]")// The authToken (email)
  localStorage.removeItem("idVerification");
  localStorage.removeItem("bvnVerification");
+ localStorage.removeItem("5pbb8");
  localStorage.removeItem("ReferralLink");
  localStorage.removeItem("ReferralCode");
  localStorage?.removeItem("aremxyPassword");
@@ -85,11 +85,11 @@ localStorage.removeItem("UserIcon");
   localStorage?.removeItem("3232");    
      localStorage?.removeItem("SessionExpiration");
      localStorage?.removeItem("PasswordResetActive");
-     localStorage.removeItem("getToken");
+     localStorage.removeItem("xcss{}");
       localStorage.removeItem("authorisedLogin");
  const AccCreated = localStorage.getItem("AccCreated")
- const getToken = localStorage.getItem("getToken");
- if(getToken){
+ const usernameToken = localStorage.getItem("xcss{}");
+ if(usernameToken){
    
    const userTransactionOtp = localStorage.getItem("userTransactionOtp")
   if(userTransactionOtp){

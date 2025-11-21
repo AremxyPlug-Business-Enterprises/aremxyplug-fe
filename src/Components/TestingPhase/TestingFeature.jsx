@@ -116,7 +116,7 @@ export const TestingFeature=()=> {
                   </td>
 
                   {/* Description Cell */}
-                  <td className="py-5 px-6 text-gray-700 leading-relaxed">
+                  <td className="py-5 px-6 text-left text-gray-700 leading-relaxed">
                     {item.description}
                   </td>
                 </motion.tr>

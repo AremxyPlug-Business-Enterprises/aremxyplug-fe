@@ -2,7 +2,7 @@ import React from "react";
 import Joi from "joi";
 import { DashBoardLayout } from "../Dashboard/Layout/DashBoardLayout";
 import "../TvSubscription/TvSubscription.css";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { useState } from "react";
 import arrowDown from '../EducationPins/imagesEducation/arrow-down.svg';
 import { ContextProvider } from "../Context";
@@ -750,6 +750,7 @@ const Decoders  = [
     
    })
   }
+  const timer = useRef(null)
   return (
     <div>
       <DashBoardLayout>
@@ -910,13 +911,21 @@ const Decoders  = [
               <input type="tel"
                     value={showMaxSmartCard}
               placeholder="XXXXXXXXXX"
-              maxLength={11}
+            
               onInput={(e =>{
                 
                      const numericValue = e.target.value.replace(/\D/g, '');
                     e.target.value = numericValue
                 })}
-                onChange={(e)=> handleSmartCard(e)} 
+                onChange={(e)=> {
+                   if(timer.current) clearTimeout(timer.current)   
+                timer.current = setTimeout(()=> {
+              //Run every 5 seconds
+                handleSmartCard(e)
+                    
+  },500)
+  return ()=> clearTimeout(timer.current);
+                } }
                 className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px] self-center ${
       isDarkMode 

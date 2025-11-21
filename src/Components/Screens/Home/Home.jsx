@@ -265,7 +265,7 @@ export const Home = () => {
       setError("Invalid email");
     }
   };
-const UserStatus = localStorage.getItem("UserStatus");
+const UserStatus = localStorage.getItem("cxccxfd");
 useEffect(()=> {
   if(UserStatus){
   RemoveLocalStorage()
@@ -305,8 +305,8 @@ useEffect(()=> {
         />
       </div> */}
 
-      <div className={`${styles.hero}`}>
-      <div className=" w-[90%] pt-[40%] mx-auto md:pt-[10%] md:w-[] lg:pt-[25%]">
+      <div className={`${styles.hero} `}>
+      <div className=" w-[90%] pt-[40%] mx-auto md:pt-[10%] md:w-[] lg:pt-[35%]">
       <div className="text-left w-[100%] text-[#04177F] text-[20px] font-extrabold md:text-[25px] md:font-bold lg:text-[45px] lg:font-extrabold lg:leading-[px]">
             The One-Stop Shop for Individuals and Businesses for Telecom,
             Payments, and Digital Services.
@@ -333,14 +333,15 @@ useEffect(()=> {
           </div>
         </div>
         <img
-          className="mx-auto mt-[12%] md:w-[40%] md:h-[30%] lg:w-[50%] lg:h-[40%] px-[20px] md:px-0 "
+          className="mx-auto mt-[12%] md:w-[40%] lg:mt-[300px] md:h-[30%]  lg:w-[50%] lg:h-[40%] px-[20px] md:px-0 "
           src="./Images/desktop_phone.png"
           alt="/"
         />
       </div>
 
       {/* WHY CHOOSE US */}
-      <div className="flex flex-col bg-[#04177F] text-[#ffffff] px-[5%] py-[15%] gap-[30px] md:py-[8%] lg:py-[8%] lg:px-[8%]">
+      <div className="flex flex-col bg-[#04177F] text-[#ffffff] px-[5%] py-[15%] gap-[30px]
+       md:py-[8%] lg:py-[8%] lg:px-[8%]">
         <div>
           <p className="mb-[5%] text-[20px] font-semibold text-center md:text-[26px] lg:text-[35px]">
             Why Choose Us?

@@ -118,12 +118,8 @@ export default function SalesSummaryPage ()  {
 }
       const FailedHandler = async(ErrorType)=> {
     if(ErrorType === "unauthorised"){
-      setTransactionHistoryError("unauthorised");
-      await GetFunction(path, setLoading, SuccessHandler, (ErrorType)=> {
-        if(ErrorType === "unauthorised"){
-       setSessionModal(true);
-        }
-      }, ()=>{})
+  if(sessionModal) return;
+      if(sessionModal === false) return setSessionModal(true);
     }else if(ErrorType === "Network error" || ErrorType === "User error" || ErrorType === "Bad request"){
      setTransactionHistoryError("Network error")
     }else if(ErrorType === "Server error"){
@@ -159,18 +155,16 @@ export default function SalesSummaryPage ()  {
                            //alert("Successful")
                              }
                             const FailedHandler = async(ErrorType)=> {
-                              console.log(`Failed to retrieve balance`)
-                              if(ErrorType === "unauthorised"){
-                              await GetFunction("balance", 
-                                setBalanceLoader, 
-                                SuccessHandler,
-                                (ErrorType)=> {
-                                  if(ErrorType === "unauthorised"){
-                                return setSessionModal(true)
-                                  }
-                               },
-                                 setPassDataBalance)
-                              }
+                             if(ErrorType === "unauthorised"){
+                             setSessionModal(true)
+                             }else if(ErrorType === "Server error"){
+                            alert("Failed to retrieve balance")
+                             }else if(ErrorType === "Network error" || ErrorType === "User error"){
+                              alert("Kindly Check your internet connection")
+                             }else {
+                              alert("An unexpected occured while retrieving the balance.")
+                             }
+                              
                             
                             }
                             await GetFunction("balance",
@@ -226,9 +220,10 @@ export default function SalesSummaryPage ()  {
   const ResetDateFilterFields = ()=>{
   setStartDateValueState("");
     setEndDateValueState("");
-    setEditCalenderOne("");
-    setEditCalenderTwo("");
-    setCurrentDateInTimeStamps("")
+    setCountCalender(0);
+    setEditCalenderOne("Start Date");
+    setEditCalenderTwo("End Date");
+    setCurrentDateInTimeStamps(0);
  }
    useEffect(()=> {
     ResetDateFilterFields();
@@ -268,43 +263,26 @@ setDateEdit(()=> {
 
  //Handle The Cancel State of the Date Filter
  const handleCalenderState = async()=> {
-  // No filtering carried out.....
-  if(editCalenderOne === "Start Date" && editCalenderTwo === "End Date"){
-    setCountCalender(0);
-  setCalender(false);
-  setStateDateEdit("Filter By Date")
-}
- //Editing Operation carried out..
-if ( (editCalenderTwo !== "End Date" && editCalenderTwo !== undefined) 
-  && (editCalenderOne !== "Start Date" && editCalenderOne !== undefined)){
-const currentDateFormattingCancel = new Date(startDateValueState);
-currentDateFormattingCancel.setHours(0,0,0,0);
-    setEditCalenderTwo("End Date");
-    setCountCalender(1);
-    setEndDateValueState("");
-    setCurrentDateInTimeStamps(currentDateFormattingCancel);
-  
-  }else  if(
-      editCalenderTwo === "End Date"  &&
-     (editCalenderOne !== "Start Date" 
-      && editCalenderOne !== undefined)){
-        const currentDateFormattingCancel = new Date();
-currentDateFormattingCancel.setHours(0,0,0,0);
-      setEditCalenderOne("Start Date");
-      setCurrentDateInTimeStamps(0)
-      setCountCalender(0);
-      setStartDateValueState("");
-       console.log("Condition2")
- }else {
+  setStartDateValueState("");
+  setEndDateValueState("");
+  setCurrentDateInTimeStamps(0);
   setCountCalender(0);
   setCalender(false);
+  setEditCalenderOne("Start Date");
+  setEditCalenderTwo("End Date");
   setStateDateEdit("Filter By Date");
-  if(startDateValueState?.length > 1 ){
-  await GetTransactionInformation(startDateValueState,
-     endDateValueState,
-      selectedProduct);
-  }
-  }
+   const optionalDate = new Date();
+  const isoString = typeof optionalDate === "object" ?
+   optionalDate?.toLocaleString("sv-SE", {
+    timeZone : "Africa/Lagos",
+    hour12 : false
+  }) : "";
+ //Bread type into ten
+  const slicedDate = isoString?.slice(0,10);
+  const startDateOptions 
+  = startDateValueState?.length && startDateValueState !== ""
+   ? startDateValueState : slicedDate;
+  await GetTransactionInformation(startDateOptions, "", selectedProduct);
  }
  //Filter By Date
  const FilterByDateFunc = async()=> {
@@ -323,20 +301,25 @@ currentDateFormattingCancel.setHours(0,0,0,0);
    = endDateValueState?.length && endDateValueState !== ""
     ? endDateValueState : "";
   setCalender(false);
-   console.log(startDateOptions)
   
      await GetTransactionInformation(
       startDateOptions,
        endDateOptions,
        selectedProduct
        );
-       if(editCalenderOne === "Start Date"){
-        setStateDateEdit(slicedDate);
-        setStartDateValueState(slicedDate);
-       }else{
-        setStateDateEdit(dateEdit);
-       }
- 
+    setStateDateEdit(()=> {
+    if(editCalenderOne !== "Start Date" && editCalenderTwo === "End Date" ){
+     return <p>{startDateValueState}</p>
+    }else if(editCalenderOne !== "Start Date" && editCalenderTwo !== "End Date" ){
+   return <div className="flex flex-col gap-[5px]">
+    <p className  ="lg:text-[12px] lg:leading-[16px] text-[#04177f] text-[10px] leading-[16px]">
+      {startDateValueState}
+      </p>
+    <p  className  ="lg:text-[12px] text-[#04177f] lg:leading-[16px] text-[10px] leading-[16px]">
+      {endDateValueState}</p>
+   </div>
+    }
+  })
 }
 
  

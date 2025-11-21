@@ -6,6 +6,7 @@ import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 import { CheckVirtualAcc } from "../../ApiCollection.jsx/ApiBuck";
 import axios from "axios";
 import { Loader } from "../../Loader/Loader";
+import { InternalLoginSession } from "../../ApiCollection.jsx/ApiBuck";
 
 function NgnVirtualAccount(Data) {
   const { isDarkMode,
@@ -18,24 +19,26 @@ function NgnVirtualAccount(Data) {
   //const accNoRef = useRef(null);
  // const accNameRef = useRef(null);
 //  const bankNameRef = useRef(null);
-  const [loading, setLoading]= useState(false)
+  const [loading, setLoading]= useState(false);
+  const [sessionModal, setSessionModal] = useState(false)
 
    const GenerateVirtualAccount = async(AuthUsed)=>{
-      const authToken = localStorage.getItem("authorisedLogin")
-      const getToken = localStorage.getItem("getToken");
+      const usernameToken = localStorage.getItem("xcss{}")
+      const emailToken  = localStorage.getItem("xcss[]");
      if(!navigator.onLine) return alert("Check your internet connection")
-      if((authToken || getToken) && navigator.onLine){
+      if((usernameToken|| emailToken ) && navigator.onLine){
       try{
       setLoading(true)
       const body =""
       const url = "https://aremxyplug.onrender.com/api/v1/virtualacc"
-       const response = await axios.post(url,body,{ headers : {"Content-Type" : "application/json",
-         Authorization : authToken || getToken},
+       const response = await axios.post(url,body,
+        { headers : {"Content-Type" : "application/json"},
+        withCredentials : true
       })
         if(response.status === 200 || response.status === 201){
            alert("Virtual Account Created")
            localStorage.setItem("AccCreated","true")
-           AuthUsed = authToken || getToken;
+           AuthUsed = usernameToken || emailToken;
            await CheckVirtualAcc(AuthUsed, customerDetail, setLoading, setVirtualAccCreated, 
             setBankNameState, setAccountNameState, setAccountNumberState, 
            twoStepVerificationSuccess,setTwoStepVerificationSuccess)
@@ -49,8 +52,7 @@ function NgnVirtualAccount(Data) {
           alert("Virtual Account Creation failed")
           setLoading(false)
         }else if(error.response &&error.response.status === 401){
-          alert("Your session has timed out.");
-          setLoading(false)
+        setSessionModal(true)
         }else if(error.response.status === 404){
 
        alert("Check your Network connection")
@@ -301,6 +303,9 @@ function NgnVirtualAccount(Data) {
           </Link>
         </div>
       </div>
+      {sessionModal && (
+        <InternalLoginSession setExpiredSessionLogin={setSessionModal}/>
+      )}
     </DashBoardLayout>
   );
 }

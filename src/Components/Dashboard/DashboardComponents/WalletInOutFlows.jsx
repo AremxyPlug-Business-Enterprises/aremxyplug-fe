@@ -68,7 +68,7 @@ export const WalletInOutFlows = ({className}) => {
      
   // const [inflowAmount, setInflowAmount] = useState("");
   // const [outflowAmount, setOutflowAmount] = useState("")
-          console.log(editCalenderOne);
+         
         
    const GetTransactionInformation = async(calenderState)=> {
     console.log(calenderState);

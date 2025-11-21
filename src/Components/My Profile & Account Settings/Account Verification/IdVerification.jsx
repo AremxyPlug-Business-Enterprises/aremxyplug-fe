@@ -153,8 +153,7 @@ export default function IdVerification(Data) {
     statusId,
     verifyPopId
   ) => {
-    const authToken = localStorage.getItem("authorisedLogin");
-    const getToken = localStorage.getItem("getToken");
+   
     // const AccCreated = localStorage.getItem("AccCreated")
     
     if (
@@ -167,7 +166,7 @@ export default function IdVerification(Data) {
     ) {
       setLoading(true);
         setErrorSubmit(false);
-      console.log("getToken", getToken);
+    
      // console.log(data)
       try {
         if (idButtonState === "Verify") {
@@ -178,8 +177,8 @@ export default function IdVerification(Data) {
         const response = await axios.post(url, data, {
           headers: {
             "Content-Type": "application/json",
-            Authorization: authToken || getToken,
-          },
+           
+          },withCredentials : true
         });
         if (response.status === 201 || response.status === 200) {
           setIdNumber(idNumber);
@@ -204,27 +203,7 @@ export default function IdVerification(Data) {
           setIdStatus("Not Verified");
           setVerifyImage(NotVerifiedIcon);
         }else if( error.response.status === 401){
-         if(error.response?.headers.get("x-new-auth-token") || error.response?.headers["x-new-auth-token"]){
-             setLoading(true)
-         const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
-        
-         if(newToken !== "" && localStorage.getItem("authorisedLogin")){
-             //console.log(newToken)
-          localStorage.setItem("authorisedLogin", newToken);
-          
-          if( localStorage.getItem("authorisedLogin")?.length > 1){
-            return CheckIdForm();
-          }
-           }else{
-      localStorage.setItem("getToken", newToken);
-      // console.log(getToken);
-          if(localStorage.getItem("getToken")?.length > 1){
-            return CheckIdForm();
-          }
-      }}else{
-        return setSessionModal(true);
-      }
-        
+          setSessionModal(true)
         }else {
           alert("Check your internet connection.")
         }
@@ -708,10 +687,10 @@ export default function IdVerification(Data) {
                           ? "cursor-pointer"
                           : "cursor-not-allowed opacity-50"
                       }`}>
-            <h2 className={`font-[500] text-[#7C7C7C] text-[8px] leading-[10.4px]
+            <h2 className={`font-[500] text-[#7C7C7C] text-[12px] leading-[17.4px]
             lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>{info.idType}</h2>
             <p
-             className={`font-[500] text-[#7C7C7C] text-[8px] leading-[10.4px]
+             className={`font-[500] text-[#7C7C7C] text-[10px] leading-[14.4px]
             lg:text-[16px] lg:leading-[20.8px] ${info.Status === "Inactive" ? "text-red-500": "text-green-500"}
            `}>
      {info.Status}

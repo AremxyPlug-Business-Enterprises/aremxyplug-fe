@@ -81,34 +81,12 @@ const TransactionHistory = ({
     const FailedHandler = async (ErrorType) => {
       // if (!navigator.online) alert("Kindly check your internet connection");
       if (ErrorType === "unauthorised") {
-        await GetFunction(
-          path,
-          setOrderLoading,
-          SuccessHandler,
-          (ErrorType) => {
-            if (ErrorType === "Server error") {
-           alert("A server error occured, please try again later");
-            }else if(ErrorType === "Network error" || ErrorType === "User error"){
-              alert("Your internet connection is quite unstable.")
-            }
-          },
-          setOrderIdResponse
-        );
-      } else if (ErrorType === "Server error") {
-        await GetFunction(
-          path,
-          setOrderLoading,
-          SuccessHandler,
-          (ErrorType) => {
-            if (ErrorType === "Server error") {
+      return ()=> {}
+       } else if (ErrorType === "Server error") {
               alert("Failed to process your request");
               setElectricityTransErrorType(
                 "Failed to process your request, try again some other time"
               );
-            }
-          },
-          setOrderIdResponse
-        );
       } else if (ErrorType === "Network error" || ErrorType === "User error") {
         setElectricityTransErrorType("An internet connection error");
       }
