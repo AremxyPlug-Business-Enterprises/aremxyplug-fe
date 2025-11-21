@@ -297,7 +297,7 @@ const FifthUserIcon = "./Images/UserIcon/FifthUserIcon.png"
 const SixthUserIcon = "./Images/UserIcon/SixthUserIcon.png"
 const SeventhUserIcon ="./Images/UserIcon/SeventhUserIcon.png"
 const EighthUserIcon = "./Images/UserIcon/EighthUserIcon.png"
-const NinethUserIcon ="./Images/UserIcon/NinethUserIcon.png"
+const NinethUserIcon ="./Images/UserIcon/NinethUserIcon.png";
 const UserIconFormatting = ()=> {
   const alphabetsName = "abcdefghijklmnopqrstuvwxyz".split("");
   const {username} = customerDetail
@@ -351,7 +351,7 @@ return assignImageByUsername
     if (CheckVirtualAcc) {
      SessionTiming();
      UserIconFormatting();
-     await refreshToken()
+      refreshToken();
      if(UserIconFormatting && SessionTiming){
       navigate("/dashboard");
      }
