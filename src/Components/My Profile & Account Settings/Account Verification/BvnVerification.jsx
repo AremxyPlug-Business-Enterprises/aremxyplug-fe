@@ -106,7 +106,7 @@ export default function BvnVerification(Data) {
   };
 
   //The main function to verify id Verification and create virtual account
-  const checkBvnform = async (
+  const checkBvnform = async(
     url,
     data,
     buttonStateSuccess,
@@ -117,8 +117,6 @@ export default function BvnVerification(Data) {
     statusBvn,
     verifyPopBvn
   ) => {
-    const authToken = localStorage.getItem("authorisedLogin");
-    const getToken = localStorage.getItem("getToken");
     if (bvnDateOfBirth !== "" 
     && bvnNumber !== ""  && genderResult !== ""  && idAddress !== "" ) {
       setLoading(true);
@@ -133,8 +131,7 @@ export default function BvnVerification(Data) {
         const response = await axios.post(url, data, {
           headers: {
             "Content-Type": "application/json",
-            Authorization: authToken || getToken,
-          },
+           }, withCredentials : true
         });
         if (response.status === 201 || response.status ===  200) {
           setBvnNumber(bvnNumber);
@@ -159,27 +156,7 @@ export default function BvnVerification(Data) {
           setBvnStatus("Not Verified");
           setBvnVerifyImage(NotVerifiedImage);
         }else if(error.response.status === 401){
-             if(error.response?.headers.get("x-new-auth-token") || error.response?.headers["x-new-auth-token"]){
-             setLoading(true)
-         const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
-        
-         if(newToken !== "" && localStorage.getItem("authorisedLogin") ){
-             console.log(newToken)
-          localStorage.setItem("authorisedLogin", newToken);
-          
-          if( localStorage.getItem("authorisedLogin")?.length > 1){
-            return checkBvnform();
-          }
-           }else{
-      localStorage.setItem("getToken", newToken);
-       console.log(getToken);
-          if(localStorage.getItem("getToken")?.length > 1){
-            return checkBvnform();
-          }
-      }}else{
-        return setSessionModal(true);
-      }
-        
+            setSessionModal(true)
         } else {
           alert("Check your internet connection.");
           setErrorVerify(true);

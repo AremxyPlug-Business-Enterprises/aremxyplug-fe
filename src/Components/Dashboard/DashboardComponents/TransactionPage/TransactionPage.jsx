@@ -214,18 +214,7 @@ console.log(startDateQuery);
     };
     const FailedHandler = async (ErrorType) => {
       if (ErrorType === "unauthorised") {
-        setTransactionHistoryError("unauthorised");
-        await GetFunction(
-          path,
-          setLoading,
-          SuccessHandler,
-          (ErrorType) => {
-            if (ErrorType === "unauthorised") {
-              setSessionModal(true);
-            }
-          },
-          setTransactionResponse
-        );
+        setSessionModal(true)
       } else if (
         ErrorType === "Network error" ||
         ErrorType === "User error" ||
@@ -265,49 +254,31 @@ console.log(startDateQuery);
       }) : "";
     const slicedDate = isoString?.slice(0,10);
   //handle Calender state
-   const handleCalenderState = async()=> {
+
   // No filtering carried out.....
-  if(editCalenderOne === "Start Date" && editCalenderTwo === "End Date"){
-    setCountCalender(0);
-  setCalender(false);
-  setStateDateEdit("Filter By Date")
-}
- //Editing Operation carried out..
-if ( (editCalenderTwo !== "End Date" && editCalenderTwo !== undefined) 
-  && (editCalenderOne !== "Start Date" && editCalenderOne !== undefined)){
-const currentDateFormattingCancel = new Date(startDateValueState);
-currentDateFormattingCancel.setHours(0,0,0,0);
-    setEditCalenderTwo("End Date");
-    setCountCalender(1);
-    setEndDateValueState("");
-    setCurrentDateInTimeStamps(currentDateFormattingCancel);
-  
-  }else  if(
-      editCalenderTwo === "End Date"  &&
-     (editCalenderOne !== "Start Date" 
-      && editCalenderOne !== undefined)){
-        const currentDateFormattingCancel = new Date();
-currentDateFormattingCancel.setHours(0,0,0,0);
-      setEditCalenderOne("Start Date");
-      setCurrentDateInTimeStamps(0)
-      setCountCalender(0);
-      setStartDateValueState("");
-       console.log("Condition2")
- }else {
+   const handleCalenderState = async()=> {
+   setStartDateValueState("");
+  setEndDateValueState("");
+  setCurrentDateInTimeStamps(0);
   setCountCalender(0);
   setCalender(false);
+  setEditCalenderOne("Start Date");
+  setEditCalenderTwo("End Date");
   setStateDateEdit("Filter By Date");
-  await GetTransactionInformation();
-  }
- }
+
+ } 
+ 
+ //Resetting the fields
+
 
 
  const ResetDateFilterFields = ()=>{
   setStartDateValueState("");
     setEndDateValueState("");
-    setEditCalenderOne("");
-    setEditCalenderTwo("");
-    setCurrentDateInTimeStamps("")
+    setEditCalenderOne("Start Date");
+    setEditCalenderTwo("End Date");
+    setCurrentDateInTimeStamps(0);
+    setCountCalender(0);
  }
  
   useEffect(() => {
@@ -507,7 +478,19 @@ return date?.toISOString()?.slice(0, 10);
 const FilterByDateFunc = async()=> {
   
   setCalender(false);
-  setStateDateEdit(dateEdit);
+    setStateDateEdit(()=> {
+    if(editCalenderOne !== "Start Date" && editCalenderTwo === "End Date" ){
+     return <p>{startDateValueState}</p>
+    }else if(editCalenderOne !== "Start Date" && editCalenderTwo !== "End Date" ){
+   return <div className="flex flex-col gap-[5px]">
+    <p className  ="lg:text-[12px] lg:leading-[16px] text-[#04177f] text-[8px] leading-[12px]">
+      {startDateValueState}
+      </p>
+    <p  className  ="lg:text-[12px] text-[#04177f] lg:leading-[16px] text-[8px] leading-[12px]">
+      {endDateValueState}</p>
+   </div>
+    }
+  })
   if(startDateValueState?.length && startDateValueState?.length > 1){
      await GetTransactionInformation();
   }else{
@@ -1433,7 +1416,7 @@ h-[100px]  rounded-[12px] px-[20px]
             lg:text-[18px] lg:leading-[24px] capitalize
             ${toggleSideBar ? "lg:text-[18px]" : ""}`}
                   >
-                    {statusArray?.status  === "success" ? "Successfully" : statusArray?.status}
+                    {statusArray?.status  === "success" ? "Successful" : statusArray?.status}
                   </p>
                     <p
                     className={`text-black text-[11px] black text-center leading-[14px] font-[500] 

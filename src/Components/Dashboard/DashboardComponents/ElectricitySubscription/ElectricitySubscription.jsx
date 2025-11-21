@@ -1,5 +1,5 @@
 import { DashBoardLayout } from "../../Layout/DashBoardLayout";
-import { useContext } from "react";
+import { useContext} from "react";
 import { ContextProvider } from "../../../Context";
 import { Link } from "react-router-dom";
 import bulb from "../ElectricitySubscription/Electricity-sub-images/Group 13115.svg";
@@ -245,6 +245,7 @@ const ElectricitySubscription = () => {
     setPhedPaymentResult("");
   }
 
+ 
   return (
     <DashBoardLayout>
       <div

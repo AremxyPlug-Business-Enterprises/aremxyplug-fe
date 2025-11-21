@@ -11,7 +11,6 @@ export const NavBar = () => {
   const location = useLocation();
   const currentLocation = location?.pathname
   const { hideNavbar,} = useContext(ContextProvider);
-console.log(currentLocation)
   function handleScroll() {
     if (
       (document.documentElement && document.documentElement.scrollTop > 70) ||
@@ -24,10 +23,8 @@ console.log(currentLocation)
   }
 
   useEffect(() => {
-   
     window.addEventListener("scroll", handleScroll);
-
-    return () => {
+ return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
@@ -39,7 +36,8 @@ console.log(currentLocation)
      
             
       {/* Mobile View */}
-      <div className={`${currentLocation !== "/TestingPhase" ? "mb-[50px]" : ""}  ${hideNavbar === true ? "hidden" : "flex "}`}>
+      <div className={`${currentLocation !== "/TestingPhase" ? "mb-[50px]" : ""} 
+       ${hideNavbar === true ? "hidden" : "flex "} relative z-[55]`}>
         {currentLocation !== "/TestingPhase" && (
          <Link to="/TestingPhase" className = "fixed bg-[#FFF8B0] w-full top-[0px] z-[55]">
        <div  className=" text-[12px] lg:text-[14px] py-[20px]
@@ -80,7 +78,8 @@ console.log(currentLocation)
       
       {navOpen && (
         <div
-          className={` bg-[#04177f] fixed z-[50] left-[60%] text-[12px] text-center text-[#ffffff] p-6 w-[35%]`}
+          className={` bg-[#04177f] fixed z-[50] top-[70px] left-[60%]
+             text-[12px] text-center text-[#ffffff] p-6 w-[35%]`}
         >
           <ul className="flex flex-col gap-[20px]">
             <li onClick={() => setNavOpen((prev) => !prev)}>

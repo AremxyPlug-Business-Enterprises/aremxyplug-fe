@@ -10,49 +10,44 @@ import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 export const RecentTransaction = ({transactionResponse, transactionHistoryError, loading, GetTransactionInformation}) => {
   const Data = GetLocalStorage()
   const { toggleSideBar, isDarkMode ,setEditCalenderOne,
-     editCalenderOne,editCalenderTwo, 
-     countCalender,dateEdit, setCountCalender,
+     editCalenderOne,editCalenderTwo, startDateValueState,
+     setCountCalender,endDateValueState,
       setEditCalenderTwo, setCurrentDateInTimeStamps, setStartDateValueState, setEndDateValueState} = useContext(ContextProvider);
   const [calender, setCalender] = useState(false);
  const [stateDateEdit, setStateDateEdit] = useState("Filter By Date");
- const handleCalenderState = ()=> {
-  // No filtering carried out.....
-  if(editCalenderOne === "Start Date" && editCalenderTwo === "End Date"){
-    setCountCalender(0);
-  setCalender(false);
-  setStateDateEdit("Filter By Date")
-}
- //Editing Operation carried out..
-if ( (editCalenderTwo !== "End Date" && editCalenderTwo !== undefined) 
-  && (editCalenderOne !== "Start Date" && editCalenderOne !== undefined)){
-    setEditCalenderTwo("End Date");
-    setCountCalender(1);
-    setEndDateValueState("")
-  }else  if(
-      editCalenderTwo === "End Date"  &&
-     (editCalenderOne !== "Start Date" 
-      && editCalenderOne !== undefined)){
-      setEditCalenderOne("Start Date");
-      setCurrentDateInTimeStamps(0)
-      setCountCalender(0);
-       console.log("Condition2");
-       setStartDateValueState("")
-       }else {
+ 
+ const handleCalenderState = async()=> {
+   setStartDateValueState("");
+  setEndDateValueState("");
+  setCurrentDateInTimeStamps(0);
   setCountCalender(0);
   setCalender(false);
-  setStateDateEdit("Filter By Date")
-  }
- }
- console.log(countCalender);
+  setEditCalenderOne("Start Date");
+  setEditCalenderTwo("End Date");
+  setStateDateEdit("Filter By Date");
+
+ } 
+
  const FilterDate = async()=> {
   setCalender(false);
-  setStateDateEdit(dateEdit)
+  setStateDateEdit(()=> {
+    if(editCalenderOne !== "Start Date" && editCalenderTwo === "End Date" ){
+     return <p>{startDateValueState}</p>
+    }else if(editCalenderOne !== "Start Date" && editCalenderTwo !== "End Date" ){
+   return <div className="flex flex-col gap-[5px]">
+    <p className  ="lg:text-[12px] lg:leading-[16px] text-[#04177f] text-[8px] leading-[12px]">
+      {startDateValueState}
+      </p>
+    <p  className  ="lg:text-[12px] text-[#04177f] lg:leading-[16px] text-[8px] leading-[12px]">
+      {endDateValueState}</p>
+   </div>
+    }
+  })
   await GetTransactionInformation(calender);
  }
  const returnHistory = async()=> {
   setStateDateEdit("Filter By Date");
   await GetTransactionInformation(calender);
-
 }
   return (
     <div className="mt-[15%] lg:mt-[5%]">
@@ -65,14 +60,14 @@ if ( (editCalenderTwo !== "End Date" && editCalenderTwo !== undefined)
         />
       </div>
        <div className="flex justify-between gap-[5.3px] 
-        md:gap-[17.75px] lg:gap-[31px] w-[100%] ">
+        md:gap-[17.75px] lg:gap-[31px] w-[100%]">
       <div
         className={`  h-[35px] lg:h-[40px]  ${
           toggleSideBar
             ? "lg:gap-[px] lg:text-[20px] md:justify-between"
             : "md:justify-between lg:text-[23px]"
         } my-[5%] flex text-[8px] font-extrabold gap-[8px] 
-         w-full
+         w-full 
         justify-between md:my-[5%] md:text-[20px] md:gap-[10px] `}
       >
         <div
@@ -95,7 +90,7 @@ if ( (editCalenderTwo !== "End Date" && editCalenderTwo !== undefined)
   className={` md:text-[9.16px] text-center py-[2px]
                    md:font-semibold text-[8px] font-extrabold lg:text-base
                     lg:font-extrabold ${isDarkMode ? "text-white": "text-[#04177f]"}`}>
-                       { stateDateEdit}
+                       {stateDateEdit}
       </p>
                      
           <img
@@ -121,7 +116,7 @@ if ( (editCalenderTwo !== "End Date" && editCalenderTwo !== undefined)
                        className={`w-[50%] md:w-[150px]  bg-blue-white py-[15px] text-[12px] 
                         md:text-[14px] font-[500] 
                          rounded-[15px] border-[0.2px] border-blue-900
-             ${isDarkMode ? "text- bg-black  " :
+             ${isDarkMode ? "text- bg-black" :
                           " bg-white text-blue-900 " }`}>
                        Cancel
                        </button>

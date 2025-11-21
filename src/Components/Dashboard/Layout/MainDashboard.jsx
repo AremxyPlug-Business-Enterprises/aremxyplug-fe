@@ -49,7 +49,7 @@ export const MainDashboard = (Data) => {
 // ]
 // const ImageLoadingExecution = useImageHook(DashBoardImages);
 
-     const [loading, setLoading] = useState(false)
+   //  const [loading, setLoading] = useState(false)
     const [userPoints, setUserPoints] = useState(null);
    
    
@@ -60,7 +60,9 @@ export const MainDashboard = (Data) => {
     customerDetail, setDashLoading, setVirtualAccCreated, 
     setBankNameState, setAccountNameState, setAccountNumberState, 
     twoStepVerificationSuccess,setTwoStepVerificationSuccess, setDateEdit,
-    newBalance, setNewBalance,  
+    newBalance, setNewBalance,  setEditCalenderOne,
+     setEditCalenderTwo, 
+     setStartDateValueState, setEndDateValueState, setCurrentDateInTimeStamps, setCountCalender
   } = useContext(ContextProvider);
   //const {account_no, bank_name, account_name} = virtualAccCreated;
 const navigate = useNavigate()
@@ -147,21 +149,21 @@ if((clickedoption === "NGN")){
 
   //Generating an account in the dashboard
   const GenerateVirtualAccount = async(AuthUsed)=>{
-      const authToken = localStorage.getItem("authorisedLogin")
-      const getToken = localStorage.getItem("getToken");
+      const usernameToken = localStorage.getItem("xcss{}")
+      const emailToken = localStorage.getItem("xcss[]");
      if(!navigator.onLine) return alert("Check your internet connection")
-      if((authToken || getToken) && navigator.onLine){
+      if((usernameToken || emailToken) && navigator.onLine){
       try{
-      setDashLoading(true)
+      setDashLoading(true);
       const body =""
       const url = "https://aremxyplug.onrender.com/api/v1/virtualacc";
        const response = await axios.post(url,body,{ headers : {"Content-Type" : "application/json",
-         Authorization : authToken || getToken},  withCredentials : true
+       },  withCredentials : true
       })
         if(response.status === 200 || response.status === 201){
            alert("Virtual Account Created")
            localStorage.setItem("AccCreated","true")
-           AuthUsed = authToken || getToken;
+           AuthUsed = usernameToken || emailToken;
            await CheckVirtualAcc(AuthUsed, customerDetail, setDashLoading, setVirtualAccCreated, 
             setBankNameState, setAccountNameState, setAccountNumberState, 
            twoStepVerificationSuccess,setTwoStepVerificationSuccess)
@@ -180,35 +182,8 @@ if((clickedoption === "NGN")){
        alert("Check your Network connection")
        setDashLoading(false)
         }else if(error.response.status === 401){
-      if(error?.response?.headers.get("x-new-auth-token") || error?.response?.headers["x-new-auth-token"]){
-             setDashLoading(true)
-         const newToken = error?.response?.headers.get("x-new-auth-token") ||error?.response?.headers["x-new-auth-token"];
-        
-         if(newToken !== "" && localStorage.getItem("authorisedLogin") ){
-             console.log(newToken)
-    localStorage.setItem("authorisedLogin", newToken);
-     
-           GenerateVirtualAccount();
-             if(GenerateVirtualAccount){
-               setDashLoading(false)
-            }
-  
-           }else{
-      localStorage.setItem("getToken", newToken);
-    
-   
-             GenerateVirtualAccount();
-            if(GenerateVirtualAccount){
-               setDashLoading(false)
-            }
-         
-        }
-      }else{
-      setDashLoading(false)
-          return setSessionModal(true)
-      }
-      
-        }else if(error.response &&error.response.status === 500){
+      setSessionModal(true)
+    }else if(error.response &&error.response.status === 500){
           alert("SERVER ERROR");
           setDashLoading(false);
         }else if(error && error.response.status === undefined){
@@ -224,19 +199,18 @@ if((clickedoption === "NGN")){
 
       //Code to get the balance
       const GenerateAccountBalance = async()=>{
-        const authToken = localStorage.getItem("authorisedLogin")
-        const getToken = localStorage.getItem("getToken")
+        const usernameToken = localStorage.getItem("xcss{}");
+        const emailToken = localStorage.getItem("xcss[]");
         if(!navigator.onLine) return setBalanceValue("Check your internet connection.");
-        if((authToken || getToken) && navigator.onLine){
+        if((usernameToken || emailToken) && navigator.onLine){
         try{
           setBalanceLoading(true);
          const url = "https://aremxyplug.onrender.com/api/v1/balance";
          const response = await axios.get(url,{ headers : {"Content-Type" : "application/json",
-           Authorization : authToken || getToken},withCredentials :true
+           },withCredentials :true
         })
            if(response){
-            console.log(response)
-          if(response.status && (response.status === 200 || response.status === 201)){
+         if(response.status && (response.status === 200 || response.status === 201)){
              setBalanceValue("");
            const checkBal =  response?.data?.data?.data?.balance;
            setNewBalance(checkBal)
@@ -246,47 +220,26 @@ if((clickedoption === "NGN")){
            if((error.response === undefined || error.response === null) ) {
            setBalanceValue("Your internet connection is quite unstable.");
            }else if(error && error.response.status === 401){
-           if(error.response?.headers.get("x-new-auth-token") || error.response?.headers["x-new-auth-token"]){
-             setBalanceLoading(true)
-         const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
-        
-         if(newToken !== "" && localStorage.getItem("authorisedLogin") ){
-             console.log(newToken)
-          localStorage.setItem("authorisedLogin", newToken);
-          return GenerateAccountBalance();
-      
-           }else{
-      localStorage.setItem("getToken", newToken);
-       console.log(getToken);
-       return GenerateAccountBalance();
-          
-      }}else{
-        return setSessionModal(true);
-      }
-        }
-        else if(error?.response?.status === 404){
-     setBalanceValue("Check your internet connection.");
-     
-          } else if(error && error?.response?.status === 400){
-     setBalanceValue("An unexpected error occured.");
-     
-          }else if (error && error?.response?.status === 500){
-            setNewBalance("");
-            setBalanceValue("Could not refresh balance.")
-    }else if(error && error.response === undefined){
-        setBalanceLoading(false);
-        setBalanceValue("Check your internet connection.")
- }else{
-  setBalanceValue("Check your internet connection.");
+          setSessionModal(true)
       }
           }finally {
           setBalanceLoading(false);
         }
       }
  }
+
+ //Resetting the fields of the date
+  const ResetDateFilterFields = ()=>{
+  setStartDateValueState("");
+    setEndDateValueState("");
+    setEditCalenderOne("Start Date");
+    setEditCalenderTwo("End Date");
+    setCurrentDateInTimeStamps(0);
+    setCountCalender(0)
+}
       
-const ValueRef = useRef()
- Data = GetLocalStorage()
+const ValueRef = useRef();
+ Data = GetLocalStorage();
  
   useEffect(() => {
     ValueRef.current = Data;
@@ -302,36 +255,14 @@ const ValueRef = useRef()
         }) : value
         return valueIsoFormat !== undefined ? valueIsoFormat?.slice(0,10) : ""
     }) 
-  
-    
-    }
+}
+    ResetDateFilterFields();
     setNav();
     setSelected("NGN"); 
     setSelected2("NGN");
-    
-   // HandleNetworkStatus()
-  //    let resetInActivityTimer;
-  //   const resetInactivityOnSession = ()=> {
-  //    clearTimeout(resetInActivityTimer);
-  //     resetInActivityTimer = setTimeout(()=> {
-  //    alert("Safety and security precautions: You have been logged out of your session due to inactivity.");
-  //    navigate("/Login", {replace : true});
-  //    RemoveLocalStorage();
-  //     }, 1200000)
-  //  }
-  //    resetInactivityOnSession();
-  //    const event = ["mousemove","mousedown", "keydown", "scroll", "touchstart"];
-  //    event.forEach(event=> {
-  //     window.addEventListener(event, resetInactivityOnSession)
-  //    })
-    
-     return () => {
+  return () => {
       setHideNavbar(false);
-    //  if(resetInActivityTimer) return clearTimeout(resetInActivityTimer);
-    //  event.forEach(event => {
-    //   window.removeEventListener(event, resetInactivityOnSession)
-    //  })
-       }
+     }
     //eslint-disable-next-line
    }, [])
 
@@ -348,17 +279,7 @@ const ValueRef = useRef()
      };
      const FailedHandler = (ErrorType) => {
       if(ErrorType === "unauthorised"){
-      GetFunction("extra/point",
-         setPointsLoading,  
-         successHandler,
-          (ErrorType)=> {
-            if(ErrorType ==="Server error"){
-             alert("Failed to retrieve points balance at the moment.")
-            }else if(ErrorType === "unauthorised"){
-             return setSessionModal(true)
-             }
-          },
-           ()=> {})
+       return ()=> {}
       }else if(ErrorType === "Network error" || ErrorType === "User error"){
        setUserPoints("Connection error")
       }else if(ErrorType === "Server error"){

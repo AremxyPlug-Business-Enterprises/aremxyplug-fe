@@ -10,7 +10,7 @@ import Conclusion from './Conclusion';
 import TestingHeroSection from './TestingHeroSection';
 import { RemoveLocalStorage } from '../LocalStorage/LocalStorage';
 export const TestingDesign = () => {
-  const UserStatus = localStorage.getItem("UserStatus")
+  const UserStatus = localStorage.getItem("cxccxfd")
  useEffect(()=> {
     if(UserStatus){
       RemoveLocalStorage();

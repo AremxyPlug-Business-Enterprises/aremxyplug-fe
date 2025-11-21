@@ -10,14 +10,14 @@ import CloseIcon from "../EducationPins/imagesEducation/close-circle.svg";
 import { Loader } from "../Loader/Loader";
 import { useNavigate } from "react-router-dom";
 import { RemoveLocalStorage } from "../LocalStorage/LocalStorage";
-import { CheckVirtualAcc } from "../ApiCollection.jsx/ApiBuck";
+import { CheckVirtualAcc, PostFunction, refreshToken } from "../ApiCollection.jsx/ApiBuck";
 import VerificationSuccess from "../My Profile & Account Settings/ProfileImages/user-tick.svg";
 import NotVerifiedImage from "../My Profile & Account Settings/ProfileImages/NotVerifiedIcon.svg";
 import { SetLocalStorage } from "../LocalStorage/LocalStorage";
-import { GetLocalStorage } from "../LocalStorage/LocalStorage";
+//import { GetLocalStorage } from "../LocalStorage/LocalStorage";
 
 function LoginPopUp() {
-  const  Data = GetLocalStorage();
+
   const {
     openTranspin,
     setOpenTranspinSuccessful,
@@ -29,8 +29,6 @@ function LoginPopUp() {
     setOpenTranspin,
     setOpenResetTranspin,
     setOpen2StepVerification,
-    //  loginAuthorisation,
-    setLoginAuthorisation,
     twoStepVerificationSuccess,
     setTwoStepVerificationSuccess,
     customerDetail,
@@ -49,7 +47,7 @@ function LoginPopUp() {
   } = useContext(ContextProvider);
 
   const { email, phone } = customerDetail;
-
+console.log(customerDetail);
   const [loading, setLoading] = useState(false);
   const [countdown, setCountdown] = useState(60);
   const [countdown2, setCountdown2] = useState(60);
@@ -87,46 +85,8 @@ function LoginPopUp() {
       if (error && error.response === undefined) {
         alert("Check your internet connection.");
       } else if (error.response && error.response.status === 401) {
-        console.log(error.response.headers);
-        console.log(error.response.headers.get("x-new-auth-token"));
-        console.log(error.response.headers["x-new-auth-token"]);
-        console.log(error.response.headers.hasAuthorization());
-        // console.log(error.response.headers.hasAuthorization);
-        if (
-          error.response.headers["x-new-auth-token"] === "" ||
-          error.response.headers.get("x-new-auth-token")
-        ) {
-          const newToken =
-            error.response.headers.get("x-new-auth-token") ||
-            error.response.headers["x-new-auth-token"];
-
-          if (
-            newToken !== "" &&
-            localStorage.getItem("authorisedLogin") === "true"
-          ) {
-            console.log(newToken);
-            const emailLogin = localStorage.setItem(
-              "authorisedLogin",
-              newToken
-            );
-            if (emailLogin) {
-              try {
-                await getOtpSmsorEmail();
-              } catch {
-                alert("Session expired, kindly login again.");
-              }
-            } else {
-              const smsLogin = localStorage.setItem("getToken", newToken);
-              if (smsLogin) {
-                try {
-                  await getOtpSmsorEmail();
-                } catch {
-                  alert("Session expired, kindly login again.");
-                }
-              }
-            }
-          }
-        }
+        alert("You were timed out")
+         setOpen2StepVerification(false)
       } else if (error.response.status === 404) {
         alert(`ERROR: Not Found`);
       } else if (error.response && error.response.status === 500) {
@@ -173,38 +133,34 @@ function LoginPopUp() {
   // Function to help resetthe login and local storage authToenand getToken to help for User LoogIn
   const Close2StepPopUp = () => {
     setOpen2StepVerification(false);
-    setLoginAuthorisation("");
     RemoveLocalStorage();
-    localStorage.removeItem("authorisedLogin");
-    localStorage.removeItem("getToken");
+    localStorage.removeItem("xcss{}");
+    localStorage.removeItem("xcss[]");
   };
 
   // FUNCTION TO HANDLE VERIFICATION OF OTP
+ 
+
   const handleVerificationOTP = () => {
-    if (otp3) {
       setVerificationPinError("");
       setTwoStepVerificationSuccess(true);
+     //
       setOtp3("");
       setOpen2StepOTP(false);
-      console.log(otp3);
-    }
   };
 
   // Function to help check the verification status of a user
   //Verification with Bvn or NiN and if the user has created an account
   const ConfirmVirtualState = async () => {
-    const getToken = localStorage.getItem("getToken");
-    const authToken = localStorage.getItem("authorisedLogin");
-    if (authToken || getToken) {
-      const url = "https://aremxyplug.onrender.com/api/v1/check-verification";
+    const url = "https://aremxyplug.onrender.com/api/v1/check-verification";
       //
       try {
         setLoading(true);
         const response = await axios.get(url, {
           headers: {
             "Content-Type": "application/json",
-            Authorization: authToken || getToken,
-          },
+       
+          }, withCredentials : true
         });
         if (response.status === 201 || response.status === 200) {
           localStorage.setItem("AccCreated", true);
@@ -306,39 +262,11 @@ function LoginPopUp() {
           alert("Network Error:, Please Check your Connection and try again");
         } else if (error && error.response.status === 401) {
           // console.log(error.response.headers.hasAuthorization);
-          if (
-            error.response.headers["x-new-auth-token"] ||
-            error.response.headers.get("x-new-auth-token")
-          ) {
-            const newToken =
-              error.response.headers.get("x-new-auth-token") ||
-              error.response.headers["x-new-auth-token"];
-            if (
-              newToken !== "" &&
-              localStorage.getItem("authorisedLogin") === "true"
-            ) {
-              console.log(newToken);
-              localStorage.setItem("authorisedLogin", newToken);
-              if (localStorage.getItem("authorisedLogin")?.length > 1) {
-                await ConfirmVirtualState();
-              }
-            } else if (
-              newToken !== "" &&
-              localStorage.getItem("getToken") === "true"
-            ) {
-              localStorage.setItem("getToken", newToken);
-              if (localStorage.getItem("getToken")?.length > 1) {
-                await ConfirmVirtualState();
-              }
-            }
-          } else {
-            alert(
-              "We Couldn't retrieve your details, click okay to repeat the login process"
-            );
-            return window.location.replace("/Login");
-          }
+          alert("You were timed out")
+        setTwoStepVerificationSuccess(false)
         } else if (error.response.status === 500) {
-          alert("Error:", "A SERVER ERROR");
+          alert('An error occured while trying to confirm your details');
+         return window.location.href = "/Login";
         } else {
           alert("Check your internet connection and try logging in again.");
           //Create a pop up to assist the user into navigating back to the login page.
@@ -346,7 +274,7 @@ function LoginPopUp() {
       } finally {
         setLoading(false);
       }
-    }
+    
   };
 
 //=======Session Management of the User========//
@@ -403,13 +331,13 @@ return assignImageByUsername
 }
 
 
-  const handleAccountDetails = async (AuthUsed) => {
-    const authToken = localStorage.getItem("authorisedLogin");
-    const getToken = localStorage.getItem("getToken");
-    AuthUsed = authToken || getToken;
-    
+  const handleAccountDetails = async (AuthToken) => {
+  const authToken = localStorage.getItem("xcss{}");
+  const emailToken = localStorage.getItem("xcss[]")
+
+  AuthToken = authToken || emailToken
  await CheckVirtualAcc(
-      AuthUsed,
+     AuthToken,
       customerDetail,
       setLoading,
       setVirtualAccCreated,
@@ -423,6 +351,7 @@ return assignImageByUsername
     if (CheckVirtualAcc) {
      SessionTiming();
      UserIconFormatting();
+     await refreshToken()
      if(UserIconFormatting && SessionTiming){
       navigate("/dashboard");
      }
@@ -453,13 +382,15 @@ return assignImageByUsername
 
   //Verification of the otp
   const VerifyOtpFunction = async (url, body) => {
+  
     setLoading(true);
     try {
       const response = await axios.post(url, body, {
-        headers: { "Content-Type": "application/json" },
-      });
+        headers: { "Content-Type": "application/json" }, withCredentials : true
+      },
+    );
       if (response.status === 200 || response.status ===  201) {
-        handleVerificationOTP();
+      handleVerificationOTP();
       }
     } catch (error) {
       if (error && error.response === undefined) {
@@ -473,28 +404,8 @@ return assignImageByUsername
         alert("OOPs, an error has occured");
         setOtp3("");
       } else if (error && error.response.status === 401) {
-        setOtp3("");
-        console.log(error?.response?.headers);
-        // console.log(error.response.headers.hasAuthorization);
-        if (
-          error.response.headers["x-new-auth-token"] === "" ||
-          error.response.headers.get("x-new-auth-token")
-        ) {
-          const newToken = error.response.headers.get("x-new-auth-token") ||
-            error.response.headers["x-new-auth-token"];
-if (newToken !== "" && localStorage.getItem("authorisedLogin") === "true"
-          ) {
-            localStorage.setItem("authorisedLogin", newToken);
-            if (localStorage.getItem("authorisedLogin")?.length > 1) {
-              await gettingSmsOrEmailFunctionOtp();
-            } else {
-              localStorage.setItem("getToken", newToken);
-              if (localStorage.getItem("getToken")?.length > 1) {
-                await gettingSmsOrEmailFunctionOtp();
-              }
-            }
-          }
-        }
+        alert("You have timed out")
+        setOpen2StepOTP(false)
       } else if (error.response && error.response.status === 500) {
         setOtp3("");
         alert("SERVER ERROR");
@@ -591,7 +502,7 @@ if (newToken !== "" && localStorage.getItem("authorisedLogin") === "true"
         id
       );
       if (SetLocalStorage) {
-        localStorage.setItem("UserStatus", true);
+        localStorage.setItem("cxccxfd", true);//UserStatus
         navigate("/dashboard");
         setLoading(false);
         setBvnNumber("");
@@ -599,91 +510,32 @@ if (newToken !== "" && localStorage.getItem("authorisedLogin") === "true"
       }
     }
   };
-  //THE FUNCTION BELOW HELPS TO SEND THE USER's TRANSACTION PIIN TO THE BACKEND
-  const SendTransactPin = async () => {
-    const getToken = localStorage.getItem("getToken");
-    const authToken = localStorage.getItem("authorisedLogin");
-    if (!navigator.onLine) return alert("Check your internet connection");
-    if ((authToken || getToken) && navigator.onLine) {
-      setLoading(true);
-      try {
-        const forwardPin = {
-          pin: otp,
-        };
-        const DataJson = JSON.stringify(forwardPin);
-        console.log(DataJson);
-        const response = await axios.post(
-          "https://aremxyplug.onrender.com/api/v1/pin",
-          DataJson,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: getToken || authToken,
-            },
-          }
-        );
-        if (response.status === 200 || response.status === 201) {
-          console.log(response);
-          SetLocalStorageInputPin();
-          // navigate("/dashboard");
-        } else {
-          alert("Check your Network Connection");
-        }
-      } catch (error) {
-        if (error && error.response === undefined) {
-          alert("Check your internet connection");
-        }
-        if (error && error.response.status === 401) {
-          // console.log(error.response.headers.hasAuthorization);
-          if (
-            error.response.headers["x-new-auth-token"] === "" ||
-            error.response.headers.get("x-new-auth-token")
-          ) {
-            const newToken =
-              error.response.headers.get("x-new-auth-token") ||
-              error.response.headers["x-new-auth-token"];
 
-            if (
-              newToken !== "" &&
-              localStorage.getItem("authorisedLogin") === "true"
-            ) {
-              console.log(newToken);
-              const emailLogin = localStorage.setItem(
-                "authorisedLogin",
-                newToken
-              );
-              if (emailLogin) {
-                try {
-                  await SendTransactPin();
-                } catch {
-                  alert("Session expired, kindly login again.");
-                }
-              } else {
-                const smsLogin = localStorage.setItem("getToken", newToken);
-                if (smsLogin) {
-                  try {
-                    await SendTransactPin();
-                  } catch {
-                    alert("Session expired, kindly login again.");
-                  }
-                }
-              }
-            }
-          }
-        } else if (error && error.response.status === 404) {
-          alert(`Please check your internet connection`);
-        } else if (error && error.response.status === 500) {
-          alert(`Server error : Please try again later`);
-        } else {
-          alert("Check your network Connection");
-        }
-        //alert(error.response.data.message)
-      } finally {
-        setLoading(false);
-      }
+   const SendTransactPin = async () => {
+    const body = {
+      pin : otp
     }
+   await PostFunction("pin", setLoading, body, ()=> {
+    SetLocalStorageInputPin()
+    return navigate("/dashboard")
+   }, async(ErrorType)=> {
+   if(ErrorType === "Bad request"){
+  alert(`Please check your internet connection`);
+   }else if(ErrorType === "Server error"){
+   alert("Server error")
+   }else if(ErrorType === "unauthorised"){
+    await SendTransactPin("pin", setLoading, body, ()=> {
+      SetLocalStorageInputPin();
+      navigate("/dashboard");
+    })
+   }else if(ErrorType === "User error" || ErrorType === "Network error"){
+    alert("Kindly check your internet connection.")
+   }else{
+    alert("Unexpected error has occured")
+   }
+   }, ()=> {})
   };
-
+ 
   //console.log(GetLocalStorage());
   return (
     <div>
@@ -737,7 +589,7 @@ if (newToken !== "" && localStorage.getItem("authorisedLogin") === "true"
                       Via SMS
                     </p>
                     <p className="text-[9px] leading-[13px] lg:text-[12px] text-gray-500 font-[400] lg:font-[600]">
-                      {`+${phone.slice(0, 3)}******${phone.slice(10)}`}
+                   { phone !== undefined && phone?.length  ?   `+${phone.slice(0, 3)}******${phone.slice(10)}` : ""}
                     </p>
                   </div>
                 </div>
@@ -765,10 +617,11 @@ if (newToken !== "" && localStorage.getItem("authorisedLogin") === "true"
                       {" "}
                       Via Email
                     </p>
-                    <p className="text-[9px] leading-[13px] lg:text-[12px]  text-gray-500 font-[400] lg:font-[600]">{`${email.slice(
+                    <p className="text-[9px] leading-[13px] lg:text-[12px]  text-gray-500 font-[400] lg:font-[600]">
+                      {email !== undefined && email?.length ? `${email.slice(
                       0,
                       3
-                    )}****** ${email.slice(15)}`}</p>
+                    )}****** ${email.slice(15)}` : ""}</p>
                   </div>
                 </div>
                 {/* VIA Email ENDS HERE*/}

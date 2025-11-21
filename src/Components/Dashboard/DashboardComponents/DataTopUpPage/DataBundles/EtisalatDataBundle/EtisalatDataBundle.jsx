@@ -97,16 +97,16 @@ const assumedString = selectedAmountEtisalat?.toString()
   let etisalatDataAmount = Number(selectedAmountEtisalat?.toString()
   ?.slice(0, assumedString?.length - 3)
   ?.replace(/\D/g, ""));
-    const updateBalance = passDataBalance?.data?.data?.data
-    ? passDataBalance?.data?.data?.data?.balance
-    : "";
-  const updateBalanceToNumber = Number(updateBalance);
-  const newBalanceToNumber = Number(newBalance);
-  const balanceOption = newBalance === "" || newBalance === null
-   ? updateBalanceToNumber : newBalanceToNumber;
-  let CheckSufficiency =
-    etisalatDataAmount >
-    balanceOption;
+   
+
+  const balanceStringToNum= Number(newBalance);
+const Balance = newBalance !== null &&
+ newBalance !== undefined && newBalance !== "" ? balanceStringToNum
+ : passDataBalance?.data?.data && (newBalance === "" 
+  || newBalance === undefined || newBalance === null) ?
+   Number(passDataBalance?.data?.data?.data?.balance) : undefined;
+  
+  let CheckSufficiency = etisalatDataAmount > Balance;
 
 
     //Fetch product for Etisalat
@@ -123,31 +123,6 @@ const assumedString = selectedAmountEtisalat?.toString()
           alert(
             "Service for 9 mobile is currently not available, Try again later."
           );
-        } else if (error && error.response.status === 401) {
-          if (
-            error.response.headers["x-new-auth-token"] ||
-            error.response.headers.get("x-new-auth-token")
-          ) {
-            setLoading(true);
-            const newToken =
-              error.response.headers.get("x-new-auth-token") ||
-              error.response.headers["x-new-auth-token"];
-
-            if (
-              newToken !== "" &&
-              localStorage.getItem("authorisedLogin") 
-            ) {
-              localStorage.setItem("authorisedLogin", newToken);
-              if (localStorage.getItem("authorisedLogin")?.length > 1) {
-                await fetchProducts();
-              }
-            } else {
-              localStorage.setItem("getToken", newToken);
-              if (localStorage.getItem("getToken")?.length > 1) {
-                await fetchProducts();
-              }
-            }
-          } 
         } else if (error && error.response.status === 500) {
           alert(
             "Service for 9 mobile is currently not available, Try again later."
@@ -193,34 +168,7 @@ const assumedString = selectedAmountEtisalat?.toString()
       console.error("Error fetching plans:", error);
       if (error && error.response === undefined) {
         alert("Your internet connection is quite unstable.");
-      } else if (error && error.response.status === 401) {
-        if (
-          error?.response?.headers["x-new-auth-token"] ||
-          error?.response?.headers?.get("x-new-auth-token")
-        ) {
-          setLoading(true);
-          const newToken =
-            error.response.headers.get("x-new-auth-token") ||
-            error.response.headers["x-new-auth-token"];
-
-          if (
-            newToken !== "" &&
-            localStorage.getItem("authorisedLogin")
-          ) {
-            localStorage.setItem("authorisedLogin", newToken);
-            if (localStorage.getItem("authorisedLogin")?.length > 1) {
-              await fetchPlans();
-            }
-          } else {
-            localStorage.setItem("getToken", newToken);
-            if (localStorage.setItem("getToken")?.length > 1) {
-              await fetchPlans();
-            }
-          }
-        } else {
-          return setSessionModal(true);
-        }
-      } else if (error && error.response.status === 400) {
+      }  else if (error && error.response.status === 400) {
         setSelectProductWarn(true);
       } else if (error && error.response.status === 500) {
         setSelectProductWarn(true);
@@ -284,11 +232,11 @@ const assumedString = selectedAmountEtisalat?.toString()
       {
         method: "Nigeria",
         balance:
-           balanceOption !== undefined || balanceOption !== null ? 
-            `(${ balanceOption?.toLocaleString("en-NG", {
+           Balance !== undefined && Balance !== null 
+            ? `(${Balance?.toLocaleString("en-NG", {
                  style : "currency",
                  currency : "NGN"
-             })})`  : "()",
+            })})` : "()",
         flag:  require("../DataBundles-Images/ng.svg").default,
         id: 1,
         code : "NGN Wallet"
@@ -327,105 +275,10 @@ const assumedString = selectedAmountEtisalat?.toString()
       };
       const FailedHandler = async (ErrorType) => {
         if (ErrorType === "unauthorised") {
-          await GetFunction(
-            `balance`,
-            setBalanceLoader,
-            SuccessHandler,
-            //Handling the error Use Cases of the Unauthorised inside
-            // of the statement.
-            async(ErrorType) => {
-              if (ErrorType === "unauthorised") {
-                return setSessionModal(true);
-              }else if(ErrorType === "Server error"){
-                  await GetFunction(
-        "balance",
-        setBalanceLoader,
-        SuccessHandler,
-       async(ErrorType)=> {
-        if(ErrorType === "Server error"){
-          alert("Failed to retrieve the balance.")
-        }else if(ErrorType === "Network error" || ErrorType === "User error"){
-           setCheckNetworkError(true);
-              alert("Kindly check your internet connection to retrieve balance.")
-        }else {
-          alert("An unexpected error has occured on attempt to retrieve balance.")
-        }
-       },
-        setPassDataBalance
-      );
-       }else if(ErrorType === "Network error" || ErrorType === "User error"){
-         setCheckNetworkError(true);
-           alert("Kindly check your internet connection to retrieve balance");
-           setCheckNetworkError(true);
-       }else {
-        alert("An unexpected error has occured on attempt to retrieve the balance")
-       }
-            },
-             setPassDataBalance
-          );
-        }else if(ErrorType === "Server error"){
-            await GetFunction(
-        "balance",
-        setBalanceLoader,
-        SuccessHandler,
-       async(ErrorType)=> {
-         if(ErrorType === "unauthorised"){
-            await GetFunction(
-        "balance",
-        setBalanceLoader,
-        SuccessHandler,
-        async(ErrorType)=> {
-          if(ErrorType === "unauthorised"){
-            return setSessionModal(true)
-          }else if(ErrorType === "Server error"){
-               await GetFunction(
-        "balance",
-        setBalanceLoader,
-        SuccessHandler,
-       async(ErrorType)=> {
-        //if Statements
-      //We run again cause the previous one was interrupted by 401
-      //Let us re-run server error
-      if(ErrorType === "Server error"){
-        alert("Failed to retrieve the balance")
-      }else if(ErrorType === "unauthorised"){
-        return sessionModal(true)
-      }else if(ErrorType === "Network error" || ErrorType === "User error"){
-         setCheckNetworkError(true);
-       alert("Kindly check your internet connection to retrieve balance")
-      }else{
-       // console.log("yeah bro i am the one running blehh")
-        alert("An Unexpected error occured in attempt to retrieve balance")
-      }
-
-       },
-        setPassDataBalance
-      );
-          }else if(ErrorType === "Network error" || ErrorType === "User error"){
-             setCheckNetworkError(true);
-            alert("Kindly check your internet connection to retrieve the balance")
-          }else if(ErrorType === "Server error"){
-            alert("Failed to retrieve the balance.")
-          }else{
-            alert("An Unexpected error occured in attempt to retrieve balance")
-          }
-        },
-        setPassDataBalance
-      );
-    }
-          else if(ErrorType === "Network error" || ErrorType === "User error"){
-            //The operation was interrupted by a network error
-             setCheckNetworkError(true);
-            alert("Kindly check your internet connection to retrieve balance.")
-         }else {
-          //Place 
-          //An alien error has occured with the re-run of the "Server error" ErrorType
-          alert("An unexpected error occured in attempt to retrieve the balance.")
-         }
-       },
-        setPassDataBalance
-      );
-        }else if(ErrorType === "Network error" || ErrorType === "User error"){
+         setSessionModal(true)
+    }else if(ErrorType ==="Server error"){
+    alert("An Unexpected error has occured")
+    } else if(ErrorType === "Network error" || ErrorType === "User error"){
             setCheckNetworkError(true);
         }else{
            
@@ -653,32 +506,7 @@ for (let network in networks) {
           setInputPin("");
             return { statusCode: error?.response?.status, data: null };
         } else if (error && error.response.status === 401) {
-          if (
-            error.response.headers["x-new-auth-token"] ||
-            error.response.headers.get("x-new-auth-token")
-          ) {
-            setLoading(true);
-            const newToken =
-              error.response.headers.get("x-new-auth-token") ||
-              error.response.headers["x-new-auth-token"];
-
-            if (
-              newToken !== "" &&
-              localStorage.getItem("authorisedLogin") 
-            ) {
-              localStorage.setItem("authorisedLogin", newToken);
-              if (localStorage.getItem("authorisedLogin")?.length > 1) {
-                await inputPinHandler();
-              }
-            } else {
-              localStorage.setItem("getToken", newToken);
-              if (localStorage.getItem("getToken")?.length > 1) {
-                await inputPinHandler();
-              }
-            }
-          } else {
-            return setSessionModal(true);
-          }
+          setSessionModal(true)
         }else if (
           error &&
           error.response.status === 400)
@@ -726,7 +554,7 @@ for (let network in networks) {
 if(Data?.ConfirmAcc === "true"){
    window.addEventListener("online", ()=> {
    if(checkNetworkError === true &&
-     (updateBalance === undefined || updateBalance === null || updateBalance === "")
+     (Balance === undefined || Balance === null )
     && (newBalance === null || newBalance === undefined || newBalance === "") ){
    return GetBalance()
    }
@@ -1323,24 +1151,20 @@ if(Data?.ConfirmAcc === "true"){
                                                    ? "NGN Wallet"
                                                    : ""
                                                );
-                                 setPaymentAmount(methodOption.id === 1 && paymentAmount === ""? 
-                                 newBalance === "" || newBalance === null || newBalance === undefined
-                         ? `(${updateBalance?.length > 1 ? updateBalanceToNumber?.toLocaleString("en-NG", {
+                                 setPaymentAmount(methodOption.id === 1 
+                            && paymentAmount === "" && 
+                             Balance !== null 
+                           && Balance !== undefined
+                         ?  `(${Balance?.toLocaleString("en-NG", {
                               style : "currency",
                               currency : "NGN"
-                         }) : ""})`
-                         : `(${newBalance?.length > 1 ? newBalanceToNumber?.toLocaleString("en-NG", {
-                           style : "currency",
-                           currency : "NGN"
-                         }) : ""})` : walletNameEtisalat === "NGN Wallet" ?  newBalance === "" || newBalance === null || newBalance === undefined
-                         ? `(${updateBalance?.length > 1 ? updateBalanceToNumber?.toLocaleString("en-NG", {
+                                 })})` :  walletNameEtisalat === "NGN Wallet" 
+                           &&
+                        Balance !== null && Balance !== undefined
+                          ?   `(${Balance?.toLocaleString("en-NG", {
                               style : "currency",
                               currency : "NGN"
-                         }) : ""})`
-                         : `(${newBalance?.length > 1 ? newBalanceToNumber?.toLocaleString("en-NG", {
-                           style : "currency",
-                           currency : "NGN"
-                         }) : ""})` : "");
+                         })}`  :  "");
                
                           setShowPayment(() => {
                               if (methodOption.id === 1) {
@@ -1578,7 +1402,8 @@ if(Data?.ConfirmAcc === "true"){
                                                    Available Balance {"  "} 
                                                     </p>
                                                     <span className={`font-medium ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
-                                                     {`(${balanceOption !== "" || balanceOption !==null ? balanceOption?.toLocaleString("en-NG", {
+                                                     {`(${Balance !== undefined || Balance !==null 
+                                                     ? Balance?.toLocaleString("en-NG", {
                                                        style : "currency",
                                                        currency : "NGN"
                                                      }) : "₦"})`}
@@ -1699,8 +1524,7 @@ if(Data?.ConfirmAcc === "true"){
             
      <div className="flex flex-col gap-[10px] px-[20px]" >
                 <button
-                  onClick={(e) => {
-                    console.log("inputPin", inputPin);
+                  onClick={() => {
                     const DataHandler = async() => {
                       // Close modal on PIN success
                      await inputPinHandler(); // Proceed with purchase

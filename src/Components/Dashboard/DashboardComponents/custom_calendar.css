@@ -28,9 +28,9 @@
 }
 
 .react-calendar__navigation__arrow {
-  font-size: 15px;
+  font-size: 23px;
   color: #9B9696;
-  padding: 0px 4px;
+  padding: 0px 10px;
 }
 
 .react-calendar__month-view{

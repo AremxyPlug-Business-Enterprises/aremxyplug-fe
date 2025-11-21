@@ -53,22 +53,22 @@ export default function TestingWindow() {
         </div>
 
         {/* Countdown Timer */}
-        <div className="mt-10 flex justify-center gap-6 text-center">
-          <div className="bg-white px-6 py-4 rounded-2xl shadow-md min-w-[80px]">
+        <div className="mt-10 flex justify-center gap-[10px] md:gap-[24px] text-center w-full">
+          <div className="bg-white px-6 py-4 rounded-2xl shadow-md md:min-w-[80px] w-1/4">
             <p className="text-2xl font-bold text-[#356DFF]">{timeLeft.days}</p>
             <span className="text-gray-600">Days</span>
           </div>
-          <div className="bg-white px-6 py-4 rounded-2xl shadow-md min-w-[80px]">
+          <div className="bg-white px-6 py-4 rounded-2xl shadow-md md:min-w-[80px] w-1/4">
             <p className="text-2xl font-bold text-[#356DFF]">{timeLeft.hours}</p>
             <span className="text-gray-600">Hours</span>
           </div>
-          <div className="bg-white px-6 py-4 rounded-2xl shadow-md min-w-[80px]">
+          <div className="bg-white px-6 py-4 rounded-2xl shadow-md md:min-w-[80px] w-1/4">
             <p className="text-2xl font-bold text-[#356DFF]">{timeLeft.minutes}</p>
-            <span className="text-gray-600">Minutes</span>
+            <span className="text-gray-600">Min</span>
           </div>
-          <div className="bg-white px-6 py-4 rounded-2xl shadow-md min-w-[80px]">
+          <div className="bg-white px-6 py-4 rounded-2xl shadow-md md:min-w-[80px] w-1/4">
             <p className="text-2xl font-bold text-[#356DFF]">{timeLeft.seconds}</p>
-            <span className="text-gray-600">Seconds</span>
+            <span className="text-gray-600">Secs</span>
           </div>
         </div>
       </div>

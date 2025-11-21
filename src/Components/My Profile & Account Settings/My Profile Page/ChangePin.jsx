@@ -70,8 +70,7 @@ Data = GetLocalStorage();
   const [countdown, setCountdown] = useState(60);
   const [resendActive, setResendActive] = useState(false);
 
-  
-  const [resetPin1, setResetPin1] = useState(false);
+const [resetPin1, setResetPin1] = useState(false);
   const [createPin, setCreatePin] = useState("");
   const [confirmPinInputBgColor, setConfirmPinInputBgColor] = useState("");
 const [verifyResponse, setVerifyResponse] = useState({})
@@ -80,10 +79,10 @@ const [verifyResponse, setVerifyResponse] = useState({})
 
 // An Api to help change the user's pin
 const ChangeUserPin = async()=> {
-  const getToken = localStorage.getItem("getToken");
-  const authToken = localStorage.getItem("authorisedLogin");
+  const usernameToken= localStorage.getItem("xcss{}");
+  const emailToken  = localStorage.getItem("xcss[]");
   if(!navigator.onLine) return alert("Check your internet connection")
-  if(authToken || getToken ){
+  if(usernameToken || emailToken ){
     setLoading(true)
   try{
   const data ={
@@ -93,11 +92,11 @@ const ChangeUserPin = async()=> {
    const dataJson = JSON.stringify(data);
    console.log(dataJson);
    const url = "https://aremxyplug.onrender.com/api/v1/pin";
-   const response = await axios.patch(url,dataJson,{headers : {"Content-Type":"application/json",
-    Authorization : getToken || authToken
-   }})
-   if(response.status === 200 || 201){
-    console.log(response.status)
+   const response = await axios.patch(url,dataJson,
+    {headers : {"Content-Type":"application/json" }, 
+    withCredentials : true
+  })
+   if(response.status === 200 || response.status === 201){
     setUpdate(true);
    }
 
@@ -107,26 +106,7 @@ const ChangeUserPin = async()=> {
       alert("Invalid Old Pin")
       console.error(`errorMessage : ${error} errorStatus : ${error.response.status}`);
      }else if(error && (error.response.status === 401  )){
-       if(error.response?.headers.get("x-new-auth-token") || error.response?.headers["x-new-auth-token"]){
-             setLoading(true)
-         const newToken = error.response.headers.get("x-new-auth-token") ||error.response.headers["x-new-auth-token"];
-        
-         if(newToken !== "" && localStorage.getItem("authorisedLogin")){
-             console.log(newToken)
-          localStorage.setItem("authorisedLogin", newToken);
-          
-          if( localStorage.getItem("authorisedLogin")?.length > 1){
-            return ChangeUserPin();
-          }
-           }else{
-      localStorage.setItem("getToken", newToken);
-       console.log(getToken);
-          if(localStorage.getItem("getToken")?.length > 1){
-            return  ChangeUserPin();
-          }
-      }}else{
-        return setSessionModal(true);
-      }
+      
        
     }else if(error && error.response.status === 404){
       alert("Check your internet connection")
@@ -193,7 +173,6 @@ await PostFunction(path, setLoading, body, SuccessHandler, FailedHandler,setRese
 
   const VerifyFunction = async()=> {
     const SuccessHandler = ()=> {
-   console.log("Successful");
    setResetPinUpdate(false)
    setVerify(true);
    setInputPin("");
@@ -220,24 +199,19 @@ await PostFunction(path,
     const SuccessHandler = ()=> {
    console.log("Successful");
     setCreatePin(true);
-    setErrorCreateNewPin("")
-
-    }
+    setErrorCreateNewPin("");
+}
     const FailedHandler = async(ErrorType)=> {
        setErrorCreateNewPin("Request to reset pin failed");
        if(ErrorType === "unauthorised"){
-        await PutFunction(path, 
-          setLoading,
-           body, 
-           SuccessHandler, 
-        (ErrorType)=> {
-          if(ErrorType === "unauthorised"){
-           // RemoveLocalStorage();
-           setSessionModal(true);
-          }
-          })
+        setSessionModal(true)
+       }else if(ErrorType === "Server error"){
+       alert("An Unexpected error has occured")
+       }else if(ErrorType === "Network error" || ErrorType === "User error"){
+         alert("Check your internet connection.")
+       }else{
+        alert("An unexpected error has occured");
        }
-
 }
     let path = "pin/reset"
     const body = {

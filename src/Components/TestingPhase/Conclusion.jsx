@@ -3,7 +3,7 @@ import { Mail, Globe } from "lucide-react";
 
 export default function Conclusion() {
   return (
-    <section className="w-full py-20 px-6 bg-gradient-to-r from-[#4A90FF] to-[#70B7FF] text-white">
+    <section className="w-full py-20 px-6 bg-white text-primary">
       <div className="max-w-3xl mx-auto text-center space-y-8">
 
         {/* Section Heading */}
@@ -51,7 +51,8 @@ export default function Conclusion() {
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="inline-block mt-8 bg-white text-[#4A90FF] font-bold px-10 py-4 rounded-full text-xl shadow-lg hover:shadow-xl hover:bg-gray-100 transition-all duration-200"
+          className="inline-block mt-8 bg-primary text-white
+       font-bold px-10 py-4 rounded-full text-xl shadow-lg hover:shadow-xl hover:bg-gray-500 transition-all duration-200"
         >
           🚀 Start Testing Now
         </motion.a>

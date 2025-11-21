@@ -3,7 +3,7 @@ import Joi from "joi";
 import { DashBoardLayout } from "../Dashboard/Layout/DashBoardLayout";
 import "../TvSubscription/TvSubscription.css";
 import { useContext, useEffect } from "react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import arrowDown from "../EducationPins/imagesEducation/arrow-down.svg";
 import { ContextProvider } from "../Context";
 import { Link } from "react-router-dom";
@@ -207,107 +207,11 @@ const Data = GetLocalStorage();
        };
       const FailedHandler = async (ErrorType) => {
         if (ErrorType === "unauthorised") {
-       await GetFunction(
-            `balance`,
-            setBalanceLoader,
-            SuccessHandler,
-            //Handling the error Use Cases of the Unauthorised inside
-            // of the statement.
-            async(ErrorType) => {
-              if (ErrorType === "unauthorised") {
-              return setSessionModal(true);
-              }else if(ErrorType === "Server error"){
-                  await GetFunction(
-        "balance",
-        setBalanceLoader,
-        SuccessHandler,
-       async(ErrorType)=> {
-        if(ErrorType === "Server error"){
-          alert("Failed to retrieve the balance.")
-        }
-        else if(ErrorType === "Network error" || ErrorType === "User error"){
-           setCheckNetworkError(true);
-            
-        }else {
-          alert("An unexpected error has occured on attempt to retrieve balance.")
-        }
-       },
-        setPassDataBalance
-      );
-       }else if(ErrorType === "Network error" || ErrorType === "User error"){
-         setCheckNetworkError(true);
-          
-           setCheckNetworkError(true);
-       }else {
-        alert("An unexpected error has occured on attempt to retrieve the balance")
-       }
-            },
-             setPassDataBalance
-          );
-        }else if(ErrorType === "Server error"){
-            await GetFunction(
-        "balance",
-        setBalanceLoader,
-        SuccessHandler,
-       async(ErrorType)=> {
-         if(ErrorType === "unauthorised"){
-            await GetFunction(
-        "balance",
-       setBalanceLoader,
-        SuccessHandler,
-        async(ErrorType)=> {
-          if(ErrorType === "unauthorised"){
-            return setSessionModal(true)
-          }else if(ErrorType === "Server error"){
-               await GetFunction(
-        "balance",
-        setBalanceLoader,
-        SuccessHandler,
-       async(ErrorType)=> {
-        //if Statements
-      //We run again cause the previous one was interrupted by 401
-      //Let us re-run server error
-      if(ErrorType === "Server error"){
-        alert("Failed to retrieve the balance")
-      }else if(ErrorType === "unauthorised"){
-        return sessionModal(true)
-      }else if(ErrorType === "Network error" || ErrorType === "User error"){
-         setCheckNetworkError(true);
-    
-      }else{
-       // console.log("yeah bro i am the one running blehh")
-        alert("An Unexpected error occured in attempt to retrieve balance")
-      }
-
-       },
-        setPassDataBalance
-      );
-          }else if(ErrorType === "Network error" || ErrorType === "User error"){
-             setCheckNetworkError(true);
-          
-          }else if(ErrorType === "Server error"){
-            alert("Failed to retrieve the balance.")
-          }else{
-            alert("An Unexpected error occured in attempt to retrieve balance")
-          }
-        },
-        setPassDataBalance
-      );
-    }
-          else if(ErrorType === "Network error" || ErrorType === "User error"){
-            //The operation was interrupted by a network error
-             setCheckNetworkError(true);
-          
-         }else {
-          //Place 
-          //An alien error has occured with the re-run of the "Server error" ErrorType
-          alert("An unexpected error occured in attempt to retrieve the balance.")
-         }
-       },
-        setPassDataBalance
-      );
+      setSessionModal(true)
         }else if(ErrorType === "Network error" || ErrorType === "User error"){
             setCheckNetworkError(true);
+        }else if(ErrorType === "Server error"){
+          alert("Failed to retrieve the balance")
         }else{
            
           alert("An unexpected error occured in attempt to retrieve balance.")
@@ -332,31 +236,12 @@ const Data = GetLocalStorage();
         const failedHandler = async (ErrorType) => {
           // console.log("Couldn't fetch gotv plans");
           if (ErrorType === "unauthorised") {
-            await GetFunction(
-              `products/tvsub/gotv`,
-              setIsLoading,
-              SuccessHandler,
-              (ErrorType) => {
-               
-               if(ErrorType === "User error" || ErrorType === "Network error"){
-             setCheckNetworkError(true);
-          }else if(ErrorType === "Server error"){
-             alert("Failed to fetch Gotv Plans, try again later")
-          }else{
-              if(ErrorType !== "unauthorised"){
-            alert("An unexpected error has occured try again later.")
-              }
-         
-          }
-              },
-              setFetchedGotvPlans
-            );
+            setSessionModal(true)
           }else if(ErrorType === "User error" || ErrorType === "Network error"){
              setCheckNetworkError(true);
           }else if(ErrorType === "Server error"){
              alert("Failed to fetch Gotv Plans, try again later")
           }else{
-           
             alert("An unexpected error has occured try again later.")
           }
         };
@@ -589,24 +474,7 @@ const Data = GetLocalStorage();
       };
       const FailedHandler = async (ErrorType) => {
         if (ErrorType === "unauthorised") {
-          await PostFunction(
-            Path,
-            setIsLoading,
-            DataJson,
-            successHandler,
-            (ErrorType) => {
-              if(ErrorType === "unauthorised") {
-                return setSessionModal(true);
-              }else if(ErrorType ==="Server error"){
-                setPurchaseGotvErrorType("Server Error: Purchase Failed")
-              }else if(ErrorType === "Network error" || ErrorType === "User error"){
-              setPurchaseGotvErrorType("Network Error : Purchase Failed")
-              }else{
-                setPurchaseGotvErrorType("An Unexpected error has occured")
-              }
-            },
-            setTvSubscriptionResponse
-          );
+         setSessionModal(true)
         } else if(ErrorType === "Network error" || ErrorType === "User error") {
              setPurchaseGotvErrorType("Network Error: Purchase Failed")
           setFailedPopup(true);
@@ -638,93 +506,9 @@ const Data = GetLocalStorage();
       const setFailedConfig= async(ErrorType)=> {
          if(ErrorType === "unauthorised"){
         setSessionModal(true);
-           //  setHoldCurrentFunction(VerifyPinHandler)
-           //The concept behind this code : A user session is regulated by tokens,
-           // the moment we notice it expires we try to get the token for the user before
-           // a transaction completed(i.e we get it during a transaction process), when unauthorised
-           //we get the necessary tokens, then re-run the transaction, there are different errors that 
-           //could occur, when re-running such as: it could return same unauthorised errorType,
-           //a server error and even network connnection issue or an unexpected error
-           //hence, the reason we account for other types of errors even while re-running,
-           //due to the inpredictability of the output of the transaction.
-      //  await VerifyTransPin(
-      //    inputPin,
-      //     async(ErrorType)=> {
-      //       // unauthorisation >>> unauthorisation ErrorTypes
-      //      if(ErrorType === "unauthorised"){
-      //        return setSessionModal(true);
-      //      }else if(ErrorType === "Server error"){
-      //      await VerifyTransPin(
-      //      inputPin,
-      //      (ErrorType)=> {
-      //       //unauthorisation >>> Server error then error Types
-      //      if(ErrorType === "Server error"){
-      //      alert("Failed to process your request, try again some other time")
-      //      }else if(ErrorType === "Network error" || ErrorType === "User error"){
-      //        alert("Kindly check your internet connection.");
-      //      }else{
-      //       if(ErrorType !== "Bad request"){
-      //        alert("Failed to process your request, try some other time.")
-      //       }
-      //      }
-      //    },
-      //    setIsLoading,
-      //    setErrorMessage,
-      //  GotvHandler,
-      // );
-      // //unauthorisation >>> the "Network error" and "User error" ErrorType
-      //      }else if(ErrorType === "Network error" || ErrorType === "User error"){
-      //        alert("Kindly check your internet connection.");
-      //      }else{
-      //       if(ErrorType !== "Bad request"){
-      //        alert("Failed to process your request, try some other time.")
-      //       }
-      //     }
-      //     },
-      //    setIsLoading,
-      //    setErrorMessage,
-      //  GotvHandler,
-      // );
-    //immediate ErrorType to the Failed function...
+     
      }else if(ErrorType === "Server error"){
-       //The server could return a 500 then be successful
-       //  on next call, so let us try twice.
-        await VerifyTransPin(
-         inputPin,
-         async(ErrorType)=> {
-   if(ErrorType === "Server error"){
-    alert("Failed to process your request try some other time.")
-   }else if(ErrorType === "unauthorised"){
-   // Error When "Server error" occured on first try then the server notices 
-   // an "unauthorised" ErrorType.
-      await VerifyTransPin(
-         inputPin,
-          (ErrorType)=> {
-           //handling of ErrorTypes after unauthorisation occurs in server error re-try
-           if(ErrorType === "unauthorised"){
-             return setSessionModal(true);
-           }else if(ErrorType === "Server error"){
-             alert("The server is currently experiencing a downtime, try again some other time.")
-           }else if(ErrorType === "User error" || ErrorType === "Network error"){
-             alert("Kindly check your internet connection")
-           }
-          },
-         setIsLoading,
-         setErrorMessage,
-       GotvHandler,
-      );
-      //End of the "unauthorised" ErrorType handling on "server error"
-      //  ErrorType re-run.
-    }else if(ErrorType === "User error" || ErrorType === "Network error"){
-     //A network error occured  during trying to re-try the code on server error
-     alert("Kindly check your internet connection");
-   }
-         },
-         setIsLoading,
-         setErrorMessage,
-       GotvHandler,
-      );
-          //The immediate ErrorType on "Network error, User error" ErrorType
+      alert("Verification Failed");
          }else if( ErrorType === "User error"
        || ErrorType === "Network error" ){
      alert("Kindly check your internet connection")
@@ -751,7 +535,7 @@ const Data = GetLocalStorage();
     setStateInvalidDecoderNumber(false)
 
     if (
-      UserTvSubscription?.length === 10 &&
+      UserTvSubscription?.length >= 10 &&
       UserTvSubscription !== "" &&
       UserTvSubscription !== null &&
       UserTvSubscription !== undefined
@@ -772,85 +556,15 @@ const Data = GetLocalStorage();
      if(ErrorType === "unauthorised"){
        //Handling  the various cases that could occur on 
        //the ErrorType "unauthorised"
-        await PostFunction("bills/verify",
-          setGotvLoading, 
-          bodyToJson, 
-          SuccessHandler,
-          async(ErrorType)=> {
-         if(ErrorType === "unauthorised"){
-          return setSessionModal(true);
-           }else if(ErrorType === "Server error"){
-             //A server error returns only if the auth Token
-             //has been retrieved then communication with the server occurs
-             //which wouldn't have returned "Server error", if the 
-             //"unauthorised" ErrorType occured as a result of authToken
-             //being expired and not retrieved through cookies
-             //  but 401 returning as error cause.
-             //hence we are running again in the ErrorType "Server error" statememt
-             //from the unauthorization which was the error from
-             //inception or beginning.
-             //Not also leaving handling the other ErrorTypes the UI 
-             //could be vulnerable to on re-try on server error.
-            await PostFunction("bills/verify", setGotvLoading, 
-       bodyToJson,
-       SuccessHandler, 
-      (ErrorType)=> {
-       if(ErrorType === "Server error"){
-         alert("Failed to process your request, try again some other time.")
-       }else if(ErrorType === "Network error" || ErrorType === "User error"
-          ){
-           alert("Kindly check your internet connection")
-          }
-      },
-        setGotvVerifyResponse)
-        //2.Handling the ErrorType "Server error" on the general conditional statement    
-           }else if(ErrorType === "Network error" || ErrorType === "User error"){
-           //3. Handling the ErrorType "Network error, User error" for the general "unauthorised" 
-           //function
-           alert("Kindly check your internet connection.")
-           }
-        }, setGotvVerifyResponse);
-        //2. Handling the server for the general conditional 
-        // statement under the failedHandler
-       }else if(ErrorType === "Server error"){
-              await PostFunction("bills/verify", setGotvLoading, 
-       bodyToJson,
-       SuccessHandler, 
-       async(ErrorType)=> {
-        if(ErrorType === "Server error"){
-          alert("Failed to process your request, try again some other time.")
-        }else if(ErrorType === "unauthorised"){
-        
-             await PostFunction("bills/verify", setGotvLoading, 
-       bodyToJson,
-       SuccessHandler, 
-      (ErrorType)=> {
-       if(ErrorType==="unauthorised"){
-         setSessionModal(true)
-       }else if(ErrorType === "Server error"){
-        alert("Failed to process your request, try again some other time")
-       }else if(ErrorType === "Network error" || ErrorType === "User error"){
-         alert("Kindly check your internet connection")
-       }else{
-         alert("An unexpected error has occured.")
-       }
-      },
-        setGotvVerifyResponse)
-        }else if(ErrorType === "Network error" || ErrorType === "User error") {
-     //Handling the network error for the server error of the general function
-     alert("Kindly check your internet connection.")
-        }else{
-         //When an alien errorType occured
-         alert("An unexpected error has occured, try again some other time.")
-        }
-       },
-        setGotvVerifyResponse)
+       
         //3.Handling the ErrorType "Network error, User error"
      }else if(ErrorType === "Network error" || ErrorType === "User error"){
        alert("Kindly check your internet connection")
      }
      else if(ErrorType === "Bad request"){
       setStateInvalidDecoderNumber(true)
+     }else if(ErrorType === "Server error"){
+     alert("Decoder verification failed")
      }
       else {
        //4. Handling the "alien" ErrorType.
@@ -910,6 +624,9 @@ const Data = GetLocalStorage();
    }
   })
 }
+
+//UseREf for tvOne Verificatiom
+const timer = useRef(null) 
 
   return (
     <div>
@@ -1147,12 +864,17 @@ const Data = GetLocalStorage();
                     <input
                       type="tel"
                       placeholder="XXXXXXXXXX"
-                      onChange={handleSmartCard}
-                      onInput={(e) => {
-                        const numericValue = e.target.value.replace(/\D/g, "");
-                        e.target.value = numericValue;
+                      onChange={(e)=> {
+                           if(timer.current) clearTimeout(timer.current)   
+                timer.current = setTimeout(()=> {
+              //Run every 5 seconds
+                handleSmartCard(e)
+                    
+  },500)
+  return ()=> clearTimeout(timer.current);
                       }}
-                      maxLength={10}
+                    
+                   
                       className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] 
                         md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] 
                         pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[11px] md:leading-[12.206px] 

@@ -2,7 +2,7 @@ import React from "react";
 import Joi from "joi";
 import { DashBoardLayout } from "../Dashboard/Layout/DashBoardLayout";
 import "../TvSubscription/TvSubscription.css";
-import { useContext , useEffect} from "react";
+import { useContext , useEffect, useRef} from "react";
 import { useState } from "react";
 import arrowDown from '../EducationPins/imagesEducation/arrow-down.svg';
 import { ContextProvider } from "../Context";
@@ -537,42 +537,7 @@ const VerifyPinHandler = async () => {;
         //Then for the Failed Handler all we have to do is create a state
         // to handle which set to the ErrorType then placed into the faiked popup
         if(ErrorType === "unauthorised"){
-         await PostFunction(
-        Path,
-        setIsLoading,
-        requestData,
-        successHandler,
-        (ErrorType)=> {
-          if(ErrorType === "unauthorised"){
-            return setSessionModal(true)
-          }else if(ErrorType === "Server error"){
-          //Why arepition did not occur here,
-          //We dont want it to be only about User experience here,
-          //There are several things that could happen to the backend,
-          // and there is also a possibility that the server was able to process and 
-          //initiate the transaction but still returned 500,
-          //so we need to prevent the case of carrying two transaction for a user,
-          //which doesn't only affect us through service of the platform we are using,
-          //but also unrest and panic to the user and the amount for purchase and 
-          //been removed twice without a result or successful output.
-          setPurchaseDstvErrorType("Server Error: Purchase Failed")
-       setFailedPopup(true);
-       setInputPinDstv(false);
-         setInputPin("")
-        }else if(ErrorType === "Network error" || ErrorType === "User error"){
-          setPurchaseDstvErrorType("Network Error: Purchase Failed");
-          setFailedPopup(true);
-       setInputPinDstv(false);
-         setInputPin("")
-        }else {
-           setFailedPopup(true);
-       setInputPinDstv(false);
-         setInputPin("")
-      setPurchaseDstvErrorType("An Unexpected error has occured");
-        }
-        },
-        setDstvSubscriptionResponse
-      );
+       setSessionModal(true)
         }else if(ErrorType === "Server error"){
           //Why arepition did not occur here,
           //We dont want it to be only about User experience here,
@@ -612,84 +577,12 @@ const VerifyPinHandler = async () => {;
   
     const setFailedConfig= async(ErrorType)=> {
       if(ErrorType === "unauthorised"){
-        //The concept behind this code : A user session is regulated by tokens,
-        // the moment we notice it expires we try to get the token for the user before
-        // a transaction completed(i.e we get it during a transaction process), when unauthorised
-        //we get the necessary tokens, then re-run the transaction, there are different errors that 
-        //could occur, when re-running such as: it could return same unauthorised errorType,
-        //a server error and even network connection issue or an unexpected error
-        //hence, the reason we account for other types of errors even while re-running,
-        //due to the inpredictability of the output of the transaction.
-    await VerifyTransPin(
-      inputPin,
-       async(ErrorType)=> {
-        if(ErrorType === "unauthorised"){
-          return setSessionModal(true)
+        setSessionModal(true)
         }else if(ErrorType === "Server error"){
-         await VerifyTransPin(
-      inputPin,
-      (ErrorType)=> {
-        if(ErrorType === "Server error"){
-        alert("Failed to process your request, try again some other time")
-        }else if(ErrorType === "Network error" || ErrorType === "User error"){
-          alert("Kindly check your internet connection.")
-        }else{
-          alert("Failed to process your request, try some other time.")
+           alert("Verification failed")
         }
-      },
-      setIsLoading,
-      setErrorMessage,
-    DstvHandler,
-   );
-        }
-       },
-      setIsLoading,
-      setErrorMessage,
-    DstvHandler,
-   );
-   //Handling of user error or network error for the general
-   //  conditional statement under the setPinFailed
-  }else if(ErrorType === "Server error"){
-    //The server could return a 500 then be successful
-    //  on next call, so let us try twice.
-     await VerifyTransPin(
-      inputPin,
-      async(ErrorType)=> {
-if(ErrorType === "Server error"){
- alert("Failed to process your request try some other time.")
-}else if(ErrorType === "unauthorised"){
-// Error When "Server error" occured on first try then the server notices 
-// an "unauthorised" ErrorType.
-   await VerifyTransPin(
-      inputPin,
-       (ErrorType)=> {
-        //handling of ErrorTypes after unauthorisation occurs in server error re-try
-        if(ErrorType === "unauthorised"){
-          return setSessionModal(true);
-        }else if(ErrorType === "Server error"){
-          alert("The server is currently experiencing a downtime, try again some other time.")
-        }else if(ErrorType === "User error" || ErrorType === "Network error"){
-          alert("Kindly check your internet connection")
-        }
-       },
-      setIsLoading,
-      setErrorMessage,
-    DstvHandler,
-   );
-   //End of the "unauthorised" ErrorType handling on "server error"
-   //  ErrorType re-run.
-
-}else if(ErrorType === "User error" || ErrorType === "Network error"){
-  //A network error occured  during trying to re-try the code on server error
-  alert("Kindly check your internet connection");
-}
-      },
-      setIsLoading,
-      setErrorMessage,
-    DstvHandler,
-   );
-       //The general error message on an "Network error, User error" ErrorType
-      }else if( ErrorType === "User error"
+      //The general error message on an "Network error, User error" ErrorType
+      else if( ErrorType === "User error"
     || ErrorType === "Network error" ){
   alert("Kindly check your internet connection")
   }
@@ -735,83 +628,11 @@ const FailedHandler = async(ErrorType)=> {
 if(ErrorType === "unauthorised"){
   //Handling  the various cases that could occur on 
   //the ErrorType "unauthorised"
-   await PostFunction("bills/verify",
-     setDstvLoading, 
-     bodyToJson, 
-     SuccessHandler,
-     async(ErrorType)=> {
-    if(ErrorType === "unauthorised"){
-     return setSessionModal(true);
-      }else if(ErrorType === "Server error"){
-        //A server error returns only if the auth Token
-        //has been retrieved then communication with the server occurs
-        //which wouldn't have returned "Server error", if the 
-        //"unauthorised" ErrorType occured as a result of authToken
-        //being expired and not retrieved through cookies
-        //  but 401 returning as error cause.
-        //hence we are running again in the ErrorType "Server error" statememt
-        //from the unauthorization which was the error from
-        //inception or beginning.
-        //Not also leaving handling the other ErrorTypes the UI 
-        //could be vulnerable to on re-try on server error.
-       await PostFunction("bills/verify", setDstvLoading, 
-  bodyToJson,
-  SuccessHandler, 
- (ErrorType)=> {
-  if(ErrorType === "Server error"){
-    alert("Failed to process your request, try again some other time.")
-  }else if(ErrorType === "Network error" || ErrorType === "User error"
-     ){
-      alert("Kindly check your internet connection")
-     }
- },
-   setDstvVerifyResponse)
-   //2.Handling the ErrorType "Server error" on the general conditional statement
+ setSessionModal(true)
       
-      }else if(ErrorType === "Network error" || ErrorType === "User error"){
-      //3. Handling the ErrorType "Network error, User error" for the general "unauthorised" 
-      //function
-      alert("Kindly check your internet connection.")
-      }
-
-   }, setDstvVerifyResponse);
-  //2. Handling the server for the general conditional 
-        // statement under the failedHandler then re-running 
-  }else if(ErrorType === "Server error"){
-         await PostFunction("bills/verify", setDstvLoading, 
-  bodyToJson,
-  SuccessHandler, 
-  async(ErrorType)=> {
-   if(ErrorType === "Server error"){
-     alert("Failed to process your request, try again some other time.")
-   }else if(ErrorType === "unauthorised"){
-    //The ErrorType "unauthorised" can occur on trying to
-    //re-run the code due aforementioned reason
-        await PostFunction("bills/verify", setDstvLoading, 
-  bodyToJson,
-  SuccessHandler, 
- (ErrorType)=> {
-  if(ErrorType==="unauthorised"){
-    setSessionModal(true)
-  }else if(ErrorType === "Server error"){
-   alert("Failed to process your request, try again some other time")
-  }else if(ErrorType === "Network error" || ErrorType === "User error"){
-    alert("Kindly check your internet connection")
-  }else{
-    alert("An unexpected error has occured.")
-  }
- },
-   setDstvVerifyResponse)
-   }else if(ErrorType === "Network error" || ErrorType === "User error") {
-//Handling the network error for the server error of the general function
-alert("Kindly check your internet connection.")
-   }else{
-    //When an alien errorType occured
-    alert("An unexpected error has occured, try again some other time.")
-   }
-  },
-   setDstvVerifyResponse)
    //3.Handling the ErrorType "Network error, User error"
+}else if(ErrorType === "Server error"){
+  alert("Unable to verify details.")
 }else if(ErrorType === "Network error" || ErrorType === "User error"){
   alert("Kindly check your internet connection")
 }  else if(ErrorType === "Bad request"){
@@ -823,7 +644,7 @@ alert("Kindly check your internet connection.")
 }
 
 //The Call to verify the decoder number
-   if(UserTvSubscription?.length === 10 && 
+   if(UserTvSubscription?.length >= 10 && 
     (UserTvSubscription !== "" && 
       UserTvSubscription !== null && 
       UserTvSubscription !== undefined)){
@@ -858,7 +679,8 @@ window.addEventListener("online", ()=> {
    }
   })
 }
-
+//Timer
+const timer = useRef(null)
 
   return (
     <div>
@@ -1030,8 +852,16 @@ window.addEventListener("online", ()=> {
                 const numericValue = e.target.value.replace(/\D/g, '');
                     e.target.value = numericValue
                 })} placeholder={"XXXXXXXXXX"}
-                onChange={handleSmartCard} 
-                maxLength ={10}
+                onChange={(e)=> {
+                    if(timer.current) clearTimeout(timer.current)   
+                timer.current = setTimeout(()=> {
+              //Run every 5 seconds
+                handleSmartCard(e)
+                    
+  },500)
+  return ()=> clearTimeout(timer.current);
+                }} 
+             
                 className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
       isDarkMode 

@@ -165,7 +165,8 @@ const bgUsername = UserBgFormatting()
                         : "UnVerified"}
                     </div>
                     <div
-                      className=" px-[4px] py-[1px] bg-[#B4B4B4] font-[600] lg:font-[700] text-[10px] text-white md:text-[10px] lg:text-[12px] rounded-[2px]"
+                      className=" px-[4px] py-[1px] bg-[#FFC589] font-[600] lg:font-[700]
+                       text-[10px] text-black md:text-[10px] lg:text-[12px] rounded-[2px]"
                     >
                       {/* KYCed */}
                     {Data?.ConfirmAcc ==="true" || Data?.ConfirmBvn === "true" ? "Regular" : ""}  

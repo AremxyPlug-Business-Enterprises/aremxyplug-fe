@@ -659,7 +659,7 @@ export const Footer = () => {
           </div>
         </div>
         <div className=" text-[9px] mx-[30%] mt-[5%] w-[%] lg:text-[16px] ">
-          ©AremxyPlug 2023. All Rights Reserved.
+          ©AremxyPlug 2021- 2025. All Rights Reserved.
         </div>
         <div className=" w-[] h-[30px] text-[7px] mx-[8%] mt-[2%] lg:text-[12px] lg:w-[px]">
           AremxyPlug is a business enterprise and telecommunication service

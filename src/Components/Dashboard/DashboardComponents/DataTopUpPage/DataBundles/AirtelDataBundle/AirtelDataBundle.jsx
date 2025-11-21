@@ -22,7 +22,6 @@ import { AiFillEyeInvisible } from "react-icons/ai";
 import { AiFillEye } from "react-icons/ai";
 import Joi from "joi";
 import airtimestyles from "../../../../../AirTimePage/AirtimeVtu.module.css";
-import Failed from "./../MtnDataTopUpBundle/MtnDataTopUpBundleImages/Failed.svg";
 import axiosInstance from "../../../../../ApiCollection.jsx/apiClient";
 import {
   GetFunction,
@@ -99,26 +98,23 @@ const assumedString = selectedAmountAirtel?.toString()
   ?.slice(0, assumedString?.length - 3)
   ?.replace(/\D/g, ""));
 
-  const updateBalance = passDataBalance?.data
-    ? passDataBalance?.data?.data?.data?.balance
-    : "";
-  const cleanUpBalanceToNumericOnly = Number(updateBalance?.replace(/\D/g, ""));
+  const Balance = newBalance !== null &&
+ newBalance !== undefined && newBalance !== "" ? balanceStringToNum
+ : passDataBalance?.data?.data && (newBalance === "" 
+  || newBalance === undefined || newBalance === null) ?
+   Number(passDataBalance?.data?.data?.data?.balance) : undefined;
+  
+
   let CheckSufficiency =
-    airtelDataAmount >
-    (newBalance === "" || newBalance === null
-      ? cleanUpBalanceToNumericOnly
-      : balanceStringToNum);
+    airtelDataAmount > Balance
 
-
-
-      //Getting MTN Products
+//Getting MTN Products
        const fetchProducts = async () => {
       setLoadingProducts(true);
       try {
         const response = await axiosInstance?.get("/products/telecom/list/4");
         setProducts(response.data.data.products || []);
       } catch (error) {
-        console.error("Error fetching products:", error);
         if (error && error.response === undefined) {
           alert("Check your internet Connection, then reload the page.");
           setCheckNetworkError(true)
@@ -130,32 +126,7 @@ const assumedString = selectedAmountAirtel?.toString()
           alert(
             "Service for airtel is currently not available, Try again later."
           );
-        } else if (error && error.response.status === 401) {
-          if (
-            error?.response?.headers["x-new-auth-token"] ||
-            error?.response?.headers?.get("x-new-auth-token")
-          ) {
-            setLoading(true);
-            const newToken =
-              error?.response?.headers?.get("x-new-auth-token") ||
-              error?.response?.headers["x-new-auth-token"];
-
-            if (
-              newToken !== "" &&
-              localStorage.getItem("authorisedLogin")
-            ) {
-              localStorage.setItem("authorisedLogin", newToken);
-              if (localStorage.getItem("authorisedLogin")?.length > 1) {
-                await fetchProducts();
-              }
-            } else {
-              localStorage.setItem("getToken", newToken);
-              if (localStorage.getItem("getToken")?.length > 1) {
-                await fetchProducts();
-              }
-            }
-          } 
-        } else {
+        }else {
           alert("Error occured: Kindly check your network connection.");
         }
       } finally {
@@ -196,37 +167,9 @@ const assumedString = selectedAmountAirtel?.toString()
         }
       }
     } catch (error) {
-      console.error("Error fetching plans:", error);
       if (error && error.response === undefined) {
         alert("Your internet connection is quite unstable.");
         setCheckNetworkError(true)
-      } else if (error && error.response.status === 401) {
-        if (
-          error?.response?.headers["x-new-auth-token"] ||
-          error?.response?.headers?.get("x-new-auth-token")
-        ) {
-          setLoading(true);
-          const newToken =
-            error.response?.headers?.get("x-new-auth-token") ||
-            error?.response?.headers["x-new-auth-token"];
-
-          if (
-            newToken !== "" &&
-            localStorage.getItem("authorisedLogin") 
-          ) {
-            localStorage.setItem("authorisedLogin", newToken);
-            if (localStorage.getItem("authorisedLogin")?.length > 1) {
-              await fetchPlans();
-            }
-          } else {
-            localStorage.setItem("getToken", newToken);
-            if (localStorage.getItem("getToken")?.length > 1) {
-              await fetchPlans();
-            }
-          }
-        } else {
-          return setSessionModal(true);
-        }
       } else if (error && error.response.status === 400) {
         setSelectProductWarn(true);
       } else if (error && error.response.status === 500) {
@@ -283,24 +226,15 @@ const assumedString = selectedAmountAirtel?.toString()
   };
 
 
-
-   const updateBalanceToNumber = Number(updateBalance)
-  const newBalanceToNumber = Number(newBalance)
-  const balanceOption = newBalance === "" || newBalance === null
-   ? updateBalanceToNumber : newBalanceToNumber
-    const methodOptions = [
+const methodOptions = [
       {
         method: "Nigeria",
         balance:
-          newBalance === "" || newBalance === null || newBalance === undefined
-            ? `(${updateBalance?.length > 1 ? updateBalanceToNumber?.toLocaleString("en-NG", {
+          Balance !== undefined && Balance !== null 
+            ? `(${Balance?.toLocaleString("en-NG", {
                  style : "currency",
                  currency : "NGN"
-            }) : ""})`
-            : `(${newBalance?.length > 1 ? newBalanceToNumber?.toLocaleString("en-Ng", {
-              style : "currency",
-              currency : "NGN"
-            }) : ""})`,
+            })})` : "",
         flag:  require("../DataBundles-Images/ng.svg").default,
         id: 1,
         code : "NGN Wallet"
@@ -333,112 +267,13 @@ const assumedString = selectedAmountAirtel?.toString()
   //Function to get user's account balance
      const GetBalance = async () => {
     if(!navigator.onLine) return setCheckNetworkError(true)
-      const SuccessHandler = () => {
-        //alert("Successful");
-        console.log("successfully retrieved balance");
-        //alert("Successful")
-      };
+  
       const FailedHandler = async (ErrorType) => {
         if (ErrorType === "unauthorised") {
-          await GetFunction(
-            `balance`,
-            setBalanceLoader,
-            SuccessHandler,
-            //Handling the error Use Cases of the Unauthorised inside
-            // of the statement.
-            async(ErrorType) => {
-              if (ErrorType === "unauthorised") {
-                return setSessionModal(true);
-              }else if(ErrorType === "Server error"){
-                  await GetFunction(
-        "balance",
-        setBalanceLoader,
-        SuccessHandler,
-       async(ErrorType)=> {
-        if(ErrorType === "Server error"){
-          alert("Failed to retrieve the balance.")
-        }else if(ErrorType === "Network error" || ErrorType === "User error"){
-           setCheckNetworkError(true);
-              alert("Kindly check your internet connection to retrieve balance.")
-        }else {
-          alert("An unexpected error has occured on attempt to retrieve balance.")
-        }
-       },
-        setPassDataBalance
-      );
-       }else if(ErrorType === "Network error" || ErrorType === "User error"){
-         setCheckNetworkError(true);
-           alert("Kindly check your internet connection to retrieve balance");
-           setCheckNetworkError(true);
-       }else {
-        alert("An unexpected error has occured on attempt to retrieve the balance")
-       }
-            },
-             setPassDataBalance
-          );
-        }else if(ErrorType === "Server error"){
-            await GetFunction(
-        "balance",
-        setBalanceLoader,
-        SuccessHandler,
-       async(ErrorType)=> {
-         if(ErrorType === "unauthorised"){
-            await GetFunction(
-        "balance",
-        setBalanceLoader,
-        SuccessHandler,
-        async(ErrorType)=> {
-          if(ErrorType === "unauthorised"){
-            return setSessionModal(true)
-          }else if(ErrorType === "Server error"){
-               await GetFunction(
-        "balance",
-        setBalanceLoader,
-        SuccessHandler,
-       async(ErrorType)=> {
-        //if Statements
-      //We run again cause the previous one was interrupted by 401
-      //Let us re-run server error
-      if(ErrorType === "Server error"){
-        alert("Failed to retrieve the balance")
-      }else if(ErrorType === "unauthorised"){
-        return sessionModal(true)
-      }else if(ErrorType === "Network error" || ErrorType === "User error"){
-         setCheckNetworkError(true);
-       alert("Kindly check your internet connection to retrieve balance")
-      }else{
-       // console.log("yeah bro i am the one running blehh")
-        alert("An Unexpected error occured in attempt to retrieve balance")
-      }
-
-       },
-        setPassDataBalance
-      );
-          }else if(ErrorType === "Network error" || ErrorType === "User error"){
-             setCheckNetworkError(true);
-            alert("Kindly check your internet connection to retrieve the balance")
-          }else if(ErrorType === "Server error"){
-            alert("Failed to retrieve the balance.")
-          }else{
-            alert("An Unexpected error occured in attempt to retrieve balance")
-          }
-        },
-        setPassDataBalance
-      );
-    }
-          else if(ErrorType === "Network error" || ErrorType === "User error"){
-            //The operation was interrupted by a network error
-             setCheckNetworkError(true);
-            alert("Kindly check your internet connection to retrieve balance.")
-         }else {
-          //Place 
-          //An alien error has occured with the re-run of the "Server error" ErrorType
-          alert("An unexpected error occured in attempt to retrieve the balance.")
-         }
-       },
-        setPassDataBalance
-      );
-        }else if(ErrorType === "Network error" || ErrorType === "User error"){
+         setSessionModal(true)
+     }else if(ErrorType === "Server error"){
+      alert("An unexpected error has occured")
+     }else if(ErrorType === "Network error" || ErrorType === "User error"){
             setCheckNetworkError(true);
         }else{
            
@@ -448,7 +283,7 @@ const assumedString = selectedAmountAirtel?.toString()
       await GetFunction(
         "balance",
         setBalanceLoader,
-        SuccessHandler,
+        ()=> {},
         FailedHandler,
         setPassDataBalance
       );
@@ -456,8 +291,7 @@ const assumedString = selectedAmountAirtel?.toString()
   useEffect(() => {
     // Simulate async data loading
  if (Data?.ConfirmAcc === "true"){                     // Simulate async data loading
-                  
-            GetBalance();
+                   GetBalance();
           setNewBalance(passDataBalance?.data?.data?.data !== undefined
                ? passDataBalance?.data?.data?.data?.balance : "");
                         
@@ -472,7 +306,7 @@ const assumedString = selectedAmountAirtel?.toString()
   if(Data?.ConfirmAcc  ==="true"){
   window.addEventListener("online", ()=> {
    if(checkNetworkError === true &&
-     (updateBalance === undefined || updateBalance === null || updateBalance === "")
+     (Balance === undefined || Balance === null )
     && (newBalance === null || newBalance === undefined || newBalance === "") ){
    return GetBalance()
    }
@@ -606,12 +440,12 @@ const assumedString = selectedAmountAirtel?.toString()
     setTransactSuccessPopUp(false);
   };
 
-  // console.log("confirm:", confirm);
+ 
 
   const [airtelTransactionID, setAirtelTransactionID] = useState("");
   const [airtelOrderID, setAirtelOrderID] = useState("");
   const [airtelrefNumber, setAirtelRefNumber] = useState("");
-  const [airtelDescription, setAirtelDescription] = useState("");
+  // const [airtelDescription, setAirtelDescription] = useState("");
 
   const inputPinHandler = async () => {
     async function buyData(network, mobileNumber, planID, name) {
@@ -633,12 +467,8 @@ const path = "/data";
         setLoading(true);
 
         const response = await axiosInstance.post(path, data);
-        //  console.log(response.data);
-       
-
-        const resData = response?.data?.data?.data; // Accessing the nested `data` object
-       
-        setAirtelTransactionID(resData?.transaction_id);
+   const resData = response?.data?.data?.data; // Accessing the nested `data` object
+         setAirtelTransactionID(resData?.transaction_id);
         setAirtelRefNumber(resData?.reference_number);
         setAirtelOrderID(resData?.order_id); // No `order_id`, using `id` instead
         if (response.status === 200 || response.status === 201) {
@@ -695,32 +525,7 @@ const path = "/data";
           setInputPin("");
           setAirtelPurchaseErrorType("Network error: Purchase Failed")
         } else if (error && error.response.status === 401) {
-          if (
-            error?.response?.headers["x-new-auth-token"] ||
-            error?.response?.headers?.get("x-new-auth-token")
-          ) {
-            setLoading(true);
-            const newToken =
-              error?.response?.headers?.get("x-new-auth-token") ||
-              error?.response?.headers["x-new-auth-token"];
-
-            if (
-              newToken !== "" &&
-              localStorage.getItem("authorisedLogin")
-            ) {
-              localStorage.setItem("authorisedLogin", newToken);
-              if (localStorage.getItem("authorisedLogin")?.length > 1) {
-                await inputPinHandler();
-              }
-            } else {
-              localStorage.setItem("getToken", newToken);
-              if (localStorage.getItem("getToken")?.length > 1) {
-                await inputPinHandler();
-              }
-            }
-          } else {
-            return setSessionModal(true);
-          }
+         setSessionModal(true);
         } else {
              setAirtelPurchaseErrorType("Unexpected error: Purchase Failed")
           setAirtelPurchaseStatus(true); // Show failure popup
@@ -1342,24 +1147,20 @@ const path = "/data";
                                                    ? "NGN Wallet"
                                                    : ""
                                                );
-                                 setPaymentAmount(methodOption.id === 1 && paymentAmount === ""? 
-                                 newBalance === "" || newBalance === null || newBalance === undefined
-                         ? `(${updateBalance?.length > 1 ? updateBalanceToNumber?.toLocaleString("en-NG", {
+                                 setPaymentAmount(methodOption.id === 1 
+                            && paymentAmount === "" && 
+                             Balance !== null 
+                           && Balance !== undefined
+                         ?  `(${Balance?.toLocaleString("en-NG", {
                               style : "currency",
                               currency : "NGN"
-                         }) : ""})`
-                         : `(${newBalance?.length > 1 ? newBalanceToNumber?.toLocaleString("en-NG", {
-                           style : "currency",
-                           currency : "NGN"
-                         }) : ""})` : walletNameAirtel === "NGN Wallet" ?  newBalance === "" || newBalance === null || newBalance === undefined
-                         ? `(${updateBalance?.length > 1 ? updateBalanceToNumber?.toLocaleString("en-NG", {
+                                 })})` :  walletNameAirtel === "NGN Wallet" 
+                           &&
+                        Balance !== null && Balance !== undefined
+                          ?   `(${Balance?.toLocaleString("en-NG", {
                               style : "currency",
                               currency : "NGN"
-                         }) : ""})`
-                         : `(${newBalance?.length > 1 ? newBalanceToNumber?.toLocaleString("en-NG", {
-                           style : "currency",
-                           currency : "NGN"
-                         }) : ""})` : "");
+                         })}`  :  "");
                
                           setShowPayment(() => {
                               if (methodOption.id === 1) {
@@ -1403,7 +1204,7 @@ const path = "/data";
                                              
                                                {methodOption.code }
                                                 {" "}
-                                     {balanceLoader === true ? <BalanceLoading/> : methodOption.balance}
+                                     {balanceLoader === true && methodOption.id ===1  ? <BalanceLoading/> : methodOption.balance}
                                              
                                            </div>
                                          );
@@ -1595,10 +1396,11 @@ const path = "/data";
                                                   Available Balance {"  "} 
                                                    </p>
                                                    <span className={`font-medium ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
-                                                    {`(${balanceOption !== "" || balanceOption !==null ? balanceOption?.toLocaleString("en-NG", {
+                                                    {Balance !== undefined || Balance !==null ? 
+                                                    `(${Balance?.toLocaleString("en-NG", {
                                                       style : "currency",
                                                       currency : "NGN"
-                                                    }) : "₦"})`}
+                                                    })})` : "(₦)"}
                                                   </span>
                                                   </div>
                                                 </div>
@@ -1687,7 +1489,7 @@ const path = "/data";
                       airteltransactionID: airtelTransactionID,
                       airtelrefNumber: airtelrefNumber,
                       airtelorderID: airtelOrderID,
-                      airteldescription: airtelDescription,
+                     // airteldescription: airtelDescription,
                       airtelReceiptInfo: airtelReceiptInfo,
                       inputValue: inputValue,
                     }}
@@ -2050,7 +1852,7 @@ const path = "/data";
                       airteltransactionID: airtelTransactionID,
                       airtelrefNumber: airtelrefNumber,
                       airtelorderID: airtelOrderID,
-                      airteldescription: airtelDescription,
+                     // airteldescription: airtelDescription,
                       airtelReceiptInfo: airtelReceiptInfo,
                     }}
                   >

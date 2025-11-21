@@ -99,20 +99,21 @@ const [gloSuccessfulResponse, setGloSuccessfulResponse] = useState({})
 
 
 
-    const updateBalance = passDataBalance?.data?.data?.data 
-    ? passDataBalance?.data?.data?.data?.balance
-    :  "";
-    const updateBalanceToNumber = Number(updateBalance);
-  const newBalanceToNumber = Number(newBalance);
-  const balanceOption = newBalance === "" || newBalance === null
-   ? updateBalanceToNumber : newBalanceToNumber;
+
+  
+ const balanceStringToNum = Number(newBalance);
+ 
 const assumedString = selectedAmountGlo?.toString();
   let gloDataAmount = Number(selectedAmountGlo?.toString()
   ?.slice(0, assumedString?.length - 3)
   ?.replace(/\D/g, ""));
-
+const Balance = newBalance !== null &&
+ newBalance !== undefined && newBalance !== "" ? balanceStringToNum
+ : passDataBalance?.data?.data && (newBalance === "" 
+  || newBalance === undefined || newBalance === null) ?
+   Number(passDataBalance?.data?.data?.data?.balance) : undefined;
   
-  let CheckSufficiency = gloDataAmount > balanceOption;
+  let CheckSufficiency = gloDataAmount > Balance;
 
 
       //Function used to fetch the newtork products that are available ===
@@ -136,34 +137,6 @@ const assumedString = selectedAmountGlo?.toString();
           alert("Check your internet Connection, then reload the page.");
         } else if (error && error.response.status === 400) {
           alert("Service for glo is currently not available, Try again later.");
-        } else if (error && error?.response?.status === 401) {
-          if (
-            error.response.headers["x-new-auth-token"] ||
-            error.response.headers.get("x-new-auth-token")
-          ) {
-            setLoading(true);
-            const newToken =
-              error.response.headers.get("x-new-auth-token") ||
-              error.response.headers["x-new-auth-token"];
-
-            if (
-              newToken !== "" &&
-              localStorage.getItem("authorisedLogin") 
-            ) {
-              const setAuthorisedToken = localStorage.setItem(
-                "authorisedLogin",
-                newToken
-              );
-              if (setAuthorisedToken) {
-                await inputPinHandler();
-              }
-            } else {
-              const setGetToken = localStorage.setItem("getToken", newToken);
-              if (setGetToken) {
-                await inputPinHandler();
-              }
-            }
-          } 
         } else if (error && error.response.status === 500) {
           alert("Service for glo is currently not available, Try again later.");
         }
@@ -172,7 +145,7 @@ const assumedString = selectedAmountGlo?.toString();
       }
     };
   useEffect(() => {
-if(Data?.ConfirmAcc === "true"){   
+if(Data?.ConfirmAcc === "true" && navigator.onLine){   
 fetchProducts();
 }
     const HandleBalanceStatus = () => {
@@ -207,37 +180,7 @@ fetchProducts();
     } catch (error) {
       console.error("Error fetching plans:", error);
       if (error && error.response === undefined) {
-        alert("Your internet connection is quite unstable.");
-      } else if (error && error.response.status === 401) {
-        if (
-          error.response.headers["x-new-auth-token"] ||
-          error.response.headers.get("x-new-auth-token")
-        ) {
-          setLoading(true);
-          const newToken =
-            error.response.headers.get("x-new-auth-token") ||
-            error.response.headers["x-new-auth-token"];
-
-          if (
-            newToken !== "" &&
-            localStorage.getItem("authorisedLogin")
-          ) {
-            const setAuthorisedToken = localStorage.setItem(
-              "authorisedLogin",
-              newToken
-            );
-            if (setAuthorisedToken) {
-              await inputPinHandler();
-            }
-          } else {
-            const setGetToken = localStorage.setItem("getToken", newToken);
-            if (setGetToken) {
-              await inputPinHandler();
-            }
-          }
-        } else {
-          return setSessionModal(true);
-        }
+        alert("Your internet connection is quite unstable.");      
       } else if (error && error.response.status === 400) {
         setSelectProductWarn(true);
       } else if (error && error.response.status === 500) {
@@ -295,14 +238,11 @@ fetchProducts();
   };
 
 
-
-
     const methodOptions = [
       {
         method: "Nigeria",
-        balance:
-         balanceOption !== undefined || balanceOption !== null ? 
-            `(${ balanceOption?.toLocaleString("en-NG", {
+        balance: Balance !== undefined && Balance !== null ? 
+            `(${ Balance?.toLocaleString("en-NG", {
                  style : "currency",
                  currency : "NGN"
              })})`  : "()",
@@ -335,110 +275,13 @@ fetchProducts();
 
     const GetBalance = async () => {
        if(!navigator.onLine) return setCheckNetworkError(true)
-         const SuccessHandler = () => {
-           //alert("Successful");
-           console.log("successfully retrieved balance");
-           //alert("Successful")
-         };
-         const FailedHandler = async (ErrorType) => {
+          const FailedHandler = async (ErrorType) => {
            if (ErrorType === "unauthorised") {
-             await GetFunction(
-               `balance`,
-               setBalanceLoader,
-               SuccessHandler,
-               //Handling the error Use Cases of the Unauthorised inside
-               // of the statement.
-               async(ErrorType) => {
-                 if (ErrorType === "unauthorised") {
-                   return setSessionModal(true);
-                 }else if(ErrorType === "Server error"){
-                     await GetFunction(
-           "balance",
-           setBalanceLoader,
-           SuccessHandler,
-          async(ErrorType)=> {
-           if(ErrorType === "Server error"){
-             alert("Failed to retrieve the balance.")
-           }else if(ErrorType === "Network error" || ErrorType === "User error"){
-              setCheckNetworkError(true);
-                 alert("Kindly check your internet connection to retrieve balance.")
-           }else {
-             alert("An unexpected error has occured on attempt to retrieve balance.")
-           }
-          },
-           setPassDataBalance
-         );
-          }else if(ErrorType === "Network error" || ErrorType === "User error"){
-            setCheckNetworkError(true);
-              alert("Kindly check your internet connection to retrieve balance");
-              setCheckNetworkError(true);
-          }else {
-           alert("An unexpected error has occured on attempt to retrieve the balance")
-          }
-               },
-                setPassDataBalance
-             );
+             setSessionModal(true)
            }else if(ErrorType === "Server error"){
-               await GetFunction(
-           "balance",
-           setBalanceLoader,
-           SuccessHandler,
-          async(ErrorType)=> {
-            if(ErrorType === "unauthorised"){
-               await GetFunction(
-           "balance",
-           setLoading,
-           SuccessHandler,
-           async(ErrorType)=> {
-             if(ErrorType === "unauthorised"){
-               return setSessionModal(true)
-             }else if(ErrorType === "Server error"){
-                  await GetFunction(
-           "balance",
-           setBalanceLoader,
-           SuccessHandler,
-          async(ErrorType)=> {
-           //if Statements
-         //We run again cause the previous one was interrupted by 401
-         //Let us re-run server error
-         if(ErrorType === "Server error"){
-           alert("Failed to retrieve the balance")
-         }else if(ErrorType === "unauthorised"){
-           return sessionModal(true)
-         }else if(ErrorType === "Network error" || ErrorType === "User error"){
-            setCheckNetworkError(true);
-          alert("Kindly check your internet connection to retrieve balance")
-         }else{
-          // console.log("yeah bro i am the one running blehh")
-           alert("An Unexpected error occured in attempt to retrieve balance")
-         }},
-           setPassDataBalance
-         );
-             }else if(ErrorType === "Network error" || ErrorType === "User error"){
-                setCheckNetworkError(true);
-               alert("Kindly check your internet connection to retrieve the balance")
-             }else if(ErrorType === "Server error"){
-               alert("Failed to retrieve the balance.")
-             }else{
-               alert("An Unexpected error occured in attempt to retrieve balance")
-             }
-           },
-           setPassDataBalance
-         );
-       }
-             else if(ErrorType === "Network error" || ErrorType === "User error"){
-               //The operation was interrupted by a network error
-                setCheckNetworkError(true);
-               alert("Kindly check your internet connection to retrieve balance.")
-            }else {
-             //Place 
-             //An alien error has occured with the re-run of the "Server error" ErrorType
-             alert("An unexpected error occured in attempt to retrieve the balance.")
-            }
-          },
-           setPassDataBalance
-         );
-           }else if(ErrorType === "Network error" || ErrorType === "User error"){
+            alert("An Unexpected error has occured")
+           }
+            else if(ErrorType === "Network error" || ErrorType === "User error"){
                setCheckNetworkError(true);
            }else{
                alert("An unexpected error occured in attempt to retrieve balance.")
@@ -447,7 +290,7 @@ fetchProducts();
          await GetFunction(
            "balance",
            setBalanceLoader,
-           SuccessHandler,
+           ()=> {},
            FailedHandler,
            setPassDataBalance
          );
@@ -643,16 +486,10 @@ try {
        setGloTransactionID(resData?.transaction_id);
         setGloRefNumber(resData?.reference_number);
        setGloOrderID(resData?.order_id);
-
-        // No `order_id`, using `id` instead
-
-        setGloDescription(`${resData?.network} - ${resData?.plan_name}`);
-      }
-
+ setGloDescription(`${resData?.network} - ${resData?.plan_name}`);
+        }
         return { statusCode: response.status, data: response.data };
-        // console.log(response.data);
       } catch (error) {
-        console.error(error);
         if (error && error.response === undefined) {
           setGloPurchaseErrorType("Network error: Purchase Failed");
           setGloPurchaseStatus(true)
@@ -664,35 +501,7 @@ try {
              setConfirm(false);
           setInputPin("");
         } else if (error && error.response.status === 401) {
-          if (
-            error.response.headers["x-new-auth-token"] ||
-            error.response.headers.get("x-new-auth-token")
-          ) {
-            setLoading(true);
-            const newToken =
-              error.response.headers.get("x-new-auth-token") ||
-              error.response.headers["x-new-auth-token"];
-
-            if (
-              newToken !== "" &&
-              localStorage.getItem("authorisedLogin")
-            ) {
-              const setAuthorisedToken = localStorage.setItem(
-                "authorisedLogin",
-                newToken
-              );
-              if (setAuthorisedToken) {
-                await inputPinHandler();
-              }
-            } else {
-              const setGetToken = localStorage.setItem("getToken", newToken);
-              if (setGetToken) {
-                await inputPinHandler();
-              }
-            }
-          } else {
-            return setSessionModal(true);
-          }
+        setSessionModal(true)
         } else if (error && error?.response?.status === 400) {
            setGloPurchaseErrorType("Unexpected error: Purchase Failed");
           setGloPurchaseStatus(true); // Show failure popup
@@ -721,7 +530,7 @@ try {
     await buyData(
       2, // Network ID for MTN
       inputValue, // Use inputValue instead of recipientPhoneNumber
-      selectedPlan?.ID,
+      selectedPlan?.fID,
       recipientNamesGlo
     );
   };
@@ -744,15 +553,16 @@ try {
     if(Data?.ConfirmAcc === "true") {
     window.addEventListener("online", ()=> {
    if(checkNetworkError === true &&
-     (updateBalance === undefined || updateBalance === null || updateBalance === "")
-    && (newBalance === null || newBalance === undefined || newBalance === "") ){
-   return GetBalance()
+     (Balance === undefined || Balance === null ||Balance === "" )
+    ){
+     return GetBalance()
    }
    if(checkNetworkError === true && products?.length < 1  ) {
-    return fetchProducts()
+    return  fetchProducts();
    }
   })
 }
+
   return (
     <DashBoardLayout>
       <div
@@ -1323,30 +1133,20 @@ try {
                      {methodOptions.map((methodOption) => {
                                          return (
                       <div onClick={(e) => {
-                            setWalletNameGlo( methodOption.id === 1
-                              ? methodOption.code
-                            : walletNameGlo === "NGN Wallet" &&
-                               methodOption.id !== 1
-                          ? "NGN Wallet"
-                                 : "" );
-                                 setPaymentAmount(methodOption.id === 1 && paymentAmount === ""
-                                  ? newBalance === "" || newBalance === null || newBalance === undefined
-                         ? `(${updateBalance?.length > 1 ? updateBalanceToNumber?.toLocaleString("en-NG", {
+                            setWalletNameGlo( methodOption.id === 1 
+                            && paymentAmount === "" && 
+                             Balance !== null 
+                           && Balance !== undefined
+                         ?  `(${Balance?.toLocaleString("en-NG", {
                               style : "currency",
                               currency : "NGN"
-                         }) : ""})`
-                         : `(${newBalance?.length > 1 ? newBalanceToNumber?.toLocaleString("en-NG", {
-                           style : "currency",
-                           currency : "NGN"
-                         }) : ""})` : walletNameGlo === "NGN Wallet" ?  newBalance === "" || newBalance === null || newBalance === undefined
-                         ? `(${updateBalance?.length > 1 ? updateBalanceToNumber?.toLocaleString("en-NG", {
+                                 })})` :  walletNameGlo === "NGN Wallet" 
+                           &&
+                        Balance !== null && Balance !== undefined
+                          ?   `(${Balance?.toLocaleString("en-NG", {
                               style : "currency",
                               currency : "NGN"
-                         }) : ""})`
-                         : `(${newBalance?.length > 1 ? newBalanceToNumber?.toLocaleString("en-NG", {
-                           style : "currency",
-                           currency : "NGN"
-                         }) : ""})` : "");
+                         })}`  :  "");
                
                           setShowPayment(() => {
                        if (methodOption.id === 1) {
@@ -1587,7 +1387,7 @@ try {
                                                    Available Balance {"  "} 
                                                     </p>
                                                     <span className={`font-medium ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
-                                                     {`(${balanceOption !== "" || balanceOption !==null ? balanceOption?.toLocaleString("en-NG", {
+                                                     {`(${Balance !== null || Balance !==undefined ? Balance?.toLocaleString("en-NG", {
                                                        style : "currency",
                                                        currency : "NGN"
                                                      }) : "₦"})`}

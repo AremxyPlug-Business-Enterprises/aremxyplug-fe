@@ -1314,8 +1314,7 @@ export const Context = ({ children }) => {
   const [nabtebQuantityAmount, setNabtebQuantityAmount] = useState("");
   const [nabtebWalletBalance, setNabtebWalletBalance] = useState("");
   const [newBalance, setNewBalance] = useState("");
-
-  const [nabtebPinsGenerated, setNabtebPinsGenerated] = useState([]);
+const [nabtebPinsGenerated, setNabtebPinsGenerated] = useState([]);
   const [nabtebOrderId, setNabtebOrderId] = useState("");
   const [nabtebTransactionId, setNabtebTransactionId] = useState("");
   const [nabtebShowDescription, setNabtebShowDescription] = useState("");
@@ -1385,7 +1384,7 @@ export const Context = ({ children }) => {
   const [bankNameState, setBankNameState] = useState("");
   const [accountNameState, setAccountNameState] = useState("");
   const [accountNumberState, setAccountNumberState] = useState("");
-  const [userStatus, setUserStatus] = useState(false);
+
   const [idButtonState, setIdButtonState] = useState("Verify");
 
   //The transactionResponse for getting user past transactions details
@@ -1428,12 +1427,15 @@ const [currentDateInTimeStamps, setCurrentDateInTimeStamps] = useState(0);
             hour12 : false
           }) : "";
        setStartDateValueState(()=> {
-       return  editCalenderOne === "Start Date" && editCalenderTwo === "End Date" ? setIsoToLocalTime?.slice(0,10) : startDateValueState
+       return  editCalenderOne === "Start Date" && editCalenderTwo === "End Date" ?
+        setIsoToLocalTime?.slice(0,10) : startDateValueState
        })
         setEndDateValueState(()=> {
-       return  editCalenderOne !== "Start Date" && editCalenderTwo === "End Date" ? setIsoToLocalTime?.slice(0,10) : endDateValueState
+       return  editCalenderOne !== "Start Date" && (editCalenderTwo === "End Date" || editCalenderTwo?.length ===11) ? setIsoToLocalTime?.slice(0,10) : endDateValueState
        })
       }
+
+    
 
    
       
@@ -1482,8 +1484,6 @@ const [currentDateInTimeStamps, setCurrentDateInTimeStamps] = useState(0);
     setAccountNameState,
     accountNumberState,
     setAccountNumberState,
-    userStatus,
-    setUserStatus,
     setIdButtonState,
     idButtonState,
     verifyImage,
