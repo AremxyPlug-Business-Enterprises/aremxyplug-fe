@@ -6,11 +6,15 @@ import { AiOutlineArrowRight } from "react-icons/ai";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { RiArrowDropUpLine } from "react-icons/ri";
 import { AiFillLinkedin } from "react-icons/ai";
-import { AiFillFacebook } from "react-icons/ai";
-import { TiSocialInstagram } from "react-icons/ti";
 import { AiOutlineTwitter } from "react-icons/ai";
 import { GrMail } from "react-icons/gr";
 import { Link } from 'react-router-dom';
+import Ameenat  from "./ImageAbout/Ameenat CLO (1).jpg"
+import Habib  from "./ImageAbout/Founder & CEO.jpg";
+import Victory from "./ImageAbout/Victory CTO.jpg";
+import pranay from "./ImageAbout/Pranay CPO.jpg";
+import Habeebat from "./ImageAbout/Habibat CFO.jpg"
+
 
 const responsive = {
   superLargeDesktop: {
@@ -23,11 +27,11 @@ const responsive = {
     items: 2,
   },
   tablet: {
-    breakpoint: { max: 1024, min: 464 },
-    items: 3,
+    breakpoint: { max: 1024, min: 464},
+    items:2.5,
   },
   mobile: {
-    breakpoint: { max: 464, min: 0 },
+    breakpoint: { max: 375, min: 0 },
     items: 1.5,
   },
 };
@@ -40,6 +44,31 @@ export const AboutUs = () => {
     setFirstDrop((prev) => !prev);
     setButtonText((prevText) => (prevText === "More" ? "Less" : "More"));
   }
+
+const theProfileArray = [
+  { name : "Habib Kamaldeen", image : Habib,
+     profession : "Founder & CEO", description : "Visionary leader and strategist, steering business development and innovation.", 
+    linkedIn : " https://www.linkedin.com/in/habib-kamaldeen-876a8b221 ",
+     email : "", twitter : " https://x.com/aremxy_"},
+
+   { name : "Habibat Kamaldeen Raji", profession : "Chief Finance Officer (CFO)", image : Habeebat ,
+    description : " Oversees financial planning, investment, and fiscal compliance.",
+     linkedIn : " https://www.linkedin.com/in/habibat-kamaldeen-raji-2278b8254", 
+    email : "", twitter : ": https://x.com/okeowo7525 "},
+
+    { name : "Victory Otaghogho Agbabune", 
+      profession : "Chief Technology Officer (CTO):", image : Victory,
+      description : "Leads platform architecture, technology strategy, and infrastructure scaling.", 
+      linkedIn : " https://www.linkedin.com/in/victory-agbabune ", email : "",
+       twitter : " https://x.com/sadman_vick "},
+     { name : "Pranay Mishra",
+       profession : "Chief Product Officer (CPO)", image : pranay,
+       description : "Leads product vision and  strategy, design development, and oversees the entire product lifecycle from planning to execution."
+       , linkedIn : "https://www.linkedin.com/in/pm-ui-ux", email : "", twitter : "https://x.com/pranaymishra401"},
+      { name : "Amina Abiola Abidemi", profession : "Chief Legal Officer (CLO)", image : Ameenat,
+         description : " Oversees all legal affairs, regulatory compliance, and corporate governance.", 
+         linkedIn : "https://www.linkedin.com/in/amina-abiola-a64483238", email : "", twitter : "https://x.com/meenahlawdesk"},]
+
 
   return (
     <>
@@ -200,173 +229,53 @@ export const AboutUs = () => {
             removeArrowOnDeviceType={["tablet", "mobile", "desktop"]}
             transitionDuration={1000}
             showDots={false}
+            className="w-full flex gap-[10px] px-[20px]"
             customTransition="transform 1800ms ease-in-out"
           >
+     
+            {theProfileArray?.map((item)=> (
+              <div className="flex gap-[30px] w-full overflow-hidden">
             <div
-              className="w-[169px] mx-[3%] my-[5%] pt-[10%] pb-[5%] flex flex-col gap-[6px] rounded-t-[34px] lg:w-[486px] lg:rounded-t-[100px]"
+              className="w-[169px]  my-[5%]  pt-[10%] pb-[5%]
+               shrink-0 flex flex-col gap-[6px] rounded-t-[34px]
+                lg:w-[486px] lg:rounded-t-[100px]"
               style={{
                 boxShadow: "0px 0px 7.84859px rgba(0, 0, 0, 0.25)",
               }}
             >
               <img
-                className="z-50 h-[86px] w-[86x] mx-auto md:w-[143px] md:h-[143px] lg:w-[248px] lg:h-[248px]"
-                src="./Images/aboutimages/dummyimg.png"
+                className="z-50 h-[86px] w-[86x] mx-auto md:w-[143px] 
+                rounded-full md:h-[143px] lg:w-[248px] lg:h-[248px]"
+                src={item?.image}
                 alt="/"
               />
               <div className="flex flex-col gap-[5px] bg-[#EEEBEB] mt-[-18%] pt-[16%] lg:gap-[15px]">
                 <div className="font-semibold text-[9.42px] text-[#04177f] text-center md:text-[13px] lg:text-[24px]">
-                  Habib Kamaldeen
+                 {item?.name}
                 </div>
                 <div className="font-semibold text-[9.42px] text-center md:text-[13px] lg:text-[24px]">
-                  Founder & CEO
-                </div>
-                <div className="mb-[7%] text-[7.06px] text-justify w-[90%] mx-auto md:w-[80%] md:text-[10px] lg:text-[18px] lg:w-[421px] lg:leading-[30px]">
-                  Lorem ipsum dolor sit amet consectetur. Congue morbi
-                  nequevenenatis faucibus proin. Neque feugiat vel volutpat at
-                  aliquam. Consequat al.
-                </div>
-                <div className="flex justify-center items-center bg-[#04177f] text-[#ffffff] p-1 gap-[5px] lg:h-[64px] lg:text-5xl lg:gap-[15px]">
-                  <AiFillLinkedin />
-                  <AiFillFacebook />
-                  <TiSocialInstagram />
-                  <AiOutlineTwitter />
-                  <GrMail />
-                </div>
-              </div>
-            </div>
-
-            <div
-              className="w-[169px] mx-[3%] my-[5%] pt-[10%] pb-[5%] flex flex-col gap-[6px] rounded-t-[34px] lg:w-[486px] lg:rounded-t-[100px]"
-              style={{
-                boxShadow: "0px 0px 7.84859px rgba(0, 0, 0, 0.25)",
-              }}
-            >
-              <img
-                className="z-50 h-[86px] w-[86x] mx-auto md:w-[143px] md:h-[143px] lg:w-[248px] lg:h-[248px]"
-                src="./Images/aboutimages/dummyimg.png"
-                alt="/"
-              />
-              <div className="flex flex-col gap-[5px] bg-[#EEEBEB] mt-[-18%] pt-[16%] lg:gap-[15px]">
-                <div className="font-semibold text-[9.42px] text-[#04177f] text-center md:text-[13px] lg:text-[24px]">
-                  Habibat Kamaldeen Raji
-                </div>
-                <div className="font-semibold text-[9.42px] text-center md:text-[13px] lg:text-[24px]">
-                  CFO/Accountant
+                  {item?.profession}
                 </div>
                 <div className="mb-[7%] text-[7.06px] text-justify w-[90%] mx-auto md:text-[10px] md:w-[80%] lg:text-[18px] lg:w-[421px] lg:leading-[30px]">
-                  Lorem ipsum dolor sit amet consectetur. Congue morbi
-                  nequevenenatis faucibus proin. Neque feugiat vel volutpat at
-                  aliquam. Consequat al.
+                  {item?.description}
                 </div>
-                <div className="flex justify-center items-center bg-[#04177f] text-[#ffffff] p-1 gap-[5px] lg:h-[64px] lg:text-5xl lg:gap-[15px]">
+                <div className="flex justify-center items-center  bg-[#04177f] text-[#ffffff]
+                 p-1 gap-[20px] lg:h-[64px] lg:text-5xl lg:gap-[15px]">
+                
+                <a href={item?.linkedIn}>
                   <AiFillLinkedin />
-                  <AiFillFacebook />
-                  <TiSocialInstagram />
-                  <AiOutlineTwitter />
+                  </a>
+                  <a href={item?.twitter} className="">
+                  <AiOutlineTwitter href={item?.twitter} />
+                  </a>
                   <GrMail />
                 </div>
               </div>
             </div>
-
-            <div
-              className="w-[169px] mx-[3%] my-[5%] pt-[10%] pb-[5%] flex flex-col gap-[6px] rounded-t-[34px] lg:w-[486px] lg:rounded-t-[100px]"
-              style={{
-                boxShadow: "0px 0px 7.84859px rgba(0, 0, 0, 0.25)",
-              }}
-            >
-              <img
-                className="z-50 h-[86px] w-[86x] mx-auto md:w-[143px] md:h-[143px] lg:w-[248px] lg:h-[248px]"
-                src="./Images/aboutimages/dummyimg.png"
-                alt="/"
-              />
-              <div className="flex flex-col gap-[5px] bg-[#EEEBEB] mt-[-18%] pt-[16%] lg:gap-[15px]">
-                <div className="font-semibold text-[9.42px] text-[#04177f] text-center md:text-[13px] lg:text-[24px]">
-                  Habibat Kamaldeen Raji
-                </div>
-                <div className="font-semibold text-[9.42px] text-center md:text-[13px] lg:text-[24px]">
-                  CFO/Accountant
-                </div>
-                <div className="mb-[7%] text-[7.06px] text-justify w-[90%] mx-auto md:text-[10px] md:w-[80%] lg:text-[18px] lg:w-[421px] lg:leading-[30px]">
-                  Lorem ipsum dolor sit amet consectetur. Congue morbi
-                  nequevenenatis faucibus proin. Neque feugiat vel volutpat at
-                  aliquam. Consequat al.
-                </div>
-                <div className="flex justify-center items-center bg-[#04177f] text-[#ffffff] p-1 gap-[5px] lg:h-[64px] lg:text-5xl lg:gap-[15px]">
-                  <AiFillLinkedin />
-                  <AiFillFacebook />
-                  <TiSocialInstagram />
-                  <AiOutlineTwitter />
-                  <GrMail />
-                </div>
-              </div>
-            </div>
-
-            <div
-              className="w-[169px] mx-[3%] my-[5%] pt-[10%] pb-[5%] flex flex-col gap-[6px] rounded-t-[34px] lg:w-[486px] lg:rounded-t-[100px] "
-              style={{
-                boxShadow: "0px 0px 7.84859px rgba(0, 0, 0, 0.25)",
-              }}
-            >
-              <img
-                className="z-50 h-[86px] w-[86x] mx-auto md:w-[143px] md:h-[143px] lg:w-[248px] lg:h-[248px]"
-                src="./Images/aboutimages/dummyimg.png"
-                alt="/"
-              />
-              <div className="font-semibold flex flex-col gap-[5px] bg-[#EEEBEB] mt-[-18%] pt-[16%] lg:gap-[15px]">
-                <div className="text-[9.42px] text-[#04177f] text-center md:text-[13px] lg:text-[24px]">
-                  Habibat Kamaldeen Raji
-                </div>
-                <div className="font-semibold text-[9.42px] text-center md:text-[13px] lg:text-[24px]">
-                  CFO/Accountant
-                </div>
-                <div className="mb-[7%] text-[7.06px] text-justify w-[90%] mx-auto md:text-[10px] md:w-[80%] lg:text-[18px] lg:w-[421px] lg:leading-[30px]">
-                  Lorem ipsum dolor sit amet consectetur. Congue morbi
-                  nequevenenatis faucibus proin. Neque feugiat vel volutpat at
-                  aliquam. Consequat al.
-                </div>
-                <div className="flex justify-center items-center bg-[#04177f] text-[#ffffff] p-1 gap-[5px] lg:h-[64px] lg:text-5xl lg:gap-[15px]">
-                  <AiFillLinkedin />
-                  <AiFillFacebook />
-                  <TiSocialInstagram />
-                  <AiOutlineTwitter />
-                  <GrMail />
-                </div>
-              </div>
-            </div>
-
-            <div
-              className="w-[169px] mx-[3%] my-[5%] pt-[10%] pb-[5%] flex flex-col gap-[6px] rounded-t-[34px] lg:w-[486px] lg:rounded-t-[100px]"
-              style={{
-                boxShadow: "0px 0px 15.84859px rgba(0, 0, 0, 0.25)",
-              }}
-            >
-              <img
-                className="z-50 h-[86px] w-[86x] mx-auto md:w-[143px] md:h-[143px] lg:w-[248px] lg:h-[248px]"
-                src="./Images/aboutimages/dummyimg.png"
-                alt="/"
-              />
-              <div className="flex flex-col gap-[5px] bg-[#EEEBEB] mt-[-18%] pt-[16%] lg:gap-[15px]">
-                <div className="font-semibold text-[9.42px] text-[#04177f] text-center md:text-[13px] lg:text-[24px]">
-                  Habibat Kamaldeen Raji
-                </div>
-                <div className="font-semibold text-[9.42px] text-center md:text-[13px] lg:text-[24px]">
-                  CFO/Accountant
-                </div>
-                <div className="mb-[7%] text-[7.06px] text-justify w-[90%] mx-auto md:text-[10px] md:w-[80%] lg:text-[18px] lg:w-[421px] lg:leading-[30px]">
-                  Lorem ipsum dolor sit amet consectetur. Congue morbi
-                  nequevenenatis faucibus proin. Neque feugiat vel volutpat at
-                  aliquam. Consequat al.
-                </div>
-                <div className="flex justify-center items-center bg-[#04177f] text-[#ffffff] p-1 gap-[5px] lg:h-[64px] lg:text-5xl lg:gap-[15px]">
-                  <AiFillLinkedin />
-                  <AiFillFacebook />
-                  <TiSocialInstagram />
-                  <AiOutlineTwitter />
-                  <GrMail />
-                </div>
-              </div>
-            </div>
-          </Carousel>
+          </div>
+            ))}
+              
+ </Carousel>
         </div>
       </div>
       <br></br>
@@ -599,7 +508,11 @@ export const AboutUs = () => {
       </div>
 
       <Link to="/ContactUs">
-          <div className="mb-[25%] lg:mb-[15%] bg-[#04177f] w-[75px] h-[24px] text-white p-[2%] rounded-sm mx-auto text-center mt-[7%] text-[7px] lg:p-0 lg:flex lg:justify-center lg:items-center lg:mt-[5%] lg:w-[170.54px] lg:h-[47px] lg:text-[13px] lg:rounded-md">
+          <div className="mb-[25%] lg:mb-[15%] bg-[#04177f]
+           w-[120px] text-white py-[8px] rounded-[8px] 
+           mx-auto text-center mt-[7%] text-[12px] lg:p-0 lg:flex lg:justify-center 
+            lg:items-center lg:mt-[5%] lg:w-[170.54px] lg:h-[47px] 
+            lg:text-[13px] lg:rounded-md">
             Contact Us
           </div>
         </Link>

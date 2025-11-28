@@ -37,7 +37,7 @@ function NgnVirtualAccount(Data) {
       })
         if(response.status === 200 || response.status === 201){
            alert("Virtual Account Created")
-           localStorage.setItem("AccCreated","true")
+           localStorage.setItem("80pcs","true")
            AuthUsed = usernameToken || emailToken;
            await CheckVirtualAcc(AuthUsed, customerDetail, setLoading, setVirtualAccCreated, 
             setBankNameState, setAccountNameState, setAccountNumberState, 

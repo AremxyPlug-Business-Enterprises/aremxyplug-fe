@@ -57,12 +57,7 @@ export default function BvnVerification(Data) {
 
   const { full_name, phone } = customerDetail;
 
-  //Function to inform a user that account has previously been craeted
-  // and set the following functions as stated bellow
-  // const AccCreatedPrev = ()=>{
-  //   setBvnButtonState("Virtual Account Created");
-  //   alert("Account has been created previously")
-  // }
+
   const BvnFunctionState = async (
     url,
     data,
@@ -139,9 +134,8 @@ export default function BvnVerification(Data) {
           statusBvn();
           verifyPopBvn();
           setBvnButtonState(buttonStateSuccess);
-          localStorage.setItem("bvnVerification", "true");
-          localStorage.setItem("idVerification", "true");
-            
+          localStorage.setItem("Zxfer", "true");// Bvn Verification
+            localStorage.setItem("Qhfde", "true"); // Id Verification
         }
       } catch (error) {
         if (error && error.response === undefined) {
@@ -218,8 +212,8 @@ export default function BvnVerification(Data) {
                   (Data.ConfirmId === "true" || Data.ConfirmBvn === "true")
                     ? bvnVerifiedSuccess
                     : bvnVerifyImage === NotVerifiedImage &&
-                      Data.ConfirmId === "false" &&
-                      Data.ConfirmBvn === "false"
+                     ((Data.ConfirmId === "false" &&
+                      Data.ConfirmBvn === "false") || (!Data?.ConfirmId  && !Data?.Confirmid))
                     ? NotVerifiedImage
                     : bvnVerifyImage === bvnVerifiedSuccess ||
                       Data.ConfirmId === "true" ||
@@ -399,7 +393,7 @@ export default function BvnVerification(Data) {
                         isDarkMode ? "text-white" : ""
                       }`}
                     >
-                      {(Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false")
+                      {((Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false") || (!Data?.ConfirmId  || !Data?.ConfirmBvn ))
                        && verificationResponse?.data?.data?.gender === undefined ? genderResult : verificationResponse?.data?.data?.gender}
                     </h2>
                     <img
@@ -469,11 +463,11 @@ export default function BvnVerification(Data) {
                     }}
                   >
                     <input
-                      value={(Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false")
+                      value={((Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false") || (!Data?.ConfirmId && !Data?.ConfirmBvn))
                        && verificationResponse?.data?.data?.dob === undefined ? bvnDateOfBirth : verificationResponse?.data?.data?.dob}
                       ref={dateInputRef}
                       onChange={(e) => {
-                        setBvnDateOfBirth(e.target.value);
+                         setBvnDateOfBirth(e.target.value);
                       }}
                       className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
                          sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px]
@@ -514,7 +508,7 @@ export default function BvnVerification(Data) {
                     House Address
                   </h2>
                   <input
-                    value={(Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false")
+                    value={((Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false") || (!Data?.ConfimId && !Data?.ConfirmBvn))
                        && verificationResponse?.data?.data?.address === undefined ? idAddress : verificationResponse?.data?.data?.address}
                     onChange={(e) => {
                       setIdAddress(e.target.value);
@@ -622,7 +616,8 @@ export default function BvnVerification(Data) {
                     value={
                       (verificationResponse?.data?.data?.bvn !== undefined && Data.ConfirmBvn === "true")
                         ? `${bvnNumber?.slice(0, 4)}*******`
-                        : verificationResponse?.data?.data?.bvn === undefined && (Data?.ConfirmId === "true" || Data?.ConfirmBvn === "true") ? "NO BVN" :  bvnNumber
+                        : verificationResponse?.data?.data?.bvn === undefined && (Data?.ConfirmId === "true" || Data?.ConfirmBvn === "true") ? "NO BVN"
+                         :  bvnNumber?.length < 1 && Data?.ConfirmBvn === "false" ? bvnNumber : ""
                     }
                     onChange={(e) => {
                       setBvnNumber(e.target.value);
@@ -669,7 +664,7 @@ export default function BvnVerification(Data) {
            (Data.ConfirmBvn === "true" || Data?.ConfirmId === "true") ? "bg-slate-400" : "bg-[#04177F]"
          }`}
                 >
-                  {bvnButtonState &&
+                  {
                   (Data.ConfirmBvn === "true" || Data.ConfirmId === "true")
                     ? "Verified"
                     : "Verify"}
@@ -690,7 +685,7 @@ export default function BvnVerification(Data) {
           {bvnQuery && (
             <Modal>
               <div className=" h-[100%] flex flex-col w-[100%]
-               items-center justify-center  ">
+               items-center justify-center">
                 <div
                   className={`bvnQuery flex flex-col shadow-[0px_0px_8.3274px_0px_rgba(0 0 0,0.25)]
                      rounded-[8px] shadow-[0px_0px_8.3274px_0px_rgba(0,0,0,0.25)] md:rounded-[11.736px]  

@@ -42,9 +42,11 @@ import arrowRight from "../../../Components/EducationPins/imagesEducation/educat
   // };
 const [balanceStatus,setBalanceStatus] = useState("")
    let balanceStringToNum = Number(newBalance);
-   const updateBalance = (newBalance === "" && passDataBalance?.data?.data?.data?.balance) ? Number(passDataBalance?.data?.data?.data?.balance) : balanceStringToNum;
+   const updateBalance = (newBalance === "" && passDataBalance?.data?.data?.data?.balance)
+    ? Number(passDataBalance?.data?.data?.data?.balance) : balanceStringToNum;
           let DstvAmountToNumber = Number(dstvAmount);
          let CheckSufficiency = DstvAmountToNumber > updateBalance;
+
       useEffect(()=> {
         const HandleBalanceStatus = ()=> {
           if(CheckSufficiency){
@@ -55,7 +57,6 @@ const [balanceStatus,setBalanceStatus] = useState("")
         }
         HandleBalanceStatus()
       },[CheckSufficiency])
-        console.log(updateBalance, DstvAmountToNumber)
 
   const valueWithoutTilde = selectedOptionDstv.split(" ~ ")[0];
   // const trimmedValue = valueWithoutTilde.trim();

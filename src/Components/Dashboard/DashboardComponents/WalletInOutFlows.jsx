@@ -1,14 +1,14 @@
 import  { useState, useEffect } from "react";
 import { RxDotFilled } from "react-icons/rx";
 import styles from "./component.module.css";
-import { GetFunction} from "../../ApiCollection.jsx/ApiBuck";
+import { GetFunction, InternalLoginSession} from "../../ApiCollection.jsx/ApiBuck";
 import { useContext } from "react";
 import { ContextProvider } from "../../Context";
 import  { RecentTransaction } from  "./RecentTransaction";
 
 
 
-export const WalletInOutFlows = ({className}) => {
+export const WalletInOutFlows = ({sessionModal, setSessionModal}) => {
   const { volumeValueToggle, 
     isValue,
      isDarkMode,
@@ -17,7 +17,8 @@ export const WalletInOutFlows = ({className}) => {
        editCalenderTwo, 
       handleStateCalender,
       startDateValueState,
-      endDateValueState
+      endDateValueState,
+      setStartDateValueState
 
   } =
     useContext(ContextProvider);
@@ -92,7 +93,7 @@ const currentDate = new Date();
          return `?start_date=${startDateValueState}&end_date=${endDateValueState}`
         }else if((editCalenderOne === "Start Date" && editCalenderOne !== undefined) 
           && (editCalenderTwo === "End Date" && editCalenderTwo !== undefined) && calenderState === true){
-            console.log("I am running3")
+           setStartDateValueState(getSlicedDate)
           return `?start_date=${getSlicedDate}`
         }else if(((editCalenderOne === "Start Date" && editCalenderOne !== undefined)  || (editCalenderOne !== "Start Date" && editCalenderOne !== undefined))
           && ((editCalenderTwo === "End Date" && editCalenderTwo !== undefined) || (editCalenderTwo !== "End Date" && editCalenderTwo !== undefined))
@@ -110,14 +111,8 @@ const currentDate = new Date();
         const FailedHandler = async(ErrorType)=> {
       if(ErrorType === "unauthorised"){
         setTransactionHistoryError("unauthorised");
-        await GetFunction(path, setLoading, SuccessHandler,
-          (ErrorType)=> {
-          if(ErrorType === "Sever error"){
-          alert("Failed to retrieve transactions")
-          }else if(ErrorType === "User error" || ErrorType === "Network error"){
-             setTransactionHistoryError("Network error")
-          }
-        }, setTransactionResponse)
+        if(sessionModal) return;
+        if(sessionModal === false) return setSessionModal(true)
       }else if(ErrorType === "Network error" || ErrorType === "User error" || ErrorType === "Bad request"){
        setTransactionHistoryError("Network error")
       }else if(ErrorType === "Server error"){
@@ -574,9 +569,13 @@ const currentDate = new Date();
        <RecentTransaction transactionResponse = {transactionResponse} 
        transactionHistoryError={transactionHistoryError} loading={loading}
         GetTransactionInformation ={GetTransactionInformation} handleStateCalender= {handleStateCalender}/>
-       
-       
+
+         {sessionModal && (
+          <InternalLoginSession setExpiredSessionLogin={setSessionModal}/>
+       )}
+       </div>
+
+       //Internal Login session
       
-    </div>
   );
 };

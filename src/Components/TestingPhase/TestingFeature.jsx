@@ -87,12 +87,12 @@ export const TestingFeature=()=> {
           className="overflow-hidden rounded-2xl shadow-lg bg-white border border-gray-100"
         >
           <table className="w-full">
-            <thead className="bg-[#0A2540] text-white">
+            <thead className="bg-[#0A2540] text-white w-full">
               <tr>
-                <th className="py-4 px-6 text-left text-lg font-semibold">
+                <th className="lg:px-6 py-4 px-2  text-left text-lg font-semibold">
                   Feature
                 </th>
-                <th className="py-4 px-6 text-left text-lg font-semibold">
+                <th className="lg:px-6 py-4 px-2  text-left text-lg font-semibold">
                   What to Test
                 </th>
               </tr>
@@ -105,18 +105,21 @@ export const TestingFeature=()=> {
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.4, delay: index * 0.05 }}
-                  className={`border-t border-gray-100 hover:bg-yellow-50 transition-all duration-300 ${
+                  className={` hover:bg-yellow-50 transition-all duration-300
+                 
+                      ${
                     index % 2 === 0 ? "bg-blue-50/40" : "bg-white"
                   }`}
                 >
                   {/* Feature Cell */}
-                  <td className="py-5 px-6 flex items-center gap-3 text-gray-800">
+                  
+                  <td className="flex items-center gap-3  lg:h-[100px]   lg:py-0 py-4 leading-relaxed text-gray-800">
                     {item.icon}
-                    <span className="font-medium">{item.title}</span>
+                    <span className="font-medium leading-relaxed">{item.title}</span>
                   </td>
 
                   {/* Description Cell */}
-                  <td className="py-5 px-6 text-left text-gray-700 leading-relaxed">
+                  <td className=" text-left lg:h-[100px] lg:px-6 px-2 py-4 lg:py-0  text-gray-700 leading-relaxed">
                     {item.description}
                   </td>
                 </motion.tr>

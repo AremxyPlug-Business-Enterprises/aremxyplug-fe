@@ -41,6 +41,10 @@ export const RecentTransaction = ({transactionResponse, transactionHistoryError,
     <p  className  ="lg:text-[12px] text-[#04177f] lg:leading-[16px] text-[8px] leading-[12px]">
       {endDateValueState}</p>
    </div>
+    }else if(editCalenderOne === "Start Date" && editCalenderTwo === "End Date" ){
+   setStateDateEdit(()=> {
+     return <p>{startDateValueState}</p>
+   })
     }
   })
   await GetTransactionInformation(calender);

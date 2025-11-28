@@ -162,7 +162,7 @@ if((clickedoption === "NGN")){
       })
         if(response.status === 200 || response.status === 201){
            alert("Virtual Account Created")
-           localStorage.setItem("AccCreated","true")
+           localStorage.setItem("80pcs","true")
            AuthUsed = usernameToken || emailToken;
            await CheckVirtualAcc(AuthUsed, customerDetail, setDashLoading, setVirtualAccCreated, 
             setBankNameState, setAccountNameState, setAccountNumberState, 
@@ -926,7 +926,8 @@ return (
           </div>
 
           <QuickFeatures />
-          <WalletInOutFlows className={styles.selected} />
+          <WalletInOutFlows className={styles.selected} sessionModal = {sessionModal}
+           setSessionModal ={setSessionModal} />
           
         </div>
         <div

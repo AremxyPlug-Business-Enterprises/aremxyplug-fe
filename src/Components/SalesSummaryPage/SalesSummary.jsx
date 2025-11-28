@@ -282,7 +282,11 @@ setDateEdit(()=> {
   const startDateOptions 
   = startDateValueState?.length && startDateValueState !== ""
    ? startDateValueState : slicedDate;
-  await GetTransactionInformation(startDateOptions, "", selectedProduct);
+  await GetTransactionInformation(startDateOptions, "", 
+    selectedProduct === "Airtime Top-up" ?
+     "airtime" : selectedProduct === "Data Top-up" ? "data" : 
+     selectedProduct === "Bills Payment" ? "bills" 
+     : selectedProduct === "All Products" ? "All Products" : ""  );
  }
  //Filter By Date
  const FilterByDateFunc = async()=> {
@@ -337,13 +341,13 @@ setDateEdit(()=> {
 // const BalanceValue = newBalance === "" || newBalance === null 
 // || newBalance === undefined 
 // ? Number(passDataBalance?.data?.data?.data?.balance) : Number(newBalance) 
-console.log(salesResponse?.data?.data?.data?.summary);
+
 
 const symbolValue = selected === "USD" ? "$" : selected === "AUD" ? 
  "AU$" : selected === "KES" ?   "KSh" : selected === "EUR" ? "€" : selected === "GBP" ? "£" : "₦";
 
 
-const product = ["All Products", "Airtime Top-up", "Data Top-up", "Bills payment"]
+const product = ["All Products", "Airtime Top-up", "Data Top-up", "Bills Payment"]
     return (
      <DashBoardLayout>
         <>
@@ -636,7 +640,7 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
                       }else if(option === "Data Top-up"){
                      GetTransactionInformation(startDateValueState, endDateValueState, "data", )
                              setIsOpen1(false);
-                     }else if(option === "Bills payment"){
+                     }else if(option === "Bills Payment"){
                      GetTransactionInformation(startDateValueState, endDateValueState, "bills")
                           setIsOpen1(false);
                       }else if(option === "All Products"){

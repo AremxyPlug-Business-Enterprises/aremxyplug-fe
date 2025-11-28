@@ -140,13 +140,7 @@ const GetRecipient = async()=> {
       
       const FailedHandler = async(ErrorType)=> {
       if(ErrorType === "unauthorised"){
-      await GetFunction("bank-recipient", 
-setLoading, ()=> {},
-(ErrorType)=> {
-  if(ErrorType === "unauthorised"){
-    setSessionModal(true)
-  }
-}, setRecipientResponse)
+     setSessionModal(true)
       }else if(ErrorType === "Server error"){
          alert("Unable to get your saved recipients at the moment")
       }else if(ErrorType === "Network error" || ErrorType === "User error"){

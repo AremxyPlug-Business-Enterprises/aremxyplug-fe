@@ -374,24 +374,28 @@ console.log(number?.length);
     }
     return 'Unknown network';
   }
-const DetectAndErrorNetFunc = (value)=> {
+const DetectAndErrorNetFunc = (name, value)=> {
+  console.log("Checking MTN Number");
+   if(value?.length < 11){
+    setErrors({})
+  }
   if(value?.length === 11){
     const detectedNetwork = validateNigerianNumberByNetwork(value);
   console.log("Detected network:", detectedNetwork);
-
-  if ((detectedNetwork !== networkName) && networkName?.length > 1) {
-    setErrors({
-      recipientNumber: `Invalid ${networkName} number. Please enter a valid ${networkName} number.`,
+ 
+  if ((detectedNetwork !== name) && name?.length > 1) {
+   setErrors({
+      recipientNumber: `Invalid ${name} number. Please enter a valid ${name} number.`,
     });
    return true
    
-  }else if(networkName?.length < 1){
+  }else if(name?.length < 1){
        setErrors({
       recipientNumber: `Select Network Type`,
     });
     return true
   
-  }else{
+  } else{
     setErrors({})
     return false
   }
@@ -474,21 +478,16 @@ const handleProceed = (e) => {
 
 //Setting the network on the user interface
  const handleSelectNetwork = (name, image, val, netId) => {
-        setNetworkName(()=> {
-          if(networkName?.length < 1){
-          return name;
-    }else if(networkName?.length > 1 && networkName?.length
-     && (recipientNumber?.length > 1 || recipientNumber?.length === 11)){
-       DetectAndErrorNetFunc(recipientNumber);
-      return name;
- }
-        }
-      );
+  setErrors({});
+        setNetworkName(name)
         setNetworkImage(image);
         setDiscount(val);
         setShowList(false);
         setSelected(true);
         setNetworkId(netId);
+         if(recipientNumber?.length > 1 && recipientNumber?.length === 11){
+        DetectAndErrorNetFunc(name, recipientNumber)
+         }
     }
 console.log(recipientList);
    
@@ -536,7 +535,6 @@ console.log(recipientList);
         setInputPin('')
     }
 
-    console.log(confirm)
 
     const {
         transactSuccessPopUp,
@@ -593,11 +591,7 @@ console.log(recipientList);
           }else if(error && error.response.status === 401){
         setInputPin("");
         setSessionModal(true)
-        //handleTransactionSuccessClose()
-        //setIsLoading(false)
-        //RefreshToken function to be ran here
-
-                return { statusCode: error.response.status, data: null };
+          return { statusCode: error.response.status, data: null };
         }
             }finally {
                 setIsLoading(false)
@@ -637,28 +631,6 @@ console.log(recipientList);
         setRecipientNumber(numericValue);
     };
 
-//     const HandleAirtime = async()=> {
-//         const setFailedPin = async(ErrorType)=> {
-//         if(ErrorType === "unauthorised"){
-//              await VerifyTransPin(inputPin,
-//     (ErrorType)=> {
-//         if(ErrorType === "unauthorised"){
-//             return setSessionModal(true)
-//         }
-//     },
-//       setIsLoading,
-//        setErrorMessage,
-//        handleTransactionSuccessClose)
-//         }
-//         }
-//    await VerifyTransPin(inputPin,
-//     setFailedPin,
-//       setIsLoading,
-//        setErrorMessage,
-//        handleTransactionSuccessClose)
-// }
-
-
  const HandleAirtime = async () => {
   await VerifyTransPin(
     inputPin,
@@ -670,7 +642,7 @@ console.log(recipientList);
       if (ErrorType === "unauthorised") {
         setSessionModal(true);
       }else if(ErrorType === "Network error" || ErrorType === "User error"){
-        alert("Your internet connectiom is quite unstable.")
+        alert("Your internet connection is quite unstable.")
         setAirtimeTransactionNetwork(true)
       }
     },
@@ -958,7 +930,8 @@ className={`flex justify-left  w-[100%] items-center`}>
                 } `}
  required placeholder='Add recipient phone number' onChange={(event) => {
      handleChange(event);
-               DetectAndErrorNetFunc(event.target.value);
+      setRecipientNumber(event.target.value);
+               DetectAndErrorNetFunc(networkName, event.target.value);
               CheckRecipientInfoInList(event.target.value)
                      
         }} value={recipientNumber} />
@@ -998,6 +971,7 @@ className={`flex justify-left  w-[100%] items-center`}>
                        md:text-[13px]
                       md:font-[600] font-[400`}>Recipient Name 
                     <span className={`${styles.span4} !text-[15px] md:!text-base`}>(optional)</span></h2>
+                 
                                 <div className={`relative `}>
                                    
                <input type='text' className={`mt-2 md:mt-0 rounded-[10px]
@@ -1269,7 +1243,7 @@ className={`flex justify-left  w-[100%] items-center`}>
                     <div className={styles.add}>
                         <h2 className='!text-[13px] md:!text-base'>
                           {RecipientExistCheck?.phone === recipientNumber 
-                          && recipientName?.length > 1 && networkName?.length > 1
+                           && networkName?.length > 1
                           && !errors?.recipientNumber
                          
                            ? "Exists in recipients" : "Add to recipients"}
@@ -1278,8 +1252,7 @@ className={`flex justify-left  w-[100%] items-center`}>
                             
                         <div onClick={() => { 
                        if(networkName?.length > 1 && 
-                          recipientName?.length > 1 
-                          && recipientNumber?.length > 1 && recipientNumber?.length === 11
+                         recipientNumber?.length > 1 && recipientNumber?.length === 11
                            && RecipientExistCheck?.phone !== recipientNumber &&   !errors?.recipientNumber) {
                                handleAddRecipient();
                             }
@@ -1288,7 +1261,9 @@ className={`flex justify-left  w-[100%] items-center`}>
                              lg:w-[50px] lg:h-[22px] lg:rounded-full 
                              rounded cursor-pointer 
                              ${
-                             (RecipientExistCheck?.phone === recipientNumber &&  recipientNumber?.length === 11   && !errors?.recipientNumber ) 
+                             (RecipientExistCheck?.phone === recipientNumber
+                               &&  recipientNumber?.length === 11   
+                               && !errors?.recipientNumber  ) 
                              ? "bg-[#77ff60]" : "bg-[#b1b0b0]"}`}>
                             <div className={`rounded-full w-[8.5px]
                                  h-[7.4px] md:w-[14px] md:h-[12px] lg:h-[22px] lg:w-[21px] lg:drop-shadow-md bg-[#fff]

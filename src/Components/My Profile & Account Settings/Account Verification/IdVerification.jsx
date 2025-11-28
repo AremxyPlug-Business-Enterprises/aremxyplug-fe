@@ -154,26 +154,25 @@ export default function IdVerification(Data) {
     verifyPopId
   ) => {
    
-    // const AccCreated = localStorage.getItem("AccCreated")
+    // const AccCreated = localStorage.getItem("80pcs")
     
     if (
       idNumber &&
-      idResult &&
+       idResult &&
       idDateOfBirth &&
       genderResult &&
       idAddress 
       // idCountry
     ) {
-      setLoading(true);
-        setErrorSubmit(false);
+     
     
      // console.log(data)
       try {
-        if (idButtonState === "Verify") {
+         setLoading(true);
           setErrorSubmit(false);
           PendingImageFxn();
           PendingText();
-        }
+        
         const response = await axios.post(url, data, {
           headers: {
             "Content-Type": "application/json",
@@ -186,8 +185,8 @@ export default function IdVerification(Data) {
           statusId();
           verifyPopId();
           setIdButtonState(buttonStateSuccess);
-          localStorage.setItem("idVerification", "true");
-          localStorage.setItem("bvnVerification", "true");
+           localStorage.setItem("Zxfer", "true");// Bvn Verification
+            localStorage.setItem("Qhfde", "true"); // Id Verification
         }
       } catch (error) {
         if(error && (error.response === undefined)){
@@ -398,8 +397,9 @@ export default function IdVerification(Data) {
                         isDarkMode ? "text-slate-50" : ""
                     }`}
                     >
-                      {(Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false")
-                       && verificationResponse?.data?.data?.gender === undefined ? genderResult : verificationResponse?.data?.data?.gender}
+                      {((Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false") || (!Data?.ConfirmId  || !Data?.ConfirmBvn ))
+                       && verificationResponse?.data?.data?.gender === undefined ?
+                        genderResult : verificationResponse?.data?.data?.gender}
                     </h2>
                     <img
                       src={ArrowDown}
@@ -469,13 +469,13 @@ export default function IdVerification(Data) {
                     }}>
                   <input
 
-                    value={(Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false")
+                    value={((Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false") || (!Data?.ConfirmId && !Data?.ConfirmBvn ))
                        && verificationResponse?.data?.data?.dob === undefined ? idDateOfBirth : verificationResponse?.data?.data?.dob}
                     ref={dateInputRef}
                     onChange={(e) => {
                       // const dobValue = dateInputRef.current ? dateInputRef.current.value : "";
                       // setIdDateOfBirth(dobValue);
-                      if(Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false"){
+                      if((Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false") || (!Data?.ConfirmId && !Data?.ConfirmBvn)){
                       setIdDateOfBirth(e.target.value);
                       }
                     }}
@@ -515,10 +515,10 @@ export default function IdVerification(Data) {
                     House Address
                   </h2>
                   <input
-                    value={(Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false")
+                    value={((Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false") || (!Data?.ConfirmId && !Data?.ConfirmBvn))
                        && verificationResponse?.data?.data?.address === undefined ? idAddress : verificationResponse?.data?.data?.address}
                     onChange={(e) => {
-                      if(Data.ConfirmId === "false" || Data.ConfirmBvn === "false"){
+                      if(((Data.ConfirmId === "false" || Data.ConfirmBvn === "false") || (!Data?.ConfirmId && !Data?.ConfirmBvn)) ){
                       setIdAddress(e.target.value);
                       }
                     }}
@@ -530,7 +530,9 @@ export default function IdVerification(Data) {
     md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer
      outline-0 border-[0.24px] lg:border-[0.4px] w-full 
      h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C]
-     ${ verificationResponse?.data?.data?.address === undefined && (Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false" ) ? "" : "uppercase"}
+     ${ verificationResponse?.data?.data?.address === undefined && 
+      ((Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false" ) || (!Data?.ConfirmId && !Data?.ConfirmBvn)) 
+      ? "" : "uppercase"}
       px-[11px] md:px-[6px] lg:px-[10px] text-[#000] self-center  ${
       isDarkMode
         ? "bg-black text-white border border-white"
@@ -558,7 +560,7 @@ export default function IdVerification(Data) {
                     const numbersOnly = e.target.value.replace(/\D/g, "");
                     e.target.value = numbersOnly;
                   }}
-                  value={(Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false")
+                  value={((Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false") || (!Data?.ConfirmId && !Data?.ConfirmBvn)) 
                        && verificationResponse?.data?.data?.postalcode === undefined ? idPostalCode : (Data?.ConfirmId === "true" || Data?.ConfirmBvn === "true") && 
                        verificationResponse?.data?.data?.postalcode === undefined && (Data?.ConfirmId === "true" || Data?.ConfirmBvn === "true") ? "NO POSTAL CODE" : verificationResponse?.data?.data?.postalcode}
                   onChange={(e) => {
@@ -714,13 +716,15 @@ export default function IdVerification(Data) {
       const numbersOnly = e.target.value.replace(/\D/g, '');
       e.target.value = numbersOnly;
     })}
-    value={  (verificationResponse?.data?.data?.nin !== undefined && Data.ConfirmBvn === "true")
+    value={  (verificationResponse?.data?.data?.nin !== undefined && Data.ConfirmId === "true")
                         ? `${idNumber?.slice(0, 4)}*******`
                         : verificationResponse?.data?.data?.nin === undefined  && (Data?.ConfirmId === "true" || Data?.ConfirmBvn === "true")
                          ? "NO ID" :  idNumber}
     
     onChange={(e) => {
+      if((Data.ConfirmBvn === "false" && Data.ConfirmId === "false") || (!Data.ConfirmBvn && !Data.ConfirmId)){
       setIdNumber(e.target.value);
+      }
     }}
      className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
     sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px]
@@ -798,8 +802,7 @@ border-[0.4px]  border-[#7E7E7E] opacity-50 cursor-pointer ${isDarkMode ? "bg-bl
          font-[600] text-[13px] leading-[18px] lg:text-[16px] text-center text-white lg:leading-[24px
 
          ${(Data.ConfirmId === "true" || Data.ConfirmBvn=== "true") ?"bg-slate-400" : "bg-[#04177F]"}`}>
-       {(idButtonState) && 
-       (   Data.ConfirmId === "true"  || Data.ConfirmBvn=== "true" ? "Verified" : "Verify" )}
+       {( Data.ConfirmId === "true"  || Data.ConfirmBvn=== "true" ? "Verified" : "Verify" )}
 
         </button>
        { errorSubmit  && (

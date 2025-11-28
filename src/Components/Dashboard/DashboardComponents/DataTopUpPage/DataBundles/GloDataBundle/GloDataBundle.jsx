@@ -412,7 +412,7 @@ fetchProducts();
         }, {})
       );
     } else if (
-      validateNigerianNumberByNetwork(recipientPhoneNumberGlo) !== "GLO"
+      validateNigerianNumberByNetwork(inputValue) !== "GLO"
     ) {
       setErrors({
         recipientPhoneNumber: `Invalid GLO number. Please enter a valid GLO number.`,
@@ -490,6 +490,7 @@ try {
         }
         return { statusCode: response.status, data: response.data };
       } catch (error) {
+        console.log(error);
         if (error && error.response === undefined) {
           setGloPurchaseErrorType("Network error: Purchase Failed");
           setGloPurchaseStatus(true)
@@ -530,7 +531,7 @@ try {
     await buyData(
       2, // Network ID for MTN
       inputValue, // Use inputValue instead of recipientPhoneNumber
-      selectedPlan?.fID,
+      selectedPlan?.ID,
       recipientNamesGlo
     );
   };
@@ -1133,7 +1134,9 @@ try {
                      {methodOptions.map((methodOption) => {
                                          return (
                       <div onClick={(e) => {
-                            setWalletNameGlo( methodOption.id === 1 
+                        setWalletNameGlo(methodOption?.id ===1 ? methodOption?.code
+                           : walletNameGlo === "NGN Wallet" && methodOption?.id !== 1 ? walletNameGlo : "");
+                            setPaymentAmount( methodOption.id === 1 
                             && paymentAmount === "" && 
                              Balance !== null 
                            && Balance !== undefined
@@ -1805,9 +1808,9 @@ try {
             <p className={`text-[10px] leading-[13px] text-center
              md:text-[14px] md:leading-[18px] lg:text-[14px]  font-semibold 
              ${isDarkMode ? "text-white" : "text-black"}`}>
-            The decoder has been subscribed successfully.
-             Please kindly confirm from the smartcard / iuc.
-              You can contact us for any further assistance.
+            The data purchase has been sent successfully to the recipient phone number.
+             Please kindly engage the recipient to check his/her
+             balance to confirm the value. You can contact us for any further assistance
             </p>
         </div>
                 <div className="flex w-full justify-center 
@@ -1867,7 +1870,7 @@ try {
             <button
               className={`
             mt-[38px] md:mt-[30px] lg:mt-[25px] rounded-[6px]
-             md:rounded-[10px] lg:rounded-[15px] bg-[#04177F] 
+             md:rounded-[10px] lg:rounded-[15px] 
              h-[43px] md:h-[30px] lg:h-[40px] flex items-center 
              font-semibold text-[12px] md:text-[11px] lg:text-[16px] 
              text-[#fff] w-full md:w-[100px] lg:w-[170px] justify-center ${

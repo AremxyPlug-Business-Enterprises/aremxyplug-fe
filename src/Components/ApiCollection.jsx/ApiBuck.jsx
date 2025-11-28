@@ -1,11 +1,12 @@
-import { SetLocalStorage } from "../LocalStorage/LocalStorage";
+import { GetLocalStorage, SetLocalStorage } from "../LocalStorage/LocalStorage";
 import { RemoveLocalStorage } from "../LocalStorage/LocalStorage";
 import axios from "axios";
 import { Modal } from "../Screens/Modal/Modal";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { BalanceLoading } from "../Loader/Loader";
 import { useState, useEffect, useRef, useContext} from "react";
 import { ContextProvider } from "../Context";
+
 
 
 //To set the different states for  virtual account
@@ -348,6 +349,26 @@ export const refreshToken = async()=> {
 }
 // ======  The Restriction-PopUp for Users that doesn't have an account
   export const RestrictionPopUp = ()=> {
+     const navigate = useNavigate()
+   
+    const {setVerificationOpen,
+       setProfilePage, 
+       setBvnVerificationOpen,
+        setIdVerificationOpen, 
+        setAccountUpgrade,
+      setAuthenticationOpen,
+     } = useContext(ContextProvider)
+     const Data = GetLocalStorage();
+     const VerificationNavigationAndState = ()=> {
+         setVerificationOpen(true)
+       setProfilePage(false)
+       setBvnVerificationOpen(false)
+        setIdVerificationOpen(true)
+        setAccountUpgrade(false)
+      setAuthenticationOpen(false)
+     navigate("/ProfileSettingMain")
+     }
+          //id Verification
    const isDarkMode = localStorage.getItem("darkModeEnabled")
   return (
   <div className={`w-full h-full justify-center items-center
@@ -363,21 +384,49 @@ export const refreshToken = async()=> {
                text-black lg:text-[16px] lg:leading-[22px] ${isDarkMode === "true" ? "text-white" : "text-black"}`}>
                    You are restricted from accessing this page.
                   </h2>
-              <p className ={`text-[14px] text-center font-[400] leading-[18px]
+             
+                {Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false" ? (
+                   <p className ={`text-[14px] text-center font-[400] leading-[18px]
                text-black lg:text-[16px] lg:leading-[22px] ${isDarkMode === "true" ? "text-white" : "text-black"}`}>
-             Create an account to access this feature,
+                Your Identity matters.Please kindly verify
+                your user account to continue smooth operation.
+              </p>
+                ) : (
+                      <p className ={`text-[14px] text-center font-[400] leading-[18px]
+               text-black lg:text-[16px] lg:leading-[22px] ${isDarkMode === "true" ? "text-white" : "text-black"}`}>
+                 Create an account to access this feature,
               navigate to dashboard to generate an account.
-               </p>
+              </p>
+                )}
+            
+          
                </div>
              
-              <Link to="/dashboard"
+             
+               {Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false"
+               ?(
+                 <button 
+                 onClick = {()=> VerificationNavigationAndState()}
                  className="bg-[#04177f]  cursor-pointer mt-[5%] mx-auto w-full
                   py-[12px] flex justify-center items-center text-[#ffffff] 
  text-[11px] font-[600] rounded-md md:w-[95px] md:h-[26px]
                    md:p-[2%] lg:w-[200px] lg:h-[38px] lg:text-[13px]"
             >
-              Navigate to dashboard.
-            </Link>
+             Verify 
+                 </button>
+               ): (
+             <button
+             onClick = {()=> navigate("/dashboard")}
+            className="bg-[#04177f]  cursor-pointer mt-[5%] mx-auto w-full
+         py-[12px] flex justify-center items-center text-[#ffffff] 
+ text-[11px] font-[600] rounded-md md:w-[95px] md:h-[26px]
+                   md:p-[2%] lg:w-[200px] lg:h-[38px] lg:text-[13px]"
+            >
+            Generate
+                 </button>
+               )
+               }
+          
           </div>
         </div>
       </Modal>
