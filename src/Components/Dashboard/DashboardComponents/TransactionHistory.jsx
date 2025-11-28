@@ -13,8 +13,7 @@ import { Modal } from "../../Screens/Modal/Modal";
 const TransactionHistory = ({
   transactionResponse,
   transactionHistoryError,
-  loading,
- stateDateEdit,
+  loading
 
 }) => {
   const {
@@ -65,7 +64,7 @@ const TransactionHistory = ({
         ? "edu"
         : product === "Electricity Bills"
         ? "electric-sub"
-        : product === "Internal Deposit"
+        : product === "Internal Deposit" ||  product === "Virtual Account"
         ? "deposit"
         : product === "Internal Transfer"
         ? "transfer"
@@ -81,7 +80,10 @@ const TransactionHistory = ({
     const FailedHandler = async (ErrorType) => {
       // if (!navigator.online) alert("Kindly check your internet connection");
       if (ErrorType === "unauthorised") {
-      return ()=> {}
+         if(sessionModal) return;
+         if(sessionModal === false){
+           setSessionModal(true);
+         }
        } else if (ErrorType === "Server error") {
               alert("Failed to process your request");
               setElectricityTransErrorType(
@@ -199,7 +201,7 @@ const FormatTime =(DateValue)=> {
                               ? "/DataTransReceipt"
                               : transaction?.product === "Internal Transfer"
                               ? "/TransferReceipt"
-                              : transaction?.product === "Internal Deposit"
+                              : transaction?.product === "Internal Deposit" || transaction?.product === "Virtual Account"
                               ? "/VirtualAccountReceipt" 
                               : transaction?.product === "Point Redeem"
                               ? "/PointRedeemReceipt" : "/SuccessfullReceipt",
@@ -466,7 +468,7 @@ const FormatTime =(DateValue)=> {
                           ? "/DataTransReceipt"
                           : transaction?.product === "Internal Transfer"
                           ? "/TransferReceipt"
-                          : transaction?.product === "Internal Deposit"
+                          : transaction?.product === "Internal Deposit" || transaction?.product === "Virtual Account"
                           ? "/VirtualAccountReceipt"
                            : transaction?.product === "Point Redeem" ?
                             "/PointRedeemReceipt" : "/SuccessfullReceipt",

@@ -270,101 +270,10 @@ const DstvOptionalPlan = dstvData?.length < 1 && fetchedDstvPlans.status === 200
       };
       const FailedHandler = async (ErrorType) => {
         if (ErrorType === "unauthorised") {
-          await GetFunction(
-            `balance`,
-            setBalanceLoader,
-            SuccessHandler,
-            //Handling the error Use Cases of the Unauthorised inside
-            // of the statement.
-            async(ErrorType) => {
-              if (ErrorType === "unauthorised") {
-                return setSessionModal(true);
-              }else if(ErrorType === "Server error"){
-                  await GetFunction(
-        "balance",
-        setBalanceLoader,
-        SuccessHandler,
-       async(ErrorType)=> {
-        if(ErrorType === "Server error"){
-          alert("Failed to retrieve the balance.")
-        }else if(ErrorType === "Network error" || ErrorType === "User error"){
-          setCheckNetworkError(true)
-              alert("Kindly check your internet connection to retrieve balance.")
-        }else {
-          alert("An unexpected error has occured on attempt to retrieve balance.")
-        }
-       },
-        setPassDataBalance
-      );
-       }else if(ErrorType === "Network error" || ErrorType === "User error"){
-          setCheckNetworkError(true)
-           alert("Kindly check your internet connection to retrieve balance")
-       }else {
-        alert("An unexpected error has occured on attempt to retrieve the balance")
-       }
-            },
-             setPassDataBalance
-          );
+          setSessionModal(true)
         }else if(ErrorType === "Server error"){
-            await GetFunction(
-        "balance",
-        setBalanceLoader,
-        SuccessHandler,
-       async(ErrorType)=> {
-         if(ErrorType === "unauthorised"){
-            await GetFunction(
-        "balance",
-        setIsLoading,
-        SuccessHandler,
-        async(ErrorType)=> {
-          if(ErrorType === "unauthorised"){
-            return setSessionModal(true)
-          }else if(ErrorType === "Server error"){
-               await GetFunction(
-        "balance",
-        setBalanceLoader,
-        SuccessHandler,
-       async(ErrorType)=> {
-        //if Statements
-      //We run again cause the previous one was interrupted by 401
-      //Let us re-run server error
-      if(ErrorType === "Server error"){
-        alert("Failed to retrieve the balance")
-      }else if(ErrorType === "unauthorised"){
-        return sessionModal(true)
-      }else if(ErrorType === "Network error" || ErrorType === "User error"){
-          setCheckNetworkError(true)
- alert("Kindly check your internet connection to retrieve balance")
-      }else{
-        alert("An Unexpected error occured in attempt to retrieve balance")
-      }
-
-       },
-        setPassDataBalance
-      );
-          }else if(ErrorType === "Network error" || ErrorType === "User error"){
-          setCheckNetworkError(true)
- alert("Kindly check your internet connection to retrieve the balance")
-            setCheckNetworkError(true)
-          }else{
-            alert("An Unexpected error occured in attempt to retrieve balance")
-          }
-        },
-        setPassDataBalance
-      );
-    }
-          else if(ErrorType === "Network error" || ErrorType === "User error"){
-            //The operation was interrupted by a network error
-             setCheckNetworkError(true)
-            alert("Kindly check your internet connection to retrieve balance.")
-         }else {
-          //An alien error has occured with the re-run of the "Server error" ErrorType
-          alert("An unexpected error occured in attempt to retrieve the balance.")
-         }
-       },
-        setPassDataBalance
-      );
-        }else if(ErrorType === "Network error" || ErrorType === "User error"){
+     alert("Failed to retrieve balance.")
+    }else if(ErrorType === "Network error" || ErrorType === "User error"){
         setCheckNetworkError(true)
         }else{
           alert("An unexpected error occured in attempt to retrieve balance.")
@@ -594,7 +503,7 @@ const VerifyPinHandler = async () => {;
        setFailedConfig,
       setIsLoading,
       setErrorMessage,
-    DstvHandler,
+  ()=> {}//DstvHandler
    );
 
    //In any case the the ""User error, Network error, Bad request," occurs
@@ -610,8 +519,8 @@ const VerifyUserAccount = async(UserTvSubscription)=> {
  setDstvVerifyResponse({});
  setStateInvalidDecoderNumber(false);
   const body = {
-       decoder_type : dstvDecoderType.toLowerCase(),
-       iuc_number : UserTvSubscription
+  decoder_type : dstvDecoderType.toLowerCase(),
+ iuc_number : UserTvSubscription
         }
         const bodyToJson = JSON.stringify(body)
  const SuccessHandler = (response)=> {
@@ -689,7 +598,8 @@ const timer = useRef(null)
         <div className={style.AirtimeTops}>
           <div className={style.airtimeTop}>
             <div>
-             <div id='tvBackground' className="min-h-[90px] py-[15px] lg:h-[196px] 
+             <div id='tvBackground'
+              className="min-h-[90px] py-[15px] lg:h-[196px] 
              md:h-[112.29px] rounded-[6.6px] md:rounded-[11.46px] 
              lg:rounded-[20px] mx-auto  flex gap-6 justify-between
               px-[16.51px] md:px-[28.65px] lg:px-[50px]">

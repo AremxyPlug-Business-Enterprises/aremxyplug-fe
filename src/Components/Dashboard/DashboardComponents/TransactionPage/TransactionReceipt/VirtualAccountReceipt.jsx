@@ -32,7 +32,8 @@ export const VirtualAccountReceipt = () => {
   const amount = receiptData?.amount !== undefined ? receiptData?.amount : "";
   const amountToNumber = Number(amount);
   const account_name =
-    receiptData?.account_name?.length > 0 ? receiptData?.account_name?.slice(11) : "";
+    receiptData?.account_name?.length > 0 && receiptData?.account_name?.includes("AREMXYPLUG") ? receiptData?.account_name?.slice(11) :
+    receiptData?.account_name?.length > 0 ? receiptData?.account_name :  "";
   const account_no =
     receiptData?.account_no?.length > 0 ? receiptData?.account_no : "";
   const order_id =

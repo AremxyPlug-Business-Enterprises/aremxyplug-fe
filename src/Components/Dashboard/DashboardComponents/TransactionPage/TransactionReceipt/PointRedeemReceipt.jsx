@@ -351,9 +351,9 @@ export const PointRedeemReceipt = () => {
                         isDarkMode ? "text-white" : "text-[#7C7C7C]"
                       }`}
                     >
-                      Completion Number
+                      Completion Time
                     </p>
-                    <span>{""}</span>
+                    <span>Instantly</span>
                   </div>
                   <div className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between lg:text-base font-medium">
                     <p

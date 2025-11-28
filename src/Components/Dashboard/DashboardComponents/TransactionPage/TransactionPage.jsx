@@ -28,7 +28,6 @@ const TransactionPage = () => {
     toggleSideBar,
     setOrderIdResponse,
     setElectricityTransErrorType,
-    dateEdit,
     startDateValueState,
     endDateValueState,
     setStartDateValueState,
@@ -36,7 +35,7 @@ const TransactionPage = () => {
     setEditCalenderOne,
     setEditCalenderTwo,
     setCurrentDateInTimeStamps,
-    editCalenderOne,editCalenderTwo, countCalender, setCountCalender
+    editCalenderOne,editCalenderTwo, setCountCalender
     
    
   } = useContext(ContextProvider);
@@ -99,7 +98,7 @@ const [isActive, setIsActive] = useState(false);
 const paymentDataForRequest
      = paymentCategoryValue === "Virtual Accounts" ? "virtual accounts" :
      paymentCategoryValue === "Money Transfer" ? "money transfer" :
-     paymentCategoryValue === "wallet Transfer" ? "virtual accounts" 
+   paymentCategoryValue === "Wallet Transfer" ? "money transfer" 
      : paymentCategoryValue === "Points Redeem" ? "points" : "";
 
       const categoryDetermination = telecomCategoryValue?.length > 1?
@@ -396,7 +395,7 @@ console.log(transactionStatusMetrics?.refunded?.value)
         ? "edu"
         : product === "Electricity Bills"
         ? "electric-sub"
-        : product === "Internal Deposit"
+        : product === "Internal Deposit" || product === "Virtual Account"
         ? "deposit"
         : product === "Internal Transfer"
         ? "transfer" : product === "Point Redeem"
@@ -1448,13 +1447,12 @@ h-[100px]  rounded-[12px] px-[20px]
                 </div>
                 </div>
          })
-
  ): (
     <p  className={ `text-sm ${Data?.ConfirmAcc === "true" && loading === true ? " text-black": "text-red-500"} py-[50px] font-[600] mb-8`}>
      {Data?.ConfirmAcc === "true" && loading === false
      ? "An error occured: unable to retrieve transaction status-metrics"  : 
      Data?.ConfirmAcc === "true" && loading === true ? "Processing Transaction Status Metrics...."
-     : "No transactions, no account created"}
+     : ""}
       </p>
 
   )}
@@ -1648,7 +1646,7 @@ h-[100px]  rounded-[12px] px-[20px]
                               ? "/DataTransReceipt"
                               : transaction?.product === "Internal Transfer"
                               ? "/TransferReceipt"
-                              : transaction?.product === "Internal Deposit"
+                              : transaction?.product === "Internal Deposit" ||  transaction?.product === "Virtual Account"
                               ? "/VirtualAccountReceipt"
                               :  transaction?.product ===  "Point Redeem" 
                               ? "/PointRedeemReceipt"  : null,
@@ -1931,9 +1929,9 @@ h-[100px]  rounded-[12px] px-[20px]
                           ? "/AirtimeTransReceipt"
                           : transaction?.product === "Data Top-up"
                           ? "/DataTransReceipt"
-                          : transaction?.product === "Money Transfer"
+                          : transaction?.product === "Internal Transfer"
                           ? "/TransferReceipt"
-                          : transaction?.product === "Virtual Account"
+                          : transaction?.product === "Virtual Account" || transaction?.product === "Internal Deposit"
                           ? "/VirtualAccountReceipt" : 
                           transaction?.product ===  "Point Redeem" 
                               ? "/PointRedeemReceipt" 

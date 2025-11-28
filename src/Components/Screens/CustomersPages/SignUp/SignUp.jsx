@@ -62,7 +62,7 @@ const setNav = () => {
     const PhoneData = localStorage.getItem("userPhone");
   if(ActiveSignUp === "true" && PhoneData ){
     setContinueConsentModal(true);
-    alert("Accounts without verification are only valid for 20 minutes after signing up, kindly click on NO, if exceeded.")
+    alert("Accounts created, kindly verify your account")
   }else if(ActiveSignUp === "true" && !PhoneData){
     localStorage.removeItem("ActiveSignUp")
   }

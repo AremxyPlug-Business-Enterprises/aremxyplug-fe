@@ -54,11 +54,11 @@
 		background: linear-gradient(-155deg, rgba(23, 102, 238, 0.295), #ffdbde82, #1fddff73, #ff85ae7c, rgba(107, 102, 255, 0.536), #ffb58a7f,  #19dfdf86);
 		background-size: 400% 400%;
 		animation: gradient 10s ease infinite;
-		height: 900px;
+		height: 1100px;
 		margin-top: -20%;
 		display: flex;
 		justify-content: center;
-		/* align-items: center; */
+		 align-items: center; 
 		padding: 6% 8%;
 		gap:20px;
 		/* background-color: red; */

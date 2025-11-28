@@ -33,7 +33,6 @@ export default function WalletSummaryPage() {
   // const [isOpen2, setIsOpen2] = useState(false);
   // const [isOpen3, setIsOpen3] = useState(false);
   // const [isOpen4, setIsOpen4] = useState(false);
-  const [isOpen5, setIsOpen5] = useState(false);
   const [loading, setLoading] = useState(false);
   const [sessionModal, setSessionModal] = useState(false);
   const [transactionHistoryError, setTransactionHistoryError] = useState("");
@@ -367,7 +366,7 @@ export default function WalletSummaryPage() {
         ? "edu"
         : product === "Electricity Bills"
         ? "electric-sub"
-        : product === "Internal Deposit"
+        : product === "Internal Deposit" || product === "Virtual Account"
         ? "deposit"
         : product === "Internal Transfer"
         ? "transfer" : product === "Point Redeem" ?
@@ -792,19 +791,19 @@ const FormatTime =(DateValue)=> {
                         className={`pb-[20px] pt-[20px] md:pb-[14px] md:pt-[14px] font-weight-bold text-[14px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-medium md:text-[13.227px] md:leading-[17.195px] shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
                         lg:text-[16px] lg:leading-[20.8px] cursor-pointer  dropdownCSS ${
                           isDarkMode
-                            ? `bg-black text-white border border-white ${index > 2 ? "bg-black opacity-50" : "bg-black"}`
-                            : `hover:bg-[#EDEAEA] border-[#9C9C9C]   text-[#7C7C7C] ${index > 2 ? "bg-gray-100" : "bg-white"}`
+                            ? `bg-black text-white border border-white`
+                            : `hover:bg-[#EDEAEA] border-[#9C9C9C]   text-[#7C7C7C]  bg-white`
                         }`}
                         key={index}
                         onClick={() => {
-                          if(index <= 2){
+
                           setSelectCollectionDropDown(false);
                           setIsOpen1(false);
                           setSelectCollection(collection)
                         //  setStateDateEdit("Filter By Date")
                           setCalender(false);
                           setSelectRecordDropDown(false)
-                          }
+                       
                         }}
                       >
                         {collection}
@@ -1188,7 +1187,7 @@ const FormatTime =(DateValue)=> {
                               ? "/DataTransReceipt"
                               : transaction?.product === "Internal Transfer"
                               ? "/TransferReceipt"
-                              : transaction?.product === "Internal Deposit"
+                              : transaction?.product === "Internal Deposit" || transaction?.product === "Virtual Account"
                               ? "/VirtualAccountReceipt" 
                               : transaction?.product === "Point Redeem" ?
                              "/PointRedeemReceipt" : "/SuccessfullReceipt",
@@ -1443,7 +1442,7 @@ const FormatTime =(DateValue)=> {
                           ? "/DataTransReceipt"
                           : transaction?.product === "Internal Transfer"
                           ? "/TransferReceipt"
-                          : transaction?.product === "Internal Deposit"
+                          : transaction?.product === "Internal Deposit" || transaction?.product === "Virtual Account"
                           ? "/VirtualAccountReceipt"
                            : transaction?.product === "Point Redeem" ? "/PointRedeemReceipt"
                           : "/SuccessfullReceipt",

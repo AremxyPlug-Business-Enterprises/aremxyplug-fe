@@ -23,17 +23,17 @@ const UserEmail = JSON.parse(localStorage.getItem("userEmail"));
   const aremxyAccountName = JSON.parse(localStorage.getItem("aremxyAccountName"))
  const aremxyAccountNumber = JSON.parse(localStorage.getItem("aremxyAccountNumber"))
   const aremxyUserId = JSON.parse(localStorage.getItem("aremxyUserId"));
- const idVerification = localStorage.getItem("idVerification");
- const bvnVerification = localStorage.getItem("bvnVerification");
- const userTransactionOtp = localStorage.getItem("userTransactionOtp");
-   const AccCreated = localStorage.getItem("AccCreated");
+ const idVerification = localStorage.getItem("Qhfde");
+ const bvnVerification = localStorage.getItem("Zxfer");
+ const userTransactionOtp = localStorage.getItem("uTrO");
+   const AccCreated = localStorage.getItem("80pcs");
   if(idVerification && bvnVerification && !AccCreated){
- ConfirmId = localStorage.getItem("idVerification");
- ConfirmBvn = localStorage.getItem("bvnVerification");
+ ConfirmId = localStorage.getItem("Qhfde");
+ ConfirmBvn = localStorage.getItem("Zxfer");
  }else if(AccCreated){
-ConfirmAcc = localStorage.getItem("AccCreated");
-ConfirmId = localStorage.getItem("idVerification");
-ConfirmBvn = localStorage.getItem("bvnVerification");
+ConfirmAcc = localStorage.getItem("80pcs");
+ConfirmId = localStorage.getItem("Qhfde");
+ConfirmBvn = localStorage.getItem("Zxfer");
   } 
 const GetItemsForTwoStep = {
 UserEmail, 
@@ -57,6 +57,9 @@ UserEmail,
     aremxyAccountNumber,
      aremxyAccountName, 
      aremxyUserId,
+     ConfirmId,
+     ConfirmBvn,
+     ConfirmAcc
     }
     return userTransactionOtp ? GetItemsForInputPin : GetItemsForTwoStep
 }
@@ -74,9 +77,18 @@ export const RemoveLocalStorage = () => {
  localStorage.removeItem("cxccxfd");//The UserStatus
  localStorage.removeItem("xcss{}");//The authToken(username)
  localStorage.removeItem("xcss[]")// The authToken (email)
- localStorage.removeItem("idVerification");
- localStorage.removeItem("bvnVerification");
+ localStorage.removeItem("Qhfde");//Id Verification
+ localStorage.removeItem("Zxfer");//Bvn Verification
+
+ //For Clearing Purposes
+ localStorage.removeItem("IdVerification");
+ localStorage.removeItem("bvnVerification")
  localStorage.removeItem("5pbb8");
+  localStorage.removeItem("AccCreated");
+ localStorage.removeItem("UserStatus");
+ localStorage.removeItem("getToken");
+ localStorage.removeItem("authorisedLogin")
+ //
  localStorage.removeItem("ReferralLink");
  localStorage.removeItem("ReferralCode");
  localStorage?.removeItem("aremxyPassword");
@@ -86,28 +98,26 @@ localStorage.removeItem("UserIcon");
      localStorage?.removeItem("SessionExpiration");
      localStorage?.removeItem("PasswordResetActive");
      localStorage.removeItem("xcss{}");
-      localStorage.removeItem("authorisedLogin");
- const AccCreated = localStorage.getItem("AccCreated")
+ const AccCreated = localStorage.getItem("80pcs")
  const usernameToken = localStorage.getItem("xcss{}");
  if(usernameToken){
    
-   const userTransactionOtp = localStorage.getItem("userTransactionOtp")
+   const userTransactionOtp = localStorage.getItem("uTrO")
   if(userTransactionOtp){
-    localStorage.removeItem("userTransactionOtp")
-
-  }
+    localStorage.removeItem("uTrO")
+ }
  if(AccCreated){
-  localStorage.removeItem("AccCreated")
+  localStorage.removeItem("80pcs")
  }
  }
  else {
 
- const userTransactionOtp = localStorage.getItem("userTransactionOtp")
+ const userTransactionOtp = localStorage.getItem("uTrO")
  if(userTransactionOtp){
-  localStorage.removeItem("userTransactionOtp")
+  localStorage.removeItem("uTrO")
 }
  if(AccCreated){
-  localStorage.removeItem("AccCreated")
+  localStorage.removeItem("80pcs")
  }
  }
 }

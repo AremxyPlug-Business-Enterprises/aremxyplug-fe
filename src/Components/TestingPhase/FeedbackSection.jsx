@@ -38,7 +38,7 @@ export default function FeedbackSection() {
 
         {/* Feedback Link */}
         <motion.a
-          href="#" // Replace with your Google Form link
+          href="https://forms.gle/GavMQJsJgCUfouUT7" 
           target="_blank"
           rel="noopener noreferrer"
           initial={{ opacity: 0, y: 10 }}

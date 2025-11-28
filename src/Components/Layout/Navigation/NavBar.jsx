@@ -29,14 +29,12 @@ export const NavBar = () => {
     };
   }, []);
 
-
+const userStatus= localStorage.getItem("cxccxfd")
   return (
+   
+!userStatus && (
     <>
-      
-     
-            
-      {/* Mobile View */}
-      <div className={`${currentLocation !== "/TestingPhase" ? "mb-[50px]" : ""} 
+      <div className={`
        ${hideNavbar === true ? "hidden" : "flex "} relative z-[55]`}>
         {currentLocation !== "/TestingPhase" && (
          <Link to="/TestingPhase" className = "fixed bg-[#FFF8B0] w-full top-[0px] z-[55]">
@@ -78,7 +76,7 @@ export const NavBar = () => {
       
       {navOpen && (
         <div
-          className={` bg-[#04177f] fixed z-[50] top-[70px] left-[60%]
+          className={` bg-[#04177f] fixed z-[50] top-[90px] left-[60%]
              text-[12px] text-center text-[#ffffff] p-6 w-[35%]`}
         >
           <ul className="flex flex-col gap-[20px]">
@@ -169,5 +167,7 @@ export const NavBar = () => {
       </div>
       </div>
     </>
-  );
+        )
+  )
+
 };

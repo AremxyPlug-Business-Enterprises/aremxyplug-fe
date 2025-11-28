@@ -2,11 +2,14 @@ import { motion } from "framer-motion";
 
 export default function TestingHeroSection() {
   return (
-    <section className="w-full z-[0px] relative overflow-hidden">
+    <section className="w-full z-[0px] mt-[-60px] relative overflow-hidden">
       {/* Animated Gradient Background */}
-      <div className="absolute inset-0 animate-gradient bg-gradient-to-r from-blue-500 via-pink-300 to-teal-400 opacity-30 -z-10"></div>
+      <div className="absolute inset-0 top-0 animate-gradient
+      bg-gradient-to-r from-blue-500 via-pink-300 to-teal-400
+       opacity-30 -z-10"></div>
 
-      <div className="max-w-6xl mx-auto pt-[160px] px-6 py-32 flex flex-col lg:flex-row gap-16 items-center justify-between">
+      <div className="max-w-6xl mx-auto pt-[160px] px-6 py-32 flex flex-col 
+      lg:flex-row gap-16 items-center justify-between">
         {/* Left Column: Welcome Text */}
         <motion.div
           initial={{ opacity: 0, x: -30 }}

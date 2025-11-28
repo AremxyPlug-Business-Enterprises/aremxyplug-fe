@@ -1816,9 +1816,9 @@ const path = "/data";
             <p className={`text-[10px] leading-[13px] text-center
              md:text-[14px] md:leading-[18px] lg:text-[14px]  font-semibold 
              ${isDarkMode ? "text-white" : "text-black"}`}>
-            The decoder has been subscribed successfully.
-             Please kindly confirm from the smartcard / iuc.
-              You can contact us for any further assistance.
+           The data purchase has been sent successfully to the recipient phone number. 
+           Please kindly engage the recipient to check his/her 
+           balance to confirm the value. You can contact us for any further assistance
             </p>
         </div>
                 <div  className="flex w-full justify-center mx-auto 

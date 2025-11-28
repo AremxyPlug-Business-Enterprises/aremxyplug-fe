@@ -83,9 +83,8 @@ function LoginForm() {
       twoStepVerificationSuccess === false &&
       openTranspinSuccessful === false &&
       open2StepOTP === false &&
-      openTranspin === false && localStorage.getItem("cxccxfd") === "true" ){
+      openTranspin === false && localStorage.getItem("cxccxfd") ){
          RemoveLocalStorage();
-         window.location.reload()
       }
 
       if(localStorage.getItem("PasswordResetActive")){
@@ -228,7 +227,7 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
              if(customer){
                    setCustomerDetail(customer);
                } 
-     } else if(response.status === 200){
+     } else if(response.status === 200 ){
                   setOpen2StepVerification(true);
                    localStorage.setItem("xcss{}", true);
                   const customer  =  response?.data?.data?.customer;

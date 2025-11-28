@@ -31,7 +31,15 @@ export const StepsToEarnRewards=()=>  {
     {
       step: 6,
       title: "Perform a Transaction + Redeem Points",
-      desc: "Buy airtime/data or pay bills and redeem at least 1 reward point.",
+      desc:  <ol className= "mb-[5px] overflow-y-scroll h-[60px] p-[10px] rounded-[10px] border-[2px] border-gray-200">
+        <li className = "text-[#4A4A4A] mb-2 text-[15px] leading-relaxed"> 
+          1. Buy airtime/data or pay bills and redeem at least 1 reward point.</li>
+        <li className = "text-[#4A4A4A] mb-2 text-[15px] leading-relaxed">
+          2. Complete atleast one point redeem transaction.</li>
+        <li className = "text-[#4A4A4A] mb-2 text-[15px] leading-relaxed">
+          3. Redeem minimum of 10 points in a single transaction. Max is 100 points</li>
+      </ol>
+     ,
     },
     {
       step: 7,

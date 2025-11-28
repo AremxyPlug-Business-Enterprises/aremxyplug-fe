@@ -34,14 +34,20 @@ export default function ProfileSettingsMain(Data) {
   const { isDarkMode } = useContext(ContextProvider);
 
   useEffect(() => {
-    if (location.state && location.state.verificationOpen) {
+    if ((location.state &&location.state.verificationOpen) || verificationOpen === true) {
       setProfilePage(false);
-      setIdVerificationOpen(false);
+      setIdVerificationOpen(true);
       setVerificationOpen(true);
       setAuthenticationOpen(false);
       setBvnVerificationOpen(false);
       setAccountUpgrade(false);
     } else {
+       setProfilePage(true);
+      setIdVerificationOpen(false);
+      setVerificationOpen(false);
+      setAuthenticationOpen(false);
+      setBvnVerificationOpen(false);
+      setAccountUpgrade(false);
       // Set default state here if the verificationOpen state is not passed
     }
   }, [

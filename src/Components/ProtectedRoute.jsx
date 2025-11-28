@@ -97,7 +97,7 @@ window.onkeydown = ResetTimer;
  const emailToken = localStorage.getItem("xcss[]");// on Email Login
 const UserStatus = localStorage.getItem("cxccxfd");//Tracking The UserStatus from the frontend
  if(((!authToken && !emailToken) || !UserStatus) 
-  || ((!authToken && !emailToken) && !UserStatus)   ){
+  || ((!authToken && !emailToken) && !UserStatus)){
  RemoveLocalStorage();
  return <Navigate to ="/Login" replace/>
 }
@@ -115,11 +115,8 @@ const UserStatus = localStorage.getItem("cxccxfd");//Tracking The UserStatus fro
    {children}
     {sessionExpiration && (
       <HandleUserSession/>
-     )
-    }
+     )}
     </>
-
-
 )
 
 // console.log(children)

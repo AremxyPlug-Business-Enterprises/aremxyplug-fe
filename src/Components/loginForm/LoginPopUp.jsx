@@ -3,7 +3,6 @@ import "./LoginForm.css";
 import { ContextProvider } from "../Context";
 import { Modal } from "../Screens/Modal/Modal";
 import OtpInput from "react-otp-input";
-import { Link } from "react-router-dom";
 import { primaryColor } from "../Screens/cardIssuing/cardIssuing";
 import axios from "axios";
 import CloseIcon from "../EducationPins/imagesEducation/close-circle.svg";
@@ -47,7 +46,6 @@ function LoginPopUp() {
   } = useContext(ContextProvider);
 
   const { email, phone } = customerDetail;
-console.log(customerDetail);
   const [loading, setLoading] = useState(false);
   const [countdown, setCountdown] = useState(60);
   const [countdown2, setCountdown2] = useState(60);
@@ -163,7 +161,7 @@ console.log(customerDetail);
           }, withCredentials : true
         });
         if (response.status === 201 || response.status === 200) {
-          localStorage.setItem("AccCreated", true);
+          localStorage.setItem("80pcs", true);
           const nin = response?.data?.data?.nin;
           const bvn = response?.data?.data?.bvn;
           //console.log(bvn,nin)
@@ -172,15 +170,15 @@ console.log(customerDetail);
             setVerifyImage(VerificationSuccess);
             setIdStatus("Verified");
             setIdNumber(response.data.data.nin);
-            localStorage.setItem("bvnVerification", true);
-            localStorage.setItem("idVerification", true);
+            localStorage.setItem("Zxfer", true);
+            localStorage.setItem("Qhfde", true);
           } else if (bvn && !nin) {
             setBvnButtonState("Verified");
             setBvnVerifyImage(VerificationSuccess);
             setBvnStatus("Verified");
             setBvnNumber(response?.data?.data?.bvn);
-            localStorage.setItem("bvnVerification", true);
-            localStorage.setItem("idVerification", true);
+ localStorage.setItem("Zxfer", true);// Bvn Verification
+            localStorage.setItem("Qhfde", true);//Id Verfication
           } else if (bvn && nin) {
             setIdButtonState("Verified");
             setVerifyImage(VerificationSuccess);
@@ -190,8 +188,8 @@ console.log(customerDetail);
             setBvnStatus("Verified");
             setBvnNumber(response?.data?.data?.bvn);
             setIdNumber(response?.data?.data?.nin);
-            localStorage.setItem("bvnVerification", true);
-            localStorage.setItem("idVerification", true);
+            localStorage.setItem("Zxfer", true);// Bvn Verification
+            localStorage.setItem("Qhfde", true); // Id Verification
           }
         }
       } catch (error) {
@@ -204,9 +202,9 @@ console.log(customerDetail);
           if (error && error?.response?.data?.message === "unverified") {
             setBvnNumber("");
             setIdNumber("");
-            localStorage.setItem("idVerification", false);
-            localStorage.setItem("bvnVerification", false);
-            localStorage.setItem("AccCreated", false);
+             localStorage.setItem("Zxfer", false);// Bvn Verification
+            localStorage.setItem("Qhfde",false); // Id Verification
+            localStorage.setItem("80pcs", false);
             setVerifyImage(NotVerifiedImage);
             setBvnVerifyImage(NotVerifiedImage);
             setIdStatus("Not Verified");
@@ -217,21 +215,19 @@ console.log(customerDetail);
             error &&
             error?.response?.data?.message === "action_required"
           ) {
-            localStorage.setItem("AccCreated", false);
+            localStorage.setItem("80pcs", false);
             const bvnCheck = error?.response?.data?.data?.bvn;
 
-            const ninCheck = error?.response?.data?.data?.nin;
-            console.log(bvnCheck, ninCheck);
-
-            if (bvnCheck && !ninCheck) {
+            const ninCheck = error?.response?.data?.data?.nin
+              if (bvnCheck && !ninCheck) {
               setBvnButtonState("Verified");
               setBvnVerifyImage(VerificationSuccess);
               setBvnStatus("Verified");
               setVerifyImage(VerificationSuccess);
               setIdStatus("Verified");
               setBvnNumber(error?.response?.data?.bvn);
-              localStorage.setItem("bvnVerification", true);
-              localStorage.setItem("idVerification", true);
+                localStorage.setItem("Zxfer", true);// Bvn Verification
+            localStorage.setItem("Qhfde", true); // Id Verification
               // setIdButtonState("Verify");
               // setVerifyImage(NotVerifiedImage)
               // setIdStatus("Not Verified");
@@ -243,8 +239,8 @@ console.log(customerDetail);
               setVerifyImage(VerificationSuccess);
               setIdStatus("Verified");
               setIdNumber(error?.response?.data?.nin);
-              localStorage.setItem("idVerification", true);
-              localStorage.setItem("bvnVerification", true);
+               localStorage.setItem("Zxfer", true);// Bvn Verification
+            localStorage.setItem("Qhfde", true); // Id Verification
             } else if (bvnCheck && ninCheck) {
               setBvnButtonState("Verified");
               setBvnVerifyImage(VerificationSuccess);
@@ -254,8 +250,8 @@ console.log(customerDetail);
               setIdStatus("Verified");
               setBvnNumber(error?.response?.data?.bvn);
               setIdNumber(error?.response?.data?.nin);
-              localStorage.setItem("idVerification", true);
-              localStorage.setItem("bvnVerification", true);
+           localStorage.setItem("Zxfer", true);// Bvn Verification
+            localStorage.setItem("Qhfde", true); // Id Verification
             }
           }
         } else if (error && error.response.status === 404) {
@@ -472,7 +468,7 @@ return assignImageByUsername
       setOpenTranspin(false);
       setOtp("");
       setOtp2("");
-      localStorage.setItem("userTransactionOtp", otp);
+      localStorage.setItem("uTrO", true)
     } else {
       setTranspinErrors("Pin does not match!");
     }
@@ -486,6 +482,8 @@ return assignImageByUsername
 
   const SetLocalStorageInputPin = () => {
     setLoading(true);
+     UserIconFormatting();
+    SessionTiming();
     if (customerDetail) {
       const { email, full_name, phone, username, id } = customerDetail;
       const bank_name = "";
@@ -502,8 +500,7 @@ return assignImageByUsername
         id
       );
       if (SetLocalStorage) {
-        localStorage.setItem("cxccxfd", true);//UserStatus
-        navigate("/dashboard");
+        navigate("/dashboard")
         setLoading(false);
         setBvnNumber("");
         setIdNumber("");
@@ -511,23 +508,26 @@ return assignImageByUsername
     }
   };
 
+  const PinSuccessToDashBoard = ()=> {
+      localStorage.setItem("cxccxfd", true)
+     refreshToken()
+   setOpenTranspinSuccessful(true);
+   setOpenTranspin(false)
+  }
+
    const SendTransactPin = async () => {
     const body = {
       pin : otp
     }
    await PostFunction("pin", setLoading, body, ()=> {
-    SetLocalStorageInputPin()
-    return navigate("/dashboard")
+   PinSuccessToDashBoard();
    }, async(ErrorType)=> {
    if(ErrorType === "Bad request"){
   alert(`Please check your internet connection`);
    }else if(ErrorType === "Server error"){
    alert("Server error")
    }else if(ErrorType === "unauthorised"){
-    await SendTransactPin("pin", setLoading, body, ()=> {
-      SetLocalStorageInputPin();
-      navigate("/dashboard");
-    })
+      setOpenTranspin(false);
    }else if(ErrorType === "User error" || ErrorType === "Network error"){
     alert("Kindly check your internet connection.")
    }else{
@@ -1002,28 +1002,32 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
       {/* FORM OVERLAY AND TRANSACTION PIN SUCCESSFUL HERE */}
       {openTranspinSuccessful === true && (
         <Modal>
-          <div className="lg:ml-[38.5%] md:ml-[40%] md:-mt-[20%] lg:-mb-[30%] px-[17.609px] py-[35.536px] bg-white rounded-[10.3px] md:py-[34.96px] md:px-[17.6px] lg:py-[62px] lg:px-[31px]">
+          <div className="lg:ml-[38.5%] md:ml-[40%] md:-mt-[20%] 
+          lg:-mb-[30%] px-[17.609px] py-[35.536px] bg-white rounded-[10.3px] 
+          md:py-[34.96px] md:px-[17.6px] lg:py-[62px] lg:px-[31px]">
             <div>
               <div className="flex justify-center">
-                <div className="flex w-[75%] ">
+                <div className="flex flex-col w-[75%] items-center">
                   <p className="lg:text-[14px] font-[500] lg:font-[700] text-[12.021px]  text-[#000] mb-[30px]">
                     You have successfully created your transaction pin.
                   </p>
 
                   <img
-                    className="lg:w-[50px] lg:h-[50px] w-[32px] h-[32px] "
+                    className="lg:w-[70px] lg:h-[70px] w-[50px] h-[50px] "
                     src="./Gif/checkMarkGif.gif"
                     alt="thumbsUpGif"
                   />
                 </div>
               </div>
               {/* <Link to="/"> */}
-              <div className="w-full flex justify-center mt-[20px]  lg:mt-[50px]">
-                <Link to="/dashboard">
+              <div className="w-full flex justify-center px-[10px] mt-[20px]  lg:mt-[50px]">
+             
                   <div
-                    onClick={() => setOpenTranspinSuccessful(false)}
-                    className=" inline-flex justify-center items-center text-[#fff]   text-center  cursor-pointer 
-      text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rounded-[7px] lg:px-[37px] lg:py-[15px] lg:text-[14px]
+                    onClick={() => SetLocalStorageInputPin()}
+                    className=" inline-flex justify-center items-center 
+                    text-[#fff] w-full  text-center  cursor-pointer 
+      text-[12px] leading-[16px] font-bold   py-[12px] rounded-[10px] 
+      lg:rounded-[7px] lg:px-[37px] lg:py-[15px] lg:text-[14px]
       "
                     style={{
                       backgroundColor: primaryColor,
@@ -1031,7 +1035,7 @@ text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rou
                   >
                     <p> Done</p>
                   </div>
-                </Link>
+              
               </div>
               {/* </Link> */}
             </div>

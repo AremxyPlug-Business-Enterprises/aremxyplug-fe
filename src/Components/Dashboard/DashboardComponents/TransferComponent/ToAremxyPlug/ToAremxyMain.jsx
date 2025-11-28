@@ -59,7 +59,8 @@ export default function ToAremxyMain() {
   const [currencyImageState, setCurrencyImageState] = useState(currencyImage);
   const transferSetTime = useRef()
   const [selectRecipientPopup, setSelectRecipientPopUp] = useState(false);
-  const [restrictUser, setRestrictUser] = useState(false)
+  const [restrictUser, setRestrictUser] = useState(false);
+  const [errorTransAmount, setErrorTransAmount] = useState(false);
      //const [errors, setErrors] = useState({});
 
 const Data = GetLocalStorage();
@@ -230,12 +231,13 @@ testUsername.test(value) === false && value?.endsWith(".com") === true
 
   const checkParametersTransfer =  fetchedResponse?.data?.data?.userDetails?.phone &&
       transferValue?.length > 1 &&
-      transferAmount?.toString()?.length > 1 &&
+   (isNaN(transferAmount) && transferAmount?.length ? 
+   transferAmount?.toString()?.length > 3 : transferAmount?.length > 2 )   &&
       (newBalance !== null | newBalance !== undefined 
         || passDataBalance?.data?.data?.data?.balance !== null 
         || passDataBalance?.data?.data?.data?.balance !== undefined)
         && mainCountry?.length > 1; 
-
+console.log(transferAmount);
   // const  HandleAmountFormat=(amount)=> {
   //   const RequireNumericChange = Number(amount)
   //   if(RequireNumericChange !== null || RequireNumericChange!== undefined ||RequireNumericChange!== ""){
@@ -1013,6 +1015,7 @@ const GetBalance = async () => {
             gap-[3px] lg:gap-[5px] w-full ">
            
             <input
+             placeholder = "100 - Unlimited Amount"
             onInput={(e)=> {
              const amountInput = e.target.value;
         const formatInput =  amountInput.replace(/\D/g, "");
@@ -1033,13 +1036,17 @@ const GetBalance = async () => {
         : "border border-[#0003] border-[#9C9C9C] text-[#7C7C7C]"
     }`}
               onChange={(e)=> {
-             
+             setErrorTransAmount(false)
        console.log(e.target.value)
        setTransferAmount(e.target.value);
        if(transferSetTime.current) clearTimeout(transferSetTime.current)
          transferSetTime.current = setTimeout(()=> {
+        if(e.target.value !== "" && e.target.value?.length > 0 
+          &&e.target.value?.length  < 3 ){
+        setErrorTransAmount(true)
+        }
         return e.target.value === ""  && e.target.value?.length < 1
-         ? setTransferAmount(0) :
+         ? setTransferAmount("") :
          e.target.value?.length > 1 &&
          e.target.value!== undefined && e.target.value !==null 
           ? setTransferAmount(()=> Number(e.target.value)?.toLocaleString("en-NG", {
@@ -1054,7 +1061,7 @@ const GetBalance = async () => {
           currency : "NGN",
           maximumFractionDigits : 0
            
-  })) : setTransferAmount(0)
+  })) : setTransferAmount("")
  }, 1000)
       return ()=> clearTimeout(transferSetTime.current)
   }}
@@ -1072,6 +1079,11 @@ const GetBalance = async () => {
               alt="dropdown"
             />
           </div>
+          {errorTransAmount &&  (
+            <p className="text-red-500 text-[12px] font-[500] leading-[16px] lg:text-[13px] lg:leading-[17px]">
+            Amount should be equal to or greater than 100 
+            </p>
+          )}
           {mainTransferErrors.amtToTransfer && (
             <div className="text-[12px] text-red-500 italic lg:text-[14px]">
               {mainTransferErrors.amtToTransfer}
@@ -1214,6 +1226,7 @@ const GetBalance = async () => {
         </div>
       </div>
       <button
+      disabled ={checkParametersTransfer === false}
         onClick={() => ProceedTransfer()}
         className={`${
         checkParametersTransfer && (!isDarkMode || isDarkMode)  ? "bg-[#04177f]" : 
