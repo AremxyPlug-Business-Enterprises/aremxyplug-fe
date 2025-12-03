@@ -79,18 +79,31 @@ export default function SalesSummaryPage ()  {
        //when selectRecords is either of deposits or transfer,
        // and startDateValueState and endDateValueState aren't used or given
      
-    product?.length && 
+    (product?.length > 1 && product !== "All Products")    && 
     (startDate?.length > 1 && startDate !== undefined)
     &&  (endDate?.length< 1 || endDate === undefined)
-      ? `?start_date=${startDate}` 
-      :  (product?.length  )
-     && product?.length &&
+      ? `&start_date=${startDate}` 
+      : (product?.length > 1 && product !== "All Products") && 
      (startDate?.length > 1 && startDate !== undefined)
       &&  (endDate?.length> 1 || endDate !== undefined)
-      ? `?start_date=${startDate}&end_date=${endDate}` : ""
+      ? `&start_date=${startDate}&end_date=${endDate}` 
+      :(product?.length >1 && product === "All Products")
+      && (startDate?.length >  1 || startDate !== undefined)
+       && (endDate?.length < 1 || endDate === undefined)
+       ?   `?start_date=${startDate}`:
+        (product?.length > 1 && product === "All Products")
+        && (startDate?.length > 1 || startDate !== undefined)
+        && (endDate?.length > 1 || endDate !== undefined ) ? 
+        `?start_date=${startDate}&end_date=${endDate}` :
+      product?.length <1 && startDate.length > 1
+       && (endDate?.length < 1 || endDate === undefined) ?  
+       `?start_date=${startDate}`
+        : product?.length < 1  && startDate?.length > 1
+         && (endDate?.length < 1 || endDate !== undefined) 
+         ? `?start_date=${startDate}&end_date=${endDate}`: ""
       return dateQueries;
     }
-        if(product === "All Products"){
+   if(product === "All Products"){
         path =`transactions/sales-overview${pathQuery()}`;
        
         }else{
@@ -179,8 +192,10 @@ export default function SalesSummaryPage ()  {
   
  window.addEventListener("online", ()=> {
    if(transactionHistoryError === "Network error"){
-    GetTransactionInformation("All Products");
-   }
+    GetTransactionInformation( slicedBread, 
+      endDateValueState, 
+      "All Products");
+   } 
  })
 
  //HandleDropDown
@@ -309,8 +324,13 @@ setDateEdit(()=> {
      await GetTransactionInformation(
       startDateOptions,
        endDateOptions,
-       selectedProduct
+      selectedProduct === "Airtime Top-up" ?
+     "airtime" : selectedProduct === "Data Top-up" ? "data" : 
+     selectedProduct === "Bills Payment" ? "bills" 
+     : selectedProduct === "All Products" ? "All Products" : ""  
        );
+
+       //Setting the ISO type date
     setStateDateEdit(()=> {
     if(editCalenderOne !== "Start Date" && editCalenderTwo === "End Date" ){
      return <p>{startDateValueState}</p>
@@ -328,20 +348,7 @@ setDateEdit(()=> {
 
  
 
-    //Filtering the sales Summary data
-  //    const filteredSalesSummary = salesResponse?.data?.data?.data?.transactions.filter((transaction) => {
-  // if(selected === ""){
-  //     return transaction
-  //   }else{
-  //     return transaction.product === selectedStatus;
-  //   }
-   
-  // });
-
-// const BalanceValue = newBalance === "" || newBalance === null 
-// || newBalance === undefined 
-// ? Number(passDataBalance?.data?.data?.data?.balance) : Number(newBalance) 
-
+ 
 
 const symbolValue = selected === "USD" ? "$" : selected === "AUD" ? 
  "AU$" : selected === "KES" ?   "KSh" : selected === "EUR" ? "€" : selected === "GBP" ? "£" : "₦";
@@ -868,24 +875,7 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
             ))}
           
             </div>
-         
-
-           
-           
-
-  
-          
-
-
-
-
-
-
-
-
-
-
-{/*main contact us */}
+         {/*main contact us */}
 <div className=' '>
 <footer className="
  flex  justify-center   text-center gap-[20px] 

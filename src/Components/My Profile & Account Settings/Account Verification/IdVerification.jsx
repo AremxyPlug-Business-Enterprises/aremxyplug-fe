@@ -110,7 +110,7 @@ export default function IdVerification(Data) {
   ) => {
      if(!navigator.onLine) return alert("Check your internet connection");
     if (idButtonState === "Verify" && navigator.onLine) {
-      url = "https://aremxyplug.onrender.com/api/v1/verify";
+      url = "https://api.aremxyplug.com/api/v1/verify";
       buttonStateSuccess = "Verified";
       ErrorMessage = "NIN Name Mismatch or Network Failure";
       PendingImageFxn = () => setVerifyImage(Pending);

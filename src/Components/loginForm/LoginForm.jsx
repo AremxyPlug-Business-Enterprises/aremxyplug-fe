@@ -216,7 +216,7 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
           };
         const response =   await axios
             .post(
-              "https://aremxyplug.onrender.com/api/v1/login",
+              "https://api.aremxyplug.com/api/v1/login",
               loginData,
               config
             )
@@ -288,7 +288,7 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
           try {
         const response =   await axios
             .post(
-              "https://aremxyplug.onrender.com/api/v1/login",
+              "https://api.aremxyplug.com/api/v1/login",
               loginData,
               config
             )

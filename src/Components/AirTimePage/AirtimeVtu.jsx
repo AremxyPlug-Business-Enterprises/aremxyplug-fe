@@ -37,7 +37,7 @@ const AirtimeVtu = () => {
     // const {  isDarkMode } = useContext(ContextProvider);
     const tFee = 0;
     const points = '+2.00';
-
+      const [airtimeResponse, setAirtimeResponse] = useState({})
     const { networkName, setNetworkName, newBalance, setNewBalance } = useContext(ContextProvider);
     const { selectedProduct, setSelectedProduct } = useContext(ContextProvider);
     const { recipientName, setRecipientName } = useContext(ContextProvider);
@@ -105,7 +105,7 @@ setRecipientList(response?.data?.data?.recipients?.recipients);
         if (a === '' || b === '') {
             return ''
         } else {
-            const totalAmount = ((1 - (a / 100)) * b)
+            const totalAmount = (Math.floor((1 - (a / 100)) * b))
             return totalAmount;
         }
      }
@@ -543,69 +543,110 @@ console.log(recipientList);
         setTransactFailedPopUp,
     } = useContext(ContextProvider);
 
-    const handleTransactionSuccessClose = async () => {
-        async function buyAirtime(network, mobileno, amount) {
-            const path = '/airtime';
+//     const handleTransactionSuccessClose = async () => {
+//         async function buyAirtime(network, mobileno, amount) {
+//             const path = '/airtime';
 
-            const data = {
-                network,
-                mobileno,
-                amount,
-             };
+//             const data = {
+//                 network,
+//                 mobileno,
+//                 amount,
+//              };
 
-            try {
-                setIsLoading(true)
-                const response = await axiosInstance.post(path, data);
-                const result = response?.data?.data?.data; // Access the nested `data`
-               setTransactionID(result?.transaction_id);
-                setRefNumber(result?.reference_number);
-                setOrderID(result?.order_id);
-                setDescription(result?.description);
-                setInputPin("")
+//             try {
+//                 setIsLoading(true)
+//                 const response = await axiosInstance.post(path, data);
+//                 const result = response?.data?.data?.data; // Access the nested `data`
+//                setTransactionID(result?.transaction_id);
+//                 setRefNumber(result?.reference_number);
+//                 setOrderID(result?.order_id);
+//                 setDescription(result?.description);
+//                 setInputPin("")
                
-                  if (response.status === 200 || response.status === 201) 
-                    {
-            // Success response
-            setTransactSuccessPopUp(true); 
-            setConfirm(false);
-             return { statusCode: response.status, data: response.data };
-            // Show success popup
-        }
+//                   if (response.status === 200 || response.status === 201) 
+//                     {
+//             // Success response
+//             setTransactSuccessPopUp(true); 
+//             setConfirm(false);
+//              return { statusCode: response.status, data: response.data };
+//             // Show success popup
+//         }
                
-                // console.log(response.data);
-            } catch (error) {
-                console.error(error);
-                setInputPin("");
-                  setTransactFailedPopUp(true); 
-            setConfirm(false)// Show failure popup
-             if(error && error.response === undefined){
-             alert("Check your internet Connection, then reload the page.")
-          } else if(error && (error.response.status === 400 || error.response.status === 404)){
-             setInputPin("");
-                  setTransactFailedPopUp(true); 
-            setConfirm(false)// 
-          }else if(error && error.response.status === 500){
-             setInputPin("");
-                  setTransactFailedPopUp(true); 
-            setConfirm(false)// 
-          }else if(error && error.response.status === 401){
+//                 // console.log(response.data);
+//             } catch (error) {
+//                 console.error(error);
+//                 setInputPin("");
+//                   setTransactFailedPopUp(true); 
+//             setConfirm(false)// Show failure popup
+//              if(error && error.response === undefined){
+//              alert("Check your internet Connection, then reload the page.")
+//           } else if(error && (error.response.status === 400 || error.response.status === 404)){
+//              setInputPin("");
+//                   setTransactFailedPopUp(true); 
+//             setConfirm(false)// 
+//           }else if(error && error.response.status === 500){
+//              setInputPin("");
+//                   setTransactFailedPopUp(true); 
+//             setConfirm(false)// 
+//           }else if(error && error.response.status === 401){
+//         setInputPin("");
+//         setSessionModal(true)
+//           return { statusCode: error.response.status, data: null };
+//         }
+//             }finally {
+//                 setIsLoading(false)
+//             }
+//         }
+
+//         // Usage
+//      await buyAirtime(
+//             networkId, // Network (MTN)
+//             recipientNumber, // Mobile No
+//             amount, // Amount
+//          // Airtime Type (VTU)
+//         );
+// };
+
+const handleTransactionSuccessClose = async()=> {
+  const requestBody = {
+   nentwork : networkId, 
+  mobileno : recipientNumber,
+  amount : amount
+  }
+  const successHandler = (response)=> {
+    const result = response?.data?.data?.data; // Access the nested `data`
+           setTransactionID(result?.transaction_id);
+          setRefNumber(result?.reference_number);
+           setOrderID(result?.order_id);
+           setDescription(result?.description);
+           setInputPin("");
+           setTransactSuccessPopUp(true); 
+           setConfirm(false);
+           setAirtimeResponse(response)
+           return response
+  }
+  const FailedHandler = (ErrorType)=> {
+      setInputPin("");
+if(ErrorType === "Network error" || ErrorType === "User error"){
         setInputPin("");
-        setSessionModal(true)
-          return { statusCode: error.response.status, data: null };
-        }
-            }finally {
-                setIsLoading(false)
-            }
-        }
-
-        // Usage
-     await buyAirtime(
-            networkId, // Network (MTN)
-            recipientNumber, // Mobile No
-            amount, // Amount
-         // Airtime Type (VTU)
-        );
-};
+           setTransactFailedPopUp(true); 
+                 setConfirm(false)// 
+}else if(ErrorType === "Server error" ) {
+   setInputPin("");
+  setTransactFailedPopUp(true); 
+  setConfirm(false)//
+}else if(ErrorType === "unauthorised"){
+ if(sessionModal) return;
+ if(sessionModal === false) return setSessionModal(true)
+}else{
+  alert("Purchase Failed")
+}
+  }
+  await PostFunction("airtime",  setIsLoading, requestBody,
+    successHandler, FailedHandler, ()=>{}
+   )
+//   return typeof successHandler() === "object" ? successHandler() : null;
+}
 
     const [receipt] = useState(false);
     const [receiptFailed] = useState(false);
@@ -651,7 +692,7 @@ console.log(recipientList);
     handleTransactionSuccessClose
   );
       }else if(ErrorType === "Network error" || ErrorType === "User error"){
-        alert("Your internet connectiom is quite unstable.")
+        alert("Your internet connection is quite unstable.")
         setAirtimeTransactionNetwork(true);
       }
     },
@@ -1075,7 +1116,7 @@ className={`flex justify-left  w-[100%] items-center`}>
      <h2 className={`text-left text-[13.2px]  font-[400] 
          leading-[17.4px] md:text-[11px] md:leading-[12.206px]
             lg:text-[16px] lg:leading-[20.8px] 
-         ${isDarkMode ? "text-white" : "text-[#7E7E7E]" }`}>{newAmount ? `NGN${newAmount}` : `Total Amount`}
+         ${isDarkMode ? "text-white" : "text-[#7E7E7E]" }`}>{newAmount? `NGN${newAmount}` : `Total Amount`}
                       </h2>
                        <img src={money} alt="" 
                                           className="self-center align-middle md:h-[14.038px]
@@ -1253,7 +1294,8 @@ className={`flex justify-left  w-[100%] items-center`}>
                         <div onClick={() => { 
                        if(networkName?.length > 1 && 
                          recipientNumber?.length > 1 && recipientNumber?.length === 11
-                           && RecipientExistCheck?.phone !== recipientNumber &&   !errors?.recipientNumber) {
+                           && RecipientExistCheck?.phone !== recipientNumber && RecipientExistCheck?.phone !== undefined 
+                           &&   !errors?.recipientNumber) {
                                handleAddRecipient();
                             }
                          }}
@@ -1722,19 +1764,23 @@ className={`flex justify-left  w-[100%] items-center`}>
                                     />
                                 </div>
                                 <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
-                                <h2 className="text-[12px] my-[5%] text-center md:text-[20px] md:my-[3%] lg:text-[14px] lg:my-[2%]">
+                                <h2 className="text-[14px] my-[5%] text-center font-[600] leading-[19px]
+                                md:text-[20px] md:my-[3%] lg:text-[14px] lg:my-[2%]">
                                     Transaction Failed
                                 </h2>
                                 <img
-                                    className="w-[120px] h-[120px] mx-auto my-[10%] lg:w-[150px] lg:h-[150px]"
+                                    className="w-[120px] h-[120px] mx-auto my-[10%] 
+                                    lg:w-[150px] lg:h-[150px]"
                                     src="./Images/failed.png"
                                     alt="/"
                                 />
-                                <p className="text-[10px] text-[#0008] mx-[10px] text-center my-[60px] md:text-[14px] lg:text-[12px]">
+                                <p className="text-[14px] text-red-500 font-[600]
+                                 mx-[10px] text-center my-[60px] md:text-[14px] lg:text-[12px]">
                                     An unexpected error has occurred, please try again.
                                 </p>
-
+ {airtimeResponse?.data?.data?.data ?  (
                                 <div className="flex w-[70%] mx-auto items-center gap-[5%] md:w-[60%] lg:my-[5%]">
+                                 
                                     <button
                                         onClick={() => {
                                             setTransactFailedPopUp(false);
@@ -1748,10 +1794,19 @@ className={`flex justify-left  w-[100%] items-center`}>
                                             setDiscount("");
                                             setPaymentSelected("");
                                         }}
-                                        className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                                        className={`
+                                          bg-[#04177f] w-[111px] 
+                                          flex justify-center items-center 
+                                          mx-auto cursor-pointer text-[12px]
+                                           font-extrabold h-[40px] text-white
+                                            rounded-[6px] md:w-[25%] md:rounded-[8px] 
+                                            md:text-[16px] lg:w-[163px] lg:h-[38px] 
+                                            lg:my-[2%]`
+                                          }
                                     >
                                         Done
                                     </button>
+                                    
                                     <Link to="/airtime-receipt-failed" state={{
                                         networkName: networkName,
                                         selectedProduct: selectedProduct,
@@ -1759,13 +1814,43 @@ className={`flex justify-left  w-[100%] items-center`}>
                                         recipientName: recipientName,
                                         amount: amount,
                                     }}>
+                                     
                                         <button
                                             onClick={handleReceiptFailed}
                                             className={`border-[1px] w-[111px] border-[#04177f] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[110px] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}>
                                             Receipt
                                         </button>
                                     </Link>
-                                </div>
+                                    </div>
+                                   ): (
+                                         <button
+                                        onClick={() => {
+                                            setTransactFailedPopUp(false);
+                                            // window.location.reload();
+                                            setNetworkName("");
+                                            setSelected("");
+                                            setRecipientNumber("");
+                                            setRecipientName("");
+                                            setSelectedProduct("");
+                                            setAmount("");
+                                            setDiscount("");
+                                            setPaymentSelected("");
+                                        }}
+                                        className={`
+                                          bg-[#04177f] w-[90%] mx-auto 
+                                          flex justify-center items-center 
+                                           cursor-pointer text-[12px]
+                                           font-extrabold h-[40px] text-white
+                                            rounded-[6px] md:w-[25%] md:rounded-[8px] 
+                                            md:text-[16px] lg:w-[163px] lg:h-[38px] 
+                                            lg:my-[2%]`
+                                          }
+                                    >
+                                        Done
+                                    </button>
+                                  
+                                    
+ )}
                             </div>
                             </div>
                         </Modal>

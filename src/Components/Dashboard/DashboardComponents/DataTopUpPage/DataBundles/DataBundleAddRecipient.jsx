@@ -156,9 +156,8 @@ const DataBundleAddRecipient = () => {
         name: recipientName, // Changed from recipientName
         phone: recipientNumber, // Changed from recipientNumber
       };
-
-      const response = await fetch(
-        "https://aremxyplug.onrender.com/api/v1/data/recipient",
+  const response = await fetch(
+        "https://api.aremxyplug.com/api/v1/data/recipient",
         {
           method: "POST",
           headers: {

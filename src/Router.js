@@ -192,13 +192,16 @@ import { VirtualAccountReceipt } from "./Components/Dashboard/DashboardComponent
 import { ThemeHandler } from "./Components/ApiCollection.jsx/ApiBuck";
 import { PointRedeemReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/PointRedeemReceipt";
 import { TestingDesign } from "./Components/TestingPhase/TestingDesign";
-
+import NotFound from "./Components/NotFound";
 export const Router = () => {
 
+
   return (
+
     <div>
-      <ThemeHandler/>
+       <ThemeHandler/>
       <Routes>
+        
         <Route path="/" element={<Home />} />
         <Route path="/About-us" element={<AboutUs />} />
         <Route path="/Solutions" element={<Solution />} />
@@ -236,6 +239,7 @@ export const Router = () => {
           <MainDashboard />
           </ProtectedRoute>
           } />
+        
           <Route path = "/TestingPhase" element = {<TestingDesign/>}/>
         {/* To redirect the user back to the login page if there is any attempt without login or authoorisation Token */}
 
@@ -436,6 +440,11 @@ export const Router = () => {
           <WithdrawToBusinessAccountPage />
           </ProtectedRoute>}
         />
+          <Route path = "undefined" element= {
+            <ProtectedRoute>
+            <NotFound/>
+            </ProtectedRoute>
+            }/>
         <Route path="/withdrawal-receipt" element={
           <ProtectedRoute>
           <WithdrawalReceipt />
