@@ -91,7 +91,7 @@ const ChangeUserPin = async()=> {
    }
    const dataJson = JSON.stringify(data);
    console.log(dataJson);
-   const url = "https://aremxyplug.onrender.com/api/v1/pin";
+   const url = "https://api.aremxyplug.com/api/v1/pin";
    const response = await axios.patch(url,dataJson,
     {headers : {"Content-Type":"application/json" }, 
     withCredentials : true

@@ -83,10 +83,10 @@ const PasswordReset = () => {
 // TO CHECK IF THE USER WANTS TO GET OTP VIA LINK OR OTP
 const userForgetPasswordSystem = async(url, alertMessage)=>{
 if(selectionType ==="otp"){
-  url = "https://aremxyplug.onrender.com/api/v1/send-otp/resetpassword"
+  url = "https://api.aremxyplug.com/api/v1/send-otp/resetpassword"
   alertMessage = "An otp has been sent to your email"
 }else if(selectionType === "link"){
-url = "https://aremxyplug.onrender.com/api/v1/forgot-password"
+url = "https://api.aremxyplug.com/api/v1/forgot-password"
 alertMessage = "A link has been sent to your email"
 }
 resetPasswordOtp(url, alertMessage)

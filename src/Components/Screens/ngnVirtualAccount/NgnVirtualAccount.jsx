@@ -30,7 +30,7 @@ function NgnVirtualAccount(Data) {
       try{
       setLoading(true)
       const body =""
-      const url = "https://aremxyplug.onrender.com/api/v1/virtualacc"
+      const url = "https://api.aremxyplug.com/api/v1/virtualacc"
        const response = await axios.post(url,body,
         { headers : {"Content-Type" : "application/json"},
         withCredentials : true

@@ -106,7 +106,7 @@ const DataBundleSelectRecipient = () => {
 
     try {
       const response = await fetch(
-        `https://aremxyplug.onrender.com/api/v1/data/recipient`,
+        `https://api.aremxyplug.com/api/v1/data/recipient`,
         {
           method: "PUT",
           headers: {
@@ -138,7 +138,7 @@ const DataBundleSelectRecipient = () => {
       };
 
       const response = await fetch(
-        `https://aremxyplug.onrender.com/api/v1/data/recipient`,
+        `https://api.aremxyplug.com/api/v1/data/recipient`,
         {
           method: "DELETE",
           headers: {

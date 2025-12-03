@@ -112,7 +112,7 @@ function LoginPopUp() {
       body = {
         phone_number: phone,
       };
-      url = "https://aremxyplug.onrender.com/api/v1/sms/send";
+      url = "https://api.aremxyplug.com/api/v1/sms/send";
     } else if ( paramSmsOrEmail === "email") {
       body = {
         email: email,
@@ -150,7 +150,7 @@ function LoginPopUp() {
   // Function to help check the verification status of a user
   //Verification with Bvn or NiN and if the user has created an account
   const ConfirmVirtualState = async () => {
-    const url = "https://aremxyplug.onrender.com/api/v1/check-verification";
+    const url = "https://api.aremxyplug.com/api/v1/check-verification";
       //
       try {
         setLoading(true);
@@ -329,8 +329,7 @@ return assignImageByUsername
 
   const handleAccountDetails = async (AuthToken) => {
   const authToken = localStorage.getItem("xcss{}");
-  const emailToken = localStorage.getItem("xcss[]")
-
+  const emailToken = localStorage.getItem("xcss[]");
   AuthToken = authToken || emailToken
  await CheckVirtualAcc(
      AuthToken,
@@ -351,20 +350,19 @@ return assignImageByUsername
      if(UserIconFormatting && SessionTiming){
       navigate("/dashboard");
      }
-      //  document.cookie = `sessionToken=${AuthUsed}; path=/; max-age=900`;
-      //   }
+    
     }
   };
 
   // THE FUNCTION FOR DERIVING THE GET OPT METHOD
   const gettingSmsOrEmailFunctionOtp = async (url, body) => {
     if (smsOrEmail === "email") {
-      url = `https://aremxyplug.onrender.com/api/v1/verify-otp/signin?email=${email}`;
+      url = `https://api.aremxyplug.com/api/v1/verify-otp/signin?email=${email}`;
       body = {
         otp: otp3,
       };
     } else if(smsOrEmail === "sms") {
-      url = `https://aremxyplug.onrender.com/api/v1/sms/verify/signin?phone=${phone}`;
+      url = `https://api.aremxyplug.com/api/v1/sms/verify/signin?phone=${phone}`;
       body = {
         otp: otp3,
       };
@@ -378,7 +376,6 @@ return assignImageByUsername
 
   //Verification of the otp
   const VerifyOtpFunction = async (url, body) => {
-  
     setLoading(true);
     try {
       const response = await axios.post(url, body, {

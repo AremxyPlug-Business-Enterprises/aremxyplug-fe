@@ -60,8 +60,7 @@ export const MainDashboard = (Data) => {
     customerDetail, setDashLoading, setVirtualAccCreated, 
     setBankNameState, setAccountNameState, setAccountNumberState, 
     twoStepVerificationSuccess,setTwoStepVerificationSuccess, setDateEdit,
-    newBalance, setNewBalance,  setEditCalenderOne,
-     setEditCalenderTwo, 
+    newBalance, setNewBalance,  setEditCalenderOne, setEditCalenderTwo, 
      setStartDateValueState, setEndDateValueState, setCurrentDateInTimeStamps, setCountCalender
   } = useContext(ContextProvider);
   //const {account_no, bank_name, account_name} = virtualAccCreated;
@@ -156,7 +155,7 @@ if((clickedoption === "NGN")){
       try{
       setDashLoading(true);
       const body =""
-      const url = "https://aremxyplug.onrender.com/api/v1/virtualacc";
+      const url = "https://api.aremxyplug.com/api/v1/virtualacc";
        const response = await axios.post(url,body,{ headers : {"Content-Type" : "application/json",
        },  withCredentials : true
       })
@@ -164,8 +163,9 @@ if((clickedoption === "NGN")){
            alert("Virtual Account Created")
            localStorage.setItem("80pcs","true")
            AuthUsed = usernameToken || emailToken;
-           await CheckVirtualAcc(AuthUsed, customerDetail, setDashLoading, setVirtualAccCreated, 
-            setBankNameState, setAccountNameState, setAccountNumberState, 
+           await CheckVirtualAcc(AuthUsed, customerDetail, setDashLoading,
+             setVirtualAccCreated, setBankNameState, 
+             setAccountNameState, setAccountNumberState, 
            twoStepVerificationSuccess,setTwoStepVerificationSuccess)
            } 
            if(CheckVirtualAcc && Data.ConfirmAcc === "true"){
@@ -205,7 +205,7 @@ if((clickedoption === "NGN")){
         if((usernameToken || emailToken) && navigator.onLine){
         try{
           setBalanceLoading(true);
-         const url = "https://aremxyplug.onrender.com/api/v1/balance";
+         const url = "https://api.aremxyplug.com/api/v1/balance";
          const response = await axios.get(url,{ headers : {"Content-Type" : "application/json",
            },withCredentials :true
         })
@@ -213,9 +213,8 @@ if((clickedoption === "NGN")){
          if(response.status && (response.status === 200 || response.status === 201)){
              setBalanceValue("");
            const checkBal =  response?.data?.data?.data?.balance;
-           setNewBalance(checkBal)
-             }
-        }
+           setNewBalance(checkBal);
+             }}
         }catch(error){
            if((error.response === undefined || error.response === null) ) {
            setBalanceValue("Your internet connection is quite unstable.");
@@ -309,8 +308,6 @@ const ValueRef = useRef();
     GenerateAccountBalance();
      ExecutePointFunction()
   }
-
-  
 })
 // if(!ImageLoadingExecution) {
 //     return (
@@ -911,8 +908,7 @@ return (
               className={`${
                 isDarkMode ? " border bg-[#000]" : "bg-[#04177f]"
               } w-[25%] py-[12px] flex items-center gap-[10%] 
-              rounded-[10px] lg:py-[15px] lg:rounded-[19px] px-[10px]`}
-            >
+              rounded-[10px] lg:py-[15px] lg:rounded-[19px] px-[10px]`}>
                 <img
                   className="w-[11px] h-[11px]
                    md:h-[20px] md:w-[20px] lg:w-[51px] lg:h-[51px]"

@@ -166,15 +166,9 @@ return localStorage.setItem("SessionExpiration", resetExpiration);
                    md:p-[2%] lg:w-[113px] lg:h-[38px] lg:text-[13px]">
             Stay
            </button>
-       
-      
-      </div>
-       
-         
-          </div>
-        
-        
-      </Modal>
+        </div>
+     </div>
+  </Modal>
     </div>
   
   );
@@ -216,8 +210,7 @@ export const InternalLoginSession = ({ setExpiredSessionLogin})=> {
 
 
 const SubmitUserLoginDetails = ()=> {
-   
-   const body = {
+     const body = {
     username : getUsername,
     password : password
   }
@@ -303,7 +296,7 @@ const SubmitUserLoginDetails = ()=> {
       : "hover:bg-[#EDEAEA] border-[#9C9C9C] bg-white text-[#7C7C7C] "
   }`} 
   placeholder="Your Current Password"
-  id = "InternalLoginPasswordValue"
+
   value={password}
   onChange={(e)=> setPassword(e.target.value)}
                 type="password"
@@ -454,21 +447,19 @@ export const CheckVirtualAcc = async(
     confirmVirtualState) => {
      if(!navigator.onLine) return alert("Check your internet Connection")
   if (authToken  && navigator.onLine) {
-    const url = 'https://aremxyplug.onrender.com/api/v1/virtualacc';
-     // console.log(data)
+    const url = 'https://api.aremxyplug.com/api/v1/virtualacc';
      try{
     setLoading(true);
           const response = await axios.get(url, {headers : {"Content-Type" : "application/json",
       }, withCredentials : true})
         if (response.status === 201 || response.status === 200 ) {
-             const virtualAccCreated = response?.data?.data?.acc_details;
-            setVirtualAccCreated(virtualAccCreated);
+      const virtualAccCreated = response?.data?.data?.acc_details;
+    setVirtualAccCreated(virtualAccCreated);
             if(TwoStep === true){
-               console.log(TwoStep)
               if(virtualAccCreated){
-              SignInVirtualAccountState(customerDetail, virtualAccCreated
+              SignInVirtualAccountState(
+                customerDetail, virtualAccCreated
                 ,setBankNameState, setAccountNameState, setAccountNumberState);
-                // alert("Sign in virtual running")
                 if(SignInVirtualAccountState){
                   localStorage.setItem("cxccxfd",true)
                   await confirmVirtualState();
@@ -488,11 +479,7 @@ export const CheckVirtualAcc = async(
         alert("We had an error trying to get your details, click okay to repeat the login process");
          }
       else if(error.status === 401){
-
-        // console.log(error.response.headers.hasAuthorization);
-       
-        
-        console.log(error.response);
+          console.log(error.response);
       } else if (error.status === 404) {
         alert("Network Error, Please Check your Connection and try again");
         console.log(`ERROR: ${error}`);
@@ -587,7 +574,7 @@ export const VerifyTransPin = async (
       const body = {
          pin : otp
       }
-      const url = "https://aremxyplug.onrender.com/api/v1/pin/verify"
+      const url = "https://api.aremxyplug.com/api/v1/pin/verify"
       const response = await axios.post(url, body, {headers: {"Content-Type" :"application/json",
       },withCredentials : true
    })
@@ -643,7 +630,7 @@ export const PostFunction = async (
   if ((usernameToken || emailToken ) && navigator.onLine){
     try {
       setLoading(true);
-      const url = `https://aremxyplug.onrender.com/api/v1/${path}`;
+      const url = `https://api.aremxyplug.com/api/v1/${path}`;
       const response = await axios.post(url, body, {
         headers: {
           "Content-Type": "application/json",
@@ -712,7 +699,7 @@ export const GetFunction = async(path, setLoading, functionAtSuccess,
    if((usernameToken || emailToken) && navigator.onLine){
       try{
          setLoading(true);
-    const url = `https://aremxyplug.onrender.com/api/v1/${path}`
+    const url = `https://api.aremxyplug.com/api/v1/${path}`
       const response = await axios.get(url, {headers: {"Content-Type" :"application/json",
          }, withCredentials : true})
     if(response.status === 201 || response.status ===  200){
@@ -727,8 +714,7 @@ export const GetFunction = async(path, setLoading, functionAtSuccess,
      functionAtFailed("Network error");
       } else if(error && error.response.status === 400){
          functionAtFailed("Bad request")
-      }
-      else if(error && error.response.status === 401){
+      } else if(error && error.response.status === 401){
     functionAtFailed("unauthorised");
 } else if (error && error.response.status === 404) {
         functionAtFailed("User error");
@@ -760,7 +746,7 @@ export const PutFunction = async (
   if ((usernameToken || emailToken) && navigator.onLine) {
     try {
       setLoading(true);
-      const url = `https://aremxyplug.onrender.com/api/v1/${path}`;
+      const url = `https://api.aremxyplug.com/api/v1/${path}`;
       const response = await axios.put(url, body, {
         headers: {
           "Content-Type": "application/json",

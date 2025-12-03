@@ -56,14 +56,14 @@ const getOtpSmsorEmail = async(body, url)=> {
       phone_number : parsedPhone
     }
     console.log(body);
-    url ="https://aremxyplug.onrender.com/api/v1/sms/send";
+    url ="https://api.aremxyplug.com/api/v1/sms/send";
   }else if(viaEmailOrSms === "email" ){
    const parsedEmail =   email  ? email : Data.UserEmail ? Data.UserEmail : "";
     body = {
     email : parsedEmail
    }
 console.log(body)
-   url = "https://aremxyplug.onrender.com/api/v1/send-otp/signup"
+   url = "https://api.aremxyplug.com/api/v1/send-otp/signup"
 }
 if(!navigator.onLine) return alert("Check your internet connection");
  if(navigator.onLine){
@@ -108,13 +108,13 @@ function twoStepVerificationHandler() {
 
 const gettingSmsOrEmailFunctionOtp = async(url, body)=> {
   if( viaEmailOrSms === "email"){
-     url = `https://aremxyplug.onrender.com/api/v1/verify-otp/signup?email=${email ? email : Data.UserEmail ? Data.UserEmail : ""}`
+     url = `https://api.aremxyplug.com/api/v1/verify-otp/signup?email=${email ? email : Data.UserEmail ? Data.UserEmail : ""}`
        body ={
        otp :otpVerifyEmailSignup
        }
      console.log(otpVerifyEmailSignup);
       }else if(viaEmailOrSms === "sms"){
-       url = `https://aremxyplug.onrender.com/api/v1/sms/verify/signup?phone=${phoneNumber ? phoneNumber : Data.UserPhone ? `${Data.UserPhone}` : ""}`
+       url = `https://api.aremxyplug.com/api/v1/sms/verify/signup?phone=${phoneNumber ? phoneNumber : Data.UserPhone ? `${Data.UserPhone}` : ""}`
        body ={
        otp :otpVerifySmsSignup
        }

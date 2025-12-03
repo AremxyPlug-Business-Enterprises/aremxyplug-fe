@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: 'https://aremxyplug.onrender.com/api/v1',
+  baseURL: 'https://api.aremxyplug.com/api/v1',
   withCredentials: true,
 });
 

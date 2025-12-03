@@ -78,7 +78,7 @@ const SelectRecipient = ({recipientList,
     };
 
     try {
-      const response = await fetch(`https://aremxyplug.onrender.com/api/v1/airtime/recipient`, {
+      const response = await fetch(`https://api.aremxyplug.com/api/v1/airtime/recipient`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -108,7 +108,7 @@ const SelectRecipient = ({recipientList,
         id: recipientId,
       };
 
-      const response = await fetch(`https://aremxyplug.onrender.com/api/v1/airtime/recipient`, {
+      const response = await fetch(`https://api.aremxyplug.com/api/v1/airtime/recipient`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json'

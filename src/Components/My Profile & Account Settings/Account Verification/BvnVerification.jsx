@@ -71,7 +71,7 @@ export default function BvnVerification(Data) {
   ) => {
     if (!navigator.onLine) return alert("Check your internet connection");
     if (bvnButtonState === "Verify" && navigator.onLine) {
-      url = "https://aremxyplug.onrender.com/api/v1/verify";
+      url = "https://api.aremxyplug.com/api/v1/verify";
       buttonStateSuccess = "Verified";
       ErrorMessage = "Bvn Name Mismatch or Network Failure";
       PendingImageFxn = () => setBvnVerifyImage(PendingImage);

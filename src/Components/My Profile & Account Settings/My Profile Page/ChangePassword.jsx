@@ -38,7 +38,7 @@ const [sessionModal, setSessionModal] = useState(false)
       old_password : oldPassword,
       new_password : newPassword
      }
-     const url = "https://aremxyplug.onrender.com/api/v1/update-password";
+     const url = "https://api.aremxyplug.com/api/v1/update-password";
      const response = await axios.patch(url,data,{headers : {"Content-Type":"application/json",
      }, withCredentials : true})
      if(response.status === 200 || response.status === 201){
