@@ -711,7 +711,6 @@ const GetBalance = async () => {
    }
   })
 }
-console.log(necoEduResponse?.data?.data?.Amount);
   return (
     <DashBoardLayout>
       <div className="flex flex-col justify-between lg:h-[120%] h-[115%]">

@@ -48,9 +48,7 @@ const [countdown, setCountdown] = useState(60);
 const getOtpSmsorEmail = async(body, url)=> {
   // const [sendSmsOrEmail, setSendSmsOrEmail] = useState("")
   if(viaEmailOrSms === "sms"){
-   
-  
-  const parsedPhone = phoneNumber  ?
+    const parsedPhone = phoneNumber  ?
    phoneNumber : Data.UserPhone ? Data.UserPhone : "";
     body = {
       phone_number : parsedPhone
@@ -118,7 +116,6 @@ const gettingSmsOrEmailFunctionOtp = async(url, body)=> {
        body ={
        otp :otpVerifySmsSignup
        }
-       console.log(otpVerifySmsSignup);
         }
         console.log(`URL:${url}`,`BODY:${body}`)
         if(!navigator.onLine) return alert("Check your internet connection")
@@ -133,7 +130,7 @@ const VerifyOtpFunction = async(url, body)=>{
   try{
  const response = await axios.post(url,body,{ headers : {"Content-Type" : "application/json"}})
 
-    if(response.status === 200 || 201){
+    if(response.status === 200 || response.status === 201){
       submitVerify()
         localStorage.removeItem("ActiveSignUp");
     } 

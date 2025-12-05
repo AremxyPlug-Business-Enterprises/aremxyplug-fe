@@ -6,6 +6,7 @@ import { Calender } from "./Calender";
 import styles from "./component.module.css";
 import TransactionHistory from "./TransactionHistory";
 import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
+import closeCircle from "../../EducationPins/imagesEducation/close-circle.svg"
 
 export const RecentTransaction = ({transactionResponse, transactionHistoryError, loading, GetTransactionInformation}) => {
   const Data = GetLocalStorage()
@@ -25,6 +26,7 @@ export const RecentTransaction = ({transactionResponse, transactionHistoryError,
   setEditCalenderOne("Start Date");
   setEditCalenderTwo("End Date");
   setStateDateEdit("Filter By Date");
+  await GetTransactionInformation(false)
 
  } 
 
@@ -51,6 +53,7 @@ export const RecentTransaction = ({transactionResponse, transactionHistoryError,
  }
  const returnHistory = async()=> {
   setStateDateEdit("Filter By Date");
+   handleCalenderState();
   await GetTransactionInformation(calender);
 }
   return (
@@ -76,7 +79,7 @@ export const RecentTransaction = ({transactionResponse, transactionHistoryError,
       >
         <div
           className={`relative cursor-pointer h-[100%]
-           ${stateDateEdit !== "Filter By Date" ? "w-[20%]" : "w-[25%]"}
+           ${stateDateEdit !== "Filter By Date" ? "w-[30%]" : "w-[25%]"}
              ${styles.filter} ${
             isDarkMode ? "border" : ""
           } flex items-center gap-[1px] px-[2px] rounded-[3px] md:px-[8px]`}
@@ -102,6 +105,13 @@ export const RecentTransaction = ({transactionResponse, transactionHistoryError,
             src="./Images/dashboardImages/dateImg.png"
             alt=""
           />
+            {stateDateEdit !== "Filter By Date" && stateDateEdit !== undefined && (
+                          <img 
+                          onClick = {()=> returnHistory()}
+                          className="absolute right-[5px] ml-[10px] lg:pr-[5px] w-[20px] h-[20px] md:w-[17px] 
+                          md:h-[17px] lg:w-[30px] lg:h-[30px] align-self"
+                          src={closeCircle} alt="" />
+                          )}
 
           {calender && (
                    <div className={`absolute rounded-[20px] 
@@ -137,25 +147,14 @@ export const RecentTransaction = ({transactionResponse, transactionHistoryError,
         </div>
          
        
-           {stateDateEdit !== "Filter By Date"  && (
-                             <p   onClick={returnHistory}
-  className={`${
-              isDarkMode ? "border" : "bg-[#04177f] text-center text-align"
-            } text-white  rounded-[7px]  w-[20%] h-[100%]
-             flex items-center cursor-pointer py-[2px]
-             justify-center md:rounded-[10px]  md:py-[8px] 
-             g:rounded-[13px] 
-             lg:py-[10px]  md:text-[9.16px] px-[5px]
-              md:font-semibold lg:text-base lg:font-extrabold `}>
-                       History
-                       </p>
-
-                      )}
+          
           <Link to="/TransactionPage" 
-            className= {`  ${stateDateEdit !== "Filter By Date" ? "w-[20%]" : "w-[25%]"} flex justify-center items-center`}>
+            className= { ` ${stateDateEdit !== "Filter By Date" ? "w-[23.3%]" : "w-[25%]"}
+             flex justify-center items-center`}>
           {" "}
           <p
-             className={`${
+             className={`
+             ${
               isDarkMode ? "border" : "bg-[#04177f]"
             } text-white  w-full text-center
              rounded-[7px] py-[2px] flex items-center justify-center
@@ -168,7 +167,7 @@ export const RecentTransaction = ({transactionResponse, transactionHistoryError,
           </p>
         </Link>
         <Link to="/wallet-summary"
-         className={` ${stateDateEdit !== "Filter By Date" ? "w-[20%]" : "w-[25%]"}
+         className={` ${stateDateEdit !== "Filter By Date" ? "w-[23.3%]" : "w-[25%]"}
           flex justify-center items-center`}>
           <p
           className={`${
@@ -184,7 +183,7 @@ export const RecentTransaction = ({transactionResponse, transactionHistoryError,
           </p>
         </Link>
         <Link to="/sales-summary"
-          className={`  ${stateDateEdit !== "Filter By Date" ? "w-[20%]" : "w-[25%]"}
+          className={`  ${stateDateEdit !== "Filter By Date" ? "w-[23.3%]" : "w-[25%]"}
           flex justify-center items-center`}>
           <p  className={`${
               isDarkMode ? "border" : "bg-[#04177f]"

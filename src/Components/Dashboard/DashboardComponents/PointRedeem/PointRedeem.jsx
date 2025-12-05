@@ -24,7 +24,7 @@ import { GetFunction,
  InternalLoginSession,
   PostFunction, 
   VerifyTransPin } from "../../../../Components/ApiCollection.jsx/ApiBuck";
-import { Loader } from "../../../Loader/Loader";
+import { BalanceLoading, Loader } from "../../../Loader/Loader";
 import { GetLocalStorage } from "../../../LocalStorage/LocalStorage";
 
 const PointRedeem = () => {
@@ -148,11 +148,11 @@ const [sessionModal, setSessionModal] = useState(false);
 
   const schema = Joi.object({
   inputValue: Joi.number()
-    .min(1000)
+    .min(100)
     .required()
     .messages({
       "number.base": "Please enter a valid number",
-      "number.min": "Minimum Point Redeem is 1000 and Above",
+      "number.min": "Minimum Point Redeem is 100 and Above",
       "any.required": "This field is required",
     }),
 });
@@ -169,16 +169,27 @@ const [sessionModal, setSessionModal] = useState(false);
     // const trxPoints = response?.data?.data?.point?.transaction_points ?? 0;
     // const referralPts = response?.data?.data?.point?.referral_points ?? 0;
     setUserPoints(available);
-    // setTransactionPoints(trxPoints);
-    // setReferralPoints(referralPts);
+    
     };
     const FailedHandler = (error) => {
       console.error("Failed to fetch points:", error);   
+      if(error === "unauthorised"){
+       if(sessionModal) return;
+       if(sessionModal === false) return setSessionModal(true)
+      }else if(error === "Server error"){
+    alert("Unable to retrieve points balance")
+  }else if(error === "Network error" || error === "User error"){
+    alert("Kindly Check your internet connection.")
+  }
          
     };
 
    
-      GetFunction("extra/point", setLoading,  successHandler, FailedHandler, setPointFetchedResponse)
+      GetFunction("extra/point", 
+        setLoading,  
+        successHandler, 
+        FailedHandler, 
+        setPointFetchedResponse)
   }else{
     setRestrictUser(true)
   }
@@ -225,8 +236,8 @@ const VerifyPinHandler = async () => {
     const payloadJson = JSON.stringify(payload);
 
     // Validate input
-    if (!inputValue || parseInt(inputValue) < 1000) {
-      alert("Minimum redemption is 1000 points");
+    if (!inputValue || parseInt(inputValue) < 100) {
+      alert("Minimum redemption is 100 points");
       return;
     }
     if (parseInt(inputValue) > userPoints) {
@@ -285,7 +296,12 @@ const redemptionData = response?.data?.data?.data;
 };
 
 
-    await PostFunction(Path, setLoading, payloadJson, successHandler, failedHandler, setPointPostResponse);
+    await PostFunction(Path, 
+      setLoading, 
+      payloadJson,
+       successHandler, 
+       failedHandler,
+        setPointPostResponse);
   };
 console.log(pointPostResponse)
 
@@ -368,12 +384,19 @@ console.log(pointPostResponse)
       >
         <div>
         {/* top part after nav bar */}
-        <div className="flex flex-row w-full pt-[20px]  h-[90px] md:h-[112.29px] lg:h-[196px] lg:px-[50px]  px-[16px] rounded-lg md:rounded-[11.5px] lg:rounded-[20px] justify-between  py-2 bg-gradient-to-r from-[#92ABFE] to-[#FFF741]">
+        <div className="min-h-[90px] py-[15px]
+                         lg:h-[196px] md:h-[112.29px] rounded-[6.6px] md:rounded-[11.46px] lg:rounded-[20px]
+                          mx-auto   gap-6 justify-between px-[16.51px] 
+                          md:px-[28.65px] lg:px-[50px] flex items-center
+                          bg-gradient-to-r from-[#92ABFE] to-[#FFF741]">
           <div className="flex flex-col gap-2  ">
-            <div className="text-[8px] font-[600]  md:text-[13.75px] md:leading-[20.63px] lg:pt-[25px] lg:text-[24px] lg:leading-[36px] text-[#000000] leading-[12px]">
+            <div className="text-[11px] leading-[13px] lg:leading-[30px]
+                                 lg:text-[24px] md:text-[13.75px] font-semibold">
               REDEEM YOUR EARNED POINTS WITH <br /> AREMXYPLUG.
             </div>
-            <div className="text-[6.67px] font-[400] md:text-[11.46px] md:leading-[14.9px] lg:text-[20px] lg:leading-[26px] text-[#000000] leading-[8.67px]">
+            <div className="text-[10px] leading-[13px] 
+                                lg:leading-[25px] lg:text-[20px]
+                                 md:text-[11.46px]">
               Redeem all your earned points to real money, withdrawn to <br />
               your bank account instantly without any hassle, free and enjoy!
             </div>
@@ -388,25 +411,31 @@ console.log(pointPostResponse)
         </div>
 
         {/* text lines after top part */}
-        <div className="text-[10px] font-[500] mt-[30px] md:mt-[30px] lg:mt-[50px] md:text-[11.46px] md:leading-[14.9px] lg:text-[20px] lg:leading-[26px] text-[#7C7C7C]">
-          How much points would you like to redeem to real money?
-        </div>
+        <div className = "flex flex-col gap-[20px]">
+         <p className="text-[12px] leading-[16px] font-[500]
+ mt-[30px] md:mt-[30px] lg:mt-[50px]   lg:text-[20px] lg:leading-[26px]
+  text-[#7C7C7C]">How much points would you like to redeem to real money?</p> 
+       
         <div
           onClick={handleRealPop}
-          className="font-[500] text-[10px] py-1 mt-[30px] md:mt-[30px] lg:mt-[50px] text-center px-4 md:text-[9.17px] lg:text-[16px] leading-[20.8px] lg:px-6 lg:w-fit  md:flex md:flex-row md:w-fit md:py-1 lg:py-3 rounded-sm md:rounded-sm lg:rounded-md md:leading-[11.5px] bg-primary text-white"
+          className="text-[14px] leading-[18px] font-[500] py-3 mt-[30px] md:mt-[30px]
+           lg:mt-[50px] text-center px-4 lg:text-[16px] lg:leading-[20.8px] lg:px-6 lg:w-fit  md:flex md:flex-row md:w-fit md:py-1
+            lg:py-3 rounded-sm md:rounded-sm 
+            lg:rounded-md md:leading-[11.5px] bg-primary text-white"
         >
           Real-time Points Redeem Tracker
         </div>
 
         {/* Section with input boxes */}
-        <div className="mt-[20px] md:mt-[30px] lg:mt-[50px] flex flex-row ">
-          <div className="border-[1px] w-[85%] md:w-[92%] h-[30px] md:h-[40px] lg:h-[60px] px-2 py-0 md:pt-1 lg:pt-4 border-slate-200">
-            <input
-              type="number"
-              value={inputValue}
-              onChange={handleInputChange}
-              className="w-[100%] outline-none text-[10px] lg:text-[16px] bg-transparent placeholder:text-[#7C7C7C] font-[600] text-[#7C7C7C]"
-              placeholder="Amount to Redeem"
+        <div className="mt-[20px] md:mt-[30px] lg:mt-[50px] flex flex-row w-[100%]">
+      <input type="tel"
+         value={inputValue}
+        onChange={handleInputChange}
+        className=" outline-none text-[12px] leading-[16px] 
+        lg:text-[16px] lg:leading-[22px] bg-transparent placeholder:text-[#7C7C7C] 
+        font-[600] text-[#7C7C7C] border-[1px] w-[80%] md:w-[85%] rounded-l-[10px] 
+         h-[50px] md:h-[40px] lg:h-[60px] px-2 py-0 md:pt-1 lg:pt-4 border-slate-200"
+         placeholder="Amount to Redeem"
             />{" "}
               {/* {!text ? <p>Amount to Redeem</p> : <div
               onChange={handleInputChange}
@@ -415,35 +444,41 @@ console.log(pointPostResponse)
                 
                 </div>} */}
         
-          </div>
-          <div className="h-[30px] md:h-[40px] lg:h-[60px] w-[15%] md:w-[8%] gap-2 lg:gap-4 flex flex-row px-3 py-2 bg-primary items-center   ">
-            <div>
+         
+          <div className="h-[50px] md:h-[40px] lg:h-[60px] py-[10px] md:py-[10px]
+           w-[20%] rounded-r-[10px] md:w-[8%] justify-between lg:gap-4
+            flex flex-row px-[5px] lg:px-2  bg-primary items-center">
+          
               {" "}
               <img
                 src={icon}
-                className="md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
+                className="h-full "
                 alt=""
               />{" "}
-            </div>
-            <div>
+          
+         
               {" "}
               <img
                 src={arrowdown}
-                className="md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px] "
+                className=" h-full w-[20px] md:w-[20.75px] md:h-[20.75px] lg:w-[24px] lg:h-[24px]"
                 alt=""
               />{" "}
-            </div>
+           
           </div>
         </div>
-        <div className="flex flex-col items-center mt-[8px] md:mt-[8px] lg:mt-[20px] text-[#7C7C7C] lg:text-[16px] leading-[20.8px] gap-2 lg:gap-4 font-[500] text-[7px] md:text-[9.2px] ">
+        <div className="flex flex-col items-center mt-[8px] md:mt-[8px] lg:mt-[20px]
+         text-[#7C7C7C] lg:text-[16px] leading-[20.8px] gap-3 lg:gap-4 font-[500]
+          text-[7px] md:text-[9.2px] ">
           {/* <div className="flex flex-row justify-between gap-[7.7vw]"> */}
-          <div className="border-[1px] border-slate-200 px-1 py-0 rounded-sm">
-            Minimum 1000 PTS
-          </div>
+          <p className="border-[1px] border-slate-200 p-2 rounded-[10px]
+           text-[12px] font-[400] leading-[16px] lg:text-[16px] lg:leading-[22px]">
+            Minimum 100 PTS
+          </p>
           
-          <div className="border-[1px] border-slate-200 pl-1 pr-3 py-0 rounded-sm">
+          <p className="border-[1px] border-slate-200 p-2  rounded-[10px]
+           text-[12px] font-[400] leading-[16px]">
             Available Points Balance: {isLoading ? "Loading..." : userPoints}
-          </div>
+          </p>
             {/* I aded this new line to it */}
   {/* <div className="border-[1px] border-slate-200 pl-1 pr-3 py-0 rounded-sm">
     Transaction Points: {isLoading ? "Loading..." : transactionPoints}
@@ -454,22 +489,27 @@ console.log(pointPostResponse)
   {/* </div> */}
         </div>
         <div className="mt-[7px] flex flex-row lg:mt-[20px]">
-          <div className="border-[1px] w-[85%] md:w-[92%]  text-[10px] lg:text-[16px] h-[30px] md:h-[40px] font-[600] text-[#7C7C7C] lg:h-[50px] px-2 py-0 pt-2 md:pt-3 lg:pt-4 border-slate-200">
+         
             <input
-              type="number"
+              type="tel"
               readOnly
               value={outputValue}
-                className="w-[100%] outline-none text-[10px] lg:text-[16px] bg-transparent placeholder:text-[#7C7C7C] font-[600] text-[#7C7C7C]"
+             className=" outline-none text-[12px] leading-[16px] 
+        lg:text-[16px] lg:leading-[22px] bg-transparent placeholder:text-[#7C7C7C] 
+        font-[600] text-[#7C7C7C] border-[1px] w-[80%] md:w-[85%] rounded-l-[10px] 
+         h-[50px] md:h-[40px] lg:h-[60px] px-2 py-0 md:pt-1 lg:pt-4 border-slate-200"
               placeholder="Amount to Receive"
             />{" "}
            {/* {!text ? <p>Amount to Receive</p> : <div>&#8358;{outputValue}</div>} */}
-          </div>
-          <div className="h-[30px] md:h-[40px] lg:h-[50px] w-[15%] md:w-[8%] gap-2 lg:gap-4 flex flex-row px-3 py-2 bg-primary items-center   ">
+          
+          <div  className="h-[50px] md:h-[40px] lg:h-[60px] py-[10px] md:py-[10px]
+           w-[20%] rounded-r-[10px] md:w-[8%] justify-between lg:gap-4
+            flex flex-row px-[5px] lg:px-2  bg-primary items-center">
             <div>
               {" "}
               <img
                 src={flag}
-                className="md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
+                className="h-full w-[30px]"
                 alt="flag"
               />{" "}
             </div>
@@ -477,7 +517,7 @@ console.log(pointPostResponse)
               {" "}
               <img
                 src={arrowdown}
-                className="md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
+                className=" h-full w-[20px] md:w-[20.75px] md:h-[20.75px] lg:w-[24px] lg:h-[24px]"
                 alt="arrow"
               />{" "}
             </div>
@@ -491,7 +531,9 @@ console.log(pointPostResponse)
               {" "}
               <img src={icon1} className="lg:w-[20px] md:w-[11px] " alt="" />
             </div>
-            <div><span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>
+            <div><span className={`
+              ${isDarkMode ? "text-white" : "text-black"}`
+              }>
   {isLoading
     ? "Loading..."
     : pointRateRedeemed && pointRateRedeemed !== 0
@@ -522,6 +564,7 @@ console.log(pointPostResponse)
             <div>Completion Time - Instantly.</div>
           </div>
         </div>
+
         {errors.inputValue && (
           <div className="text-[12px] text-red-500 italic lg:text-[14px]">
             {errors.inputValue}
@@ -531,13 +574,16 @@ console.log(pointPostResponse)
           <div
             onClick={handleProceed}
             className={` ${
-               parseInt(inputValue) >= 1000 ? "bg-[#04177f]" : "bg-[#0008]"
+               parseInt(inputValue) >= 100 ? "bg-[#04177f]" : "bg-[#0008]"
               // (inputValue.length < 1000 ? "bg-[#0008]" : "bg-[#04177f]",
               // outputValue.length < 1000 ? "bg-[#0008]" : "bg-[#04177f]")
-            } text-[12px] mt-[50px] md:mt-[40px] md:w-fit lg:px-12 lg:text-[16px] lg:px md:py-1 md:rounded-md md:px-6 cursor-pointer py-3 rounded-md font-[600] text-center text-white`}
+            } text-[12px] mt-[50px] md:mt-[40px] md:w-fit lg:px-12 lg:text-[16px]
+             lg:px md:py-1 md:rounded-md md:px-6 cursor-pointer py-3 rounded-md font-[600]
+              text-center text-white`}
           >
             Proceed
           </div>
+        </div>
         </div>
         </div>
 
@@ -778,7 +824,9 @@ console.log(pointPostResponse)
                         <p className={`text-[12px] md:text-[14px] leading-[20px] 
                         lg:leading-[22px]  lg:text-[16px] font-[500] ${isDarkMode ? "text-white" : "text-black"}`}>
                     
-                 Available Balance: {isLoading ? "Loading..." : userPoints}
+                 Available Points: {isLoading ? <BalanceLoading/> 
+                 : userPoints 
+                 }
                 </p>
               </div>
               </div>

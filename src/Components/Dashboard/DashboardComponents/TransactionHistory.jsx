@@ -13,17 +13,13 @@ import { Modal } from "../../Screens/Modal/Modal";
 const TransactionHistory = ({
   transactionResponse,
   transactionHistoryError,
-  loading
-
-}) => {
+  loading}) => {
   const {
     isDarkMode,
     toggleSideBar,
     setOrderIdResponse,
     setElectricityTransErrorType,
-    
-
-  } = useContext(ContextProvider);
+    } = useContext(ContextProvider);
 
   const navigate = useNavigate();
 

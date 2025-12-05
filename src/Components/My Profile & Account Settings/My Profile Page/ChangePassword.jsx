@@ -29,7 +29,7 @@ const [sessionModal, setSessionModal] = useState(false)
   //Function to Change the password
   const ChangeUserPin = async()=> {
     const usernameToken = localStorage.getItem("xcss{}");
-    const emailToken = localStorage.getItem("authorisedLogin");
+    const emailToken = localStorage.getItem("xcss[]");
     if(!navigator.onLine) return alert("Check your internet connection");
     if((usernameToken || emailToken) && navigator.onLine){
       setLoading(true)

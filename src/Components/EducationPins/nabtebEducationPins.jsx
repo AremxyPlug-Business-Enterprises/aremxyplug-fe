@@ -525,13 +525,7 @@ const Data = GetLocalStorage();
 
   const [balanceStatus, setBalanceStatus] = useState("");
   let balanceStringToNum = Number(newBalance || updateBalance);
-  // let educationAmountToNumber = parseInt(
-  //   nabtebEducationAmount.replace(/,/g, ""),
-  //   10
-  // );
-  // let educationAmountToNumber = String(
-  //   nabtebEducationAmount.replace(/[₦,]/g, "")
-  // );
+
   let educationAmountToNumber = Number(nabtebEducationAmount);
   let CheckSufficiency = educationAmountToNumber > balanceStringToNum;
   useEffect(() => {
@@ -727,7 +721,6 @@ const Data = GetLocalStorage();
    }
   })
 }
-console.log(nabtebEduResponse?.data?.data?.Amount);
   return (
     <DashBoardLayout>
       <div className="flex flex-col h-[115%] lg:h-[120%] justify-between ">
