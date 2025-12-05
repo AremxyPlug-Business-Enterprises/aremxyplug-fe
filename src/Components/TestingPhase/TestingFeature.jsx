@@ -16,47 +16,47 @@ export const TestingFeature=()=> {
     {
       icon: <ShieldCheck className="w-6 h-6 text-blue-600" />,
       title: "KYC Verification",
-      description: "Upload your ID and complete identity verification smoothly.",
+      description: "Upload and verify identity smoothly.",
     },
     {
       icon: <Banknote className="w-6 h-6 text-blue-600" />,
       title: "Virtual Account Generation",
-      description: "Generate a fully functional virtual bank account.",
+      description: "Ability to generate an active virtual account.",
     },
     {
       icon: <Wallet className="w-6 h-6 text-blue-600" />,
       title: "Wallet Funding",
-      description: "Deposit funds through your virtual account.",
+      description: "Deposit into wallet via virtual account.",
     },
     {
       icon: <Smartphone className="w-6 h-6 text-blue-600" />,
       title: "Airtime / Data / Bills",
-      description: "Purchase airtime, data, or successfully pay bills.",
+      description: "Complete transactions successfully.",
     },
     {
       icon: <ArrowLeftRight className="w-6 h-6 text-blue-600" />,
       title: "Internal Wallet Transfer",
-      description: "Send funds instantly to another AremxyPlug user.",
+      description: "Send funds to another AremxyPlug user.",
     },
     {
       icon: <Users className="w-6 h-6 text-blue-600" />,
       title: "Referral System",
-      description: "Share your link/code and track referred users.",
+      description: "Share referral link/code and track referrals.",
     },
     {
       icon: <ListOrdered className="w-6 h-6 text-blue-600" />,
       title: "Transaction History",
-      description: "View completed transactions and details.",
+      description: "View completed transactions.",
     },
     {
       icon: <BarChart3 className="w-6 h-6 text-blue-600" />,
       title: "Wallet & Sales Summary",
-      description: "Monitor wallet analytics and sales insights.",
+      description: "Monitor wallet analytics and sales summary.",
     },
     {
       icon: <Gift className="w-6 h-6 text-blue-600" />,
       title: "Points Redemption",
-      description: "Earn points and redeem them for rewards.",
+      description: "Earn and redeem reward points.",
     },
   ];
 

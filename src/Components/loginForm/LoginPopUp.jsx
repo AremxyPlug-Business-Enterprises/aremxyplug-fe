@@ -108,8 +108,7 @@ function LoginPopUp() {
     
       //Without the 2Step which triggers the function without the getOtpSmsOrEmail
     if ( paramSmsOrEmail === "sms") {
-     
-      body = {
+       body = {
         phone_number: phone,
       };
       url = "https://api.aremxyplug.com/api/v1/sms/send";
@@ -117,7 +116,7 @@ function LoginPopUp() {
       body = {
         email: email,
       };
-      url = "https://aremxyplug.onrender.com/api/v1/send-otp/signin";
+      url = "https://api.aremxyplug.com/api/v1/send-otp/signin";
     }
     if (!navigator.onLine) return alert("Check your internet connection");
     if(paramSmsOrEmail === undefined) alert("Select medium to receive your otp")

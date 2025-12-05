@@ -807,7 +807,6 @@ const GetBalance = async () => {
    }
   })
 }
-console.log(eduResponse?.data?.data?.Amount);
 
   return (
     <DashBoardLayout>

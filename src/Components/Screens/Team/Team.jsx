@@ -53,34 +53,7 @@ const Team = () => {
           <TeamMember key={index} memberData={item}/>
         ))}
       </div>
-      {/* <div className="flex flex-col gap-[80px] md:hidden">
       
-        { show 
-          ? 
-          <div className="text-center">
-            <div className="flex flex-col gap-[80px] mb-[60.93px]">
-              { halfData.map((item, index) => (
-                <TeamMember key={index} memberData={item}/> 
-              ))}
-            </div>
-            <button className='cursor-pointer bg-primary text-[10px] font-bold leading-[11.31px] text-white px-[16px] py-[11px] inline-flex gap-[10px] items-center rounded-[7px] lg:px-[37px] lg:py-[15px] lg:text-[14px] lg:leading-[16px]' onClick={()=> setShow(false)}>
-              Less
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
-              </svg>
-            </button>
-          </div>
-          :
-          <div className="text-center">
-            <button className='cursor-pointer bg-primary text-[10px] font-bold leading-[11.31px] text-white px-[16px] py-[11px] inline-flex gap-[10px] items-center rounded-[7px] lg:px-[37px] lg:py-[15px] lg:text-[14px] lg:leading-[16px]' onClick={()=> setShow(true)}>
-              More
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-[14px] h-[14px]">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-              </svg>
-            </button>
-          </div>
-        }
-      </div> */}
       <div className='flex justify-center mt-[100px]'>
           <Link to={`/ContactUs`} className='bg-primary text-[10px] font-bold leading-[15px] text-white px-[35px] py-[12px] inline-block rounded-[7px] lg:px-[37px] lg:py-[15px] lg:text-[14px] lg:leading-[16px]'>Contact Us</Link>
       </div>

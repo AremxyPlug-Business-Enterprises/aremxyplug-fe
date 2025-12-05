@@ -26,6 +26,7 @@ import { Modal } from "../Screens/Modal/Modal";
 import NoRecordImage from "../Add&SelectRecipient/RecipientImages/NoRecordImage.svg";
 import { GetLocalStorage } from "../LocalStorage/LocalStorage";
 import { BalanceLoading } from "../Loader/Loader";
+import closeCircle from "../EducationPins/imagesEducation/close-circle.svg"
 export default function WalletSummaryPage() {
   const Data = GetLocalStorage();
   const [isOpen1, setIsOpen1] = useState(false);
@@ -197,6 +198,11 @@ export default function WalletSummaryPage() {
   setEditCalenderOne("Start Date");
   setEditCalenderTwo("End Date");
   setStateDateEdit("Filter By Date");
+
+   await GetTransactionInformation(
+      "",
+       "",
+       selectRecords)
  }
 
 
@@ -662,7 +668,7 @@ const FormatTime =(DateValue)=> {
               {/* filter by date */}
 
               <div
-                className={`cursor-pointer shadow-[0px_1.3290735483169556px_1.3290735483169556px_0p_rgba(0,0,0,0.25)] ${
+                className={`cursor-pointer relative shadow-[0px_1.3290735483169556px_1.3290735483169556px_0p_rgba(0,0,0,0.25)] ${
                 isDarkMode ? "border-[0.5px]   border-white rounded-[12px]" : "border-[0.5px] bg-white rounded-[12px]"} 
                 flex  md:gap-[6px] items-center py-[15px]
                  justify-center md:w-[145px] h-[100%] w-[100%]
@@ -692,6 +698,13 @@ const FormatTime =(DateValue)=> {
                   className="w-[12px] h-[12px] md:w-[17px] md:h-[17px] lg:w-[20px] lg:h-[20px]"
                   alt=""
                 />
+                {stateDateEdit !== "Filter By Date" && stateDateEdit !== undefined && (
+                <img 
+                onClick = {()=> handleCalenderState()}
+                className="absolute right-[20px]  lg:pr-[25px] w-[20px] h-[20px] md:w-[17px] 
+                md:h-[17px] lg:w-[20px] lg:h-[20px] align-self"
+                src={closeCircle} alt="" />
+                )}
                   {calender && (
               <div className={`absolute rounded-[20px] z-[2] left-0
                    md:mt-[40px] w-[300px] md:w-[500px] lg:w-[600px]  h-auto p-2   border-[0.2px]
@@ -894,11 +907,12 @@ const FormatTime =(DateValue)=> {
                         onClick={async() => {
                             setSelectRecords(record);
                           setIsOpen1(false);
-                          setSelectRecordDropDown(false)
-                         // setStateDateEdit("Filter By Date")
+                          setSelectRecordDropDown(false);
                           setCalender(false);
                           if(record === "Deposits" || record === "Transfers"){
                           await GetTransactionInformation(startDateValueState, endDateValueState, record);
+                          }else if(record === "All Records"){
+                           await GetTransactionInformation(startDateValueState, endDateValueState, "All Records");
                           }
                         }}
                       >

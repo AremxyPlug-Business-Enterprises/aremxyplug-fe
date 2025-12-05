@@ -18,7 +18,7 @@ export const WalletInOutFlows = ({sessionModal, setSessionModal}) => {
       handleStateCalender,
       startDateValueState,
       endDateValueState,
-      setStartDateValueState
+      setStartDateValueState,
 
   } =
     useContext(ContextProvider);
@@ -31,6 +31,7 @@ export const WalletInOutFlows = ({sessionModal, setSessionModal}) => {
  const [loading, setLoading] = useState(false);
  const {transactionResponse, setTransactionResponse} = useContext(ContextProvider)
  const [transactionHistoryError, setTransactionHistoryError] = useState("");
+ const [walletResponse, setWalletResponse] = useState({}) 
   const [activeButtons, setActiveButtons] = useState([
     true,
     false,
@@ -67,12 +68,7 @@ export const WalletInOutFlows = ({sessionModal, setSessionModal}) => {
     );
   };
      
-  // const [inflowAmount, setInflowAmount] = useState("");
-  // const [outflowAmount, setOutflowAmount] = useState("")
-         
-        
    const GetTransactionInformation = async(calenderState)=> {
-    console.log(calenderState);
             if(!navigator.onLine) return setTransactionHistoryError("Network error");
        
         
@@ -85,11 +81,9 @@ const currentDate = new Date();
   const getSlicedDate = isoFormat?.slice(0,10);
   if((editCalenderOne !== "Start Date" && editCalenderOne !== undefined) 
           && (editCalenderTwo === "End Date" && editCalenderTwo !== undefined) && calenderState === true){
-        console.log("I am running 1")
           return `?start_date=${startDateValueState}`
         }else if ((editCalenderOne !== "Start Date" && editCalenderOne !== undefined) 
           && (editCalenderTwo !== "End Date" && editCalenderTwo !== undefined) && calenderState === true){
-            console.log("I am running2")
          return `?start_date=${startDateValueState}&end_date=${endDateValueState}`
         }else if((editCalenderOne === "Start Date" && editCalenderOne !== undefined) 
           && (editCalenderTwo === "End Date" && editCalenderTwo !== undefined) && calenderState === true){
@@ -98,15 +92,18 @@ const currentDate = new Date();
         }else if(((editCalenderOne === "Start Date" && editCalenderOne !== undefined)  || (editCalenderOne !== "Start Date" && editCalenderOne !== undefined))
           && ((editCalenderTwo === "End Date" && editCalenderTwo !== undefined) || (editCalenderTwo !== "End Date" && editCalenderTwo !== undefined))
            && calenderState === false){
-          return ""
+          return "";
+
         }else{
-          console.log("I am running the else")
           return "";
         }
       }
         const path =`transactions${handleDateFilter()}`
         const SuccessHandler =()=>{
         setTransactionHistoryError("");
+        if( path === "transactions"){
+         setWalletResponse(transactionResponse)
+        }
         }
         const FailedHandler = async(ErrorType)=> {
       if(ErrorType === "unauthorised"){
@@ -257,6 +254,7 @@ const currentDate = new Date();
   // const handleClick = (index) => {
   //   setActiveButton(index);
   // };
+  console.log(walletResponse)
 
   return (
     <div className="mt-[10%] lg:mt-[5%] mb-[10%]">
@@ -314,11 +312,11 @@ const currentDate = new Date();
                 </div>
                 <p className="text-center text-[10px] leading-[13px] font-[500] 
                   lg:text-[18px] lg:leading-[24px]">
-                  {selected === "NGN"  ? transactionResponse?.data?.data?.data ?
-        transactionResponse?.data?.data?.data?.total_inflow?.toLocaleString("en-NG", {
+                  {selected === "NGN"  ? walletResponse?.data?.data?.data && walletResponse?.data?.data?.data !== undefined   ?
+        walletResponse?.data?.data?.data?.total_inflow?.toLocaleString("en-NG", {
           style : "currency",
           currency : "NGN"
-        }) :   "₦"  : `${symbolValue}0.00` }
+        }) :"₦"  : `${symbolValue}0.00` }
                 </p>
               </div>
 
@@ -341,9 +339,11 @@ const currentDate = new Date();
                 </div>
                 <p className="text-center  text-[10px] leading-[13px] font-[500] 
                   lg:text-[18px] lg:leading-[24px]">{selected === "NGN" 
-                  ? transactionResponse?.data?.data?.data?.total_count
-                   || transactionResponse?.data?.status === 200 
-                    ? transactionResponse?.data?.data?.data?.total_count: "" : 0}  </p>
+                  ? walletResponse?.data?.data?.data?.total_count  &&
+                   walletResponse?.data?.data?.data !== undefined
+                   && walletResponse?.data?.status === 200 
+                    ? walletResponse?.data?.data?.data?.total_count :
+                     0 : ""}  </p>
               </div>
 
               <div
@@ -365,11 +365,12 @@ const currentDate = new Date();
                 </div>
                 <p className="text-center  text-[10px] leading-[13px] font-[500] 
                   lg:text-[18px] lg:leading-[24px]">
-                  {selected === "NGN" ? transactionResponse?.data?.data?.data ?
-        transactionResponse?.data?.data?.data?.total_outflow?.toLocaleString("en-NG", {
+                  {selected === "NGN" ? walletResponse?.data?.data?.data 
+                  && walletResponse?.data?.data?.data !== undefined
+                 ?  walletResponse?.data?.data?.data?.total_outflow?.toLocaleString("en-NG", {
           style : "currency",
           currency : "NGN"
-        }) :   "₦"  : `${symbolValue}0.00`}
+        }) :  "₦"  : `${symbolValue}0.00`}
                 </p>
               </div>
             </div>

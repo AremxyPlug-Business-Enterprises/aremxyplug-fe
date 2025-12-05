@@ -14,11 +14,11 @@ const TeamMember = ({memberData: {name,
   return (
     <div 
     className={`w-full border-[4px] h-[467.36px] md:h-[408.8px] 
-    lg:h-[728px] rounded-t-[64.19px] rounded-b-[6px] flex flex-col
+    lg:h-[728px] rounded-t-[64.19px] rounded-b-[6px] pt-[10px] flex flex-col
      border-[#d4d1d1] lg:border-[7px] my-[20px]`}>
       <div className="h-[45%] flex w-full
-       z-[30] items-center justify-center">
-      <img className="rounded-t-[64.19px] h-full w-full" 
+       z-[30] items-center justify-center ">
+      <img className="rounded-full h-[200px] w-[200px] lg:w-[300px] lg:h-[300px] object-center" 
     src={image} alt="" />
       </div>
       <div className='flex flex-col justify-end items-center
