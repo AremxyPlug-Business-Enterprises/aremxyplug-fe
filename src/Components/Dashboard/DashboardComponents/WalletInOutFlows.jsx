@@ -1,36 +1,44 @@
-import  { useState, useEffect } from "react";
+import  { useState, useEffect, useMemo } from "react";
 import { RxDotFilled } from "react-icons/rx";
 import styles from "./component.module.css";
 import { GetFunction, InternalLoginSession} from "../../ApiCollection.jsx/ApiBuck";
 import { useContext } from "react";
 import { ContextProvider } from "../../Context";
 import  { RecentTransaction } from  "./RecentTransaction";
+import { Calender } from "./Calender";
+import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 
 
 
 export const WalletInOutFlows = ({sessionModal, setSessionModal}) => {
+  const Data = GetLocalStorage()
   const { volumeValueToggle, 
     isValue,
      isDarkMode,
       toggleSideBar,
-       editCalenderOne, 
-       editCalenderTwo, 
       handleStateCalender,
       startDateValueState,
       endDateValueState,
       setStartDateValueState,
-
-  } =
+      setEndDateValueState,
+      editCalenderOne,
+      setEditCalenderOne,
+      editCalenderTwo,
+      setEditCalenderTwo,
+      setCurrentDateInTimeStamps,
+    setCountCalender  } =
     useContext(ContextProvider);
   const [blur] = useState(false);
  // console.log(setBlur)
   const [selected, setSelected] = useState("");
   const [toggleTotalTransaction] = useState(false);
   //console.log(setToggleTotalTransaction)
+  const [walletLoading, setWalletLoading] = useState(false)
   const [symbol, setSymbol] = useState("₦");
  const [loading, setLoading] = useState(false);
- const {transactionResponse, setTransactionResponse} = useContext(ContextProvider)
+ const {transactionResponse, setTransactionResponse} = useContext(ContextProvider);
  const [transactionHistoryError, setTransactionHistoryError] = useState("");
+ const [stateDateEdit, setStateDateEdit] = useState("")
  const [walletResponse, setWalletResponse] = useState({}) 
   const [activeButtons, setActiveButtons] = useState([
     true,
@@ -39,11 +47,15 @@ export const WalletInOutFlows = ({sessionModal, setSessionModal}) => {
     false,
     false,
   ]);
+ 
+  const [calenderWallet, setCalenderWallet] = useState(false)
 
 
-  const handleClick = (index) => {
+  const handleClick = (index, value) => {
     const updatedButtons = activeButtons.map((isActive, i) => i === index);
     setActiveButtons(updatedButtons);
+    chartFunc(value)
+    return value
   };
 
   
@@ -67,18 +79,21 @@ export const WalletInOutFlows = ({sessionModal, setSessionModal}) => {
         : ""
     );
   };
-     
-   const GetTransactionInformation = async(calenderState)=> {
-            if(!navigator.onLine) return setTransactionHistoryError("Network error");
-       
-        
-const handleDateFilter = ()=> {
-const currentDate = new Date();
+
+  
+     const currentDate = new Date();
   const isoFormat = currentDate ? currentDate?.toLocaleString("sv-SE", {
     timeZone : "Africa/Lagos",
     hour12 : false
   }) : "";
   const getSlicedDate = isoFormat?.slice(0,10);
+   const GetTransactionInformation = async(calenderState)=> {
+    
+            if(!navigator.onLine) return setTransactionHistoryError("Network error");
+       
+        
+const handleDateFilter = ()=> {
+
   if((editCalenderOne !== "Start Date" && editCalenderOne !== undefined) 
           && (editCalenderTwo === "End Date" && editCalenderTwo !== undefined) && calenderState === true){
           return `?start_date=${startDateValueState}`
@@ -99,11 +114,10 @@ const currentDate = new Date();
         }
       }
         const path =`transactions${handleDateFilter()}`
-        const SuccessHandler =()=>{
+        const SuccessHandler =(response)=>{
         setTransactionHistoryError("");
-        if( path === "transactions"){
-         setWalletResponse(transactionResponse)
-        }
+        setTransactionResponse(response)
+       
         }
         const FailedHandler = async(ErrorType)=> {
       if(ErrorType === "unauthorised"){
@@ -122,7 +136,7 @@ const currentDate = new Date();
           setLoading, 
           SuccessHandler,
            FailedHandler,
-            setTransactionResponse)}
+            ()=> {})}
   
          window.addEventListener("online", ()=> {
    if(transactionHistoryError === "Network error"){
@@ -254,7 +268,117 @@ const currentDate = new Date();
   // const handleClick = (index) => {
   //   setActiveButton(index);
   // };
-  console.log(walletResponse)
+  //Chart Implemntation for the wa;;et inflow and outflow
+
+
+//Chart Function to filter data from the backend
+//Description : This function comes first to the necessary data to be used/passed to the chart component
+useEffect(()=> {
+  if(Data?.ConfirmAcc === "true"){
+  chartFunc("daily")
+  }
+ //eslint-disable-next-line
+}, []);
+
+
+ const handleCalenderState = async()=> {
+ setStartDateValueState("");
+  setEndDateValueState("");
+  setCurrentDateInTimeStamps(0);
+  setCountCalender(0);
+  setCalenderWallet(false);
+  setEditCalenderOne("Start Date");
+  setEditCalenderTwo("End Date");
+  setStateDateEdit("Filter By Date");
+  await chartFunc("Custom")
+  
+ }
+
+ const FilterDate = async()=> {
+
+  setCalenderWallet(false);
+    setCalenderWallet(false);
+  setStateDateEdit(()=> {
+    if(editCalenderOne !== "Start Date" && editCalenderTwo === "End Date" ){
+     return <p>{startDateValueState}</p>
+    }else if(editCalenderOne !== "Start Date" && editCalenderTwo !== "End Date" ){
+   return <div className="flex flex-col gap-[5px]">
+    <p className  ="lg:text-[12px] lg:leading-[16px] text-[#04177f] text-[8px] leading-[12px]">
+      {startDateValueState}
+      </p>
+    <p  className="lg:text-[12px] text-[#04177f]
+     lg:leading-[16px] text-[8px] leading-[12px]">
+      {endDateValueState}
+      </p>
+   </div>
+    }else if(editCalenderOne === "Start Date" && editCalenderTwo === "End Date" ){
+   setStateDateEdit(()=> {
+     return <p>{startDateValueState}</p>
+   })
+    }
+  })
+  await chartFunc("Custom");
+
+ }
+
+// const cachedChartResponse = useMemo(()=> chartFunc, [c])
+const [chartResponse, setChartResponse] = useState({});
+ const [walletResponseError, setWalletResponseError] = useState("");
+const chartFunc = async(chartIndicator)=> {
+function handleDataFilter(){
+  if((chartIndicator === "daily" ||
+     chartIndicator === "weekly" ||
+      chartIndicator === "monthly" ||  chartIndicator === "all-time")
+      &&(chartIndicator !== "" ||
+         chartIndicator !== undefined
+          || chartIndicator !=="Custom"
+  )){
+   return chartIndicator ===  "daily" ? `?range=daily` 
+   : chartIndicator === "weekly" ? `?range=weekly`
+    : chartIndicator === "monthly" ? `?range=monthly`
+     : chartIndicator === "all-time" ? `?range=all-time` : "";
+}else if (chartIndicator === "Custom"){
+  if((editCalenderOne !== "Start Date" && editCalenderOne !== undefined) 
+          && (editCalenderTwo === "End Date" && editCalenderTwo !== undefined) && calenderWallet === true){
+          return `?start_date=${startDateValueState}`
+        }else if ((editCalenderOne !== "Start Date" && editCalenderOne !== undefined) 
+          && (editCalenderTwo !== "End Date" && editCalenderTwo !== undefined) && calenderWallet === true){
+         return `?start_date=${startDateValueState}&end_date=${endDateValueState}`
+        }else if((editCalenderOne === "Start Date" && editCalenderOne !== undefined) 
+          && (editCalenderTwo === "End Date" && editCalenderTwo !== undefined) && calenderWallet === true){
+           setStartDateValueState(getSlicedDate)
+          return `?start_date=${getSlicedDate}`
+        }else if(((editCalenderOne === "Start Date" && editCalenderOne !== undefined)  || (editCalenderOne !== "Start Date" && editCalenderOne !== undefined))
+          && ((editCalenderTwo === "End Date" && editCalenderTwo !== undefined) || (editCalenderTwo !== "End Date" && editCalenderTwo !== undefined))
+           && calenderWallet === false){
+          return "";
+
+        }else{
+          return "";
+        }
+      }
+}
+
+let path =`chart${typeof handleDataFilter() === "string" ? handleDataFilter() : ""}`
+  await GetFunction(path, setWalletLoading, (response)=> {
+      setChartResponse(response)
+  }, (errorType)=> {
+      if(errorType === "unauthorised"){
+     if(sessionModal) return;
+     if(sessionModal === false) return setSessionModal(true)
+      }else if(errorType === "Network error" ||
+     errorType === "User error"
+      || errorType === "Bad request"){
+       setWalletResponseError("Network error")
+    }else if(errorType === "Server error"){
+    setWalletResponseError("Server error")
+    }
+  }, ()=> {})
+}
+const walletCount = 
+typeof chartResponse?.data?.data?.data?.totalInflowCount === "number" 
+&& typeof chartResponse?.data?.data?.data?.totalOutflowCount === "number"  ? 
+chartResponse?.data?.data?.data?.totalInflowCount + chartResponse?.data?.data?.data?.totalOutflowCount : undefined
 
   return (
     <div className="mt-[10%] lg:mt-[5%] mb-[10%]">
@@ -312,8 +436,8 @@ const currentDate = new Date();
                 </div>
                 <p className="text-center text-[10px] leading-[13px] font-[500] 
                   lg:text-[18px] lg:leading-[24px]">
-                  {selected === "NGN"  ? walletResponse?.data?.data?.data && walletResponse?.data?.data?.data !== undefined   ?
-        walletResponse?.data?.data?.data?.total_inflow?.toLocaleString("en-NG", {
+                  {selected === "NGN"  ? chartResponse?.data?.data?.data && chartResponse?.data?.data?.data !== undefined   ?
+        chartResponse?.data?.data?.data?.totalInflowAmount?.toLocaleString("en-NG", {
           style : "currency",
           currency : "NGN"
         }) :"₦"  : `${symbolValue}0.00` }
@@ -338,12 +462,14 @@ const currentDate = new Date();
                   />
                 </div>
                 <p className="text-center  text-[10px] leading-[13px] font-[500] 
-                  lg:text-[18px] lg:leading-[24px]">{selected === "NGN" 
-                  ? walletResponse?.data?.data?.data?.total_count  &&
-                   walletResponse?.data?.data?.data !== undefined
-                   && walletResponse?.data?.status === 200 
-                    ? walletResponse?.data?.data?.data?.total_count :
-                     0 : ""}  </p>
+                  lg:text-[18px] lg:leading-[24px]">{
+   typeof walletCount === "number"&& typeof walletCount !== "undefined"
+         ? walletCount :
+         ( chartResponse?.data?.data?.data?.totalInflowCount === undefined  &&
+       chartResponse?.data?.data?.data === undefined && chartResponse?.data?.data?.data?.totalOutflowCount === undefined)
+       || (chartResponse?.data?.data?.data?.totalInflowCount === null &&
+     chartResponse?.data?.data?.data?.totalOutflowCount === null) ? 
+        0 : ""  }</p>
               </div>
 
               <div
@@ -365,9 +491,9 @@ const currentDate = new Date();
                 </div>
                 <p className="text-center  text-[10px] leading-[13px] font-[500] 
                   lg:text-[18px] lg:leading-[24px]">
-                  {selected === "NGN" ? walletResponse?.data?.data?.data 
-                  && walletResponse?.data?.data?.data !== undefined
-                 ?  walletResponse?.data?.data?.data?.total_outflow?.toLocaleString("en-NG", {
+                  {selected === "NGN" ? chartResponse?.data?.data?.data 
+                  && chartResponse?.data?.data?.data !== undefined
+                 ?  chartResponse?.data?.data?.data?.totalOutflowAmount?.toLocaleString("en-NG", {
           style : "currency",
           currency : "NGN"
         }) :  "₦"  : `${symbolValue}0.00`}
@@ -416,10 +542,16 @@ const currentDate = new Date();
 
       {/* =========================Chart Start========================= */}
       <div
-        className={`${
-          isDarkMode ? "bg-black border text-[#fff]" : "bg-[#fff]"
+        className={`relative h-[400px] w-full ${
+          isDarkMode ? "bg-black border  text-[#fff]" : "bg-[#fff]"
         } ${styles.Chart}`}
+       
       >
+
+         <div className ="absolute text-[16px] 
+          top-1/2 leading-[22px] font-semibold left-1/4  text-black lg:text-[35px] lg:leading-[45px]">
+          Charts Updates coming soon....
+         </div>
         {/* ==============Amount Of Days==================== */}
         <div
           className={`${styles.chartbuttons} ${
@@ -430,7 +562,7 @@ const currentDate = new Date();
         >
           <div
             onClick={() => {
-              handleClick(0);
+              handleClick(0, "daily");
             }}
             className={`${styles.chartBtn} ${
               activeButtons[0] ? "bg-[#04177f]" : "bg-[#0003]"
@@ -440,7 +572,7 @@ const currentDate = new Date();
           </div>
           <div
             onClick={() => {
-              handleClick(1);
+              handleClick(1, "weekly");
             }}
             className={`${styles.chartBtn} ${
               activeButtons[1] ? "bg-[#04177f]" : "bg-[#0003]"
@@ -450,7 +582,7 @@ const currentDate = new Date();
           </div>
           <div
             onClick={() => {
-              handleClick(2);
+              handleClick(2, "monthly");
             }}
             className={`${styles.chartBtn} ${
               activeButtons[2] ? "bg-[#04177f]" : "bg-[#0003]"
@@ -460,7 +592,7 @@ const currentDate = new Date();
           </div>
           <div
             onClick={() => {
-              handleClick(3);
+              handleClick(3, "all-time");
             }}
             className={`${styles.chartBtn} ${
               activeButtons[3] ? "bg-[#04177f]" : "bg-[#0003]"
@@ -470,7 +602,8 @@ const currentDate = new Date();
           </div>
           <div
             onClick={() => {
-              handleClick(4);
+           //  handleClick(4, "daily");
+              setCalenderWallet(true);
             }}
             className={`${styles.chartBtn} ${
               activeButtons[4] ? "bg-[#04177f]" : "bg-[#0003]"
@@ -482,7 +615,8 @@ const currentDate = new Date();
 
         {/* ==============Volume & Value Toggle================== */}
         <div
-          className={`text-[7px] flex gap-2 items-center mt-[7%]  md:text-[14px] lg:mt-[4%] lg:text-[18px]  ${
+          className={`text-[7px] flex gap-2 items-center mt-[7%]  
+            md:text-[14px] lg:mt-[4%] lg:text-[18px]  ${
             toggleSideBar ? "lg:ml-[80%]" : " lg:ml-[85%] md:ml-[82%]"
           } ml-[75%] mr`}
         >
@@ -492,7 +626,8 @@ const currentDate = new Date();
               volumeValueToggle();
               // handleButtonClick();
             }}
-            className={` w-[15px] h-[6.4px] md:w-[30px] md:h-[12px] lg:w-[50px] lg:h-[22px] lg:rounded-full rounded ${
+            className={` w-[15px] h-[6.4px] md:w-[30px] md:h-[12px]
+               lg:w-[50px] lg:h-[22px] lg:rounded-full rounded ${
               isValue ? "bg-[#58DA8F]" : "bg-[#b1b0b0]"
             }`}
           >
@@ -504,6 +639,16 @@ const currentDate = new Date();
           </div>
           <div>Value</div>
         </div>
+
+        <div className="w-full p-[5px] flex justify-end items-center">
+     <div className="w-[200px] bg-white lg:w-[200px] h-[60px] 
+     lg:h-[80px] rounded-[12px] border-[1px]">
+      <p className ="text-center text-[12px] font-[600] 
+      leading-[18px] lg:text-[16px] lg:leading-[24px]"> 
+        {stateDateEdit}
+        </p>
+      </div>
+      </div>
 
         {/* ====================Inflow & Outflow indication================ */}
         <div className="flex float-right mt-[1%] md:mt-[3%] lg:mt-[1%]">
@@ -528,43 +673,43 @@ const currentDate = new Date();
         /> */}
 
 
-{/* The Charts Created earlier */}
-        {/* <div style={{ width: "100%", maxWidth: "100%", overflowX: "auto" }}>
-          <LineChart
-            width={window.innerWidth < 768 ? window.innerWidth - 40 : 1480}
-            height={window.innerWidth < 768 ? 300 : 370}
-            data={data}
-            margin={{ top: 20, right: 20, bottom: 20, left: 0 }}
-          >
-           <XAxis 
-          dataKey="xaxis" 
-          tickLine={false}
-          tick={{ 
-            fontSize: 12,
-            textAnchor: 'end'
-          }} 
-        >
-          <Label
-            value="X Axis Label"
-            offset={0}
-            position="insideBottom"
-            style={{ fontStyle: 'italic', transform: 'rotate(45deg)' }}
-          />
-        </XAxis>
-            <YAxis tickFormatter={(value) => `${symbol}${value}K`} 
-          tick={{ 
-            fontSize: 12,
-            // fontStyle: 'italic',
-            // transform: 'rotate(90deg)',
-            // textAnchor: 'end'
-          }} 
-             />
-            <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
-            <Line type="linear" dataKey="inflow" stroke="#58DA8F" />
-            <Line type="linear" dataKey="outflow" stroke="#FA6B6B" />
-            <Tooltip />
-          </LineChart>
-        </div> */}
+
+         <div style={{ width: "100%",
+           maxWidth: "100%",
+            overflowX: "auto" }} className ="">
+       
+          {calenderWallet && (
+                      <div className={`absolute rounded-[20px] top-0 z-[1000px]
+                           md:mt-[40px] w-[300px] md:w-[500px] lg:w-[600px] h-auto p-2   border-[0.2px]
+                           lg:mt-[55px]  flex flex-col gap-[10px] font-[400]
+                            ${isDarkMode ? "bg-black text-white  border-white" 
+                            : "bg-white text-black border-gray-300"}`}>
+                        {" "}
+                        <Calender />
+                        {" "}
+                        <div
+                             className="flex justify-center 
+                             items-center w-[270px] md:w-[470px] lg:w-[570px] gap-[10px]">
+                               <button  onClick={handleCalenderState}
+                               className={`w-[50%] md:w-[150px] bg-blue-white py-[15px] text-[12px] 
+                                md:text-[14px] font-[500] 
+                                 rounded-[15px] border-[0.2px] border-blue-900
+                     ${isDarkMode ? "text- bg-black  " :
+                                  " bg-white text-blue-900" }`}>
+                               Cancel
+                               </button>
+                               <button
+                                onClick={FilterDate}
+                               className={`w-[50%] md:w-[150px] bg-blue-900 py-[15px] 
+                                text-[12px] md:text-[14px] font-[500] 
+                                 rounded-[15px] text-white
+                               `}>
+                               Apply
+                               </button>
+                               </div>
+                      </div>
+                    )}
+        </div> 
   {/* ========================Chart End========================= */}
      </div>
        <RecentTransaction transactionResponse = {transactionResponse} 

@@ -546,7 +546,6 @@ const Data = GetLocalStorage();
       };
       const bodyToJson = JSON.stringify(body);
       const SuccessHandler = (response) => {
-        console.log("Succesfully verified tv subscription account.");
         setSmartCard(UserTvSubscription);
         setCardName(response?.data?.data?.data?.name);
         setStateInvalidDecoderNumber(false)
@@ -554,6 +553,8 @@ const Data = GetLocalStorage();
      const FailedHandler = async(ErrorType)=> {
        //1.
      if(ErrorType === "unauthorised"){
+      if(sessionModal) return;
+      if(sessionModal === false ) return setSessionModal(true);
        //Handling  the various cases that could occur on 
        //the ErrorType "unauthorised"
        

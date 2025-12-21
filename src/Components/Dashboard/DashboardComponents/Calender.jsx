@@ -216,6 +216,9 @@ export const Calender = () => {
               && editCalenderOne !== "Start Date"){
             return tileDates?.setHours(0,0,0,0) < (startDateObject !== "" ? startDateObject.setHours(0,0,0,0) : 0);
             }
+            if(startDateValueState === "" || endDateValueState === "Start Date"){
+              return true;
+            }
           
       }
       }

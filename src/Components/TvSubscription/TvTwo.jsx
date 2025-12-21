@@ -411,8 +411,7 @@ const [errorFillDecoder, setErrorFillDecoder] = useState(false);
 const VerifyPinHandler = async () => {;
 
     const DstvHandler = async () => {
-
-      const requestData = {
+     const requestData = {
         decoder_type: dstvDecoderType.toLowerCase(),
         package: packageDstv,
         iuc_number: dstvSmartCard,
@@ -503,7 +502,7 @@ const VerifyPinHandler = async () => {;
        setFailedConfig,
       setIsLoading,
       setErrorMessage,
-  ()=> {}//DstvHandler
+     DstvHandler
    );
 
    //In any case the the ""User error, Network error, Bad request," occurs
@@ -524,7 +523,6 @@ const VerifyUserAccount = async(UserTvSubscription)=> {
         }
         const bodyToJson = JSON.stringify(body)
  const SuccessHandler = (response)=> {
-  console.log("Succesfully verified tv subscription account.");
 setDstvSmartCard(UserTvSubscription);
 setDstvCardName(response?.data?.data?.data?.name);
 
@@ -535,11 +533,11 @@ setDstvCardName(response?.data?.data?.data?.name);
 const FailedHandler = async(ErrorType)=> {
   //1.
 if(ErrorType === "unauthorised"){
-  //Handling  the various cases that could occur on 
-  //the ErrorType "unauthorised"
+    if(sessionModal) return;
+      if(sessionModal === false) return setSessionModal(true);
+ 
  setSessionModal(true)
-      
-   //3.Handling the ErrorType "Network error, User error"
+       //3.Handling the ErrorType "Network error, User error"
 }else if(ErrorType === "Server error"){
   alert("Unable to verify details.")
 }else if(ErrorType === "Network error" || ErrorType === "User error"){
@@ -571,8 +569,7 @@ if(ErrorType === "unauthorised"){
     const inputValue = e.target.value;
   await VerifyUserAccount(inputValue);
  }
- 
-console.log(dstvAmount)
+  
 
 //======Running the Balance and the retrieving if the following 
 //Conditions are met

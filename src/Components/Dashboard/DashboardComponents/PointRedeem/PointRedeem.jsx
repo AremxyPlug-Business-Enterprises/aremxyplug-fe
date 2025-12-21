@@ -119,6 +119,7 @@ const [sessionModal, setSessionModal] = useState(false);
   };
 
   const handle = () => {
+    setInputPin("")
     setInputPinPopUp(false);
     setProceed(true);
   };
@@ -148,11 +149,12 @@ const [sessionModal, setSessionModal] = useState(false);
 
   const schema = Joi.object({
   inputValue: Joi.number()
-    .min(100)
+    .min(10)
+    .max(100)
     .required()
     .messages({
       "number.base": "Please enter a valid number",
-      "number.min": "Minimum Point Redeem is 100 and Above",
+      "number.min": "Minimum Point Redeem is 10 and maximum is 100",
       "any.required": "This field is required",
     }),
 });
@@ -236,8 +238,8 @@ const VerifyPinHandler = async () => {
     const payloadJson = JSON.stringify(payload);
 
     // Validate input
-    if (!inputValue || parseInt(inputValue) < 100) {
-      alert("Minimum redemption is 100 points");
+    if (!inputValue || parseInt(inputValue) < 10) {
+      alert("Minimum redemption is 10 points");
       return;
     }
     if (parseInt(inputValue) > userPoints) {
@@ -574,7 +576,7 @@ console.log(pointPostResponse)
           <div
             onClick={handleProceed}
             className={` ${
-               parseInt(inputValue) >= 100 ? "bg-[#04177f]" : "bg-[#0008]"
+               parseInt(inputValue) >= 10  ? "bg-[#04177f]" : "bg-gray-300 cursor-not-allowed"
               // (inputValue.length < 1000 ? "bg-[#0008]" : "bg-[#04177f]",
               // outputValue.length < 1000 ? "bg-[#0008]" : "bg-[#04177f]")
             } text-[12px] mt-[50px] md:mt-[40px] md:w-fit lg:px-12 lg:text-[16px]
@@ -638,7 +640,7 @@ console.log(pointPostResponse)
                 <div className="mt-[20px] md:mt-[30px] lg:mt-[10px] flex flex-row ">
                   <div className="border-[1px] w-[85%] md:w-[85%] h-[30px] md:h-[40px] lg:h-[50px] px-2 py-0 md:pt-1 lg:pt-4 border-slate-200">
                     <input
-                      type="number"
+                      type="tel"
                       value={realinputValue}
                       onChange={handleRealInputChange}
                       className="w-[100%] outline-none text-[10px] lg:text-[16px] leading-[20.8px  font-[600]  text-[#000]"

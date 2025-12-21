@@ -1,12 +1,13 @@
 import { motion } from "framer-motion";
 import {  Crown } from "lucide-react";
+import {Link} from "react-router-dom"
 
 export const StepsToEarnRewards=()=>  {
   const steps = [
     {
       step: 1,
       title: "Sign Up",
-      desc: "Create an account at aremxyplug.com",
+      desc: `Create an account at`,
     },
     {
       step: 2,
@@ -30,15 +31,8 @@ export const StepsToEarnRewards=()=>  {
     },
     {
       step: 6,
-      title: "Perform a Transaction + Redeem Points",
-      desc:  <ol className= "mb-[5px] overflow-y-scroll h-[60px] p-[10px] rounded-[10px] border-[2px] border-gray-200">
-        <li className = "text-[#4A4A4A] mb-2 text-[15px] leading-relaxed"> 
-          1. Buy airtime/data or pay bills and redeem at least 1 reward point.</li>
-        <li className = "text-[#4A4A4A] mb-2 text-[15px] leading-relaxed">
-          2. Complete atleast one point redeem transaction.</li>
-        <li className = "text-[#4A4A4A] mb-2 text-[15px] leading-relaxed">
-          3. Redeem minimum of 10 points in a single transaction. Max is 100 points</li>
-      </ol>
+      title: "Complete at least One Point Redeem Transaction.",
+      desc:  "Redeem minimum of 10 points in a single transaction. Max is 100 points."
      ,
     },
     {
@@ -92,7 +86,12 @@ export const StepsToEarnRewards=()=>  {
                     {item.title}
                   </h3>
                   <p className="text-[#4A4A4A] mt-1 text-[15px] leading-relaxed">
-                    {item.desc}
+                    {item.desc} {" "}
+                    {index === 0 && (
+                      <Link to ="/signUp" className = "text-blue-500">
+                        Sign Up
+                      </Link>
+                    )}
                   </p>
                 </div>
               </motion.div>

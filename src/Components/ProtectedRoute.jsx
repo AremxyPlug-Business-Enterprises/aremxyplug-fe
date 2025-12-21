@@ -2,17 +2,79 @@
 import { Navigate } from 'react-router-dom';
 import { RemoveLocalStorage } from './LocalStorage/LocalStorage';
  import { useEffect, useRef,  useContext } from 'react';
-
 import { HandleUserSession, refreshToken} from './ApiCollection.jsx/ApiBuck';
 import { ContextProvider } from './Context';
+import { FloatingProgressCircle, TaskProgressModal } from './Motion';
+import { AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
+import { createWebSocket } from './ApiCollection.jsx/ApiBuck';
+import { GetFunction } from './ApiCollection.jsx/ApiBuck';
 
 export const ProtectedRoute = ({children}) => {
  
  const SessionIntervalHold = useRef(null);
   const {sessionExpiration, 
-    setSessionExpiration,
+    setSessionExpiration, openTaskBar, setOpenTaskBar, setProgressTaskBarResponse,
      sec, setSec} = useContext(ContextProvider);
-  ;
+       
+  ;//Handling getting the data from the mongo data base before the websocket linking
+const handleTaskProgress = async()=> {
+  let path = `tasks/progress`
+    await GetFunction(path, ()=> {},
+    //Function At Success
+     (response)=> {
+      setProgressTaskBarResponse(response)
+      if(!navigator.onLine) return alert("Your internet connection is quite unstable")
+     if(navigator.onLine){   
+     
+      createWebSocket()  
+     }
+    }, (errorType)=> {
+    if(errorType === "Network error"){
+      alert("Unable to retrieve tasks progress")
+    }else if(errorType ==="Server error"){
+      alert("A server error has occured")
+    }
+    },()=> {})
+}
+//The Modal Handling for the user Task Progress Bar
+ const TaskProgressController = ()=> {
+return (
+    <>
+      <FloatingProgressCircle
+        onClick={() => {
+          if(openTaskBar === true){
+          setOpenTaskBar(false)
+          }else{
+            setOpenTaskBar(true)
+          }
+        }}
+      />
+      <AnimatePresence>
+          <motion.div
+            initial={{ scale: 1 }}
+            exit={{
+              scaleY: 0.6,
+              scaleX: 0.8,
+              opacity: 0,
+              x: 60,
+              rotate: 8,
+              transition: { duration: 0.7, ease: "easeInOut" },
+            }}
+          >
+          {openTaskBar  && (
+            <TaskProgressModal 
+            onHide={() => {
+              setOpenTaskBar(false)
+            } 
+            }/>
+          )}
+          </motion.div>
+     
+      </AnimatePresence>
+    </>
+  );
+}
 // The aim is to create three different situation when the user will
 // will be logged from the page
 // 1. The point in which the authToken is not gotten through cookies after a request from
@@ -27,7 +89,6 @@ export const ProtectedRoute = ({children}) => {
 const TrackSessionExpiration = ()=> {
   const expiryTime = localStorage.getItem("SessionExpiration");
 const getDifferenceForExpiration = Date.now()  > Number(expiryTime);
-console.log(getDifferenceForExpiration)
 //Checking for the last one minutes difference between the current time and the expiry date,
 const HandleUserSessionPopUpTime = Number(expiryTime) - Date.now() <= 35000
 if(HandleUserSessionPopUpTime && sessionExpiration === false){
@@ -43,7 +104,9 @@ if(HandleUserSessionPopUpTime && sessionExpiration === false){
 function ResetTimer(e){
     if(!localStorage.getItem("cxccxfd")) return;
     if((e?.target?.innerText && e?.target ?
-   e?.target?.innerText !== "Logout"   : true)  && TrackSessionExpiration() === false && sessionExpiration=== false){
+   e?.target?.innerText !== "Logout"   : true) 
+    && TrackSessionExpiration() === false
+     && sessionExpiration=== false){
     const Reset = 800  *  1000;
     const resetExpiration = Date.now() + Reset;
 return localStorage.setItem("SessionExpiration", resetExpiration);
@@ -52,7 +115,9 @@ return localStorage.setItem("SessionExpiration", resetExpiration);
 const refresh = useRef(null);
 
 useEffect (()=> {
-//Refresh Token Functiom
+  setOpenTaskBar(true);
+handleTaskProgress();
+//Refresh Token Function
 if(refresh.current) return clearInterval(refresh.current);
 refresh.current = setInterval(async()=> {
  await refreshToken();
@@ -61,8 +126,7 @@ refresh.current = setInterval(async()=> {
 
 
 const checkForIntervalCallBack = ()=> {
-    
-     const sessionExpirationValue = TrackSessionExpiration();
+ const sessionExpirationValue = TrackSessionExpiration();
     const clearSessionExpirationMemory = ()=> {
          RemoveLocalStorage();
       window.location.href="/Login"  
@@ -89,12 +153,6 @@ window.onkeydown = ResetTimer;
 // window.onmousedown = ResetTimer;
  window.onmouseenter = ResetTimer;
 
-// if(TrackSessionExpiration() === true){
-//   window.location.href= "/Login"
-//   localStorage.removeItem("SessionExpiration");
-// }
-
-
  const authToken = localStorage.getItem("xcss{}")//On Username Login
  const emailToken = localStorage.getItem("xcss[]");// on Email Login
 const UserStatus = localStorage.getItem("cxccxfd");//Tracking The UserStatus from the frontend
@@ -103,23 +161,18 @@ const UserStatus = localStorage.getItem("cxccxfd");//Tracking The UserStatus fro
  RemoveLocalStorage();
  return <Navigate to ="/Login" replace/>
 }
-
-// useEffect(()=> {
-
-//})
- 
- 
-
-
-
- return(
+return(
   <>
-   {children}
+        {children}
+
     {sessionExpiration && (
       <HandleUserSession/>
      )}
+    
+      <TaskProgressController/>
+    
     </>
 )
 
-// console.log(children)
+
 }

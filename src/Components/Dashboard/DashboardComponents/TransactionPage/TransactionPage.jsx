@@ -264,7 +264,7 @@ console.log(startDateQuery);
   setEditCalenderOne("Start Date");
   setEditCalenderTwo("End Date");
   setStateDateEdit("Filter By Date");
-
+await GetTransactionInformation()
  } 
  
  //Resetting the fields
@@ -475,8 +475,7 @@ return date?.toISOString()?.slice(0, 10);
 }
 
 const FilterByDateFunc = async()=> {
-  
-  setCalender(false);
+   setCalender(false);
     setStateDateEdit(()=> {
     if(editCalenderOne !== "Start Date" && editCalenderTwo === "End Date" ){
      return <p>{startDateValueState}</p>
@@ -488,12 +487,13 @@ const FilterByDateFunc = async()=> {
     <p  className  ="lg:text-[12px] text-[#04177f] lg:leading-[16px] text-[8px] leading-[12px]">
       {endDateValueState}</p>
    </div>
+    }else if(editCalenderOne === "Start Date" && editCalenderTwo === "End Date" ){
+       return <p>{slicedDate}</p>
     }
   })
   if(startDateValueState?.length && startDateValueState?.length > 1){
      await GetTransactionInformation();
   }else{
-    console.log("date by value...")
    await GetTransactionInformation(slicedDate);
   }
 }
@@ -980,9 +980,7 @@ const FilterByDateFunc = async()=> {
                     </div>
 
                     <div className="flex justify-center gap-[25px] py-[10px]">
-                      <p
-                      
-                        className={`rounded-[2px] text-[10px]
+                      <p className={`rounded-[2px] text-[10px]
                            lg:text-[15px] cursor-not-allowed
                            px-[5px] font-semibold  text-[#7C7C7C]
                            text-opacity-50 bg-gray-100`}

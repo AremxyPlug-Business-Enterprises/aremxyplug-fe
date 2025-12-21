@@ -236,6 +236,8 @@ export default function WalletSummaryPage() {
     <p  className  ="lg:text-[12px] text-[#04177f] lg:leading-[16px] text-[10px] leading-[16px]">
       {" - "}{endDateValueState}</p>
    </div>
+    }else if(editCalenderOne === "Start Date" && editCalenderTwo === "End Date"){
+    return <p>{startDateOptions}</p>
     }
   })
   

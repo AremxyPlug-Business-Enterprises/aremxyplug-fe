@@ -58,7 +58,6 @@ export const GetVirtualAccountValue = (
     setBankNameState(bank_name);
     setAccountNameState(account_name?.slice(11));
     setAccountNumberState(account_no);
-    console.log("The GetVirtualAccountValue is running");
   }
 };
 
@@ -98,6 +97,28 @@ export const InActionVirtualAccountState = (
     );
   }
 };
+
+//ws Socket
+
+
+export const createWebSocket = ()=> {
+const  connectionSocket = new WebSocket(`wss://api.aremxyplug.com/api/v1/ws/events`);
+  connectionSocket.onopen =()=> {
+    console.log("Socket running")
+  }
+
+  connectionSocket.onmessage = (event)=>{
+    try{
+     const data = JSON.parse(event)
+       console.log(data)
+    }catch(error){
+      console.log("unable to fetch realtime update")
+    }
+  } 
+  
+}
+
+
 
 
   // A reusable component to handle user session management.
@@ -147,12 +168,8 @@ return localStorage.setItem("SessionExpiration", resetExpiration);
            click on "<b>Stay</b>" to avoid being logged out.
 
     <p className = "text-[14px] font-[700] text-end leading-[20px]" > {sec  > 1 ? `${sec}secs` : `${sec}sec`} </p>
-        
-      
-               </p>
-
-                  
-               </div>
+        </p>
+        </div>
                 <div className = "flex flex-col gap-[10px]  w-full">
             <button onClick ={(e)=> {
                    ResetTimer(e);
@@ -381,7 +398,7 @@ export const refreshToken = async()=> {
                 {Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false" ? (
                    <p className ={`text-[14px] text-center font-[400] leading-[18px]
                text-black lg:text-[16px] lg:leading-[22px] ${isDarkMode === "true" ? "text-white" : "text-black"}`}>
-                Your Identity matters.Please kindly verify
+                Your Identity matters, kindly verify
                 your user account to continue smooth operation.
               </p>
                 ) : (
@@ -479,7 +496,7 @@ export const CheckVirtualAcc = async(
         alert("We had an error trying to get your details, click okay to repeat the login process");
          }
       else if(error.status === 401){
-          console.log(error.response);
+         alert("You were timed out, kindly login again to continue")
       } else if (error.status === 404) {
         alert("Network Error, Please Check your Connection and try again");
         console.log(`ERROR: ${error}`);

@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Mail, Globe } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function Conclusion() {
   return (
@@ -26,8 +27,11 @@ export default function Conclusion() {
           <p>If you encounter any issue during testing, reach out:</p>
           <div className="flex justify-center items-center gap-4">
             <Mail className="w-5 h-5" />
-            <a href="mailto:support@aremxyplug.com" className="underline hover:text-gray-200">
-              support@aremxyplug.com
+            <a href="mailto:hello@aremxyplug.com" 
+             target="_blank"
+                  rel="noreferrer"
+             className="underline hover:text-gray-200">
+              hello@aremxyplug.com
             </a>
           </div>
           <div className="flex justify-center items-center gap-4">
@@ -44,18 +48,17 @@ export default function Conclusion() {
         </motion.div>
 
         {/* Call to Action Button */}
-        <motion.a
-          href="/signUp"
-          target="_blank"
-          rel="noopener noreferrer"
+        <motion.div
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="inline-block mt-8 bg-primary text-white
-       font-bold px-10 py-4 rounded-full text-xl shadow-lg hover:shadow-xl hover:bg-gray-500 transition-all duration-200"
-        >
+          transition={{ duration: 0.5, delay: 0.2 }}>
+          <Link to = "/signUp" 
+           className="inline-block mt-8 bg-primary text-white
+       font-bold px-10 py-4 rounded-full text-xl shadow-lg hover:shadow-xl
+        hover:bg-gray-500 transition-all duration-200">
           🚀 Start Testing Now
-        </motion.a>
+          </Link>
+        </motion.div>
       </div>
     </section>
   );

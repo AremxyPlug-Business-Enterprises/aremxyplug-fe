@@ -259,7 +259,7 @@ cursor-pointer py-[8.17px] px-[14%] rounded-tr-[5px] rounded-br-[5px] rounded-bl
                 You need help?
               </h2>
               <Link
-                to={`/ContactUs`}
+                to={`/ontactUs`}
                 className={` ${ isDarkMode ? "border":"bg-primary"} text-[8px] leading-[12px] text-white  px-2 py-1 rounded-full md:text-[10px] lg:text-[12px]`}
               >
                 Contact Us
