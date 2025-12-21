@@ -38,7 +38,7 @@ import { AddAccount } from "./Components/Dashboard/DashboardComponents/PersonalA
 import NgnVirtualAccount from "./Components/Screens/ngnVirtualAccount/NgnVirtualAccount";
 import { CookiesSettings } from "./Components/Screens/Home/Cookie/CookiesSettings";
 import { Receipt } from "./Components/Dashboard/DashboardComponents/PersonalAccountPage/Receipt";
-//import { WithdrawPage } from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawPage";
+// import { WithdrawPage } from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawPage";
 import { BusinessAccountPage } from "./Components/Dashboard/DashboardComponents/PersonalAccountPage/BusinessAccountPage";
 import { WithdrawToMyAccountPage } from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToMyAccountPage";
 import { WithdrawToPersonalAccountPage } from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToPersonalAccountPage";

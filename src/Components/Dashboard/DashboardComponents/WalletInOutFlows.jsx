@@ -1,4 +1,4 @@
-import  { useState, useEffect, useMemo } from "react";
+import  { useState, useEffect, } from "react";
 import { RxDotFilled } from "react-icons/rx";
 import styles from "./component.module.css";
 import { GetFunction, InternalLoginSession} from "../../ApiCollection.jsx/ApiBuck";
@@ -39,7 +39,7 @@ export const WalletInOutFlows = ({sessionModal, setSessionModal}) => {
  const {transactionResponse, setTransactionResponse} = useContext(ContextProvider);
  const [transactionHistoryError, setTransactionHistoryError] = useState("");
  const [stateDateEdit, setStateDateEdit] = useState("")
- const [walletResponse, setWalletResponse] = useState({}) 
+
   const [activeButtons, setActiveButtons] = useState([
     true,
     false,
@@ -550,7 +550,7 @@ chartResponse?.data?.data?.data?.totalInflowCount + chartResponse?.data?.data?.d
 
          <div className ="absolute text-[16px] 
           top-1/2 leading-[22px] font-semibold left-1/4  text-black lg:text-[35px] lg:leading-[45px]">
-          Charts Updates coming soon....
+          Chart's live updates coming soon....
          </div>
         {/* ==============Amount Of Days==================== */}
         <div
@@ -678,7 +678,7 @@ chartResponse?.data?.data?.data?.totalInflowCount + chartResponse?.data?.data?.d
            maxWidth: "100%",
             overflowX: "auto" }} className ="">
        
-          {calenderWallet && (
+          {(calenderWallet && Data?.ConfirmAcc === "true") && (
                       <div className={`absolute rounded-[20px] top-0 z-[1000px]
                            md:mt-[40px] w-[300px] md:w-[500px] lg:w-[600px] h-auto p-2   border-[0.2px]
                            lg:mt-[55px]  flex flex-col gap-[10px] font-[400]
