@@ -47,11 +47,18 @@ const Team = () => {
        <h2 className="w-[80%] mx-auto py-[22.36px] border rounded-full text-center font-bold text-[16.77px] leading-[18.45px] md:w-[33%] lg:text-[30px] lg:leading-[45px] lg:py-[40px] lg:w-[40%]" style={{boxShadow:`0px 0px 11.186px rgba(0, 0, 0, 0.25)`}}>OUR TEAM MEMBERS</h2>
        <p className='text-[12px] leading-[18px] text-justify lg:text-[18px] lg:leading-[27px]'>At AremxyPlug, we think that the success of our company is built on the strength of our team. We take great pride in having a skilled and experienced team of experts who are committed to giving our clients excellent services.</p>
       </div>
+      <div className = "flex flex-col p w-full md:gap-[104.49px] lg:gap-[158px]">
+        <div className = "flex md:w-1/2 md:mx-auto w-full">
+              { theProfileArray.map((item, index) => (
+        index === 0 && <TeamMember key={index} memberData={item}/>
+        ))}
+        </div>
       <div className="w-full h-full md:grid md:grid-cols-2 md:grid-rows-2 md:gap-x-[131.96px] md:gap-y-[104.49px] 
       lg:gap-x-[235px] lg:gap-y-[158px] gap-y-[20px] ">
         { theProfileArray.map((item, index) => (
-          <TeamMember key={index} memberData={item}/>
+        index > 0 && <TeamMember key={index} memberData={item}/>
         ))}
+      </div>
       </div>
       
       <div className='flex justify-center mt-[100px]'>

@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import { BrowserRouter as Router } from "react-router-dom";
-import { Context } from './Components/Context';
+import { Context, ContextProvider } from './Components/Context';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
 //  <React.StrictMode>
    
     <Context>
-      <Router>
+   <Router>
     <App />
     </Router>
     </Context>

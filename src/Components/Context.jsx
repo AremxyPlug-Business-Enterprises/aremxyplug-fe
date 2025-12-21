@@ -3,9 +3,17 @@ import Joi from "joi";
 import axios from "axios";
 import arrowDown from "../../src/Components/EducationPins/imagesEducation/arrow-down.svg";
 import NotVerifiedIcon from "../Components/My Profile & Account Settings/ProfileImages/NotVerifiedIcon.svg";
+
+
 // import { BASE_URL } from "../config";
 
 export const ContextProvider = createContext();
+
+
+
+
+
+
 
 export const Context = ({ children }) => {
   const handleRefresh = () => {
@@ -14,6 +22,7 @@ export const Context = ({ children }) => {
   };
 
   // Select username or email starts here
+  const [taskBarResponse, setTaskBarResponse] = useState({})
   const [hideNavbar, setHideNavbar] = useState(false);
   const [resetEmail, setResetEmail] = useState("");
   const [resetNumber, setResetNumber] = useState("");
@@ -169,8 +178,6 @@ export const Context = ({ children }) => {
   function changeHandler(e) {
     const { name, value, type, checked } = e.target;
     const inputValue = type === "checkbox" ? checked : value;
-    console.log(value);
-    console.log(name);
     setState({ ...state, [name]: inputValue });
   }
 
@@ -318,7 +325,7 @@ export const Context = ({ children }) => {
           .post(url, data, config)
           .then((response) => {
             console.log(response);
-            if (response.status === 201 || 200) {
+            if (response.status === 201 || response.status === 200) {
               setVerification(true);
               setLocalStorageForInputPin();
             }
@@ -1395,6 +1402,8 @@ const [nabtebPinsGenerated, setNabtebPinsGenerated] = useState([]);
   const [electricityTransErrorType, setElectricityTransErrorType] =
     useState("");
     const [sec, setSec] = useState(0);
+    const [openTaskBar, setOpenTaskBar] = useState(false)
+    const [progressTaskBarResponse, setProgressTaskBarResponse]  = useState({})
 
 
     // ========== Transfer to aremxyPlug======
@@ -1442,6 +1451,12 @@ const [currentDateInTimeStamps, setCurrentDateInTimeStamps] = useState(0);
 
   const hold = {
     //Transfer Data
+    progressTaskBarResponse, 
+    setProgressTaskBarResponse,
+    taskBarResponse,
+    openTaskBar,
+     setOpenTaskBar,
+     setTaskBarResponse,
     handleStateCalender,
     startDateValueState, 
     setStartDateValueState,

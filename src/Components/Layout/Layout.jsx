@@ -17,7 +17,7 @@ const pathname = locationObject.pathname;
   if(!pathname) return;
   return (
     <div className={`flex flex-col ${pathname === "/TestingPhase" ? "gap-[40px] md:gap-[50px]" 
-      : "gap-[80px] md:gap-[160px]"} `} 
+      : "gap-[100px] md:gap-[160px]"} `} 
     onClick={handleClickOutside}>
       <NavBar />
       <ScrollToTop />

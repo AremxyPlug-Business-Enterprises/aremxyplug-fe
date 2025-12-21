@@ -106,10 +106,8 @@ export const RedeemReceipt = () => {
           `}> 
             Redeem Successful on
             </h3>
-            <span className={`text-[12px] text-[#0008] pt-1 font-extrabold'
-             flex justify-center items-center
-            =`}
-            >
+            <span className={`text-[12px]  ${isDarkMode ? "text-white" : "text-black"} 
+            pt-1 font-extrabold flex justify-center items-center`}>
               {date.toLocaleDateString(undefined, {
                 year: "numeric",
                 month: "long",
@@ -196,7 +194,7 @@ export const RedeemReceipt = () => {
                    <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                 <p className={`  ${isDarkMode ? "text-white" : "text-[#0008]"}`}>Transaction Id</p>
                 {/* <span>&#8358;{transferFee}.00</span> */}
-                <span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>{isLoading ? "Loading..." : pointTransactionId}.00</span>
+                <span className={`  ${isDarkMode ? "text-white" : "text-black"}`}>{isLoading ? "Loading..." : pointTransactionId}</span>
               </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Order Number</p>

@@ -256,9 +256,7 @@ function LoginPopUp() {
         } else if (error && error.response.status === 404) {
           alert("Network Error:, Please Check your Connection and try again");
         } else if (error && error.response.status === 401) {
-          // console.log(error.response.headers.hasAuthorization);
-          alert("You were timed out")
-        setTwoStepVerificationSuccess(false)
+        setTwoStepVerificationSuccess(false);
         } else if (error.response.status === 500) {
           alert('An error occured while trying to confirm your details');
          return window.location.href = "/Login";
@@ -396,7 +394,7 @@ return assignImageByUsername
         alert("OOPs, an error has occured");
         setOtp3("");
       } else if (error && error.response.status === 401) {
-        alert("You have timed out")
+        alert("You have been timed out")
         setOpen2StepOTP(false)
       } else if (error.response && error.response.status === 500) {
         setOtp3("");

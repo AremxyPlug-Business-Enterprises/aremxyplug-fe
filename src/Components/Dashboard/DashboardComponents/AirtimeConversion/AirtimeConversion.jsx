@@ -109,7 +109,7 @@ const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
 
 
   const handleShowList = () => {
-    setShowList(!showList);
+   // setShowList(!showList);
     setNetworkName("");
     setNetworkImage("");
     setSelected(false);
@@ -258,9 +258,6 @@ const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
 
   const { isDarkMode } = useContext(ContextProvider);
 
-
-
-  console.log(selectedNetwork);
   return (
     <DashBoardLayout>
       <div
@@ -345,7 +342,7 @@ const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
                       Select Network
                     </h2>
                     <div
-                      onClick={handleShowList}
+                     // onClick={handleShowList}
                       className="border w-full h-[30px] rounded-[4px] pl-[4px] pr-[8px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between"
                     >
                       {selected ? (
@@ -370,7 +367,7 @@ const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
                       )}
                       <button
                         className="lg:w-6 lg:h-6 w-[11px] h-[11px]"
-                        onClick={handleShowList}
+                     //   onClick={handleShowList}
                       >
                         <img src={arrow} alt="" className="w-full h-full" />
                       </button>
@@ -409,6 +406,7 @@ const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
                   </div>
                   <div className="border w-full h-[30px] rounded-[4px] pr-[8px] pl-[4px] lg:h-[51px] md:rounded-[6px] lg:rounded-[10px] lg:pl-[14px] lg:pr-[16px] flex items-center justify-between">
                     <input
+                    disabled
                       type="number"
                       className="lg:text-[16px] lg:leading-[24px] grow outline-none text-[8px] leading-[12px]"
                       placeholder="Add recipient phone number"
@@ -429,6 +427,7 @@ const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
               <div className="mt-[20px] md:mt-[30px] lg:mt-[50px] flex flex-row ">
                 <div className="border-[1px] w-[85%] md:w-[92%] h-[30px] md:h-[40px] lg:h-[60px] px-2 py-0 md:pt-1 lg:pt-4 border-slate-200">
                   <input
+                  disabled
                     type="number"
                     value={inputValue}
                     onChange={handleInputChange}
@@ -464,6 +463,7 @@ const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
               <div className="mt-[15px] flex flex-row lg:mt-[20px]">
                 <div className="border-[1px] w-[85%] md:w-[92%]  text-[8px] lg:text-[16px] h-[30px] md:h-[40px] font-[400] text-[#7C7C7C] lg:h-[50px] px-2 py-0 pt-2 md:pt-3 lg:pt-4 border-slate-200">
                   <input
+                  disabled
                     type="number"
                     value={resultValue}
                     readOnly
@@ -535,15 +535,15 @@ const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
               </div>
 
               <div className="flex flex-col justify-center md:items-center">
-                <div
-                  onClick={() => {
-                    handleProceed();
+                <button
+                  // onClick={() => {
+                  //   handleProceed();
 
-                    console.log(
-                      selectedNetwork.networkImage,
-                      selectedNetwork.networkName
-                    );
-                  }}
+                  //   console.log(
+                  //     selectedNetwork.networkImage,
+                  //     selectedNetwork.networkName
+                  //   );
+                  // }}
                   className={` ${
                     !inputValue.length || resultValue.length < 4
                       ? "bg-[#0008]"
@@ -552,7 +552,7 @@ const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
            `}
                 >
                   Proceed
-                </div>
+                </button>
               </div>
             </div>
             <div></div>

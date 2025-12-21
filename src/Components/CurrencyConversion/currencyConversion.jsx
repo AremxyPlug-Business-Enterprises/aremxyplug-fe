@@ -236,7 +236,7 @@ const CurrencyConversion = () => {
                   {/* airtime conversion */}
                   <div>
                     <Link
-                      // to="/airtime-conversion"
+                     to="/airtime-conversion"
                       onClick={() => {
                         setShowAirtimePopUp(true);
                       }}
@@ -268,14 +268,14 @@ const CurrencyConversion = () => {
                       </div>
                     </Link>
                   </div>
-                  {showAirtimePopUp && (
+                  {/* {showAirtimePopUp && (
                     <CurrencyConversionModal
                       title="Airtime Conversion"
                       image="./Images/wallet/comingSoon.png"
                       onClick={() => setShowAirtimePopUp(false)}
                       tag="This Feature is Currently Not Available."
                     />
-                  )}
+                  )} */}
                   {/* points redeemed */}
                   <Link to="/point-redeem">
                     <div className="conversionLists cursor-pointer flex pl-[5px] pr-[14px] md:pr-[28px] lg:pr-[45px] md:pl-[8.59px] lg:pl-[15px] justify-between  mx-auto py-[7px] md:py-[9px] lg:py-[15px] rounded-[4px] md:rounded-[6.88px] lg:rounded-[12px]">

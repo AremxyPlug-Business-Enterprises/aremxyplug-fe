@@ -156,7 +156,7 @@ const bgUsername = UserBgFormatting()
                       className={`px-[4px] py-[1px] font-[600] lg:font-[700] text-[10px]
                       md:text-[10px] lg:text-[12px] rounded-[2px] ${
                         BvnVerify === "true" || NinVerify === "true"
-                          ? "text-white bg-[#B4B4B4]"
+                          ? "text-white bg-green-500"
                           : "text-red-600"
                       }`}
                     >
@@ -169,7 +169,7 @@ const bgUsername = UserBgFormatting()
                        text-[10px] text-black md:text-[10px] lg:text-[12px] rounded-[2px]"
                     >
                       {/* KYCed */}
-                    {Data?.ConfirmAcc ==="true" || Data?.ConfirmBvn === "true" ? "Regular" : ""}  
+                    {(Data?.ConfirmAcc ==="true" || Data?.ConfirmBvn === "true")  && "Regular" }  
                     </div>
                   </div>
                 </div>

@@ -347,7 +347,7 @@ function GraphicDesign() {
             with effective messaging and positive impressions.
           </p>
           <div className="mt-6  flex justify-center">
-            <Link to="/contactUs">
+            <Link to="/ContactUs">
               <Bluebutton text="Contact Sales" />
             </Link>
           </div>

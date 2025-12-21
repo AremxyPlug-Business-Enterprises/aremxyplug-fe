@@ -1900,7 +1900,7 @@ className={`flex justify-left  w-[100%] items-center`}>
                 </div>
                    <div className={styles.help}>
                     <h2>You need help?</h2>
-                    <Link to={`/ContactUs`} className={styles.btnContact}>Contact Us</Link>
+                    <Link to={`/contactUs`} className={styles.btnContact}>Contact Us</Link>
                 </div>
                 </div>
           

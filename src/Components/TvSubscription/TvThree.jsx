@@ -644,7 +644,8 @@ const VerifyPinHandler = async () => {
    SuccessHandler,
    async (ErrorType)=> {
     if(ErrorType === "unauthorised"){
-    return setSessionModal(true)
+    if(sessionModal) return;
+      if(sessionModal === false ) return setSessionModal(true);
     }else if(ErrorType === "Server error"){
             //A server error returns only if the auth Token
             //has been retrieved then communication with the server occurs
@@ -1193,7 +1194,7 @@ const timer = useRef(null)
 
           <div className={style.help}>
             <h2>You need help?</h2>
-            <Link to={`/ContactUs`} className={style.btnContact}>Contact Us</Link>
+            <Link to={`/contactUs`} className={style.btnContact}>Contact Us</Link>
           </div>
 
         </div>

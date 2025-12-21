@@ -40,7 +40,7 @@ function ProductDesign() {
               and provide seamless interactions across various platforms.
             </p>
             <div className="mt-6">
-              <Link to="/contactUs">
+              <Link to="/ContactUs">
                 <Bluebutton text="Contact Sales" />
               </Link>
             </div>
@@ -435,7 +435,7 @@ function ProductDesign() {
               AremxyPlug.
             </p>
             <div className="mt-6  flex justify-center">
-              <Link to="/contactUs">
+              <Link to="/ContactUs">
                 <Bluebutton text="Contact Sales" />
               </Link>
             </div>

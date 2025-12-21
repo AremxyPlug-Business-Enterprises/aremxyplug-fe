@@ -38,7 +38,7 @@ import { AddAccount } from "./Components/Dashboard/DashboardComponents/PersonalA
 import NgnVirtualAccount from "./Components/Screens/ngnVirtualAccount/NgnVirtualAccount";
 import { CookiesSettings } from "./Components/Screens/Home/Cookie/CookiesSettings";
 import { Receipt } from "./Components/Dashboard/DashboardComponents/PersonalAccountPage/Receipt";
-//import { WithdrawPage } from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawPage";
+// import { WithdrawPage } from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawPage";
 import { BusinessAccountPage } from "./Components/Dashboard/DashboardComponents/PersonalAccountPage/BusinessAccountPage";
 import { WithdrawToMyAccountPage } from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToMyAccountPage";
 import { WithdrawToPersonalAccountPage } from "./Components/Dashboard/DashboardComponents/Withdrawal/WithdrawToPersonalAccountPage";
@@ -192,9 +192,8 @@ import { VirtualAccountReceipt } from "./Components/Dashboard/DashboardComponent
 import { ThemeHandler } from "./Components/ApiCollection.jsx/ApiBuck";
 import { PointRedeemReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/PointRedeemReceipt";
 import { TestingDesign } from "./Components/TestingPhase/TestingDesign";
-//import NotFound from "./Components/NotFound";
-export const Router = () => {
-  const RoutingObjectLimitScope = [
+import NotFound from "./Components/NotFound";
+export   const RoutingObjectLimitScope = [
      { id: 1, Routepath: "/", RouteComponent: <Home /> },
   { id: 2, Routepath: "/About-us", RouteComponent: <AboutUs /> },
   { id: 3, Routepath: "/Solutions", RouteComponent: <Solution /> },
@@ -209,7 +208,7 @@ export const Router = () => {
   { id: 12, Routepath: "/EmailMarketing", RouteComponent: <EmailMarketing /> },
   { id: 13, Routepath: "/ProductDesign", RouteComponent: <ProductDesign /> },
   { id: 14, Routepath: "/GraphicDesign", RouteComponent: <GraphicDesign /> },
-  { id: 15, Routepath: "/contact-us", RouteComponent: <ContactUs /> },
+  { id: 15, Routepath: "/ContactUs", RouteComponent: <ContactUs /> },
   { id: 16, Routepath: "/businessDev", RouteComponent: <BusinessDev /> },
   { id: 17, Routepath: "/DigitalServices", RouteComponent: <DigitalServices /> },
   { id: 18, Routepath: "/OwnVTU", RouteComponent: <OwnVTU /> },
@@ -239,7 +238,7 @@ export const Router = () => {
   { id: 42, Routepath: "/to-aremxymain-receipt", RouteComponent: <ProtectedRoute><AremxyMainReceipt /></ProtectedRoute> },
   { id: 43, Routepath: "/aremxy-add-user", RouteComponent: <ProtectedRoute><AremxyAddUser /></ProtectedRoute> },
   { id: 44, Routepath: "/airtime-topup", RouteComponent: <ProtectedRoute><AirTime /></ProtectedRoute> },
-     { id: 45, Routepath: "/airtime-vtu", RouteComponent: <ProtectedRoute><AirtimeVtu /></ProtectedRoute> },
+   { id: 45, Routepath: "/airtime-vtu", RouteComponent: <ProtectedRoute><AirtimeVtu /></ProtectedRoute> },
   { id: 46, Routepath: "/airtime-vtu-receipt", RouteComponent: <ProtectedRoute><AirtimeVtuReceipt /></ProtectedRoute> },
   { id: 47, Routepath: "/airtime-receipt-failed", RouteComponent: <ProtectedRoute><AirtimeReceiptFailed /></ProtectedRoute> },
   { id: 48, Routepath: "/add-vtu-recipient", RouteComponent: <ProtectedRoute><AddRecipient /></ProtectedRoute> },
@@ -276,8 +275,7 @@ export const Router = () => {
   { id: 79, Routepath: "/bedc-receipt", RouteComponent: <ProtectedRoute><BedcReceipt /></ProtectedRoute> },
   { id: 80, Routepath: "/bedc-receipt-failed", RouteComponent: <ProtectedRoute><BedcReceiptFailed /></ProtectedRoute> },
   { id: 81, Routepath: "/ibedc-receipt", RouteComponent: <ProtectedRoute><IbedcReceipt /></ProtectedRoute> },
-
-  { id: 82, Routepath: "/ibedc-receipt-failed", RouteComponent: <ProtectedRoute><IbedcReceiptFailed /></ProtectedRoute> },
+ { id: 82, Routepath: "/ibedc-receipt-failed", RouteComponent: <ProtectedRoute><IbedcReceiptFailed /></ProtectedRoute> },
   { id: 83, Routepath: "/jed-receipt", RouteComponent: <ProtectedRoute><JedReceipt /></ProtectedRoute> },
   { id: 84, Routepath: "/jed-receipt-failed", RouteComponent: <ProtectedRoute><JedReceiptFailed /></ProtectedRoute> },
   { id: 85, Routepath: "/kedco-receipt", RouteComponent: <ProtectedRoute><KedcoReceipt /></ProtectedRoute> },
@@ -377,11 +375,11 @@ export const Router = () => {
   { id: 179, Routepath: "/WaecFailedReceipt", RouteComponent: <ProtectedRoute><WaecFailedReceipt /></ProtectedRoute> },
   { id: 180, Routepath: "/NecoFailedReceipt", RouteComponent: <ProtectedRoute><NecoFailedReceipt /></ProtectedRoute> },
   { id: 181, Routepath: "/NabtebFailedReceipt", RouteComponent: <ProtectedRoute><NabtebFailedReceipt /></ProtectedRoute> },
-  {id : 182, Routepath : "/TestingPhase", RouteComponent : <TestingDesign/>}
+  {id : 182, Routepath : "/TestingPhase", RouteComponent : <TestingDesign/>},
+     {id : 183, Routepath : "*", RouteComponent : <NotFound/>}
   ];
-
-
-  return (
+export const Router = () => {
+ return (
     <div>
       <ThemeHandler />
       <Routes>

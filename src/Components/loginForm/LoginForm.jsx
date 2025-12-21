@@ -522,7 +522,7 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
               />
               <p className="ml-2 lg:text-[14px] md:text-[14.02px] 
                text-[13.02px] leading-[18px] font-[400]
-               text-[#575757]  tracking-wider  ">
+               text-[#575757]  tracking-wider">
                 Remember me next time!
               </p>
             </div>

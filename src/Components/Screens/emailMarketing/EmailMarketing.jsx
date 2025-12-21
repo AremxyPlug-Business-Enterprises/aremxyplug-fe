@@ -66,7 +66,7 @@ function EmailMarketing() {
               create a bond with your customers.
             </p>
             <div className="my-6">
-              <Link to="/contactUs">
+              <Link to="/ContactUs">
                 <Bluebutton text="Contact Sales" />
               </Link>
             </div>
@@ -412,7 +412,7 @@ function EmailMarketing() {
             expert got you covered. Contact our sales team right away!
           </p>
           <div className="mt-6  flex justify-center">
-            <Link to="/contactUs">
+            <Link to="/ContactUs">
               <Bluebutton text="Contact Sales" />
             </Link>
           </div>

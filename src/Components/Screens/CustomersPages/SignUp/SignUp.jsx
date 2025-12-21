@@ -464,16 +464,17 @@ const ChangeEventFunctionUsername = (value)=> {
         </form>
 
         <div className="md:ml-[4%] lg:ml-[14%]">
-          <div className="flex gap-[5px] w-[90%] mx-auto">
+          <div className="flex gap-[5px] w-[90%] mx-auto items-center">
             <input
-            className="w-[25px] h-[25px] lg:w-[30px] lg:h-[30px]"
+            className="w-[40px] h-[40px]"
               type="checkbox"
               value={state.checkbox}
               name="checkbox"
               onChange={changeHandler}
             />
-            <p className="text-[14px] leading-[20px] font-bold text-center
-             text-[#00000060] lg:text-[16px] lg:leading-[24px]">
+            <p className="ml-2 lg:text-[14px] md:text-[14.02px] 
+               text-[13.02px] leading-[18px] font-[400]
+               text-[#575757]  tracking-wider">
               I have read and agreed to the{" "}
               <Link
                 to="/privacy-policy"
@@ -499,9 +500,9 @@ const ChangeEventFunctionUsername = (value)=> {
           <Link>
             {" "}
             <p
-              className="mt-[9%] lg:mt-[2%] text-[14px] leading-[18px] lg:text-[16px] lg:leading-[24px] font-extrabold mx-auto w-[90%] text-[#04177f]"
-              onClick={() => setShowPassModal(!showPassModal)}
-            >
+              className="text-[rgb(4,23,127)] lg:text-[16px] md:text-[14.02px] text-[12.02px]
+              font-semibold my-[25px] cursor-pointer tracking-wider"
+              onClick={() => setShowPassModal(!showPassModal)}>
               Forgot password ?
             </p>
           </Link>
@@ -527,9 +528,12 @@ const ChangeEventFunctionUsername = (value)=> {
        
       
         <div className="flex text-[#00000057] justify-center items-center">
-          <hr className="w-[1%]"></hr>{" "}
-          <p className="text-[8px] lg:text-[14px]">OR</p>{" "}
-          <hr className="w-[1%]"></hr>
+         <p className="text-center text-[14px] font-semibold
+           text-[#575757] cursor-pointer">
+            -OR-
+            </p> 
+            {" "}
+         
         </div>
        <div className="flex justify-center mt-[20px]"
         >
@@ -545,7 +549,7 @@ const ChangeEventFunctionUsername = (value)=> {
             <img
               src="./Images/login/Google.png"
               alt="google"
-              className="w-[11.46px] lg:w-[20px] "
+              className="w-[11.46px] lg:w-[20px]"
             />
             <p  onClick ={()=> {
             alert("The use of Google as a third party authentication OAuth isn't available for now.")
