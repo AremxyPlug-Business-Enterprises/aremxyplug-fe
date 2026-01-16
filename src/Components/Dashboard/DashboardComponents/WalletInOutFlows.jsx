@@ -627,12 +627,14 @@ chartResponse?.data?.data?.data?.totalInflowCount + chartResponse?.data?.data?.d
                     )}
         </div> 
              <div className="w-full bg-white z-2">
-      {chartResponse?.data?.data?.data?.inflow &&chartResponse?.data?.data?.data?.outflow ? (
-                  <ChartsDesignModule inflow ={chartResponse?.data?.data?.data?.inflow} outflow={chartResponse?.data?.data?.data?.outflow}/>
+      {(chartResponse?.data?.data?.data?.inflow?.length > 0 )
+       && (chartResponse?.data?.data?.data?.outflow?.length > 0) ? (
+          <ChartsDesignModule inflow ={chartResponse?.data?.data?.data?.inflow} outflow={chartResponse?.data?.data?.data?.outflow}/>
       ): (
-    <div className="flex w-full h-full justify-center my-auto items-center">
-      <h1 className="text-[40px] leading-[50px] font-500 text-gray-500">
-        Charts data are not available</h1>
+    <div className="flex w-full h-full justify-center my-20 items-center">
+      <h1 className="text-[30px] lg:leading-[40px] lg:text-[40px] leading-[50px] font-500 text-gray-500">
+        Charts data are not available
+        </h1>
       </div>
 
       )}

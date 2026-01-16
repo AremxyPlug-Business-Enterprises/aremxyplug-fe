@@ -369,7 +369,7 @@ const product = ["All Products", "Airtime Top-up", "Data Top-up", "Bills Payment
                            mx-auto  flex gap-6 justify-between px-[16.51px] md:px-[28.65px] lg:px-[50px]"
           >
             <div className="py-[9.57px] md:py-[16.61px] align-middle self-center 
-                            flex flex-col gap-1.5 w-[70%]">
+                            flex flex-col gap-1.5 w-full">
               <p className="text-[11px] leading-[13px] lg:leading-[30px]
                                  lg:text-[24px] md:text-[13.75px] font-semibold">
                 MANAGE ALL YOUR TRANSACTIONS AT A TIME WITHOUT ANY HASSLE.
