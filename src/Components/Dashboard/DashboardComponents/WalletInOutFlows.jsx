@@ -7,7 +7,7 @@ import { ContextProvider } from "../../Context";
 import  { RecentTransaction } from  "./RecentTransaction";
 import { Calender } from "./Calender";
 import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
-
+import { ChartsDesignModule } from "../../ChartsDesignModule";
 
 
 export const WalletInOutFlows = ({sessionModal, setSessionModal}) => {
@@ -26,7 +26,7 @@ export const WalletInOutFlows = ({sessionModal, setSessionModal}) => {
       editCalenderTwo,
       setEditCalenderTwo,
       setCurrentDateInTimeStamps,
-    setCountCalender  } =
+    setCountCalender, progressTaskBarResponse }  =
     useContext(ContextProvider);
   const [blur] = useState(false);
  // console.log(setBlur)
@@ -143,124 +143,51 @@ const handleDateFilter = ()=> {
     GetTransactionInformation();
    }
  })
-  const [activeButton] = useState(0);
+  //const [activeButton] = useState(0);
 
   //console.log(setActiveButton)
-  const [data, setData] = useState([]);
+  ///============== CHARTS INFORMATION===============//
+
 
   useEffect(() => {
+        GetTransactionInformation();
     // Function to generate data based on selected time range
-    const generateData = () => {
-      const currentDate = new Date();
-      const currentDay = currentDate.getDay();
-     GetTransactionInformation();
-      console.log(currentDay)
-      const todayData = [
-        { xaxis: "0.00", inflow: 10, outflow: 0, amt: 2400 },
-        { xaxis: "1.00", inflow: 9, outflow: 5, amt: 2210 },
-        { xaxis: "2.00", inflow: 8, outflow: 1, amt: 2210 },
-        { xaxis: "3.00", inflow: 7, outflow: 2, amt: 2210 },
-        { xaxis: "4.00", inflow: 6, outflow: 3, amt: 2210 },
-        { xaxis: "5.00", inflow: 5, outflow: 4, amt: 2210 },
-        { xaxis: "6.00", inflow: 4, outflow: 5, amt: 2210 },
-        { xaxis: "7.00", inflow: 3, outflow: 6, amt: 2210 },
-        { xaxis: "8.00", inflow: 2, outflow: 7, amt: 2210 },
-        { xaxis: "9.00", inflow: 1, outflow: 8, amt: 2210 },
-        { xaxis: "10.00", inflow: 0, outflow: 9, amt: 2210 },
-        { xaxis: "11.00", inflow: 5, outflow: 9.5, amt: 2210 },
-        { xaxis: "12.00", inflow: 1, outflow: 10, amt: 2210 },
-        { xaxis: "13.00", inflow: 2, outflow: 9, amt: 2210 },
-        { xaxis: "14.00", inflow: 3, outflow: 8, amt: 2210 },
-        { xaxis: "15.00", inflow: 4, outflow: 7, amt: 2210 },
-        { xaxis: "16.00", inflow: 5, outflow: 6, amt: 2210 },
-        { xaxis: "17.00", inflow: 6, outflow: 5, amt: 2210 },
-        { xaxis: "18.00", inflow: 7, outflow: 4, amt: 2210 },
-        { xaxis: "19.00", inflow: 8, outflow: 3, amt: 2210 },
-        { xaxis: "20.00", inflow: 9, outflow: 2, amt: 2210 },
-        { xaxis: "21.00", inflow: 10, outflow: 1, amt: 2210 },
-        { xaxis: "22.00", inflow: 10, outflow: 0, amt: 2210 },
-        { xaxis: "23.00", inflow: 2, outflow: 9, amt: 2210 },
-        { xaxis: "24.00", inflow: 0, outflow: 10, amt: 2210 },
-        // Include data for the current day
-        // Modify data based on your actual requirements
-      ];
-
-      const last7DaysData = [
-        // Generate data for last 7 days, starting from Monday
-        // Modify data based on your actual requirements
-
-        { xaxis: "0.00", inflow: 10, outflow: 0, amt: 2400 },
-        { xaxis: "1.00", inflow: 9, outflow: 5, amt: 2210 },
-        { xaxis: "2.00", inflow: 8, outflow: 1, amt: 2210 },
-        { xaxis: "3.00", inflow: 7, outflow: 2, amt: 2210 },
-        { xaxis: "4.00", inflow: 6, outflow: 3, amt: 2210 },
-        { xaxis: "5.00", inflow: 5, outflow: 4, amt: 2210 },
-        { xaxis: "6.00", inflow: 4, outflow: 5, amt: 2210 },
-        { xaxis: "7.00", inflow: 3, outflow: 6, amt: 2210 },
-        { xaxis: "8.00", inflow: 2, outflow: 7, amt: 2210 },
-        { xaxis: "9.00", inflow: 1, outflow: 8, amt: 2210 },
-        { xaxis: "10.00", inflow: 0, outflow: 9, amt: 2210 },
-        { xaxis: "11.00", inflow: 5, outflow: 9.5, amt: 2210 },
-        { xaxis: "12.00", inflow: 1, outflow: 10, amt: 2210 },
-        { xaxis: "13.00", inflow: 2, outflow: 9, amt: 2210 },
-        { xaxis: "14.00", inflow: 3, outflow: 8, amt: 2210 },
-        { xaxis: "15.00", inflow: 4, outflow: 7, amt: 2210 },
-        { xaxis: "16.00", inflow: 5, outflow: 6, amt: 2210 },
-        { xaxis: "17.00", inflow: 6, outflow: 5, amt: 2210 },
-        { xaxis: "18.00", inflow: 7, outflow: 4, amt: 2210 },
-        { xaxis: "19.00", inflow: 8, outflow: 3, amt: 2210 },
-        { xaxis: "20.00", inflow: 9, outflow: 2, amt: 2210 },
-        { xaxis: "21.00", inflow: 10, outflow: 1, amt: 2210 },
-        { xaxis: "22.00", inflow: 10, outflow: 0, amt: 2210 },
-        { xaxis: "23.00", inflow: 2, outflow: 9, amt: 2210 },
-        { xaxis: "24.00", inflow: 0, outflow: 10, amt: 2210 },
-      ];
-
-      const last30DaysData = [
-        // Generate data for last 30 days
-        // Modify data based on your actual requirements
-      ];
-      const allTimeData = [
-        // Generate data for all time
-        // Modify data based on your actual requirements
-      ];
-
-      const customData = [
-
-        // Generate data for custom time range
-        // Modify data based on your actual requirements
-      ];
+ 
+     // const currentDay = currentDate.getDay();
+ 
+  // console.log(currentDay)
+   
 
       // Set data based on the selected button
-      switch (activeButton) {
-        case 0:
-          setData(todayData);
-          break;
-        case 1:
-          setData(last7DaysData);
-          break;
-        case 2:
-          setData(last30DaysData);
-          break;
-        case 3:
-          setData(allTimeData);
-          break;
-        case 4:
-          setData(customData);
-          break;
-        default:
-          setData(todayData);
-          break;
-      }
-    };
+    //   switch (activeButton) {
+    //     case 0:
+    //       setData(todayData);
+    //       break;
+    //     case 1:
+    //       setData(last7DaysData);
+    //       break;
+    //     case 2:
+    //       setData(last30DaysData);
+    //       break;
+    //     case 3:
+    //       setData(allTimeData);
+    //       break;
+    //     case 4:
+    //       setData(customData);
+    //       break;
+    //     default:
+    //       setData(todayData);
+    //       break;
+    //   }
+    // };
 
-    generateData();
+  //  generateData();
     if(transactionResponse?.data?.data?.data === undefined){
       GetTransactionInformation();
     }
     setSelected("NGN");
     //eslint-disable-next-line
-  }, [activeButton]);
+  }, []);
 
   const symbolValue = selected === "USD" ? "$" : selected === "AUD" ? 
  "AU$" : selected === "KES" ?   "KSh" : selected === "EUR" ? "€" : selected === "GBP" ? "£" : "₦";
@@ -323,6 +250,7 @@ useEffect(()=> {
 
 // const cachedChartResponse = useMemo(()=> chartFunc, [c])
 const [chartResponse, setChartResponse] = useState({});
+
  const [walletResponseError, setWalletResponseError] = useState("");
 const chartFunc = async(chartIndicator)=> {
 function handleDataFilter(){
@@ -358,6 +286,7 @@ function handleDataFilter(){
         }
       }
 }
+
 
 let path =`chart${typeof handleDataFilter() === "string" ? handleDataFilter() : ""}`
   await GetFunction(path, setWalletLoading, (response)=> {
@@ -548,10 +477,7 @@ chartResponse?.data?.data?.data?.totalInflowCount + chartResponse?.data?.data?.d
        
       >
 
-         <div className ="absolute text-[16px] 
-          top-1/2 leading-[22px] font-semibold left-1/4  text-black lg:text-[35px] lg:leading-[45px]">
-          Chart's live updates coming soon....
-         </div>
+       
         {/* ==============Amount Of Days==================== */}
         <div
           className={`${styles.chartbuttons} ${
@@ -624,7 +550,6 @@ chartResponse?.data?.data?.data?.totalInflowCount + chartResponse?.data?.data?.d
           <div
             onClick={() => {
               volumeValueToggle();
-              // handleButtonClick();
             }}
             className={` w-[15px] h-[6.4px] md:w-[30px] md:h-[12px]
                lg:w-[50px] lg:h-[22px] lg:rounded-full rounded ${
@@ -640,7 +565,7 @@ chartResponse?.data?.data?.data?.totalInflowCount + chartResponse?.data?.data?.d
           <div>Value</div>
         </div>
 
-        <div className="w-full p-[5px] flex justify-end items-center">
+        {/* <div className="w-full p-[5px] flex justify-end items-center">
      <div className="w-[200px] bg-white lg:w-[200px] h-[60px] 
      lg:h-[80px] rounded-[12px] border-[1px]">
       <p className ="text-center text-[12px] font-[600] 
@@ -648,7 +573,7 @@ chartResponse?.data?.data?.data?.totalInflowCount + chartResponse?.data?.data?.d
         {stateDateEdit}
         </p>
       </div>
-      </div>
+      </div> */}
 
         {/* ====================Inflow & Outflow indication================ */}
         <div className="flex float-right mt-[1%] md:mt-[3%] lg:mt-[1%]">
@@ -664,22 +589,13 @@ chartResponse?.data?.data?.data?.totalInflowCount + chartResponse?.data?.data?.d
             </div>
             <div className="text-[7px] md:text-[14px]">Outflows</div>
           </div>
-        </div>
-        {/* 
-        <Line
-          className={isDarkMode ? "bg-[#fff]" : ""}
-          data={data}
-          options={options}
-        /> */}
-
-
-
-         <div style={{ width: "100%",
+  </div>
+   <div style={{ width: "100%",
            maxWidth: "100%",
-            overflowX: "auto" }} className ="">
+            overflowX: "auto", zIndex: 8, position : "absolute" }} className ="">
        
           {(calenderWallet && Data?.ConfirmAcc === "true") && (
-                      <div className={`absolute rounded-[20px] top-0 z-[1000px]
+                      <div className={`rounded-[20px] top-0 z-[1000px]
                            md:mt-[40px] w-[300px] md:w-[500px] lg:w-[600px] h-auto p-2   border-[0.2px]
                            lg:mt-[55px]  flex flex-col gap-[10px] font-[400]
                             ${isDarkMode ? "bg-black text-white  border-white" 
@@ -710,6 +626,17 @@ chartResponse?.data?.data?.data?.totalInflowCount + chartResponse?.data?.data?.d
                       </div>
                     )}
         </div> 
+             <div className="w-full bg-white z-2">
+      {chartResponse?.data?.data?.data?.inflow &&chartResponse?.data?.data?.data?.outflow ? (
+                  <ChartsDesignModule inflow ={chartResponse?.data?.data?.data?.inflow} outflow={chartResponse?.data?.data?.data?.outflow}/>
+      ): (
+    <div className="flex w-full h-full justify-center my-auto items-center">
+      <h1 className="text-[40px] leading-[50px] font-500 text-gray-500">
+        Charts data are not available</h1>
+      </div>
+
+      )}
+        </div>
   {/* ========================Chart End========================= */}
      </div>
        <RecentTransaction transactionResponse = {transactionResponse} 

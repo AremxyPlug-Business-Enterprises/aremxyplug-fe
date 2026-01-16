@@ -21,9 +21,8 @@ export const GloFailedReceipt = (Data) => {
     glotransactionID,
     glorefNumber,
     gloorderID,
-     selectedProductGlo,
      walletNameGlo,
-    selectedOptionGlo,
+    
     glodescription
   } = location.state;
 
@@ -31,6 +30,8 @@ export const GloFailedReceipt = (Data) => {
     toggleSideBar,
     isDarkMode,
     date,
+    selectedOptionGlo,
+      selectedProductGlo,
      setSelectedProductGlo,
     setSelectedOptionGlo,
     setSelectedAmountGlo,

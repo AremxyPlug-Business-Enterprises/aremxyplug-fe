@@ -78,25 +78,14 @@ export default function Referral() {
 
     const FailedHandler = async (ErrorType) => {
       if (ErrorType === "unauthorised") {
-        await GetFunction(
-          Path,
-          setIsLoading,
-          successHandler,
-          (ErrorType) => {
-            if (ErrorType === "unauthorised" && !referralCode && !referralLink) {
-             setSessionModal(true);
-              
+         if(sessionModal) return
+         if(sessionModal === false) return setSessionModal(true)
             }else if (ErrorType === "User error" || ErrorType === "Network error") {
           alert("Your inetrnet connection is quite unstable")
       }else  if (ErrorType === "Server error") {
               alert("Failed to fetch referred users");
-             
-            }
-          },
-          setReferralResponds
-        );
-      }
-    };
+             }
+         };
 
     await GetFunction(
       Path,
@@ -134,7 +123,8 @@ export default function Referral() {
     const successHandler = (response) => {
      
       const referredUsersResponse = response?.data?.data?.referrals;
-      setTotalUsers(referredUsersResponse === null ? 0 : referredUsers?.length);
+
+      setTotalUsers(referredUsersResponse === null ? 0 : referredUsersResponse?.length);
       setActiveUsers(
         referredUsersResponse !== null || referredUsersResponse?.length > 0? 
         referredUsersResponse?.filter((user) => user.is_active === true)?.length : 0
@@ -146,48 +136,21 @@ export default function Referral() {
     };
 
     const FailedHandler = async (ErrorType) => {
-      if (ErrorType === "unauthorised") {
-        await GetFunction(
-          Path,
-        ()=> {},
-          successHandler,
-          (ErrorType) => {
-            if(ErrorType === "unathorised" && referralCode && referralLink){
-           setSessionModal(true);
-            } else if (ErrorType === "User error" || ErrorType === "Network error") {
-        setTotalUsers("");
-        setActiveUsers("");
-        setInactiveUsers("");
-      }else  if (ErrorType === "Server error") {
+            if(ErrorType === "unauthorised"){
+           if(sessionModal) return;
+           if(sessionModal === false)setSessionModal(true)
+            }else if (ErrorType === "Server error") {
               alert("Failed to fetch referred users");
               setTotalUsers("");
               setActiveUsers("");
               setInactiveUsers("");
             }
-          },
-          setReferralResponds
-        );
-      } else if (ErrorType === "Server error") {
-        await GetFunction(
-          Path,
-          ()=> {},
-          successHandler,
-          (ErrorType) => {
-            if (ErrorType === "Server error") {
-              alert("Failed to fetch referred users");
-              setTotalUsers("");
-              setActiveUsers("");
-              setInactiveUsers("");
-            }
-          },
-          setReferredUsersResponse
-        );
-      } else if (ErrorType === "User error") {
+       
+      else if (ErrorType === "User error") {
         setTotalUsers("");
         setActiveUsers("");
         setInactiveUsers("");
       } else {
-        // No referred users
         setTotalUsers(0);
         setActiveUsers(0);
         setInactiveUsers(0);
@@ -201,6 +164,8 @@ export default function Referral() {
       setReferredUsersResponse
     );
   };
+
+  console.log(totalUsers)
 
   const referredUsers = referredUsersResponse
     ? referredUsersResponse?.data?.data?.referrals
@@ -664,8 +629,7 @@ export default function Referral() {
             <Loader />
           </Modal>
         )}
-        {sessionModal
-         && <InternalLoginSession
+        {sessionModal  && <InternalLoginSession
           setExpiredSessionModal ={setSessionModal} />}
       </div>
     </DashBoardLayout>

@@ -9,7 +9,8 @@ export const SetLocalStorage = (email, fullName,phone, username,bankName, accoun
   localStorage.setItem("userBankName", JSON.stringify(bankName));
   localStorage.setItem("aremxyAccountName", JSON.stringify(accountName))
   localStorage.setItem("aremxyAccountNumber", JSON.stringify(accountNumber));
-  localStorage.setItem("aremxyUserId", JSON.stringify(id))
+  localStorage.setItem("aremxyUserId", JSON.stringify(id));
+
 }
 
 
@@ -61,7 +62,7 @@ UserEmail,
      ConfirmBvn,
      ConfirmAcc
     }
-    return userTransactionOtp ? GetItemsForInputPin : GetItemsForTwoStep
+    return userTransactionOtp  ? GetItemsForInputPin : GetItemsForTwoStep
 }
 
 
@@ -81,8 +82,7 @@ export const RemoveLocalStorage = () => {
  localStorage.removeItem("Zxfer");//Bvn Verification
 
  //For Clearing Purposes
- localStorage.removeItem("IdVerification");
- localStorage.removeItem("bvnVerification")
+ 
  localStorage.removeItem("5pbb8");
   localStorage.removeItem("AccCreated");
  localStorage.removeItem("UserStatus");

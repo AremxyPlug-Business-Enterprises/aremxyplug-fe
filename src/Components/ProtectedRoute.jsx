@@ -1,20 +1,19 @@
 
 import { Navigate } from 'react-router-dom';
 import { RemoveLocalStorage } from './LocalStorage/LocalStorage';
- import { useEffect, useRef,  useContext } from 'react';
+ import { useEffect, useRef,  useContext, useMemo } from 'react';
 import { HandleUserSession, refreshToken} from './ApiCollection.jsx/ApiBuck';
 import { ContextProvider } from './Context';
 import { FloatingProgressCircle, TaskProgressModal } from './Motion';
 import { AnimatePresence } from 'framer-motion';
 import { motion } from 'framer-motion';
-import { createWebSocket } from './ApiCollection.jsx/ApiBuck';
 import { GetFunction } from './ApiCollection.jsx/ApiBuck';
 
 export const ProtectedRoute = ({children}) => {
  
  const SessionIntervalHold = useRef(null);
   const {sessionExpiration, 
-    setSessionExpiration, openTaskBar, setOpenTaskBar, setProgressTaskBarResponse,
+    setSessionExpiration, openTaskBar, setOpenTaskBar, setProgressTaskBarResponse, progressTaskBarResponse,
      sec, setSec} = useContext(ContextProvider);
        
   ;//Handling getting the data from the mongo data base before the websocket linking
@@ -25,19 +24,43 @@ const handleTaskProgress = async()=> {
      (response)=> {
       setProgressTaskBarResponse(response)
       if(!navigator.onLine) return alert("Your internet connection is quite unstable")
-     if(navigator.onLine){   
-     
-      createWebSocket()  
-     }
-    }, (errorType)=> {
-    if(errorType === "Network error"){
-      alert("Unable to retrieve tasks progress")
-    }else if(errorType ==="Server error"){
-      alert("A server error has occured")
-    }
-    },()=> {})
+ 
+    }, ()=> {},()=> {})
 }
 //The Modal Handling for the user Task Progress Bar
+//Array to help organise taskBar Progress according to the way frontend requires it.
+const order = [
+  "signup",
+  "kyc",
+  "fund_wallet",
+  "transaction_volume",
+  "point_redeem"
+];
+
+
+
+
+    //Filter the task not completed/ done
+ 
+  const memoedProgress = useMemo(()=>  progressTaskBarResponse?.data?.data?.tasks, [progressTaskBarResponse])
+ 
+
+   const orderedUpdatedTask = 
+  progressTaskBarResponse?.data?.data?.tasks?.length > 1 ? 
+   Array.from(memoedProgress)?.sort((a, b)=>{
+return order.indexOf(a.task_code) - order.indexOf(b.task_code);
+})  : [];
+
+const filterTaskNotCompleted =  orderedUpdatedTask?.filter((dataBaseRes)=> dataBaseRes?.completed === false);
+    const firstNotCompletedTask = Array.isArray(filterTaskNotCompleted) && filterTaskNotCompleted?.length < 1 ? 
+     filterTaskNotCompleted?.find((_, index)=>  index === 0 ) : {};
+       
+      //Declarations for floating progress circle
+   const getCompletedTask = orderedUpdatedTask?.filter((task)=> task?.completed === true)
+
+//Progress
+const progressNumber = Array?.isArray(getCompletedTask) ?  getCompletedTask?.length * 20 : 0;
+//Ends here
  const TaskProgressController = ()=> {
 return (
     <>
@@ -49,7 +72,7 @@ return (
             setOpenTaskBar(true)
           }
         }}
-      />
+      progressNumber = {progressNumber}/>
       <AnimatePresence>
           <motion.div
             initial={{ scale: 1 }}
@@ -62,19 +85,21 @@ return (
               transition: { duration: 0.7, ease: "easeInOut" },
             }}
           >
-          {openTaskBar  && (
+          {openTaskBar && (
             <TaskProgressModal 
             onHide={() => {
               setOpenTaskBar(false)
             } 
-            }/>
+            } getUpdatedTask ={memoedProgress} 
+            firstNotCompletedTask = {firstNotCompletedTask}/>
           )}
+          
           </motion.div>
-     
       </AnimatePresence>
     </>
   );
 }
+
 // The aim is to create three different situation when the user will
 // will be logged from the page
 // 1. The point in which the authToken is not gotten through cookies after a request from
@@ -136,7 +161,7 @@ const checkForIntervalCallBack = ()=> {
     return clearSessionExpirationMemory() 
     }
   }
-  checkForIntervalCallBack();
+ checkForIntervalCallBack();
     SessionIntervalHold.current =  setInterval(checkForIntervalCallBack, 30000);
   return ()=> {
     clearInterval(SessionIntervalHold.current);
@@ -144,7 +169,6 @@ const checkForIntervalCallBack = ()=> {
   }
       // eslint-disable-next-line
 }, [])
-
 
   window.onclick = ResetTimer;
  window.onload = ResetTimer;
@@ -164,13 +188,12 @@ const UserStatus = localStorage.getItem("cxccxfd");//Tracking The UserStatus fro
 return(
   <>
         {children}
-
-    {sessionExpiration && (
+  {sessionExpiration && (
       <HandleUserSession/>
      )}
-    
-      <TaskProgressController/>
-    
+     {(progressTaskBarResponse?.data?.data ) && (
+   <TaskProgressController/>   
+     )} 
     </>
 )
 

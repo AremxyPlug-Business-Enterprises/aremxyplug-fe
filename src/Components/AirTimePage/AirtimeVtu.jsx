@@ -281,29 +281,6 @@ setRecipientList(response?.data?.data?.recipients?.recipients);
         )
     }
 
-    // const Payment = ({ code, flag, amount, onClick, className }) => {
-    //     return (
-    //         <li className="py-[10px] flex items-center 
-    //      gap-[10px] pl-[7px]" onClick={onClick}>
-    //             <div className={styles.netImage}>
-    //                 <img src={flag} alt="" className={styles.NoImage} />
-    //             </div>
-    //             <h2 className={styles.netName}>{code}</h2>
-    //             <h2 className={styles.netName}>Wallet({amount})</h2>
-    //         </li>
-    //     )
-    // }
-
-  
-
-   
-    
-    
-    // const handleSelectProduct = (val, proId) => {
-    //     setSelectedProduct(val);
-    //     setShowProduct(false);
-    //     setProductId(proId);
-    // }
 
     const handleShowList = () => {
         setShowList(!showList);
@@ -489,10 +466,6 @@ const handleProceed = (e) => {
         DetectAndErrorNetFunc(name, recipientNumber)
          }
     }
-console.log(recipientList);
-   
-
-
 
     const factorWalletName = (value) => {
 

@@ -101,8 +101,12 @@ export const InActionVirtualAccountState = (
 //ws Socket
 
 
-export const createWebSocket = ()=> {
-const  connectionSocket = new WebSocket(`wss://api.aremxyplug.com/api/v1/ws/events`);
+  export const CreateWebSocket = ()=> {
+let connectionSocket = false;
+if(connectionSocket.readyState === WebSocket.OPEN || connectionSocket.readyState === WebSocket.CONNECTING){
+  return;
+}
+  connectionSocket = new WebSocket(`wss://api.aremxyplug.com/api/v1/ws/events`);
   connectionSocket.onopen =()=> {
     console.log("Socket running")
   }
@@ -111,6 +115,7 @@ const  connectionSocket = new WebSocket(`wss://api.aremxyplug.com/api/v1/ws/even
     try{
      const data = JSON.parse(event)
        console.log(data)
+       return data;
     }catch(error){
       console.log("unable to fetch realtime update")
     }
@@ -118,6 +123,7 @@ const  connectionSocket = new WebSocket(`wss://api.aremxyplug.com/api/v1/ws/even
   
 }
 
+export const WebSocketMessage = CreateWebSocket()
 
 
 
@@ -730,7 +736,8 @@ export const GetFunction = async(path, setLoading, functionAtSuccess,
      alert("Kindly check your internet connection");
      functionAtFailed("Network error");
       } else if(error && error.response.status === 400){
-         functionAtFailed("Bad request")
+        console.log(error.response);
+         functionAtFailed("Bad request", error.response)
       } else if(error && error.response.status === 401){
     functionAtFailed("unauthorised");
 } else if (error && error.response.status === 404) {

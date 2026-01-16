@@ -59,18 +59,11 @@ const order = [
 
 
 
-export const  TaskProgressModal = ({onHide})=> {
-  const {progressTaskBarResponse} = useContext(ContextProvider)
-  const getUpdatedTask = progressTaskBarResponse?.data?.data?.tasks
-    //Filter the task not completed/ done
-  
-   const orderedUpdatedTask = 
-    getUpdatedTask?.sort((a, b)=>{
-return order.indexOf(a.task_code) - order.indexOf(b.task_code)
-})
-const filterTaskNotCompleted
-   = orderedUpdatedTask?.filter((dataBaseRes)=> dataBaseRes?.completed === false );
-   const firstNotCompletedTask = filterTaskNotCompleted?.find((_, index)=>  index === 0 )
+export const  TaskProgressModal = ({onHide, getUpdatedTask, firstNotCompletedTask})=> {
+  //console.log(getUpdatedTask);
+  const trueFilteredTask = Array.isArray(getUpdatedTask) ? getUpdatedTask?.filter((taskDone)=> {
+    return taskDone?.completed === true
+  }) : []
   return (
     <motion.div
       layout
@@ -88,13 +81,12 @@ const filterTaskNotCompleted
            = getUpdatedTask?.find((dataBaseRes)=>
              dataBaseRes?.task_code === task?.logo && dataBaseRes?.completed === true )
        return(
-           <li
-            key={task.id}
+           <li key={task.id}
             className="flex items-start gap-3 p-3 rounded-xl bg-gray-50"
           >
             {/* Placeholder completion visual */}
            
-            <div className="w-5 h-5 rounded-full border-[2px] border-gray-500 mt-1" >
+            <div className="w-5 h-5 rounded-full border-[2px] self-center  border-gray-500 mt-1" >
               
             < div className = {`${completedTask?.task_code === task?.logo? "bg-green-600" : ""} 
             w-[100%] h-[100%] rounded-full font-[500] text-[12px]`}/>
@@ -110,8 +102,11 @@ const filterTaskNotCompleted
           </li>
       )})}
       </ul>
-    <p className = "text-[12px] font-[800] leading-[16px] capitalize">
-   {firstNotCompletedTask?.task_code === "signup" ? "Start Testing" : "Next Step"} :  {firstNotCompletedTask?.task_code} 
+    <p className = {`text-[12px] font-[800] leading-[16px] capitalize
+      ${trueFilteredTask?.length < 5 ? "text-black" : "text-green-600"}`}>
+ {trueFilteredTask?.length < 5 ?   "Next Step:": "Task Completed"}
+   {firstNotCompletedTask?.task_code === "signup" ? "" : 
+    firstNotCompletedTask?.task_code  ? firstNotCompletedTask?.task_code : ""}
     </p>
       <div className="mt-5 flex justify-between">
         <Link to ={firstNotCompletedTask?.task_code === "kyc" 
@@ -133,18 +128,8 @@ const filterTaskNotCompleted
 
 //Floating Progress bar
 export const FloatingProgressCircle = ({
-  onClick})=>  {
-      const {progressTaskBarResponse} = useContext(ContextProvider)
-  const getUpdatedTask = progressTaskBarResponse?.data?.data?.tasks
-    //OrderedTaskList
-      const orderedUpdatedTask = 
-    getUpdatedTask?.sort((a, b)=>{
-return order.indexOf(a.task_code) - order.indexOf(b.task_code)
-})
-const getCompletedTask = orderedUpdatedTask?.filter((task)=> task?.completed === true )
-//Progress
-const progressNumber = Array?.isArray(getCompletedTask) ?  getCompletedTask?.length * 20 : 0;
-  return (
+  onClick, progressNumber})=>  {
+     return (
     <motion.button
       onClick={onClick}
       whileTap={{ scale: 0.9 }}

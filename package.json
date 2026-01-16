@@ -50,6 +50,7 @@
     "react-select-country-list": "^2.2.3",
     "react-tooltip": "^5.27.1",
     "react-verification-input": "^4.1.2",
+    "recharts": "^3.6.0",
     "rimraf": "^6.0.1",
     "swiper": "^11.2.10",
     "uuid": "^10.0.0",
