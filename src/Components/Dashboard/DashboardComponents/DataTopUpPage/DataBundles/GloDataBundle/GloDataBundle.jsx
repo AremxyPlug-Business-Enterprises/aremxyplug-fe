@@ -806,7 +806,6 @@ try {
                           `}
                           onClick={() => {
                             handleSelectProduct(product);
-                            console.log(product);
                             setSelectPlanWarn(false);
                             setShowOptionList(false);
                             if (product.plan === null) {
@@ -1477,6 +1476,8 @@ try {
                         fontWeight: 700,
                         borderRadius: 4,
                         height: "35px",
+                        columnGap : "50px",
+                        gap: "50px",
                         width: "35px",
                         backgroundColor: isDarkMode ? "black" : "white",
                         border: isDarkMode

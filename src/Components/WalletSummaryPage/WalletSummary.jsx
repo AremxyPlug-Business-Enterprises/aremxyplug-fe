@@ -82,18 +82,20 @@ export default function WalletSummaryPage() {
 
 
 
-  const GetTransactionInformation = async (startDate, endDate , record) => {
-   console.log(startDate);
+  const GetTransactionInformation = async (startDate, endDate , record, collection) => {
     if (!navigator.onLine) return setTransactionHistoryError("Network error");
+    console.log(collection);
       const pathQuery = ()=> {
       const parseRecordValues 
       = record === "Deposits"
        ? "deposit" :
         record === "Transfers" ? "transfer" : "All Records"
+        const parseCollectionValues = collection === "Virtual Accounts"
+         ?  "virtual" : collection === "Point Redeem" ? "point" : "All Collections"
       //Queries for the different combination of filters
+     
        const requestQueries = 
-       //when selectRecords is either of deposits or transfer,
-       // and startDateValueState and endDateValueState aren't used or given
+       record !== "All Records" && record !== undefined && record?.length ? 
        (record?.length && record !== "All Records") 
        && (startDate?.length < 1 || startDate === undefined)
        &&  (endDate.length <1 || endDate === undefined )
@@ -117,6 +119,34 @@ export default function WalletSummaryPage() {
      && (startDate?.length > 1 && startDate !== undefined)
       &&  (endDate?.length> 1 || endDate !== undefined)
       ? `?start_date=${startDate}&end_date=${endDate}` : ""
+      :  (record?.length && record !== "All Records") 
+       && (startDate?.length < 1 || startDate === undefined)
+       &&  (endDate.length <1 || endDate === undefined )
+       ? `?record=${parseRecordValues}`
+       //when selectRecords is either deposits or transfer
+       // and ony startDateValueState is used
+    :(collection?.length && collection !== "All Collections")
+     &&(startDate?.length > 1 && startDate!== undefined)
+      &&  (endDate?.length < 1 || endDate === undefined)
+    ? `?category=${parseCollectionValues}&start_date=${startDate}`
+    //when selectRecord   s is used and both date queries are used
+    :  (collection?.length && collection !== "All Collections")
+     &&(startDate?.length > 1 && startDate !== undefined)
+      &&  (endDate?.length > 1 || endDate!== undefined )
+      ? `?category=${parseCollectionValues}&start_date=${startDate}&end_date=${endDate}`
+      : (collection?.length  && collection === "All Collections")
+    && (startDate?.length > 1 && startDate !== undefined)
+    &&  (endDate?.length< 1 || endDate === undefined)
+      ? `?start_date=${startDate}` 
+      :  (collection?.length  && collection === "All Collections")
+     && (startDate?.length > 1 && startDate !== undefined)
+      &&  (endDate?.length> 1 || endDate !== undefined)
+      ? `?start_date=${startDate}&end_date=${endDate}` : 
+      collection?.length && collection !== "All Collection" &&
+       (startDate?.length < 1 || startDate === undefined)
+       &&  (endDate.length <1 || endDate === undefined )
+       ? `?category=${parseCollectionValues}`
+       : ""
       return requestQueries;
     }
      const path = `transactions/wallet-summary${pathQuery()}`;
@@ -202,7 +232,8 @@ export default function WalletSummaryPage() {
    await GetTransactionInformation(
       "",
        "",
-       selectRecords)
+       selectRecords,
+      selectCollection)
  }
 
 
@@ -244,7 +275,8 @@ export default function WalletSummaryPage() {
      await GetTransactionInformation(
       startDateOptions,
        endDateOptions,
-       selectRecords 
+       selectRecords,
+       selectCollection
        );
        
  
@@ -795,7 +827,7 @@ const FormatTime =(DateValue)=> {
                   </div>
                 </div>
 
-                {/*filter by product dropdown */}
+                {/*filter by Collection dropdown */}
                 {selectCollectionDropDown && (
                   <ul
                     className={`dropdown-options z-[2] absolute left-0 md:left-auto top-[100%]
@@ -815,6 +847,10 @@ const FormatTime =(DateValue)=> {
                           setSelectCollectionDropDown(false);
                           setIsOpen1(false);
                           setSelectCollection(collection)
+                          GetTransactionInformation(startDateValueState,
+                             endDateValueState,
+                              selectRecords,
+                               collection)
                         //  setStateDateEdit("Filter By Date")
                           setCalender(false);
                           setSelectRecordDropDown(false)

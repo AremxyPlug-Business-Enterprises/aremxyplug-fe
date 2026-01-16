@@ -26,7 +26,7 @@ export default function ProfileSettingsMain(Data) {
   const { idVerificationOpen, setIdVerificationOpen } =
     useContext(ContextProvider);
     const {setVerificationReason} = useContext(ContextProvider);
-    const {verificationResponse, setVerificationResponse} = useContext(ContextProvider);
+    const {setVerificationResponse} = useContext(ContextProvider);
     const [sessionModal, setSessionModal] = useState(false);
 
   const location = useLocation();
@@ -66,12 +66,14 @@ export default function ProfileSettingsMain(Data) {
     if(!navigator.onLine) return  setVerificationReason(`${idVerificationOpen === true ? "Nin" : bvnVerificationOpen === true ? "Bvn" : "Nin"} retrieval failed: internet connection error`)
     const path ="check-verification";
     const SuccessHandler = (response)=> {
-      console.log("Successful");
+      setVerificationResponse(response)
     }
-    const FailedHandler = async(ErrorType)=> {
+    const FailedHandler = async(ErrorType, response)=> {
       
       if(ErrorType === "User error" || ErrorType === "Network error"){
         setVerificationReason(`${idVerificationOpen === true ? "Nin" : bvnVerificationOpen === true ? "Bvn" : "Nin"} retrieval failed due to unstable connection`)
+      }else if(ErrorType === "Bad request"){
+        setVerificationResponse(response)
       }else if(ErrorType === "Server error"){
         setVerificationReason(`${idVerificationOpen === true ? "Nin" : bvnVerificationOpen === true ? "Bvn" : "Nin"} retrieval failed try some other time`)
       }else if(ErrorType === undefined){
@@ -86,11 +88,11 @@ export default function ProfileSettingsMain(Data) {
         }
        },
 
-      setVerificationResponse)
+     ()=> {})
       }else {
-        if(ErrorType !== "Bad request"){
+     
         setVerificationReason(`${idVerificationOpen === true ? "Nin" : bvnVerificationOpen === true ? "Bvn" : ""} retrieval failed.`);
-        }
+ 
       }
     }
   //console.log(verificationResponse?.data?.data?.address);

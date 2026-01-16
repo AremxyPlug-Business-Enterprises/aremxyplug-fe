@@ -476,6 +476,7 @@ return assignImageByUsername
 
   const SetLocalStorageInputPin = () => {
     setLoading(true);
+    setOpenTranspinSuccessful(false);
      UserIconFormatting();
     SessionTiming();
     if (customerDetail) {
@@ -502,11 +503,11 @@ return assignImageByUsername
     }
   };
 
-  const PinSuccessToDashBoard = ()=> {
+  const PinSuccessFlow = ()=> {
       localStorage.setItem("cxccxfd", true)
      refreshToken()
-   setOpenTranspinSuccessful(true);
-   setOpenTranspin(false)
+    setOpenTranspin(false);
+    setOpenTranspinSuccessful(true)
   }
 
    const SendTransactPin = async () => {
@@ -514,13 +515,14 @@ return assignImageByUsername
       pin : otp
     }
    await PostFunction("pin", setLoading, body, ()=> {
-   PinSuccessToDashBoard();
+   PinSuccessFlow();
    }, async(ErrorType)=> {
    if(ErrorType === "Bad request"){
   alert(`Please check your internet connection`);
    }else if(ErrorType === "Server error"){
    alert("Server error")
    }else if(ErrorType === "unauthorised"){
+    alert("We lost connection with you over long period deciding your pin.")
       setOpenTranspin(false);
    }else if(ErrorType === "User error" || ErrorType === "Network error"){
     alert("Kindly check your internet connection.")
@@ -655,7 +657,7 @@ return assignImageByUsername
             className="lg:ml-[38.5%] md:ml-[40%] md:-mt-[20%] lg:-mb-[30%] px-[17.609px] py-[35.536px]
            bg-white rounded-[10.3px] md:py-[34.96px] md:px-[17.6px] lg:py-[62px] lg:px-[31px]"
           >
-            <p className="lg:text-[16px] text-[9.167px] text-[#000] mb-[30px] text-center">
+            <p className="lg:text-[16px] text-[12.167px] font-[600] text-[#000] mb-[30px] text-center">
               Create your transaction pin to continue operations!
             </p>
             <p className="lg:text-[16px] font-[600] text-[9.167px] text-[#000] my-4 text-center">
@@ -672,8 +674,8 @@ return assignImageByUsername
                 shouldAutoFocus={true}
                 inputStyle={{
                   color: "#403f3f",
-                  width: 30,
-                  height: 30,
+                  width: 40,
+                  height: 40,
                   borderRadius: 3,
                 }}
                 renderInput={(props) => (
@@ -698,8 +700,8 @@ return assignImageByUsername
                 // onBlur={() => handleBlur_otp()}
                 inputStyle={{
                   color: "#403f3f",
-                  width: 30,
-                  height: 30,
+                  width: 40,
+                  height: 40,
                   borderRadius: 3,
                 }}
                 renderInput={(props) => (
@@ -729,7 +731,7 @@ return assignImageByUsername
                     ? " bg-[#b3b3b3] cursor-not-allowed"
                     : "bg-[#04177F] cursor-pointer"
                 } inline-flex justify-center items-center text-[#fff]   text-center   
-text-[10px] font-bold leading-[11.31px]  px-[25px] py-[8px] rounded-[3px] lg:rounded-[7px] lg:px-[37px] lg:py-[15px] lg:text-[14px]
+text-[10px] font-bold leading-[11.31px] w-full md:w-[300px] px-[25px] py-5 rounded-[3px] lg:rounded-[7px] lg:px-[37px] lg:py-[15px] lg:text-[14px]
 `}
               >
                 <p> Create</p>

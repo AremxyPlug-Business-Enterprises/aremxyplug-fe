@@ -60,7 +60,6 @@ export const SideBar = ({ fullname, userId, BvnVerify, NinVerify }) => {
   })
   const UserData = Data?.aremxyUsername?.toString();
 
-  console.log(Data?.aremxyUsername?.toLowerCase()?.startsWith("m"||"o"))
  const UserBgFormatting = ()=> {
   const alphabetsName = "abcdefghijklmnopqrstuvwxyz".split("");
   
@@ -169,7 +168,7 @@ const bgUsername = UserBgFormatting()
                        text-[10px] text-black md:text-[10px] lg:text-[12px] rounded-[2px]"
                     >
                       {/* KYCed */}
-                    {(Data?.ConfirmAcc ==="true" || Data?.ConfirmBvn === "true")  && "Regular" }  
+                Regular
                     </div>
                   </div>
                 </div>

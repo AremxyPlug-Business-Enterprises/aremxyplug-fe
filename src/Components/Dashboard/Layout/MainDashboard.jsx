@@ -26,7 +26,7 @@ import { GetFunction} from "../../../Components/ApiCollection.jsx/ApiBuck";
 //import { useImageHook } from "../../useImageHook";
 
 
-export const MainDashboard = (Data) => {
+export const MainDashboard = () => {
 //   const DashBoardImages = [
 //     "./Images/dashboardImages/hero1image.png",
 //     "./Images/dashboardImages/hero2image.png",
@@ -77,7 +77,7 @@ const navigate = useNavigate()
  const [balanceLoading, setBalanceLoading] = useState(false)
  const [balanceValue, setBalanceValue] = useState("");
  const [sessionModal, setSessionModal] = useState(false)
-
+const Data = GetLocalStorage()
   const handleCopyClick = () => {
     const text = Data.aremxyAccountNumber;
     navigator.clipboard
@@ -238,7 +238,7 @@ if((clickedoption === "NGN")){
 }
       
 const ValueRef = useRef();
- Data = GetLocalStorage();
+ 
  
   useEffect(() => {
     ValueRef.current = Data;
@@ -309,6 +309,7 @@ const ValueRef = useRef();
      ExecutePointFunction()
   }
 })
+
 // if(!ImageLoadingExecution) {
 //     return (
 // <div className ="h-[100%] w-[100%] items-center justify-center">
@@ -316,7 +317,7 @@ const ValueRef = useRef();
 // </div>
 //   )
 // }
-
+console.log(Data?.ConfirmId);
 return (
     <div className="relative h-[150%] w-[100%]">
  {/* ============SIDE BAR========= */}
@@ -526,7 +527,7 @@ return (
                 </div>) :  (
                   <div className="w-full flex justify-center backdrop-blur-[6px] lg:mt-[9px] lg:h-[40px]">
        <p className="lg:text-[16px] text-[10px] leading-[16px] lg:leading-[24px] font-[400] lg:font-[500] mt-[5px]">
-       {balanceValue === "" && Data?.ConfirmAcc === "false" ? "Create your virtual account." : balanceValue }
+       {balanceValue === "" && ( Data?.ConfirmAcc === "false" || !Data?.ConfirmAcc) ? "Create your virtual account." : balanceValue }
 
        </p>
                     </div>
@@ -805,7 +806,7 @@ return (
                  md:leading-[18px] lg:leading-[22px] font-[500] 
                 text-left
                ${isDarkMode ? "text-white" : "text-blue-950"}`}>
-        {(Data.ConfirmId === "true" || Data.ConfirmBvn === "true") && Data.ConfirmAcc === "false" ? "Create a virtual account dedicated to your wallet." : "The below accounts are reserved for your wallets only."}
+        {(Data.ConfirmId === "true" || Data.ConfirmBvn === "true") && (Data.ConfirmAcc === "false" || !Data?.ConfirmAcc) ? "Create a virtual account dedicated to your wallet." : "The below accounts are reserved for your wallets only."}
               </p>
               </div>
                       <div className="flex flex-col gap-[8px] md:h-[30%]  md:gap-[10%]">
@@ -813,7 +814,7 @@ return (
               <p className={`lg:text-[16px] font-[400] lg:leading-[24px]
                text-[12px] md:text-[14px] md:leading-[18px]
                  ${isDarkMode ? "text-white" : "text-black"}`}>
-                   {(Data.ConfirmId === "true" || Data.ConfirmBvn === "true") && Data.ConfirmAcc === "false" ? "Your account has been verified successfully. Please click the button below to generate your virtual account."
+                   {(Data.ConfirmId === "true" || Data.ConfirmBvn === "true") && (Data.ConfirmAcc === "false" || !Data?.ConfirmAcc) ? "Your account has been verified successfully. Please click the button below to generate your virtual account."
                     : (Data.ConfirmId === "true" || Data.ConfirmBvn === "true") && Data.ConfirmAcc === "true" ? "You now have an account" : "Please verify your account to generate your virtual account." }
                 {/* This is Collected for secure and cyber-attack-free transactions among AremxyPlug's users*/}
                 </p>
@@ -824,7 +825,7 @@ return (
     pathname: "/ProfileSettingMain",
     state: { verificationOpen: true } 
   } : null } onClick={()=> {
-    if((Data.ConfirmId === "true" ||  Data.ConfirmBvn === "true") && Data.ConfirmAcc === "false" && selected === "NGN"){
+    if((Data.ConfirmId === "true" ||  Data.ConfirmBvn === "true") && (Data.ConfirmAcc === "false" || !Data?.ConfirmAcc) && selected === "NGN"){
      GenerateVirtualAccount()
     }
   } }   disabled={selected !== "NGN"}
@@ -833,7 +834,7 @@ return (
                     isDarkMode ? "border bg-black" : "bg-[#04177f]"
                   } ${selected !== "NGN" && (Data.ConfirmId === "true" || Data.ConfirmBvn === "true") ? "bg-gray-400" : "bg-[#04177f]"}`}
                >
-              {(Data.ConfirmId === "true" ||  Data.ConfirmBvn === "true") && Data.ConfirmAcc === "false"  ? "Generate" : "Verify"
+              {(Data.ConfirmId === "true" ||  Data.ConfirmBvn === "true") && (Data.ConfirmAcc === "false"  || !Data?.ConfirmAcc) ? "Generate" : "Verify"
                }
               
            </Link>

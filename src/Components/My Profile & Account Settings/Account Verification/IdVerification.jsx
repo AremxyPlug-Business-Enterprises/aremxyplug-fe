@@ -35,7 +35,8 @@ export default function IdVerification(Data) {
     isDarkMode,
     setIdStatus,
     verificationResponse,
-    verificationReason
+    verificationReason,
+    setVerificationResponse
   } = useContext(ContextProvider);
   const { dropDownGender, setDropDownGender, idButtonState, setIdButtonState } =
     useContext(ContextProvider);
@@ -178,12 +179,13 @@ export default function IdVerification(Data) {
             "Content-Type": "application/json",
            
           },withCredentials : true
-        });
+        })
         if (response.status === 201 || response.status === 200) {
           setIdNumber(idNumber);
           verifyIdImage();
           statusId();
           verifyPopId();
+          setVerificationResponse(response)
           setIdButtonState(buttonStateSuccess);
            localStorage.setItem("Zxfer", "true");// Bvn Verification
             localStorage.setItem("Qhfde", "true"); // Id Verification
@@ -227,7 +229,7 @@ export default function IdVerification(Data) {
   }, [Data]);
  // console.log(Data);
 
-  
+  console.log(verificationResponse)
 
   return (
     <div className="flex flex-col ">
@@ -397,7 +399,7 @@ export default function IdVerification(Data) {
                         isDarkMode ? "text-slate-50" : ""
                     }`}
                     >
-                      {((Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false") || (!Data?.ConfirmId  || !Data?.ConfirmBvn ))
+                      {((Data?.ConfirmId === "false" && Data?.ConfirmBvn === "false") || (!Data?.ConfirmId  || !Data?.ConfirmBvn ))
                        && verificationResponse?.data?.data?.gender === undefined ?
                         genderResult : verificationResponse?.data?.data?.gender}
                     </h2>
