@@ -91,7 +91,8 @@ export default function WalletSummaryPage() {
        ? "deposit" :
         record === "Transfers" ? "transfer" : "All Records"
         const parseCollectionValues = collection === "Virtual Accounts"
-         ?  "virtual" : collection === "Point Redeem" ? "point" : "All Collections"
+         ?  "virtual" : collection === "Point Redeem" ? "point" 
+         : collection === "Wallet" ? "wallet" :  "";
       //Queries for the different combination of filters
      
        const requestQueries = 
@@ -152,7 +153,6 @@ export default function WalletSummaryPage() {
      const path = `transactions/wallet-summary${pathQuery()}`;
     const SuccessHandler = () => {
        setTransactionHistoryError("");
-      console.log("Wallet Summary fetched");
     };
     const FailedHandler = async (ErrorType) => {
       if (ErrorType === "unauthorised") {
@@ -493,6 +493,7 @@ export default function WalletSummaryPage() {
     "Virtual Accounts",
     "Point Redeem",
      "Card Payments",
+     "Wallet",
      "Payment Links",
       "QR Code",
        "Bank USSD",
@@ -534,9 +535,9 @@ const FormatTime =(DateValue)=> {
           <div
             // id="Transaction"
             className="min-h-[99px]   bg-gradient-to-r
-               from-yellow-300 to-rose-400 lg:h-[196px] md:h-[112.29px] rounded-[6.6px] md:rounded-[11.46px] lg:rounded-[20px] mx-auto  flex gap-6 justify-between px-[16.51px] md:px-[28.65px] lg:px-[50px]"
+               from-yellow-300 to-rose-400 lg:h-[196px] md:h-[112.29px] rounded-[6.6px] md:rounded-[11.46px] lg:rounded-[20px]  flex gap-6 justify-between px-[16.51px] md:px-[28.65px] lg:px-[50px]"
           >
-            <div className="py-[9.57px] md:py-[16.61px] align-middle self-center flex flex-col gap-1.5 w-[70%]">
+            <div className="py-[9.57px] md:py-[16.61px] align-middle self-center flex flex-col gap-1.5 w-full">
               <p className="text-[11px] leading-[13px] lg:leading-[30px] lg:text-[24px] md:text-[13.75px] font-semibold">
                 MANAGE ALL YOUR TRANSACTIONS AT A TIME WITHOUT ANY HASSLE.
               </p>
@@ -1206,8 +1207,11 @@ const FormatTime =(DateValue)=> {
                 <div className="h-[150px] flex items-center justify-center">
                   <Loader />
                 </div>
-              ) : filteredWalletTransactions &&
-                filteredWalletTransactions?.length > 0 ? (
+              ) : (filteredWalletTransactions &&
+                filteredWalletTransactions?.length > 0)
+                &&  (selectCollection === "Virtual Accounts" || 
+             selectCollection === "Point Redeem" || 
+               selectCollection === "Wallet" || selectCollection === "All Collections") ? (
                 filteredWalletTransactions?.map((transaction, index) => (
                   <div
                     className={`cursor-pointer ${
@@ -1272,8 +1276,7 @@ const FormatTime =(DateValue)=> {
                                           isDarkMode
                                             ? "text-white"
                                             : "text-neutral-500"
-                                        }`}
-                          >
+                                        }`}>
                             Description : {transaction?.description}
                           </p>
 
@@ -1389,9 +1392,12 @@ const FormatTime =(DateValue)=> {
                     </div>
                   </div>
                 ))
-              ) :filteredWalletTransactions?.length < 1 ||
+              ) :(filteredWalletTransactions?.length < 1 ||
                walletTransactionResponse?.data?.data?.data?.data?.transactions?.length < 1
-               || walletTransactionResponse?.data?.data?.data?.data?.transaction === null  
+               || walletTransactionResponse?.data?.data?.data?.data?.transaction === null  )
+               || (selectCollection === "Payment Link" || 
+               selectCollection === "Bank USSD" || 
+               selectCollection=== "Card Payment" || selectCollection === "QR Code")
                 ? 
                 (<img
                   className="lg:w-[517px] lg:h-[456px] w-[100%] h-[100%]"
