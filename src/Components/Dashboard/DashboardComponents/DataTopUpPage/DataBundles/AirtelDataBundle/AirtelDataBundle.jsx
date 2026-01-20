@@ -118,6 +118,9 @@ const assumedString = selectedAmountAirtel?.toString()
         if (error && error.response === undefined) {
           alert("Check your internet Connection, then reload the page.");
           setCheckNetworkError(true)
+        }else if(error && error.reponse.status === 401){
+                  if(sessionModal) return;
+         if(!sessionModal) return setSessionModal(true)
         } else if (error && error.response.status === 400) {
           alert(
             "Service for airtel is currently not available, Try again later."
@@ -172,7 +175,11 @@ const assumedString = selectedAmountAirtel?.toString()
         setCheckNetworkError(true)
       } else if (error && error.response.status === 400) {
         setSelectProductWarn(true);
-      } else if (error && error.response.status === 500) {
+      } else if(error && error.response.status === 401){
+           if(sessionModal) return;
+         if(!sessionModal) return setSessionModal(true);
+      }
+        else if (error && error.response.status === 500) {
         setSelectProductWarn(true);
       } else {
         alert("Check your internet connection.");
@@ -185,7 +192,10 @@ const assumedString = selectedAmountAirtel?.toString()
   const handleSelectProduct = (product) => {
     if (!navigator.onLine) {
       alert("Check your internet connection.");
-       setCheckNetworkError(true)
+       setCheckNetworkError(true);
+       if(product?.Plan_Type !== selectedProductAirtel){
+        setProductPlans([])
+       }
     }
     if (navigator.onLine) {
       setSelectedProductAirtel(`${product?.Plan_Type}`);
@@ -465,12 +475,11 @@ const path = "/data";
       setLoading(true)
  try {
         setLoading(true);
-
-        const response = await axiosInstance.post(path, data);
+   const response = await axiosInstance.post(path, data);
    const resData = response?.data?.data?.data; // Accessing the nested `data` object
-         setAirtelTransactionID(resData?.transaction_id);
-        setAirtelRefNumber(resData?.reference_number);
-        setAirtelOrderID(resData?.order_id); // No `order_id`, using `id` instead
+   setAirtelTransactionID(resData?.transaction_id);
+  setAirtelRefNumber(resData?.reference_number);
+   setAirtelOrderID(resData?.order_id); // No `order_id`, using `id` instead
         if (response.status === 200 || response.status === 201) {
           setAirtelSuccessfulResponse(response?.data?.data?.data)
           // Success response
@@ -1658,12 +1667,12 @@ const path = "/data";
           {transactSuccessPopUp && (
             <Modal>
               {/* <TransactFailedPopUp/> */}
-            <div className={`w-full flex flex-col justify-center h-full 
+            <div className={`w-full flex flex-col justify-center h-auto 
              py-[30px] px-[15px] lg:px-[0px] lg:items-center
               items-end`}>
               <div
-                 className={` bvnQuery lg:rounded-[12px] rounded-[10px] 
-              h-[520px] ${ toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+                 className={` bvnQuery lg:rounded-[12px] rounded-[10px] h-full 
+              ${ toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
               } w-[100%] md:w-[60%] overflow-auto  ${isDarkMode ? "bg-black text-white border rounded-[10px] border-white": "bg-white text-black"} `}
               >
                  <div className="flex justify-between px-2
@@ -1717,16 +1726,18 @@ const path = "/data";
                   <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`} >
                  Network
                 </span>
-                   
+                    <div className="flex gap-2 justify-end">
                     <div className="rounded-full w-[12.02px]
-                        h-[12.02px] flex items-center justify-center 
-                       overflow-hidden md:w-[12.02px] lg:w-[25px] 
+                        h-[12.02px] flex items-center justify-end
+                       md:w-[12.02px] lg:w-[25px] overflow-hidden
                       md:h-[12.02px] lg:h-[25px]">
                        <img  src={AirtelLogo} alt="" className="w-full h-full object-cover"  />
+                     
                             </div>
-                             <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[black]"}`}>
+                              <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[black]"}`}>
                       Airtel
                      </span>
+                             </div>
                   
                  </div>
                                                
@@ -1735,7 +1746,7 @@ const path = "/data";
           <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
                    Product
          </span>
-      =
+      
       <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
         {selectedProductAirtel }
            </span>
@@ -1801,13 +1812,13 @@ const path = "/data";
     Order Number
      </span>
           
-  <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+  <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
         {airtelOrderID}
   </span>
   
  </div>
       </div>
-        </div>
+        
                 <div className={`bg-[#F2FAFF] w-[90%]   mx-auto p-[8px] my-5 flex justify-between 
         items-center md:p-[9px] lg:p-[10px] rounded-[5px] lg:rounded-[10px]
          ${
@@ -1866,6 +1877,7 @@ const path = "/data";
                       Receipt
                     </button>
                   </Link>
+                </div>
                 </div>
               </div>
             </Modal>

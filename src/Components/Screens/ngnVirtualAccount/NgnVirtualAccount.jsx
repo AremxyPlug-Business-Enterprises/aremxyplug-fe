@@ -217,17 +217,17 @@ function NgnVirtualAccount(Data) {
           ) : (
         <div className="flex flex-col justify-between py-[15px] lg:py-[20px] gap-[30px]"> 
         <h2 className={`text-[14px] leading-[20px] font-[500] lg:text-[16px] lg:leading-[22px] text-start ${isDarkMode ? "text-white" : "text-black"}`}>
-       { (Data.ConfirmId === "true" || Data.ConfirmBvn === "true") && Data.ConfirmAcc === "false" ?`Brilliant, Now we know who you are, kindly generate a NGN Virtual account.` : "To generate a virtual account, kindly verify your account in the profile settings page or your dashboard." }
+       { (Data.ConfirmId === "true" || Data.ConfirmBvn === "true") && ( Data.ConfirmAcc === "false" || !Data?.ConfirmAcc) ?`Brilliant, Now we know who you are, kindly generate a NGN Virtual account.` : "To generate a virtual account, kindly verify your account in the profile settings page or your dashboard." }
        </h2>
        <div onClick={()=> {
-        if((Data.ConfirmId === "true" || Data.ConfirmBvn === "true") && Data.ConfirmAcc === "false"){
+        if((Data.ConfirmId === "true" || Data.ConfirmBvn === "true") && (Data.ConfirmAcc === "false" || !Data?.ConfirmAcc)){
         GenerateVirtualAccount()
         }
        }}
         className={`flex md:justify-end w-full`}>
           <button className={`text-[12px] text-white w-full text-center  leading-[20px] font-[400] lg:text-[14px] lg:leading-[22px]
            py-[14px] rounded-[14px] md:rounded-[20px]  md:w-[300px]  md:py-[16px] md:px-[13px] 
-          ${(Data.ConfirmId === "true" || Data.ConfirmBvn === "true") && Data.ConfirmAcc === "false" ? "bg-primary" : "bg-gray-300"}
+          ${(Data.ConfirmId === "true" || Data.ConfirmBvn === "true") && (Data.ConfirmAcc === "false" || !Data?.ConfirmAcc) ? "bg-primary" : "bg-gray-300"}
         `}>
             Generate
             </button>

@@ -101,29 +101,8 @@ export const InActionVirtualAccountState = (
 //ws Socket
 
 
-  export const CreateWebSocket = ()=> {
-let connectionSocket = false;
-if(connectionSocket.readyState === WebSocket.OPEN || connectionSocket.readyState === WebSocket.CONNECTING){
-  return;
-}
-  connectionSocket = new WebSocket(`wss://api.aremxyplug.com/api/v1/ws/events`);
-  connectionSocket.onopen =()=> {
-    console.log("Socket running")
-  }
-
-  connectionSocket.onmessage = (event)=>{
-    try{
-     const data = JSON.parse(event)
-       console.log(data)
-       return data;
-    }catch(error){
-      console.log("unable to fetch realtime update")
-    }
-  } 
   
-}
 
-export const WebSocketMessage = CreateWebSocket()
 
 
 

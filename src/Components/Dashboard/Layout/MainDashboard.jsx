@@ -239,20 +239,18 @@ if((clickedoption === "NGN")){
       
 const ValueRef = useRef();
  
- 
-  useEffect(() => {
+ useEffect(() => {
     ValueRef.current = Data;
     if(Data?.ConfirmAcc === "true"){
     GenerateAccountBalance();
     setDateEdit((value)=>{
       const valueReset = new Date()
-   const valueIsoFormat =
-     valueReset !== undefined || valueReset !== null ?
+   const valueIsoFormat =  valueReset !== undefined || valueReset !== null ?
         valueReset?.toLocaleString("sv-SE", {
           timeZone : "Africa/Lagos",
           hour12 : false
         }) : value
-        return valueIsoFormat !== undefined ? valueIsoFormat?.slice(0,10) : ""
+        return valueIsoFormat !== undefined ? valueIsoFormat?.slice(0,10) : "";
     }) 
 }
     ResetDateFilterFields();
@@ -317,9 +315,9 @@ const ValueRef = useRef();
 // </div>
 //   )
 // }
-console.log(Data?.ConfirmId);
+// console.log(Data?.ConfirmId);
 return (
-    <div className="relative h-[150%] w-[100%]">
+    <div className="relative h-[200%] w-[100%]">
  {/* ============SIDE BAR========= */}
         {toggleSideBar && (
          <div className="absolute top-0 left-0 z-[50]">
@@ -722,8 +720,7 @@ return (
               <div
                 className={`${
                   toggleSideBar ? "lg:gap-[20px]" : "lg:gap-[30px]"
-                } mt-[5%] flex flex-col gap-[10px] `}
-              >
+                } mt-[5%] flex flex-col gap-[10px] `}>
                 <div
                   className={`${styles.virtualaccounttxt} ${
                     toggleSideBar ? "lg:text-[10px] lg:mt-[1%]" : ""

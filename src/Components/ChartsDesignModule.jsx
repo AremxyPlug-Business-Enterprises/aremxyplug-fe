@@ -1,13 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { CartesianGrid, Legend, Line, LineChart, XAxis, YAxis } from 'recharts';
+import { ContextProvider } from './Context';
 
 
 export const ChartsDesignModule = ({inflow, outflow}) => {
-  console.log(inflow)
+  const { isDarkMode }= useContext(ContextProvider);
   return (
-    <div className="flex w-full relative bg-blue-400 lg:h-70 h-auto">
-    <LineChart style={{ width: '100%', height :  350, 
-      position : "absolute", top : 5, bottom : 5, right : 0, left:5, 
+    <div className="flex w-full relative  h-[350px]">
+    <LineChart style={{ width: '100%', height :  350, backgroundColor : isDarkMode ? "#000" : "#FFF",
+         position : "absolute", top : 5, bottom : 5, right : 0, left:5, 
        aspectRatio: 1.618, }} responsive data={inflow}>
       <CartesianGrid />
       <Line dataKey="" />

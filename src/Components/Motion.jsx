@@ -2,14 +2,6 @@ import { motion } from "framer-motion";
 import { useContext } from "react";
 import { ContextProvider } from "./Context";
 import { Link } from "react-router-dom";
-// interface Props {
-//   onHide: () => void;
-// }
-
-// interface FloatProps{
-//   progress : number,
-//   onClick : ()=> void
-// }
 
 
  const TASKS = [
@@ -47,20 +39,12 @@ import { Link } from "react-router-dom";
 
 
 
-const order = [
-  "signup",
-  "kyc",
-  "fund_wallet",
-  "transaction_volume",
-  "point_redeem"
-];
 
 
 
 
-
-export const  TaskProgressModal = ({onHide, getUpdatedTask, firstNotCompletedTask})=> {
-  //console.log(getUpdatedTask);
+export const  TaskProgressModal = ({onHide, getUpdatedTask, webSocketMessage, firstNotCompletedTask})=> {
+  console.log(webSocketMessage)
   const trueFilteredTask = Array.isArray(getUpdatedTask) ? getUpdatedTask?.filter((taskDone)=> {
     return taskDone?.completed === true
   }) : []
@@ -88,7 +72,7 @@ export const  TaskProgressModal = ({onHide, getUpdatedTask, firstNotCompletedTas
            
             <div className="w-5 h-5 rounded-full border-[2px] self-center  border-gray-500 mt-1" >
               
-            < div className = {`${completedTask?.task_code === task?.logo? "bg-green-600" : ""} 
+            < div className = {`${(completedTask?.task_code === task?.logo || (webSocketMessage?.task === task?.logo && webSocketMessage?.completed === true))? "bg-green-600" : ""} 
             w-[100%] h-[100%] rounded-full font-[500] text-[12px]`}/>
      </div>
               
@@ -104,14 +88,16 @@ export const  TaskProgressModal = ({onHide, getUpdatedTask, firstNotCompletedTas
       </ul>
     <p className = {`text-[12px] font-[800] leading-[16px] capitalize
       ${trueFilteredTask?.length < 5 ? "text-black" : "text-green-600"}`}>
- {trueFilteredTask?.length < 5 ?   "Next Step:": "Task Completed"}
-   {firstNotCompletedTask?.task_code === "signup" ? "" : 
-    firstNotCompletedTask?.task_code  ? firstNotCompletedTask?.task_code : ""}
+ {trueFilteredTask?.length < 5 ?   "Next Step: ": "Task Completed"}
+   {webSocketMessage?.task && webSocketMessage?.completed === true  ? webSocketMessage?.task  : 
+    firstNotCompletedTask?.task_code ?  firstNotCompletedTask?.task_code : "" }
     </p>
       <div className="mt-5 flex justify-between">
         <Link to ={firstNotCompletedTask?.task_code === "kyc" 
+        || (webSocketMessage?.task === "kyc" && webSocketMessage?.completed === true)
           ? "/ProfileSettingMain" : 
-          firstNotCompletedTask?.task_code === "point_redeem" ? "/point-redeem"  : "" } className="text-sm text-gray-600">
+          firstNotCompletedTask?.task_code === "point_redeem"  || (webSocketMessage?.task === "point_redeem" && webSocketMessage.completed === true)
+          ? "/point-redeem"  : "" } className="text-sm text-gray-600">
           Continue Tasks
         </Link>
 

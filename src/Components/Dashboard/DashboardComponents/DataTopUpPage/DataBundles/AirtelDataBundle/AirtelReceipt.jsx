@@ -152,7 +152,7 @@ Data = GetLocalStorage()
                     lg:text-base  lg:leading-[24px]  md:mb-7
                      border-[#27AE60] text-[#27AE60] bg-[#D5F6E3]`}>
               You have successfully purchased{" "}
-              <span className="text-[#000] font-extrabold text-[10px] md:text-[16px] lg:text-[16px]">
+              <span className=" font-extrabold text-[10px] md:text-[16px] lg:text-[16px]">
                 {selectedProduct + " " +selectedOption}
               </span>
               from your NGN wallet to{" "}
@@ -190,7 +190,7 @@ Data = GetLocalStorage()
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Amount</p>
-                  <span>&#8358;{selectedAmount}</span>
+                  <span>{selectedAmount}</span>
                 </div>            
               </div>
 

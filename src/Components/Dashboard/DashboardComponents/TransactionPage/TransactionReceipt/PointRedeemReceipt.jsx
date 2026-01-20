@@ -74,10 +74,7 @@ export const PointRedeemReceipt = () => {
 
        const transaction_amountRedeem =
     receiptData?.amount_redeemed?.length > 1
-      ? Number(receiptData?.amount_redeemed)?.toLocaleString("en-NG", {
-        style : "currency",
-        currency : "NGN"
-      })
+      ? receiptData?.amount_redeemed
       : "";
 
        const transaction_redeemedRate =
@@ -290,7 +287,10 @@ export const PointRedeemReceipt = () => {
                     >
                       Amount Received
                     </p>
-                    <span className="">{transaction_amountRedeem} </span>
+                    <span className="">{typeof transaction_amountRedeem === "string" ?  Number(transaction_amountRedeem)?.toLocaleString("en-NG", {
+                      style : "currency",
+                      currency : "NGN"
+                    }) : 0 } </span>
                   </div>
 
                   <div className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between font-medium lg:text-base">

@@ -170,6 +170,9 @@ const Balance = newBalance !== null &&
         alert("Your internet connection is quite unstable.");
       }  else if (error && error.response.status === 400) {
         setSelectProductWarn(true);
+      }else if(error && error.response.status === 401){
+           if(sessionModal) return;
+         if(!sessionModal) return setSessionModal(true)
       } else if (error && error.response.status === 500) {
         setSelectProductWarn(true);
       } else {
@@ -184,6 +187,9 @@ const Balance = newBalance !== null &&
     if (!navigator.onLine) {
       alert("Check your internet connection");
       setCheckNetworkError(true);
+       if(product?.Plan_Type !== selectedProductEtisalat){
+        setProductPlans([])
+       }
     }
     if (navigator.onLine) {
       setSelectedProductEtisalat(`${product.Plan_Type}`);
@@ -506,7 +512,8 @@ for (let network in networks) {
           setInputPin("");
             return { statusCode: error?.response?.status, data: null };
         } else if (error && error.response.status === 401) {
-          setSessionModal(true)
+          if(sessionModal) return;
+         if(!sessionModal) return setSessionModal(true)
         }else if (
           error &&
           error.response.status === 400)
