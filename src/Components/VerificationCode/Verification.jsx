@@ -7,8 +7,8 @@ import CloseIcon from '../EducationPins/imagesEducation/close-circle.svg';
 import axios from "axios";
 import { Loader } from "../Loader/Loader";
 import { GetLocalStorage } from "../LocalStorage/LocalStorage";
-import { CreateWebSocket } from "../ApiCollection.jsx/ApiBuck";
-import { WebSocketMessage } from "../ApiCollection.jsx/ApiBuck";
+
+
 function Verification( Data) {
   Data = GetLocalStorage()
   const {
@@ -28,7 +28,8 @@ function Verification( Data) {
     setOtpVerifySmsSignup,
     setSuccess,
     state,
-    setState
+    setState,
+    webSocketMessage
   } = useContext(ContextProvider);
 const { phoneNumber, email} = state;
 // console.log("Phone:",phoneNumber)
@@ -204,10 +205,7 @@ return () => clearInterval(timer);
   
 
   const submitVerify = () => {
-    if(WebSocketMessage === undefined){
-     CreateWebSocket()
-    }
-   setSuccess(true);
+    setSuccess(true);
       setViaSms(false);
       setViaEmail(false);
       setVerification(false);

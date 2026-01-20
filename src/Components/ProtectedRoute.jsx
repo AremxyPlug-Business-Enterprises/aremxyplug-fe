@@ -10,7 +10,7 @@ import { motion } from 'framer-motion';
 import { GetFunction } from './ApiCollection.jsx/ApiBuck';
 
 export const ProtectedRoute = ({children}) => {
- 
+ const {webSocketMessage, setWebSocketMessage} = useContext(ContextProvider)
  const SessionIntervalHold = useRef(null);
   const {sessionExpiration, 
     setSessionExpiration, openTaskBar, setOpenTaskBar, setProgressTaskBarResponse, progressTaskBarResponse,
@@ -38,6 +38,31 @@ const order = [
 ];
 
 
+const CreateWebSocket = ()=> {
+let connectionSocket = false;
+if(connectionSocket.readyState === WebSocket.OPEN 
+  || connectionSocket.readyState === WebSocket.CONNECTING){
+  return;
+}
+
+ 
+  connectionSocket = new WebSocket(`wss://api.aremxyplug.com/api/v1/ws/events`);
+  
+  connectionSocket.onopen =()=> {
+    console.log("Socket running")
+  }
+
+  connectionSocket.onmessage = (event)=>{
+    try{
+     const data = JSON.parse(event.data)
+       setWebSocketMessage(data);
+     return data;
+    }catch(error){
+      console.log("unable to fetch realtime update")
+    }
+  } 
+  }
+
 
 
     //Filter the task not completed/ done
@@ -52,14 +77,22 @@ return order.indexOf(a.task_code) - order.indexOf(b.task_code);
 })  : [];
 
 const filterTaskNotCompleted =  orderedUpdatedTask?.filter((dataBaseRes)=> dataBaseRes?.completed === false);
-    const firstNotCompletedTask = Array.isArray(filterTaskNotCompleted) && filterTaskNotCompleted?.length < 1 ? 
+    const firstNotCompletedTask = Array.isArray(filterTaskNotCompleted) && filterTaskNotCompleted?.length ? 
      filterTaskNotCompleted?.find((_, index)=>  index === 0 ) : {};
-       
-      //Declarations for floating progress circle
    const getCompletedTask = orderedUpdatedTask?.filter((task)=> task?.completed === true)
-
+   const progressNumber = Array?.isArray(getCompletedTask) ?  getCompletedTask?.length * 20 : 0;
+   //Update the task progress
+ const CheckCurrentUpdate = webSocketMessage?.completed === true
+ ?   filterTaskNotCompleted?.find((value)=> value?.task_code === webSocketMessage?.task && value?.completed === webSocketMessage?.completed ) 
+ : "Error"
+const floatingProgressBarUpdate
+ = CheckCurrentUpdate === undefined && CheckCurrentUpdate !== "Error"
+ ? progressNumber + 20
+  : typeof CheckCurrentUpdate === "object" && CheckCurrentUpdate?.completed === true ? progressNumber : progressNumber
+ 
+  
 //Progress
-const progressNumber = Array?.isArray(getCompletedTask) ?  getCompletedTask?.length * 20 : 0;
+
 //Ends here
  const TaskProgressController = ()=> {
 return (
@@ -72,7 +105,7 @@ return (
             setOpenTaskBar(true)
           }
         }}
-      progressNumber = {progressNumber}/>
+      progressNumber = {floatingProgressBarUpdate}/>
       <AnimatePresence>
           <motion.div
             initial={{ scale: 1 }}
@@ -91,6 +124,7 @@ return (
               setOpenTaskBar(false)
             } 
             } getUpdatedTask ={memoedProgress} 
+             webSocketMessage={webSocketMessage}
             firstNotCompletedTask = {firstNotCompletedTask}/>
           )}
           
@@ -140,6 +174,7 @@ return localStorage.setItem("SessionExpiration", resetExpiration);
 const refresh = useRef(null);
 
 useEffect (()=> {
+  CreateWebSocket()
   setOpenTaskBar(true);
 handleTaskProgress();
 //Refresh Token Function

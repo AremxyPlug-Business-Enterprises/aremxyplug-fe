@@ -185,10 +185,12 @@ fetchProducts();
         setSelectProductWarn(true);
       } else if (error && error.response.status === 500) {
         setSelectProductWarn(true);
+      }else if(error && error.reponse.status === 401) {
+                if(sessionModal) return;
+         if(!sessionModal) return setSessionModal(true)
       } else {
         alert("Check your internet connection.");
-      }
-    } finally {
+      } } finally {
       setLoadingPlans(false);
     }
   };
@@ -196,7 +198,10 @@ fetchProducts();
   const handleSelectProduct = (product) => {
     if (!navigator.onLine) {
       alert("Check your internet connection.");
-      setCheckNetworkError(true)
+      setCheckNetworkError(true);
+       if(product?.Plan_Type !== selectedProductGlo){
+        setProductPlans([])
+       }
     }
     if (navigator.onLine) {
       setSelectedProductGlo(`${product.Plan_Type}`);
@@ -502,7 +507,8 @@ try {
              setConfirm(false);
           setInputPin("");
         } else if (error && error.response.status === 401) {
-        setSessionModal(true)
+               if(sessionModal) return;
+         if(!sessionModal) return setSessionModal(true)
         } else if (error && error?.response?.status === 400) {
            setGloPurchaseErrorType("Unexpected error: Purchase Failed");
           setGloPurchaseStatus(true); // Show failure popup
@@ -1795,7 +1801,7 @@ try {
                     <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
                       Order Number
                     </span>
-              <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
+              <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
                      {gloorderID}
                 </span>
                     </div>

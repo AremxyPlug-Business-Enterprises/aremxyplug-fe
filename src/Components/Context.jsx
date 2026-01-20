@@ -3,15 +3,9 @@ import Joi from "joi";
 import axios from "axios";
 import arrowDown from "../../src/Components/EducationPins/imagesEducation/arrow-down.svg";
 import NotVerifiedIcon from "../Components/My Profile & Account Settings/ProfileImages/NotVerifiedIcon.svg";
-import { CreateWebSocket } from "./ApiCollection.jsx/ApiBuck";
-
 // import { BASE_URL } from "../config";
 
 export const ContextProvider = createContext();
-
-
-
-
 
 
 
@@ -22,6 +16,7 @@ export const Context = ({ children }) => {
   };
 
   // Select username or email starts here
+  const [webSocketMessage, setWebSocketMessage] = useState({})
   const [taskBarResponse, setTaskBarResponse] = useState({})
   const [hideNavbar, setHideNavbar] = useState(false);
   const [resetEmail, setResetEmail] = useState("");
@@ -1452,7 +1447,7 @@ const [currentDateInTimeStamps, setCurrentDateInTimeStamps] = useState(0);
 
   const hold = {
     //Transfer Data
-   
+   webSocketMessage, setWebSocketMessage,
     progressTaskBarResponse, 
     setProgressTaskBarResponse,
     taskBarResponse,

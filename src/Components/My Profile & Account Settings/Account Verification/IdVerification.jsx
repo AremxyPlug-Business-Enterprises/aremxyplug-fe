@@ -229,7 +229,7 @@ export default function IdVerification(Data) {
   }, [Data]);
  // console.log(Data);
 
-  console.log(verificationResponse)
+  
 
   return (
     <div className="flex flex-col ">

@@ -1,4 +1,4 @@
-import  { useState, useEffect, } from "react";
+import  { useState, useEffect, useMemo} from "react";
 import { RxDotFilled } from "react-icons/rx";
 import styles from "./component.module.css";
 import { GetFunction, InternalLoginSession} from "../../ApiCollection.jsx/ApiBuck";
@@ -54,7 +54,15 @@ export const WalletInOutFlows = ({sessionModal, setSessionModal}) => {
   const handleClick = (index, value) => {
     const updatedButtons = activeButtons.map((isActive, i) => i === index);
     setActiveButtons(updatedButtons);
+    if(Data?.ConfirmAcc === "true"){
+    if(value !== "custom"){
     chartFunc(value)
+    setCalenderWallet(false)
+    }else{
+    
+    setCalenderWallet(true)
+    }
+  }
     return value
   };
 
@@ -124,7 +132,8 @@ const handleDateFilter = ()=> {
         setTransactionHistoryError("unauthorised");
         if(sessionModal) return;
         if(sessionModal === false) return setSessionModal(true)
-      }else if(ErrorType === "Network error" || ErrorType === "User error" || ErrorType === "Bad request"){
+      }else if(ErrorType === "Network error" 
+    || ErrorType === "User error" || ErrorType === "Bad request"){
        setTransactionHistoryError("Network error")
       }else if(ErrorType === "Server error"){
         setTransactionHistoryError("Server error")
@@ -147,44 +156,12 @@ const handleDateFilter = ()=> {
 
   //console.log(setActiveButton)
   ///============== CHARTS INFORMATION===============//
-
+const HandleTransactionDataMgt = useMemo(()=> GetTransactionInformation, [transactionResponse])
 
   useEffect(() => {
-        GetTransactionInformation();
-    // Function to generate data based on selected time range
- 
-     // const currentDay = currentDate.getDay();
- 
-  // console.log(currentDay)
+        HandleTransactionDataMgt();
+
    
-
-      // Set data based on the selected button
-    //   switch (activeButton) {
-    //     case 0:
-    //       setData(todayData);
-    //       break;
-    //     case 1:
-    //       setData(last7DaysData);
-    //       break;
-    //     case 2:
-    //       setData(last30DaysData);
-    //       break;
-    //     case 3:
-    //       setData(allTimeData);
-    //       break;
-    //     case 4:
-    //       setData(customData);
-    //       break;
-    //     default:
-    //       setData(todayData);
-    //       break;
-    //   }
-    // };
-
-  //  generateData();
-    if(transactionResponse?.data?.data?.data === undefined){
-      GetTransactionInformation();
-    }
     setSelected("NGN");
     //eslint-disable-next-line
   }, []);
@@ -209,6 +186,7 @@ useEffect(()=> {
 
 
  const handleCalenderState = async()=> {
+  
  setStartDateValueState("");
   setEndDateValueState("");
   setCurrentDateInTimeStamps(0);
@@ -217,7 +195,7 @@ useEffect(()=> {
   setEditCalenderOne("Start Date");
   setEditCalenderTwo("End Date");
   setStateDateEdit("Filter By Date");
-  await chartFunc("Custom")
+ // await chartFunc("Custom")
   
  }
 
@@ -471,16 +449,16 @@ chartResponse?.data?.data?.data?.totalInflowCount + chartResponse?.data?.data?.d
 
       {/* =========================Chart Start========================= */}
       <div
-        className={`relative h-[400px] w-full ${
-          isDarkMode ? "bg-black border  text-[#fff]" : "bg-[#fff]"
-        } ${styles.Chart}`}
+        className={`relative h-auto w-full ${
+          isDarkMode ? "bg-black border rounded-t-xl pt-2 px-2  text-[#fff]" : "bg-[#fff]"
+        }`}
        
       >
 
        
         {/* ==============Amount Of Days==================== */}
         <div
-          className={`${styles.chartbuttons} ${
+          className={` flex justify-between gap-5 w-full  ${
             toggleSideBar
               ? "gap-[10px] text-[5.6px] md:text-[13.66px] lg:gap-[20px] lg:text-[15px]"
               : "text-[5.6px] lg:text-[21px]  md:text-[13.66px] lg:gap-[50px] gap-[10px] "
@@ -490,105 +468,123 @@ chartResponse?.data?.data?.data?.totalInflowCount + chartResponse?.data?.data?.d
             onClick={() => {
               handleClick(0, "daily");
             }}
-            className={`${styles.chartBtn} ${
+            className={` w-1/5 h-10 flex items-center justify-center rounded-xl ${
               activeButtons[0] ? "bg-[#04177f]" : "bg-[#0003]"
             } ${isDarkMode ? "border " : " "} cursor-pointer`}
           >
-            TODAY
+         <p className="text-[14px] text-white leading-[20px] lg:text-[16px] lg:leading-[22px] font-500"> 
+            TODAY</p>
           </div>
           <div
             onClick={() => {
               handleClick(1, "weekly");
             }}
-            className={`${styles.chartBtn} ${
+            className={`w-1/5 h-10  flex items-center justify-center rounded-xl ${
               activeButtons[1] ? "bg-[#04177f]" : "bg-[#0003]"
             } ${isDarkMode ? "border " : " "} cursor-pointer`}
           >
-            LAST 7 DAYS
+            <p className="text-[12px] text-white leading-[16px] text-center lg:text-[14px] lg:leading-[18px] font-500"> 
+            LAST 7 DAYS</p>
           </div>
           <div
             onClick={() => {
               handleClick(2, "monthly");
             }}
-            className={`${styles.chartBtn} ${
+            className={`w-1/5 h-10 flex items-center justify-center rounded-xl
+               ${
               activeButtons[2] ? "bg-[#04177f]" : "bg-[#0003]"
             } ${isDarkMode ? "border " : " "} cursor-pointer`}
           >
-            LAST 30 DAYS
+            <p className="text-[12px] text-center  text-white leading-[16px] lg:text-[14px] lg:leading-[18px] 
+            font-500"> 
+            LAST 30 DAYS</p>
           </div>
           <div
             onClick={() => {
               handleClick(3, "all-time");
             }}
-            className={`${styles.chartBtn} ${
+            className={`w-1/5 h-10 flex items-center justify-center rounded-xl ${
               activeButtons[3] ? "bg-[#04177f]" : "bg-[#0003]"
             } ${isDarkMode ? "border " : " "} cursor-pointer`}
           >
-            ALL TIME
+           <p className="text-[12px]  text-white leading-[16px] lg:text-[14px] lg:leading-[18px] 
+            font-500">
+              ALL TIME
+              </p>
           </div>
           <div
             onClick={() => {
-           //  handleClick(4, "daily");
-              setCalenderWallet(true);
+             handleClick(4, "custom");
             }}
-            className={`${styles.chartBtn} ${
+            className={` w-1/5 h-10  flex items-center justify-center rounded-xl ${
               activeButtons[4] ? "bg-[#04177f]" : "bg-[#0003]"
             } ${isDarkMode ? "border " : " "} cursor-pointer`}
           >
-            CUSTOM
+          <p className="text-[12px] text-center  text-white leading-[16px] lg:text-[14px] lg:leading-[18px] 
+            font-500"> CUSTOM
+            </p> 
           </div>
         </div>
 
         {/* ==============Volume & Value Toggle================== */}
+        
+        <div className="w-full flex justify-between items-center my-5">
+          <div className="flex flex-col gap-5">
         <div
-          className={`text-[7px] flex gap-2 items-center mt-[7%]  
-            md:text-[14px] lg:mt-[4%] lg:text-[18px]  ${
-            toggleSideBar ? "lg:ml-[80%]" : " lg:ml-[85%] md:ml-[82%]"
-          } ml-[75%] mr`}
+          className={`flex justify-start gap-2 items-center mt-[7%]  
+        ${ toggleSideBar ? "lg:ml-[80%]" : ""
+          } `}
         >
-          <div>Volume</div>
+          <p className="text-[12px] leading-[16px] font-400 lg:text-[14px] lg:leading-[18px]
+          ">Volume</p>
           <div
             onClick={() => {
               volumeValueToggle();
             }}
-            className={` w-[15px] h-[6.4px] md:w-[30px] md:h-[12px]
+            className={` w-[15px] h-[10.4px] md:w-[30px] md:h-[12px]
                lg:w-[50px] lg:h-[22px] lg:rounded-full rounded ${
               isValue ? "bg-[#58DA8F]" : "bg-[#b1b0b0]"
             }`}
           >
             <div
-              className={`rounded-full w-[7.5px] h-[6.4px] md:w-[14px] md:h-[12px] lg:h-[22px] lg:w-[21px] lg:drop-shadow-md bg-[#fff] ${
+              className={`rounded-full w-[7.5px] h-[10.4px] md:w-[14px] md:h-[12px] lg:h-[22px] lg:w-[21px] lg:drop-shadow-md bg-[#fff] ${
                 isValue ? "float-right" : "float-left"
               }`}
             ></div>
           </div>
-          <div>Value</div>
+          <p className="text-[12px] leading-[16px] font-400 lg:text-[14px] lg:leading-[18px]">
+            Value</p>
         </div>
 
-        {/* <div className="w-full p-[5px] flex justify-end items-center">
-     <div className="w-[200px] bg-white lg:w-[200px] h-[60px] 
-     lg:h-[80px] rounded-[12px] border-[1px]">
+      
+        {/* ====================Inflow & Outflow indication================ */}
+        <div className="flex justify-start mt-[1%] md:mt-[3%] lg:mt-[1%]">
+          <div className="flex items-center ">
+            <div className="text-2xl text-[#58DA8F] md:text-5xl">
+              <RxDotFilled />
+            </div>
+            <div className="text-[12px] leading-[16px] font-400 lg:text-[14px] lg:leading-[18px]">Inflow</div>
+          </div>
+          <div className="flex items-center">
+            <div className="text-2xl text-red-700 leading-[16px] font-400  lg:leading-[18px] md:text-5xl">
+              <RxDotFilled />
+            </div>
+            <div className="text-[12px] leading-[16px] font-400 lg:text-[14px] lg:leading-[18px]">Outflows</div>
+          </div>
+          </div>
+          </div>
+          {/* Date Filter */}
+    {startDateValueState?.length > 1 && (
+     <div className="bg-white px-10 py-2  
+     rounded-[12px] border-[1px]">
       <p className ="text-center text-[12px] font-[600] 
       leading-[18px] lg:text-[16px] lg:leading-[24px]"> 
         {stateDateEdit}
         </p>
       </div>
-      </div> */}
+    )}
 
-        {/* ====================Inflow & Outflow indication================ */}
-        <div className="flex float-right mt-[1%] md:mt-[3%] lg:mt-[1%]">
-          <div className="flex items-center ">
-            <div className="text-2xl text-[#58DA8F] md:text-5xl">
-              <RxDotFilled />
-            </div>
-            <div className="text-[7px] md:text-[14px]">Inflow</div>
-          </div>
-          <div className="flex items-center">
-            <div className="text-2xl text-[#FA6B6B] md:text-5xl">
-              <RxDotFilled />
-            </div>
-            <div className="text-[7px] md:text-[14px]">Outflows</div>
-          </div>
+
   </div>
    <div style={{ width: "100%",
            maxWidth: "100%",
@@ -626,14 +622,16 @@ chartResponse?.data?.data?.data?.totalInflowCount + chartResponse?.data?.data?.d
                       </div>
                     )}
         </div> 
-             <div className="w-full bg-white z-2">
+             <div className="w-full h-full z-2">
       {(chartResponse?.data?.data?.data?.inflow?.length > 0 )
-       && (chartResponse?.data?.data?.data?.outflow?.length > 0) ? (
-          <ChartsDesignModule inflow ={chartResponse?.data?.data?.data?.inflow} outflow={chartResponse?.data?.data?.data?.outflow}/>
-      ): (
-    <div className="flex w-full h-full justify-center my-20 items-center">
-      <h1 className="text-[30px] lg:leading-[40px] lg:text-[40px] leading-[50px] font-500 text-gray-500">
-        Charts data are not available
+       || (chartResponse?.data?.data?.data?.outflow?.length > 0) ? (
+      <div className="w-full h-full">
+<ChartsDesignModule inflow ={chartResponse?.data?.data?.data?.inflow} outflow={chartResponse?.data?.data?.data?.outflow}/>
+      </div>
+   ): (
+    <div className="flex w-full  h-full justify-center my-20 items-center  border border-gray-300 py-2 px-1 rounded-xl ">
+      <h1 className="text-[30px] text-center lg:leading-[40px] lg:text-[40px] leading-[50px] font-500 text-gray-500">
+        Chart's data are not available
         </h1>
       </div>
 
@@ -641,10 +639,11 @@ chartResponse?.data?.data?.data?.totalInflowCount + chartResponse?.data?.data?.d
         </div>
   {/* ========================Chart End========================= */}
      </div>
+     <div className="">
        <RecentTransaction transactionResponse = {transactionResponse} 
        transactionHistoryError={transactionHistoryError} loading={loading}
         GetTransactionInformation ={GetTransactionInformation} handleStateCalender= {handleStateCalender}/>
-
+  </div>
          {sessionModal && (
           <InternalLoginSession setExpiredSessionLogin={setSessionModal}/>
        )}

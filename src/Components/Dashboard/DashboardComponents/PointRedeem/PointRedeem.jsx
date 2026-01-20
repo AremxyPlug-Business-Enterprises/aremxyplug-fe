@@ -474,7 +474,7 @@ console.log(pointPostResponse)
           {/* <div className="flex flex-row justify-between gap-[7.7vw]"> */}
           <p className="border-[1px] border-slate-200 p-2 rounded-[10px]
            text-[12px] font-[400] leading-[16px] lg:text-[16px] lg:leading-[22px]">
-            Minimum 100 PTS
+            Minimum 10 PTS
           </p>
           
           <p className="border-[1px] border-slate-200 p-2  rounded-[10px]

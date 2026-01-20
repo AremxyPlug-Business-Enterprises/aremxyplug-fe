@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { DashBoardLayout } from "../../../../Layout/DashBoardLayout";
 import { ContextProvider } from "../../../../../Context";
 import { useContext } from "react";
@@ -166,6 +166,10 @@ console.log(Balance);
       
       } else if (error && error.response.status === 400) {
         setSelectProductWarn(true);
+        
+      }else if(error && error.response.status === 401){
+       if(sessionModal) return;
+       if(!sessionModal) return setSessionModal(true)
       } else if (error && error.response.status === 500) {
         setSelectProductWarn(true);
       }
@@ -178,13 +182,15 @@ console.log(Balance);
     if (!navigator.onLine){ 
       alert("Check your internet connection.");
       setCheckNetworkError(true);
+      if(selectedProductMtn !== product?.Plan_Type){
+        setProductPlans([]);
+      }
        }
     if (navigator.onLine) {
       setSelectedProductMtn(`${product.Plan_Type}`);
       setShowProductList(false);
       fetchPlans(product.Product_ID);
-      
-    }
+     }
   };
 
   const handleSelectOption = (plan) => {
@@ -513,9 +519,11 @@ console.log(Balance);
           setPurchaseStatus(true); // Show failure popup
           setConfirm(false);
           setInputPin("");
-        } else if (error && error.response.status === 401) {
-         setSessionModal(true)
-        }else if (
+        } 
+      else if(error && error.response.status === 401){
+       if(sessionModal) return;
+       if(!sessionModal) return setSessionModal(true)
+    }else if (
           error &&
          (error.response.status === 400)
         ) {
@@ -579,6 +587,7 @@ console.log(Balance);
    }
   })
 }
+
 
   return (
     <DashBoardLayout>

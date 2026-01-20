@@ -7,6 +7,16 @@ html {
   font-family: interFont;
 } */
 
+html {
+  --webkit-text-size-adjust : 100%;
+}
+.inputWrapper{
+  transform : scale(0.875px);
+  transform-origin :  left top
+}
+
+
+
 .react-calendar {
   width: 750px;
   max-width: 100%;
