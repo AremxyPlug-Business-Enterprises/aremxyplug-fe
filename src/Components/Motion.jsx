@@ -90,9 +90,9 @@ export const  TaskProgressModal = ({onHide, getUpdatedTask, webSocketMessage, fi
       ${trueFilteredTask?.length < 5 ? "text-black" : "text-green-600"}`}>
  {trueFilteredTask?.length < 5 ?   "Next Step: ": "Task Completed"}
    {webSocketMessage?.task && webSocketMessage?.completed === true  ? webSocketMessage?.task  : 
-    firstNotCompletedTask?.task_code ?  firstNotCompletedTask?.task_code : "" }
+    firstNotCompletedTask?.task_code === "signup" ? "Error: Completed signup not recorded" :  firstNotCompletedTask?.task_code !== "signup" && firstNotCompletedTask?.task_code ? firstNotCompletedTask?.task_code : ""}
     </p>
-      <div className="mt-5 flex justify-between">
+       <div className="mt-5 flex justify-between">
         <Link to ={firstNotCompletedTask?.task_code === "kyc" 
         || (webSocketMessage?.task === "kyc" && webSocketMessage?.completed === true)
           ? "/ProfileSettingMain" : 

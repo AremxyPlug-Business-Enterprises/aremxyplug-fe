@@ -121,9 +121,15 @@ const AddNewCardPayment = () => {
     },
   ];
 
-  const Payment = ({ code, flag, onClick }) => {
+  const Payment = ({
+     code, 
+    flag,
+    // onClick 
+    }) => {
     return (
-      <li className={airtimestyles.netList} onClick={onClick}>
+      <li className={airtimestyles.netList}
+      // onClick={onClick}
+       >
         <div className={airtimestyles.netImage}>
           <img src={flag} alt="" className={airtimestyles.NoImage} />
         </div>
@@ -134,12 +140,12 @@ const AddNewCardPayment = () => {
 
   const [filteredCountryList, setFilteredCountryList] = useState(countryList);
 
-  const handleSearch = (searchValue) => {
-    const filteredList = countryList.filter((country) =>
-      country.code.toLowerCase().includes(searchValue.toLowerCase())
-    );
-    setFilteredCountryList(filteredList);
-  };
+  // const handleSearch = (searchValue) => {
+  //   const filteredList = countryList.filter((country) =>
+  //     country.code.toLowerCase().includes(searchValue.toLowerCase())
+  //   );
+  //   setFilteredCountryList(filteredList);
+  // };
 
   const handleCardNumberChange = (e, setCardNumber) => {
     let inputVal = e.target.value.replace(/[^0-9]/g, ""); // Keep only numeric characters
@@ -249,7 +255,9 @@ const AddNewCardPayment = () => {
           </div>
 
           <div>
-            <div onClick={handleShowPayment}>
+            <div
+          //   onClick={handleShowPayment}
+          >
               <div className="flex justify-between items-center border w-[50%] md:w-[35%] lg:w-[35%] h-8 px-2 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px] mt-[5%] xl:w-[35%]">
                 {paymentSelected ? (
                   <li
@@ -260,7 +268,7 @@ const AddNewCardPayment = () => {
                   </li>
                 ) : (
                   <h2
-                    onClick={handleShowPayment}
+                  //  onClick={handleShowPayment}
                     className="text-[10px] md:text-[12px] lg:text-[16px] text-[#929292]"
                   >
                     Select currency
@@ -269,7 +277,7 @@ const AddNewCardPayment = () => {
                 {paymentSelected ? (
                   <button
                     className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]"
-                    onClick={handleShowPayment}
+                  //  onClick={handleShowPayment}
                   >
                     <img
                       src={image}
@@ -280,7 +288,7 @@ const AddNewCardPayment = () => {
                 ) : (
                   <button
                     className="lg:w-6 lg:h-6 h-[11px] w-[11px]"
-                    onClick={handleShowPayment}
+                  //  onClick={handleShowPayment}
                   >
                     <img src={ArrowDown} alt="" className="w-full h-full" />
                   </button>
@@ -299,9 +307,12 @@ const AddNewCardPayment = () => {
                 <div className="flex justify-between px-[10px] py-[7px]">
                   <input
                     type="text"
+                    disabled
                     placeholder="Search"
                     className="text-[10px] md:text-[12px] lg:text-[14px] font-semibold text-[#7C7C7C] w-[50%] py-1 outline-none rounded-md focus:outline-none"
-                    onChange={(e) => handleSearch(e.target.value)}
+                    // onChange={(e) => {
+                    //   handleSearch(e.target.value)}
+                    // }
                   />
                   <img src={Search} alt="" classsName="" />
                 </div>
@@ -312,13 +323,13 @@ const AddNewCardPayment = () => {
                     flag={country.flag}
                     code={country.code}
                     amount={country.amount}
-                    onClick={() =>
-                      handleSelectPayment(
-                        country.code,
-                        country.flag,
-                        country.amount
-                      )
-                    }
+                    // onClick={() =>
+                    //   handleSelectPayment(
+                    //     country.code,
+                    //     country.flag,
+                    //     country.amount
+                    //   )
+                    // }
                   />
                 ))}
               </div>
@@ -350,7 +361,10 @@ const AddNewCardPayment = () => {
                   type="tel"
                   inputMode="numeric" // Set inputMode to control keyboard type on mobile devices
                   value={cardNumber}
-                  onChange={(e) => handleCardNumberChange(e, setCardNumber)}
+                  disabled
+                  // onChange={(e) => {
+                  //   handleCardNumberChange(e, setCardNumber)
+                  // }}
                   className={`outline-none w-full text-[10px] md:text-[14px] lg:text-[18px]`}
                   placeholder="Card Number"
                   maxLength="39"
@@ -384,7 +398,8 @@ const AddNewCardPayment = () => {
                     type="tel"
                     inputMode="numeric"
                     value={expiryDate}
-                    onChange={handleExpiryDateChange}
+                    disabled
+                   // onChange={handleExpiryDateChange}
                     className="outline-none w-full text-[10px] md:text-[14px] lg:text-[18px]"
                     placeholder="MM/YY"
                     maxLength={5} // Set max length to ensure only 5 characters are allowed
@@ -403,7 +418,7 @@ const AddNewCardPayment = () => {
                     CVV
                   </p>
                   <img
-                    onClick={handleCvv}
+                  //  onClick={handleCvv}
                     src={Question}
                     alt=""
                     className="h-[20px] md:h-[30px] lg:h-[40px]"
@@ -419,7 +434,8 @@ const AddNewCardPayment = () => {
                     className="outline-none w-full text-[10px] md:text-[14px] lg:text-[18px]"
                     placeholder=""
                     value={cvv}
-                    onChange={handleCVVChange}
+                    disabled
+                   // onChange={handleCVVChange}
                     maxLength={3}
                   />
                   <img
@@ -436,7 +452,7 @@ const AddNewCardPayment = () => {
                     PIN
                   </p>
                   <img
-                    onClick={handlePin}
+                  //  onClick={handlePin}
                     src={Question}
                     alt=""
                     className="h-[20px] md:h-[30px] lg:h-[40px]"
@@ -452,7 +468,8 @@ const AddNewCardPayment = () => {
                     className="outline-none w-full text-[10px] md:text-[14px] lg:text-[18px]"
                     placeholder=""
                     value={pin}
-                    onChange={handlePinChange}
+                    disabled
+                 //   onChange={handlePinChange}
                     maxLength={4}
                   />
                   <img
@@ -475,9 +492,10 @@ const AddNewCardPayment = () => {
                 <input
                   type="text"
                   value={cardHolderName}
+                  disabled
                   className="outline-none w-full text-[10px] md:text-[12px] lg:text-[16px]"
                   placeholder=""
-                  onChange={handleCardNameChange}
+                  //onChange={handleCardNameChange}
                 />
                 <img
                   src={CardName}

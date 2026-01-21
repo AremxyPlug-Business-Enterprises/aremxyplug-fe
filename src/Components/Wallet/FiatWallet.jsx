@@ -77,36 +77,66 @@ const FiatWallet = () => {
       name: "Nigeria",
       code: "NGN",
       flag: require("./Images/ng.svg").default,
+      balance :     `(${
+                          newBalance === "" || newBalance === null
+                            ? `${
+                                cleanUpBalanceToNumericOnly > 1
+                                  ? cleanUpBalanceToNumericOnly?.toLocaleString(
+                                      "en-NG",
+                                      {
+                                        style: "currency",
+                                        currency: "NGN",
+                                      }
+                                    )
+                                  : "₦"
+                              }`
+                            : `${
+                                balanceStringToNum > 1
+                                  ? balanceStringToNum?.toLocaleString(
+                                      "en-NG",
+                                      {
+                                        style: "currency",
+                                        currency: "NGN",
+                                      }
+                                    )
+                                  : "₦"
+                              }`
+                        })`
     },
     {
       id: 2,
       name: "United States",
       code: "USD",
       flag: require("./Images/us.svg").default,
+      balance : "($0.00)"
     },
     {
       id: 3,
       name: "United Kingdom",
       code: "GBP",
       flag: require("./Images/gb.svg").default,
+      balance : "(€0.00)"
     },
     {
       id: 4,
       name: "European Union",
       code: "EUR",
       flag: require("./Images/eu.svg").default,
+      balance : "(£0.00)"
     },
     {
       id: 5,
       name: "Australia",
       code: "AUD",
       flag: require("./Images/au.svg").default,
+      balance : "(AU$0.00)"
     },
     {
       id: 6,
       name: "Kenya",
       code: "KSH",
       flag: require("./Images/ke.svg").default,
+      balance : "(KSh0.00)"
     },
   ];
 
@@ -321,31 +351,7 @@ const FiatWallet = () => {
                     {currentId === country.id && clicked ? (
                       <h2 className="text-[12px] font-[400] md:text-[14px] md:font-[500]">
                         {country.code}
-                        {`(${
-                          newBalance === "" || newBalance === null
-                            ? `${
-                                cleanUpBalanceToNumericOnly > 1
-                                  ? cleanUpBalanceToNumericOnly?.toLocaleString(
-                                      "en-NG",
-                                      {
-                                        style: "currency",
-                                        currency: "NGN",
-                                      }
-                                    )
-                                  : "₦"
-                              }`
-                            : `${
-                                balanceStringToNum > 1
-                                  ? balanceStringToNum?.toLocaleString(
-                                      "en-NG",
-                                      {
-                                        style: "currency",
-                                        currency: "NGN",
-                                      }
-                                    )
-                                  : "₦"
-                              }`
-                        })`}
+                       {country.balance}
                       </h2>
                     ) : (
                       <h2>*****</h2>
