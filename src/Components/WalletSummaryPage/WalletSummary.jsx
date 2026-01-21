@@ -1211,7 +1211,7 @@ const FormatTime =(DateValue)=> {
                 filteredWalletTransactions?.length > 0)
                 &&  (selectCollection === "Virtual Accounts" || 
              selectCollection === "Point Redeem" || 
-               selectCollection === "Wallet" || selectCollection === "All Collections") ? (
+               selectCollection === "Wallet" || selectCollection === "All Collections" ) ? (
                 filteredWalletTransactions?.map((transaction, index) => (
                   <div
                     className={`cursor-pointer ${
@@ -1395,9 +1395,9 @@ const FormatTime =(DateValue)=> {
               ) :(filteredWalletTransactions?.length < 1 ||
                walletTransactionResponse?.data?.data?.data?.data?.transactions?.length < 1
                || walletTransactionResponse?.data?.data?.data?.data?.transaction === null  )
-               || (selectCollection === "Payment Link" || 
+               || (selectCollection === "Payment Links" || 
                selectCollection === "Bank USSD" || 
-               selectCollection=== "Card Payment" || selectCollection === "QR Code")
+               selectCollection=== "Card Payments" || selectCollection === "QR Code")
                 ? 
                 (<img
                   className="lg:w-[517px] lg:h-[456px] w-[100%] h-[100%]"
@@ -1475,7 +1475,10 @@ const FormatTime =(DateValue)=> {
                 <Loader />
               </div>
             ) : filteredWalletTransactions &&
-              filteredWalletTransactions?.length > 0 ? (
+              filteredWalletTransactions?.length > 0
+              && (selectCollection === "Virtual Accounts" || 
+             selectCollection === "Point Redeem" || 
+               selectCollection === "Wallet" || selectCollection === "All Collections") ? (
               filteredWalletTransactions?.map((transaction, index) => (
                 <div key={index}>
                   <div
@@ -1603,7 +1606,9 @@ const FormatTime =(DateValue)=> {
               ))
                ) : filteredWalletTransactions?.length < 1 ||
                walletTransactionResponse?.data?.data?.data?.data?.transactions?.length < 1
-               || walletTransactionResponse?.data?.data?.data?.data?.transaction === null ? (
+               || walletTransactionResponse?.data?.data?.data?.data?.transaction === null ||  (selectCollection === "Payment Links" || 
+               selectCollection === "Bank USSD" || 
+               selectCollection=== "Card Payments" || selectCollection === "QR Code" ) ? (
               <img
                 className="lg:w-full lg:h-[456px] flex self-center"
                 src={NoRecordImage}

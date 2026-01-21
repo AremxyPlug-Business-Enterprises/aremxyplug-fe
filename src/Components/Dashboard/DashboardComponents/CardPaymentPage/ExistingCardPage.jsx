@@ -133,9 +133,14 @@ const ExistingCardPage = () => {
     },
   ];
 
-  const Payment = ({ code, flag, onClick }) => {
+  const Payment = ({ code,
+     flag,
+    //  onClick
+     }) => {
     return (
-      <li className={airtimestyles.netList} onClick={onClick}>
+      <li className={airtimestyles.netList} 
+      // onClick={onClick}
+      >
         <div className={airtimestyles.netImage}>
           <img src={flag} alt="" className={airtimestyles.NoImage} />
         </div>
@@ -278,18 +283,20 @@ const ExistingCardPage = () => {
           </div>
           
           <div>
-            <div onClick={handleShowPayment}>
+            <div 
+           // onClick={handleShowPayment}
+            >
               <div className="flex justify-between items-center border w-[50%] md:w-[35%] lg:w-[35%] h-8 px-2 rounded-md text-[10px] font-[600] focus:outline-none lg:h-[51px] lg:text-[16px] mt-[5%] xl:w-[35%]">
                 {paymentSelected ? (
                   <li
-                    onClick={handleShowPayment}
+                   // onClick={handleShowPayment}
                     className={airtimestyles.labelInput}
                   >
                     <h2 className="text-[#7C7C7C]">{walletName}</h2>
                   </li>
                 ) : (
                   <h2
-                    onClick={handleShowPayment}
+                   // onClick={handleShowPayment}
                     className="text-[10px] md:text-[12px] lg:text-[16px] text-[#929292]"
                   >
                     Select currency
@@ -298,14 +305,14 @@ const ExistingCardPage = () => {
                 {paymentSelected ? (
                   <button
                     className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]"
-                    onClick={handleShowPayment}
+                   // onClick={handleShowPayment}
                   >
                     <img src={ArrowDown} alt="" className="w-full h-full" />
                   </button>
                 ) : (
                   <button
                     className="lg:w-6 lg:h-6 h-[11px] w-[11px]"
-                    onClick={handleShowPayment}
+                  //  onClick={handleShowPayment}
                   >
                     <img src={ArrowDown} alt="" className="w-full h-full" />
                   </button>
@@ -325,8 +332,9 @@ const ExistingCardPage = () => {
                   <input
                     type="text"
                     placeholder="Search"
+                    disabled
                     className="text-[10px] md:text-[12px] lg:text-[14px] font-semibold text-[#7C7C7C] w-[50%] py-1 outline-none rounded-md focus:outline-none"
-                    onChange={(e) => handleSearch(e.target.value)}
+                    // onChange={(e) => handleSearch(e.target.value)}
                   />
                   <img src={Search} alt="" classsName="" />
                 </div>
@@ -337,13 +345,13 @@ const ExistingCardPage = () => {
                     flag={country.flag}
                     code={country.code}
                     amount={country.amount}
-                    onClick={() =>
-                      handleSelectPayment(
-                        country.code,
-                        country.flag,
-                        country.amount
-                      )
-                    }
+                    // onClick={() =>
+                    //   handleSelectPayment(
+                    //     country.code,
+                    //     country.flag,
+                    //     country.amount
+                    //   )
+                    // }
                   />
                 ))}
               </div>
@@ -402,7 +410,7 @@ const ExistingCardPage = () => {
                     className={` ${
                       isDarkMode ? "border" : "bg-[#04177f] "
                     } cursor-pointer text-white text-[10px] h-[40px] rounded-[5px] md:rounded-[10px] flex items-center justify-center md:mx-auto md:w-[25%] md:h-[30px] md:text-[14px] lg:my-[3%] lg:h-[40px] lg:text-[20px] lg:w-[25%] lg:mx-auto`}
-                    onClick={handleButtonClick}
+                  //  onClick={handleButtonClick}
                   >
                     Okay
                   </button>
@@ -425,21 +433,21 @@ const ExistingCardPage = () => {
                         to={`/FundWithCard?codeValue=${encodeURIComponent(
                           `${card.code}, ${card.name}, ${card.number}, ${card.flag}`
                         )}`}
-                        onClick={(e) => {
-                          console.log(card.code);
-                          console.log(card.flag);
+                        // onClick={(e) => {
+                        //   console.log(card.code);
+                        //   console.log(card.flag);
 
-                          if (paymentSelected) {
-                            navigate("/FundWithCard", {
-                              state: {
-                                paymentSelected: true,
-                                localPaymentSelected: true,
-                              },
-                            });
-                          }
+                        //   if (paymentSelected) {
+                        //     navigate("/FundWithCard", {
+                        //       state: {
+                        //         paymentSelected: true,
+                        //         localPaymentSelected: true,
+                        //       },
+                        //     });
+                        //   }
 
-                          console.log("paymentSelected:", paymentSelected);
-                        }}
+                        //   console.log("paymentSelected:", paymentSelected);
+                        // }}
                         key={index}
                         className=""
                       >
@@ -465,17 +473,17 @@ const ExistingCardPage = () => {
                     <div
                       className="relative right-[5px]"
                       style={{ zIndex: 30, position: "relative" }}
-                      onMouseDown={(e) => {
-                        if (e.target === e.currentTarget) {
-                          // Handle div click logic
-                          handleBank(index);
-                          setShowPayment(false);
-                        }
-                      }}
-                      onClick={() => {
-                        handleBank(index);
-                        setShowPayment(false);
-                      }}
+                      // onMouseDown={(e) => {
+                      //   if (e.target === e.currentTarget) {
+                      //     // Handle div click logic
+                      //     handleBank(index);
+                      //     setShowPayment(false);
+                      //   }
+                      // }}
+                      // onClick={() => {
+                      //   handleBank(index);
+                      //   setShowPayment(false);
+                      // }}
                     >
                       <img
                         src={RoundArrowDown}
@@ -496,10 +504,10 @@ const ExistingCardPage = () => {
                             to={`/FundWithCard?codeValue=${encodeURIComponent(
                               `${card.code}, ${card.name}, ${card.number}, ${card.flag}`
                             )}`}
-                            onClick={(e) => {
-                              console.log(card.code);
-                              console.log(card.flag);
-                            }}
+                            // onClick={(e) => {
+                            //   console.log(card.code);
+                            //   console.log(card.flag);
+                            // }}
                             key={index}
                           >
                             <div className="text-[10px] md:text-[12px] lg:text-[14px] text-[#000000] px-[5px] py-[5px] z-[10000]">
@@ -508,7 +516,7 @@ const ExistingCardPage = () => {
                           </Link>
                           <hr className="w-full h-[5px]" />
                           <div
-                            onClick={handleDefaultCard}
+                            // onClick={handleDefaultCard}
                             className="text-[#000000] text-[10px] md:text-[12px] lg:text-[14px] px-[5px] py-[5px] z-[10000000]"
                           >
                             Make Card Default
@@ -551,18 +559,18 @@ const ExistingCardPage = () => {
                       >
                         <button
                           className={`bg-[#04177F] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%] xl:py-[30px]`}
-                          onClick={() => {
-                            handleSuccessDefaultCard();
-                            setDefaultCard(false);
-                          }}
+                          // onClick={() => {
+                          //   handleSuccessDefaultCard();
+                          //   setDefaultCard(false);
+                          // }}
                         >
                           Yes
                         </button>
                         <button
                           className={`bg-[#fff] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-[#F95252] rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
-                          onClick={() => {
-                            setDefaultCard(false);
-                          }}
+                          // onClick={() => {
+                          //   setDefaultCard(false);
+                          // }}
                         >
                           Cancel
                         </button>
@@ -598,10 +606,10 @@ const ExistingCardPage = () => {
                       >
                         <button
                           className={`bg-[#04177F] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[20px] lg:text-[16px] md:mx-auto lg:h-[38px] lg:my-[4%]`}
-                          onClick={() => {
-                            setSuccessDefaultCard(false);
-                            // window.location.reload();
-                          }}
+                          // onClick={() => {
+                          //   setSuccessDefaultCard(false);
+                          //   window.location.reload();
+                          // }}
                         >
                           Done
                         </button>
@@ -634,18 +642,18 @@ const ExistingCardPage = () => {
                       >
                         <button
                           className={`bg-[#04177F] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
-                          onClick={() => {
-                            handleConfirmDeleteCard();
-                            setDeleteCard(false);
-                          }}
+                          // onClick={() => {
+                          //   handleConfirmDeleteCard();
+                          //   setDeleteCard(false);
+                          // }}
                         >
                           Yes
                         </button>
                         <button
                           className={`bg-[#fff] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-[#F95252] rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
-                          onClick={() => {
-                            setDeleteCard(false);
-                          }}
+                          // onClick={() => {
+                          //   setDeleteCard(false);
+                          // }}
                         >
                           Cancel
                         </button>
@@ -682,10 +690,10 @@ const ExistingCardPage = () => {
                       >
                         <button
                           className={`bg-[#04177F] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:rounded-[8px] md:text-[20px] lg:text-[16px] md:mx-auto lg:h-[38px] lg:my-[4%]`}
-                          onClick={() => {
-                            setConfirmDeleteCard(false);
-                            // window.location.reload();
-                          }}
+                          // onClick={() => {
+                          //   setConfirmDeleteCard(false);
+                          //    window.location.reload();
+                          // }}
                         >
                           Done
                         </button>
