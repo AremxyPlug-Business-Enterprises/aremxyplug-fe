@@ -4,6 +4,7 @@ import { ContextProvider } from "./Context";
 import { Link } from "react-router-dom";
 
 
+
  const TASKS = [
   {
     id: 1,
@@ -44,7 +45,7 @@ import { Link } from "react-router-dom";
 
 
 export const  TaskProgressModal = ({onHide, getUpdatedTask, webSocketMessage, firstNotCompletedTask})=> {
-  console.log(webSocketMessage)
+  console.log(firstNotCompletedTask);
   const trueFilteredTask = Array.isArray(getUpdatedTask) ? getUpdatedTask?.filter((taskDone)=> {
     return taskDone?.completed === true
   }) : []
@@ -86,12 +87,31 @@ export const  TaskProgressModal = ({onHide, getUpdatedTask, webSocketMessage, fi
           </li>
       )})}
       </ul>
-    <p className = {`text-[12px] font-[800] leading-[16px] capitalize
-      ${trueFilteredTask?.length < 5 ? "text-black" : "text-green-600"}`}>
+    <div className = {`flex justify-between
+   ${trueFilteredTask?.length < 5 ? "text-black" : "text-green-600"}`}>
+         <p className="text-[12px] font-[800] leading-[16px] capitalize">
  {trueFilteredTask?.length < 5 ?   "Next Step: ": "Task Completed"}
-   {webSocketMessage?.task && webSocketMessage?.completed === true  ? webSocketMessage?.task  : 
-    firstNotCompletedTask?.task_code === "signup" ? "Error: Completed signup not recorded" :  firstNotCompletedTask?.task_code !== "signup" && firstNotCompletedTask?.task_code ? firstNotCompletedTask?.task_code : ""}
-    </p>
+  {webSocketMessage?.task && webSocketMessage?.completed === true  ? webSocketMessage?.task  : 
+    firstNotCompletedTask?.task_code === "signup" ? "Error: Completed signup not recorded" :  
+    firstNotCompletedTask?.task_code !== "signup" && firstNotCompletedTask?.task_code ? firstNotCompletedTask?.task_code : ""}
+ </p>
+  
+<p className="text-[12px] font-[800] leading-[16px] capitalize">
+    {webSocketMessage?.task === "transaction_volume"  
+     && (webSocketMessage?.progress && webSocketMessage?.progress < 1000
+      && typeof webSocketMessage?.progress === "number")? 
+     `Progress : ${webSocketMessage?.progress?.toLocaleString("en-NG", {style : "currency",
+      currency : "NGN",
+    minimumFractionDigits : 0,
+    maximumFractionDigits : 0
+     })}`  :  firstNotCompletedTask?.task_code === "transaction_volume"   && firstNotCompletedTask?.progress < 1000
+     && (firstNotCompletedTask?.progress && typeof firstNotCompletedTask?.progress === "number") ?  `Progress : ${firstNotCompletedTask?.progress?.toLocaleString("en-NG", {style : "currency",
+         minimumFractionDigits : 0,
+    maximumFractionDigits : 0,
+      currency : "NGN"
+     })}` : ""  }
+     </p>
+    </div>
        <div className="mt-5 flex justify-between">
         <Link to ={firstNotCompletedTask?.task_code === "kyc" 
         || (webSocketMessage?.task === "kyc" && webSocketMessage?.completed === true)

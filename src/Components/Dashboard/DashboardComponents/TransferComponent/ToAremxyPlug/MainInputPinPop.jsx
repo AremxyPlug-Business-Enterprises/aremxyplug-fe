@@ -92,18 +92,8 @@ const requestData = {
         //Then for the Failed Handler all we have to do is create a state
         // to handle which set to the ErrorType then placed into the faiked popup
         if(ErrorType === "unauthorised"){
-         await PostFunction(
-        Path,
-        setIsLoading,
-        requestData,
-        successHandler,
-        (ErrorType)=> {
-          if(ErrorType === "unauthorised"){
-            return setSessionModal(true);
-          }
-        },
-        setTransferResponse
-      );
+      if(sessionModal) return;
+      if(!sessionModal) return setSessionModal(true)
         }else if(ErrorType === "Server error"){
           //Why a repition did not occur here,
           //We dont want it to be only about User experience here,
@@ -140,83 +130,12 @@ const requestData = {
   
     const setFailedConfig= async(ErrorType)=> {
       if(ErrorType === "unauthorised"){
-        //The concept behind this code : A user session is regulated by tokens,
-        // the moment we notice it expires we try to get the token for the user before
-        // a transaction completed(i.e we get it during a transaction process), when unauthorised
-        //we get the necessary tokens, then re-run the transaction, there are different errors that 
-        //could occur, when re-running such as: it could return same unauthorised errorType,
-        //a server error and even network connection issue or an unexpected error
-        //hence, the reason we account for other types of errors even while re-running,
-        //due to the inpredictability of the output of the transaction.
-    await VerifyTransPin(
-      inputPin,
-       async(ErrorType)=> {
-        if(ErrorType === "unauthorised"){
-          return setSessionModal(true)
-        }else if(ErrorType === "Server error"){
-         await VerifyTransPin(
-      inputPin,
-      (ErrorType)=> {
-        if(ErrorType === "Server error"){
-        alert("Failed to process your request, try again some other time")
-        }else if(ErrorType === "Network error" || ErrorType === "User error"){
-          alert("Kindly check your internet connection.")
-        }else{
-          alert("Failed to process your request, try some other time.")
-        }
-      },
-      setIsLoading,
-      setErrorMessage,
-    DstvHandler,
-   );
-        }
-       },
-      setIsLoading,
-      setErrorMessage,
-    DstvHandler,
-   );
+     if(sessionModal) return;
+     if(!sessionModal) return setSessionModal(true)
    //Handling of user error or network error for the general
    //  conditional statement under the setPinFailed
   }else if(ErrorType === "Server error"){
-    //The server could return a 500 then be successful
-    //  on next call, so let us try twice.
-     await VerifyTransPin(
-      inputPin,
-      async(ErrorType)=> {
-if(ErrorType === "Server error"){
- alert("Failed to process your request try some other time.")
-}else if(ErrorType === "unauthorised"){
-// Error When "Server error" occured on first try then the server notices 
-// an "unauthorised" ErrorType.
-   await VerifyTransPin(
-      inputPin,
-       (ErrorType)=> {
-        //handling of ErrorTypes after unauthorisation occurs in server error re-try
-        if(ErrorType === "unauthorised"){
-          return setSessionModal(true);
-        }else if(ErrorType === "Server error"){
-          alert("The server is currently experiencing a downtime, try again some other time.")
-        }else if(ErrorType === "User error" || ErrorType === "Network error"){
-          alert("Kindly check your internet connection")
-        }
-       },
-      setIsLoading,
-      setErrorMessage,
-    DstvHandler,
-   );
-   //End of the "unauthorised" ErrorType handling on "server error"
-   //  ErrorType re-run.
-
-}else if(ErrorType === "User error" || ErrorType === "Network error"){
-  //A network error occured  during trying to re-try the code on server error
-  alert("Kindly check your internet connection");
-}
-      },
-      setIsLoading,
-      setErrorMessage,
-    DstvHandler,
-   );
-       //The general error message on an "Network error, User error" ErrorType
+     alert("PinVerification Failed")
       }else if( ErrorType === "User error"
     || ErrorType === "Network error" ){
   alert("Kindly check your internet connection")
@@ -239,44 +158,46 @@ if(ErrorType === "Server error"){
       {" "}
       {otherInputPinPopUp && (
         <Modal>
-          <div className="flex items-end justify-center
+             <div className="flex items-end justify-center
              lg:items-center lg:justify-center 
    w-[100%] lg:px-[0px] rounded-[10px] h-[100%] px-[15px]">
-        <div className={`  flex flex-col lg:mb-[0px]  mb-[50px]  '
-         lg:h-[350px] overflow-scroll h-[300px] bvnQuery  ${
+              <div className={`flex flex-col lg:mb-[0px]  mb-[50px]
+         lg:h-[350px] overflow-y-scroll h-[300px] bvnQuery  ${
                       toggleSideBar ? "md:w-[45%] lg:w-[40%]  " : "lg:w-[40%]"
                     } md:w-[55%] w-full   ${isDarkMode ? "text-white bg-black border-[1px] border-white rounded-[10px]" : "text-black bg-white rounded-[10px]"}`}
-            >
-            <div className="pr-3 lg:pr-2 py-[5px] flex justify-end">
-            <img  onClick={cancelInputDstv}
-                className="w-[25px] h-[25px]  md:w-[35px] md:h-[35px] 
+              >
+                <div className="pr-3 lg:pr-2 py-[5px] 
+                flex justify-end">
+                  <img
+                    onClick={cancelInputDstv}
+                     className="w-[25px] h-[25px]  md:w-[35px] md:h-[35px] 
                 lg:w-[25px] lg:h-[25px]"
-                src="/Images/transferImages/close-circle.png"
-                alt=""
-              />
-            </div>
-            <div className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
-            <div className="flex flex-col w-full  justify-center 
+                    src={"/Images/transferImages/close-circle.png"}
+                    alt=""
+                  />
+                </div>
+                 <div className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
+                  <div className="flex flex-col w-full  justify-center 
              py-[15px] lg:py-[0px]
-             h-[100%] gap-[15px] ">
-            <p className="font-extrabold text-[12px] leading-[16px] 
+             h-[100%] gap-[15px]">
+                  <p className="font-extrabold text-[12px] leading-[16px] 
             pb-[20px]
              md:text-[10px]
              lg:text-[16px] text-center 
-            ">Input PIN to complete transaction</p>
-            <div className="flex flex-col items-center lg:gap-[0px]
+            ">
+                 Input PIN to complete transaction
+                  </p>
+                  <div className="flex flex-col items-center lg:gap-[0px]
              gap-[5px] font-extrabold">
-              <div className=" flex items-center  gap-[10px]">
-                {" "}
-                {isVisible ? (
-                  <OtpInput
-                    value={inputPin}
-                    inputType="tel"
-                    onChange={setInputPin}
-                    numInputs={4}
-                    shouldAutoFocus={true}
-                    inputStyle={{
-                        color: isDarkMode ? "#ffffff" : "#000000",
+                    <div className=" flex items-center  gap-[10px]">
+                      <OtpInput
+                        value={inputPin}
+                        inputType= {!isVisible ? "tel" : "password" }
+                        onChange={setInputPin}
+                        numInputs={4}
+                        shouldAutoFocus={true}
+                       inputStyle={{
+                       color: isDarkMode ? "#ffffff" : "#000000",
                         // width: 30,
                         // height: 30,
                         // borderRadius: 3,
@@ -288,73 +209,57 @@ if(ErrorType === "Server error"){
                         border: isDarkMode
                           ? "1px solid white"
                           : "1px solid #ccc",
-                    }
-                }
-                    
-                    renderInput={(props) => (
-                      <input {...props} className={`inputOTP mx-[2px] 
-                        ${isFocused ? 'focused' : ''}`} onFocus={handleFocus}
-                      onBlur={handleBlur}/>
-                    )}
-                  />
-                ) : (
-                  <div className="text-[24px] md:text-[24px] mt-1">
-                    * * * *{" "}
+                    }}
+                        renderInput={(props) => (
+                          <input {...props} className="inputOTP mx-[3px]"
+                           onFocus={handleFocus} onBlur={handleBlur}  />
+                        )}
+                      />
+                      <div
+                        className="text-[#0003] text-[13px] md:text-3xl"
+                        onClick={toggleVisibility}
+                      >
+                        {isVisible ? <AiFillEye className={`w-[16px] h-[16px]
+                                          lg:w-[24px] lg:h-[24px]  ${isDarkMode ? " text-white" : "text-black" }`}/> : <AiFillEyeInvisible  
+                                          className={`w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]
+                                          ${isDarkMode ? " text-white" : "text-black" }`}/>}
+                      </div>
+                    </div>
+                     <Link to={{
+                                  pathname : "/ProfileSettingMain",
+                                   state :  authenticationOpen
+                                 }} className="text-[10px] leading-[14px] font-extrabold 
+                                 md:text-[12px]
+                                   my-2 text-[#04177f]">
+                                   Forgot Pin ?
+                                 </Link>
                   </div>
-                )}
-                <div
-                  className="text-[#0003]"
-                  onClick={toggleVisibility}
-                >
- {isVisible ? <AiFillEye className={`w-[16px] h-[16px]
-                  lg:w-[24px] lg:h-[24px]  ${isDarkMode ? " text-white" : "text-black" }`}/> : <AiFillEyeInvisible  
-                    className={`w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]
-                 ${isDarkMode ? " text-white" : "text-black" }`}/>}
-                </div>
-              </div>
-              <Link  to = {{
-               pathname : "/ProfileSettingMain",
-                state :  authenticationOpen
-              }} className="text-[10px] leading-[14px] font-extrabold 
-              md:text-[12px]
-                my-2 text-[#04177f]">
-                Forgot Pin ?
-              </Link>
-            </div>
-            {errorMessage && (
-              <p className="font-bold text-[14px]  lg:text-[16px] md:font-[500] 
-              text-center leading-[18px] lg:leading-[20px]   text-red-600">
-                 Incorrect Pin
-              </p>
-            ) 
-            }
-             <div className="flex flex-col gap-[10px] px-[20px]" >
-            <button
-              onClick={VerifyPinHandler}
-              disabled={inputPin.length !== 4 ? true : false}
-              className={`${
+                  {errorMessage && (
+                    <p className="font-bold text-[14px]  lg:text-[16px] md:font-[500] 
+              text-center leading-[18px] lg:leading-[20px]  text-red-600">
+                      Incorrect pin
+                    </p>
+                  )}
+            
+     <div className="flex flex-col gap-[10px] px-[20px]" >
+                <button
+                  onClick={VerifyPinHandler}
+                  disabled={inputPin.length !== 4}
+                  className={`${
                 inputPin.length !== 4 && !isDarkMode ? "bg-[#0008]" : 
                  inputPin.length !== 4 && isDarkMode ? "bg-gray-300" : "bg-[#04177f]"
-              }  w-full  md:w-[94px] lg:w-[163px] flex 
+              } w-full  md:w-[94px] lg:w-[163px] flex 
               justify-center items-center mx-auto cursor-pointer text-[12px]
                md:text-[10px] lg:text-[16px] font-extrabold h-[50px] 
                lg:h-[38px] md:h-[22px] text-white rounded-[6px] md:rounded-[6.88px]
                 lg:rounded-[12px]`}
-            >
-              Purchase
-            </button>
-            {/* {errorMessage && (
-              <p className="text-[10px] leading-[16px] font-[400]
-              lg:text-[12px] lg:leading-[18px] lg:font-[500] text-red-500">
-                Incorrect Pin
-                </p>
-
-            )} */}
-            </div>
-             </div>
-           
-        </div>
-        </div>
+                >
+                  Purchase
+                </button>
+                </div>
+              </div>
+              </div>
+              </div>
         </Modal>
       )}
        {isLoading && (

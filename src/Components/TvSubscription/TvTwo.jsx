@@ -487,7 +487,7 @@ const VerifyPinHandler = async () => {;
       if(ErrorType === "unauthorised"){
         setSessionModal(true)
         }else if(ErrorType === "Server error"){
-           alert("Verification failed")
+                alert("Pin Verification Failed")
         }
       //The general error message on an "Network error, User error" ErrorType
       else if( ErrorType === "User error"

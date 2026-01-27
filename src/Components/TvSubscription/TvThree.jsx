@@ -525,42 +525,8 @@ const VerifyPinHandler = async () => {
       }
       const FailedHandler = async(ErrorType) =>{
          if(ErrorType === "unauthorised"){
-                await PostFunction(
-               Path,
-               setIsLoading,
-               requestData,
-               successHandler,
-               (ErrorType)=> {
-                 if(ErrorType === "unauthorised"){
-                   return setSessionModal(true)
-                 }else if(ErrorType === "Server error"){
-                 //Why a repetition did not occur here,
-                 //We dont want it to be only about User experience here,
-                 //There are several things that could happen to the backend,
-                 // and there is also a possibility that the server was able to process and 
-                 //initiate the transaction but still returned 500,
-                 //so we need to prevent the case of carrying two transaction for a user,
-                 //which doesn't only affect us through service of the platform we are using,
-                 //but also unrest and panic to the user and the amount for purchase and 
-                 //been removed twice without a result or successful output.
-                 setPurchaseStarTimesErrorType("Server Error: Purchase Failed")
-              setFailedPopup(true);
-              setInputPinStarTimes(false);
-                setInputPin("")
-               }else if(ErrorType === "Network error" || ErrorType === "User error"){
-                 setPurchaseStarTimesErrorType("Network Error: Purchase Failed");
-                 setFailedPopup(true);
-              setInputPinStarTimes(false);
-                setInputPin("")
-               }else {
-                    setPurchaseStarTimesErrorType("An unexpected error has occured.");
-                 setFailedPopup(true);
-              setInputPinStarTimes(false);
-                setInputPin("")
-               }
-               },
-               setStarTimesSubscriptionResponse
-             );
+             if(sessionModal) return;
+             if(!sessionModal) return setSessionModal(true)
                }else if(ErrorType === "Server error"){
                  //Why arepition did not occur here,
                  //We dont want it to be only about User experience here,
@@ -599,22 +565,15 @@ const VerifyPinHandler = async () => {
     };
     const setFailedConfig= async(ErrorType)=> {
     if(ErrorType === "unauthorised"){
-      await VerifyTransPin(
-      inputPin,
-      (ErrorType)=> {
-      if(ErrorType === "unauthorised"){
-        setSessionModal(true)
-        } 
-       },
-        setIsLoading,
-      setErrorMessage,
-      StarTimesHandler,
-     );
-    }
-    }
-  
-    await VerifyTransPin(
-      inputPin,
+    if(sessionModal) return;
+    if(!sessionModal) return setSessionModal(true)
+    }else if(ErrorType === "Server error"){
+      alert("Pin Verification Failed")
+    }else{
+    alert("An unexpected error")
+  }
+ }
+   await VerifyTransPin(inputPin,
       setFailedConfig,
       setIsLoading,
       setErrorMessage,

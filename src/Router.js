@@ -321,7 +321,7 @@ export   const RoutingObjectLimitScope = [
   { id: 125, Routepath: "/NecoEducationPin", RouteComponent: <ProtectedRoute><NecoEducationPins /></ProtectedRoute> },
   { id: 126, Routepath: "/NabtebEducationPin", RouteComponent: <ProtectedRoute><NabtebEducationPins /></ProtectedRoute> },
   { id: 127, Routepath: "/WaecReceipt", RouteComponent: <ProtectedRoute><WaecReceipt /></ProtectedRoute> },
-  { id: 128, Routepath: "/JambReceipt", RouteComponent: <ProtectedRoute><JambReceipt /></ProtectedRoute> },
+ // { id: 128, Routepath: "/JambReceipt", RouteComponent: <ProtectedRoute><JambReceipt /></ProtectedRoute> },
   { id: 129, Routepath: "/NecoReceipt", RouteComponent: <ProtectedRoute><NecoReceipt /></ProtectedRoute> },
   { id: 130, Routepath: "/NabtebReceipt", RouteComponent: <ProtectedRoute><NabtebReceipt /></ProtectedRoute> },
   { id: 131, Routepath: "/DsTv", RouteComponent: <ProtectedRoute><DsTv /></ProtectedRoute> },

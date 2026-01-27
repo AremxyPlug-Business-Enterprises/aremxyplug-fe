@@ -3,7 +3,7 @@ import { ContextProvider } from "../../../../Context";
 import styled from "../../../../AirTimePage/AirTime.module.css";
 import { ToConfirmAremxyMain } from "./ToConfirmAremxyMain";
 import { Modal } from "../../../../Screens/Modal/Modal";
-import pickPinIcon from "../../../../My Profile & Account Settings/ProfileImages/pickPinIcon.svg";
+import { BalanceLoading } from "../../../../Loader/Loader";
 import { GetLocalStorage } from "../../../../LocalStorage/LocalStorage";
 import { GetFunction } from "../../../../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../../../../Loader/Loader";
@@ -51,6 +51,7 @@ export default function ToAremxyMain() {
   const [errorMessage, setErrorMessage] = useState("");
 
   const [loading, setLoading] = useState(false);
+  const [balanceLoader, setBalanceLoader] = useState(false)
   const [sessionModal, setSessionModal] = useState(false);
   const [fetchedResponse, setFetchedResponse] = useState({});
   const [verifiedUser, setVerifiedUser] = useState(false);
@@ -304,128 +305,11 @@ const GetBalance = async () => {
       };
       const FailedHandler = async (ErrorType) => {
         if (ErrorType === "unauthorised") {
-          await GetFunction(
-            `balance`,
-            setLoading,
-            SuccessHandler,
-            //Handling the error Use Cases of the Unauthorised inside
-            // of the statement.
-            async (ErrorType) => {
-              if (ErrorType === "unauthorised") {
-                return setSessionModal(true);
-              } else if (ErrorType === "Server error") {
-                await GetFunction(
-                  "balance",
-                  setLoading,
-                  SuccessHandler,
-                  async (ErrorType) => {
-                    if (ErrorType === "Server error") {
-                      alert("Failed to retrieve the balance.");
-                    } else if (
-                      ErrorType === "Network error" ||
-                      ErrorType === "User error"
-                    ) {
-                      alert(
-                        "Kindly check your internet connection to retrieve balance."
-                      );
-                    } else {
-                      alert(
-                        "An unexpected error has occured on attempt to retrieve balance."
-                      );
-                    }
-                  },
-                  setPassDataBalance
-                );
-              } else if (
-                ErrorType === "Network error" ||
-                ErrorType === "User error"
-              ) {
-                alert(
-                  "Kindly check your internet connection to retrieve balance"
-                );
-              } else {
-                alert(
-                  "An unexpected error has occured on attempt to retrieve the balance"
-                );
-              }
-            },
-            setPassDataBalance
-          );
-        } else if (ErrorType === "Server error") {
-          await GetFunction(
-            "balance",
-            setLoading,
-            SuccessHandler,
-            async (ErrorType) => {
-              if (ErrorType === "unauthorised") {
-                await GetFunction(
-                  "balance",
-                  setLoading,
-                  SuccessHandler,
-                  async (ErrorType) => {
-                    if (ErrorType === "unauthorised") {
-                      return setSessionModal(true);
-                    } else if (ErrorType === "Server error") {
-                      await GetFunction(
-                        "balance",
-                        setLoading,
-                        SuccessHandler,
-                        async (ErrorType) => {
-                          //if Statements
-                          //We run again cause the previous one was interrupted by 401
-                          //Let us re-run server error
-                          if (ErrorType === "Server error") {
-                            alert("Failed to retrieve the balance");
-                          } else if (ErrorType === "unauthorised") {
-                            return sessionModal(true);
-                          } else if (
-                            ErrorType === "Network error" ||
-                            ErrorType === "User error"
-                          ) {
-                            alert(
-                              "Kindly check your internet connection to retrieve balance"
-                            );
-                          } else {
-                            alert(
-                              "An Unexpected error occured in attempt to retrieve balance"
-                            );
-                          }
-                        },
-                        setPassDataBalance
-                      );
-                    } else if (
-                      ErrorType === "Network error" ||
-                      ErrorType === "User error"
-                    ) {
-                      alert(
-                        "Kindly check your internet connection to retrieve the balance"
-                      );
-                    } else {
-                      alert(
-                        "An Unexpected error occured in attempt to retrieve balance"
-                      );
-                    }
-                  },
-                  setPassDataBalance
-                );
-              } else if (
-                ErrorType === "Network error" ||
-                ErrorType === "User error"
-              ) {
-                //The operation was interrupted by a network error
-                alert(
-                  "Kindly check your internet connection to retrieve balance."
-                );
-              } else {
-                //An alien error has occured with the re-run of the "Server error" ErrorType
-                alert(
-                  "An unexpected error occured in attempt to retrieve the balance."
-                );
-              }
-            },
-            setPassDataBalance
-          );
-        } else if (
+            if(sessionModal) return;
+            if(!sessionModal) return setSessionModal(true)
+        }else if(ErrorType === "Server error"){
+         alert("Unable to retrieve balance");
+      } else if (
           ErrorType === "Network error" ||
           ErrorType === "User error"
         ) {
@@ -435,20 +319,17 @@ const GetBalance = async () => {
       };
       await GetFunction(
         "balance",
-        setLoading,
+        setBalanceLoader,
         SuccessHandler,
         FailedHandler,
         setPassDataBalance
       );
     };
       if (Data?.ConfirmAcc === "true"){                     // Simulate async data loading
-                  
-                        GetBalance();
-          setNewBalance(passDataBalance?.data?.data?.data !== undefined
+        GetBalance();
+       setNewBalance(passDataBalance?.data?.data?.data !== undefined
                ? passDataBalance?.data?.data?.data?.balance : "");
-                       
-                     
-                    }else {
+                        }else {
                     setRestrictUser(true);
                     }
                       //eslint-disable-next-line
@@ -635,13 +516,9 @@ const GetBalance = async () => {
                                 alt=""
                               />
 
-                            
-                              
-                                {methodOption.method +
-                                  " " +
-                                  methodOption.balance}
-                              
-                            </div>
+                              {methodOption.method} {" "}
+                                  {balanceLoader === true && methodOption.id === 1 ? <BalanceLoading/> : methodOption.balance}
+                               </div>
                           );
                         })}
             </div>
@@ -894,56 +771,7 @@ const GetBalance = async () => {
           </div>
          
           </div>
-        {/* <div className="flex flex-col md:w-[50%]
-         w-[100%] md:gap-[10px] gap-[5.868px]">
-          <p
-            // className="text-[10px] font-extrabold md:text-[14px] lg:text-[20px]"
-          className={`text-[#7E7E7E] text-[15px] lg:text-[17px]
-                       md:text-[13px] md:font-[600] font-[400]
-                       ${isDarkMode ? "text-white" : "text-black"}`}
-          >
-            Phone Number
-          </p>
-          <div
-            // className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]"
-          className="relative flex flex-col h-full 
-            gap-[3px] lg:gap-[5px] w-full ">
-            <input
-            //  onChange={handleMainInputChange}
-              name="userPhoneNumber"
-              maxLength={11}
-              readOnly
-              value={fetchedResponse?.data?.data?.userDetails?.phone !== undefined ?
-            `${fetchedResponse?.data?.data?.userDetails?.phone}` : "" }
-        className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] 
-     md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] 
-     pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px]
-      md:text-[11px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px]
-       md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] 
-    lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  
-    items-center cursor-pointer outline-0 border-[0.24px]
-     lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] 
-      px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
-      isDarkMode
-        ? "bg-black text-white border border-white"
-        : "border border-[#0003] border-[#9C9C9C] text-[#7C7C7C]"
-    }`}
-  type="number"
-            />
-            <img
-             className=" absolute left-[90%] top-[40%] md:top-[30%]
-                         lg:left-[94%] self-center align-middle md:h-[14.038px] md:w-[14.038px] 
-      lg:h-[24px] lg:w-[24px] w-[14px] h-[16px] "
-              src="/Images/transferImages/call.png"
-              alt="dropdown"
-            />
-          </div>
-          {mainTransferErrors.userPhoneNumber && (
-            <div className="text-[12px] text-red-500 italic lg:text-[14px]">
-              {mainTransferErrors.userPhoneNumber}
-            </div>
-          )}
-          </div> */}
+    
           </div>
 
         {/* =========================Amount To Transfer==================== */}

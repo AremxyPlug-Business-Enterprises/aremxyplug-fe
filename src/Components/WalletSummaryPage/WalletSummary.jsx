@@ -92,7 +92,7 @@ export default function WalletSummaryPage() {
         record === "Transfers" ? "transfer" : "All Records"
         const parseCollectionValues = collection === "Virtual Accounts"
          ?  "virtual" : collection === "Point Redeem" ? "point" 
-         : collection === "Wallet" ? "wallet" :  "";
+         : collection === "Wallet Transfer" ? "wallet" :  "";
       //Queries for the different combination of filters
      
        const requestQueries = 
@@ -493,7 +493,7 @@ export default function WalletSummaryPage() {
     "Virtual Accounts",
     "Point Redeem",
      "Card Payments",
-     "Wallet",
+     "Wallet Transfer",
      "Payment Links",
       "QR Code",
        "Bank USSD",
@@ -534,8 +534,9 @@ const FormatTime =(DateValue)=> {
         <div className="flex flex-col gap-[20px]">
           <div
             // id="Transaction"
-            className="min-h-[99px]   bg-gradient-to-r
-               from-yellow-300 to-rose-400 lg:h-[196px] md:h-[112.29px] rounded-[6.6px] md:rounded-[11.46px] lg:rounded-[20px]  flex gap-6 justify-between px-[16.51px] md:px-[28.65px] lg:px-[50px]"
+            className="min-h-[99px]   bg-gradient-to-r w-full
+               from-yellow-300 to-rose-400 lg:h-[196px] md:h-[112.29px] rounded-[6.6px] md:rounded-[11.46px] lg:rounded-[20px] 
+                flex gap-6 justify-between px-[16.51px] md:px-[28.65px] lg:px-[50px]"
           >
             <div className="py-[9.57px] md:py-[16.61px] align-middle self-center flex flex-col gap-1.5 w-full">
               <p className="text-[11px] leading-[13px] lg:leading-[30px] lg:text-[24px] md:text-[13.75px] font-semibold">
@@ -848,6 +849,7 @@ const FormatTime =(DateValue)=> {
                           setSelectCollectionDropDown(false);
                           setIsOpen1(false);
                           setSelectCollection(collection)
+                          setSelectRecords("All Records");
                           GetTransactionInformation(startDateValueState,
                              endDateValueState,
                               selectRecords,
@@ -945,6 +947,7 @@ const FormatTime =(DateValue)=> {
                         key={index}
                         onClick={async() => {
                             setSelectRecords(record);
+                            setSelectCollection("All Collections")
                           setIsOpen1(false);
                           setSelectRecordDropDown(false);
                           setCalender(false);
@@ -1061,8 +1064,8 @@ const FormatTime =(DateValue)=> {
                   name="curr"
                   id="curr"
                   // onChange={handleSelectedOption}
-                  value={selected}
-                  className={`${styles.selected} w-[25%]`}
+                  value={selected} 
+                  className={`${styles.selected} p-4 w-[25%]`}
                 >
                   <option value="NGN">NGN</option>
                   <option value="USD">USD</option>
@@ -1211,7 +1214,7 @@ const FormatTime =(DateValue)=> {
                 filteredWalletTransactions?.length > 0)
                 &&  (selectCollection === "Virtual Accounts" || 
              selectCollection === "Point Redeem" || 
-               selectCollection === "Wallet" || selectCollection === "All Collections" ) ? (
+               selectCollection === "Wallet Transfer" || selectCollection === "All Collections" ) ? (
                 filteredWalletTransactions?.map((transaction, index) => (
                   <div
                     className={`cursor-pointer ${
@@ -1478,7 +1481,7 @@ const FormatTime =(DateValue)=> {
               filteredWalletTransactions?.length > 0
               && (selectCollection === "Virtual Accounts" || 
              selectCollection === "Point Redeem" || 
-               selectCollection === "Wallet" || selectCollection === "All Collections") ? (
+               selectCollection === "Wallet Transfer" || selectCollection === "All Collections") ? (
               filteredWalletTransactions?.map((transaction, index) => (
                 <div key={index}>
                   <div

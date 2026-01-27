@@ -612,40 +612,12 @@ const GetBalance = async () => {
       );
     }
     const setPinFailed = async (ErrorType) => {
-      if (ErrorType === "unauthorised") {
-        await VerifyTransPin(
-          inputPin,
-          (ErrorType) => {
-            if (ErrorType === "unauthorised") {
-              setSessionModal(true);
-            } else if (
-              ErrorType === "Network error" ||
-              ErrorType === "User error"
-            ) {
-              return alert("Kindly Check your internet connection");
-            } else if (ErrorType === "Server error") {
-              alert(
-                "The server is currently experiencing a downtime, try again some other time."
-              );
-            } else {
-              alert("An unexpected has occured try again some other time.");
-            }
-          },
-          setIsLoading,
-          setErrorMessage,
-          EduPinHandler
-        );
-      } else if (ErrorType === "Network error" || ErrorType === "User error") {
-        return alert("Kindly Check your internet connection");
-      } else if (ErrorType === "Server error") {
-        alert(
-          "The server is currently experiencing a downtime, try again some other time."
-        );
-      } else {
-        if(ErrorType !== "Bad request"){
-        alert("An unexpected has occured try again some other time.");
-        }
-      }
+    if (ErrorType === "unauthorised") {
+                       if(sessionModal) return;
+               if(!sessionModal) return setSessionModal(true)
+                    }else if(ErrorType === "Server error"){
+                     alert("Pin Verification Failed")
+                    }
     };
     await VerifyTransPin(
       inputPin,

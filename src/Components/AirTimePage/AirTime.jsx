@@ -80,8 +80,7 @@ const AirTime = () => {
                 <ul className={styles.localInter} >
                     <li className={`${activeTab === 'tab_1' ? active : inactive}
                       ${  
-                            
-                                   isDarkMode ? "!text-black md:text-base md:!text-base !text-[12.4px] !font-size-[20px] md:!pb-base md:!pt-base !pb-[20px] !pt-[10px] !mb-[16px] md:!mb-0 " : "!font-size-[20px] md:!pb-base md:!pt-base !pb-[20px] !pt-[10px] !mb-[16px] md:!mb-0"
+             isDarkMode ? "!text-black md:text-base md:!text-base !text-[12.4px] !font-size-[20px] md:!pb-base md:!pt-base !pb-[20px] !pt-[10px] !mb-[16px] md:!mb-0 " : "!font-size-[20px] md:!pb-base md:!pt-base !pb-[20px] !pt-[10px] !mb-[16px] md:!mb-0"
                            }
                     `} onClick={handleTab1}>Local Airtime</li>
                     <li className={`${activeTab === 'tab_2' ? active : inactive} 

@@ -471,7 +471,7 @@ export const VirtualAccountReceipt = () => {
                       {transaction_id}
                     </span>
                   </div>
-                  <div className="flex text-[10px] font-medium md:text-sm w-[90%] mx-auto justify-between lg:text-base">
+                  {/* <div className="flex text-[10px] font-medium md:text-sm w-[90%] mx-auto justify-between lg:text-base">
                     <p
                       className={` ${
                         isDarkMode ? "text-white" : "text-[#7C7C7C]"
@@ -495,7 +495,7 @@ export const VirtualAccountReceipt = () => {
                         <RiFileCopyFill />
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
               <div

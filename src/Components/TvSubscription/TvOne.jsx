@@ -505,10 +505,10 @@ const Data = GetLocalStorage();
 
       const setFailedConfig= async(ErrorType)=> {
          if(ErrorType === "unauthorised"){
-        setSessionModal(true);
-     
-     }else if(ErrorType === "Server error"){
-      alert("Verification Failed");
+          if(sessionModal) return;
+     if(!sessionModal) return   setSessionModal(true);
+      }else if(ErrorType === "Server error"){
+       alert("Pin Verification Failed")
          }else if( ErrorType === "User error"
        || ErrorType === "Network error" ){
      alert("Kindly check your internet connection")

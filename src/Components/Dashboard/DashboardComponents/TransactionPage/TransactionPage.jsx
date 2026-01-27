@@ -539,7 +539,7 @@ const FilterByDateFunc = async()=> {
         <section>
           <div
             id="Transaction"
-            className="min-h-[90px]  py-[15px] lg:h-[196px] md:h-[112.29px] 
+            className="min-h-[90px] w-full  py-[15px] lg:h-[196px] md:h-[112.29px] 
             rounded-[6.6px] md:rounded-[11.46px] lg:rounded-[20px] mx-auto 
              flex gap-6 justify-between px-[16.51px] md:px-[28.65px] lg:px-[50px] mb-[30px] lg:mb-[40px]"
           >

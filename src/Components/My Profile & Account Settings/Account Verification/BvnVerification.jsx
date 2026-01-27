@@ -617,7 +617,7 @@ export default function BvnVerification(Data) {
                       (verificationResponse?.data?.data?.bvn !== undefined && Data.ConfirmBvn === "true")
                         ? `${bvnNumber?.slice(0, 4)}*******`
                         : verificationResponse?.data?.data?.bvn === undefined && (Data?.ConfirmId === "true" || Data?.ConfirmBvn === "true") ? "NO BVN"
-                         :  bvnNumber?.length < 1 && Data?.ConfirmBvn === "false" ? bvnNumber : ""
+                         :  (bvnNumber?.length < 1 &&( Data?.ConfirmBvn === "false" || !Data?.ConfirmBvn)) ? bvnNumber : ""
                     }
                     onChange={(e) => {
                       setBvnNumber(e.target.value);

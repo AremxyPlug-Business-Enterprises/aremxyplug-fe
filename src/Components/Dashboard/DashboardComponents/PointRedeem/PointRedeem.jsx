@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { DashBoardLayout } from "../../Layout/DashBoardLayout";
 import { Link } from "react-router-dom";
 import cloud from "../PointRedeem/images/cloud storage convert.svg";
@@ -10,7 +10,6 @@ import icon3 from "../PointRedeem/images/clock.svg";
 import icon5 from "../PointRedeem/images/main-component.png";
 import flag from "../PointRedeem/images/Country Flags.svg";
 import { Modal } from "../../../Screens/Modal/Modal";
-import { useContext } from "react";
 import { ContextProvider } from "../../../Context";
 import styles from "../TransferComponent/transfer.module.css";
 import icon4 from "../PointRedeem/images/Group 13102.png";
@@ -32,7 +31,6 @@ const PointRedeem = () => {
 
   const { 
     toggleSideBar, 
-    // transferFee, 
     toggleVisibility, isVisible,
     inputValue,
            setInputValue, 
@@ -44,13 +42,9 @@ const PointRedeem = () => {
            setRealOutputValue,
             errorMessage,
            setErrorMessage,
-          //  redeemResponse, 
-          //  setRedeemResponse,
-         
-        pointRateRedeemed,
+  pointRateRedeemed,
          setPointRateRedeemed,
-       
-        setPointTransactionId,
+         setPointTransactionId,
        pointOrderId,  
        setPointOrderId,
         pointAmountRedeemed, 
@@ -61,8 +55,7 @@ const PointRedeem = () => {
         setPointPointsRedeemed,
           authenticationOpen,
           pointPointsRedeemed,
-          
-   } = useContext(ContextProvider);
+          } = useContext(ContextProvider);
    
 
 
@@ -74,11 +67,6 @@ const PointRedeem = () => {
          const handleBlur = () => {
            setIsFocused(false);
          };
-   
-        //  const cancelInputGotv = () => {
-        //    setInputPinPopUp(false);
-        //    window.location.reload();
-        //  }
   
 
 const [text, setText] =useState(false);
@@ -90,7 +78,7 @@ const [restrictUser, setRestrictUser] = useState(false);
   const [proceed, setProceed] = useState(false);
    const [successPopup, setSuccessPopup] = useState(false);
   const [errors, setErrors] = useState({});
-  const [pointPostResponse, setPointPostResponse] = useState({});
+ // const [pointPostResponse, setPointPostResponse] = useState({});
   
 const [userPoints, setUserPoints] = useState(0);
 const [sessionModal, setSessionModal] = useState(false);
@@ -138,16 +126,7 @@ const [sessionModal, setSessionModal] = useState(false);
     setText(true);
   }
 
-  // const schema = Joi.object({
-  //   inputValue: Joi.string()
-  //     .pattern(new RegExp(/\d{3,}/))
-  //     .required()
-  //     .messages({
-  //       "string.pattern.base": "Minimum Point Redeem is 1000 and Above",
-  //     }),
-  // });
-
-  const schema = Joi.object({
+const schema = Joi.object({
   inputValue: Joi.number()
     .min(10)
     .max(100)
@@ -165,7 +144,7 @@ const [sessionModal, setSessionModal] = useState(false);
     if(Data?.ConfirmAcc === "true"){
     const  successHandler = (response) => {
      if (!response?.data?.data) return;
-     // console.log("fetch points succefully");
+
     //const total = response?.data?.data?.point?.total_points;
     const available = response?.data?.data?.point?.available_points ?? 0;
     // const trxPoints = response?.data?.data?.point?.transaction_points ?? 0;
@@ -173,8 +152,7 @@ const [sessionModal, setSessionModal] = useState(false);
     setUserPoints(available);
     
     };
-    const FailedHandler = (error) => {
-      console.error("Failed to fetch points:", error);   
+    const FailedHandler = (error) => {  
       if(error === "unauthorised"){
        if(sessionModal) return;
        if(sessionModal === false) return setSessionModal(true)
@@ -281,9 +259,7 @@ const redemptionData = response?.data?.data?.data;
 };
 
  const failedHandler = (ErrorType) => {
-  console.error("Redemption failed with error:", ErrorType);
-
-     if (ErrorType === "unauthorised") {
+    if (ErrorType === "unauthorised") {
         setSessionModal(true);
       } else if (ErrorType === "Server error") {
         setErrorMessage("Server Error: Redemption Failed");
@@ -296,16 +272,14 @@ const redemptionData = response?.data?.data?.data;
   setInputPinPopUp(false);
   setInputPin("");
 };
-
-
-    await PostFunction(Path, 
+ await PostFunction(Path, 
       setLoading, 
       payloadJson,
        successHandler, 
        failedHandler,
-        setPointPostResponse);
+        ()=> {});
   };
-console.log(pointPostResponse)
+
 
   const refreshPoints = () => {
   GetFunction("extra/point", setLoading, (res) => {
@@ -340,16 +314,11 @@ console.log(pointPostResponse)
   await VerifyTransPin(
     inputPin,
     (ErrorType) => {
-    if (ErrorType === "unauthorised") {
-        setSessionModal(true);
-      } else if (ErrorType === "Server error") {
-        setErrorMessage("Server error while verifying PIN");
-      } else if (ErrorType === "Network error" || ErrorType === "User error") {
-        setErrorMessage("Check your internet connection");
-      } else if (ErrorType === "incorrect pin") {
-        setErrorMessage("Incorrect PIN entered");
-      } else {
-        setErrorMessage("PIN verification failed");
+   if (ErrorType === "unauthorised") {
+         if(sessionModal) return;
+       if(!sessionModal) return setSessionModal(true)
+     }else if(ErrorType === "Server error"){
+          alert("Pin Verification Failed")
       }
     },
     setLoading,
@@ -358,8 +327,6 @@ console.log(pointPostResponse)
   );
 };
 
-
-// console.log("Verifying PIN:", inputPin);
 
 
   
