@@ -324,11 +324,6 @@ const Balance = newBalance !== null &&
     setTransactSuccessPopUp(false);
   };
 
-  // if (addRecipient) {
-  //   console.log("recipient added");
-  // } else {
-  //   console.log("did not add recipient");
-  // }
 
   const schema = Joi.object({
     recipientPhoneNumberEtisalat: Joi.string()
@@ -1538,18 +1533,11 @@ if(Data?.ConfirmAcc === "true"){
                     };
                     const setFailed = (ErrorType) => {
                       if (ErrorType === "unauthorised") {
-                        VerifyTransPin(
-                          inputPin,
-                          (ErrorType) => {
-                            if (ErrorType === "unauthorised") {
-                              return setSessionModal(true);
-                            }
-                          },
-                          setLoading,
-                          setErrorMessage,
-                          DataHandler
-                        );
-                      }
+                       if(sessionModal) return;
+               if(!sessionModal) return setSessionModal(true)
+                    }else if(ErrorType === "Server error"){
+                     alert("Pin Verification Failed")
+                    }
                     };
                     //Run the function to check user's pin
                     // and proceed with purchase

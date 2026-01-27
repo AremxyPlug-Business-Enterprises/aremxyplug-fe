@@ -19,7 +19,6 @@ import { AiFillEye } from "react-icons/ai";
 import { Link } from 'react-router-dom';
 import { AirtimeVtuReceipt } from './AirtimeVtuReceipt';
 import { AirtimeReceiptFailed } from './AirtimeReceiptFailed';
-import axiosInstance from '../ApiCollection.jsx/apiClient';
 import { Loader } from '../Loader/Loader';
 import { VerifyTransPin, 
     GetFunction, 
@@ -48,10 +47,10 @@ const AirtimeVtu = () => {
     const [restrictUser, setRestrictUser] = useState(false)
     const [balanceLoader, setBalanceLoader] = useState(false);
     const [loadingRecipient, setLoadingRecipient] = useState(false);
-    const [addRecipient, setAddRecipient] = useState(false);
+
     const [discount, setDiscount] = useState('');
     const [proceed, setProceed] = useState(false);
-    const [selected, setSelected] = useState(false);
+  
     const [paymentSelected, setPaymentSelected] = useState(false);
     const [showList, setShowList] = useState(false);
     const [showPayment, setShowPayment] = useState(false);
@@ -109,53 +108,49 @@ setRecipientList(response?.data?.data?.recipients?.recipients);
             return totalAmount;
         }
      }
-      const newAmount = calcAmount(discount, amount)
-   console.log(newAmount)      
+      const newAmount = calcAmount(discount, amount) ;
+      console.log(newAmount);   
                const updateBalance = passDataBalance?.data?.data?.data
                && (newBalance === "" || newBalance === undefined || newBalance === null)
                 ?  passDataBalance?.data?.data?.data?.balance : balanceStringToNum;
-            //console.log(updateBalance);
+            
                  let CheckSufficiency = newAmount  >   updateBalance
                  
 
 //Getting The User Balance of the application.
                  const GetBalance =   async()=> {
-                               const SuccessHandler = ()=> {
-                             //alert("Successful");
-                        console.log("successfully retrieved balance");
-                        //alert("Successful")
+                               const SuccessHandler = (response)=> {
+                            setPassDataBalance(response)
                           }
                          const FailedHandler = async(ErrorType)=> {
                            if(ErrorType === "unauthorised"){
-                              await GetFunction("balance",
-                                 setBalanceLoader, SuccessHandler,
-                                  (ErrorType)=> {
-                                    if(ErrorType === "unauthorised"){
-                                    return setSessionModal(true);
-                                    }
-                                  },
-                                  setPassDataBalance)
-                           }
+                             if(sessionModal) return;
+                             if(!sessionModal) return setSessionModal(true);
+                         }else if(ErrorType === "Server error"){
+                         alert("Failed to retrieve balance")
+                         }else if(ErrorType === "Network error" || "User error"){
+                           alert("Your internet connection seems unstable.")
+                         }else{
+                            alert("An unepected has occured")
                          }
+                        }
                          await GetFunction("balance",
                              setBalanceLoader, 
                              SuccessHandler, 
                              FailedHandler,
-                             setPassDataBalance)
+                            ()=>{})
                            } 
                  useEffect(() => {
                     setRecipientNumber("");
                     setRecipientName("");
                     setNetworkName("")
-                           
-                            // Simulate async data loading
-                                              // Simulate async data loading
-                      if (Data?.ConfirmAcc === "true"){                     // Simulate async data loading
-                       GetBalance();
+                     // Simulate async data loading
+                    // Simulate async data loading
+            if (Data?.ConfirmAcc === "true"){                    
+             GetBalance();
           setNewBalance(passDataBalance?.data?.data?.data !== undefined
                ? passDataBalance?.data?.data?.data?.balance : "");
-             
-                    }else {
+             }else {
                       setRestrictUser(true);
                     }
                   //eslint-disable-next-line
@@ -177,14 +172,7 @@ setRecipientList(response?.data?.data?.recipients?.recipients);
         GetRecipientList();
         },[])
 
-
-   
-
-  
-
-
-
-    const networkList = [
+ const networkList = [
         {
             id: 1,
             name: 'MTN',
@@ -287,15 +275,8 @@ setRecipientList(response?.data?.data?.recipients?.recipients);
         setNetworkName('');
         setNetworkImage('');
         setDiscount('');
-        setSelected(false);
+        //setSelected(false);
     }
-
-    // const handleShowProduct = () => {
-    //     if (selected) {
-    //         setShowProduct(!showProduct);
-    //     }
-    // };
-
 
    
     const handleShowPayment = () => {
@@ -341,7 +322,6 @@ setRecipientList(response?.data?.data?.recipients?.recipients);
       '9MOBILE': ['0809', '0817', '0818', '0909', '0908']
     };
  
-console.log(number?.length);
     for (let network in networks) {
       for (let prefix of networks[network]) {
         if (number.startsWith(prefix) && number.length === prefix.length + 7) {
@@ -352,15 +332,12 @@ console.log(number?.length);
     return 'Unknown network';
   }
 const DetectAndErrorNetFunc = (name, value)=> {
-  console.log("Checking MTN Number");
-   if(value?.length < 11){
+if(value?.length < 11){
     setErrors({})
   }
-  if(value?.length === 11){
+   if(value?.length === 11){
     const detectedNetwork = validateNigerianNumberByNetwork(value);
-  console.log("Detected network:", detectedNetwork);
- 
-  if ((detectedNetwork !== name) && name?.length > 1) {
+ if ((detectedNetwork !== name) && name?.length > 1) {
    setErrors({
       recipientNumber: `Invalid ${name} number. Please enter a valid ${name} number.`,
     });
@@ -387,18 +364,13 @@ const CheckRecipientInfoInList =(value)=> {
     return value === item?.phone
    }
 ) : []
-//console.log(findingRecipient);
   return findingRecipient
   }
 }
-
 const RecipientExistCheck = CheckRecipientInfoInList(recipientNumber)
 
-console.log(typeof CheckRecipientInfoInList(recipientNumber) === "object" 
-? CheckRecipientInfoInList(recipientNumber)?.phone : undefined);
 
- 
-const handleProceed = (e) => {
+ const handleProceed = (e) => {
   e.preventDefault();
 // Validate with Joi
   const { error } = schema.validate({
@@ -418,14 +390,15 @@ const handleProceed = (e) => {
 };
 
   const handleAddRecipient = async() => {
+
       const successHandler = ()=> {
             alert("Recipients saved successfully")
         }
-        const failedHandler = async(ErrorType)=> {
-            if(ErrorType === "Server error"){
-              alert("Unable to save recipients at the moment")
-            }else if(ErrorType === "unauthorised"){
-               await PostFunction("airtime/recipient",
+  const failedHandler = async(ErrorType)=> {
+ if(ErrorType === "Server error"){
+  alert("Unable to save recipients at the moment")
+ }else if(ErrorType === "unauthorised"){
+ await PostFunction("airtime/recipient",
      setIsLoading, 
      requestBody,
      successHandler, 
@@ -460,39 +433,13 @@ const handleProceed = (e) => {
         setNetworkImage(image);
         setDiscount(val);
         setShowList(false);
-        setSelected(true);
         setNetworkId(netId);
          if(recipientNumber?.length > 1 && recipientNumber?.length === 11){
         DetectAndErrorNetFunc(name, recipientNumber)
          }
     }
 
-    const factorWalletName = (value) => {
-
-        if (value === 'NGN') {
-            return 'Nigerian NGN Wallet'
-        }
-
-        if (value === 'GBP') {
-            return 'British GBP Wallet'
-        }
-
-        if (value === 'USD') {
-            return 'American USD Wallet'
-        }
-
-        if (value === 'AUD') {
-            return 'Australian AUD Wallet'
-        }
-
-        if (value === 'KSH') {
-            return 'Kenyan KSH Wallet'
-        }
-
-        if (value === 'EUR') {
-            return 'European EUR Wallet'
-        }
-    }
+    
 
     const {
         toggleSideBar,
@@ -516,73 +463,11 @@ const handleProceed = (e) => {
         setTransactFailedPopUp,
     } = useContext(ContextProvider);
 
-//     const handleTransactionSuccessClose = async () => {
-//         async function buyAirtime(network, mobileno, amount) {
-//             const path = '/airtime';
 
-//             const data = {
-//                 network,
-//                 mobileno,
-//                 amount,
-//              };
-
-//             try {
-//                 setIsLoading(true)
-//                 const response = await axiosInstance.post(path, data);
-//                 const result = response?.data?.data?.data; // Access the nested `data`
-//                setTransactionID(result?.transaction_id);
-//                 setRefNumber(result?.reference_number);
-//                 setOrderID(result?.order_id);
-//                 setDescription(result?.description);
-//                 setInputPin("")
-               
-//                   if (response.status === 200 || response.status === 201) 
-//                     {
-//             // Success response
-//             setTransactSuccessPopUp(true); 
-//             setConfirm(false);
-//              return { statusCode: response.status, data: response.data };
-//             // Show success popup
-//         }
-               
-//                 // console.log(response.data);
-//             } catch (error) {
-//                 console.error(error);
-//                 setInputPin("");
-//                   setTransactFailedPopUp(true); 
-//             setConfirm(false)// Show failure popup
-//              if(error && error.response === undefined){
-//              alert("Check your internet Connection, then reload the page.")
-//           } else if(error && (error.response.status === 400 || error.response.status === 404)){
-//              setInputPin("");
-//                   setTransactFailedPopUp(true); 
-//             setConfirm(false)// 
-//           }else if(error && error.response.status === 500){
-//              setInputPin("");
-//                   setTransactFailedPopUp(true); 
-//             setConfirm(false)// 
-//           }else if(error && error.response.status === 401){
-//         setInputPin("");
-//         setSessionModal(true)
-//           return { statusCode: error.response.status, data: null };
-//         }
-//             }finally {
-//                 setIsLoading(false)
-//             }
-//         }
-
-//         // Usage
-//      await buyAirtime(
-//             networkId, // Network (MTN)
-//             recipientNumber, // Mobile No
-//             amount, // Amount
-//          // Airtime Type (VTU)
-//         );
-// };
 
 const handleTransactionSuccessClose = async()=> {
   const requestBody = {
-   nentwork : networkId, 
+   network : networkId, 
   mobileno : recipientNumber,
   amount : amount
   }
@@ -591,7 +476,7 @@ const handleTransactionSuccessClose = async()=> {
            setTransactionID(result?.transaction_id);
           setRefNumber(result?.reference_number);
            setOrderID(result?.order_id);
-           setDescription(result?.description);
+           setDescription(result?.transaction_description);
            setInputPin("");
            setTransactSuccessPopUp(true); 
            setConfirm(false);
@@ -650,20 +535,10 @@ if(ErrorType === "Network error" || ErrorType === "User error"){
     inputPin,
     async(ErrorType) => {
       if (ErrorType === "unauthorised") {
-        await VerifyTransPin(
-    inputPin,
-    (ErrorType) => {
-      if (ErrorType === "unauthorised") {
-        setSessionModal(true);
-      }else if(ErrorType === "Network error" || ErrorType === "User error"){
-        alert("Your internet connection is quite unstable.")
-        setAirtimeTransactionNetwork(true)
-      }
-    },
-    setIsLoading,
-    setErrorMessage,
-    handleTransactionSuccessClose
-  );
+   if(sessionModal) return;
+   if(!sessionModal) return setSessionModal(true)
+      }else if(ErrorType === "Server error"){
+            alert("Pin Verification Failed")
       }else if(ErrorType === "Network error" || ErrorType === "User error"){
         alert("Your internet connection is quite unstable.")
         setAirtimeTransactionNetwork(true);
@@ -682,8 +557,8 @@ if(Data?.ConfirmAcc === "true"){
    await  GetRecipientList();
   }
   if(airtimeTransactionNetwork === true && (newBalance === ""|| newBalance === undefined) ){
-}
-  await GetBalance()
+     await GetBalance()
+    } 
   })
 }
 
@@ -1049,11 +924,10 @@ className={`flex justify-left  w-[100%] items-center`}>
                                 {errors.amount && (
                                     <div className="!text-[14px] text-red-500 italic lg:text-[14px]">
                                         {errors.amount}
-                                      
-                                    </div>
+                                   </div>
                                 )}
                                   {(!errors.amount && networkName === "" && amount?.length > 1) && (
-                                             <p className="text-[#F95252] text-[13px] 
+                     <p className="text-[#F95252] text-[13px] 
                       md:text-[12px] lg:text-[14px] font-[400] italic">
                            Select Network Type
                                             </p>
@@ -1265,9 +1139,10 @@ className={`flex justify-left  w-[100%] items-center`}>
                         {isLoading === false  ? (
                             
                         <div onClick={() => { 
+                            console.log("Error brooooo");
                        if(networkName?.length > 1 && 
                          recipientNumber?.length > 1 && recipientNumber?.length === 11
-                           && RecipientExistCheck?.phone !== recipientNumber && RecipientExistCheck?.phone !== undefined 
+                            && RecipientExistCheck?.phone === undefined && RecipientExistCheck?.phone !== recipientNumber
                            &&   !errors?.recipientNumber) {
                                handleAddRecipient();
                             }
@@ -1516,9 +1391,6 @@ className={`flex justify-left  w-[100%] items-center`}>
                     shouldAutoFocus={true}
                     inputStyle={{
                        color: isDarkMode ? "#ffffff" : "#000000",
-                        // width: 30,
-                        // height: 30,
-                        // borderRadius: 3,
                         fontWeight: 700,
                         borderRadius: 4,
                         height: "35px",
@@ -1654,11 +1526,11 @@ className={`flex justify-left  w-[100%] items-center`}>
                                     </div>
                                     <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                                         <p className="text-[#0008]">Payment Method</p>
-                                        <span>{factorWalletName(name)}</span>
+                                        <span>{name}</span>
                                     </div>
                                     <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                                         <p className="text-[#0008]">Amount</p>
-                                        <span>&#8358;{amount}</span>
+                                        <span>&#8358;{newAmount}</span>
                                     </div>
                                     <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[12px]">
                                         <p className="text-[#0008]">Order Number</p>
@@ -1677,7 +1549,6 @@ className={`flex justify-left  w-[100%] items-center`}>
                                             setTransactSuccessPopUp(false);
                                             // window.location.reload();
                                             setNetworkName("");
-                                            setSelected("");
                                             setRecipientNumber("");
                                             setRecipientName("");
                                             setSelectedProduct("");
@@ -1759,7 +1630,6 @@ className={`flex justify-left  w-[100%] items-center`}>
                                             setTransactFailedPopUp(false);
                                             // window.location.reload();
                                             setNetworkName("");
-                                            setSelected("");
                                             setRecipientNumber("");
                                             setRecipientName("");
                                             setSelectedProduct("");
@@ -1801,7 +1671,6 @@ className={`flex justify-left  w-[100%] items-center`}>
                                             setTransactFailedPopUp(false);
                                             // window.location.reload();
                                             setNetworkName("");
-                                            setSelected("");
                                             setRecipientNumber("");
                                             setRecipientName("");
                                             setSelectedProduct("");

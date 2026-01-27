@@ -364,9 +364,9 @@ const product = ["All Products", "Airtime Top-up", "Data Top-up", "Bills Payment
 
           <div
             // id="Transaction"
-            className="min-h-[99px]   bg-gradient-to-r
+            className="min-h-[99px] w-full  bg-gradient-to-r
              from-yellow-300 to-rose-400 lg:h-[196px] md:h-[112.29px] rounded-[6.6px] md:rounded-[11.46px] lg:rounded-[20px]
-                           mx-auto  flex gap-6 justify-between px-[16.51px] md:px-[28.65px] lg:px-[50px]"
+                mx-auto  flex gap-6 justify-between px-[16.51px] md:px-[28.65px] lg:px-[50px]"
           >
             <div className="py-[9.57px] md:py-[16.61px] align-middle self-center 
                             flex flex-col gap-1.5 w-full">

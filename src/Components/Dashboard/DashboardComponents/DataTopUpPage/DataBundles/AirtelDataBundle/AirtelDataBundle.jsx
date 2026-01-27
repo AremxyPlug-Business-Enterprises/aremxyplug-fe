@@ -1622,18 +1622,11 @@ const path = "/data";
                                  };
                                  const setFailed = (ErrorType) => {
                                    if (ErrorType === "unauthorised") {
-                                     VerifyTransPin(
-                                       inputPin,
-                                       (ErrorType) => {
-                                         if (ErrorType === "unauthorised") {
-                                           return setSessionModal(true);
-                                         }
-                                       },
-                                       setLoading,
-                                       setErrorMessage,
-                                       AirtelDataHandler
-                                     );
-                                   }
+                               if(sessionModal) return;
+                           if(!sessionModal) return setSessionModal(true)
+                            }else if(ErrorType === "Server error"){
+                           alert("Pin Verification Failed")
+                                }
                                  };
                                  //Run the function to check user's pin
                                  // and proceed with purchase

@@ -233,7 +233,6 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
                   const customer  =  response?.data?.data?.customer;
             if(customer){
                setCustomerDetail(customer);
-               console.log(customer);
                   }} 
             } catch(error){
              if(error && error.response === undefined){
