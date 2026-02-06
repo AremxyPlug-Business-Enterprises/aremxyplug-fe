@@ -79,6 +79,7 @@ const KAEDCO = () => {
     authenticationOpen,
     purchaseElectricityErrorType,
     setPurchaseElectricityErrorType,
+    setNetworkIssue
   } = useContext(ContextProvider);
 
   const [showProductList, setShowProductList] = useState(false);
@@ -116,24 +117,16 @@ const KAEDCO = () => {
     // setShowOptionList(false);
   };
   const [passDataBalance, setPassDataBalance] = useState({});
-   const [balanceLoader, setBalanceLoader] = useState(false)
-  const GetBalance = async () => {
-    const SuccessHandler = () => {
-      console.log("successfully retrieved balance");
+   const [balanceLoader, setBalanceLoader] = useState(false);
+const GetBalance = async () => {
+
+    const SuccessHandler = (response) => {
+       setPassDataBalance(response)
     };
     const FailedHandler = async (ErrorType) => {
       if (ErrorType === "unauthorised") {
-        await GetFunction(
-          `bills/verify`,
-          setBalanceLoader,
-          SuccessHandler,
-          (ErrorType) => {
-            if (ErrorType === "unauthorised") {
-              return setSessionModal(true);
-            }
-          },
-          setPassDataBalance
-        );
+      if(sessionModal) return;
+      if(!sessionModal) return setSessionModal(true)
       }
     };
     await GetFunction(
@@ -141,7 +134,8 @@ const KAEDCO = () => {
       setBalanceLoader,
       SuccessHandler,
       FailedHandler,
-      setPassDataBalance
+     ()=> {},
+      setNetworkIssue
     );
   };
   // get the balance on entering the page
@@ -306,14 +300,7 @@ const KAEDCO = () => {
       }),
   });
 
-  // const isEmailValid = (input) => {
-  //   const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-
-  //   if (emailRegex.test(input) ) {
-  //     return true;
-  //   }
-  //   return false;
-  // };
+ 
 
   const handleCountryClick = (name, flag, id, code, balance) => {
     if (id !== 1 && code !== "Nigerian NGN Wallet") return;
@@ -361,7 +348,7 @@ const KAEDCO = () => {
   const [isFailedMeterNumber, setIsFailedMeterNumber] = useState(false);
   const [meterNumberLoading, setMeterNumberLoading] = useState(false);
 
-  let passedMeterName;
+let passedMeterName;
 
   const verifyMeterNumber = async (meterNumber) => {
     async function HandleMeterNumber() {
@@ -391,20 +378,8 @@ const KAEDCO = () => {
         const FailedHandler = async (ErrorType) => {
           if (ErrorType === "Bad request") {
             setIsFailedMeterNumber(true);
-          } else if (ErrorType === "unaithorised") {
-            await PostFunction(
-              path,
-              setMeterNumberLoading,
-              body,
-              SuccessHandler,
-              (ErrorType) => {
-                if (ErrorType === "unauthorised") {
-                  return setSessionModal(true);
-                }
-              },
-              setKaedcoFetchedResponse
-            );
-            return setSessionModal(true);
+          } else if (ErrorType === "unauthorised") {
+         if(!sessionModal)  return setSessionModal(true);
           }
           setIsFailedMeterNumber(true);
         };
@@ -415,7 +390,8 @@ const KAEDCO = () => {
           body,
           SuccessHandler,
           FailedHandler,
-          setKaedcoFetchedResponse
+          setKaedcoFetchedResponse,
+          setNetworkIssue
         );
       }
     }
@@ -464,33 +440,8 @@ const KAEDCO = () => {
           setInputPinPopUp(false);
           setFailedPopup(true);
         } else if (ErrorType === "unauthorised") {
-          await PostFunction(
-            path,
-            setLoading,
-            data,
-            SuccessHandler,
-            (ErrorType) => {
-              if (ErrorType === "unauthorised") {
-                return setSessionModal(true);
-              } else if (ErrorType === "Server error") {
-                setPurchaseElectricityErrorType(
-                  "Server Error: Purchase Failed"
-                );
-              } else if (
-                ErrorType === "Network error" ||
-                ErrorType === "User error"
-              ) {
-                setPurchaseElectricityErrorType(
-                  "Network Error : Purchase Failed"
-                );
-              } else {
-                setPurchaseElectricityErrorType(
-                  "An Unexpected error has occured"
-                );
-              }
-            },
-            setKaedcoFetchedResponse
-          );
+         if(sessionModal) return;
+         if(!sessionModal) return setSessionModal(true)
         } else if (ErrorType === "Server error") {
           setPurchaseElectricityErrorType("Server Error: Purchase Failed");
           setFailedPopup(true);
@@ -513,35 +464,16 @@ const KAEDCO = () => {
         data,
         SuccessHandler,
         FailedHandler,
-        setKaedcoFetchedResponse
+        setKaedcoFetchedResponse,
+        setNetworkIssue
       );
     }
     const setPinFailed = async (ErrorType) => {
       if (ErrorType === "unauthorised") {
-        await VerifyTransPin(
-          inputPin,
-          (ErrorType) => {
-            if (ErrorType === "unauthorised") {
-              setSessionModal(true);
-            } else if (
-              ErrorType === "Network error" ||
-              ErrorType === "User error"
-            ) {
-              return alert("Kindly Check your internet connection");
-            } else if (ErrorType === "Server error") {
-              alert(
-                "The server is currently experiencing a downtime, try again some other time."
-              );
-            } else {
-              alert("An unexpected has occured try again some other time.");
-            }
-          },
-          setLoading,
-          setErrorMessage,
-          ElectricityHandler
-        );
+        if(sessionModal) return;
+        if(!sessionModal) return setSessionModal(true)
       } else if (ErrorType === "Network error" || ErrorType === "User error") {
-        return alert("Kindly Check your internet connection");
+        return setNetworkIssue(true)
       } else if (ErrorType === "Server error") {
         alert(
           "The server is currently experiencing a downtime, try again some other time."
@@ -555,7 +487,8 @@ const KAEDCO = () => {
       setPinFailed,
       setLoading,
       setErrorMessage,
-      ElectricityHandler
+      ElectricityHandler,
+      setNetworkIssue
     );
   };
 

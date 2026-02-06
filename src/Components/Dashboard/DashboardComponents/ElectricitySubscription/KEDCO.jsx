@@ -75,7 +75,7 @@ const KEDCO = () => {
     setKedcoWalletBalance,
     kedcoPaymentResult,
     setKedcoPaymentResult,
-
+    setNetworkIssue,
     newBalance,
     setNewBalance,
     authenticationOpen,
@@ -121,23 +121,15 @@ const KEDCO = () => {
   };
   const [passDataBalance, setPassDataBalance] = useState({});
    const [balanceLoader, setBalanceLoader] = useState(false)
-  const GetBalance = async () => {
-    const SuccessHandler = () => {
-      console.log("successfully retrieved balance");
+const GetBalance = async () => {
+
+    const SuccessHandler = (response) => {
+    setPassDataBalance(response)
     };
     const FailedHandler = async (ErrorType) => {
       if (ErrorType === "unauthorised") {
-        await GetFunction(
-          `bills/verify`,
-          setBalanceLoader,
-          SuccessHandler,
-          (ErrorType) => {
-            if (ErrorType === "unauthorised") {
-              return setSessionModal(true);
-            }
-          },
-          setPassDataBalance
-        );
+         if(sessionModal) return;
+         if(!sessionModal) return setSessionModal(true)
       }
     };
     await GetFunction(
@@ -145,7 +137,8 @@ const KEDCO = () => {
       setBalanceLoader,
       SuccessHandler,
       FailedHandler,
-      setPassDataBalance
+      setPassDataBalance,
+      setNetworkIssue
     );
   };
   // get the balance on entering the page
@@ -396,18 +389,8 @@ const KEDCO = () => {
           if (ErrorType === "Bad request") {
             setIsFailedMeterNumber(true);
           } else if (ErrorType === "unauthorised") {
-            await PostFunction(
-              path,
-              setMeterNumberLoading,
-              body,
-              SuccessHandler,
-              (ErrorType) => {
-                if (ErrorType === "unauthorised") {
-                  return setSessionModal(true);
-                }
-              },
-              setKedcoFetchedResponse
-            );
+           if(sessionModal) return;
+           if(!sessionModal) return setSessionModal(true)
           }
         };
 
@@ -417,7 +400,8 @@ const KEDCO = () => {
           body,
           SuccessHandler,
           FailedHandler,
-          setKedcoFetchedResponse
+          setKedcoFetchedResponse,
+          setNetworkIssue
         );
       }
     }
@@ -463,33 +447,8 @@ const KEDCO = () => {
           setInputPinPopUp(false);
           setFailedPopup(true);
         } else if (ErrorType === "unauthorised") {
-          await PostFunction(
-            path,
-            setLoading,
-            data,
-            SuccessHandler,
-            (ErrorType) => {
-              if (ErrorType === "unauthorised") {
-                return setSessionModal(true);
-              } else if (ErrorType === "Server error") {
-                setPurchaseElectricityErrorType(
-                  "Server Error: Purchase Failed"
-                );
-              } else if (
-                ErrorType === "Network error" ||
-                ErrorType === "User error"
-              ) {
-                setPurchaseElectricityErrorType(
-                  "Network Error : Purchase Failed"
-                );
-              } else {
-                setPurchaseElectricityErrorType(
-                  "An Unexpected error has occured"
-                );
-              }
-            },
-            setKedcoFetchedResponse
-          );
+         if(sessionModal) return;
+         if(!sessionModal) return setSessionModal(true)
         } else if (ErrorType === "Server error") {
           setPurchaseElectricityErrorType("Server Error: Purchase Failed");
           setFailedPopup(true);
@@ -512,7 +471,8 @@ const KEDCO = () => {
         data,
         SuccessHandler,
         FailedHandler,
-        setKedcoFetchedResponse
+        setKedcoFetchedResponse,
+        setNetworkIssue
       );
     }
     //Kindly uncomment the code below after implementing the errorMessage
@@ -525,12 +485,13 @@ const KEDCO = () => {
           inputPin,
           (ErrorType) => {
             if (ErrorType === "unauthorised") {
-              setSessionModal(true);
+              if(sessionModal) return;
+            if(!sessionModal) return   setSessionModal(true);
             } else if (
               ErrorType === "Network error" ||
               ErrorType === "User error"
             ) {
-              return alert("Kindly Check your internet connection");
+              return setNetworkIssue(true)
             } else if (ErrorType === "Server error") {
               alert(
                 "The server is currently experiencing a downtime, try again some other time."
@@ -544,7 +505,7 @@ const KEDCO = () => {
           ElectricityHandler
         );
       } else if (ErrorType === "Network error" || ErrorType === "User error") {
-        return alert("Kindly Check your internet connection");
+        return setNetworkIssue(true)
       } else if (ErrorType === "Server error") {
         alert(
           "The server is currently experiencing a downtime, try again some other time."
@@ -558,7 +519,8 @@ const KEDCO = () => {
       setPinFailed,
       setLoading,
       setErrorMessage,
-      ElectricityHandler
+      ElectricityHandler,
+      setNetworkIssue
     );
   };
 

@@ -1,5 +1,5 @@
 const TawkWidget = ()=> {
-if(!navigator.onLine)return alert("Check your internet connection then reload to get customer support widget.");
+//if(!navigator.onLine)return alert("Check your internet connection then reload to get customer support widget.");
 if(navigator.onLine){
 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
 //Prevent loading or adding of script when one already exists
@@ -12,7 +12,7 @@ s1.charset='UTF-8';
 s1.setAttribute('crossorigin','*');
 s1.id ="tawk-widget";
 s1.onload = function(){
-    if(!navigator.onLine) return alert("Check internet connection")
+  //  if(!navigator.onLine) return alert("Check internet connection")
 };
 s0.parentNode.insertBefore(s1,s0);
 })();

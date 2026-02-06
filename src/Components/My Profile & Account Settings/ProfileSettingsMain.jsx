@@ -16,14 +16,14 @@ export default function ProfileSettingsMain(Data) {
   const { profilePage, setProfilePage } = useContext(ContextProvider);
   const { verificationOpen, setVerificationOpen } = useContext(ContextProvider);
   const { setBusinessPopUp } = useContext(ContextProvider);
-  const { authenticationOpen, setAuthenticationOpen,
+  const { authenticationOpen, setAuthenticationOpen, setNetworkIssue
      
    } =
     useContext(ContextProvider);
   const { bvnVerificationOpen, setBvnVerificationOpen } =
     useContext(ContextProvider);
   const { accountUpgrade, setAccountUpgrade } = useContext(ContextProvider);
-  const { idVerificationOpen, setIdVerificationOpen } =
+const { idVerificationOpen, setIdVerificationOpen, networkIssue } =
     useContext(ContextProvider);
     const {setVerificationReason} = useContext(ContextProvider);
     const {setVerificationResponse} = useContext(ContextProvider);
@@ -63,7 +63,11 @@ export default function ProfileSettingsMain(Data) {
 
   const QuickCheckVerification = async()=> {
      
-    if(!navigator.onLine) return  setVerificationReason(`${idVerificationOpen === true ? "Nin" : bvnVerificationOpen === true ? "Bvn" : "Nin"} retrieval failed: internet connection error`)
+    if(!navigator.onLine) {
+     setVerificationReason(`${idVerificationOpen === true ? "Nin" : bvnVerificationOpen === true ? "Bvn" : "Nin"} retrieval failed: internet connection error`)
+        if(networkIssue) return;
+             if(!networkIssue) return setNetworkIssue(true)
+             }
     const path ="check-verification";
     const SuccessHandler = (response)=> {
       setVerificationResponse(response)
@@ -71,6 +75,8 @@ export default function ProfileSettingsMain(Data) {
     const FailedHandler = async(ErrorType, response)=> {
       
       if(ErrorType === "User error" || ErrorType === "Network error"){
+             if(networkIssue) return;
+             if(!networkIssue) return setNetworkIssue(true)
         setVerificationReason(`${idVerificationOpen === true ? "Nin" : bvnVerificationOpen === true ? "Bvn" : "Nin"} retrieval failed due to unstable connection`)
       }else if(ErrorType === "Bad request"){
         setVerificationResponse(response)
@@ -79,16 +85,8 @@ export default function ProfileSettingsMain(Data) {
       }else if(ErrorType === undefined){
       setVerificationReason(`${idVerificationOpen === true ? "Nin" : bvnVerificationOpen === true ? "Bvn" : "Nin"} retrieval failed: internet connection error`)
       }else if(ErrorType === "unauthorised"){
-        await GetFunction(path, 
-      setLoading, 
-      SuccessHandler,
-       (ErrorType)=> {
-        if(ErrorType === "unauthorised"){
-         setSessionModal(true)
-        }
-       },
-
-     ()=> {})
+       if(sessionModal) return;
+       if(!sessionModal) return setSessionModal(true)
       }else {
      
         setVerificationReason(`${idVerificationOpen === true ? "Nin" : bvnVerificationOpen === true ? "Bvn" : ""} retrieval failed.`);
@@ -96,14 +94,13 @@ export default function ProfileSettingsMain(Data) {
       }
     }
   //console.log(verificationResponse?.data?.data?.address);
-    const setLoading=(Value)=> {
-  console.log(Value)
-    }
+    const setLoading=(Value)=> {} 
     await GetFunction(path, 
       setLoading, 
       SuccessHandler,
        FailedHandler,
-      setVerificationResponse)
+      setVerificationResponse,
+    setNetworkIssue)
   }
   // UseEffect to get Users Data
   const ValueRef = useRef();

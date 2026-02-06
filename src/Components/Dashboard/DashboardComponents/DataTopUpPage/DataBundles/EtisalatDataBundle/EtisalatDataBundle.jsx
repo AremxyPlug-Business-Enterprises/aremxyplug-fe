@@ -38,6 +38,7 @@ const EtisalatDataBundle = () => {
   const { isDarkMode,
      newBalance,
       setNewBalance,
+      setNetworkIssue,
     authenticationOpen} = useContext(ContextProvider);
   const {
     selectedOptionEtisalat,
@@ -56,6 +57,7 @@ const EtisalatDataBundle = () => {
     toggleSideBar,
     inputPin,
     setInputPin,
+    networkIssue,
     // inputPinHandler,
     toggleVisibility,
     isVisible,
@@ -112,13 +114,15 @@ const Balance = newBalance !== null &&
     //Fetch product for Etisalat
      const fetchProducts = async () => {
       setLoadingProducts(true);
+      if(!navigator.onLine) return setNetworkIssue(true);
+      if(navigator.onLine) {
       try {
         const response = await axiosInstance.get("/products/telecom/list/3");
         setProducts(response?.data?.data?.products || []);
       } catch (error) {
         console.error("Error fetching products:", error);
         if (error && error.response === undefined) {
-          alert("Check your internet Connection, then reload the page.");
+        setNetworkIssue(true)
         } else if (error && error.response.status === 400) {
           alert(
             "Service for 9 mobile is currently not available, Try again later."
@@ -131,6 +135,7 @@ const Balance = newBalance !== null &&
       } finally {
         setLoadingProducts(false);
       }
+    }
     };
   useEffect(() => {
     //fetch product for 9 mobile
@@ -152,6 +157,8 @@ const Balance = newBalance !== null &&
   // Fetch plans when product is selected
   const fetchPlans = async (productId) => {
     setLoadingPlans(true);
+    if(!navigator.onLine) return setNetworkIssue(true);
+    if(navigator.onLine) {
     try {
       const response = await axiosInstance.get(
         `/products/telecom/${productId}`
@@ -167,7 +174,8 @@ const Balance = newBalance !== null &&
     } catch (error) {
       console.error("Error fetching plans:", error);
       if (error && error.response === undefined) {
-        alert("Your internet connection is quite unstable.");
+       if(networkIssue) return;
+        if(!networkIssue) return setNetworkIssue(true)
       }  else if (error && error.response.status === 400) {
         setSelectProductWarn(true);
       }else if(error && error.response.status === 401){
@@ -176,23 +184,25 @@ const Balance = newBalance !== null &&
       } else if (error && error.response.status === 500) {
         setSelectProductWarn(true);
       } else {
-        alert("Check your internet connection.");
+        alert("An unexpected error has occured.");
       }
     } finally {
       setLoadingPlans(false);
     }
+  }
   };
 
   const handleSelectProduct = (product) => {
     if (!navigator.onLine) {
-      alert("Check your internet connection");
+     setNetworkIssue(true);
       setCheckNetworkError(true);
        if(product?.Plan_Type !== selectedProductEtisalat){
         setProductPlans([])
        }
     }
+     
     if (navigator.onLine) {
-      setSelectedProductEtisalat(`${product.Plan_Type}`);
+     setSelectedProductEtisalat(`${product.Plan_Type}`);
       setShowProductList(false);
       fetchPlans(product.Product_ID);
       setShowOptionList(true);
@@ -296,7 +306,8 @@ const Balance = newBalance !== null &&
         setBalanceLoader,
         SuccessHandler,
         FailedHandler,
-        setPassDataBalance
+        setPassDataBalance,
+        setNetworkIssue
       );
     };
   useEffect(() => {

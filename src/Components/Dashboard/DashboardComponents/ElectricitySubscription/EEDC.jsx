@@ -72,7 +72,7 @@ const EEDC = () => {
     setEedcWalletBalance,
     eedcPaymentResult,
     setEedcPaymentResult,
-
+   setNetworkIssue,
     newBalance,
     setNewBalance,
     authenticationOpen,
@@ -118,9 +118,10 @@ const EEDC = () => {
 
   const [passDataBalance, setPassDataBalance] = useState({});
 const [balanceLoader, setBalanceLoader] = useState(false)
-  const GetBalance = async () => {
-    const SuccessHandler = () => {
-      console.log("successfully retrieved balance");
+const GetBalance = async () => {
+
+    const SuccessHandler = (response) => {
+     setPassDataBalance(response)
     };
     const FailedHandler = async (ErrorType) => {
       if (ErrorType === "unauthorised") {
@@ -133,7 +134,8 @@ const [balanceLoader, setBalanceLoader] = useState(false)
               return setSessionModal(true);
             }
           },
-          setPassDataBalance
+          setPassDataBalance,
+          setNetworkIssue
         );
       }
     };
@@ -142,7 +144,8 @@ const [balanceLoader, setBalanceLoader] = useState(false)
       setBalanceLoader,
       SuccessHandler,
       FailedHandler,
-      setPassDataBalance
+      setPassDataBalance,
+      setNetworkIssue
     );
   };
   // get the balance on entering the page
@@ -403,7 +406,8 @@ const [balanceLoader, setBalanceLoader] = useState(false)
                   setSessionModal(true);
                 }
               },
-              setEedcFetchedResponse
+              setEedcFetchedResponse,
+              setNetworkIssue
             );
           } else if (ErrorType === "Server error") {
             setIsFailedMeterNumber(true);
@@ -416,7 +420,8 @@ const [balanceLoader, setBalanceLoader] = useState(false)
           body,
           SuccessHandler,
           FailedHandler,
-          setEedcFetchedResponse
+          setEedcFetchedResponse,
+          setNetworkIssue
         );
       }
     }
@@ -489,7 +494,8 @@ const [balanceLoader, setBalanceLoader] = useState(false)
                 );
               }
             },
-            setEedcFetchedResponse
+            setEedcFetchedResponse,
+            setNetworkIssue
           );
         } else if (ErrorType === "Server error") {
           setPurchaseElectricityErrorType("Server Error: Purchase Failed");
@@ -513,7 +519,8 @@ const [balanceLoader, setBalanceLoader] = useState(false)
         data,
         SuccessHandler,
         FailedHandler,
-        setEedcFetchedResponse
+        setEedcFetchedResponse,
+        setNetworkIssue
       );
     }
     const setPinFailed = async (ErrorType) => {
@@ -538,7 +545,8 @@ const [balanceLoader, setBalanceLoader] = useState(false)
           },
           setLoading,
           setErrorMessage,
-          ElectricityHandler
+          ElectricityHandler,
+          setNetworkIssue
         );
       } else if (ErrorType === "Network error" || ErrorType === "User error") {
         return alert("Kindly Check your internet connection");
@@ -555,7 +563,8 @@ const [balanceLoader, setBalanceLoader] = useState(false)
       setPinFailed,
       setLoading,
       setErrorMessage,
-      ElectricityHandler
+      ElectricityHandler,
+      setNetworkIssue
     );
   };
 

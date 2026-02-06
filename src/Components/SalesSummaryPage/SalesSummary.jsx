@@ -39,10 +39,10 @@ export default function SalesSummaryPage ()  {
          const { isDarkMode, toggleSideBar, dateEdit, setDateEdit,  startDateValueState,
     endDateValueState,
     setStartDateValueState,
-    setEndDateValueState,
+    setEndDateValueState, networkIssue,  setNetwrkIssue,
     setEditCalenderOne,
     setEditCalenderTwo,
-    setCurrentDateInTimeStamps,
+    setCurrentDateInTimeStamps, setNetworkIssue,
     editCalenderOne,editCalenderTwo, countCalender, setCountCalender } =
   useContext(ContextProvider);
     // const toggleDropdown1 = () => { setIsOpen1(true); };
@@ -110,8 +110,6 @@ export default function SalesSummaryPage ()  {
           path =`transactions/sales-summary?category=${product}${pathQuery()}`;
         }
       const SuccessHandler =(response)=>{
-       console.log("Sales Summary fetched");
-       console.log(product)
           if(product === "airtime"){
             setSalesResponse(response?.data?.data?.data?.data)
              console.log(response?.data?.data?.data?.data);
@@ -147,7 +145,8 @@ export default function SalesSummaryPage ()  {
         setLoading, 
         SuccessHandler,
          FailedHandler,
-          ()=> {}
+          ()=> {},
+          setNetworkIssue
         )}
 
 
@@ -162,11 +161,9 @@ export default function SalesSummaryPage ()  {
       //  
 
           const GetBalance =   async()=> {
-                                  const SuccessHandler = ()=> {
-                                //alert("Successful");
-                           console.log("successfully retrieved balance");
-                           //alert("Successful")
-                             }
+                const SuccessHandler = (response)=> {
+                  setPassDataBalance(response)
+                  }
                             const FailedHandler = async(ErrorType)=> {
                              if(ErrorType === "unauthorised"){
                              setSessionModal(true)
@@ -184,7 +181,8 @@ export default function SalesSummaryPage ()  {
                                setBalanceLoader,
                                 SuccessHandler,
                                  FailedHandler,
-                                 setPassDataBalance)
+                               ()=>{},
+                                setNetworkIssue)
                               } 
                                // Simulate async data loading
                               
@@ -291,7 +289,7 @@ setDateEdit(()=> {
    optionalDate?.toLocaleString("sv-SE", {
     timeZone : "Africa/Lagos",
     hour12 : false
-  }) : "";
+  }) : ""
  //Bread type into ten
   const slicedDate = isoString?.slice(0,10);
   const startDateOptions 

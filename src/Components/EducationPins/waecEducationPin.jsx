@@ -151,7 +151,6 @@ export default function WaecEducationPin() {
     setEduResponse,
     newBalance,
     setNewBalance,
-
     setWaecPinsGenerated,
     waecOrderId,
     setWaecOrderId,
@@ -159,7 +158,7 @@ export default function WaecEducationPin() {
     setWaecShowDescription,
     setWaecFullName,
     setWaecTransactionProduct,
-
+    networkIssue, setNetworkIssue,
     authenticationOpen,
     purchaseEduErrorType,
     setPurchaseEduErrorType,
@@ -234,7 +233,6 @@ export default function WaecEducationPin() {
   ];
 
   const getAmount = async function handleGetAmount() {
-    if (!navigator.onLine) alert("Kindly check your internet connection");
     const id = 1;
     const path = `products/edu/${id}`;
 
@@ -249,35 +247,13 @@ export default function WaecEducationPin() {
 
     const FailedHandler = async (ErrorType) => {
       if (ErrorType === "Server error") {
-        await GetFunction(
-          path,
-          setIsLoading,
-          SuccessHandler,
-          (ErrorType) => {
-            if (ErrorType === "Server error") {
-              alert("Unable to get WAEC PINS. Please try again later");
-            }
-          },
-          setEduResponse
-        );
+       alert("Unable to get WAEC PINS. Please try again later")
       } else if (ErrorType === "unauthorised") {
-        await GetFunction(
-          path,
-          setIsLoading,
-          SuccessHandler,
-          (ErrorType) => {
-            if (ErrorType === "Server error") {
-           alert("Unable to get WAEC PINS. Please try again later");  
-            }else if(ErrorType === "Network error" || ErrorType === "User error"){
-          alert("Your internet connection is quite unstable.");
-            }
-          },
-          setEduResponse
-        );
-      } else if (ErrorType === "Server error") {
-           alert("Unable to get WAEC PINS. Please try again later");
-            }else if(ErrorType === "Network error" || ErrorType === "User error"){
-          alert("Your internet connection is quite unstable.");
+        if(sessionModal) return;
+        if(!sessionModal) return setSessionModal(true)
+      } else if(ErrorType === "Network error" || ErrorType === "User error"){
+          if(networkIssue) return;
+          if(!networkIssue) return setNetworkIssue(true)
             }
     };
 
@@ -286,121 +262,29 @@ export default function WaecEducationPin() {
       setIsLoading,
       SuccessHandler,
       FailedHandler,
-      setEduResponse
+      setEduResponse,
+      setNetworkIssue
     );
   };
 const GetBalance = async () => {
     if(!navigator.onLine) return setCheckNetworkError(true)
-      const SuccessHandler = () => {
+      const SuccessHandler = (response) => {
         //alert("Successful");
-        console.log("successfully retrieved balance");
+      setPassDataBalance(response)
         //alert("Successful")
       };
       const FailedHandler = async (ErrorType) => {
         if (ErrorType === "unauthorised") {
-          await GetFunction(
-            `balance`,
-            setIsLoading,
-            SuccessHandler,
-            //Handling the error Use Cases of the Unauthorised inside
-            // of the statement.
-            async(ErrorType) => {
-              if (ErrorType === "unauthorised") {
-                return setSessionModal(true);
-              }else if(ErrorType === "Server error"){
-                  await GetFunction(
-        "balance",
-        setIsLoading,
-        SuccessHandler,
-       async(ErrorType)=> {
-        if(ErrorType === "Server error"){
-          alert("Failed to retrieve the balance.")
-        }else if(ErrorType === "Network error" || ErrorType === "User error"){
-           setCheckNetworkError(true);
-              alert("Kindly check your internet connection to retrieve balance.")
-        }else {
-          alert("An unexpected error has occured on attempt to retrieve balance.")
-        }
-       },
-        setPassDataBalance
-      );
-       }else if(ErrorType === "Network error" || ErrorType === "User error"){
-         setCheckNetworkError(true);
-           alert("Kindly check your internet connection to retrieve balance");
-           setCheckNetworkError(true);
-       }else {
-        alert("An unexpected error has occured on attempt to retrieve the balance")
-       }
-            },
-             setPassDataBalance
-          );
-        }else if(ErrorType === "Server error"){
-            await GetFunction(
-        "balance",
-        setIsLoading,
-        SuccessHandler,
-       async(ErrorType)=> {
-         if(ErrorType === "unauthorised"){
-            await GetFunction(
-        "balance",
-        setIsLoading,
-        SuccessHandler,
-        async(ErrorType)=> {
-          if(ErrorType === "unauthorised"){
-            return setSessionModal(true)
-          }else if(ErrorType === "Server error"){
-               await GetFunction(
-        "balance",
-        setIsLoading,
-        SuccessHandler,
-       async(ErrorType)=> {
-        //if Statements
-      //We run again cause the previous one was interrupted by 401
-      //Let us re-run server error
-      if(ErrorType === "Server error"){
+          if(sessionModal) return;
+          if(!sessionModal) return setSessionModal(true)
+        } else if(ErrorType === "Server error"){
         alert("Failed to retrieve the balance")
-      }else if(ErrorType === "unauthorised"){
-        return sessionModal(true)
-      }else if(ErrorType === "Network error" || ErrorType === "User error"){
-         setCheckNetworkError(true);
-       alert("Kindly check your internet connection to retrieve balance")
-      }else{
-       // console.log("yeah bro i am the one running blehh")
-        alert("An Unexpected error occured in attempt to retrieve balance")
-      }
-
-       },
-        setPassDataBalance
-      );
-          }else if(ErrorType === "Network error" || ErrorType === "User error"){
-             setCheckNetworkError(true);
-            alert("Kindly check your internet connection to retrieve the balance")
-          }else if(ErrorType === "Server error"){
-            alert("Failed to retrieve the balance.")
-          }else{
-            alert("An Unexpected error occured in attempt to retrieve balance")
-          }
-        },
-        setPassDataBalance
-      );
-    }
-          else if(ErrorType === "Network error" || ErrorType === "User error"){
-            //The operation was interrupted by a network error
-             setCheckNetworkError(true);
-            alert("Kindly check your internet connection to retrieve balance.")
-         }else {
-          //Place 
-          //An alien error has occured with the re-run of the "Server error" ErrorType
-          alert("An unexpected error occured in attempt to retrieve the balance.")
-         }
-       },
-        setPassDataBalance
-      );
         }else if(ErrorType === "Network error" || ErrorType === "User error"){
             setCheckNetworkError(true);
+            if(networkIssue) return;
+         if(!networkIssue) return setNetworkIssue(true)
         }else{
-           
-          alert("An unexpected error occured in attempt to retrieve balance.")
+           alert("An unexpected error occured in attempt to retrieve balance.")
         }
       }
       await GetFunction(
@@ -408,7 +292,8 @@ const GetBalance = async () => {
         setIsLoading,
         SuccessHandler,
         FailedHandler,
-        setPassDataBalance
+        ()=> {},
+        setNetworkIssue
       );
     };
    
@@ -667,18 +552,8 @@ const GetBalance = async () => {
         if (ErrorType === "Bad request") {
           waecEduPinFailed();
         } else if (ErrorType === "unauthorised") {
-          await PostFunction(
-            path,
-            setIsLoading,
-            body,
-            SuccessHandler,
-            (ErrorType) => {
-              if (ErrorType === "unauthorised") {
-                return setSessionModal(true);
-              }
-            },
-            setFetchedPurchaseResponse
-          );
+           if(sessionModal) return;
+           if(!sessionModal) return setSessionModal(true)
         } else if (ErrorType === "Server error") {
           setPurchaseEduErrorType(
             "Server error: Purchase Failed"
@@ -702,7 +577,8 @@ const GetBalance = async () => {
         body,
         SuccessHandler,
         FailedHandler,
-        setFetchedPurchaseResponse
+        setFetchedPurchaseResponse,
+        setNetworkIssue
       );
     }
 
@@ -725,7 +601,8 @@ const GetBalance = async () => {
       setPinFailed,
       setIsLoading,
       setErrorMessage,
-      EduPinHandler
+      EduPinHandler,
+      setNetworkIssue
     );
   };
 

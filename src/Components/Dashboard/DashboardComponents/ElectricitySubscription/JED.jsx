@@ -42,6 +42,7 @@ const JED = () => {
     setShowList,
     setSelected,
     selected,
+    setNetworkIssue,
     // jedCountry,
     setJedCountry,
     globalTransferErrors,
@@ -119,23 +120,15 @@ const JED = () => {
 
   const [passDataBalance, setPassDataBalance] = useState({});
   const [balanceLoader, setBalanceLoader] = useState(false)
-  const GetBalance = async () => {
-    const SuccessHandler = () => {
-      console.log("successfully retrieved balance");
+const GetBalance = async () => {
+
+    const SuccessHandler = (response) => {
+      setPassDataBalance(response);
     };
     const FailedHandler = async (ErrorType) => {
       if (ErrorType === "unauthorised") {
-        await GetFunction(
-          `bills/verify`,
-          setBalanceLoader,
-          SuccessHandler,
-          (ErrorType) => {
-            if (ErrorType === "unauthorised") {
-              return setSessionModal(true);
-            }
-          },
-          setPassDataBalance
-        );
+        if(sessionModal) return;
+        if(!sessionModal) return setSessionModal(true)
       }
     };
     await GetFunction(
@@ -143,7 +136,8 @@ const JED = () => {
       setBalanceLoader,
       SuccessHandler,
       FailedHandler,
-      setPassDataBalance
+     ()=> {},
+      setNetworkIssue
     );
   };
   // get the balance on entering the page
@@ -385,18 +379,7 @@ const JED = () => {
           if (ErrorType === "Bad request") {
             setIsFailedMeterNumber(true);
           } else if (ErrorType === "unauthorised") {
-            await PostFunction(
-              path,
-              setMeterNumberLoading,
-              body,
-              SuccessHandler,
-              (ErrorType) => {
-                if (ErrorType === "unauthorised") {
-                  return setSessionModal(true);
-                }
-              },
-              setJedFetchedResponse
-            );
+            setNetworkIssue(true)
           }
         };
 
@@ -406,7 +389,8 @@ const JED = () => {
           body,
           SuccessHandler,
           FailedHandler,
-          setJedFetchedResponse
+          setJedFetchedResponse,
+          setNetworkIssue
         );
       }
     }
@@ -502,35 +486,16 @@ const JED = () => {
         data,
         SuccessHandler,
         FailedHandler,
-        setJedFetchedResponse
+        setJedFetchedResponse,
+        setNetworkIssue
       );
     }
     const setPinFailed = async (ErrorType) => {
       if (ErrorType === "unauthorised") {
-        await VerifyTransPin(
-          inputPin,
-          (ErrorType) => {
-            if (ErrorType === "unauthorised") {
-              setSessionModal(true);
-            } else if (
-              ErrorType === "Network error" ||
-              ErrorType === "User error"
-            ) {
-              return alert("Kindly Check your internet connection");
-            } else if (ErrorType === "Server error") {
-              alert(
-                "The server is currently experiencing a downtime, try again some other time."
-              );
-            } else {
-              alert("An unexpected has occured try again some other time.");
-            }
-          },
-          setLoading,
-          setErrorMessage,
-          ElectricityHandler
-        );
+        if(sessionModal) return;
+        if(!sessionModal) return setSessionModal(true)
       } else if (ErrorType === "Network error" || ErrorType === "User error") {
-        return alert("Kindly Check your internet connection");
+        return setNetworkIssue(true)
       } else if (ErrorType === "Server error") {
         alert(
           "The server is currently experiencing a downtime, try again some other time."
@@ -544,7 +509,8 @@ const JED = () => {
       setPinFailed,
       setLoading,
       setErrorMessage,
-      ElectricityHandler
+      ElectricityHandler,
+      setNetworkIssue
     );
   };
 

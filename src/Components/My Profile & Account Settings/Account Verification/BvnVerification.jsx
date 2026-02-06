@@ -22,7 +22,7 @@ import countryImage from "../../EducationPins/imagesEducation/Nigeriaflag.svg";
 import { InternalLoginSession} from "../../ApiCollection.jsx/ApiBuck";
 export default function BvnVerification(Data) {
   const dateInputRef = useRef(null);
-  const { bvnVerificationOpen } = useContext(ContextProvider);
+  const { bvnVerificationOpen, networkIssue, setNetworkIssue } = useContext(ContextProvider);
   const { verificationOpen } = useContext(ContextProvider);
   const { bvnVerifyImage, setBvnVerifyImage } = useContext(ContextProvider);
   const { bvnStatus, setBvnStatus } = useContext(ContextProvider);
@@ -139,7 +139,8 @@ export default function BvnVerification(Data) {
         }
       } catch (error) {
         if (error && error.response === undefined) {
-          alert("Your network connection is quite unstable.");
+              if(networkIssue) return;
+             if(!networkIssue) return setNetworkIssue(true)
         } else if ( error.response.status ===  400) {
           alert(ErrorMessage);
           console.log(`ERROR : ${error}`);
@@ -152,7 +153,6 @@ export default function BvnVerification(Data) {
         }else if(error.response.status === 401){
             setSessionModal(true)
         } else {
-          alert("Check your internet connection.");
           setErrorVerify(true);
         }
       } finally {

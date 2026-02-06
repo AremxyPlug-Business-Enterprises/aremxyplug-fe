@@ -907,8 +907,8 @@ export const Context = ({ children }) => {
           const [ pointOrderId,  setPointOrderId] = useState(0);
         const [pointAmountRedeemed, setPointAmountRedeemed] = useState(0);
         const [pointPointsRedeemed, setPointPointsRedeemed] = useState(0);
-           const [pointTransactionProduct, setPointTransactionProduct] = useState(0);
-        const [pointTransactionDescription, setPointTransactionDescription] = useState(0);
+           const [pointTransactionProduct, setPointTransactionProduct] = useState("");
+        const [pointTransactionDescription, setPointTransactionDescription] = useState("");
          const [pointFetchedResponse, setPointFetchedResponse ] = useState({});
 
   //==============electricity subscrition===========
@@ -1396,9 +1396,10 @@ const [nabtebPinsGenerated, setNabtebPinsGenerated] = useState([]);
   const [updateDataBalance, setUpdateDataBalance] = useState({});
   const [electricityTransErrorType, setElectricityTransErrorType] =
     useState("");
-    const [sec, setSec] = useState(0);
+
     const [openTaskBar, setOpenTaskBar] = useState(false)
-    const [progressTaskBarResponse, setProgressTaskBarResponse]  = useState({})
+    const [progressTaskBarResponse, setProgressTaskBarResponse]  = useState({});
+  const [networkIssue, setNetworkIssue] = useState(false)
 
 
     // ========== Transfer to aremxyPlug======
@@ -1453,6 +1454,8 @@ const [currentDateInTimeStamps, setCurrentDateInTimeStamps] = useState(0);
     taskBarResponse,
     openTaskBar,
      setOpenTaskBar,
+     networkIssue,
+     setNetworkIssue,
      setTaskBarResponse,
     handleStateCalender,
     startDateValueState, 
@@ -1469,8 +1472,6 @@ const [currentDateInTimeStamps, setCurrentDateInTimeStamps] = useState(0);
     setCountCalender,
   sessionExpiration,
      setSessionExpiration, 
-    sec,
-     setSec,
     transferValue,
      setTransferValue,
     dateEdit, 

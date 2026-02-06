@@ -31,6 +31,7 @@ import { validateNigerianNumberByNetwork } from "./AEDC";
 const EKEDC = () => {
   const navigate = useNavigate();
   const {
+    setNetworkIssue,
     isDarkMode,
     toggleSideBar,
     ekedcMeterNumber,
@@ -118,7 +119,8 @@ const EKEDC = () => {
 
   const [passDataBalance, setPassDataBalance] = useState({});
   const [balanceLoader, setBalanceLoader] = useState(false)
-  const GetBalance = async () => {
+const GetBalance = async () => {
+
     const SuccessHandler = () => {
       console.log("successfully retrieved balance");
     };
@@ -142,7 +144,8 @@ const EKEDC = () => {
       setBalanceLoader,
       SuccessHandler,
       FailedHandler,
-      setPassDataBalance
+      setPassDataBalance,
+      setNetworkIssue
     );
   };
   // get the balance on entering the page
@@ -417,7 +420,8 @@ const EKEDC = () => {
           body,
           SuccessHandler,
           FailedHandler,
-          setEkedcFetchedResponse
+          setEkedcFetchedResponse,
+          setNetworkIssue
         );
       }
     }
@@ -495,7 +499,8 @@ const EKEDC = () => {
                 );
               }
             },
-            setEkedcFetchedResponse
+            setEkedcFetchedResponse,
+            setNetworkIssue
           );
         } else if (ErrorType === "Server error") {
           setPurchaseElectricityErrorType("Server Error: Purchase Failed");
@@ -519,33 +524,14 @@ const EKEDC = () => {
         data,
         SuccessHandler,
         FailedHandler,
-        setEkedcFetchedResponse
+        setEkedcFetchedResponse,
+        setNetworkIssue
       );
     }
     const setPinFailed = async (ErrorType) => {
       if (ErrorType === "unauthorised") {
-        await VerifyTransPin(
-          inputPin,
-          (ErrorType) => {
-            if (ErrorType === "unauthorised") {
-              setSessionModal(true);
-            } else if (
-              ErrorType === "Network error" ||
-              ErrorType === "User error"
-            ) {
-              return alert("Kindly Check your internet connection");
-            } else if (ErrorType === "Server error") {
-              alert(
-                "The server is currently experiencing a downtime, try again some other time."
-              );
-            } else {
-              alert("An unexpected has occured try again some other time.");
-            }
-          },
-          setLoading,
-          setErrorMessage,
-          ElectricityHandler
-        );
+        if(sessionModal) return;
+        if(!sessionModal) return setSessionModal(true);
       } else if (ErrorType === "Network error" || ErrorType === "User error") {
         return alert("Kindly Check your internet connection");
       } else if (ErrorType === "Server error") {
@@ -561,7 +547,8 @@ const EKEDC = () => {
       setPinFailed,
       setLoading,
       setErrorMessage,
-      ElectricityHandler
+      ElectricityHandler,
+      setNetworkIssue
     );
   };
 

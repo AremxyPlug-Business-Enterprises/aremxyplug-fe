@@ -75,7 +75,8 @@ export default function NabtebEducationPins() {
     setEducationPinStatus,
     newBalance,
     setNewBalance,
-
+   networkIssue,
+   setNetworkIssue,
      nabtebEduResponse,
     setNabtebPinsGenerated,
     nabtebOrderId,
@@ -160,7 +161,6 @@ const Data = GetLocalStorage();
   ];
 
   const getAmount = async function handleGetAmount() {
-    if (!navigator.onLine) alert("Kindly check your internet connection");
     const id = 3;
     const path = `products/edu/${id}`;
     const SuccessHandler = (response) => {
@@ -175,32 +175,16 @@ const Data = GetLocalStorage();
 
     const FailedHandler = async (ErrorType) => {
       if (ErrorType === "Server error") {
-        await GetFunction(
-          path,
-          setIsLoading,
-          SuccessHandler,
-          (ErrorType) => {
-            if (ErrorType === "Sever error") {
-           alert("Unable to get NABTEB PINS. Please try again later");
-            }else if(ErrorType === "Network error" || ErrorType === "User error"){
-          alert("Your internet connection is quite unstable.")
-            }
-          },
-          setNabtebEduResponse
-        );
+         alert("Unable to retrieve Nabteb Information")
       } else if (ErrorType === "unauthorised") {
-        await GetFunction(
-          path,
-          setIsLoading,
-          SuccessHandler,
-          (ErrorType) => {
-            if (ErrorType === "unauthorised") {
-              return setSessionModal(true);
-            }
-          },
-          setNabtebEduResponse
-        );
-      }
+        if(sessionModal) return;
+        if(!sessionModal) return setNetworkIssue(true)
+      }else if(ErrorType === "Network error" || ErrorType === "User error"){
+    if(!networkIssue) return setNetworkIssue(true)
+      if(networkIssue) return;
+    }else{
+      alert("An Unexpected error had occured")
+    }
     };
 
     await GetFunction(
@@ -208,121 +192,27 @@ const Data = GetLocalStorage();
       setIsLoading,
       SuccessHandler,
       FailedHandler,
-      setNabtebEduResponse
+      setNabtebEduResponse,
+      setNetworkIssue
     );
   };
   const GetBalance = async () => {
       if(!navigator.onLine) return setCheckNetworkError(true)
-        const SuccessHandler = () => {
+        const SuccessHandler = (response) => {
           //alert("Successful");
-          console.log("successfully retrieved balance");
+         setPassDataBalance(response)
           //alert("Successful")
         };
         const FailedHandler = async (ErrorType) => {
           if (ErrorType === "unauthorised") {
-            await GetFunction(
-              `balance`,
-              setIsLoading,
-              SuccessHandler,
-              //Handling the error Use Cases of the Unauthorised inside
-              // of the statement.
-              async(ErrorType) => {
-                if (ErrorType === "unauthorised") {
-                  return setSessionModal(true);
-                }else if(ErrorType === "Server error"){
-                    await GetFunction(
-          "balance",
-          setIsLoading,
-          SuccessHandler,
-         async(ErrorType)=> {
-          if(ErrorType === "Server error"){
-            alert("Failed to retrieve the balance.")
-          }else if(ErrorType === "Network error" || ErrorType === "User error"){
-             setCheckNetworkError(true);
-                alert("Kindly check your internet connection to retrieve balance.")
-          }else {
-            alert("An unexpected error has occured on attempt to retrieve balance.")
-          }
-         },
-          setPassDataBalance
-        );
-         }else if(ErrorType === "Network error" || ErrorType === "User error"){
-           setCheckNetworkError(true);
-             alert("Kindly check your internet connection to retrieve balance");
-             setCheckNetworkError(true);
-         }else {
-          alert("An unexpected error has occured on attempt to retrieve the balance")
-         }
-              },
-               setPassDataBalance
-            );
-          }else if(ErrorType === "Server error"){
-              await GetFunction(
-          "balance",
-          setIsLoading,
-          SuccessHandler,
-         async(ErrorType)=> {
-           if(ErrorType === "unauthorised"){
-              await GetFunction(
-          "balance",
-          setIsLoading,
-          SuccessHandler,
-          async(ErrorType)=> {
-            if(ErrorType === "unauthorised"){
-              return setSessionModal(true)
-            }else if(ErrorType === "Server error"){
-                 await GetFunction(
-          "balance",
-          setIsLoading,
-          SuccessHandler,
-         async(ErrorType)=> {
-          //if Statements
-        //We run again cause the previous one was interrupted by 401
-        //Let us re-run server error
-        if(ErrorType === "Server error"){
-          alert("Failed to retrieve the balance")
-        }else if(ErrorType === "unauthorised"){
-          return sessionModal(true)
-        }else if(ErrorType === "Network error" || ErrorType === "User error"){
-           setCheckNetworkError(true);
-         alert("Kindly check your internet connection to retrieve balance")
-        }else{
-         // console.log("yeah bro i am the one running blehh")
-          alert("An Unexpected error occured in attempt to retrieve balance")
-        }
-  
-         },
-          setPassDataBalance
-        );
-            }else if(ErrorType === "Network error" || ErrorType === "User error"){
-               setCheckNetworkError(true);
-              alert("Kindly check your internet connection to retrieve the balance")
-            }else if(ErrorType === "Server error"){
-              alert("Failed to retrieve the balance.")
-            }else{
-              alert("An Unexpected error occured in attempt to retrieve balance")
-            }
-          },
-          setPassDataBalance
-        );
-      }
-            else if(ErrorType === "Network error" || ErrorType === "User error"){
-              //The operation was interrupted by a network error
-               setCheckNetworkError(true);
-              alert("Kindly check your internet connection to retrieve balance.")
-           }else {
-            //Place 
-            //An alien error has occured with the re-run of the "Server error" ErrorType
-            alert("An unexpected error occured in attempt to retrieve the balance.")
-           }
-         },
-          setPassDataBalance
-        );
+            if(sessionModal) return;
+            if(!sessionModal) return setSessionModal(true)
+          
           }else if(ErrorType === "Network error" || ErrorType === "User error"){
               setCheckNetworkError(true);
+              setNetworkIssue(true)
           }else{
-             
-            alert("An unexpected error occured in attempt to retrieve balance.")
+              alert("An unexpected error occured in attempt to retrieve balance.")
           }
         }
         await GetFunction(
@@ -330,7 +220,7 @@ const Data = GetLocalStorage();
           setIsLoading,
           SuccessHandler,
           FailedHandler,
-          setPassDataBalance
+          ()=> {}, setNetworkIssue
         );
       };
   // get the amount and balance on entering the page
@@ -621,7 +511,8 @@ const Data = GetLocalStorage();
         body,
         SuccessHandler,
         FailedHandler,
-        setFetchedPurchaseResponse
+        setFetchedPurchaseResponse,
+        setNetworkIssue
       );
     }
     const setPinFailed = async (ErrorType) => {
@@ -630,6 +521,9 @@ const Data = GetLocalStorage();
                if(!sessionModal) return setSessionModal(true)
                     }else if(ErrorType === "Server error"){
                      alert("Pin Verification Failed")
+                    }else if(ErrorType === "Network Error" || ErrorType === "User error"){
+                    if(networkIssue) return;
+                    if(!networkIssue) return setNetworkIssue(true)
                     }
     };
     await VerifyTransPin(
@@ -637,7 +531,8 @@ const Data = GetLocalStorage();
       setPinFailed,
       setIsLoading,
       setErrorMessage,
-      EduPinHandler
+      EduPinHandler,
+      setNetworkIssue
     );
   };
 

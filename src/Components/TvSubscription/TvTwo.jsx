@@ -73,7 +73,7 @@ const DsTv = () => {
         setNewBalance,
         setFetchedDstvPlans,
         toggleSideBar,
-        
+         networkIssue, setNetworkIssue
  } = useContext(ContextProvider);
 const Data = GetLocalStorage();
    // const [packageDstv, setPackageDstv] = useState("");
@@ -130,7 +130,6 @@ const ReceiptButton = ()=> {
     setDstvSubscriptionResponse({})
     // navigate("/DsTv");
   }
-console.log(dstvSubscriptionResponse?.data?.status);
   
 
   const handleTvEmail = (e) => {
@@ -178,15 +177,8 @@ console.log(dstvSubscriptionResponse?.data?.status);
    const FailedHandler = async(ErrorType)=> {
     console.log("Error");
     if(ErrorType === "unauthorised"){
-      await GetFunction(TvPath,
-         setIsLoading,
-          SuccessHandler,
-           (ErrorType)=> {
-            if(ErrorType === "unauthorised"){
-             return setSessionModal(true);
-            }
-           }, 
-           fetchedResponse)
+     if(!sessionModal) return setSessionModal(true);
+     if(sessionModal) return;
     }
     
    };
@@ -204,15 +196,15 @@ console.log(dstvSubscriptionResponse?.data?.status);
     if((fetchedStarTimesPlans.status === undefined || fetchedStarTimesPlans.status ===  null) && id === 2 ){
       TvPath = `products/tvsub/startimes`;
     fetchedResponse = setFetchedStarTimesPlans;
-     await GetFunction(TvPath, setIsLoading, SuccessHandler, FailedHandler, fetchedResponse)
+     await GetFunction(TvPath, setIsLoading, SuccessHandler, FailedHandler, fetchedResponse, setNetworkIssue)
    }else if((fetchedGotvPlans.status === undefined || fetchedGotvPlans.status === null) && id === 3){
       TvPath = `products/tvsub/gotv`;
     fetchedResponse = setFetchedGotvPlans;
-     await GetFunction(TvPath, setIsLoading, SuccessHandler, FailedHandler, fetchedResponse)
+     await GetFunction(TvPath, setIsLoading, SuccessHandler, FailedHandler, fetchedResponse, setNetworkIssue)
    }else if ((fetchedShowMaxPlans.status === undefined || fetchedShowMaxPlans.status ===  null) && id === 4){
     TvPath = `products/tvsub/showmax`;
     fetchedResponse = setFetchedShowMaxPlans;
-     await GetFunction(TvPath, setIsLoading, SuccessHandler, FailedHandler, fetchedResponse)
+     await GetFunction(TvPath, setIsLoading, SuccessHandler, FailedHandler, fetchedResponse, setNetworkIssue)
    }else{
     return SubscriptionPresent();
   }
@@ -222,26 +214,17 @@ console.log(dstvSubscriptionResponse?.data?.status);
 
   const RetrieveGotvPlans = async()=> {
   if(!navigator.onLine) return setCheckNetworkError(true)
-          const SuccessHandler = ()=> {
-    console.log("Successfully fetched dstv plans");
+          const SuccessHandler = (response)=> {
+    setFetchedDstvPlans(response);
    }
      const failedHandler = async(ErrorType)=> {
       if(ErrorType === "unauthorised"){
-    await GetFunction(`products/tvsub/dstv`, 
-      setIsLoading,
-       SuccessHandler,
-        (ErrorType)=> {
-         if(ErrorType === "User error" || ErrorType === "Network error"){
-             setCheckNetworkError(true);
-          }else if(ErrorType === "Server error"){
-             alert("Failed to fetch DStv Plans, try again later")
-          }else{
-            alert("An unexpected error has occured try again later.")
-          }
-      },
-         setFetchedDstvPlans);
+            if(sessionModal) return;
+            if(!sessionModal) return setSessionModal(true)
       }else if(ErrorType === "User error" || ErrorType === "Network error"){
              setCheckNetworkError(true);
+             if(networkIssue) return;
+             if(!networkIssue) return setNetworkIssue(true)
           }else if(ErrorType === "Server error"){
              alert("Failed to fetch Gotv Plans, try again later")
           }else{
@@ -253,7 +236,7 @@ console.log(dstvSubscriptionResponse?.data?.status);
   setIsLoading, 
   SuccessHandler,
    failedHandler,
-    setFetchedDstvPlans);
+    ()=> {}, setNetworkIssue);
 }
 
 const DstvOptionalPlan = dstvData?.length < 1 && fetchedDstvPlans.status === 200 ? fetchedDstvPlans?.data?.data?.data : dstvData;
@@ -262,19 +245,23 @@ const DstvOptionalPlan = dstvData?.length < 1 && fetchedDstvPlans.status === 200
  
 //Retrieving User's Balance ======
   const GetBalance = async () => {
-    if(!navigator.onLine) return setCheckNetworkError(true)
-      const SuccessHandler = () => {
-        //alert("Successful");
-        console.log("successfully retrieved balance");
-        //alert("Successful")
+    if(!navigator.onLine) {
+      setCheckNetworkError(true)
+      setNetworkIssue(true);
+    }
+      const SuccessHandler = (response) => {
+        setPassDataBalance(response)
       };
       const FailedHandler = async (ErrorType) => {
         if (ErrorType === "unauthorised") {
-          setSessionModal(true)
+          if(sessionModal) return;
+        if(!sessionModal) return  setSessionModal(true)
         }else if(ErrorType === "Server error"){
      alert("Failed to retrieve balance.")
     }else if(ErrorType === "Network error" || ErrorType === "User error"){
         setCheckNetworkError(true)
+        if(networkIssue) return;
+        if(!networkIssue) return setNetworkIssue(true)
         }else{
           alert("An unexpected error occured in attempt to retrieve balance.")
         }
@@ -284,7 +271,8 @@ const DstvOptionalPlan = dstvData?.length < 1 && fetchedDstvPlans.status === 200
         setBalanceLoader,
         SuccessHandler,
         FailedHandler,
-        setPassDataBalance
+        ()=> {},
+        setNetworkIssue
       );
     };
       useEffect(()=> {
@@ -296,9 +284,7 @@ const DstvOptionalPlan = dstvData?.length < 1 && fetchedDstvPlans.status === 200
 }
 
                      // Simulate async data loading
-                     
-                  
-                        GetBalance();
+          GetBalance();
                         if(GetBalance){
                          setNewBalance(passDataBalance?.data?.data?.data !== undefined
                            ? passDataBalance?.data?.data?.data?.balance : "");
@@ -479,7 +465,8 @@ const VerifyPinHandler = async () => {;
         requestData,
         successHandler,
         FailedHandler,
-         setDstvSubscriptionResponse
+         setDstvSubscriptionResponse,
+         setNetworkIssue
       );
     };
   
@@ -492,7 +479,8 @@ const VerifyPinHandler = async () => {;
       //The general error message on an "Network error, User error" ErrorType
       else if( ErrorType === "User error"
     || ErrorType === "Network error" ){
-  alert("Kindly check your internet connection")
+      if(networkIssue) return;
+        if(!networkIssue) return setNetworkIssue(true)
   }
     }
 
@@ -502,7 +490,8 @@ const VerifyPinHandler = async () => {;
        setFailedConfig,
       setIsLoading,
       setErrorMessage,
-     DstvHandler
+     DstvHandler,
+     setNetworkIssue
    );
 
    //In any case the the ""User error, Network error, Bad request," occurs
@@ -535,17 +524,15 @@ const FailedHandler = async(ErrorType)=> {
 if(ErrorType === "unauthorised"){
     if(sessionModal) return;
       if(sessionModal === false) return setSessionModal(true);
- 
- setSessionModal(true)
        //3.Handling the ErrorType "Network error, User error"
 }else if(ErrorType === "Server error"){
   alert("Unable to verify details.")
 }else if(ErrorType === "Network error" || ErrorType === "User error"){
-  alert("Kindly check your internet connection")
+     if(networkIssue) return;
+        if(!networkIssue) return setNetworkIssue(true)
 }  else if(ErrorType === "Bad request"){
       setStateInvalidDecoderNumber(true)
      }else {
-  //4. Handling the "alien" ErrorType.
    alert("An unexpected error has occured, try again some other time.")
 }
 }
@@ -560,7 +547,8 @@ if(ErrorType === "unauthorised"){
       bodyToJson,
       SuccessHandler, 
      FailedHandler,
-   setDstvVerifyResponse)
+   setDstvVerifyResponse,
+  setNetworkIssue)
 }
 }
 //console.log(userVerifiedName)
@@ -580,7 +568,7 @@ window.addEventListener("online", ()=> {
     && (newBalance === null || newBalance === undefined || newBalance === "") ){
    return GetBalance()
    }
-   if(checkNetworkError === true && (fetchedDstvPlans.status !== 200 || fetchedDstvPlans.status === undefined) ) {
+   if((fetchedDstvPlans.status !== 200 || fetchedDstvPlans.status === undefined) ) {
     return RetrieveGotvPlans()
    }
   })

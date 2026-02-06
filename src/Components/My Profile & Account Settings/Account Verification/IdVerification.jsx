@@ -36,7 +36,9 @@ export default function IdVerification(Data) {
     setIdStatus,
     verificationResponse,
     verificationReason,
-    setVerificationResponse
+    setVerificationResponse,
+    networkIssue,
+    setNetworkIssue
   } = useContext(ContextProvider);
   const { dropDownGender, setDropDownGender, idButtonState, setIdButtonState } =
     useContext(ContextProvider);
@@ -192,7 +194,8 @@ export default function IdVerification(Data) {
         }
       } catch (error) {
         if(error && (error.response === undefined)){
-          alert("Your network is quite unstable.");
+              if(networkIssue) return;
+             if(!networkIssue) return setNetworkIssue(true)
         } else if (error.response.status === 400) {
           alert(ErrorMessage);
           console.log(`ERROR : ${error}`);
@@ -206,7 +209,7 @@ export default function IdVerification(Data) {
         }else if( error.response.status === 401){
           setSessionModal(true)
         }else {
-          alert("Check your internet connection.")
+          alert("Unexpected error occured, try again later")
         }
       } finally {
         setLoading(false);

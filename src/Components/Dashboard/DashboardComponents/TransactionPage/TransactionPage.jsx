@@ -35,7 +35,9 @@ const TransactionPage = () => {
     setEditCalenderOne,
     setEditCalenderTwo,
     setCurrentDateInTimeStamps,
-    editCalenderOne,editCalenderTwo, setCountCalender
+    editCalenderOne,editCalenderTwo, setCountCalender,
+    setNetworkIssue,
+    networkIssue
     
    
   } = useContext(ContextProvider);
@@ -86,7 +88,10 @@ const [isActive, setIsActive] = useState(false);
   //  which include necessary query parameters for search
   const GetTransactionInformation = async (value) => {
      console.log(value);
-    if (!navigator.onLine) return setTransactionHistoryError("Network error");
+    if (!navigator.onLine){
+       setTransactionHistoryError("Network error");
+       setNetworkIssue(true)
+    }
    
     const pathQueryFunction = ()=> {
     const telecomDataForRequest
@@ -175,8 +180,7 @@ const paymentDataForRequest
      ? `?category=${categoryDetermination}&subcategory=${valueCategoryDetermination}&start_date=${startDateValueState}&end_date=${endDateValueState}` : undefined
     
 const fullQuery = `?flow=${allCategoryValue}&category=${categoryDetermination}&subcategory=${valueCategoryDetermination}?start_date=${startDateValueState}&end_date=${endDateValueState}`
-console.log(startDateValueState);
-console.log(startDateQuery);
+
 
       if(allCategoryValue?.length > 1 
         && (categoryDetermination === undefined || !categoryDetermination )
@@ -231,7 +235,8 @@ console.log(startDateQuery);
       setLoading,
       SuccessHandler,
       FailedHandler,
-      setTransactionResponse
+      setTransactionResponse,
+      setNetworkIssue
     );
   };
 
@@ -336,14 +341,12 @@ await GetTransactionInformation()
 const totalLength = transactionResponse?.data?.data?.data?.total_count;
 const totalValue = transactionResponse?.data?.data?.data?.total_value;
 const transactionStatusMetrics = transactionResponse?.data?.data?.data?.status_metrics;
-console.log(transactionStatusMetrics?.success?.volume)
 const successStatusMetricsPercentage = (transactionStatusMetrics?.success?.volume / totalLength) * 100;
 const failedStatusMetricsPercentage = (transactionStatusMetrics?.failed?.volume / totalLength) * 100;
 const  refundedStatusMetricsPercentage = (transactionStatusMetrics?.refunded?.volume / totalLength) * 100
 const  pendingStatusMetricsPercentage = (transactionStatusMetrics?.pending?.volume / totalLength) * 100;
 
-console.log(transactionStatusMetrics?.refunded?.value)
-      const pictorialStatus = [
+const pictorialStatus = [
         { status : "All Transactions",
            percentage : totalLength > 0 ? 100 : 0, 
            volume : totalLength,
@@ -406,39 +409,19 @@ console.log(transactionStatusMetrics?.refunded?.value)
     let result;
     const SuccessHandler = (response) => {
       result = response;
-      console.log("Transaction fetched successfully");
     };
     const FailedHandler = async (ErrorType) => {
-       if (!navigator.onLine) alert("Kindly check your internet connection");
+       if (!navigator.onLine) {
+        if(networkIssue) return;
+        if(!networkIssue) return setNetworkIssue(true)
+       }
       if (ErrorType === "unauthorised") {
-        await GetFunction(
-          path,
-          setOrderLoading,
-          SuccessHandler,
-          (ErrorType) => {
-            if (ErrorType === "unauthorised") {
-              setSessionModal(true);
-            }
-          },
-          setOrderIdResponse
-        );
-      } else if (ErrorType === "Server error") {
-        await GetFunction(
-          path,
-          setOrderLoading,
-          SuccessHandler,
-          (ErrorType) => {
-            if (ErrorType === "Server error") {
-              alert("A server error occured, please try again later");
-              setElectricityTransErrorType(
-                "Failed to process your request, try again some other time"
-              );
-            }
-          },
-          setOrderIdResponse
-        );
+         if(sessionModal ) return;
+            if(!sessionModal) return setSessionModal(true)
       } else if (ErrorType === "Network error" || ErrorType === "User error") {
         setElectricityTransErrorType("An internet connection error");
+      }else if(ErrorType === "Server error"){
+          setElectricityTransErrorType("An Server error");
       }
     };
 
@@ -447,7 +430,8 @@ console.log(transactionStatusMetrics?.refunded?.value)
       setOrderLoading,
       SuccessHandler,
       FailedHandler,
-      setOrderIdResponse
+      setOrderIdResponse,
+      setNetworkIssue
     );
     return result;
   };

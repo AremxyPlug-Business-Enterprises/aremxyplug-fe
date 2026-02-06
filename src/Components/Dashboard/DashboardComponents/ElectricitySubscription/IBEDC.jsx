@@ -74,7 +74,7 @@ const IBEDC = () => {
     setIbedcWalletBalance,
     ibedcPaymentResult,
     setIbedcPaymentResult,
-
+   setNetworkIssue,
     newBalance,
     setNewBalance,
     authenticationOpen,
@@ -121,7 +121,8 @@ const IBEDC = () => {
 
   const [passDataBalance, setPassDataBalance] = useState({});
 const [balanceLoader, setBalanceLoader] = useState(false)
-  const GetBalance = async () => {
+const GetBalance = async () => {
+
     const SuccessHandler = () => {
       console.log("successfully retrieved balance");
     };
@@ -135,8 +136,9 @@ const [balanceLoader, setBalanceLoader] = useState(false)
             if (ErrorType === "unauthorised") {
               return setSessionModal(true);
             }
-          },
-          setPassDataBalance
+          }
+          ,setPassDataBalance,
+          setNetworkIssue
         );
       }
     };
@@ -145,7 +147,8 @@ const [balanceLoader, setBalanceLoader] = useState(false)
       setBalanceLoader,
       SuccessHandler,
       FailedHandler,
-      setPassDataBalance
+      setPassDataBalance,
+      setNetworkIssue
     );
   };
   // get the balance on entering the page
@@ -410,7 +413,8 @@ const [balanceLoader, setBalanceLoader] = useState(false)
                   setSessionModal(true);
                 }
               },
-              setIbedcFetchedResponse
+              setIbedcFetchedResponse,
+              setNetworkIssue
             );
           }
         };
@@ -421,7 +425,8 @@ const [balanceLoader, setBalanceLoader] = useState(false)
           body,
           SuccessHandler,
           FailedHandler,
-          setIbedcFetchedResponse
+          setIbedcFetchedResponse,
+          setNetworkIssue
         );
       }
     }
@@ -519,33 +524,14 @@ const [balanceLoader, setBalanceLoader] = useState(false)
         data,
         SuccessHandler,
         FailedHandler,
-        setIbedcFetchedResponse
+        setIbedcFetchedResponse,
+        setNetworkIssue
       );
     }
     const setPinFailed = async (ErrorType) => {
       if (ErrorType === "unauthorised") {
-        await VerifyTransPin(
-          inputPin,
-          (ErrorType) => {
-            if (ErrorType === "unauthorised") {
-              setSessionModal(true);
-            } else if (
-              ErrorType === "Network error" ||
-              ErrorType === "User error"
-            ) {
-              return alert("Kindly Check your internet connection");
-            } else if (ErrorType === "Server error") {
-              alert(
-                "The server is currently experiencing a downtime, try again some other time."
-              );
-            } else {
-              alert("An unexpected has occured try again some other time.");
-            }
-          },
-          setLoading,
-          setErrorMessage,
-          ElectricityHandler
-        );
+      if(sessionModal) return;
+      if(!sessionModal) return setSessionModal(true)
       } else if (ErrorType === "Network error" || ErrorType === "User error") {
         return alert("Kindly Check your internet connection");
       } else if (ErrorType === "Server error") {
@@ -561,7 +547,8 @@ const [balanceLoader, setBalanceLoader] = useState(false)
       setPinFailed,
       setLoading,
       setErrorMessage,
-      ElectricityHandler
+      ElectricityHandler,
+      setNetworkIssue
     );
   };
 

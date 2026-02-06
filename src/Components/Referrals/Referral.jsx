@@ -19,9 +19,11 @@ import {
 } from "../../Components/ApiCollection.jsx/ApiBuck";
 import { Loader } from "../Loader/Loader";
 import { Modal } from "../Screens/Modal/Modal";
+import { ContextProvider } from "../Context";
 // import { set } from "core-js/core/dict";
 
 export default function Referral() {
+  const {networkIssue, setNetworkIssue} = React?.useContext(ContextProvider)
   //  const [copyTextOne, setCopyTextOne] = useState('');
   //  const [copyTextTwo, setCopyTextTwo] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -81,7 +83,8 @@ export default function Referral() {
          if(sessionModal) return
          if(sessionModal === false) return setSessionModal(true)
             }else if (ErrorType === "User error" || ErrorType === "Network error") {
-          alert("Your inetrnet connection is quite unstable")
+            if(networkIssue) return;
+             if(!networkIssue) return setNetworkIssue(true)
       }else  if (ErrorType === "Server error") {
               alert("Failed to fetch referred users");
              }
@@ -92,7 +95,8 @@ export default function Referral() {
       setIsLoading,
       successHandler,
       FailedHandler,
-      setReferralResponds
+      setReferralResponds,
+      setNetworkIssue
     );
   };
   useEffect(() => {
@@ -161,7 +165,8 @@ export default function Referral() {
     ()=>{},
       successHandler,
       FailedHandler,
-      setReferredUsersResponse
+      setReferredUsersResponse,
+      setNetworkIssue
     );
   };
 

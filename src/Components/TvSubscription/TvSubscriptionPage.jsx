@@ -70,6 +70,8 @@ export const TvSubscription = () =>{
     setStarTimesWalletBalance,
      setTvSubscriptionResponse,
      setDstvSubscriptionResponse,
+     networkIssue,
+     setNetworkIssue
        } = useContext(ContextProvider)
     const navigate = useNavigate();
 const [sessionModal, setSessionModal]= useState(false)
@@ -163,23 +165,22 @@ const GetFunctionHandler = async(GlobalTvSubscription,tvPage, TvSubscriptionValu
         if(ErrorType === "unauthorised"){
          setSessionModal(true);
         }
-    }, setFetchedGotvPlans)
+    }, setFetchedGotvPlans, setNetworkIssue)
      }else if(GlobalTvSubscription === 1){
         await GetFunction(`products/tvsub/dstv`, setLoading, SuccessHandler, ()=> {
       
            setSessionModal(true);
-    }, setFetchedDstvPlans)
+    }, setFetchedDstvPlans, setNetworkIssue)
      }else if(GlobalTvSubscription === 2 ){
           await GetFunction(`products/tvsub/startimes`, setLoading, SuccessHandler, ()=> {
        
            setSessionModal(true);
-    }, setFetchedStarTimesPlans)
+    }, setFetchedStarTimesPlans, setNetworkIssue)
      }else if(GlobalTvSubscription === 3){
   await GetFunction(`products/tvsub/showmax`, setLoading, SuccessHandler, ()=> {
         setSessionModal(true);
-    }, setFetchedShowMaxPlans)
-     }else {
-        console.log("This error did not result from unauthorization.")
+    }, setFetchedShowMaxPlans, setNetworkIssue)
+     }else {console.log("This error did not result from unauthorization.")
      }
     }
 
@@ -207,7 +208,8 @@ const GetFunctionHandler = async(GlobalTvSubscription,tvPage, TvSubscriptionValu
      }
   }
 else if(DetectAuthorisation === "User error" || DetectAuthorisation === "Network error" ){
-         alert("Kindly check your internet connection")
+       if(networkIssue) return;
+       if(!networkIssue) return setNetworkIssue(true)
      }else{
         alert("An unexpected error has occured, try some other time.")
      }
@@ -243,11 +245,11 @@ const handleSubscriptionFunction = ()=> {
  const LinkToPage = ()=> {
    if(handleSubscriptionFunction && GlobalTvSubscription === 1  && (fetchedDstvPlans.status === 200 || fetchedDstvPlans.status === 201)){
   return  navigate("/DsTv");
-  }else if(handleSubscriptionFunction && GlobalTvSubscription === 3  && fetchedShowMaxPlans.status === (200 || 201)){
+  }else if(handleSubscriptionFunction && GlobalTvSubscription === 3  && (fetchedShowMaxPlans.status === 200 || fetchedShowMaxPlans.status === 201)){
  return navigate("/Showmax");
-  }else if(handleSubscriptionFunction && GlobalTvSubscription === 2 && fetchedStarTimesPlans.status === (200 || 201)){
+  }else if(handleSubscriptionFunction && GlobalTvSubscription === 2 && ( fetchedStarTimesPlans.status === 200 ||  fetchedStarTimesPlans.status === 201)){
 return navigate("/StarTimes");
-   }else if(handleSubscriptionFunction && GlobalTvSubscription === 0 && fetchedGotvPlans.status === (200 || 201)){
+   }else if(handleSubscriptionFunction && GlobalTvSubscription === 0 && (fetchedGotvPlans.status === 200 || fetchedGotvPlans.status ===  201)){
    return navigate("/GoTv");
    }
    }
@@ -258,7 +260,7 @@ return navigate("/StarTimes");
 
  handleSubscriptionFunction();
    if(handleSubscriptionFunction && GlobalTvSubscription === 0 && (fetchedGotvPlans.status !== 200)){
-await GetFunction(path, setLoading, SuccessHandler, FailedHandler, fetchedPlans);
+await GetFunction(path, setLoading, SuccessHandler, FailedHandler, fetchedPlans, setNetworkIssue);
 //console.log(FailedHandler);
 //alert("Hello")
 //   if(GetFunction && (fetchedGotvPlans.status === 200 || fetchedGotvPlans.status === 201)){
@@ -266,20 +268,20 @@ await GetFunction(path, setLoading, SuccessHandler, FailedHandler, fetchedPlans)
 //   }
     } else if(handleSubscriptionFunction && GlobalTvSubscription === 1 && (fetchedDstvPlans.status !== 200 )){
     
-  await GetFunction(path, setLoading, SuccessHandler, FailedHandler, fetchedPlans);
+  await GetFunction(path, setLoading, SuccessHandler, FailedHandler, fetchedPlans, setNetworkIssue);
      if(GetFunction && (fetchedDstvPlans.status === 200 || fetchedDstvPlans.status === 201))
          return navigate("/DsTv");
     
     } else if(handleSubscriptionFunction && GlobalTvSubscription === 2 &&(fetchedStarTimesPlans.status !== 200 )){
         
- await GetFunction(path, setLoading, SuccessHandler, FailedHandler, fetchedPlans);
+ await GetFunction(path, setLoading, SuccessHandler, FailedHandler, fetchedPlans, setNetworkIssue);
  if(GetFunction && (fetchedStarTimesPlans.status === 200 || fetchedStarTimesPlans.status === 201)){
 return navigate("/StarTimes");
  }
  
     }else if(handleSubscriptionFunction && GlobalTvSubscription === 3 && (fetchedShowMaxPlans.status !== 200)){
      
-  await GetFunction(path, setLoading, SuccessHandler, FailedHandler, fetchedPlans);
+  await GetFunction(path, setLoading, SuccessHandler, FailedHandler, fetchedPlans,setNetworkIssue);
   if(GetFunction && (fetchedShowMaxPlans.status === 200 || fetchedShowMaxPlans.status === 201)){
  return navigate("/Showmax");
   }

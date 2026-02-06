@@ -107,12 +107,13 @@ export const InActionVirtualAccountState = (
 
 
   // A reusable component to handle user session management.
-  export const HandleUserSession = ()=> {
-    const {sec, setSec, setSessionExpiration}= useContext(ContextProvider)
+  export const HandleUserSession = ({sec, setSec})=> {
+    const { setSessionExpiration, setOpenTaskBar}= useContext(ContextProvider)
+     setOpenTaskBar(false)
     const holdSecRef = useRef(null);
     const isDarkMode = localStorage.getItem("darkModeEnabled");
     console.log(sec);
-    useEffect(()=> {
+    useEffect(()=> {   
     if(holdSecRef.current) return clearInterval(holdSecRef.current)
     if(sec > 0){
      holdSecRef.current = setInterval(()=> {
@@ -181,6 +182,7 @@ return localStorage.setItem("SessionExpiration", resetExpiration);
 ///Login Session =======//
 export const InternalLoginSession = ({ setExpiredSessionLogin})=> {
   const [password, setPassword] = useState();
+  const {setNetworkIssue, networkIssue} = useContext(ContextProvider)
   const [loading, setLoading] = useState(false)
    const isDarkMode = localStorage.getItem("darkModeEnabled");
    const getUsername = JSON.parse(localStorage.getItem("aremxyUserName"));
@@ -188,7 +190,9 @@ export const InternalLoginSession = ({ setExpiredSessionLogin})=> {
    const emailToken = localStorage.getItem("xcss[]");
    const usernameToken = localStorage.getItem("xcss{}");
    const HoldValue = usernameToken && !emailToken ? getUsername : UserEmail;
- 
+   if(networkIssue === true){
+    setNetworkIssue(false)
+   }
 
  const functionAtSuccess = async(response)=> {
    alert("Successful");
@@ -221,7 +225,7 @@ const SubmitUserLoginDetails = ()=> {
   body,
   functionAtSuccess,
   functionAtFailed,
-  ()=> {})
+  ()=> {}, setNetworkIssue)
   }
 //console.log(requestObjectConfirm)
 
@@ -328,19 +332,64 @@ const SubmitUserLoginDetails = ()=> {
 
 
 //RefreshTojen EndPoint
-export const refreshToken = async()=> {
+export const refreshToken = async(setNetworkIssue, setSessionModal)=> {
     const setLoading = ()=> {}
   await GetFunction("refresh-token",setLoading, ()=> {
-    console.log("Token refreshed successfully")
   }, (ErrorType)=> {
     if(ErrorType === "Network error" || ErrorType === "User error"){
-      alert("Your internet connection is quite unstable.")
+     //
       }else if(ErrorType === "Server error"){
     return;
     }else if(ErrorType === "unauthorised"){
-   console.log("Unauthorised issue");
+       setSessionModal(true)
     }
-  }, ()=> {} )
+  }, ()=> {}, setNetworkIssue ? setNetworkIssue : ()=> {})
+}
+
+//============Network issue ============//
+export const NetworkPopUp = ({Page})=> {
+const {setNetworkIssue} = useContext(ContextProvider);
+   const isDarkMode = localStorage.getItem("darkModeEnabled")
+  return (
+  <div className="`w-full h-full justify-center items-center
+   flex">
+    <Modal>
+    <div className="w-full flex  justify-center items-center">
+     <div className = {`flex flex-col justify-center items-center
+             py-[20px] px-[12px] gap-[20px] w-[80%] md:w-[60%] lg:w-[30%] md:h-[300px]  rounded-[10px]
+             lg:rounded-[20px]   ${isDarkMode === "true" ? "bg-black border border-white rounded-[10px]" 
+               : "bg-white"}`}>
+         <h2 className={`text-[14px] text-center font-[600] leading-[18px]
+               text-black lg:text-[16px] lg:leading-[22px] ${isDarkMode === "true" ? "text-white" : "text-black"}`}>
+             No network connection or unstable internet connection
+         </h2>
+       
+         <div className="flex flex-col items-center justify-center gap-2 w-full">
+          <p className ={`text-[14px] text-center font-[400] leading-[18px]
+               text-black lg:text-[16px] lg:leading-[22px] ${isDarkMode === "true" ? "text-white" : "text-black"}`}>
+               Failed to retrieve <span className="font-bold capitalize">{Page}</span> {" "} 
+               information 
+              </p>
+                {isDarkMode === "false" ? (
+              <img src={"./Images/NetworkBlack.svg"} className="w-20 h-20" alt="Network Icon" />
+                ) : (
+                  <img src={"./Images/NetworkWhite.svg"} className="w-20 h-20" alt="Network Icon" />
+                )}
+              </div>
+                <button 
+                 onClick = {()=> setNetworkIssue(false)}
+                 className="bg-[#04177f]  cursor-pointer mt-[5%] mx-auto 
+                  py-[12px] flex justify-center items-center text-[#ffffff] 
+ text-[11px] font-[600] rounded-md md:w-[95px] md:h-[26px] w-full
+                   md:p-[2%] lg:w-[200px] lg:h-[38px] lg:text-[13px]"
+            >
+             Okay
+                 </button>
+     </div>
+    </div>
+    </Modal>
+    </div>
+  )
 }
 // ======  The Restriction-PopUp for Users that doesn't have an account
   export const RestrictionPopUp = ()=> {
@@ -446,8 +495,9 @@ export const CheckVirtualAcc = async(
      setAccountNumberState,
      TwoStep,
      setTwoStepVerificationSuccess,
-    confirmVirtualState) => {
-     if(!navigator.onLine) return alert("Check your internet Connection")
+    confirmVirtualState,
+  setNetworkIssue) => {
+     if(!navigator.onLine ) setNetworkIssue(true)
   if (authToken  && navigator.onLine) {
     const url = 'https://api.aremxyplug.com/api/v1/virtualacc';
      try{
@@ -483,14 +533,14 @@ export const CheckVirtualAcc = async(
       else if(error.status === 401){
          alert("You were timed out, kindly login again to continue")
       } else if (error.status === 404) {
-        alert("Network Error, Please Check your Connection and try again");
+       //
         console.log(`ERROR: ${error}`);
       } else if (error.status === 500) {
         alert("Error:", "SERVER ERROR");
       } else if (error.response === undefined) {
-        alert("Check your internet Connection");
+        setNetworkIssue(true)
       } else {
-        alert("Check your internet connection");
+        alert("An unexpected error has occured");
       }
     } finally {
       if (confirmVirtualState) {
@@ -565,11 +615,12 @@ export const VerifyTransPin = async (
   setFailed,
   setLoading,
   setErrorMessage,
-  asyncFuncAtSuccess
+  asyncFuncAtSuccess,
+  setNetworkIssue
 ) => {
   const usernameToken = localStorage.getItem("xcss{}");
   const emailToken = localStorage.getItem("xcss[]");
-  if (!navigator.onLine) return alert("Check your internet connection");
+  if (!navigator.onLine) return setNetworkIssue(true);
   if ((usernameToken || emailToken) && navigator.onLine) {
     try {
       setLoading(true);
@@ -587,7 +638,7 @@ export const VerifyTransPin = async (
       
    }catch(error){
         if(error && error.response === undefined){
-     alert("Kindly check your internet connection")
+       setNetworkIssue(true)
      setFailed("Network error");
       } else if(error && error.response.status === 400){
          setFailed("Bad request");
@@ -624,11 +675,12 @@ export const PostFunction = async (
   body,
   functionAtSuccess,
   functionAtFailed,
-  setFetchedResponse
+  setFetchedResponse,
+  setNetworkIssue
 ) => {
   const usernameToken = localStorage.getItem("xcss{}");
   const emailToken = localStorage.getItem("xcss[]");
-  if (!navigator.onLine) return alert("Check your internet connection");
+  if (!navigator.onLine) return setNetworkIssue(true);
   if ((usernameToken || emailToken ) && navigator.onLine){
     try {
       setLoading(true);
@@ -642,6 +694,7 @@ export const PostFunction = async (
       
       if (response.status === 201 || response.status === 200) {
         functionAtSuccess(response);
+        setNetworkIssue(false);
         if (functionAtSuccess) {
           setFetchedResponse(response?.data?.data);
 
@@ -649,7 +702,7 @@ export const PostFunction = async (
       }
    }catch(error){
         if(error && error.response === undefined){
-     alert("Kindly check your internet connection")
+      setNetworkIssue(true)
       functionAtFailed("Network error");
       }  else  if(error && error.response.status === 400){
        functionAtFailed("Bad request");
@@ -694,10 +747,10 @@ export const PostFunction = async (
 
 // A general Function to get useful data from the backend
 export const GetFunction = async(path, setLoading, functionAtSuccess,
-  functionAtFailed,setFetchedResponse)=> {
+  functionAtFailed,setFetchedResponse, setNetworkIssue)=> {
    const usernameToken = localStorage.getItem("xcss{}");
    const emailToken = localStorage.getItem("xcss[]");
-   if(!navigator.onLine) return alert("Check your internet connection");
+   if(!navigator.onLine) return setNetworkIssue(true);
    if((usernameToken || emailToken) && navigator.onLine){
       try{
          setLoading(true);
@@ -705,6 +758,7 @@ export const GetFunction = async(path, setLoading, functionAtSuccess,
       const response = await axios.get(url, {headers: {"Content-Type" :"application/json",
          }, withCredentials : true})
     if(response.status === 201 || response.status ===  200){
+      setNetworkIssue(false)
      functionAtSuccess(response);
      if(functionAtSuccess){
      setFetchedResponse(response);
@@ -712,7 +766,7 @@ export const GetFunction = async(path, setLoading, functionAtSuccess,
       }
    }catch(error){
       if(error && error.response === undefined){
-     alert("Kindly check your internet connection");
+        setNetworkIssue(true)
      functionAtFailed("Network error");
       } else if(error && error.response.status === 400){
         console.log(error.response);
@@ -726,9 +780,10 @@ export const GetFunction = async(path, setLoading, functionAtSuccess,
         functionAtFailed("Server error");
        // alert("Server error: Try some other time");
       } else if (error && error.response.status === undefined) {
-        alert("Check your internet Connection");
+      setNetworkIssue(true)
       } else {
-        alert("Check your internet connection");
+        
+        alert("An unexpected error has occured")
       }
     } finally {
       setLoading(false);
@@ -741,11 +796,12 @@ export const PutFunction = async (
   setLoading,
   body,
   functionAtSuccess,
-  functionAtFailed
+  functionAtFailed,
+  setNetworkIssue 
 ) => {
   const usernameToken = localStorage.getItem("xcss{}");
   const emailToken = localStorage.getItem("xcss[]");
-  if (!navigator.onLine) return alert("Check your internet connection");
+  if (!navigator.onLine) return setNetworkIssue(true);
   if ((usernameToken || emailToken) && navigator.onLine) {
     try {
       setLoading(true);
@@ -757,11 +813,12 @@ export const PutFunction = async (
         }, withCredentials : true
       });
       if (response.status === 201 || response.status === 200) {
+        setNetworkIssue(false)
         functionAtSuccess();
       }
    }catch(error){
       if(error && error.response === undefined){
-         alert("Check your internet connection");
+       setNetworkIssue(true)
           functionAtFailed("Network error")
       }else if(error && error.response.status === 400){
          functionAtFailed("Bad request");
@@ -770,12 +827,12 @@ export const PutFunction = async (
     functionAtFailed("unauthorised");
   }else if(error && error.response.status === 404){
          functionAtFailed("User error")
-         alert("Check your internet connection")
+         alert("User error")
       }else if(error && error.response.status === 500){
         functionAtFailed("Server error")
    alert("Server error: Try some other time")
       }else if(error && error.response === undefined){
-                alert("Check your internet Connection");
+               setNetworkIssue(true)
           }else {
          alert("Check your internet connection")
 

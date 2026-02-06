@@ -74,6 +74,8 @@ setShowMaxMobileNumber,
     newBalance,
     setNewBalance,
     purchaseShowMaxErrorType,
+    networkIssue,
+    setNetworkIssue,
    // setShowMaxCardName,
    setFetchedShowMaxPlans,
 
@@ -136,17 +138,17 @@ const Decoders  = [
        if((fetchedDstvPlans.status === undefined || fetchedDstvPlans.status === null) && id === 2 ){
          TvPath = `products/tvsub/dstv`;
        fetchedResponse = setFetchedDstvPlans;
-        await GetFunction(TvPath, setIsLoading, SuccessHandler, FailedHandler, fetchedResponse)
+        await GetFunction(TvPath, setIsLoading, SuccessHandler, FailedHandler, fetchedResponse, setNetworkIssue)
        
       }else if((fetchedStarTimesPlans.status === undefined || fetchedStarTimesPlans.status === null) && id === 3){
          TvPath = `products/tvsub/startimes`;
        fetchedResponse = setFetchedStarTimesPlans;
-        await GetFunction(TvPath, setIsLoading, SuccessHandler, FailedHandler, fetchedResponse)
+        await GetFunction(TvPath, setIsLoading, SuccessHandler, FailedHandler, fetchedResponse, setNetworkIssue)
         
      }else if ((fetchedGotvPlans.status === undefined || fetchedGotvPlans.status === null) && id === 4){
        TvPath = `products/tvsub/gotv`;
        fetchedResponse = setFetchedGotvPlans;
-        await GetFunction(TvPath, setIsLoading, SuccessHandler, FailedHandler, fetchedResponse)
+        await GetFunction(TvPath, setIsLoading, SuccessHandler, FailedHandler, fetchedResponse, setNetworkIssue)
       
      }else{
        return SubscriptionPresent();
@@ -157,144 +159,51 @@ const Decoders  = [
 
 //==========Retrieve Showmax Plans =========///
   const RetrieveShowMaxPlans = async()=> {
-                const SuccessHandler = ()=> {
-          console.log("Successfully fetched showmax plans");
+                const SuccessHandler = (response)=> {
+            setFetchedShowMaxPlans(response)
          }
            const failedHandler = async(ErrorType)=> {
          if(ErrorType === "unauthorised"){
-          await GetFunction(`products/tvsub/showmax`, 
-            setIsLoading,
-             SuccessHandler,
-              (ErrorType)=> {
-                 if(ErrorType === "User error" || ErrorType === "Network error"){
-             setCheckNetworkError(true);
-          }else if(ErrorType === "Server error"){
-             alert("Failed to fetch Showmax Plans, try again later")
-          }else{
-            alert("An unexpected error has occured try again later.")
-          }
-              }, 
-              setFetchedShowMaxPlans);
-          }
+          if(sessionModal) return;
+          if(!sessionModal) return setSessionModal(true)
+          }else if(ErrorType === "Network error" || ErrorType === "User error"){
+        if(networkIssue) return;
+        if(!networkIssue) return setNetworkIssue(true)
+        }  else if(ErrorType === "Server error"){
+      alert("Failed to retrieve showmax plans")
+      }else {
+    alert("An unexpected error has occured")
+      }
           }
             
        await GetFunction(`products/tvsub/showmax`, 
         setIsLoading,
          SuccessHandler,
           failedHandler,
-           setFetchedShowMaxPlans);
+           ()=> {},
+          setNetworkIssue);
       
         }
         // ========= Retrieve User's Balance ======== //
            const GetBalance = async () => {
-    if(!navigator.onLine) return setCheckNetworkError(true)
-      const SuccessHandler = () => {
+    if(!navigator.onLine) {
+      setCheckNetworkError(true)
+       if(networkIssue) return;
+        if(!networkIssue) return setNetworkIssue(true)
+    }
+      const SuccessHandler = (response) => {
         //alert("Successful");
-        console.log("successfully retrieved balance");
+        setPassDataBalance(response)
         //alert("Successful")
       };
       const FailedHandler = async (ErrorType) => {
         if (ErrorType === "unauthorised") {
-          await GetFunction(
-            `balance`,
-            setBalanceLoader,
-            SuccessHandler,
-            //Handling the error Use Cases of the Unauthorised inside
-            // of the statement.
-            async(ErrorType) => {
-              if (ErrorType === "unauthorised") {
-                return setSessionModal(true);
-              }else if(ErrorType === "Server error"){
-                  await GetFunction(
-        "balance",
-        setBalanceLoader,
-        SuccessHandler,
-       async(ErrorType)=> {
-        if(ErrorType === "Server error"){
-          alert("Failed to retrieve the balance.")
-        }else if(ErrorType === "Network error" || ErrorType === "User error"){
-           setCheckNetworkError(true);
-              alert("Kindly check your internet connection to retrieve balance.")
-        }else {
-          alert("An unexpected error has occured on attempt to retrieve balance.")
-        }
-       },
-        setPassDataBalance
-      );
-       }else if(ErrorType === "Network error" || ErrorType === "User error"){
-         setCheckNetworkError(true);
-           alert("Kindly check your internet connection to retrieve balance");
-           setCheckNetworkError(true);
-       }else {
-        alert("An unexpected error has occured on attempt to retrieve the balance")
-       }
-            },
-             setPassDataBalance
-          );
-        }else if(ErrorType === "Server error"){
-            await GetFunction(
-        "balance",
-        setBalanceLoader,
-        SuccessHandler,
-       async(ErrorType)=> {
-         if(ErrorType === "unauthorised"){
-            await GetFunction(
-        "balance",
-        setBalanceLoader,
-        SuccessHandler,
-        async(ErrorType)=> {
-          if(ErrorType === "unauthorised"){
-            return setSessionModal(true)
-          }else if(ErrorType === "Server error"){
-               await GetFunction(
-        "balance",
-        setBalanceLoader,
-        SuccessHandler,
-       async(ErrorType)=> {
-        //if Statements
-      //We run again cause the previous one was interrupted by 401
-      //Let us re-run server error
-      if(ErrorType === "Server error"){
-        alert("Failed to retrieve the balance")
-      }else if(ErrorType === "unauthorised"){
-        return setSessionModal(true)
-      }else if(ErrorType === "Network error" || ErrorType === "User error"){
-         setCheckNetworkError(true);
-       alert("Kindly check your internet connection to retrieve balance")
-      }else{
-       // console.log("yeah bro i am the one running blehh")
-        alert("An Unexpected error occured in attempt to retrieve balance")
-      }
-
-       },
-        setPassDataBalance
-      );
-          }else if(ErrorType === "Network error" || ErrorType === "User error"){
-             setCheckNetworkError(true);
-            alert("Kindly check your internet connection to retrieve the balance")
-          }else if(ErrorType === "Server error"){
-            alert("Failed to retrieve the balance.")
-          }else{
-            alert("An Unexpected error occured in attempt to retrieve balance")
-          }
-        },
-        setPassDataBalance
-      );
-    }
-          else if(ErrorType === "Network error" || ErrorType === "User error"){
-            //The operation was interrupted by a network error
-             setCheckNetworkError(true);
-            alert("Kindly check your internet connection to retrieve balance.")
-         }else {
-          //Place 
-          //An alien error has occured with the re-run of the "Server error" ErrorType
-          alert("An unexpected error occured in attempt to retrieve the balance.")
-         }
-       },
-        setPassDataBalance
-      );
+            if(sessionModal) return;
+            if(!sessionModal) return setSessionModal(true)
         }else if(ErrorType === "Network error" || ErrorType === "User error"){
             setCheckNetworkError(true);
+             if(networkIssue) return;
+        if(!networkIssue) return setNetworkIssue(true)
         }else{
            
           alert("An unexpected error occured in attempt to retrieve balance.")
@@ -305,7 +214,8 @@ const Decoders  = [
         setBalanceLoader,
         SuccessHandler,
         FailedHandler,
-        setPassDataBalance
+        ()=> {},
+        setNetworkIssue
       );
     };
 
@@ -615,92 +525,20 @@ const Decoders  = [
           requestData,
          successHandler,
           FailedHandler,
-        setShowMaxSubscriptionResponse
+        setShowMaxSubscriptionResponse,
+        setNetworkIssue
         );
       };
     
      const setFailedConfig= async(ErrorType)=> {
           if(ErrorType === "unauthorised"){
-            //The concept behind this code : A user session is regulated by tokens,
-            // the moment we notice it expires we try to get the token for the user before
-            // a transaction completed(i.e we get it during a transaction process), when unauthorised
-            //we get the necessary tokens, then re-run the transaction, there are different errors that 
-            //could occur, when re-running such as: it could return same unauthorised errorType,
-            //a server error and even network connection issue or an unexpected error
-            //hence, the reason we account for other types of errors even while re-running,
-            //due to the inpredictability of the output of the transaction.
-        await VerifyTransPin(
-          inputPin,
-           async(ErrorType)=> {
-            if(ErrorType === "unauthorised"){
-              return setSessionModal(true)
-            }else if(ErrorType === "Server error"){
-             await VerifyTransPin(
-          inputPin,
-          (ErrorType)=> {
-            if(ErrorType === "Server error"){
-            alert("Failed to process your request, try again some other time")
-            }else if(ErrorType === "Network error" || ErrorType === "User error"){
-              alert("Kindly check your internet connection.")
-            }else{
-              alert("Failed to process your request, try some other time.")
-            }
-          },
-          setIsLoading,
-          setErrorMessage,
-        ShowmaxHandler,
-       );
-            }
-           },
-          setIsLoading,
-          setErrorMessage,
-        ShowmaxHandler,
-       );
-       //Handling of user error or network error for the general
-       //  conditional statement under the setPinFailed
-      }else if(ErrorType === "Server error"){
-        //The server could return a 500 then be successful
-        //  on next call, so let us try twice.
-         await VerifyTransPin(
-          inputPin,
-          async(ErrorType)=> {
-    if(ErrorType === "Server error"){
-     alert("Failed to process your request try some other time.")
-    }else if(ErrorType === "unauthorised"){
-    // Error When "Server error" occured on first try then the server notices 
-    // an "unauthorised" ErrorType.
-       await VerifyTransPin(
-          inputPin,
-           (ErrorType)=> {
-            //handling of ErrorTypes after unauthorisation occurs in server error re-try
-            if(ErrorType === "unauthorised"){
-              return setSessionModal(true);
-            }else if(ErrorType === "Server error"){
-              alert("The server is currently experiencing a downtime, try again some other time.")
-            }else if(ErrorType === "User error" || ErrorType === "Network error"){
-              alert("Kindly check your internet connection")
-            }
-           },
-          setIsLoading,
-          setErrorMessage,
-      ShowmaxHandler,
-       );
-       //End of the "unauthorised" ErrorType handling on "server error"
-       //  ErrorType re-run.
-    
-    }else if(ErrorType === "User error" || ErrorType === "Network error"){
-      //A network error occured  during trying to re-try the code on server error
-      alert("Kindly check your internet connection");
-    }
-          },
-          setIsLoading,
-          setErrorMessage,
-        ShowmaxHandler,
-       );
+          if(sessionModal) return;
+          if(!sessionModal) return setSessionModal(true)
            //The general error message on an "Network error, User error" ErrorType
           }else if( ErrorType === "User error"
         || ErrorType === "Network error" ){
-      alert("Kindly check your internet connection")
+     if(networkIssue) return;
+        if(!networkIssue) return setNetworkIssue(true)
       }
         }
       await VerifyTransPin(
@@ -709,6 +547,7 @@ const Decoders  = [
         setIsLoading,
         setErrorMessage,
         ShowmaxHandler,
+        setNetworkIssue
      
       );
     };
@@ -737,10 +576,10 @@ const Decoders  = [
 
    if(Data?.ConfirmAcc ===  "true"){
     window.addEventListener("online", async()=> {
-      if(checkNetworkError === true && (fetchedShowMaxPlans.status === 200 || fetchedShowMaxPlans.status === 201)){
+      if( (fetchedShowMaxPlans.status !== 200 || fetchedShowMaxPlans.status === undefined)){
         await RetrieveShowMaxPlans()
       }
-      if(checkNetworkError === true && (newBalance === "" 
+      if((newBalance === "" 
         || newBalance === null 
         || newBalance === undefined || updateBalance === "" 
         || updateBalance === null 

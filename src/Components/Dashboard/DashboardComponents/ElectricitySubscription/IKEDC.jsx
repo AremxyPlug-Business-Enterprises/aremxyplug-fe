@@ -79,6 +79,7 @@ const IKEDC = () => {
     authenticationOpen,
     purchaseElectricityErrorType,
     setPurchaseElectricityErrorType,
+    setNetworkIssue
   } = useContext(ContextProvider);
  const Data = GetLocalStorage()
   const [showProductList, setShowProductList] = useState(false);
@@ -119,23 +120,15 @@ const IKEDC = () => {
   const [passDataBalance, setPassDataBalance] = useState({});
   const [restrictUser, setRestrictUser] = useState(false);
   const [balanceLoader, setBalanceLoader] = useState(false)
-  const GetBalance = async () => {
-    const SuccessHandler = () => {
-      console.log("successfully retrieved balance");
+ const GetBalance = async () => {
+
+    const SuccessHandler = (response) => {
+     setPassDataBalance(response);
     };
     const FailedHandler = async (ErrorType) => {
       if (ErrorType === "unauthorised") {
-        await GetFunction(
-          `bills/verify`,
-          setBalanceLoader,
-          SuccessHandler,
-          (ErrorType) => {
-            if (ErrorType === "unauthorised") {
-              return setSessionModal(true);
-            }
-          },
-          setPassDataBalance
-        );
+      if(sessionModal) return;
+      if(!sessionModal) return setSessionModal(true)
       }
     };
     await GetFunction(
@@ -143,14 +136,14 @@ const IKEDC = () => {
       setBalanceLoader,
       SuccessHandler,
       FailedHandler,
-      setPassDataBalance
+      ()=> {},
+      setNetworkIssue
     );
   };
   // get the balance on entering the page
   useEffect(() => {
     if(Data?.ConfirmAcc === "true"){
-   
-      GetBalance();
+    GetBalance();
       if (GetBalance) {
         setNewBalance(
           passDataBalance?.data?.data
@@ -394,18 +387,8 @@ const IKEDC = () => {
           if (ErrorType === "Bad request") {
             setIsFailedMeterNumber(true);
           } else if (ErrorType === "unauthorised") {
-            await PostFunction(
-              path,
-              setMeterNumberLoading,
-              body,
-              SuccessHandler,
-              (ErrorType) => {
-                if (ErrorType === "unauthorised") {
-                  return setSessionModal(true);
-                }
-              },
-              setIkedcFetchedResponse
-            );
+            if(sessionModal) return;
+            if(!sessionModal) return setSessionModal(true)
           }
         };
 
@@ -415,7 +398,8 @@ const IKEDC = () => {
           body,
           SuccessHandler,
           FailedHandler,
-          setIkedcFetchedResponse
+          setIkedcFetchedResponse,
+          setNetworkIssue
         );
       }
     }
@@ -489,7 +473,8 @@ const IKEDC = () => {
                 );
               }
             },
-            setIkedcFetchedResponse
+            setIkedcFetchedResponse,
+            setNetworkIssue
           );
         } else if (ErrorType === "Server error") {
           setPurchaseElectricityErrorType("Server Error: Purchase Failed");
@@ -513,35 +498,16 @@ const IKEDC = () => {
         data,
         SuccessHandler,
         FailedHandler,
-        setIkedcFetchedResponse
+        setIkedcFetchedResponse,
+        setNetworkIssue
       );
     }
     const setPinFailed = async (ErrorType) => {
       if (ErrorType === "unauthorised") {
-        await VerifyTransPin(
-          inputPin,
-          (ErrorType) => {
-            if (ErrorType === "unauthorised") {
-              setSessionModal(true);
-            } else if (
-              ErrorType === "Network error" ||
-              ErrorType === "User error"
-            ) {
-              return alert("Kindly Check your internet connection");
-            } else if (ErrorType === "Server error") {
-              alert(
-                "The server is currently experiencing a downtime, try again some other time."
-              );
-            } else {
-              // alert("An unexpected has occured try again some other time.");
-            }
-          },
-          setLoading,
-          setErrorMessage,
-          ElectricityHandler
-        );
+       if(sessionModal) return;
+       if(!sessionModal) return setSessionModal(true)
       } else if (ErrorType === "Network error" || ErrorType === "User error") {
-        return alert("Kindly Check your internet connection");
+        return setNetworkIssue(true)
       } else if (ErrorType === "Server error") {
         alert(
           "The server is currently experiencing a downtime, try again some other time."
@@ -555,7 +521,8 @@ const IKEDC = () => {
       setPinFailed,
       setLoading,
       setErrorMessage,
-      ElectricityHandler
+      ElectricityHandler,
+      setNetworkIssue
     );
   };
 
