@@ -19,9 +19,9 @@ const Data = GetLocalStorage();
 
     const {
      toggleSideBar,
-       isDarkMode,
+       isDarkMode, networkIssue,
        recipientResponse,
-        setRecipientResponse
+        setRecipientResponse, setNetworkIssue
         } = useContext(ContextProvider);
   const [activeTab, setActiveTab] = useState('tab_1');
     const [showPopup, setShowPopup] = useState(false);
@@ -144,12 +144,13 @@ const GetRecipient = async()=> {
       }else if(ErrorType === "Server error"){
          alert("Unable to get your saved recipients at the moment")
       }else if(ErrorType === "Network error" || ErrorType === "User error"){
-        alert("Check your internet connection");
+      if(networkIssue) return;
+      if(!networkIssue) setNetworkIssue(true)
       }
       }
 await GetFunction("bank-recipient", 
 setLoading, ()=> {},
- FailedHandler, setRecipientResponse)
+ FailedHandler, setRecipientResponse, setNetworkIssue)
     }
   }
     useEffect(()=> {

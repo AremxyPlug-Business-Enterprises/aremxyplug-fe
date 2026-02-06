@@ -22,7 +22,9 @@ export const MainInputPinPop = ({fetchedResponse}) => {
        setTransferResponse,
        messageTransfer,
        isDarkMode,
-       authenticationOpen
+       authenticationOpen,
+       setNetworkIssue,
+       networkIssue
       } =
     useContext(ContextProvider);
   const [inputPin, setInputPin] = useState("");
@@ -114,7 +116,7 @@ const requestData = {
        setOtherInputPinPopUp(false);
          setInputPin("")
         }else {
-
+       alert("An unexpected error has occured")
         }
       }
       
@@ -124,7 +126,8 @@ const requestData = {
         requestData,
         successHandler,
         FailedHandler,
-         setTransferResponse
+         setTransferResponse,
+         setNetworkIssue
       );
     };
   
@@ -138,7 +141,8 @@ const requestData = {
      alert("PinVerification Failed")
       }else if( ErrorType === "User error"
     || ErrorType === "Network error" ){
-  alert("Kindly check your internet connection")
+   if(networkIssue) return;
+      if(!networkIssue) setNetworkIssue(true)
   }
     }
 
@@ -149,6 +153,7 @@ const requestData = {
       setIsLoading,
       setErrorMessage,
     DstvHandler,
+    setNetworkIssue
    );
   }
 

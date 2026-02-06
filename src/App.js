@@ -3,10 +3,7 @@ import { Layout } from "./Components/Layout/Layout";
 
 function App() {
 
-
-
-
-  return (
+return (
     <>
    
     <Layout />

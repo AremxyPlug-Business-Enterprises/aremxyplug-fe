@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
-import { useContext } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useContext, useMemo } from "react";
 import { ContextProvider } from "./Context";
 import { Link } from "react-router-dom";
 
@@ -40,12 +40,16 @@ import { Link } from "react-router-dom";
 
 
 
+           
 
 
 
-
-export const  TaskProgressModal = ({onHide, getUpdatedTask, webSocketMessage, firstNotCompletedTask})=> {
-  console.log(firstNotCompletedTask);
+export const  TaskProgressModal =
+ ({onHide,
+   getUpdatedTask,
+    webSocketMessage, 
+    firstNotCompletedTask})=> {    
+      const {isDarkMode} = useContext(ContextProvider)  
   const trueFilteredTask = Array.isArray(getUpdatedTask) ? getUpdatedTask?.filter((taskDone)=> {
     return taskDone?.completed === true
   }) : []
@@ -55,9 +59,9 @@ export const  TaskProgressModal = ({onHide, getUpdatedTask, webSocketMessage, fi
       initial={{ opacity: 0, scale : 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed  top-[15%] lg:right-1/4 -translate-y-1/2 w-[360px]
-       bg-white rounded-2xl shadow-xl p-5 z-40">
-      <h3 className="text-lg font-semibold mb-4">
+      className={`fixed  top-[15%] lg:right-1/4 -translate-y-1/2 w-[360px]
+      rounded-2xl shadow-xl p-5 z-40 ${isDarkMode ? "bg-[#0F0F0F] text-white rounded-xl" : "bg-white text-black"  }`}>
+      <h3 className={`text-lg font-semibold mb-4 ${isDarkMode ? "text-white" : "text-black"}`}>
         Testing Phase Progress
       </h3>
     <ul className="space-y-3">
@@ -67,13 +71,13 @@ export const  TaskProgressModal = ({onHide, getUpdatedTask, webSocketMessage, fi
              dataBaseRes?.task_code === task?.logo && dataBaseRes?.completed === true )
        return(
            <li key={task.id}
-            className="flex items-start gap-3 p-3 rounded-xl bg-gray-50"
+            className={` ${isDarkMode ? "text-white bg-[#2C2C2C] " : "text-black bg-gray-100"} flex items-start gap-3 p-3 rounded-xl `}
           >
             {/* Placeholder completion visual */}
            
             <div className="w-5 h-5 rounded-full border-[2px] self-center  border-gray-500 mt-1" >
               
-            < div className = {`${(completedTask?.task_code === task?.logo || (webSocketMessage?.task === task?.logo && webSocketMessage?.completed === true))? "bg-green-600" : ""} 
+            < div className = {`${(completedTask?.task_code === task?.logo || (webSocketMessage?.task === task?.logo && webSocketMessage?.completed === true))? "bg-green-500" : ""} 
             w-[100%] h-[100%] rounded-full font-[500] text-[12px]`}/>
      </div>
               
@@ -87,17 +91,17 @@ export const  TaskProgressModal = ({onHide, getUpdatedTask, webSocketMessage, fi
           </li>
       )})}
       </ul>
-    <div className = {`flex justify-between
+    <div className = {`flex justify-between mt-2
    ${trueFilteredTask?.length < 5 ? "text-black" : "text-green-600"}`}>
-         <p className="text-[12px] font-[800] leading-[16px] capitalize">
+         <p className={`text-[12px] font-[800] leading-[16px] capitalize ${isDarkMode && trueFilteredTask?.length < 5 ? "text-white" : (isDarkMode || !isDarkMode) && trueFilteredTask?.length === 5 ? "text-green-500" : "text-black"}`}>
  {trueFilteredTask?.length < 5 ?   "Next Step: ": "Task Completed"}
-  {webSocketMessage?.task && webSocketMessage?.completed === true  ? webSocketMessage?.task  : 
+  {webSocketMessage?.task && webSocketMessage?.completed  === false  ? webSocketMessage?.task  : 
     firstNotCompletedTask?.task_code === "signup" ? "Error: Completed signup not recorded" :  
     firstNotCompletedTask?.task_code !== "signup" && firstNotCompletedTask?.task_code ? firstNotCompletedTask?.task_code : ""}
  </p>
   
-<p className="text-[12px] font-[800] leading-[16px] capitalize">
-    {webSocketMessage?.task === "transaction_volume"  
+<p className={`text-[12px] font-[800] leading-[16px] capitalize ${isDarkMode ? "text-white" : "text-black" }`}>
+    {webSocketMessage?.task === "transaction_volume" 
      && (webSocketMessage?.progress && webSocketMessage?.progress < 1000
       && typeof webSocketMessage?.progress === "number")? 
      `Progress : ${webSocketMessage?.progress?.toLocaleString("en-NG", {style : "currency",
@@ -117,7 +121,8 @@ export const  TaskProgressModal = ({onHide, getUpdatedTask, webSocketMessage, fi
         || (webSocketMessage?.task === "kyc" && webSocketMessage?.completed === true)
           ? "/ProfileSettingMain" : 
           firstNotCompletedTask?.task_code === "point_redeem"  || (webSocketMessage?.task === "point_redeem" && webSocketMessage.completed === true)
-          ? "/point-redeem"  : "" } className="text-sm text-gray-600">
+          ? "/point-redeem"  : "" } 
+          className={`text-sm  ${isDarkMode ? "text-gray-200" : "text-gray-600"}`}>
           Continue Tasks
         </Link>
 
@@ -139,7 +144,7 @@ export const FloatingProgressCircle = ({
     <motion.button
       onClick={onClick}
       whileTap={{ scale: 0.9 }}
-      className="fixed right-6 top-3/4 -translate-y-1/2 w-16 h-16 rounded-full bg-white shadow-lg 
+      className="fixed right-6 top-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-white shadow-lg 
       flex items-center justify-center z-50"
     >
        <p className = "absolute bottom-1/4 text-blue-500 text-[12px] text-center leading-[16px] font-[500]">
@@ -171,4 +176,76 @@ export const FloatingProgressCircle = ({
   );
 }
 
+ 
+export  const TaskProgressController = ()=> {
+  /// Order set on the frontend to ensure consistency on the response the frontend is using
+   const order = [
+  "signup",
+  "kyc",
+  "fund_wallet",
+  "transaction_volume",
+  "point_redeem"
+];
+  const {progressTaskBarResponse,
+     webSocketMessage, openTaskBar, setOpenTaskBar} = useContext(ContextProvider)
+ const memoedProgress = useMemo(()=>  progressTaskBarResponse?.data?.data?.tasks, [progressTaskBarResponse])
+ 
+
+   const orderedUpdatedTask = 
+  progressTaskBarResponse?.data?.data?.tasks?.length > 1 ? 
+   Array.from(memoedProgress)?.sort((a, b)=>{
+return order.indexOf(a.task_code) - order.indexOf(b.task_code);
+})  : [];
+
+const filterTaskNotCompleted =  orderedUpdatedTask?.filter((dataBaseRes)=> dataBaseRes?.completed === false);
+    const firstNotCompletedTask = Array.isArray(filterTaskNotCompleted) && filterTaskNotCompleted?.length ? 
+     filterTaskNotCompleted?.find((_, index)=>  index === 0 ) : {};
+   const getCompletedTask = orderedUpdatedTask?.filter((task)=> task?.completed === true)
+   const progressNumber = Array?.isArray(getCompletedTask) ?  getCompletedTask?.length * 20 : 0;
+   //Update the task progress
+ const CheckCurrentUpdate = webSocketMessage?.completed === true
+ ?   filterTaskNotCompleted?.find((value)=> value?.task_code === webSocketMessage?.task && value?.completed === webSocketMessage?.completed ) 
+ : "Error"
+const floatingProgressBarUpdate
+ = CheckCurrentUpdate === undefined && CheckCurrentUpdate !== "Error" && progressTaskBarResponse?.length < 5
+ ? progressNumber + 20
+  : typeof CheckCurrentUpdate === "object" && CheckCurrentUpdate?.completed === true ? progressNumber : progressNumber
+ return (
+    <>
+      <FloatingProgressCircle
+        onClick={() => {
+          if(openTaskBar === true){
+          setOpenTaskBar(false)
+          }else{
+            setOpenTaskBar(true)
+          }
+        }}
+      progressNumber = {floatingProgressBarUpdate}/>
+      <AnimatePresence>
+          <motion.div
+            initial={{ scale: 1 }}
+            exit={{
+              scaleY: 0.6,
+              scaleX: 0.8,
+              opacity: 0,
+              x: 60,
+              rotate: 8,
+              transition: { duration: 0.7, ease: "easeInOut" },
+            }}
+          >
+          {openTaskBar && (
+            <TaskProgressModal 
+            onHide={() => {
+              setOpenTaskBar(false)
+            } 
+            } getUpdatedTask ={memoedProgress} 
+             webSocketMessage={webSocketMessage}
+            firstNotCompletedTask = {firstNotCompletedTask}/>
+          )}
+          
+          </motion.div>
+      </AnimatePresence>
+    </>
+  );
+}
 //Fold and throw the modal

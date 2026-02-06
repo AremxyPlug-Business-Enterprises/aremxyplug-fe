@@ -19,6 +19,7 @@ const TransactionHistory = ({
     toggleSideBar,
     setOrderIdResponse,
     setElectricityTransErrorType,
+    setNetworkIssue
     } = useContext(ContextProvider);
 
   const navigate = useNavigate();
@@ -95,7 +96,8 @@ const TransactionHistory = ({
       setOrderLoading,
       SuccessHandler,
       FailedHandler,
-      setOrderIdResponse
+      setOrderIdResponse,
+      setNetworkIssue
     );
     return result;
   };

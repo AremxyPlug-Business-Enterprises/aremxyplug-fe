@@ -76,7 +76,9 @@ const Data = GetLocalStorage();
     setFetchedStarTimesPlans,
     toggleSideBar,
     purchaseStarTimesErrorType,
-    setPurchaseStarTimesErrorType
+    setPurchaseStarTimesErrorType,
+    setNetworkIssue,
+    networkIssue
     } = useContext(ContextProvider);
       
 
@@ -147,17 +149,17 @@ const Data = GetLocalStorage();
      if((fetchedDstvPlans.status === undefined || fetchedDstvPlans.status === null) && id === 2 ){
        TvPath = `products/tvsub/dstv`;
      fetchedResponse = setFetchedDstvPlans;
-      await GetFunction(TvPath, setIsLoading, SuccessHandler, FailedHandler, fetchedResponse)
+      await GetFunction(TvPath, setIsLoading, SuccessHandler, FailedHandler, fetchedResponse, setNetworkIssue)
      
     }else if((fetchedGotvPlans.status === undefined || fetchedGotvPlans.status === null) && id === 3){
        TvPath = `products/tvsub/gotv`;
      fetchedResponse = setFetchedGotvPlans;
-      await GetFunction(TvPath, setIsLoading, SuccessHandler, FailedHandler, fetchedResponse)
+      await GetFunction(TvPath, setIsLoading, SuccessHandler, FailedHandler, fetchedResponse, setNetworkIssue)
     
    }else if ((fetchedShowMaxPlans.status === undefined || fetchedShowMaxPlans.status === null) && id === 4){
      TvPath = `products/tvsub/showmax`;
      fetchedResponse = setFetchedShowMaxPlans;
-      await GetFunction(TvPath, setIsLoading, SuccessHandler, FailedHandler, fetchedResponse)
+      await GetFunction(TvPath, setIsLoading, SuccessHandler, FailedHandler, fetchedResponse, setNetworkIssue)
     
    }else{
      return SubscriptionPresent();
@@ -169,108 +171,16 @@ const Data = GetLocalStorage();
    //Function to Get User's Balance
      const GetBalance = async () => {
        if(!navigator.onLine) return setCheckNetworkError(true)
-         const SuccessHandler = () => {
-           //alert("Successful");
-           console.log("successfully retrieved balance");
-           //alert("Successful")
-         };
+         const SuccessHandler = (response) => {
+          setPassDataBalance(response)
+        };
          const FailedHandler = async (ErrorType) => {
            if (ErrorType === "unauthorised") {
-             await GetFunction(
-               `balance`,
-              setBalanceLoader,
-               SuccessHandler,
-               //Handling the error Use Cases of the Unauthorised inside
-               // of the statement.
-               async(ErrorType) => {
-                 if (ErrorType === "unauthorised") {
-                   return setSessionModal(true);
-                 }else if(ErrorType === "Server error"){
-                     await GetFunction(
-           "balance",
-           setBalanceLoader,
-           SuccessHandler,
-          async(ErrorType)=> {
-           if(ErrorType === "Server error"){
-             alert("Failed to retrieve the balance.")
+             if(sessionModal) return;
+             if(!sessionModal) return setSessionModal(true)
            }else if(ErrorType === "Network error" || ErrorType === "User error"){
-             setCheckNetworkError(true)
-                 alert("Kindly check your internet connection to retrieve balance.")
-           }else {
-             alert("An unexpected error has occured on attempt to retrieve balance.")
-           }
-          },
-           setPassDataBalance
-         );
-          }else if(ErrorType === "Network error" || ErrorType === "User error"){
-             setCheckNetworkError(true)
-              alert("Kindly check your internet connection to retrieve balance")
-          }else {
-           alert("An unexpected error has occured on attempt to retrieve the balance")
-          }
-               },
-                setPassDataBalance
-             );
-           }else if(ErrorType === "Server error"){
-               await GetFunction(
-           "balance",
-           setBalanceLoader,
-           SuccessHandler,
-          async(ErrorType)=> {
-            if(ErrorType === "unauthorised"){
-               await GetFunction(
-           "balance",
-           setBalanceLoader,
-           SuccessHandler,
-           async(ErrorType)=> {
-             if(ErrorType === "unauthorised"){
-               return setSessionModal(true)
-             }else if(ErrorType === "Server error"){
-                  await GetFunction(
-           "balance",
-           setBalanceLoader,
-           SuccessHandler,
-          async(ErrorType)=> {
-           //if Statements
-         //We run again cause the previous one was interrupted by 401
-         //Let us re-run server error
-         if(ErrorType === "Server error"){
-           alert("Failed to retrieve the balance")
-         }else if(ErrorType === "unauthorised"){
-           return sessionModal(true)
-         }else if(ErrorType === "Network error" || ErrorType === "User error"){
-             setCheckNetworkError(true)
-    alert("Kindly check your internet connection to retrieve balance")
-         }else{
-           alert("An Unexpected error occured in attempt to retrieve balance")
-         }
-   
-          },
-           setPassDataBalance
-         );
-             }else if(ErrorType === "Network error" || ErrorType === "User error"){
-             setCheckNetworkError(true)
-    alert("Kindly check your internet connection to retrieve the balance")
-               setCheckNetworkError(true)
-             }else{
-               alert("An Unexpected error occured in attempt to retrieve balance")
-             }
-           },
-           setPassDataBalance
-         );
-       }
-             else if(ErrorType === "Network error" || ErrorType === "User error"){
-               //The operation was interrupted by a network error
-                setCheckNetworkError(true)
-               alert("Kindly check your internet connection to retrieve balance.")
-            }else {
-             //An alien error has occured with the re-run of the "Server error" ErrorType
-             alert("An unexpected error occured in attempt to retrieve the balance.")
-            }
-          },
-           setPassDataBalance
-         );
-           }else if(ErrorType === "Network error" || ErrorType === "User error"){
+          if(networkIssue) return;
+          if(!networkIssue) return setNetworkIssue(true)
            setCheckNetworkError(true)
            }else{
              alert("An unexpected error occured in attempt to retrieve balance.")
@@ -281,7 +191,8 @@ const Data = GetLocalStorage();
            setBalanceLoader,
            SuccessHandler,
            FailedHandler,
-           setPassDataBalance
+          ()=> {},
+          setNetworkIssue
          );
        };
 
@@ -292,24 +203,19 @@ const Data = GetLocalStorage();
       }
         const failedHandler = async(ErrorType)=> {
           if(ErrorType === "unauthorised"){
-           await GetFunction(`products/tvsub/startimes`, 
-            setIsLoading,
-             SuccessHandler, 
-             (ErrorType)=> {
-               if(ErrorType === "User error" || ErrorType === "Network error"){
-             setCheckNetworkError(true);
+           if(sessionModal) return;
+           if(!sessionModal) return setSessionModal(true)
           }else if(ErrorType === "Server error"){
-             alert("Failed to fetch Startimes Plans, try again later")
-          }else{
-            alert("An unexpected error has occured try again later.");
-          }
-             },
-              setFetchedStarTimesPlans);
-          }
-      
+        alert("Unable to retrieve the starTimes information")
+        }else if(ErrorType === "Network error" || ErrorType === "User error"){
+          if(networkIssue) return;
+          if(!networkIssue) return setNetworkIssue(true)
+
+}      
        }
          
-    await GetFunction(`products/tvsub/startimes`, setIsLoading, SuccessHandler, failedHandler, setFetchedStarTimesPlans);
+    await GetFunction(`products/tvsub/startimes`, 
+      setIsLoading, SuccessHandler, failedHandler, setFetchedStarTimesPlans,setNetworkIssue);
    
      }
    const starTimesOptionalPlan = starTimesData?.length < 1 && fetchedStarTimesPlans.status === 200 ? fetchedStarTimesPlans.data.data.data : starTimesData;
@@ -504,6 +410,7 @@ const VerifyPinHandler = async () => {
       };
       const Path = "bills/tvsub";
       const successHandler = (response) =>{
+          setNetworkIssue(true);
        if(response?.data?.data?.data?.status === "success"
           || response?.data?.data?.data?.status === "delivered"
         ||  response?.data?.data?.data?.status === "successful" ||
@@ -560,7 +467,8 @@ const VerifyPinHandler = async () => {
         requestData,
         successHandler,
         FailedHandler,
-       setStarTimesSubscriptionResponse
+       setStarTimesSubscriptionResponse,
+       setNetworkIssue
       );
     };
     const setFailedConfig= async(ErrorType)=> {
@@ -569,6 +477,9 @@ const VerifyPinHandler = async () => {
     if(!sessionModal) return setSessionModal(true)
     }else if(ErrorType === "Server error"){
       alert("Pin Verification Failed")
+    }else if(ErrorType === "Network error" || ErrorType === "User error"){
+         if(networkIssue) return;
+        if(!networkIssue) return setNetworkIssue(true)
     }else{
     alert("An unexpected error")
   }
@@ -578,6 +489,7 @@ const VerifyPinHandler = async () => {
       setIsLoading,
       setErrorMessage,
       StarTimesHandler,
+      setNetworkIssue
      );
  };
 
@@ -592,91 +504,17 @@ const VerifyPinHandler = async () => {
          }
          const bodyToJson = JSON.stringify(body);
   const SuccessHandler = (response)=> {
+    setNetworkIssue(true);
    setStarTimesSmartCard(UserTvSubscription);
     setStarTimesCardName(response?.data?.data?.data?.name);
  }
  const FailedHandler = async(ErrorType)=> {
      if(ErrorType === "unauthorised"){
-    await PostFunction("bills/verify", 
-  setStarTimesLoading,
-   bodyToJson,
-   SuccessHandler,
-   async (ErrorType)=> {
-    if(ErrorType === "unauthorised"){
-    if(sessionModal) return;
-      if(sessionModal === false ) return setSessionModal(true);
-    }else if(ErrorType === "Server error"){
-            //A server error returns only if the auth Token
-            //has been retrieved then communication with the server occurs
-            //which wouldn't have returned "Server error", if the 
-            //"unauthorised" ErrorType occured as a result of authToken
-            //being expired and not retrieved through cookies
-            //  but 401 returning as error cause.
-            //hence we are running again in the ErrorType "Server error" statememt
-            //from the unauthorization which was the error from
-            //inception or beginning.
-            //Not also leaving handling the other ErrorTypes the UI 
-            //could be vulnerable to on re-try on server error.
-           await PostFunction("bills/verify", setStarTimesLoading, 
-      bodyToJson,
-      SuccessHandler, 
-     (ErrorType)=> {
-      if(ErrorType === "Server error"){
-        alert("Failed to process your request, try again some other time.")
-      }else if(ErrorType === "Network error" || ErrorType === "User error"
-         ){
-          alert("Kindly check your internet connection")
-         }
-     },
-       setStarTimesVerifyResponse)
-       //2.Handlingt the ErrorType "Server error" on the general conditional statement
-          
-          }else if(ErrorType === "Network error" || ErrorType === "User error"){
-          //3. Handling the ErrorType "Network error, User error" for the general "unauthorised" 
-          //function
-          alert("Kindly check your internet connection.")
-          }
-    
-       }, setStarTimesVerifyResponse);
-      //2. Handling the server for the general conditional 
-            // statement under the failedHandler then re-running 
-      }else if(ErrorType === "Server error"){
-             await PostFunction("bills/verify", setStarTimesLoading, 
-      bodyToJson,
-      SuccessHandler, 
-      async(ErrorType)=> {
-       if(ErrorType === "Server error"){
-         alert("Failed to process your request, try again some other time.")
-       }else if(ErrorType === "unauthorised"){
-        //The ErrorType "unauthorised" can occur on trying to
-        //re-run the code due aforementioned reason
-            await PostFunction("bills/verify", setStarTimesLoading, 
-      bodyToJson,
-      SuccessHandler, 
-     (ErrorType)=> {
-      if(ErrorType==="unauthorised"){
-        setSessionModal(true);
-      }else if(ErrorType === "Server error"){
-       alert("Failed to process your request, try again some other time")
-      }else if(ErrorType === "Network error" || ErrorType === "User error"){
-        alert("Kindly check your internet connection")
-      }else{
-        alert("An unexpected error has occured.")
-      }
-     },
-       setStarTimesVerifyResponse)
-       }else if(ErrorType === "Network error" || ErrorType === "User error") {
-    //Handling the network error for the server error of the general function
-    alert("Kindly check your internet connection.")
-       }else{
-        //When an alien errorType occured
-        alert("An unexpected error has occured, try again some other time.")
-       }
-      },
-       setStarTimesVerifyResponse)
-       //3.Handling the ErrorType "Network error, User error"
+      if(sessionModal) return;
+      if(!sessionModal) return setSessionModal(true)
     }else if(ErrorType === "Network error" || ErrorType === "User error"){
-      alert("Kindly check your internet connection")
+         if(networkIssue) return;
+        if(!networkIssue) return setNetworkIssue(true)
     }  else if(ErrorType === "Bad request"){
           setStateInvalidDecoderNumber(true)
          }else {
@@ -699,7 +537,7 @@ const VerifyPinHandler = async () => {
    bodyToJson,
    SuccessHandler,
    FailedHandler,
-   setStarTimesVerifyResponse )
+   setStarTimesVerifyResponse , setNetworkIssue)
  }
 }
  
@@ -737,7 +575,7 @@ window.addEventListener("online", ()=> {
     && (newBalance === null || newBalance === undefined || newBalance === "") ){
    return GetBalance();
    }
-   if(checkNetworkError === true && (fetchedDstvPlans.status !== 200 || fetchedDstvPlans.status === undefined) ) {
+   if( (fetchedDstvPlans.status !== 200 || fetchedDstvPlans.status === undefined) ) {
     return RetrieveStarTimesPlans();
    }
   })
@@ -751,7 +589,7 @@ const timer = useRef(null)
           <div className={style.airtimeTop}>
             <div>
             <div id='tvBackground' className="min-h-[90px] py-[15px] lg:h-[196px] md:h-[112.29px] rounded-[6.6px] md:rounded-[11.46px] lg:rounded-[20px] mx-auto  flex gap-6 justify-between px-[16.51px] md:px-[28.65px] lg:px-[50px]">
-                            <div className="py-[9.57px] md:py-[16.61px] align-middle self-center flex flex-col gap-1.5 w-[70%]">
+              <div className="py-[9.57px] md:py-[16.61px] align-middle self-center flex flex-col gap-1.5 w-[70%]">
                                 <p className="text-[11px] leading-[13px] lg:leading-[30px] lg:text-[24px] md:text-[13.75px] font-semibold">
                                     SUBSCRIBE YOUR TV CHANNELS WITH AREMXYPLUG.
                                     </p>

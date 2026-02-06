@@ -17,14 +17,17 @@ import euroFlag from "../../../DashboardComponents/flagsImages/europeanFlag.png"
 
 //import currencyImage from  "../../../../EducationPins/imagesEducation/arrow-down.svg";
 const AremxyAddUser = () => {
-  const { toggleSideBar, isDarkMode, newBalance, setNewBalance} = useContext(ContextProvider);
+  const { toggleSideBar, 
+    isDarkMode,
+     newBalance, networkIssue,
+      setNewBalance,
+       setNetworkIssue} = useContext(ContextProvider);
 //  const [emailUsername, setEmailUserName] = useState("");
   const [mainCountry, setMainCountry] = useState("");
   const [selected, setSelected] = useState(false);
   const [showList, setShowList] = useState(false);
   const [save, setSave] = useState(false);
-
- const [errorMessage, setErrorMessage]  = useState("")
+  const [errorMessage, setErrorMessage]  = useState("")
  const [verifiedUser, setVerifiedUser] = useState(false);
  const [fetchedResponse, setFetchedResponse] = useState({});
  const [loading, setLoading] = useState(false);
@@ -36,47 +39,43 @@ const AremxyAddUser = () => {
 const UserIcon = localStorage.getItem("UserIcon") ?  localStorage.getItem("UserIcon") : ""
 
   const [passDataBalance, setPassDataBalance] = useState({})
-      const [currencyBalance,  setCurrencyBalance] = useState("");
+   //   const [currencyBalance,  setCurrencyBalance] = useState("");
 const updateBalance = passDataBalance?.data?.data?.data !== undefined
     ? passDataBalance?.data?.data?.data?.balance
     : "";
   
-  const updateBalanceToNumber = Number(updateBalance)
-  const newBalanceToNumber = Number(newBalance)
+  //const updateBalanceToNumber = Number(updateBalance)
+  //const newBalanceToNumber = Number(newBalance)
      const methodOptions = [
        {
          method: "Nigeria",
-         balance:
-           newBalance === "" || newBalance === null || newBalance === undefined
-             ? `(${updateBalance?.length > 1 ? updateBalanceToNumber?.toLocaleString("en-NG", {
-                  style : "currency",
-                  currency : "NGN"
-             }) : ""})`
-             : `(${newBalance?.length > 1 ? newBalanceToNumber?.toLocaleString("en-Ng", {
-               style : "currency",
-               currency : "NGN"
-             }) : ""})`,
+        
          flag: nigerianFlag,
          id: 1,
          code : "NGN"
        },
        { method: "United States",
-          balance: "($0.00)", 
+         
           flag: usdFlag,
            id: 2, code : "" },
        { method: "United Kingdom",
-          balance: "(€0.00)", 
+         
           flag: britainFlag,
            id: 3,
            code : ""
          },
        { method: "Europe",
-          balance: "(£0.00)", 
+        
           flag: euroFlag,
            id: 4,
          code : "" },
-       { method: "Australia", balance: "(AU$0.00)", flag: audFlag, id: 5 , code : ""},
-       { method: "Kenya", balance: "(KSh0.00)", flag: kenyaFlag, id: 6, code : ""  },
+       { method: "Australia",
+        
+         flag: audFlag, 
+         id: 5 , code : ""},
+       { method: "Kenya",
+          flag: kenyaFlag,
+           id: 6, code : ""  },
      ];
 
 
@@ -145,7 +144,7 @@ const updateBalance = passDataBalance?.data?.data?.data !== undefined
     },
        SuccessHandler,
         FailedHandler,
-         setFetchedResponse);
+         setFetchedResponse, setNetworkIssue);
   }else if(value === Data?.aremxyUsername || value === Data?.UserEmail){
    setErrorMessage(`${value} is your transfer identity, you can only send to other aremxyplug wallet.`)
     setVerifiedUser(false);
@@ -238,16 +237,17 @@ const updateBalance = passDataBalance?.data?.data?.data !== undefined
         if(ErrorType === "unauthorised"){
           setSessionModal(true)
         }
-}, ()=> {}
+}, ()=> {}, setNetworkIssue
     )
       }else if(ErrorType === "Network error" || ErrorType === "User error"){
-     alert("Kindly check your internet connection");
+     if(networkIssue) return;
+      if(!networkIssue) setNetworkIssue(true)
     }else {
       alert("An unexpected error has occured, please try again later.")
     }
    }
    await PostFunction("bank-recipient", setLoading,body,
-      SuccessHandler, FailedHandler, ()=>{}
+      SuccessHandler, FailedHandler, ()=>{}, setNetworkIssue
     )
 }
 
@@ -262,96 +262,12 @@ const GetBalance = async () => {
       };
       const FailedHandler = async (ErrorType) => {
         if (ErrorType === "unauthorised") {
-          await GetFunction(
-            `balance`,
-            setLoading,
-            SuccessHandler,
-            //Handling the error Use Cases of the Unauthorised inside
-            // of the statement.
-            async(ErrorType) => {
-              if (ErrorType === "unauthorised") {
-                return setSessionModal(false);
-              }else if(ErrorType === "Server error"){
-                  await GetFunction(
-        "balance",
-        setLoading,
-        SuccessHandler,
-       async(ErrorType)=> {
-        if(ErrorType === "Server error"){
-          alert("Failed to retrieve the balance.")
+         if(sessionModal) return;
+         if(!sessionModal) return setSessionModal(true)
+        }else if (ErrorType === "Server error"){
+          alert("A service downtime error has occured")
         }else if(ErrorType === "Network error" || ErrorType === "User error"){
-              alert("Kindly check your internet connection to retrieve balance.")
-        }else {
-          alert("An unexpected error has occured on attempt to retrieve balance.")
-        }
-       },
-        setPassDataBalance
-      );
-       }else if(ErrorType === "Network error" || ErrorType === "User error"){
-           alert("Kindly check your internet connection to retrieve balance")
-       }else {
-        alert("An unexpected error has occured on attempt to retrieve the balance")
-       }
-            },
-             setPassDataBalance
-          );
-        }else if(ErrorType === "Server error"){
-            await GetFunction(
-        "balance",
-        setLoading,
-        SuccessHandler,
-       async(ErrorType)=> {
-         if(ErrorType === "unauthorised"){
-            await GetFunction(
-        "balance",
-        setLoading,
-        SuccessHandler,
-        async(ErrorType)=> {
-          if(ErrorType === "unauthorised"){
-            return setSessionModal(false);
-          }else if(ErrorType === "Server error"){
-               await GetFunction(
-        "balance",
-        setLoading,
-        SuccessHandler,
-       async(ErrorType)=> {
-        //if Statements
-      //We run again cause the previous one was interrupted by 401
-      //Let us re-run server error
-      if(ErrorType === "Server error"){
-        alert("Failed to retrieve the balance")
-      }else if(ErrorType === "unauthorised"){
-        return sessionModal(true)
-      }else if(ErrorType === "Network error" || ErrorType === "User error"){
-       alert("Kindly check your internet connection to retrieve balance")
-      }else{
-        alert("An Unexpected error occured in attempt to retrieve balance")
-      }
-
-       },
-        setPassDataBalance
-      );
-          }else if(ErrorType === "Network error" || ErrorType === "User error"){
-            alert("Kindly check your internet connection to retrieve the balance")
-          }else{
-            alert("An Unexpected error occured in attempt to retrieve balance")
-          }
-        },
-        setPassDataBalance
-      );
-    }
-          else if(ErrorType === "Network error" || ErrorType === "User error"){
-            //The operation was interrupted by a network error
-            alert("Kindly check your internet connection to retrieve balance.")
-         }else {
-          //An alien error has occured with the re-run of the "Server error" ErrorType
-          alert("An unexpected error occured in attempt to retrieve the balance.")
-         }
-       },
-        setPassDataBalance
-      );
-        }else if(ErrorType === "Network error" || ErrorType === "User error"){
-
+          setNetworkIssue(true)
         }else{
           alert("An unexpected error occured in attempt to retrieve balance.")
         }
@@ -361,7 +277,8 @@ const GetBalance = async () => {
         setLoading,
         SuccessHandler,
         FailedHandler,
-        setPassDataBalance
+        setPassDataBalance,
+        setNetworkIssue
       );
     };
                      // Simulate async data loading
@@ -548,25 +465,7 @@ const GetBalance = async () => {
                                                                      ? "Nigeria"
                                                                      : ""
                                                                  );
-                                                                 setCurrencyBalance(methodOption.id === 1 && currencyBalance === ""? 
-                                                                 newBalance === "" || newBalance === null || newBalance === undefined
-                                           ? `(${updateBalance?.length > 1 ? updateBalanceToNumber?.toLocaleString("en-NG", {
-                                                style : "currency",
-                                                currency : "NGN"
-                                           }) : ""})`
-                                           : `(${newBalance?.length > 1 ? newBalanceToNumber?.toLocaleString("en-NG", {
-                                             style : "currency",
-                                             currency : "NGN"
-                                           }) : ""})` : mainCountry === "Nigeria" ?  newBalance === "" || newBalance === null || newBalance === undefined
-                                           ? `(${updateBalance?.length > 1 ? updateBalanceToNumber?.toLocaleString("en-NG", {
-                                                style : "currency",
-                                                currency : "NGN"
-                                           }) : ""})`
-                                           : `(${newBalance?.length > 1 ? newBalanceToNumber?.toLocaleString("en-NG", {
-                                             style : "currency",
-                                             currency : "NGN"
-                                           }) : ""})` : "");
-                                 
+                                                               
                                             setShowList(() => {
                                                 if (methodOption.id === 1) {
                                                  setSelected(true);
@@ -615,9 +514,7 @@ const GetBalance = async () => {
                                  
                                                              
                                                                
-                                                                 {methodOption.method +
-                                                                   " " +
-                                                                   methodOption.balance}
+                                                                 {methodOption.method}
                                                                
                                                              </div>
                                                            );

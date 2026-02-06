@@ -38,6 +38,7 @@ const GoTv = () => {
     showDropdownGOTV,
     setShowDropdownGOTV,
     setSelectedOptionGOTV,
+    networkIssue,
     //formatNumberWithCommas,
     mobileNumber,
     setCardName,
@@ -81,7 +82,8 @@ const GoTv = () => {
     setNewBalance,
     purchaseGotvErrorType,
      setPurchaseGotvErrorType,
-    toggleSideBar
+    toggleSideBar,
+    setNetworkIssue
   } = useContext(ContextProvider);
   //const [successConfig, setSuccessConfig] = useState(false);
   const [passDataBalance, setPassDataBalance] = useState({});
@@ -119,27 +121,21 @@ const Data = GetLocalStorage();
   };
 
   const GetOtherDataTv = async (id, path) => {
-    console.log(id, path);
     const SuccessHandler = () => {
       navigate(path);
     };
     const FailedHandler = async (ErrorType) => {
       //alert("Error");
       if (ErrorType === "unauthorised") {
-        await GetFunction(
-          TvPath,
-          setIsLoading,
-          SuccessHandler,
-          (ErrorType) => {
-            if (ErrorType === "unauthorised") {
-              return setSessionModal(true);
-            }
-          },
-          fetchedResponse
-        );
-      }
+       if(sessionModal) return;
+       if(!sessionModal) return setSessionModal(true)
+      }else if(ErrorType === "Network error" || ErrorType === "User error"){
+        setCheckNetworkError(true);
+        setNetworkIssue(true)
+      }else if(ErrorType === "Server error"){
+        alert("failed to retrieve the tv Subscription data")
     };
-
+  }
     const SubscriptionPresent = () => {
       if ((fetchedDstvPlans.status === 200 ||  fetchedDstvPlans.status ===201) && id === 2) {
         return navigate(path);
@@ -163,7 +159,8 @@ const Data = GetLocalStorage();
         setIsLoading,
         SuccessHandler,
         FailedHandler,
-        fetchedResponse
+        fetchedResponse,
+        setNetworkIssue
       );
     } else if (
       (fetchedStarTimesPlans.status !== 200 ||
@@ -177,7 +174,7 @@ const Data = GetLocalStorage();
         setIsLoading,
         SuccessHandler,
         FailedHandler,
-        fetchedResponse
+        fetchedResponse, setNetworkIssue
       );
     } else if (
       (fetchedShowMaxPlans.status !== 200 ||
@@ -191,30 +188,34 @@ const Data = GetLocalStorage();
         setIsLoading,
         SuccessHandler,
         FailedHandler,
-        fetchedResponse
+        fetchedResponse, setNetworkIssue
       );
     } else {
-      console.log(fetchedDstvPlans.status);
       return SubscriptionPresent();
     }
   };
 
 // ========= Get User's Balance =======
    const GetBalance = async () => {
-    if(!navigator.onLine) return setCheckNetworkError(true)
-      const SuccessHandler = () => {
-       console.log("successfully retrieved balance");
+    if(!navigator.onLine)   {
+         setCheckNetworkError(true)
+       if(!networkIssue)  return setNetworkIssue(true);
+       if(networkIssue) return;
+    }
+      const SuccessHandler = (response) => {
+         setPassDataBalance(response)
        };
       const FailedHandler = async (ErrorType) => {
         if (ErrorType === "unauthorised") {
-      setSessionModal(true)
+     if(!sessionModal) return   setSessionModal(true);
+     if(sessionModal) return;
         }else if(ErrorType === "Network error" || ErrorType === "User error"){
             setCheckNetworkError(true);
+            setNetworkIssue(true)
         }else if(ErrorType === "Server error"){
           alert("Failed to retrieve the balance")
         }else{
-           
-          alert("An unexpected error occured in attempt to retrieve balance.")
+            alert("An unexpected error occured in attempt to retrieve balance.")
         }
       }
       await GetFunction(
@@ -222,16 +223,20 @@ const Data = GetLocalStorage();
          setBalanceLoader,
         SuccessHandler,
         FailedHandler,
-        setPassDataBalance
+        ()=> {},
+        setNetworkIssue
       );
     };
 
 
     //=========Retrieving Gotv Plans=====
     const RetrieveGotvPlans = async () => {
-       if(!navigator.onLine) return setCheckNetworkError(true)
-        const SuccessHandler = () => {
-          console.log("Successfully fetched gotv plans");
+       if(!navigator.onLine){
+         if(!networkIssue)  return setNetworkIssue(true);
+       if(networkIssue) return;
+       }
+        const SuccessHandler = (response) => {
+          setFetchedGotvPlans(response)
         };
         const failedHandler = async (ErrorType) => {
           // console.log("Couldn't fetch gotv plans");
@@ -239,6 +244,7 @@ const Data = GetLocalStorage();
             setSessionModal(true)
           }else if(ErrorType === "User error" || ErrorType === "Network error"){
              setCheckNetworkError(true);
+              setNetworkIssue(true)
           }else if(ErrorType === "Server error"){
              alert("Failed to fetch Gotv Plans, try again later")
           }else{
@@ -251,7 +257,8 @@ const Data = GetLocalStorage();
           setIsLoading,
           SuccessHandler,
           failedHandler,
-          setFetchedGotvPlans
+          ()=> {},
+          setNetworkIssue
         );
         // console.log(fetchedGotvPlans);
       };
@@ -313,17 +320,11 @@ const Data = GetLocalStorage();
         }, {})
       );
     } else {
-      // sendDataToBackend(decoderType, planName, smartCard, tvEmail, '₦' + getNumericValue(selectedOptionGOTV), mobileNumber);
-      // console.log(decoderType, planName, smartCard, tvEmail, '₦' + getNumericValue(selectedOptionGOTV), mobileNumber);
       setConfirmGotvPopup(true);
       setErrors({});
     }
   };
   const [errors, setErrors] = useState({});
-
-  // const GOTVSchema = Joi.object({
-  //   mobileNumber: Joi.string().regex(/^\d{11}$/).required(),
-  // });
 
   const schema = Joi.object({
     smartCard: Joi.string()
@@ -408,7 +409,6 @@ const Data = GetLocalStorage();
   const handleReceivedData = () => {
     setIsLoading(true);
     const receivedData = () => {
-      // Seting the relevant data from the TV subscription response
       setGotvOrderId(
         tvSubscriptionResponse?.data
           ? tvSubscriptionResponse?.data?.order_id
@@ -499,7 +499,8 @@ const Data = GetLocalStorage();
         DataJson,
         successHandler,
         FailedHandler,
-        setTvSubscriptionResponse
+        setTvSubscriptionResponse,
+        setNetworkIssue
       );
     };
 
@@ -511,7 +512,8 @@ const Data = GetLocalStorage();
        alert("Pin Verification Failed")
          }else if( ErrorType === "User error"
        || ErrorType === "Network error" ){
-     alert("Kindly check your internet connection")
+     if(!networkIssue)  return setNetworkIssue(true);
+       if(networkIssue) return;
      }
          }
    
@@ -520,7 +522,8 @@ const Data = GetLocalStorage();
       setFailedConfig,
       setIsLoading,
       setErrorMessage,
-      GotvHandler
+      GotvHandler,
+      setNetworkIssue
     );
   };
   //console.log( passDataBalance.status)
@@ -547,6 +550,7 @@ const Data = GetLocalStorage();
       const bodyToJson = JSON.stringify(body);
       const SuccessHandler = (response) => {
         setSmartCard(UserTvSubscription);
+        setCheckNetworkError(false);
         setCardName(response?.data?.data?.data?.name);
         setStateInvalidDecoderNumber(false)
       };
@@ -555,12 +559,11 @@ const Data = GetLocalStorage();
      if(ErrorType === "unauthorised"){
       if(sessionModal) return;
       if(sessionModal === false ) return setSessionModal(true);
-       //Handling  the various cases that could occur on 
-       //the ErrorType "unauthorised"
-       
-        //3.Handling the ErrorType "Network error, User error"
+  
      }else if(ErrorType === "Network error" || ErrorType === "User error"){
-       alert("Kindly check your internet connection")
+     if(!networkIssue)  return setNetworkIssue(true);
+       if(networkIssue) return;
+       setCheckNetworkError(true)
      }
      else if(ErrorType === "Bad request"){
       setStateInvalidDecoderNumber(true)
@@ -580,7 +583,8 @@ const Data = GetLocalStorage();
         bodyToJson,
         SuccessHandler,
         FailedHandler,
-        setGotvVerifyResponse
+        setGotvVerifyResponse,
+        setNetworkIssue
       );
     }
   };
@@ -620,11 +624,12 @@ const Data = GetLocalStorage();
     && (newBalance === null || newBalance === undefined || newBalance === "") ){
    return GetBalance()
    }
-   if(checkNetworkError === true && (fetchedGotvPlans.status !== 200 || fetchedGotvPlans.status === undefined) ) {
+   if( (fetchedGotvPlans.status !== 200 || fetchedGotvPlans.status === undefined) ) {
     return RetrieveGotvPlans()
    }
   })
 }
+
 
 //UseREf for tvOne Verificatiom
 const timer = useRef(null) 

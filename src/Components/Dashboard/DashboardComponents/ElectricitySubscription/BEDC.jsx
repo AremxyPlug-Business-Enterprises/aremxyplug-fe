@@ -78,6 +78,7 @@ const BEDC = () => {
     authenticationOpen,
     purchaseElectricityErrorType,
     setPurchaseElectricityErrorType,
+    setNetworkIssue
   } = useContext(ContextProvider);
 
   const [showProductList, setShowProductList] = useState(false);
@@ -114,7 +115,8 @@ const BEDC = () => {
 
   const [passDataBalance, setPassDataBalance] = useState({});
 
-  const GetBalance = async () => {
+const GetBalance = async () => {
+
     const SuccessHandler = () => {
       console.log("successfully retrieved balance");
     };
@@ -129,7 +131,8 @@ const BEDC = () => {
               return setSessionModal(true);
             }
           },
-          setPassDataBalance
+          setPassDataBalance,
+          setNetworkIssue
         );
       }
     };
@@ -138,7 +141,8 @@ const BEDC = () => {
       setBalanceLoader,
       SuccessHandler,
       FailedHandler,
-      setPassDataBalance
+      setPassDataBalance,
+      setNetworkIssue
     );
   };
   // get the balance on entering the page
@@ -407,7 +411,8 @@ const BEDC = () => {
                   setSessionModal(true);
                 }
               },
-              setBedcFetchedResponse
+              setBedcFetchedResponse,
+              setNetworkIssue
             );
           } else if (ErrorType === "Server error") {
             setIsFailedMeterNumber(true);
@@ -420,7 +425,8 @@ const BEDC = () => {
           body,
           SuccessHandler,
           FailedHandler,
-          setBedcFetchedResponse
+          setBedcFetchedResponse,
+          setNetworkIssue
         );
       }
     }
@@ -493,7 +499,8 @@ const BEDC = () => {
                 );
               }
             },
-            setBedcFetchedResponse
+            setBedcFetchedResponse,
+            setNetworkIssue
           );
         } else if (ErrorType === "Server error") {
           setPurchaseElectricityErrorType("Server Error: Purchase Failed");
@@ -517,7 +524,8 @@ const BEDC = () => {
         data,
         SuccessHandler,
         FailedHandler,
-        setBedcFetchedResponse
+        setBedcFetchedResponse,
+        setNetworkIssue
       );
     }
 
@@ -543,7 +551,8 @@ const BEDC = () => {
           },
           setLoading,
           setErrorMessage,
-          ElectricityHandler
+          ElectricityHandler,
+          setNetworkIssue
         );
       } else if (ErrorType === "Network error" || ErrorType === "User error") {
         return alert("Kindly Check your internet connection");
@@ -560,7 +569,8 @@ const BEDC = () => {
       setPinFailed,
       setLoading,
       setErrorMessage,
-      ElectricityHandler
+      ElectricityHandler,
+      setNetworkIssue
     );
   };
 

@@ -26,6 +26,9 @@ import { GetFunction,
 import { BalanceLoading, Loader } from "../../../Loader/Loader";
 import { GetLocalStorage } from "../../../LocalStorage/LocalStorage";
 
+
+
+
 const PointRedeem = () => {
  const Data = GetLocalStorage()
 
@@ -55,6 +58,8 @@ const PointRedeem = () => {
         setPointPointsRedeemed,
           authenticationOpen,
           pointPointsRedeemed,
+          setNetworkIssue,
+          pointTransactionProduct
           } = useContext(ContextProvider);
    
 
@@ -77,7 +82,9 @@ const [restrictUser, setRestrictUser] = useState(false);
   const [inputPin, setInputPin] = useState("");
   const [proceed, setProceed] = useState(false);
    const [successPopup, setSuccessPopup] = useState(false);
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors]  = useState({});
+  const [failedPopup, setFailedPopup] = useState(false);
+  
  // const [pointPostResponse, setPointPostResponse] = useState({});
   
 const [userPoints, setUserPoints] = useState(0);
@@ -144,8 +151,6 @@ const schema = Joi.object({
     if(Data?.ConfirmAcc === "true"){
     const  successHandler = (response) => {
      if (!response?.data?.data) return;
-
-    //const total = response?.data?.data?.point?.total_points;
     const available = response?.data?.data?.point?.available_points ?? 0;
     // const trxPoints = response?.data?.data?.point?.transaction_points ?? 0;
     // const referralPts = response?.data?.data?.point?.referral_points ?? 0;
@@ -169,7 +174,8 @@ const schema = Joi.object({
         setLoading,  
         successHandler, 
         FailedHandler, 
-        setPointFetchedResponse)
+        setPointFetchedResponse,
+      setNetworkIssue)
   }else{
     setRestrictUser(true)
   }
@@ -262,7 +268,8 @@ const redemptionData = response?.data?.data?.data;
     if (ErrorType === "unauthorised") {
         setSessionModal(true);
       } else if (ErrorType === "Server error") {
-        setErrorMessage("Server Error: Redemption Failed");
+        setFailedPopup(true)
+        setErrorMessage("Redeem point exceeded or internal server error");
       } else if (ErrorType === "Network error" || ErrorType === "User error") {
         setErrorMessage("Network Error: Redemption Failed");
       } else {
@@ -277,7 +284,7 @@ const redemptionData = response?.data?.data?.data;
       payloadJson,
        successHandler, 
        failedHandler,
-        ()=> {});
+        ()=> {}, setNetworkIssue);
   };
 
 
@@ -298,15 +305,15 @@ const redemptionData = response?.data?.data?.data;
    }else if(err === "Server error"){
     alert("Failed to retrieve points balance.")
    }else if(err === "Network error" || err === "User error"){
-    alert("Your internet connection is quite unstable")
+   setNetworkIssue(true)
    }
   }, setPointFetchedResponse)
    }else if(err === "Server error"){
     alert("Failed to retrieve points balance.")
    }else if(err === "Network error" || err=== "User error"){
-    alert("Your internet connection is quite unstable")
+   setNetworkIssue(true)
    }
-  }, setPointFetchedResponse);
+  }, setPointFetchedResponse, setNetworkIssue);
 };
 
 
@@ -323,7 +330,8 @@ const redemptionData = response?.data?.data?.data;
     },
     setLoading,
     setErrorMessage,
-    RedeemPointsHandler
+    RedeemPointsHandler,
+    setNetworkIssue
   );
 };
 
@@ -340,7 +348,18 @@ const redemptionData = response?.data?.data?.data;
   };
 
   const { isDarkMode } = useContext(ContextProvider);
-
+const ExitTheDoneButton =()=> {
+  setFailedPopup(false);
+    setPointPointsRedeemed("");
+   setPointAmountRedeemed("");
+setPointRateRedeemed("");
+  setPointTransactionId("");
+  setPointOrderId("");
+  setPointTransactionProduct("");
+  setPointTransactionDescription("");
+  setOutputValue("");
+  setInputValue("")
+}
  
   return (
     <DashBoardLayout>
@@ -1075,6 +1094,56 @@ const redemptionData = response?.data?.data?.data;
           </div>
         </Modal>
       )}
+    
+
+     {failedPopup && (
+        <Modal>
+           <div  className={`w-[90%] md:w-[50%] lg:w-[35%] mx-auto 
+               rounded-lg overflow-hidden
+                ${isDarkMode ? "bg-black border-[1px] rounded-[7px] border-white": "bg-white"}`}>
+             <div className="flex justify-between items-center p-4">
+               <img
+              className={`w-6 h-6  `}
+                    src="/Images/login/arpLogo.png"
+                    alt="Logo"
+                  />
+                  <img
+                    onClick={() => setFailedPopup(false)}
+                    className="w-6 h-6 cursor-pointer"
+                    src="/Images/transferImages/close-circle.png"
+                    alt="Close"
+                  />
+              
+             </div>
+             <hr className="h-1 bg-[#04177f] border-none" />
+             <div className="p-4 text-center">
+               <h2 className="text-lg md:text-xl font-semibold my-4">
+                 Transaction Failed
+               </h2>
+               <img
+                  className={`w-32 h-32 mx-auto my-6 
+                       ${isDarkMode ? "bg-black rounded-full border-[0.1px] border-black"
+                        : "bg-white"}`}
+                 src="./Images/failed.png"
+                 alt="Failed"
+               />
+               <p className="text-sm text-red-500 font-[600] mb-8">
+                 {errorMessage}
+               </p>
+               
+                       <button
+                      onClick={() => ExitTheDoneButton()}
+                      className="bg-[#04177f] w-[100%] max-w-xs mx-auto py-2
+               text-white rounded-md font-medium"
+                    >
+                      Done
+                    </button>
+                     
+    
+             </div>
+           </div>
+           </Modal>
+       )}
                {isLoading && (
                     <Modal>
                         <Loader/>

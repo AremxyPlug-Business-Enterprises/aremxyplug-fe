@@ -65,7 +65,7 @@ const AirtimeVtu = () => {
     const [refNumber, setRefNumber] = useState("");
     const [description, setDescription] = useState("");
     const [isLoading, setIsLoading] = useState(false); // For managing loading state
-    const { isDarkMode } = useContext(ContextProvider);
+    const { isDarkMode, setNetworkIssue } = useContext(ContextProvider);
    const [sessionModal, setSessionModal] = useState(false)
     const [errorMessage, setErrorMessage] = useState(false);
     const [passDataBalance, setPassDataBalance] = useState({});
@@ -89,7 +89,7 @@ setRecipientList(response?.data?.data?.recipients?.recipients);
             setLoadingRecipient, 
             successHandler, 
             failedHandler
-            ,setRecipientList)
+            ,setRecipientList, setNetworkIssue)
         }else if(errorType === "Server error"){
     alert("Unable to fetch your recipient List try again later.")
         }
@@ -97,7 +97,7 @@ setRecipientList(response?.data?.data?.recipients?.recipients);
    await GetFunction("airtime/recipient", 
     setLoadingRecipient, 
     successHandler, 
-    failedHandler,()=> {})
+    failedHandler,()=> {}, setNetworkIssue)
    }
     
       const calcAmount = (a, b) => {
@@ -128,8 +128,6 @@ setRecipientList(response?.data?.data?.recipients?.recipients);
                              if(!sessionModal) return setSessionModal(true);
                          }else if(ErrorType === "Server error"){
                          alert("Failed to retrieve balance")
-                         }else if(ErrorType === "Network error" || "User error"){
-                           alert("Your internet connection seems unstable.")
                          }else{
                             alert("An unepected has occured")
                          }
@@ -138,7 +136,7 @@ setRecipientList(response?.data?.data?.recipients?.recipients);
                              setBalanceLoader, 
                              SuccessHandler, 
                              FailedHandler,
-                            ()=>{})
+                            ()=>{}, setNetworkIssue)
                            } 
                  useEffect(() => {
                     setRecipientNumber("");
@@ -391,8 +389,9 @@ const RecipientExistCheck = CheckRecipientInfoInList(recipientNumber)
 
   const handleAddRecipient = async() => {
 
-      const successHandler = ()=> {
-            alert("Recipients saved successfully")
+      const successHandler = (response)=> {
+            alert("Recipients saved successfully");
+            setFetchedResponse(response)
         }
   const failedHandler = async(ErrorType)=> {
  if(ErrorType === "Server error"){
@@ -403,9 +402,10 @@ const RecipientExistCheck = CheckRecipientInfoInList(recipientNumber)
      requestBody,
      successHandler, 
      failedHandler, 
-     setFetchedResponse)
+     setFetchedResponse, setNetworkIssue)
             }else if(ErrorType === "User error" || ErrorType === "Network error"){
               setAirtimeTransactionNetwork(true)
+              setNetworkIssue(true)
             }else {
               alert("Unable to save recipients at the moment.")
             }
@@ -423,7 +423,7 @@ const RecipientExistCheck = CheckRecipientInfoInList(recipientNumber)
      requestBody,
      successHandler, 
      failedHandler, 
-     setFetchedResponse)
+     setFetchedResponse, setNetworkIssue)
     };
 
 //Setting the network on the user interface
@@ -465,11 +465,14 @@ const RecipientExistCheck = CheckRecipientInfoInList(recipientNumber)
 
 
 
+
 const handleTransactionSuccessClose = async()=> {
   const requestBody = {
    network : networkId, 
   mobileno : recipientNumber,
-  amount : amount
+  amount : amount,
+   discount : `${discount}%`,
+  discounted_amount : newAmount
   }
   const successHandler = (response)=> {
     const result = response?.data?.data?.data; // Access the nested `data`
@@ -501,7 +504,7 @@ if(ErrorType === "Network error" || ErrorType === "User error"){
 }
   }
   await PostFunction("airtime",  setIsLoading, requestBody,
-    successHandler, FailedHandler, ()=>{}
+    successHandler, FailedHandler, ()=>{}, setNetworkIssue
    )
 //   return typeof successHandler() === "object" ? successHandler() : null;
 }
@@ -531,6 +534,8 @@ if(ErrorType === "Network error" || ErrorType === "User error"){
     };
 
  const HandleAirtime = async () => {
+    if(!canProceed) return
+    if(canProceed){
   await VerifyTransPin(
     inputPin,
     async(ErrorType) => {
@@ -546,8 +551,9 @@ if(ErrorType === "Network error" || ErrorType === "User error"){
     },
     setIsLoading,
     setErrorMessage,
-    handleTransactionSuccessClose
+    handleTransactionSuccessClose, setNetworkIssue
   );
+}
 };
 
 
@@ -918,9 +924,7 @@ className={`flex justify-left  w-[100%] items-center`}>
                          lg:left-[94%] self-center align-middle md:h-[14.038px] md:w-[14.038px] 
       lg:h-[24px] lg:w-[24px] w-[14px] h-[16px]"
                                              src={money} alt="" />
-                                       
-                        
-                                </div>
+                                        </div>
                                 {errors.amount && (
                                     <div className="!text-[14px] text-red-500 italic lg:text-[14px]">
                                         {errors.amount}
@@ -1139,7 +1143,6 @@ className={`flex justify-left  w-[100%] items-center`}>
                         {isLoading === false  ? (
                             
                         <div onClick={() => { 
-                            console.log("Error brooooo");
                        if(networkName?.length > 1 && 
                          recipientNumber?.length > 1 && recipientNumber?.length === 11
                             && RecipientExistCheck?.phone === undefined && RecipientExistCheck?.phone !== recipientNumber
@@ -1320,7 +1323,10 @@ className={`flex justify-left  w-[100%] items-center`}>
                                                                                         Available Balance {"  "} 
                                                                                          </p>
                                                                                          <span className="text-black">
-                                                                                          {`(${newBalance === "" || newBalance === null ? updateBalance : newBalance})`}
+                                                                                          {`(${typeof updateBalance === "number" ? updateBalance?.toLocaleString("en-NG", {
+                                                                                            style : "currency",
+                                                                                            currency : "NGN"
+                                                                                          }) : ""})`}
                                                                                         </span>
                                                                                         </div>
                                                                                       </div>

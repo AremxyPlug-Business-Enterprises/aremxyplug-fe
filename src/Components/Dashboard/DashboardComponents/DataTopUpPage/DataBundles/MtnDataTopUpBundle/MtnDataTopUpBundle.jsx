@@ -49,7 +49,8 @@ const MtnDataTopUpBundle = () => {
     setWalletNameMtn,
      authenticationOpen,
     purchaseMtnErrorType, 
-    setPurchaseMtnErrorType} = useContext(ContextProvider);
+    setPurchaseMtnErrorType,
+  setNetworkIssue} = useContext(ContextProvider);
 
   const [showProductList, setShowProductList] = useState(false);
   const [showOptionList, setShowOptionList] = useState(false);
@@ -97,8 +98,7 @@ const Balance = newBalance !== null &&
   let CheckSufficiency =
     mtnDataAmount >
    Balance
-console.log(newBalance);
-console.log(Balance);
+
 
 //fetching the products
        const fetchProducts = async () => {
@@ -113,7 +113,8 @@ console.log(Balance);
       } catch (error) {
         console.error("Error fetching products:", error);
         if (error && error.response === undefined) {
-          alert("Check your internet Connection, then reload the page.");
+          //alert("Check your internet Connection, then reload the page.");
+          setNetworkIssue(true)
         } else if (error && error.response.status === 400) {
           alert("Service for mtn is currently not available, Try again later.");
         }  else if (error && error?.response?.status === 500) {
@@ -144,6 +145,8 @@ console.log(Balance);
   // Fetch plans when product is selected
   const fetchPlans = async (productId) => {
     setLoadingPlans(true);
+    if(!navigator.onLine) return setNetworkIssue(true)
+    if(navigator.onLine) {
    try {
       setLoadingPlans(true);
       const response = await axiosInstance.get(
@@ -160,11 +163,9 @@ console.log(Balance);
         }
       }
     } catch (error) {
-      console.error("Error fetching plans:", error);
       if (error && error.response === undefined) {
-        alert("Your internet connection is quite unstable.");
-      
-      } else if (error && error.response.status === 400) {
+      setNetworkIssue(true)
+       } else if (error && error.response.status === 400) {
         setSelectProductWarn(true);
         
       }else if(error && error.response.status === 401){
@@ -176,18 +177,19 @@ console.log(Balance);
     } finally {
       setLoadingPlans(false);
     }
+  }
   };
 
   const handleSelectProduct = (product) => {
     if (!navigator.onLine){ 
-      alert("Check your internet connection.");
+      setNetworkIssue(true)
       setCheckNetworkError(true);
       if(selectedProductMtn !== product?.Plan_Type){
         setProductPlans([]);
       }
        }
     if (navigator.onLine) {
-      setSelectedProductMtn(`${product.Plan_Type}`);
+       setSelectedProductMtn(`${product.Plan_Type}`);
       setShowProductList(false);
       fetchPlans(product.Product_ID);
      }
@@ -224,7 +226,7 @@ console.log(Balance);
            ? Balance?.toLocaleString("en-NG", {
                  style : "currency",
                  currency : "NGN"
-            }) : "()"})`,
+            }) : ""})`,
         flag:  require("../DataBundles-Images/ng.svg").default,
         id: 1,
         code : "NGN Wallet"
@@ -253,10 +255,8 @@ console.log(Balance);
 
      const GetBalance = async () => {
        if(!navigator.onLine) return setCheckNetworkError(true)
-         const SuccessHandler = () => {
-           //alert("Successful");
-           console.log("successfully retrieved balance");
-           //alert("Successful")
+         const SuccessHandler = (response) => {
+           setPassDataBalance(response)
          };
          const FailedHandler = async (ErrorType) => {
            if (ErrorType === "unauthorised") {
@@ -275,10 +275,11 @@ console.log(Balance);
            setBalanceLoader,
            SuccessHandler,
            FailedHandler,
-           setPassDataBalance
+           ()=> {},
+           setNetworkIssue
          );
        };
-       console.log(newBalance)
+      
   useEffect(() => {
     // Simulate async data loading
  if (Data?.ConfirmAcc === "true"){                     // Simulate async data loading

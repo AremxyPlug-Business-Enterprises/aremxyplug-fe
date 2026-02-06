@@ -140,6 +140,7 @@ const AEDC = () => {
     authenticationOpen,
     purchaseElectricityErrorType,
     setPurchaseElectricityErrorType,
+    setNetworkIssue
   } = useContext(ContextProvider);
 
   const [showProductList, setShowProductList] = useState(false);
@@ -178,9 +179,10 @@ const AEDC = () => {
  const [restrictUser, setRestrictUser] = useState(false);
   const [passDataBalance, setPassDataBalance] = useState({});
 
-  const GetBalance = async () => {
-    const SuccessHandler = () => {
-      console.log("successfully retrieved balance");
+const GetBalance = async () => {
+
+    const SuccessHandler = (response) => {
+     setPassDataBalance(response)
     };
     const FailedHandler = async (ErrorType) => {
       if (ErrorType === "unauthorised") {
@@ -202,7 +204,8 @@ const AEDC = () => {
       setBalanceLoader,
       SuccessHandler,
       FailedHandler,
-      setPassDataBalance
+      ()=> {},
+      setNetworkIssue
     );
   };
   // get the balance on entering the page
@@ -444,29 +447,17 @@ const AEDC = () => {
           if (ErrorType === "Bad request") {
             setIsFailedMeterNumber(true);
           } else if (ErrorType === "unauthorised") {
-            await PostFunction(
-              path,
-              setMeterNumberLoading,
-              body,
-              SuccessHandler,
-              (ErrorType) => {
-                if (ErrorType === "unauthorised") {
-                  return setSessionModal(true);
-                }
-              },
-              setAedcFetchedResponse
-            );
-          } else if (ErrorType === "Server error") {
-            setIsFailedMeterNumber(true);
-          }
-        };
+            if(!sessionModal) return setSessionModal(true);
+            if(sessionModal) return;
+          }}
         await PostFunction(
           path,
           setMeterNumberLoading,
           body,
           SuccessHandler,
           FailedHandler,
-          setAedcFetchedResponse
+          setAedcFetchedResponse,
+          setNetworkIssue
         );
       }
     }
@@ -474,8 +465,6 @@ const AEDC = () => {
     passedMeterName = aedcFetchedResponse
       ? aedcFetchedResponse?.data?.name
       : "";
-
-    console.log("passed meter", passedMeterName);
   };
 
   const handleAedcMeterNumber = async (e) => {
@@ -562,7 +551,8 @@ const AEDC = () => {
         data,
         SuccessHandler,
         FailedHandler,
-        setAedcFetchedResponse
+        setAedcFetchedResponse,
+        setNetworkIssue
       );
     }
 
@@ -577,7 +567,7 @@ const AEDC = () => {
               ErrorType === "Network error" ||
               ErrorType === "User error"
             ) {
-              return alert("Kindly Check your internet connection");
+              return setNetworkIssue(true)
             } else if (ErrorType === "Server error") {
               alert(
                 "The server is currently experiencing a downtime, try again some other time."
@@ -591,7 +581,7 @@ const AEDC = () => {
           ElectricityHandler
         );
       } else if (ErrorType === "Network error" || ErrorType === "User error") {
-        return alert("Kindly Check your internet connection");
+        return setNetworkIssue(true)
       } else if (ErrorType === "Server error") {
         alert(
           "The server is currently experiencing a downtime, try again some other time."
@@ -605,7 +595,8 @@ const AEDC = () => {
       setPinFailed,
       setLoading,
       setErrorMessage,
-      ElectricityHandler
+      ElectricityHandler,
+      setNetworkIssue
     );
   };
 

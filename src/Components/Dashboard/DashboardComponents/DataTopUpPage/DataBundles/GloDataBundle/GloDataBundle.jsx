@@ -47,6 +47,8 @@ const GloDataBundle = () => {
     setRecipientNamesGlo,
     walletNameGlo,
     setWalletNameGlo,
+    setNetworkIssue,
+    networkIssue,
     // selectedNetworkProductGlo,
     //  setSelectedNetworkProductGlo,
     selectedProductGlo,
@@ -119,6 +121,8 @@ const Balance = newBalance !== null &&
       //Function used to fetch the newtork products that are available ===
        const fetchProducts = async () => {
       setLoadingProducts(true);
+      if(!navigator.onLine) return setNetworkIssue(true);
+      if(navigator.onLine){
       try {
         const response = await axiosInstance.get("/products/telecom/list/2");
         if (response.status === 201 || response.status === 200) {
@@ -132,9 +136,9 @@ const Balance = newBalance !== null &&
         }
         }
       } catch (error) {
-        console.error("Error fetching products:", error);
+       
         if (error && error.response === undefined) {
-          alert("Check your internet Connection, then reload the page.");
+          setNetworkIssue(true)
         } else if (error && error.response.status === 400) {
           alert("Service for glo is currently not available, Try again later.");
         } else if (error && error.response.status === 500) {
@@ -143,11 +147,10 @@ const Balance = newBalance !== null &&
       } finally {
         setLoadingProducts(false);
       }
+    }
     };
   useEffect(() => {
-if(Data?.ConfirmAcc === "true" && navigator.onLine){   
-fetchProducts();
-}
+
     const HandleBalanceStatus = () => {
       if (CheckSufficiency) {
         setBalanceStatus("Insufficient fund");
@@ -163,6 +166,8 @@ fetchProducts();
   // Fetch plans when product is selected
   const fetchPlans = async (productId) => {
     setLoadingPlans(true);
+    if(!navigator.onLine) return setNetworkIssue(true)
+    if(navigator.onLine){
     try {
       const response = await axiosInstance.get(
         `/products/telecom/${productId}`
@@ -180,7 +185,7 @@ fetchProducts();
     } catch (error) {
       console.error("Error fetching plans:", error);
       if (error && error.response === undefined) {
-        alert("Your internet connection is quite unstable.");      
+        if(!networkIssue) return setNetworkIssue(true)    
       } else if (error && error.response.status === 400) {
         setSelectProductWarn(true);
       } else if (error && error.response.status === 500) {
@@ -189,21 +194,23 @@ fetchProducts();
                 if(sessionModal) return;
          if(!sessionModal) return setSessionModal(true)
       } else {
-        alert("Check your internet connection.");
+       setNetworkIssue(true)
       } } finally {
       setLoadingPlans(false);
     }
+  }
   };
 
   const handleSelectProduct = (product) => {
     if (!navigator.onLine) {
-      alert("Check your internet connection.");
+       setNetworkIssue(true)
       setCheckNetworkError(true);
        if(product?.Plan_Type !== selectedProductGlo){
         setProductPlans([])
        }
     }
     if (navigator.onLine) {
+     
       setSelectedProductGlo(`${product.Plan_Type}`);
       setShowProductList(false);
       fetchPlans(product.Product_ID);
@@ -288,6 +295,7 @@ fetchProducts();
            }
             else if(ErrorType === "Network error" || ErrorType === "User error"){
                setCheckNetworkError(true);
+               if(!networkIssue) setNetworkIssue(true)
            }else{
                alert("An unexpected error occured in attempt to retrieve balance.")
            }
@@ -297,7 +305,8 @@ fetchProducts();
            setBalanceLoader,
            ()=> {},
            FailedHandler,
-           setPassDataBalance
+           setPassDataBalance,
+           setNetworkIssue
          );
        };
 
@@ -305,6 +314,7 @@ fetchProducts();
  
     // Simulate async data loading
   if(Data?.ConfirmAcc === "true"){
+    fetchProducts()
       GetBalance();
       if (GetBalance) {
         setNewBalance(
@@ -498,7 +508,8 @@ try {
         console.log(error);
         if (error && error.response === undefined) {
           setGloPurchaseErrorType("Network error: Purchase Failed");
-          setGloPurchaseStatus(true)
+          setGloPurchaseStatus(true);
+          
              setConfirm(false);
           setInputPin("");
         } else if (error && error.response.status === 404) {

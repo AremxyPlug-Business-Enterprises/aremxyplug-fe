@@ -43,7 +43,9 @@ export default function ToAremxyMain() {
     setTransferAmount,
     isDarkMode,
     transferValue,
-    setTransferValue
+    setTransferValue,
+    setNetworkIssue,
+    networkIssue
   } = useContext(ContextProvider);
 
   const [addToRecipient, SetAddToRecipient] = useState(false);
@@ -141,7 +143,7 @@ setErrorMessage("");
       setLoading, 
       SuccessHandler, ()=> {
         setSessionModal(true);
-      }, setFetchedResponse); 
+      }, setFetchedResponse, setNetworkIssue); 
       }else if(Error === undefined){
        setErrorMessage("Your internet connection is quite unstable.")
           setVerifiedUser(false)
@@ -160,7 +162,7 @@ setErrorMessage("");
     setLoading,
      SuccessHandler,
       FailedHandler,
-       setFetchedResponse);
+       setFetchedResponse, setNetworkIssue);
 }else if(valueTransfer=== customerUsername || valueTransfer === customerEmail){
  setErrorMessage(`${value} is your transfer identity, you can only send to other aremxyplug wallet.`)
   setVerifiedUser(false);
@@ -238,7 +240,7 @@ testUsername.test(value) === false && value?.endsWith(".com") === true
         || passDataBalance?.data?.data?.data?.balance !== null 
         || passDataBalance?.data?.data?.data?.balance !== undefined)
         && mainCountry?.length > 1; 
-console.log(transferAmount);
+
   // const  HandleAmountFormat=(amount)=> {
   //   const RequireNumericChange = Number(amount)
   //   if(RequireNumericChange !== null || RequireNumericChange!== undefined ||RequireNumericChange!== ""){
@@ -298,10 +300,10 @@ const standardPhoneNumber = AppendValueWithPlus()
     
     
 const GetBalance = async () => {
-      const SuccessHandler = () => {
+      const SuccessHandler = (response) => {
         //alert("Successful");
-        console.log("successfully retrieved balance");
-        //alert("Successful")
+        setPassDataBalance(response)
+       
       };
       const FailedHandler = async (ErrorType) => {
         if (ErrorType === "unauthorised") {
@@ -313,6 +315,8 @@ const GetBalance = async () => {
           ErrorType === "Network error" ||
           ErrorType === "User error"
         ) {
+            if(networkIssue) return;
+             if(!networkIssue) return setNetworkIssue(true)
         } else {
           alert("An unexpected error occured in attempt to retrieve balance.");
         }
@@ -322,7 +326,8 @@ const GetBalance = async () => {
         setBalanceLoader,
         SuccessHandler,
         FailedHandler,
-        setPassDataBalance
+        ()=> {},
+        setNetworkIssue
       );
     };
       if (Data?.ConfirmAcc === "true"){                     // Simulate async data loading
@@ -372,7 +377,60 @@ const GetBalance = async () => {
       className="flex flex-col gap-[20px] 
     lg:gap-x-[40px] w-full"
     >
-     
+         {/* ==========================Select/Add Recipient====================== */}
+      <div className="flex flex-col gap-[15px] md:flex-row lg:gap-[30px]">
+        <div className="w-full">
+          
+            <div onClick={()=> {
+             // navigate("/aremxy-select-user");
+             setSelectRecipientPopUp(true)
+            }}
+            className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] 
+                        md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] 
+                        pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "border border-[#0003] border-[#9C9C9C]  text-[#7C7C7C]"
+    }`}>
+              <p className="text-[#7E7E7E] text-[15px] lg:text-[17px]
+                       md:text-[13px] md:font-[600] font-[400]">Select User</p>
+              <img
+                className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
+                src="./Images/otherBanksImages/weight.png"
+                alt=""
+              />
+            
+          </div>
+        </div>
+        <div className="w-full">
+         
+            <div className={`mt-2 md:mt-0 rounded-[10px] 
+                        md:rounded-0 p-[20px] md:p-0  sm:p-3 sm:text-lg 
+                        flex justify-between pt-[8.803px] pb-[7.794px] 
+                        pr-[13px] pl-[10.876px] font-[400] text-[14px] 
+                        leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
+     items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full 
+     h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px] 
+      self-center ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "border border-[#0003] hover:bg-[#EDEAEA] border-[#9C9C9C] text-[#7C7C7C]"
+    }`} onClick ={()=> {
+       navigate("/aremxy-add-user")
+    }}>
+              <p className="text-[#7E7E7E] text-[15px] lg:text-[17px]
+                       md:text-[13px] md:font-[600] font-[400]">Add User</p>
+              <img
+                className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
+                src="./Images/otherBanksImages/add-square.png"
+                alt=""
+              />
+            </div>
+      </div>
+      </div>
       <div
         className="flex flex-col gap-[15px] 
       md:flex-row lg:gap-[30px]"
@@ -570,98 +628,8 @@ const GetBalance = async () => {
           )}
         </div>
       </div>
-      {/* ==========================Select/Add Recipient====================== */}
-      <div className="flex flex-col gap-[15px] md:flex-row lg:gap-[30px]">
-        <div className="w-full">
-          
-            <div onClick={()=> {
-             // navigate("/aremxy-select-user");
-             setSelectRecipientPopUp(true)
-            }}
-            className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] 
-                        md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] 
-                        pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
-      isDarkMode
-        ? "bg-black text-white border border-white"
-        : "border border-[#0003] border-[#9C9C9C]  text-[#7C7C7C]"
-    }`}>
-              <p className="text-[#7E7E7E] text-[15px] lg:text-[17px]
-                       md:text-[13px] md:font-[600] font-[400]">Select User</p>
-              <img
-                className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
-                src="./Images/otherBanksImages/weight.png"
-                alt=""
-              />
-            
-          </div>
-        </div>
-        <div className="w-full">
-         
-            <div className={`mt-2 md:mt-0 rounded-[10px] 
-                        md:rounded-0 p-[20px] md:p-0  sm:p-3 sm:text-lg 
-                        flex justify-between pt-[8.803px] pb-[7.794px] 
-                        pr-[13px] pl-[10.876px] font-[400] text-[14px] 
-                        leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
-    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
-     items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full 
-     h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px] 
-      self-center ${
-      isDarkMode
-        ? "bg-black text-white border border-white"
-        : "border border-[#0003] hover:bg-[#EDEAEA] border-[#9C9C9C] text-[#7C7C7C]"
-    }`} onClick ={()=> {
-       navigate("/aremxy-add-user")
-    }}>
-              <p className="text-[#7E7E7E] text-[15px] lg:text-[17px]
-                       md:text-[13px] md:font-[600] font-[400]">Add User</p>
-              <img
-                className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
-                src="./Images/otherBanksImages/add-square.png"
-                alt=""
-              />
-            </div>
-      </div>
-      </div>
+  
 
-      {/* User details section */}
-
-
-      
-          {/* <div className={`relative  ${ Data?.aremxyUsername?.toLowerCase()?.startsWith("a" || "b" || "c" )
-                                            ? "bg-[#228be6] bg-opacity-5 p-5 rounded-full" : Data?.aremxyUsername?.toLowerCase()?.startsWith("d" || "e" || "f") 
-                                           ?"bg-[#40c057] bg-opacity-5 p-5 rounded-full" : Data?.aremxyUsername?.toLowerCase()?.startsWith("g" || "h" || "i") 
-                                         ? "bg-[#fab005]  bg-opacity-5 p-5 rounded-full" : Data?.aremxyUsername?.toLowerCase()?.startsWith("j" || "k" || "l")
-                                        ? "bg-[#fa5252]  bg-opacity-5 p-5 rounded-full":  Data?.aremxyUsername?.toLowerCase()?.startsWith("m" || "n" || "o")
-                                      ? "bg-[#7850f2]  bg-opacity-5 p-5 rounded-full" : Data?.aremxyUsername?.toLowerCase()?.startsWith("p" || "q" || "r")
-                                   ? "bg-[#e70f0f]  bg-opacity-5 p-5 rounded-full" : Data?.aremxyUsername?.toLowerCase()?.startsWith("s" || "t" || "u")
-                                  ? "bg-[#804a4a]  bg-opacity-5 p-5 rounded-full": Data?.aremxyUsername?.toLowerCase()?.startsWith("v" || "w" || "x") 
-                              ? "bg-[#545893]  bg-opacity-5 p-5 rounded-full" : "bg-[#8a9354]  bg-opacity-5  p-5 rounded-full"}`}>
-            <img
-              src={UserImage}
-              className="h-[48px] w-[46.753px] rounded-[48px]
-              lg:h-[150px] lg:w-[150px] 
-              md:h-[88.801px]  md:w-[88.801px]
-              md:rounded-[88.201px] lg:rounded-[150px] z-[2]"
-              alt="profilePic"
-            />
-            <img
-              src={pickPinIcon}
-              className="absolute bottom-0 right-0 h-[25px] w-[25px] 
-              md:h-[25.82px] md:w-[25.82px] lg:h-[44px] lg:w-[44px]"
-              alt=""
-            />
-          </div> */}
-          {/* Profile text */}
-          
-        
-      
-
-      {/* <div className={` ${styles.inputBox}`}> 
-      <div className="flex flex-col gap-[15px] md:flex-row lg:gap-[30px]">
-        *
-      */}
 
       <div className='flex flex-col lg:gap-[25px] gap-[20px] w-[100%] mb-[50px]'>
       <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-full">

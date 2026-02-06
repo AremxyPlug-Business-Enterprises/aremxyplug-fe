@@ -80,7 +80,7 @@ import NecoEducationPins from "./Components/EducationPins/NecoEducationPins";
 //import JambEducationPin from "./Components/EducationPins/jambEducationPin";
 import NabtebEducationPins from "./Components/EducationPins/nabtebEducationPins";
 import WaecReceipt from "./Components/EducationPins/ReceiptEducationPins/waecReceipt";
-import JambReceipt from "./Components/EducationPins/ReceiptEducationPins/jambReceipt";
+//import JambReceipt from "./Components/EducationPins/ReceiptEducationPins/jambReceipt";
 import NecoReceipt from "./Components/EducationPins/ReceiptEducationPins/necoReceipt";
 import NabtebReceipt from "./Components/EducationPins/ReceiptEducationPins/nabtebReceipt";
 import { SuccessfulReceipt } from "./Components/CurrencyConversion/ConversionReceipts/SuccessConversionReceipt";
@@ -182,7 +182,6 @@ import { KedcoReceiptFailed } from "./Components/Dashboard/DashboardComponents/E
 import { PhedReceiptFailed } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/phedReceiptFailed";
 import BvnVerification from "./Components/My Profile & Account Settings/Account Verification/BvnVerification";
 import AccountVerficationPage from "./Components/My Profile & Account Settings/Account Verification/AccountVerficationPage";
-import { ProtectedRoute } from "./Components/ProtectedRoute";
 import EduReceipt from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/EduReceipt";
 import { TvSubReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/Tv_SubReceipt";
 import { AirtimeTransReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/AirtimeTransReceipt";
@@ -192,7 +191,33 @@ import { VirtualAccountReceipt } from "./Components/Dashboard/DashboardComponent
 import { ThemeHandler } from "./Components/ApiCollection.jsx/ApiBuck";
 import { PointRedeemReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/PointRedeemReceipt";
 import { TestingDesign } from "./Components/TestingPhase/TestingDesign";
+import { Loader } from "./Components/Loader/Loader";
+import { Suspense } from "react";
 import NotFound from "./Components/NotFound";
+import ProtectedRoutes from "./Components/ProtectedRoute"
+const ProtectedRoute = ({children})=> {
+ 
+  const SessionExpiration = localStorage.getItem("SessionExpiration")
+  //const pathname = typeof location.pathname  === "string" ? location?.pathname?.slice(1) : ""
+const LazyRoutes =  React.lazy(()=> import("./Components/ProtectedRoute"))
+
+
+  //eslint-disable-next-line
+
+  return(
+  <Suspense fallback= {
+  <Loader/>
+}>
+  {!SessionExpiration  ? (
+    <LazyRoutes>{children}</LazyRoutes>
+  ) : (
+    <ProtectedRoutes>{children}</ProtectedRoutes>
+  )}
+  </Suspense>
+  )
+}
+
+
 export   const RoutingObjectLimitScope = [
      { id: 1, Routepath: "/", RouteComponent: <Home /> },
   { id: 2, Routepath: "/About-us", RouteComponent: <AboutUs /> },
@@ -216,7 +241,7 @@ export   const RoutingObjectLimitScope = [
   { id: 20, Routepath: "/faq", RouteComponent: <Faq /> },
    { id: 21, Routepath: "/terms-and-condition", RouteComponent: <TermsAndCondition /> },
   { id: 22, Routepath: "/privacy-policy", RouteComponent: <PrivacyPolicy /> },
-  { id: 23, Routepath: "/Login", RouteComponent: <Login /> },
+  { id: 23, Routepath: "/Login", RouteComponent:  <Login /> },
   { id: 24, Routepath: "/team", RouteComponent: <Team /> },
   { id: 25, Routepath: "/signUp", RouteComponent: <SignUp /> },
   { id: 26, Routepath: "/Verification", RouteComponent: <Verification /> },
@@ -378,13 +403,19 @@ export   const RoutingObjectLimitScope = [
   {id : 182, Routepath : "/TestingPhase", RouteComponent : <TestingDesign/>},
      {id : 183, Routepath : "*", RouteComponent : <NotFound/>}
   ];
+  const UserStatus = localStorage.getItem("cxccxfd");
 export const Router = () => {
  return (
     <div>
       <ThemeHandler />
       <Routes>
         {RoutingObjectLimitScope.map(({ id, Routepath, RouteComponent }) => (
-          <Route key={id} path={Routepath} element={RouteComponent} />
+          <Route key={id} path={Routepath} element={
+           
+           RouteComponent}
+            
+            
+             />
         ))}
 
         {/* Protected Routes */}

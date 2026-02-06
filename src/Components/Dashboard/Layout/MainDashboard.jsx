@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useMemo } from "react";
 import { SideBar } from "../Layout/SideBar";
 import { useEffect, useContext } from "react";
 import { ContextProvider } from "../../Context";
@@ -23,6 +23,7 @@ import { CheckVirtualAcc, InternalLoginSession} from "../../ApiCollection.jsx/Ap
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { GetFunction} from "../../../Components/ApiCollection.jsx/ApiBuck";
+
 //import { useImageHook } from "../../useImageHook";
 
 
@@ -50,6 +51,10 @@ export const MainDashboard = () => {
 // const ImageLoadingExecution = useImageHook(DashBoardImages);
 
    //  const [loading, setLoading] = useState(false)
+
+
+
+
     const [userPoints, setUserPoints] = useState(null);
    
    
@@ -61,7 +66,7 @@ export const MainDashboard = () => {
     setBankNameState, setAccountNameState, setAccountNumberState, 
     twoStepVerificationSuccess,setTwoStepVerificationSuccess, setDateEdit,
     newBalance, setNewBalance,  setEditCalenderOne, setEditCalenderTwo, 
-     setStartDateValueState, setEndDateValueState, setCurrentDateInTimeStamps, setCountCalender
+     setStartDateValueState, setEndDateValueState, setCurrentDateInTimeStamps, setCountCalender, networkIssue, setNetworkIssue
   } = useContext(ContextProvider);
   //const {account_no, bank_name, account_name} = virtualAccCreated;
 const navigate = useNavigate()
@@ -122,6 +127,12 @@ const Data = GetLocalStorage()
     return;
   };
 
+
+  ///============ HandleTaskBarResponse =============== /////
+
+   
+    
+
   const handleSelectedOption2 = (event) => {
     const clickedoption = event.target.value;
     setSelected2(clickedoption);
@@ -150,7 +161,7 @@ if((clickedoption === "NGN")){
   const GenerateVirtualAccount = async(AuthUsed)=>{
       const usernameToken = localStorage.getItem("xcss{}")
       const emailToken = localStorage.getItem("xcss[]");
-     if(!navigator.onLine) return alert("Check your internet connection")
+     if(!navigator.onLine && networkIssue === false) return setNetworkIssue(true) 
       if((usernameToken || emailToken) && navigator.onLine){
       try{
       setDashLoading(true);
@@ -166,7 +177,7 @@ if((clickedoption === "NGN")){
            await CheckVirtualAcc(AuthUsed, customerDetail, setDashLoading,
              setVirtualAccCreated, setBankNameState, 
              setAccountNameState, setAccountNumberState, 
-           twoStepVerificationSuccess,setTwoStepVerificationSuccess)
+           twoStepVerificationSuccess,setTwoStepVerificationSuccess, setNetworkIssue)
            } 
            if(CheckVirtualAcc && Data.ConfirmAcc === "true"){
             setDashLoading(false);
@@ -174,12 +185,12 @@ if((clickedoption === "NGN")){
 
       }catch(error){
         if(error && error.response === undefined){
-          alert("Your internet connection is quite unstable.")
+         setNetworkIssue(true)
         } else if( error.response && error.response.status === 400){
           alert("Virtual Account Creation failed")
           setDashLoading(false);
         }else if(error.response.status === 404){
-       alert("Check your Network connection")
+      alert("Check your Network connection")
        setDashLoading(false)
         }else if(error.response.status === 401){
       setSessionModal(true)
@@ -188,7 +199,8 @@ if((clickedoption === "NGN")){
           setDashLoading(false);
         }else if(error && error.response.status === undefined){
            setDashLoading(false);
-           alert("Network connection unstable, kindly check your network connection")
+           setNetworkIssue(true)
+          // alert("Network connection unstable, kindly check your network connection")
             alert("Virtual Account Creation failed");
         }else {
             setDashLoading(false);
@@ -201,7 +213,10 @@ if((clickedoption === "NGN")){
       const GenerateAccountBalance = async()=>{
         const usernameToken = localStorage.getItem("xcss{}");
         const emailToken = localStorage.getItem("xcss[]");
-        if(!navigator.onLine) return setBalanceValue("Check your internet connection.");
+        if(!navigator.onLine) {
+    setBalanceValue("Check your internet connection.");
+    setNetworkIssue(true)
+        }
         if((usernameToken || emailToken) && navigator.onLine){
         try{
           setBalanceLoading(true);
@@ -242,6 +257,7 @@ const ValueRef = useRef();
  useEffect(() => {
     ValueRef.current = Data;
     if(Data?.ConfirmAcc === "true"){
+    ExecutePointFunction();
     GenerateAccountBalance();
     setDateEdit((value)=>{
       const valueReset = new Date()
@@ -280,25 +296,19 @@ const ValueRef = useRef();
       }else if(ErrorType === "Network error" || ErrorType === "User error"){
        setUserPoints("Connection error")
       }else if(ErrorType === "Server error"){
-        alert("Points refresh failed");
+        setUserPoints("Points refresh failed");
       }
      };
       await GetFunction("extra/point",
          setPointsLoading,  
          successHandler,
           FailedHandler,
-           ()=> {})
+           ()=> {}, setNetworkIssue)
        
  }
   //Fetch Points
   const [pointsLoading, setPointsLoading] = useState(false)
-   useEffect(() => {
- if(Data?.ConfirmAcc === "true"){
-      ExecutePointFunction();
-      }
-        
-           //eslint-disable-next-line
-    }, []);
+ 
 
     window.addEventListener("online", ()=> {
   if((balanceValue === "Check your internet connection." ||  balanceValue === "Your internet connection is quite unstable.")
@@ -943,7 +953,7 @@ return (
             </div>
           </div> 
     
-      {sessionModal && (
+      {sessionModal &&   (
      <InternalLoginSession setExpiredSessionLogin={setSessionModal}/>
       )}
       

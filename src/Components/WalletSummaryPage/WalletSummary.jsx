@@ -55,7 +55,7 @@ export default function WalletSummaryPage() {
     setEndDateValueState,
     setEditCalenderOne,
     setEditCalenderTwo,
-    setCurrentDateInTimeStamps,
+    setCurrentDateInTimeStamps, setNetworkIssue,
     editCalenderOne,editCalenderTwo,  setCountCalender
   } = useContext(ContextProvider);
   const [passDataBalance, setPassDataBalance] = useState({});
@@ -175,30 +175,19 @@ export default function WalletSummaryPage() {
       setLoading,
       SuccessHandler,
       FailedHandler,
-      setWalletTransactionResponse
+      setWalletTransactionResponse,
+      setNetworkIssue
     );
   };
 
   const GetBalance = async () => {
-    const SuccessHandler = () => {
-      //alert("Successful");
-      console.log("successfully retrieved balance");
-      //alert("Successful")
-    };
+    const SuccessHandler = (response) => {
+       setPassDataBalance(response)
+       };
     const FailedHandler = async (ErrorType) => {
-      console.log(`Failed to retrieve balance`);
       if (ErrorType === "unauthorised") {
-        await GetFunction(
-          "balance",
-          setBalanceLoader,
-          SuccessHandler,
-          (ErrorType) => {
-            if (ErrorType === "unauthorised") {
-              return setSessionModal(true);
-            }
-          },
-          setPassDataBalance
-        );
+        if(sessionModal) return;
+        if(!sessionModal) return setSessionModal(true);
       }
     };
     await GetFunction(
@@ -206,7 +195,8 @@ export default function WalletSummaryPage() {
       setBalanceLoader,
       SuccessHandler,
       FailedHandler,
-      setPassDataBalance
+      setPassDataBalance,
+      setNetworkIssue
     );
   };
   // Simulate async data loading
@@ -219,7 +209,6 @@ export default function WalletSummaryPage() {
 
   //Handle Calender State (The cancel Button)
    const handleCalenderState = async()=> {
-  // No filtering carried out.....
    setStartDateValueState("");
   setEndDateValueState("");
   setCurrentDateInTimeStamps(0);
@@ -416,7 +405,6 @@ export default function WalletSummaryPage() {
     let result;
     const SuccessHandler = (response) => {
       result = response;
-      console.log("Transaction fetched successfully");
     };
     const FailedHandler = async (ErrorType) => {
       // if (!navigator.online) alert("Kindly check your internet connection");
@@ -437,7 +425,8 @@ export default function WalletSummaryPage() {
       setOrderLoading,
       SuccessHandler,
       FailedHandler,
-      setOrderIdResponse
+      setOrderIdResponse,
+      setNetworkIssue
     );
     return result;
   };

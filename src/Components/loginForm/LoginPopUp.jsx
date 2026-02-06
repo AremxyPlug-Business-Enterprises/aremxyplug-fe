@@ -43,6 +43,7 @@ function LoginPopUp() {
     setBvnVerifyImage,
     setIdNumber,
     setBvnNumber,
+    setNetworkIssue
   } = useContext(ContextProvider);
 
   const { email, phone } = customerDetail;
@@ -338,7 +339,8 @@ return assignImageByUsername
       setAccountNumberState,
       twoStepVerificationSuccess,
       setTwoStepVerificationSuccess,
-      ConfirmVirtualState
+      ConfirmVirtualState,
+      setNetworkIssue
     );
     if (CheckVirtualAcc) {
      SessionTiming();

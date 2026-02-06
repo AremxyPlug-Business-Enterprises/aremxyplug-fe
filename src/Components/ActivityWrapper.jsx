@@ -1,0 +1,87 @@
+import React from 'react'
+import { useContext, useState, useRef, useEffect } from 'react';
+import { RemoveLocalStorage } from './LocalStorage/LocalStorage';
+import { ContextProvider } from './Context';
+import { HandleUserSession } from './ApiCollection.jsx/ApiBuck';
+export const ActivityWrapper = ({children}) => {
+  const {sessionExpiration, setSessionExpiration} = useContext(ContextProvider)
+      const [sec, setSec] = useState(0);
+  // The aim is to create three different situation when the user will
+  // will be logged from the page
+  // 1. The point in which the authToken is not gotten through cookies after a request from
+  // an expitred token.The usage of user session expiration component must be 
+  //used here.
+  // 2. No user activity was detected within 20 minutes, a pop up for inactivity is created.
+  // 3. The user enters the dashboard or any protected-route through an openend tab
+  // for the opened tab a cookie present in the frontend is to check the time when it was created,
+  // then does it substraction to know if expired or not.
+  //4. The authorisedLogin, getToken and userStatus is not found in the local Storage.
+  
+  const TrackSessionExpiration = ()=> {
+    const expiryTime = localStorage.getItem("SessionExpiration");
+  const getDifferenceForExpiration = Date.now()  > Number(expiryTime);
+  //Checking for the last 30 seconds difference between the expiryTime and the current Time,
+  const HandleUserSessionPopUpTime = Number(expiryTime) - Date.now() <= 35000;
+  // Kindly Check this later
+  //console.log( Number(expiryTime) - Date.now())
+  if(HandleUserSessionPopUpTime && sessionExpiration === false 
+    && Number(expiryTime) - Date.now() > 5000 && Number(expiryTime) - Date.now() < 35000
+  ){
+    setSessionExpiration(true);
+    //An extra 5 seconds is set for the sessionModal to get running
+ setSec(30);
+  }
+   return getDifferenceForExpiration;
+  }  
+   
+    const SessionIntervalHold = useRef(null)
+  
+  //Resets the timer on user activity using the event click as an example 
+  function ResetTimer(e){
+      if(!localStorage.getItem("cxccxfd")) return;
+      if((e?.target?.innerText && e?.target ?
+     e?.target?.innerText !== "Logout"   : true) 
+      && TrackSessionExpiration() === false
+       && sessionExpiration=== false){
+      const Reset = 800  *  1000;
+      const resetExpiration = Date.now() + Reset;
+  return localStorage.setItem("SessionExpiration", resetExpiration);
+   }
+  }
+ 
+  
+  useEffect (()=> { 
+  const checkForIntervalCallBack = ()=> {
+   const sessionExpirationValue = TrackSessionExpiration();
+      const clearSessionExpirationMemory = ()=> {
+            window.location.href="/Login"  
+          return RemoveLocalStorage();
+      }
+      if(sessionExpirationValue === true && sec === 0 ){
+      clearInterval(SessionIntervalHold.current);
+      return clearSessionExpirationMemory() 
+      }
+    }
+   checkForIntervalCallBack();
+      SessionIntervalHold.current =  setInterval(checkForIntervalCallBack, 30000);
+    return ()=> {
+      clearInterval(SessionIntervalHold.current);
+     }
+        // eslint-disable-next-line
+  }, [])
+  
+    window.onclick = ResetTimer;
+   window.onload = ResetTimer;
+  window.onkeyup = ResetTimer;
+  window.onkeydown = ResetTimer;
+  // window.onmousedown = ResetTimer;
+   window.onmouseenter = ResetTimer;
+  
+  return (
+    <div className="flex flex-col w-full items-center">
+      {children}
+      {sessionExpiration && <HandleUserSession sec={sec} setSec={setSec}/>}
+    </div>
+  )
+}
+

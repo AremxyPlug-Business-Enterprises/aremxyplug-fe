@@ -57,6 +57,8 @@ const AirtelDataBundle = () => {
     setInputPin,
     airtelPurchaseErrorType,
     setAirtelPurchaseErrorType,
+    setNetworkIssue,
+    networkIssue,
     // inputPinHandler,
     toggleVisibility,
     isVisible,
@@ -116,7 +118,7 @@ const assumedString = selectedAmountAirtel?.toString()
         setProducts(response.data.data.products || []);
       } catch (error) {
         if (error && error.response === undefined) {
-          alert("Check your internet Connection, then reload the page.");
+         setNetworkIssue(true)
           setCheckNetworkError(true)
         }else if(error && error.reponse.status === 401){
                   if(sessionModal) return;
@@ -156,6 +158,8 @@ const assumedString = selectedAmountAirtel?.toString()
   // Fetch plans when product is selected
   const fetchPlans = async (productId) => {
     setLoadingPlans(true);
+    if(!navigator.onLine) return setNetworkIssue(true);
+    if(navigator.onLine){
     try {
       const response = await axiosInstance.get(
         `/products/telecom/${productId}`
@@ -171,7 +175,7 @@ const assumedString = selectedAmountAirtel?.toString()
       }
     } catch (error) {
       if (error && error.response === undefined) {
-        alert("Your internet connection is quite unstable.");
+       if(!networkIssue) setNetworkIssue(true) 
         setCheckNetworkError(true)
       } else if (error && error.response.status === 400) {
         setSelectProductWarn(true);
@@ -182,11 +186,12 @@ const assumedString = selectedAmountAirtel?.toString()
         else if (error && error.response.status === 500) {
         setSelectProductWarn(true);
       } else {
-        alert("Check your internet connection.");
+        alert("An unexpected error has occurred");
       }
     } finally {
       setLoadingPlans(false);
     }
+  }
   };
 
   const handleSelectProduct = (product) => {
@@ -276,7 +281,10 @@ const methodOptions = [
 
   //Function to get user's account balance
      const GetBalance = async () => {
-    if(!navigator.onLine) return setCheckNetworkError(true)
+    if(!navigator.onLine){
+       setCheckNetworkError(true);
+       setNetworkIssue(true)
+    }
   
       const FailedHandler = async (ErrorType) => {
         if (ErrorType === "unauthorised") {
@@ -293,9 +301,12 @@ const methodOptions = [
       await GetFunction(
         "balance",
         setBalanceLoader,
-        ()=> {},
+        (response)=> {
+           setPassDataBalance(response)
+        },
         FailedHandler,
-        setPassDataBalance
+       ()=> {},
+        setNetworkIssue
       );
     };
   useEffect(() => {
@@ -505,6 +516,7 @@ const path = "/data";
       
       } catch (error) {
         if (error && error.response === undefined) {
+         setNetworkIssue(true)
              setAirtelPurchaseErrorType("Network error: Purchase Failed")
            setAirtelPurchaseStatus(true); // Show success popup
           setConfirm(false);
@@ -532,6 +544,7 @@ const path = "/data";
           setAirtelPurchaseStatus(true); // Show failure popup
           setConfirm(false);
           setInputPin("");
+         // setNetworkIssue(true);
           setAirtelPurchaseErrorType("Network error: Purchase Failed")
         } else if (error && error.response.status === 401) {
          setSessionModal(true);

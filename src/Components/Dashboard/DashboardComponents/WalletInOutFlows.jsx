@@ -26,7 +26,7 @@ export const WalletInOutFlows = ({sessionModal, setSessionModal}) => {
       editCalenderTwo,
       setEditCalenderTwo,
       setCurrentDateInTimeStamps,
-    setCountCalender, progressTaskBarResponse }  =
+    setCountCalender, setNetworkIssue }  =
     useContext(ContextProvider);
   const [blur] = useState(false);
  // console.log(setBlur)
@@ -145,7 +145,7 @@ const handleDateFilter = ()=> {
           setLoading, 
           SuccessHandler,
            FailedHandler,
-            ()=> {})}
+            ()=> {}, setNetworkIssue)}
   
          window.addEventListener("online", ()=> {
    if(transactionHistoryError === "Network error"){
@@ -158,13 +158,7 @@ const handleDateFilter = ()=> {
   ///============== CHARTS INFORMATION===============//
 const HandleTransactionDataMgt = useMemo(()=> GetTransactionInformation, [transactionResponse])
 
-  useEffect(() => {
-        HandleTransactionDataMgt();
-
-   
-    setSelected("NGN");
-    //eslint-disable-next-line
-  }, []);
+ 
 
   const symbolValue = selected === "USD" ? "$" : selected === "AUD" ? 
  "AU$" : selected === "KES" ?   "KSh" : selected === "EUR" ? "€" : selected === "GBP" ? "£" : "₦";
@@ -179,7 +173,9 @@ const HandleTransactionDataMgt = useMemo(()=> GetTransactionInformation, [transa
 //Description : This function comes first to the necessary data to be used/passed to the chart component
 useEffect(()=> {
   if(Data?.ConfirmAcc === "true"){
-  chartFunc("daily")
+  chartFunc("daily");
+     HandleTransactionDataMgt();
+     setSelected("NGN");
   }
  //eslint-disable-next-line
 }, []);
@@ -280,7 +276,7 @@ let path =`chart${typeof handleDataFilter() === "string" ? handleDataFilter() : 
     }else if(errorType === "Server error"){
     setWalletResponseError("Server error")
     }
-  }, ()=> {})
+  }, ()=> {}, setNetworkIssue)
 }
 const walletCount = 
 typeof chartResponse?.data?.data?.data?.totalInflowCount === "number" 

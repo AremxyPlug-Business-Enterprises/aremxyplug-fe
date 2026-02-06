@@ -78,6 +78,7 @@ const PHED = () => {
     authenticationOpen,
     purchaseElectricityErrorType,
     setPurchaseElectricityErrorType,
+    setNetworkIssue
   } = useContext(ContextProvider);
   const Data = GetLocalStorage()
   const [showProductList, setShowProductList] = useState(false);
@@ -116,23 +117,15 @@ const PHED = () => {
   //   const [showOptionList, setShowOptionList] = useState(false);
   const [passDataBalance, setPassDataBalance] = useState({});
   const [balanceLoader, setBalanceLoader] = useState(false)
-  const GetBalance = async () => {
-    const SuccessHandler = () => {
-      console.log("successfully retrieved balance");
+const GetBalance = async () => {
+
+    const SuccessHandler = (response) => {
+     setPassDataBalance(response)
     };
     const FailedHandler = async (ErrorType) => {
       if (ErrorType === "unauthorised") {
-        await GetFunction(
-          `bills/verify`,
-          setBalanceLoader,
-          SuccessHandler,
-          (ErrorType) => {
-            if (ErrorType === "unauthorised") {
-              return setSessionModal(true);
-            }
-          },
-          setPassDataBalance
-        );
+       if(sessionModal) return;
+       if(!sessionModal) return setSessionModal(true)
       }
     };
     await GetFunction(
@@ -140,7 +133,8 @@ const PHED = () => {
       setBalanceLoader,
       SuccessHandler,
       FailedHandler,
-      setPassDataBalance
+      ()=> {},
+      setNetworkIssue
     );
   };
   // get the balance on entering the page
@@ -413,7 +407,8 @@ const PHED = () => {
           body,
           SuccessHandler,
           FailedHandler,
-          setPhedFetchedResponse
+          setPhedFetchedResponse,
+          setNetworkIssue
         );
       }
     }
@@ -462,34 +457,9 @@ const PHED = () => {
           setInputPinPopUp(false);
           setFailedPopup(true);
         } else if (ErrorType === "unauthorised") {
-          await PostFunction(
-            path,
-            setLoading,
-            data,
-            SuccessHandler,
-            (ErrorType) => {
-              if (ErrorType === "unauthorised") {
-                return setSessionModal(true);
-              } else if (ErrorType === "Server error") {
-                setPurchaseElectricityErrorType(
-                  "Server Error: Purchase Failed"
-                );
-              } else if (
-                ErrorType === "Network error" ||
-                ErrorType === "User error"
-              ) {
-                setPurchaseElectricityErrorType(
-                  "Network Error : Purchase Failed"
-                );
-              } else {
-                setPurchaseElectricityErrorType(
-                  "An Unexpected error has occured"
-                );
-              }
-            },
-            setPhedFetchedResponse
-          );
-        } else if (ErrorType === "Server error") {
+         if(sessionModal) return;
+         if(!sessionModal) return setSessionModal(true)
+          } else if (ErrorType === "Server error") {
           setPurchaseElectricityErrorType("Server Error: Purchase Failed");
           setFailedPopup(true);
           setInputPinPopUp(false);
@@ -511,35 +481,16 @@ const PHED = () => {
         data,
         SuccessHandler,
         FailedHandler,
-        setPhedFetchedResponse
+        setPhedFetchedResponse,
+        setNetworkIssue
       );
     }
     const setPinFailed = async (ErrorType) => {
       if (ErrorType === "unauthorised") {
-        await VerifyTransPin(
-          inputPin,
-          (ErrorType) => {
-            if (ErrorType === "unauthorised") {
-              setSessionModal(true);
-            } else if (
-              ErrorType === "Network error" ||
-              ErrorType === "User error"
-            ) {
-              return alert("Kindly Check your internet connection");
-            } else if (ErrorType === "Server error") {
-              alert(
-                "The server is currently experiencing a downtime, try again some other time."
-              );
-            } else {
-              alert("An unexpected has occured try again some other time.");
-            }
-          },
-          setLoading,
-          setErrorMessage,
-          ElectricityHandler
-        );
+       if(sessionModal) return;
+       if(!sessionModal) return setSessionModal(true)
       } else if (ErrorType === "Network error" || ErrorType === "User error") {
-        return alert("Kindly Check your internet connection");
+        return setNetworkIssue(true)
       } else if (ErrorType === "Server error") {
         alert(
           "The server is currently experiencing a downtime, try again some other time."
@@ -553,7 +504,8 @@ const PHED = () => {
       setPinFailed,
       setLoading,
       setErrorMessage,
-      ElectricityHandler
+      ElectricityHandler,
+      setNetworkIssue
     );
   };
 
