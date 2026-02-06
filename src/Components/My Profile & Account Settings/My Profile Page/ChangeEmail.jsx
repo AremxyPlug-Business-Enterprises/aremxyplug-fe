@@ -18,12 +18,11 @@ import PopUpGreenDeskTop from "../ProfileImages/PopUpGreenDeskTop.svg";
 import Success from "../ProfileImages/success.gif";
 import { PostFunction } from "../../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../../Loader/Loader";
-import { InternalLoginSession } from "../../ApiCollection.jsx/ApiBuck";
 const ChangeEmail = () => {
   const { isDarkMode } = useContext(ContextProvider);
-  const { emailId, setEmailId } = useContext(ContextProvider);
+  const { emailId, setEmailId, sessionModal, setSessionModal } = useContext(ContextProvider);
   const [verificationPinError, setVerificationPinError] = useState(false)
-  const [sessionModal, setSessionModal] = useState(false)
+  
   const {
     toggleSideBar,
     toggleVisibility,
@@ -450,9 +449,7 @@ const ChangeEmail = () => {
       <Loader/>
         </Modal>
       )}
-      {sessionModal && (
-        <InternalLoginSession setExpiredSessionLogin ={setSessionModal}/>
-      )}
+    
     </DashBoardLayout>
   );
 };

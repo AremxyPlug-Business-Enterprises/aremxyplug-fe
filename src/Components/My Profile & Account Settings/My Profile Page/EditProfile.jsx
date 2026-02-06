@@ -3,7 +3,6 @@ import "../../../App.css";
 import { DashBoardLayout } from "../../Dashboard/Layout/DashBoardLayout";
 import ProfileHero from "../ProfileHero";
 import ArrowRight from "../../EducationPins/imagesEducation/educationArrowRight.svg";
-import EditPic from "../ProfileImages/ProfilePic.svg";
 import changePic from "../ProfileImages/pickPinIcon.svg";
 import { Link } from "react-router-dom";
 import { useContext } from "react";

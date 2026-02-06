@@ -30,8 +30,7 @@ import {
   GetFunction,
   PostFunction,
   VerifyTransPin,
-  RestrictionPopUp,
-  InternalLoginSession
+  RestrictionPopUp
 } from "../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../Loader/Loader";
 import { validateNigerianNumberByNetwork } from "./waecEducationPin";
@@ -85,10 +84,10 @@ export default function NabtebEducationPins() {
     setNabtebShowDescription,
     setNabtebFullName,
     setNabtebTransactionProduct,
-
-    authenticationOpen,
+authenticationOpen,
     purchaseEduErrorType,
     setPurchaseEduErrorType,
+    sessionModal, setSessionModal
   } = useContext(ContextProvider);
 const Data = GetLocalStorage();
   // UseStates
@@ -104,7 +103,6 @@ const Data = GetLocalStorage();
 
   // Get Amount
   const [isLoading, setIsLoading] = useState(false);
-  const [sessionModal, setSessionModal] = useState(false);
   const [passDataBalance, setPassDataBalance] = useState({});
 
   const nabtebOptions = [
@@ -1646,7 +1644,7 @@ const Data = GetLocalStorage();
           <Loader />
         </Modal>
       )}
-      {sessionModal && <InternalLoginSession setExpiredSessionLogin={setSessionModal} />}
+    
       {sessionModal === false && restrictUser && (
         <RestrictionPopUp/>
       )}

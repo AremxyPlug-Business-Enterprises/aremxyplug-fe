@@ -6,7 +6,6 @@ import NoRecordImage from "../../Add&SelectRecipient/RecipientImages/NoRecordIma
 import { Loader } from "../../Loader/Loader";
 import {
   GetFunction,
-  InternalLoginSession,
 } from "../../ApiCollection.jsx/ApiBuck";
 import { Modal } from "../../Screens/Modal/Modal";
 
@@ -19,7 +18,8 @@ const TransactionHistory = ({
     toggleSideBar,
     setOrderIdResponse,
     setElectricityTransErrorType,
-    setNetworkIssue
+    setNetworkIssue,
+    sessionModal, setSessionModal
     } = useContext(ContextProvider);
 
   const navigate = useNavigate();
@@ -46,7 +46,7 @@ const TransactionHistory = ({
   };
 
   const [orderLoading, setOrderLoading] = useState(false);
-  const [sessionModal, setSessionModal] = useState(false);
+ 
   
   const getTransactionByOrderId = async (orderId, product) => {
     if (!orderId || !product) return;
@@ -72,7 +72,7 @@ const TransactionHistory = ({
     let result;
     const SuccessHandler = (response) => {
       result = response;
-      console.log("Transaction fetched successfully");
+     
     };
     const FailedHandler = async (ErrorType) => {
       // if (!navigator.online) alert("Kindly check your internet connection");
@@ -609,8 +609,7 @@ const FormatTime =(DateValue)=> {
           <Loader />
         </Modal>
       )}
-      {sessionModal && <InternalLoginSession
-       setExpiredSessionLogin={setSessionModal} />}
+     
     </>
   );
 };

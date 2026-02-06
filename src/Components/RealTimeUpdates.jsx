@@ -1,14 +1,14 @@
 import {useContext, useEffect, useRef} from 'react';
 import { useLocation } from 'react-router-dom';
 import { ContextProvider } from './Context';
-import { GetFunction , NetworkPopUp} from './ApiCollection.jsx/ApiBuck';
+import { GetFunction , NetworkPopUp, InternalLoginSession} from './ApiCollection.jsx/ApiBuck';
 import { TaskProgressController } from './Motion';
 
 
 export const RealTimeUpdates = ({children}) => {
      const {setProgressTaskBarResponse, setNetworkIssue, networkIssue,
-         setWebSocketMessage, sessionExpiration, setOpenTaskBar, progressTaskBarResponse} = useContext(ContextProvider)
-
+         setWebSocketMessage,   setOpenTaskBar, progressTaskBarResponse, sessionModal, setSessionModal} = useContext(ContextProvider)
+  
          const locationObj = useLocation()
           
            const  Page = typeof locationObj.pathname === "string" ? locationObj?.pathname?.slice(1) : ""
@@ -43,7 +43,12 @@ export const RealTimeUpdates = ({children}) => {
           setProgressTaskBarResponse(response)
          // if(!navigator.onLine && networkIssue ===false) return setNetworkIssue(true)
      
-        }, ()=> {},()=> {}, setNetworkIssue)
+        }, (ErrorType)=> {
+          if(ErrorType === "unauthorised"){
+            if(sessionModal) return;
+            if(!sessionModal) setSessionModal(true)
+          }
+        },()=> {}, setNetworkIssue)
       }
        if(progressTaskBarResponse?.data?.data === undefined && navigator.onLine){
   
@@ -55,14 +60,11 @@ export const RealTimeUpdates = ({children}) => {
       window.addEventListener("online", ()=> {
     if(navigator.onLine && networkIssue === true) setNetworkIssue(false);
       } ) 
-
- 
 }, 2000)
  
 //Functions we dont necessarily have to run every 2 seconds
  setOpenTaskBar(true);
 CreateWebSocket()
-
 return ()=> clearInterval(realTimeUpdate.current)
 //eslint-disable-next-line
     }, [])
@@ -77,6 +79,7 @@ return ()=> clearInterval(realTimeUpdate.current)
            <TaskProgressController/>
            )} 
            {networkIssue === true && <NetworkPopUp Page ={Page}  />}
+           {sessionModal  && <InternalLoginSession/>}
         </div>
   )
 }

@@ -27,7 +27,6 @@ import {
   GetFunction,
   VerifyTransPin,
   RestrictionPopUp,
-  InternalLoginSession
 } from "../../../../../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../../../../../Loader/Loader";
 import { GetLocalStorage } from "../../../../../LocalStorage/LocalStorage";
@@ -59,6 +58,8 @@ const AirtelDataBundle = () => {
     setAirtelPurchaseErrorType,
     setNetworkIssue,
     networkIssue,
+    sessionModal,
+    setSessionModal,
     // inputPinHandler,
     toggleVisibility,
     isVisible,
@@ -88,7 +89,6 @@ const AirtelDataBundle = () => {
   const [selectPlanWarn, setSelectPlanWarn] = useState("");
   const [passDataBalance, setPassDataBalance] = useState({});
   const [airtelReceiptInfo, setAirtelReceiptInfo] = useState("");
-  const [sessionModal, setSessionModal] = useState(false);
   const [restrictUser, setRestrictUser] = useState(false);
   const [checkNetworkError, setCheckNetworkError] = useState(false);
   const [airtelSuccessfulResponse, setAirtelSuccessfulResponse] = useState({})
@@ -1947,7 +1947,6 @@ const path = "/data";
           <Loader />
         </Modal>
       )}
-      {sessionModal && <InternalLoginSession setExpiredSessionLogin ={setSessionModal} />}
       {restrictUser && sessionModal === false  && <RestrictionPopUp/>}
     </DashBoardLayout>
   );

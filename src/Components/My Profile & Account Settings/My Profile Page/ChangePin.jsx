@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import {  useState, useEffect } from "react";
 import Email from "../ProfileImages/Email.svg";
 import { Modal } from "../../Screens/Modal/Modal";
 import styles from "../../../Components/Dashboard/DashboardComponents/TransferComponent/transfer.module.css";
@@ -16,11 +16,11 @@ import Success from "../ProfileImages/success.gif";
 import axios from "axios";
 import { Loader } from "../../Loader/Loader";
 import { GetLocalStorage, } from "../../LocalStorage/LocalStorage";
-import { PostFunction, InternalLoginSession } from "../../ApiCollection.jsx/ApiBuck";
+import { PostFunction } from "../../ApiCollection.jsx/ApiBuck";
 import { PutFunction } from "../../ApiCollection.jsx/ApiBuck";
 
 const ChangePin = (Data) => {
-  const { toggleSideBar, isDarkMode, customerDetail, state } = useContext(ContextProvider);
+  const { toggleSideBar, isDarkMode, customerDetail, state, sessionModal, setSessionModal } = useContext(ContextProvider);
   const [loading, setLoading] =useState(false);
   const [activeBtn, setActiveBtn] = useState([true, false, false]);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -43,7 +43,6 @@ const {email} = customerDetail;
   const [confirmPin, setConfirmPin] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [update, setUpdate] = useState("");
-  const [sessionModal, setSessionModal] = useState(false)
  
 
   const [resetPin, setResetPin] = useState("");
@@ -989,9 +988,8 @@ await PutFunction(path, setLoading, body, SuccessHandler, FailedHandler);
           <Loader/>
         </Modal>
       )}
-      {sessionModal && (
-        <InternalLoginSession setExpiredSessionLogin={setSessionModal}/>
-      )}
+     
+     
     </div>
   );
 };

@@ -17,18 +17,17 @@ import NoRecordImage  from "../Add&SelectRecipient/RecipientImages/NoRecordImage
 // import { Oval } from 'react-loader-spinner';
 
 
-const SelectRecipient = ({recipientList, 
-  loadingRecipient, 
+const SelectRecipient = ({loadingRecipient,
    setSelectRecipientDisplay}) => {
 
-  const { isDarkMode } = useContext(ContextProvider);
+  const { networkIssue, setNetworkIssue, setSessionModal,  recipientsAirtime, setRecipientsAirtime,
+    sessionModal,  } = useContext(ContextProvider);
   const { toggleSideBar } = useContext(ContextProvider);
   const { networkName, setNetworkName } = useContext(ContextProvider);
   const { recipientName, setRecipientName } = useContext(ContextProvider);
   const { recipientNumber, setRecipientNumber } = useContext(ContextProvider);
   const { networkImage, setNetworkImage } = useContext(ContextProvider);
-  const [recipients, setRecipients] = useState([]);
-  const [recipientToDelete, setRecipientToDelete] = useState(null);
+   const [recipientToDelete, setRecipientToDelete] = useState(null);
   const navigate = useNavigate();
 
   const [errors, setErrors] = useState({});
@@ -37,7 +36,6 @@ const SelectRecipient = ({recipientList,
   const [confirm, setConfirm] = useState(false);
   const [deleted, setdeleted] = useState(false);
   const [successDeleted, setSuccessDeleted] = useState(false);
-  const [loading, setLoading] = useState(false)
   const [showPopup, setShowPopup] = useState(false);
   const [activeImage, setActiveImage] = useState(null);
   const [edit, setEdit] = useState("");
@@ -96,8 +94,20 @@ const SelectRecipient = ({recipientList,
         return false;
       }
     } catch (error) {
-      console.error('Error updating recipient:', error);
-      return false;
+      if(error && error?.response === undefined){
+        if(networkIssue) return;
+        if(!networkIssue) return setNetworkIssue(true)
+      }
+      else if(error && error.response?.status === 401){
+        if(sessionModal) return;
+       if(!sessionModal) return setSessionModal(true)
+      }else if (error && error?.response?.status === 404){
+     return;
+    }else if(error && error?.response?.status ===500){
+      alert("An internal Server error")
+    }else {
+      alert("An unexpected error has occured.")
+    }
     }
   };
 
@@ -117,17 +127,29 @@ const SelectRecipient = ({recipientList,
         body: JSON.stringify(requestBody)
       });
 
-      const data = await response.json();
-      console.log('Delete response:', data);
+     
 
-      if (response.ok && data.status === 200) {
+      if (response.ok && response?.data.status === 200) {
         return true; // Indicate successful deletion
       } else {
-        console.error('Error deleting recipient:', data.message);
+        
         return false; // Indicate failed deletion
       }
     } catch (error) {
-      console.error('Error deleting recipient:', error);
+      if(error && error?.response === undefined){
+        if(networkIssue) return;
+        if(!networkIssue) return setNetworkIssue(true)
+      }
+      else if(error && error.response?.status === 401){
+        if(sessionModal) return;
+       if(!sessionModal) return setSessionModal(true)
+      }else if (error && error?.response?.status === 404){
+     return;
+    }else if(error && error?.response?.status ===500){
+      alert("An internal Server error")
+    }else {
+      alert("An unexpected error has occured.")
+    }
       return false; // Indicate failed deletion
     }
   };
@@ -167,7 +189,7 @@ const SelectRecipient = ({recipientList,
     const success = await updateRecipient(editingRecipientId, updatedRecipient);
 
     if (success) {
-      setRecipients(prevRecipients =>
+      setRecipientsAirtime(prevRecipients =>
         prevRecipients.map(recipient =>
           recipient.id === editingRecipientId ? { ...recipient, ...updatedRecipient } : recipient
         )
@@ -197,7 +219,7 @@ const SelectRecipient = ({recipientList,
     if (recipientToDelete !== null) {
       const success = await deleteRecipient(recipientToDelete);
       if (success) {
-        setRecipients(prevRecipients =>
+        setRecipientsAirtime(prevRecipients =>
           prevRecipients.filter(recipient => recipient.id !== recipientToDelete)
         );
         setSuccessDeleted(true);
@@ -331,9 +353,9 @@ const SelectRecipient = ({recipientList,
     setInputValue(numericValue);
   };
 
-   const filteredRecipients = recipientList !== null && 
-   recipientList !== undefined && recipientList?.length 
-        ?   recipientList.filter((recipient) =>
+   const filteredRecipients = recipientsAirtime !== null && 
+   recipientsAirtime !== undefined && recipientsAirtime?.length 
+        ?   recipientsAirtime.filter((recipient) =>
           recipient.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
           recipient.phone.includes(searchQuery)
         ) : []

@@ -23,7 +23,6 @@ import {
   VerifyTransPin,
   GetFunction,
   RestrictionPopUp,
-  InternalLoginSession
 } from "../../../ApiCollection.jsx/ApiBuck";
 import { BalanceLoading, Loader } from "../../../Loader/Loader";
 import { validateNigerianNumberByNetwork } from "./AEDC";
@@ -78,10 +77,10 @@ const EKEDC = () => {
     authenticationOpen,
     purchaseElectricityErrorType,
     setPurchaseElectricityErrorType,
+     sessionModal, setSessionModal
   } = useContext(ContextProvider);
   const Data = GetLocalStorage()
   const [showProductList, setShowProductList] = useState(false);
-  const [sessionModal, setSessionModal] = useState(false);
   const [restrictUser, setRestrictUser] = useState(false);
   const pointsEarned = "+2.00";
   const timer = useRef(null)
@@ -121,8 +120,8 @@ const EKEDC = () => {
   const [balanceLoader, setBalanceLoader] = useState(false)
 const GetBalance = async () => {
 
-    const SuccessHandler = () => {
-      console.log("successfully retrieved balance");
+    const SuccessHandler = (response) => {
+    setPassDataBalance(response)
     };
     const FailedHandler = async (ErrorType) => {
       if (ErrorType === "unauthorised") {
@@ -1743,8 +1742,7 @@ const GetBalance = async () => {
           <Loader />
         </Modal>
       )}
-      {sessionModal &&
-       <InternalLoginSession setExpiredSessionLogin ={setSessionModal} />}
+      
       {restrictUser && sessionModal === false && (
         <RestrictionPopUp/>
       ) }

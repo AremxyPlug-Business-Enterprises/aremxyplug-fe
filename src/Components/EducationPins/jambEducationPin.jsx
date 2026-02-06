@@ -26,8 +26,7 @@ import AremxyPlugIcon from "./imagesEducation/AremxyPlug.svg";
 import eduFailed from "./imagesEducation/WaecFailedTransaction.svg";
 import "../Dashboard/DashboardComponents/DataTopUpPage/DataTopUp.css";
 import {
-  GetFunction,
-  InternalLoginSession,
+  GetFunction, 
   PostFunction,
   RestrictionPopUp,
   VerifyTransPin,
@@ -74,18 +73,17 @@ export default function JambEducationPin() {
     setJambEduResponse,
     newBalance,
     setNewBalance,
-
-    setJambPinsGenerated,
+setJambPinsGenerated,
     jambOrderId,
     setJambOrderId,
     setJambTransactionId,
     setJambShowDescription,
     setJambFullName,
     setJambTransactionProduct,
-
-    authenticationOpen,
+authenticationOpen,
     purchaseEduErrorType,
     setPurchaseEduErrorType,
+    sessionModal, setSessionModal
   } = useContext(ContextProvider);
   const Data = GetLocalStorage()
   // UseStates
@@ -100,7 +98,6 @@ export default function JambEducationPin() {
 
   // Get Amount
   const [isLoading, setIsLoading] = useState(false);
-  const [sessionModal, setSessionModal] = useState(false);
   const [passDataBalance, setPassDataBalance] = useState({});
   const jambOptions = [
     {
@@ -1751,7 +1748,7 @@ export default function JambEducationPin() {
           <Loader />
         </Modal>
       )}
-      {sessionModal && <InternalLoginSession setExpiredSessionLogin={setSessionModal} />}
+
       {sessionModal === false && restrictUser && (
         <RestrictionPopUp/>
       )}

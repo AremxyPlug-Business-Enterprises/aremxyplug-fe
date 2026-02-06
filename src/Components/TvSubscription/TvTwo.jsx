@@ -17,7 +17,7 @@ import britainFlag from '../../Components/EducationPins/imagesEducation/Britain.
 import euroFlag from '../../Components/EducationPins/imagesEducation/GBP.svg';
 import austriaFlag from '../../Components/EducationPins/imagesEducation/Austria.svg';
 import kenyaFlag from '../../Components/EducationPins/imagesEducation/Kenya.svg';
-import {InternalLoginSession, RestrictionPopUp, VerifyTransPin} from "../../Components/ApiCollection.jsx/ApiBuck";
+import {RestrictionPopUp, VerifyTransPin} from "../../Components/ApiCollection.jsx/ApiBuck";
 import { Modal } from "../Screens/Modal/Modal";
 import {Loader} from "../Loader/Loader"
 import {PostFunction} from "../../Components/ApiCollection.jsx/ApiBuck"
@@ -73,7 +73,8 @@ const DsTv = () => {
         setNewBalance,
         setFetchedDstvPlans,
         toggleSideBar,
-         networkIssue, setNetworkIssue
+         networkIssue, setNetworkIssue,
+         sessionModal, setSessionModal
  } = useContext(ContextProvider);
 const Data = GetLocalStorage();
    // const [packageDstv, setPackageDstv] = useState("");
@@ -85,7 +86,6 @@ const Data = GetLocalStorage();
      const [dstvVerifyResponse, setDstvVerifyResponse] = useState({});
      const [dstvLoading, setDstvLoading] = useState(false);
      const [stateInvalidDecoderNumber, setStateInvalidDecoderNumber] = useState(false);
-     const [sessionModal, setSessionModal] = useState(false);
      const {purchaseDstvErrorType, setPurchaseDstvErrorType} = useContext(ContextProvider);
      const { setDstvCardName} = useContext(ContextProvider)
       const [checkNetworkError, setCheckNetworkError] = useState(false)
@@ -1081,9 +1081,7 @@ const timer = useRef(null)
    
               </Modal>
          ) } 
-         {sessionModal && (
-           <InternalLoginSession setExpiredSessionLogin={setSessionModal}/>
-         )}
+        
          {sessionModal=== false && restrictUser && (
           <RestrictionPopUp/>
          )}

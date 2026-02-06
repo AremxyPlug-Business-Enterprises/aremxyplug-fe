@@ -15,7 +15,7 @@ import { ContextProvider } from  "../Context";
 import styles from "../Dashboard/DashboardComponents/./component.module.css";
 import { Calender } from "../Dashboard/DashboardComponents/Calender";
 import { Link } from "react-router-dom/dist/react-router-dom.development";
-import { GetFunction, InternalLoginSession } from '../ApiCollection.jsx/ApiBuck';
+import { GetFunction } from '../ApiCollection.jsx/ApiBuck';
 import { Loader } from '../Loader/Loader';
 import NoRecordImage from "../Add&SelectRecipient/RecipientImages/NoRecordImage.svg";
 import { GetLocalStorage } from '../LocalStorage/LocalStorage';
@@ -26,7 +26,6 @@ export default function SalesSummaryPage ()  {
   const [balanceLoader, setBalanceLoader] = useState(false) 
     const [isOpen1, setIsOpen1] = useState(false); 
     const [loading, setLoading] = useState(false);
-    const [sessionModal, setSessionModal] = useState(false);
     const [transactionHistoryError, setTransactionHistoryError] = useState("");
     const [salesResponse, setSalesResponse] = useState({})
     const {newBalance, setNewBalance} = useContext(ContextProvider);
@@ -36,14 +35,15 @@ export default function SalesSummaryPage ()  {
     const [methodBalance, setMethodBalance] = useState(false);
     const [stateDateEdit , setStateDateEdit] = useState("Filter By Date")
     //  const [totalOutFlow, setTotalOutFlow] = useState('')
-         const { isDarkMode, toggleSideBar, dateEdit, setDateEdit,  startDateValueState,
+         const { isDarkMode, toggleSideBar, setDateEdit,  startDateValueState,
     endDateValueState,
     setStartDateValueState,
-    setEndDateValueState, networkIssue,  setNetwrkIssue,
-    setEditCalenderOne,
+    setEndDateValueState, 
+    setEditCalenderOne,    setSessionModal,
+          sessionModal,
     setEditCalenderTwo,
     setCurrentDateInTimeStamps, setNetworkIssue,
-    editCalenderOne,editCalenderTwo, countCalender, setCountCalender } =
+    editCalenderOne,editCalenderTwo,  setCountCalender } =
   useContext(ContextProvider);
     // const toggleDropdown1 = () => { setIsOpen1(true); };
 // 
@@ -908,9 +908,7 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
 {/* airtime top-up dropdown */}
 
 
-{sessionModal && (
-   <InternalLoginSession setExpiredSessionLogin={setSessionModal}/>
-)}
+
   </div>
 
         </>

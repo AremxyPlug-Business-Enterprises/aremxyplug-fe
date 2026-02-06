@@ -1404,6 +1404,7 @@ const [nabtebPinsGenerated, setNabtebPinsGenerated] = useState([]);
 
     // ========== Transfer to aremxyPlug======
     const [recipientResponse, setRecipientResponse] = useState([]);
+    const [recipientsAirtime, setRecipientsAirtime] = useState([])
      const formatDateISO = ()=> {
             const HoldInitialDate = new Date();
               const ISOStringDateFormat = HoldInitialDate?.toLocaleString("sv-SE", {
@@ -1417,6 +1418,7 @@ const [nabtebPinsGenerated, setNabtebPinsGenerated] = useState([]);
     //Date for the Calenders
 
                 //Transfer Data
+                const [sessionModal, setSessionModal] = useState(false)
                   const [transferValue, setTransferValue] = useState("");
                   const [sessionExpiration, setSessionExpiration] = useState(false);
                   const [editCalenderOne, setEditCalenderOne] = useState("Start Date");
@@ -1448,6 +1450,7 @@ const [currentDateInTimeStamps, setCurrentDateInTimeStamps] = useState(0);
 
   const hold = {
     //Transfer Data
+
    webSocketMessage, setWebSocketMessage,
     progressTaskBarResponse, 
     setProgressTaskBarResponse,
@@ -2025,6 +2028,7 @@ const [currentDateInTimeStamps, setCurrentDateInTimeStamps] = useState(0);
     setIbedcWalletBalance,
     ibedcPaymentResult,
     setIbedcPaymentResult,
+    sessionModal, setSessionModal, 
 
     // aedc
     aedcFullName,
@@ -2352,6 +2356,7 @@ const [currentDateInTimeStamps, setCurrentDateInTimeStamps] = useState(0);
     resultValue,
     setResultValue,
     recipientNumberA,
+    recipientsAirtime, setRecipientsAirtime,
     setRecipientNumberA,
     firstName,
     setFirstName,

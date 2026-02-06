@@ -17,7 +17,7 @@ import britainFlag from '../../Components/EducationPins/imagesEducation/Britain.
 import euroFlag from '../../Components/EducationPins/imagesEducation/GBP.svg';
 import austriaFlag from '../../Components/EducationPins/imagesEducation/Austria.svg';
 import kenyaFlag from '../../Components/EducationPins/imagesEducation/Kenya.svg';
-import {InternalLoginSession, VerifyTransPin} from "../../Components/ApiCollection.jsx/ApiBuck";
+import {VerifyTransPin} from "../../Components/ApiCollection.jsx/ApiBuck";
 import {Loader} from "../Loader/Loader";
 import {Modal} from "../Screens/Modal/Modal";
 import { useNavigate } from "react-router-dom";
@@ -78,7 +78,8 @@ const Data = GetLocalStorage();
     purchaseStarTimesErrorType,
     setPurchaseStarTimesErrorType,
     setNetworkIssue,
-    networkIssue
+    networkIssue,
+    setSessionModal, sessionModal
     } = useContext(ContextProvider);
       
 
@@ -94,7 +95,7 @@ const Data = GetLocalStorage();
    const [stateInvalidDecoderNumber, setStateInvalidDecoderNumber] = useState(false);
     const [passDataBalance, setPassDataBalance] = useState({});
     const [starTimesData, setStarTimesData] = useState([]);
-    const [sessionModal, setSessionModal] = useState(false);
+
             const [balanceLoader, setBalanceLoader] = useState(false)   
 
     const navigate = useNavigate();
@@ -1078,10 +1079,7 @@ const timer = useRef(null)
       
                  </Modal>
             ) } 
-            {sessionModal &&(
-              <InternalLoginSession setExpiredSessionLogin={setSessionModal}/>
-            )}
-            {restrictUser && sessionModal === false && (
+        {restrictUser && sessionModal === false && (
               <RestrictionPopUp/>
             ) }
             

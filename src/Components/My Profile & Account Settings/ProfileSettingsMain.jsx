@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useRef } from "react";
+import React, { useContext,  useEffect, useRef } from "react";
 import "../../App.css";
 import { DashBoardLayout } from "../Dashboard/Layout/DashBoardLayout";
 import ProfileHero from "./ProfileHero";
@@ -10,13 +10,14 @@ import ChangePin from "./My Profile Page/ChangePin";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { GetLocalStorage } from "../LocalStorage/LocalStorage";
-import {  GetFunction, InternalLoginSession } from "../ApiCollection.jsx/ApiBuck";
+import {  GetFunction } from "../ApiCollection.jsx/ApiBuck";
 
 export default function ProfileSettingsMain(Data) {
   const { profilePage, setProfilePage } = useContext(ContextProvider);
   const { verificationOpen, setVerificationOpen } = useContext(ContextProvider);
   const { setBusinessPopUp } = useContext(ContextProvider);
-  const { authenticationOpen, setAuthenticationOpen, setNetworkIssue
+  const { authenticationOpen, setAuthenticationOpen, setNetworkIssue,  setSessionModal,
+          sessionModal
      
    } =
     useContext(ContextProvider);
@@ -27,7 +28,6 @@ const { idVerificationOpen, setIdVerificationOpen, networkIssue } =
     useContext(ContextProvider);
     const {setVerificationReason} = useContext(ContextProvider);
     const {setVerificationResponse} = useContext(ContextProvider);
-    const [sessionModal, setSessionModal] = useState(false);
 
   const location = useLocation();
 
@@ -267,9 +267,7 @@ const { idVerificationOpen, setIdVerificationOpen, networkIssue } =
           </Link>
         </div>
       </div>
-      {sessionModal && (
-        <InternalLoginSession setExpiredSessionLogin ={setSessionModal}/>
-      )}
+   
     </DashBoardLayout>
   );
 }

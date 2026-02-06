@@ -33,7 +33,6 @@ import {
   PostFunction,
   VerifyTransPin,
   RestrictionPopUp,
-  InternalLoginSession
 } from "../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../Loader/Loader";
 import { GetLocalStorage } from "../LocalStorage/LocalStorage";
@@ -162,6 +161,7 @@ export default function WaecEducationPin() {
     authenticationOpen,
     purchaseEduErrorType,
     setPurchaseEduErrorType,
+    sessionModal, setSessionModal
   } = useContext(ContextProvider);
 
   const navigate = useNavigate();
@@ -175,7 +175,6 @@ export default function WaecEducationPin() {
   const [restrictUser, setRestrictUser] = useState(false)
   // Get Amount
   const [isLoading, setIsLoading] = useState(false);
-  const [sessionModal, setSessionModal] = useState(false);
   const [passDataBalance, setPassDataBalance] = useState({});
   const [checkNetworkError, setCheckNetworkError] = useState(false)
  const Data = GetLocalStorage()
@@ -2103,7 +2102,7 @@ const GetBalance = async () => {
           <Loader />
         </Modal>
       )}
-      {sessionModal && <InternalLoginSession setExpiredSessionLogin = {setSessionModal}/>}
+     
       {sessionModal === false && restrictUser &&(
         <RestrictionPopUp/>
       )}

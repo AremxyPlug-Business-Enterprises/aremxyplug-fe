@@ -19,8 +19,7 @@ import OtpInput from "react-otp-input";
 import Joi from "joi";
 // import axios from 'axios';
 import { GetFunction, 
- RestrictionPopUp, 
- InternalLoginSession,
+ RestrictionPopUp,
   PostFunction, 
   VerifyTransPin } from "../../../../Components/ApiCollection.jsx/ApiBuck";
 import { BalanceLoading, Loader } from "../../../Loader/Loader";
@@ -59,7 +58,8 @@ const PointRedeem = () => {
           authenticationOpen,
           pointPointsRedeemed,
           setNetworkIssue,
-          pointTransactionProduct
+          setSessionModal,
+          sessionModal
           } = useContext(ContextProvider);
    
 
@@ -88,7 +88,6 @@ const [restrictUser, setRestrictUser] = useState(false);
  // const [pointPostResponse, setPointPostResponse] = useState({});
   
 const [userPoints, setUserPoints] = useState(0);
-const [sessionModal, setSessionModal] = useState(false);
 
   const handleInputChange = (event) => {
     const newValue = event.target.value;
@@ -141,6 +140,7 @@ const schema = Joi.object({
     .messages({
       "number.base": "Please enter a valid number",
       "number.min": "Minimum Point Redeem is 10 and maximum is 100",
+      "number.max" : "Minimum Point Redeem is 10 and maximum is 100",
       "any.required": "This field is required",
     }),
 });
@@ -1150,9 +1150,7 @@ setPointRateRedeemed("");
          
                     </Modal>
                ) } 
-               {sessionModal && (
-                <InternalLoginSession setExpiredSessionLogin={setSessionModal}/>
-               )}
+            
                {restrictUser && sessionModal === false && (
         <RestrictionPopUp/>
       ) }

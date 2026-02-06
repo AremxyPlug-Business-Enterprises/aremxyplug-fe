@@ -180,9 +180,9 @@ return localStorage.setItem("SessionExpiration", resetExpiration);
 };
 
 ///Login Session =======//
-export const InternalLoginSession = ({ setExpiredSessionLogin})=> {
+export const InternalLoginSession = ()=> {
   const [password, setPassword] = useState();
-  const {setNetworkIssue, networkIssue} = useContext(ContextProvider)
+  const {setNetworkIssue, networkIssue, setSessionModal} = useContext(ContextProvider)
   const [loading, setLoading] = useState(false)
    const isDarkMode = localStorage.getItem("darkModeEnabled");
    const getUsername = JSON.parse(localStorage.getItem("aremxyUserName"));
@@ -196,7 +196,7 @@ export const InternalLoginSession = ({ setExpiredSessionLogin})=> {
 
  const functionAtSuccess = async(response)=> {
    alert("Successful");
-  setExpiredSessionLogin(false);
+  setSessionModal(false);
      
     // await RequestReRun();
       

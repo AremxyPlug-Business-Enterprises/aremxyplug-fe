@@ -20,7 +20,6 @@ import { Link, useNavigate } from "react-router-dom";
 import {
   PostFunction,
   VerifyTransPin,
-  InternalLoginSession,
   RestrictionPopUp,
   GetFunction,
 } from "../../../ApiCollection.jsx/ApiBuck";
@@ -80,6 +79,8 @@ const IBEDC = () => {
     authenticationOpen,
     purchaseElectricityErrorType,
     setPurchaseElectricityErrorType,
+    sessionModal,
+    setSessionModal
   } = useContext(ContextProvider);
 
   // const { selectedNetworkProduct, setSelectedNetworkProduct } =
@@ -258,7 +259,6 @@ const GetBalance = async () => {
   const [errors, setErrors] = useState({});
   const [proceed, setProceed] = useState(false);
   const [amountError, setAmountError] = useState("");
-  const [sessionModal, setSessionModal] = useState(false);
 
   const handleProceed = (e) => {
     // e.preventDefault();
@@ -1739,9 +1739,6 @@ const GetBalance = async () => {
           <Loader />
         </Modal>
       )}
-
-      {sessionModal &&
-            <InternalLoginSession setExpiredSessionLogin ={setSessionModal} />}
            {restrictUser && sessionModal === false && (
              <RestrictionPopUp/>
            ) }

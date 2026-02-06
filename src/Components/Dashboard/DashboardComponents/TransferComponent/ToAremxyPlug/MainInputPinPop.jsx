@@ -24,13 +24,14 @@ export const MainInputPinPop = ({fetchedResponse}) => {
        isDarkMode,
        authenticationOpen,
        setNetworkIssue,
-       networkIssue
+       networkIssue,
+          setSessionModal,
+          sessionModal
       } =
     useContext(ContextProvider);
   const [inputPin, setInputPin] = useState("");
   const [transactSuccessToOtherBank, setTransactSuccessToOtherBank] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const [sessionModal, setSessionModal] = useState(false);
     const [errorMessage, setErrorMessage] = useState(false);
     const [transferErrorType, setTransferErrorType] = useState("");
     const [failedPopup, setFailedPopup] = useState(false);

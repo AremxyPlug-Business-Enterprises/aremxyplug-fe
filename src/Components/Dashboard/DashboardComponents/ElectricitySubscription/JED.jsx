@@ -21,7 +21,6 @@ import { Link, useNavigate } from "react-router-dom";
 import {
   PostFunction,
   VerifyTransPin,
-  InternalLoginSession,
   RestrictionPopUp,
   GetFunction,
 } from "../../../ApiCollection.jsx/ApiBuck";
@@ -80,10 +79,11 @@ const JED = () => {
     authenticationOpen,
     purchaseElectricityErrorType,
     setPurchaseElectricityErrorType,
+    sessionModal, setSessionModal
   } = useContext(ContextProvider);
 
   const [showProductList, setShowProductList] = useState(false);
-  const [sessionModal, setSessionModal] = useState(false);
+ 
   const [restrictUser, setRestrictUser]= useState(false)
   const pointsEarned = "+2.00";
 
@@ -1687,8 +1687,7 @@ const GetBalance = async () => {
           <Loader />
         </Modal>
       )}
-      {sessionModal &&
-       <InternalLoginSession setexpiredSessionLogin ={setSessionModal} />}
+    
       {restrictUser && sessionModal === false && (
         <RestrictionPopUp/>
       ) }

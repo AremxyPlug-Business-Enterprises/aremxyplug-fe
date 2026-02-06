@@ -26,7 +26,6 @@ import { Modal } from "../Screens/Modal/Modal";
 import { BalanceLoading } from "../Loader/Loader";
 import {  RestrictionPopUp } from "../../Components/ApiCollection.jsx/ApiBuck";
 import { GetLocalStorage } from "../LocalStorage/LocalStorage";
-import { InternalLoginSession } from "../../Components/ApiCollection.jsx/ApiBuck";
 
 
 // import { duration } from "html2canvas/dist/types/css/property-descriptors/duration";
@@ -83,14 +82,15 @@ const GoTv = () => {
     purchaseGotvErrorType,
      setPurchaseGotvErrorType,
     toggleSideBar,
-    setNetworkIssue
-  } = useContext(ContextProvider);
+    setNetworkIssue,
+    sessionModal, setSessionModal
+  } = useContext(ContextProvider)
   //const [successConfig, setSuccessConfig] = useState(false);
   const [passDataBalance, setPassDataBalance] = useState({});
   const [gotvData, setGotvData] = useState([]);
   const [stateInvalidDecoderNumber, setStateInvalidDecoderNumber] =
     useState(false);
-  const [sessionModal, setSessionModal] = useState(false);
+
 const [balanceLoader , setBalanceLoader] = useState(false)
   const [isLoading, setIsLoading] = useState(false);
   const [failedPopup, setFailedPopup] = useState(false);
@@ -1316,9 +1316,7 @@ const timer = useRef(null)
       {restrictUser && sessionModal === false && (
         <RestrictionPopUp/>
       )}
-  {sessionModal && (
-     <InternalLoginSession setExpiredSessionLogin={setSessionModal}/>
-  ) }
+ 
     </div>
   );
 };

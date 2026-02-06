@@ -19,10 +19,9 @@ import NotVerifiedImage from "../ProfileImages/NotVerifiedIcon.svg";
 import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 import { Loader } from "../../Loader/Loader";
 import countryImage from "../../EducationPins/imagesEducation/Nigeriaflag.svg";
-import { InternalLoginSession} from "../../ApiCollection.jsx/ApiBuck";
 export default function BvnVerification(Data) {
   const dateInputRef = useRef(null);
-  const { bvnVerificationOpen, networkIssue, setNetworkIssue } = useContext(ContextProvider);
+  const { bvnVerificationOpen, networkIssue, setNetworkIssue, setSessionModal } = useContext(ContextProvider)
   const { verificationOpen } = useContext(ContextProvider);
   const { bvnVerifyImage, setBvnVerifyImage } = useContext(ContextProvider);
   const { bvnStatus, setBvnStatus } = useContext(ContextProvider);
@@ -41,7 +40,7 @@ export default function BvnVerification(Data) {
     useContext(ContextProvider);
   const [loading, setLoading] = useState(false);
   const [genderResult, setGenderResult] = useState("");
-  const [sessionModal, setSessionModal] = useState(false)
+ 
   // const genderInfo = ["Male", "Female", "Others.."];
   const chooseGender = () => {
     setDropDownGender(!dropDownGender);
@@ -862,9 +861,7 @@ export default function BvnVerification(Data) {
           <Loader />
         </Modal>
       )}
-      {sessionModal && (
-        <InternalLoginSession setExpiredSessionLogin ={setSessionModal}/>
-      )}
+    
     </div>
   );
 }

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import style from "../../../../AirTimePage/AirtimeVtu.module.css";
 import styled from "../../../../AirTimePage/AirTime.module.css";
 import { Modal } from "../../../../Screens/Modal/Modal";
-import {GetFunction, PostFunction,RestrictionPopUp, InternalLoginSession } from "../../../../ApiCollection.jsx/ApiBuck";
+import {GetFunction, PostFunction,RestrictionPopUp } from "../../../../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../../../../Loader/Loader";
 import { GetLocalStorage } from "../../../../LocalStorage/LocalStorage";
 import nigerianFlag from "../../../../Dashboard/DashboardComponents/flagsImages/nigeriaFlag.png";
@@ -21,6 +21,8 @@ const AremxyAddUser = () => {
     isDarkMode,
      newBalance, networkIssue,
       setNewBalance,
+         setSessionModal,
+          sessionModal, 
        setNetworkIssue} = useContext(ContextProvider);
 //  const [emailUsername, setEmailUserName] = useState("");
   const [mainCountry, setMainCountry] = useState("");
@@ -31,7 +33,6 @@ const AremxyAddUser = () => {
  const [verifiedUser, setVerifiedUser] = useState(false);
  const [fetchedResponse, setFetchedResponse] = useState({});
  const [loading, setLoading] = useState(false);
- const [sessionModal, setSessionModal] = useState(false);
  const [transferValue, setTransferValue] = useState("");
   const [restrictUser, setRestrictUser] = useState(false);
 // const [recipientResponse, setRecipientResponse] = useState({})
@@ -773,9 +774,7 @@ const GetBalance = async () => {
            <Loader/>
             </Modal>
           )}
-          {sessionModal && (
-            <InternalLoginSession setExpiredSessionLogin ={setSessionModal}/>
-          )}
+        
           {restrictUser && sessionModal === false && (
         <RestrictionPopUp/>
       ) }

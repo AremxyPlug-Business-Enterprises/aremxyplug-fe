@@ -10,7 +10,7 @@ import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 import { ChartsDesignModule } from "../../ChartsDesignModule";
 
 
-export const WalletInOutFlows = ({sessionModal, setSessionModal}) => {
+export const WalletInOutFlows = () => {
   const Data = GetLocalStorage()
   const { volumeValueToggle, 
     isValue,
@@ -26,6 +26,7 @@ export const WalletInOutFlows = ({sessionModal, setSessionModal}) => {
       editCalenderTwo,
       setEditCalenderTwo,
       setCurrentDateInTimeStamps,
+      sessionModal, setSessionModal,
     setCountCalender, setNetworkIssue }  =
     useContext(ContextProvider);
   const [blur] = useState(false);
@@ -640,9 +641,7 @@ chartResponse?.data?.data?.data?.totalInflowCount + chartResponse?.data?.data?.d
        transactionHistoryError={transactionHistoryError} loading={loading}
         GetTransactionInformation ={GetTransactionInformation} handleStateCalender= {handleStateCalender}/>
   </div>
-         {sessionModal && (
-          <InternalLoginSession setExpiredSessionLogin={setSessionModal}/>
-       )}
+         
        </div>
 
        //Internal Login session

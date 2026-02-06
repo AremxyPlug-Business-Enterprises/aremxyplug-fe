@@ -9,18 +9,18 @@ import call from './Images/call.svg';
 import user from './Images/user.svg';
 import { Modal } from "../Screens/Modal/Modal";
 import SelectRecipient from './SelectRecipient';
-import { PostFunction, InternalLoginSession } from '../ApiCollection.jsx/ApiBuck';
+import { PostFunction } from '../ApiCollection.jsx/ApiBuck';
 import { BalanceLoading } from '../Loader/Loader';
 
 
 const AddRecipient = () => {
 
-    const { networkName, setNetworkName } = useContext(ContextProvider);
+    const { networkName, setNetworkName,  } = useContext(ContextProvider);
     const { recipientName, setRecipientName } = useContext(ContextProvider);
     const { recipientNumber, setRecipientNumber } = useContext(ContextProvider);
-    const { networkImage, setNetworkImage } = useContext(ContextProvider);
+    const { networkImage, setNetworkImage, setSessionModal, sessionModal, networkIssue, setNetworkIssue } = useContext(ContextProvider);
     const [selectRecipientDisplay, setSelectRecipientDisplay] = useState(false);
-    const [sessionActivity, setSessionActivity] = useState(false)
+    
 
     const [errors, setErrors] = useState({});
     const [save, setSave] = useState(false);
@@ -144,7 +144,7 @@ const AddRecipient = () => {
 
         setInputValue(numericValue);
     };
- const [recipientList, setRecipientList] = useState(false)
+
     const {
         toggleSideBar,
         // inputPin,
@@ -176,36 +176,17 @@ const setFetchedResponse = ()=> {
 
        }, async(ErrorType)=> {
           if(ErrorType === "unauthorised"){
-             await PostFunction("airtime/recipient",
-                 setLoadingRecipient,
-                body, 
-                ()=> {
-        alert("Saved Recipient Successfully");
-        setSave(false);
-        setConfirm(true);
-        setSelected("");
-        setRecipientNumber("");
-        setRecipientName("");
-                }, (ErrorType)=> {
-                if(ErrorType === "Unauthorised"){
-                    setSessionActivity(true)
-                }else if(ErrorType === "Server error"){
-                    alert("Unable to save recipients, try again later")
-                }else if(ErrorType === "Network error" || ErrorType === "User error"){
-                 alert("Check your internet connection.");
-                }else{
-                    alert("Unable to save recipients try again later.")
-                }
-                }, setFetchedResponse
-             )
+          if (!sessionModal) return setSessionModal(true);
+          if(sessionModal) return;
           }else if(ErrorType === "Network error" || ErrorType === "User error"){
-        alert("Check your internet connection")
+           if(networkIssue) return;
+           if(!networkIssue) return setNetworkIssue(true)
           }else if(ErrorType === "Server error"){
           alert("Unable to save recipients try again later.")
           }else {
             alert("Unable to save recipients try again later.")
           }
-       }, setFetchedResponse)
+       }, setFetchedResponse, setNetworkIssue)
     };
 
 
@@ -527,13 +508,10 @@ const setFetchedResponse = ()=> {
             {selectRecipientDisplay && (
                 <SelectRecipient 
                 loadingRecipient={loadingRecipient}
-                 recipientList = {recipientList} 
                   setSelectRecipientDisplay={setSelectRecipientDisplay}
                   />
             )}
-            {sessionActivity && (
-                <InternalLoginSession   setExpiredSessionLogin={setSessionActivity}/>
-            )}
+            
         </DashBoardLayout>
     )
 }
