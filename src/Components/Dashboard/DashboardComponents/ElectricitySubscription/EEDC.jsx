@@ -78,10 +78,11 @@ const EEDC = () => {
     authenticationOpen,
     purchaseElectricityErrorType,
     setPurchaseElectricityErrorType,
+       setSessionModal,
+          sessionModal
   } = useContext(ContextProvider);
 
   const [showProductList, setShowProductList] = useState(false);
-  const [sessionModal, setSessionModal] = useState(false);
   const [restrictUser, setRestrictUser] = useState(false)
   const pointsEarned = "+2.00";
 
@@ -1745,8 +1746,7 @@ const timer = useRef(null);
           <Loader />
         </Modal>
       )}
-      {sessionModal && <InternalLoginSession 
-      setExpiredSessionLogin ={setSessionModal}/>}
+     
       {restrictUser && sessionModal === false && (
               <RestrictionPopUp/>
             ) }

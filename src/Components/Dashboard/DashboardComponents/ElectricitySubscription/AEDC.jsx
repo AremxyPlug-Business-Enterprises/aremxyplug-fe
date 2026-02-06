@@ -22,7 +22,6 @@ import {
   PostFunction,
   VerifyTransPin,
   GetFunction,
-  InternalLoginSession,
   RestrictionPopUp
 } from "../../../ApiCollection.jsx/ApiBuck";
 import { GetLocalStorage } from "../../../LocalStorage/LocalStorage";
@@ -140,14 +139,15 @@ const AEDC = () => {
     authenticationOpen,
     purchaseElectricityErrorType,
     setPurchaseElectricityErrorType,
-    setNetworkIssue
+    setNetworkIssue,
+       setSessionModal,
+          sessionModal
   } = useContext(ContextProvider);
 
   const [showProductList, setShowProductList] = useState(false);
 
   const pointsEarned = "+2.00";
   const [loading, setLoading] = useState(false);
-  const [sessionModal, setSessionModal] = useState(false);
   const [balanceLoader, setBalanceLoader] = useState(false)
   // const handleValidate = () => {
 
@@ -1974,8 +1974,7 @@ const timer = useRef(null)
           <Loader />
         </Modal>
       )}
-      {sessionModal 
-      && <InternalLoginSession setExpiredSessionLogin ={setSessionModal} />}
+     
       {restrictUser && sessionModal === false && (
         <RestrictionPopUp/>
       ) }

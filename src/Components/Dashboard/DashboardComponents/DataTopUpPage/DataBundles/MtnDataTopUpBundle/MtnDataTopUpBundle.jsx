@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { DashBoardLayout } from "../../../../Layout/DashBoardLayout";
 import { ContextProvider } from "../../../../../Context";
 import { useContext } from "react";
@@ -23,7 +23,7 @@ import { AiFillEye } from "react-icons/ai";
 import Joi from "joi";
 import airtimestyles from "../../../../../AirTimePage/AirtimeVtu.module.css";
 import axiosInstance from "../../../../../ApiCollection.jsx/apiClient";
-import { InternalLoginSession, RestrictionPopUp, VerifyTransPin } from "../../../../../ApiCollection.jsx/ApiBuck";
+import { RestrictionPopUp, VerifyTransPin } from "../../../../../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../../../../../Loader/Loader";
 import {
   GetFunction,
@@ -50,6 +50,7 @@ const MtnDataTopUpBundle = () => {
      authenticationOpen,
     purchaseMtnErrorType, 
     setPurchaseMtnErrorType,
+    sessionModal, setSessionModal,
   setNetworkIssue} = useContext(ContextProvider);
 
   const [showProductList, setShowProductList] = useState(false);
@@ -77,7 +78,6 @@ const MtnDataTopUpBundle = () => {
   const [selectProductWarn, setSelectProductWarn] = useState(false);
   const [passDataBalance, setPassDataBalance] = useState({});
   const [mtnReceiptInfo, setMtnReceiptInfo] = useState("");
-  const [sessionModal, setSessionModal] = useState(false);
   const [checkNetworkError, setCheckNetworkError] = useState(false)
    const [mtnSuccessfulResponse, setMtnSuccessfulResponse] = useState({});
    const [balanceLoader, setBalanceLoader] = useState(false)
@@ -1992,7 +1992,7 @@ const Balance = newBalance !== null &&
           <Loader />
         </Modal>
       )}
-      {sessionModal && <InternalLoginSession setExpiredSessionLogin = {setSessionModal} />}
+     
       {restrictUser && sessionModal === false  && <RestrictionPopUp/>}
     </DashBoardLayout>
   );

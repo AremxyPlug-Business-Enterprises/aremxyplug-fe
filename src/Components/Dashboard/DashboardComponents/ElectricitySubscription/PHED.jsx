@@ -21,7 +21,6 @@ import { GetLocalStorage } from "../../../LocalStorage/LocalStorage";
 import {
   PostFunction,
   VerifyTransPin,
-  InternalLoginSession,
   RestrictionPopUp,
   GetFunction,
 } from "../../../ApiCollection.jsx/ApiBuck";
@@ -72,7 +71,7 @@ const PHED = () => {
     setPhedWalletBalance,
     phedPaymentResult,
     setPhedPaymentResult,
-
+  sessionModal, setSessionModal,
     newBalance,
     setNewBalance,
     authenticationOpen,
@@ -349,7 +348,6 @@ const GetBalance = async () => {
   const [phedCustomerName, setPhedCustomerName] = useState("");
 
   const [errorMessage, setErrorMessage] = useState(false);
-  const [sessionModal, setSessionModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isFailedMeterNumber, setIsFailedMeterNumber] = useState(false);
   const [meterNumberLoading, setMeterNumberLoading] = useState(false);
@@ -1683,8 +1681,7 @@ const GetBalance = async () => {
           <Loader />
         </Modal>
       )}
-      {sessionModal &&
-       <InternalLoginSession setexpiredSessionLogin ={setSessionModal} />}
+   
       {restrictUser && sessionModal === false && (
         <RestrictionPopUp/>
       ) }

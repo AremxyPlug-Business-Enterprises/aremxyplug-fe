@@ -7,7 +7,7 @@ import styles from "../../TransferComponent/transfer.module.css";
 import SearchIcon from '../../../../Add&SelectRecipient/RecipientImages/search-status.svg';
 import Delete from "../../../../AirTimePage/Images/Deleted.svg";
 import { Modal } from "../../../../Screens/Modal/Modal";
-import { GetFunction, InternalLoginSession} from "../../../../ApiCollection.jsx/ApiBuck";
+import { GetFunction} from "../../../../ApiCollection.jsx/ApiBuck";
 import { Loader} from "../../../../Loader/Loader";
 import NoRecordImage  from "../../../../Add&SelectRecipient/RecipientImages/NoRecordImage.svg";
 import { GetLocalStorage } from "../../../../LocalStorage/LocalStorage";
@@ -21,7 +21,9 @@ const Data = GetLocalStorage();
      toggleSideBar,
        isDarkMode, networkIssue,
        recipientResponse,
-        setRecipientResponse, setNetworkIssue
+        setRecipientResponse, setNetworkIssue,
+           setSessionModal,
+          sessionModal
         } = useContext(ContextProvider);
   const [activeTab, setActiveTab] = useState('tab_1');
     const [showPopup, setShowPopup] = useState(false);
@@ -43,7 +45,6 @@ const Data = GetLocalStorage();
     }
 
     const [loading, setLoading] = useState(false);
-    const [sessionModal, setSessionModal] =useState(false);
    
     const active = styled.active;
     const inactive = styled.inactive;
@@ -931,10 +932,7 @@ return (
         </div>
        
      
-       {sessionModal && (
-              <InternalLoginSession
-               setExpiredSessionLogin={ setSessionModal}/>
-            )}
+     
             {loading && (
               <Modal>
                 <Loader/>

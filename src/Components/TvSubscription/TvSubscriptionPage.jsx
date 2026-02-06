@@ -3,7 +3,7 @@ import { DashBoardLayout } from "../Dashboard/Layout/DashBoardLayout";
 import "../TvSubscription/TvSubscription.css";
 import { Link, useNavigate } from "react-router-dom";
 import style from "../AirTimePage/AirtimeVtu.module.css";
-import { GetFunction, InternalLoginSession} from "../ApiCollection.jsx/ApiBuck";
+import { GetFunction} from "../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../Loader/Loader";
 import { Modal } from "../Screens/Modal/Modal";
 import { ContextProvider } from "../Context";
@@ -71,10 +71,11 @@ export const TvSubscription = () =>{
      setTvSubscriptionResponse,
      setDstvSubscriptionResponse,
      networkIssue,
-     setNetworkIssue
+     setNetworkIssue,
+     setSessionModal
        } = useContext(ContextProvider)
     const navigate = useNavigate();
-const [sessionModal, setSessionModal]= useState(false)
+
 
 
 const ResetShowMaxFields = ()=> {
@@ -383,9 +384,7 @@ return(
                 )}
                
             </div>
-             {sessionModal && (
-                    <InternalLoginSession setExpiredSessionLogin ={setSessionModal}/>
-                )}
+           
         </DashBoardLayout>
     )
 }

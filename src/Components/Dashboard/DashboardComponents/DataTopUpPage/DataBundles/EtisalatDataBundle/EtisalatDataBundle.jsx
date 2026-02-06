@@ -24,7 +24,7 @@ import { AiFillEye } from "react-icons/ai";
 import Joi from "joi";
  import airtimestyles from "../../../../../AirTimePage/AirtimeVtu.module.css";
 import axiosInstance from "../../../../../ApiCollection.jsx/apiClient";
-import { InternalLoginSession, VerifyTransPin } from "../../../../../ApiCollection.jsx/ApiBuck";
+import { VerifyTransPin } from "../../../../../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../../../../../Loader/Loader";
 import {
   GetFunction,RestrictionPopUp
@@ -58,6 +58,8 @@ const EtisalatDataBundle = () => {
     inputPin,
     setInputPin,
     networkIssue,
+    sessionModal,
+    setSessionModal,
     // inputPinHandler,
     toggleVisibility,
     isVisible,
@@ -89,7 +91,6 @@ const EtisalatDataBundle = () => {
   const [selectPlanWarn, setSelectPlanWarn] = useState(false);
   const [passDataBalance, setPassDataBalance] = useState({});
   const [etisalatReceiptInfo, setEtisalatReceiptInfo] = useState("");
-  const [sessionModal, setSessionModal] = useState(false);
   const [restrictUser, setRestrictUser] = useState(false);
   const [checkNetworkError, setCheckNetworkError] = useState(false)
 const [balanceLoader, setBalanceLoader] = useState(false)
@@ -1953,7 +1954,7 @@ if(Data?.ConfirmAcc === "true"){
           <Loader />
         </Modal>
       )}
-      {sessionModal && <InternalLoginSession setExpiredSessionLogin ={setSessionModal} />}
+      
        {restrictUser && sessionModal === false  && <RestrictionPopUp/>}
   
     </DashBoardLayout>

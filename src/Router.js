@@ -196,11 +196,9 @@ import { Suspense } from "react";
 import NotFound from "./Components/NotFound";
 import ProtectedRoutes from "./Components/ProtectedRoute"
 const ProtectedRoute = ({children})=> {
- 
-  const SessionExpiration = localStorage.getItem("SessionExpiration")
-  //const pathname = typeof location.pathname  === "string" ? location?.pathname?.slice(1) : ""
+ //const pathname = typeof location.pathname  === "string" ? location?.pathname?.slice(1) : ""
 const LazyRoutes =  React.lazy(()=> import("./Components/ProtectedRoute"))
-
+  const SessionExpiration = localStorage.getItem("SessionExpiration")
 
   //eslint-disable-next-line
 

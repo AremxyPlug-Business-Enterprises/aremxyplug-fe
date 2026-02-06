@@ -17,7 +17,7 @@ import britainFlag from '../../Components/EducationPins/imagesEducation/Britain.
 import euroFlag from '../../Components/EducationPins/imagesEducation/GBP.svg';
 import austriaFlag from '../../Components/EducationPins/imagesEducation/Austria.svg';
 import kenyaFlag from '../../Components/EducationPins/imagesEducation/Kenya.svg';
-import {InternalLoginSession, VerifyTransPin} from "../../Components/ApiCollection.jsx/ApiBuck";
+import { VerifyTransPin} from "../../Components/ApiCollection.jsx/ApiBuck";
 import {PostFunction} from "../../Components/ApiCollection.jsx/ApiBuck"
 import { useNavigate } from "react-router-dom";
 import { Loader } from "../Loader/Loader";
@@ -83,13 +83,14 @@ setShowMaxMobileNumber,
     setPurchaseShowMaxErrorType,
     showMaxFlagResult,
     setShowMaxFlagResult,
+       setSessionModal,
+          sessionModal
   } = useContext(ContextProvider)
  const [isLoading, setIsLoading] = useState(false)
       const [failedPopup, setFailedPopup] = useState(false);
     const [balanceLoader, setBalanceLoader] = useState(false)
     const [passDataBalance, setPassDataBalance] = useState({});
      const [showMaxData, setShowMaxData] = useState([]);
-        const [sessionModal, setSessionModal] = useState(false);
                        const [checkNetworkError, setCheckNetworkError] = useState(false)
                     const [restrictUser, setRestrictUser] = useState(false)
             const navigate = useNavigate();
@@ -1084,9 +1085,7 @@ const Decoders  = [
                       <Loader/>
                       </Modal>
                   )}
-                  {sessionModal && (
-                    <InternalLoginSession setExpiredSessionLogin={setSessionModal}/>
-                  )}
+               
                   {sessionModal === false && restrictUser && (
                     <RestrictionPopUp/>
                   )}

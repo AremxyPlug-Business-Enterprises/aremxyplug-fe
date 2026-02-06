@@ -22,7 +22,6 @@ import { AirtimeReceiptFailed } from './AirtimeReceiptFailed';
 import { Loader } from '../Loader/Loader';
 import { VerifyTransPin, 
     GetFunction, 
-    InternalLoginSession,
      RestrictionPopUp, PostFunction } from '../ApiCollection.jsx/ApiBuck';
 import Select from  "../Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundles-Images/Select.svg";
 import { GetLocalStorage } from '../LocalStorage/LocalStorage';
@@ -37,9 +36,10 @@ const AirtimeVtu = () => {
     const tFee = 0;
     const points = '+2.00';
       const [airtimeResponse, setAirtimeResponse] = useState({})
-    const { networkName, setNetworkName, newBalance, setNewBalance } = useContext(ContextProvider);
-    const { selectedProduct, setSelectedProduct } = useContext(ContextProvider);
-    const { recipientName, setRecipientName } = useContext(ContextProvider);
+    const { networkName, setNetworkName, newBalance, setNewBalance,    setSessionModal,
+          sessionModal } = useContext(ContextProvider);
+    const { selectedProduct, setSelectedProduct, recipientsAirtime, setRecipientsAirtime } = useContext(ContextProvider);
+    const { recipientName, setRecipientName, networkIssue } = useContext(ContextProvider);
     const { recipientNumber, setRecipientNumber } = useContext(ContextProvider);
     const { amount, setAmount } = useContext(ContextProvider);
     const { networkImage, setNetworkImage } = useContext(ContextProvider);
@@ -66,30 +66,31 @@ const AirtimeVtu = () => {
     const [description, setDescription] = useState("");
     const [isLoading, setIsLoading] = useState(false); // For managing loading state
     const { isDarkMode, setNetworkIssue } = useContext(ContextProvider);
-   const [sessionModal, setSessionModal] = useState(false)
+ 
     const [errorMessage, setErrorMessage] = useState(false);
     const [passDataBalance, setPassDataBalance] = useState({});
     const [balanceStatus, setBalanceStatus] = useState("");
     const [selectRecipientDisplay, setSelectRecipientDisplay] = useState(false)
    const balanceStringToNum = Number(newBalance);
-   const [recipientList, setRecipientList] = useState([]);
+ 
    const [airtimeTransactionNetwork, setAirtimeTransactionNetwork] = useState(false)
 
 
    const GetRecipientList = async()=> {
       const successHandler = (response)=> {
-setRecipientList(response?.data?.data?.recipients?.recipients);
+setRecipientsAirtime(response?.data?.data?.recipients?.recipients);
       }
       const failedHandler = async(errorType)=> {
    
         if(errorType === "Network error" || errorType === "User error"){
-            alert("Check your internet connection.")
+             if(!networkIssue) return  setNetworkIssue(true)
+                        if(networkIssue) return;
         }else if(errorType === "unauthorised"){
         await GetFunction("airtime/recipient", 
             setLoadingRecipient, 
             successHandler, 
             failedHandler
-            ,setRecipientList, setNetworkIssue)
+            ,setRecipientsAirtime, setNetworkIssue)
         }else if(errorType === "Server error"){
     alert("Unable to fetch your recipient List try again later.")
         }
@@ -109,16 +110,19 @@ setRecipientList(response?.data?.data?.recipients?.recipients);
         }
      }
       const newAmount = calcAmount(discount, amount) ;
-      console.log(newAmount);   
-               const updateBalance = passDataBalance?.data?.data?.data
-               && (newBalance === "" || newBalance === undefined || newBalance === null)
-                ?  passDataBalance?.data?.data?.data?.balance : balanceStringToNum;
-            
-                 let CheckSufficiency = newAmount  >   updateBalance
+     // console.log(newAmount);   
+               const updateBalance = (newBalance === "" || newBalance === undefined || newBalance === null)
+                ?  Number(passDataBalance?.data?.data?.data?.balance) : balanceStringToNum;
+          //  console.log(updateBalance);
+                 let CheckSufficiency = newAmount  >  updateBalance
                  
 
 //Getting The User Balance of the application.
                  const GetBalance =   async()=> {
+                    if(!navigator){
+                      if(!networkIssue) return  setNetworkIssue(true)
+                        if(networkIssue) return;
+                     }
                                const SuccessHandler = (response)=> {
                             setPassDataBalance(response)
                           }
@@ -128,8 +132,11 @@ setRecipientList(response?.data?.data?.recipients?.recipients);
                              if(!sessionModal) return setSessionModal(true);
                          }else if(ErrorType === "Server error"){
                          alert("Failed to retrieve balance")
+                         }else if (ErrorType === "Network error" || ErrorType === "User error"){
+                                 if(!networkIssue) return  setNetworkIssue(true)
+                        if(networkIssue) return;
                          }else{
-                            alert("An unepected has occured")
+                            alert("An unexpected has occured")
                          }
                         }
                          await GetFunction("balance",
@@ -284,7 +291,7 @@ setRecipientList(response?.data?.data?.recipients?.recipients);
         setPaymentAmount('');
         setPaymentSelected(false);
     }
-
+const amountToNumber = Number(amount) 
     const schema = Joi.object({
         recipientNumber: Joi.string()
             .pattern(new RegExp(/^\d{11,}/))
@@ -292,22 +299,24 @@ setRecipientList(response?.data?.data?.recipients?.recipients);
             .messages({
                 "string.pattern.base": "Phone number should be 11 digits ",
             }),
-        amount: Joi.string()
-            .pattern(new RegExp(/\d{2,}/))
-            .required()
-            .messages({
-                "string.pattern.base": "Amount can not be less than 10",
-            }),
+        amountToNumber: Joi.number()
+ .required()
+  .messages({
+                 "number.min" : "Amount can not be less than 50"
+            }).min(50)
+           // .min(50)
+        
     });
+    //console.log(typeof amount)
+   //console.log(amount);
 
     const canProceed =
   recipientNumber?.length === 11 &&
-  amount?.length >= 2 &&
+  amount?.length >= 2 && amountToNumber >= 50 &&
   networkName &&
   paymentSelected;
 
-
-
+console.log(canProceed);
    //validating the prefix of Nigeria network providers with the
     // network name selected
      // Nigerian number validate
@@ -357,8 +366,8 @@ if(value?.length < 11){
 
 const CheckRecipientInfoInList =(value)=> {
    if(value && value?.length === 11){
-   const findingRecipient = recipientList?.length > 0 && recipientList !== null && recipientList !== undefined ? 
-     recipientList?.find((item)=>{ 
+   const findingRecipient = recipientsAirtime?.length > 0 && recipientsAirtime !== null && recipientsAirtime !== undefined ? 
+     recipientsAirtime?.find((item)=>{ 
     return value === item?.phone
    }
 ) : []
@@ -373,7 +382,7 @@ const RecipientExistCheck = CheckRecipientInfoInList(recipientNumber)
 // Validate with Joi
   const { error } = schema.validate({
     recipientNumber,
-    amount,
+    amountToNumber,
   });
 
   if (error) {
@@ -381,9 +390,10 @@ const RecipientExistCheck = CheckRecipientInfoInList(recipientNumber)
       acc[curr.path[0]] = curr.message;
       return acc;
     }, {}))
-  }
+  }else{
  setProceed(true);
   setErrors({});
+  }
 
 };
 
@@ -545,7 +555,7 @@ if(ErrorType === "Network error" || ErrorType === "User error"){
       }else if(ErrorType === "Server error"){
             alert("Pin Verification Failed")
       }else if(ErrorType === "Network error" || ErrorType === "User error"){
-        alert("Your internet connection is quite unstable.")
+        setNetworkIssue(true)
         setAirtimeTransactionNetwork(true);
       }
     },
@@ -559,14 +569,15 @@ if(ErrorType === "Network error" || ErrorType === "User error"){
 
 if(Data?.ConfirmAcc === "true"){
   window.addEventListener("online", async()=> {
-    if(airtimeTransactionNetwork === true && recipientList?.length < 1){
+    if(airtimeTransactionNetwork === true && recipientsAirtime?.length < 1){
    await  GetRecipientList();
   }
-  if(airtimeTransactionNetwork === true && (newBalance === ""|| newBalance === undefined) ){
+  if(airtimeTransactionNetwork === true && (newBalance === ""|| newBalance === undefined || newBalance === null) ){
      await GetBalance()
     } 
   })
 }
+
 
     return (
         <DashBoardLayout>
@@ -918,19 +929,19 @@ className={`flex justify-left  w-[100%] items-center`}>
                 }
                   
   `}
-                onChange={(event) => setAmount(event.target.value)} value={amount.toLocaleString()} />
+                onChange={(event) => setAmount(event.target.value)} value={amount} />
                  
                                             <img className="absolute left-[90%] top-[40%] md:top-[30%]
                          lg:left-[94%] self-center align-middle md:h-[14.038px] md:w-[14.038px] 
       lg:h-[24px] lg:w-[24px] w-[14px] h-[16px]"
                                              src={money} alt="" />
                                         </div>
-                                {errors.amount && (
-                                    <div className="!text-[14px] text-red-500 italic lg:text-[14px]">
-                                        {errors.amount}
+                                {errors.amountToNumber && (
+                                    <div className="text-[14px] text-red-500 italic lg:text-[14px]">
+                                        {errors. amountToNumber}
                                    </div>
                                 )}
-                                  {(!errors.amount && networkName === "" && amount?.length > 1) && (
+                                  {(!errors.amountToNumber && networkName === "" && amount?.length > 1) && (
                      <p className="text-[#F95252] text-[13px] 
                       md:text-[12px] lg:text-[14px] font-[400] italic">
                            Select Network Type
@@ -1740,7 +1751,7 @@ className={`flex justify-left  w-[100%] items-center`}>
              h-[43px] md:h-[30px] lg:h-[40px] flex items-center 
              font-semibold text-[12px] md:text-[11px] lg:text-[16px] 
              text-[#fff] w-full md:w-[100px] lg:w-[170px] justify-center`}
-                             disabled={!canProceed}
+                            // disabled={!canProceed}
                             onClick={handleProceed}>
                                 Proceed
                         </button>
@@ -1757,12 +1768,9 @@ className={`flex justify-left  w-[100%] items-center`}>
                     <Loader/>
                 </Modal>
             )}
-            {sessionModal && (
-                <InternalLoginSession setExpiredSessionLogin={setSessionModal}/>
-            )}
+        
             {restrictUser && <RestrictionPopUp/>}
             {selectRecipientDisplay && <SelectRecipient 
-            recipientList = {recipientList} 
             loadingRecipient ={loadingRecipient}
              setSelectRecipientDisplay = {setSelectRecipientDisplay}/>}
         </DashBoardLayout>

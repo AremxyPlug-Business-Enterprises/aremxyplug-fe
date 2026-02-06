@@ -27,7 +27,6 @@ import {
   VerifyTransPin,
   GetFunction,
   RestrictionPopUp,
-  InternalLoginSession
 } from "../../../../../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../../../../../Loader/Loader";
 import { BalanceLoading } from "../../../../../Loader/Loader";
@@ -62,7 +61,9 @@ const GloDataBundle = () => {
     setNewBalance,
     authenticationOpen,
     gloPurchaseErrorType,
-     setGloPurchaseErrorType
+     setGloPurchaseErrorType,
+     sessionModal,
+     setSessionModal
   } = useContext(ContextProvider);
 
   const [showProductList, setShowProductList] = useState(false);
@@ -93,7 +94,6 @@ const GloDataBundle = () => {
   const [selectProductWarn, setSelectProductWarn] = useState(false);
   const [passDataBalance, setPassDataBalance] = useState({});
   const [gloReceiptInfo, setGloReceiptInfo] = useState("");
-  const [sessionModal, setSessionModal] = useState(false);
   const [checkNetworkError, setCheckNetworkError] = useState(false);
   const [restrictUser, setRestrictUser] = useState(false)
   const [balanceLoader, setBalanceLoader] = useState(false)
@@ -1937,7 +1937,6 @@ try {
           <Loader />
         </Modal>
       )}
-      {sessionModal && <InternalLoginSession setExpiredSessionLogin ={setSessionModal}/>}
       {sessionModal  === false && restrictUser && (
         <RestrictionPopUp/>
       )}

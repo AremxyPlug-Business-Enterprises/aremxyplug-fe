@@ -21,7 +21,7 @@ import { Loader } from "../../Loader/Loader";
 import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 import idSuccess from "../ProfileImages/user-tick.svg";
 import countryImage from "../../EducationPins/imagesEducation/Nigeriaflag.svg";
-import { InternalLoginSession } from "../../ApiCollection.jsx/ApiBuck";
+
 
 export default function IdVerification(Data) {
   const { verificationOpen } = useContext(ContextProvider);
@@ -38,13 +38,14 @@ export default function IdVerification(Data) {
     verificationReason,
     setVerificationResponse,
     networkIssue,
-    setNetworkIssue
+    setNetworkIssue,
+    setSessionModal
   } = useContext(ContextProvider);
   const { dropDownGender, setDropDownGender, idButtonState, setIdButtonState } =
     useContext(ContextProvider);
   const [idDropDown, setIdDropDown] = useState(false);
   const { idAddress, setIdAddress } = useContext(ContextProvider);
-  const [sessionModal, setSessionModal] = useState(false);
+
   // const {idState, setIdState} = useContext(ContextProvider);
   const { 
     // idCountry, 
@@ -1036,10 +1037,7 @@ Confirming your identity ensures that the person accessing the account is indeed
           )}
         </div>
       )}
-      {sessionModal && (
-        <InternalLoginSession 
-        setExpiredSessionLogin ={setSessionModal}/>
-      )}
+    
       {loading && (
         <Modal>
           <Loader />

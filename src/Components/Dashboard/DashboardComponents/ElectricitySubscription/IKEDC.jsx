@@ -22,7 +22,6 @@ import { GetLocalStorage } from "../../../LocalStorage/LocalStorage";
 import {
   PostFunction,
   VerifyTransPin,
-  InternalLoginSession,
   RestrictionPopUp,
   GetFunction,
 } from "../../../ApiCollection.jsx/ApiBuck";
@@ -79,25 +78,14 @@ const IKEDC = () => {
     authenticationOpen,
     purchaseElectricityErrorType,
     setPurchaseElectricityErrorType,
-    setNetworkIssue
+    setNetworkIssue,
+    sessionModal, setSessionModal
   } = useContext(ContextProvider);
  const Data = GetLocalStorage()
   const [showProductList, setShowProductList] = useState(false);
-  const [sessionModal, setSessionModal] = useState(false);
 
   const pointsEarned = "+2.00";
 
-  // const handleValidate = () => {
-
-  //   if (isEmailOrNumberValid(email) || isEmailOrNumberValid(number)) {
-  //     setErrorMessage('')
-  //     setAccountId(email);
-  //   setShowAccountId(true);;
-  //   } else {
-  //     setErrorMessage('Invalid Email or Smile Account ID')
-  //   setShowAccountId(false);
-  //   }
-  // };
   const timer = useRef(null)
   const productList = [
     {
@@ -1714,8 +1702,7 @@ const IKEDC = () => {
           <Loader />
         </Modal>
       )}
-      {sessionModal &&
-            <InternalLoginSession setExpiredSessionLogin ={setSessionModal} />}
+    
            {restrictUser && sessionModal === false && (
              <RestrictionPopUp/>
            ) }

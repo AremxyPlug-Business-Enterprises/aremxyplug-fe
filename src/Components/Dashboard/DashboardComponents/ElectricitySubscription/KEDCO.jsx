@@ -24,7 +24,6 @@ import { GetLocalStorage } from "../../../LocalStorage/LocalStorage";
 
 import {
   GetFunction,
-  InternalLoginSession,
   RestrictionPopUp,
   PostFunction,
   VerifyTransPin,
@@ -81,6 +80,7 @@ const KEDCO = () => {
     authenticationOpen,
     purchaseElectricityErrorType,
     setPurchaseElectricityErrorType,
+    sessionModal, setSessionModal
   } = useContext(ContextProvider);
   const Data = GetLocalStorage()
   const [showProductList, setShowProductList] = useState(false);
@@ -353,7 +353,6 @@ const GetBalance = async () => {
   const [failedPopup, setFailedPopup] = useState(false);
   const [kedcoCustomerName, setKedcoCustomerName] = useState("");
   const [errorMessage, setErrorMessage] = useState(false);
-  const [sessionModal, setSessionModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isFailedMeterNumber, setIsFailedMeterNumber] = useState(false);
   const [meterNumberLoading, setMeterNumberLoading] = useState(false);
@@ -1779,8 +1778,7 @@ const GetBalance = async () => {
           </div>
         </Modal>
       )}
-     {sessionModal &&
-       <InternalLoginSession setexpiredSessionLogin ={setSessionModal} />}
+
       {restrictUser && sessionModal === false && (
         <RestrictionPopUp/>
       ) }

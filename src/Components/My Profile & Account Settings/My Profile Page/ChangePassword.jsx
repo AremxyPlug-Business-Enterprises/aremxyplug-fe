@@ -9,9 +9,8 @@ import styles from "../../../Components/Dashboard/DashboardComponents/TransferCo
 import Success from "../ProfileImages/success.gif";
 import axios from "axios";
 import { Loader } from "../../Loader/Loader";
-import { InternalLoginSession } from "../../ApiCollection.jsx/ApiBuck";
 const ChangePassword = () => {
-  const { toggleSideBar, isDarkMode } = useContext(ContextProvider);
+  const { toggleSideBar, isDarkMode, sessionModal, setSessionModal } = useContext(ContextProvider);
 
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -19,7 +18,6 @@ const ChangePassword = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [update, setUpdate] = useState("");
 const [loading, setLoading] = useState(false);
-const [sessionModal, setSessionModal] = useState(false)
   const validatePassword = (password) => {
     const passwordRegex =
       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -243,10 +241,7 @@ setErrorMessage("Please fill in all fields");
         <Loader/>
         </Modal>
       )}
-      {sessionModal && (
-        <InternalLoginSession 
-        setExpiredSessionModal = {setSessionModal}/>
-      )}
+     
     </div>
   );
 };

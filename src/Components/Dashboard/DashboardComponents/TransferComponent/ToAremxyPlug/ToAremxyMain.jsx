@@ -18,7 +18,6 @@ import euroFlag from "../../../DashboardComponents/flagsImages/europeanFlag.png"
 import currencyImage from  "../../../../EducationPins/imagesEducation/arrow-down.svg";
 import AremxySelectUser from "./AremxySelectUser";
 import { RestrictionPopUp } from "../../../../ApiCollection.jsx/ApiBuck";
-import { InternalLoginSession } from "../../../../ApiCollection.jsx/ApiBuck";
 // import { useNavigate } from "react-router-dom";
 
 export default function ToAremxyMain() {
@@ -45,16 +44,16 @@ export default function ToAremxyMain() {
     transferValue,
     setTransferValue,
     setNetworkIssue,
-    networkIssue
+    networkIssue,
+       setSessionModal,
+          sessionModal
   } = useContext(ContextProvider);
 
   const [addToRecipient, SetAddToRecipient] = useState(false);
   const [saveToFavorite, setSaveTofavorite] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-
   const [loading, setLoading] = useState(false);
   const [balanceLoader, setBalanceLoader] = useState(false)
-  const [sessionModal, setSessionModal] = useState(false);
   const [fetchedResponse, setFetchedResponse] = useState({});
   const [verifiedUser, setVerifiedUser] = useState(false);
   const [passDataBalance, setPassDataBalance] = useState({});
@@ -64,7 +63,7 @@ export default function ToAremxyMain() {
   const [selectRecipientPopup, setSelectRecipientPopUp] = useState(false);
   const [restrictUser, setRestrictUser] = useState(false);
   const [errorTransAmount, setErrorTransAmount] = useState(false);
-     //const [errors, setErrors] = useState({});
+  
 
 const Data = GetLocalStorage();
 //console.log(Data?.UserEmail);
@@ -1075,7 +1074,7 @@ const GetBalance = async () => {
       <MainInputPinPop fetchedResponse={fetchedResponse} />
       {loading && <Loader />}
       {(restrictUser && sessionModal === false ) && <RestrictionPopUp/>}
-      {sessionModal && <InternalLoginSession setExpiredSessionLogin={ setSessionModal} />}
+  
      
 
        

@@ -21,7 +21,6 @@ import { Link, useNavigate } from "react-router-dom";
 import {
   PostFunction,
   VerifyTransPin,
-  InternalLoginSession,
   GetFunction,
   RestrictionPopUp
 } from "../../../ApiCollection.jsx/ApiBuck";
@@ -78,25 +77,16 @@ const BEDC = () => {
     authenticationOpen,
     purchaseElectricityErrorType,
     setPurchaseElectricityErrorType,
-    setNetworkIssue
+    setNetworkIssue,
+       setSessionModal,
+          sessionModal
   } = useContext(ContextProvider);
 
   const [showProductList, setShowProductList] = useState(false);
-  const [sessionModal, setSessionModal] = useState(false);
   const pointsEarned = "+2.00";
   const [restrictUser, setRestrictUser] = useState(false)
   const Data = GetLocalStorage()
-  // const handleValidate = () => {
 
-  //   if (isEmailOrNumberValid(email) || isEmailOrNumberValid(number)) {
-  //     setErrorMessage('')
-  //     setAccountId(email);
-  //   setShowAccountId(true);;
-  //   } else {
-  //     setErrorMessage('Invalid Email or Smile Account ID')
-  //   setShowAccountId(false);
-  //   }
-  // };
   const productList = [
     {
       id: 1,
@@ -1741,8 +1731,7 @@ const GetBalance = async () => {
           <Loader />
         </Modal>
       )}
-      {sessionModal &&
-       <InternalLoginSession setExpiredSessionLogin ={setSessionModal} />}
+  
        {restrictUser && sessionModal === false && (
                <RestrictionPopUp/>
              ) }

@@ -20,7 +20,7 @@ import {
   Link,
   useNavigate,
 } from "react-router-dom/dist/react-router-dom.development";
-import { GetFunction, InternalLoginSession } from "../ApiCollection.jsx/ApiBuck";
+import { GetFunction } from "../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../Loader/Loader";
 import { Modal } from "../Screens/Modal/Modal";
 import NoRecordImage from "../Add&SelectRecipient/RecipientImages/NoRecordImage.svg";
@@ -35,7 +35,6 @@ export default function WalletSummaryPage() {
   // const [isOpen3, setIsOpen3] = useState(false);
   // const [isOpen4, setIsOpen4] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [sessionModal, setSessionModal] = useState(false);
   const [transactionHistoryError, setTransactionHistoryError] = useState("");
   const [walletTransactionResponse, setWalletTransactionResponse] = useState(
     {}
@@ -47,7 +46,6 @@ export default function WalletSummaryPage() {
     newBalance,
     setNewBalance,
     setElectricityTransErrorType,
-    dateEdit,
     setDateEdit,
      startDateValueState,
     endDateValueState,
@@ -56,7 +54,9 @@ export default function WalletSummaryPage() {
     setEditCalenderOne,
     setEditCalenderTwo,
     setCurrentDateInTimeStamps, setNetworkIssue,
-    editCalenderOne,editCalenderTwo,  setCountCalender
+    editCalenderOne,editCalenderTwo,  setCountCalender,
+       setSessionModal,
+          sessionModal
   } = useContext(ContextProvider);
   const [passDataBalance, setPassDataBalance] = useState({});
   const [selected, setSelected] = useState("NGN");
@@ -1655,7 +1655,7 @@ const FormatTime =(DateValue)=> {
               <Loader />
             </Modal>
           )}
-          {sessionModal && <InternalLoginSession setExpiredSessionLogin = {setSessionModal} />}
+       
         </div>
         </div>
       </>

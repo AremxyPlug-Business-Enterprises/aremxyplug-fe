@@ -19,7 +19,7 @@ import { Link } from "react-router-dom";
 import { Loader } from "../../Loader/Loader";
 import { BalanceLoading } from "../../Loader/Loader";
 import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
-import { CheckVirtualAcc, InternalLoginSession} from "../../ApiCollection.jsx/ApiBuck";
+import { CheckVirtualAcc} from "../../ApiCollection.jsx/ApiBuck";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { GetFunction} from "../../../Components/ApiCollection.jsx/ApiBuck";
@@ -66,7 +66,8 @@ export const MainDashboard = () => {
     setBankNameState, setAccountNameState, setAccountNumberState, 
     twoStepVerificationSuccess,setTwoStepVerificationSuccess, setDateEdit,
     newBalance, setNewBalance,  setEditCalenderOne, setEditCalenderTwo, 
-     setStartDateValueState, setEndDateValueState, setCurrentDateInTimeStamps, setCountCalender, networkIssue, setNetworkIssue
+     setStartDateValueState, setEndDateValueState, setCurrentDateInTimeStamps,
+      setCountCalender, networkIssue, setNetworkIssue, setSessionModal, sessionModal
   } = useContext(ContextProvider);
   //const {account_no, bank_name, account_name} = virtualAccCreated;
 const navigate = useNavigate()
@@ -81,7 +82,7 @@ const navigate = useNavigate()
   const [symbol, setSymbol] = useState("₦");
  const [balanceLoading, setBalanceLoading] = useState(false)
  const [balanceValue, setBalanceValue] = useState("");
- const [sessionModal, setSessionModal] = useState(false)
+
 const Data = GetLocalStorage()
   const handleCopyClick = () => {
     const text = Data.aremxyAccountNumber;
@@ -930,8 +931,7 @@ return (
           </div>
 
           <QuickFeatures />
-          <WalletInOutFlows className={styles.selected} sessionModal = {sessionModal}
-           setSessionModal ={setSessionModal} />
+          <WalletInOutFlows className={styles.selected}  />
           
         </div>
         <div
@@ -953,9 +953,7 @@ return (
             </div>
           </div> 
     
-      {sessionModal &&   (
-     <InternalLoginSession setExpiredSessionLogin={setSessionModal}/>
-      )}
+     
       
       </div>
   

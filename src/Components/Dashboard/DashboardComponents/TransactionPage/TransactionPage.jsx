@@ -102,8 +102,8 @@ const [isActive, setIsActive] = useState(false);
      ? "tv-sub" : "";
 const paymentDataForRequest
      = paymentCategoryValue === "Virtual Accounts" ? "virtual accounts" :
-     paymentCategoryValue === "Money Transfer" ? "money transfer" :
-   paymentCategoryValue === "Wallet Transfer" ? "money transfer" 
+    
+   paymentCategoryValue === "Wallet Transfer" ? "wallet transfer" 
      : paymentCategoryValue === "Points Redeem" ? "points" : "";
 
       const categoryDetermination = telecomCategoryValue?.length > 1?
@@ -114,7 +114,7 @@ const paymentDataForRequest
         ?  paymentDataForRequest : undefined;
 
       const allCategoryRequest = `?flow=${allCategoryValue === "Inflows"
-         ? "inflow" : allCategoryValue === "Outflows" ? "outflow" : allCategoryValue === "Transactions" ? "transactions" : "" }`
+         ? "inflow" : allCategoryValue === "Outflows" ? "outflow" : ""}`;
    
    const CategoryQuery =
     (allCategoryValue?.length < 1 || allCategoryValue === undefined)
@@ -182,10 +182,10 @@ const paymentDataForRequest
 const fullQuery = `?flow=${allCategoryValue}&category=${categoryDetermination}&subcategory=${valueCategoryDetermination}?start_date=${startDateValueState}&end_date=${endDateValueState}`
 
 
-      if(allCategoryValue?.length > 1 
+      if(allCategoryValue?.length > 1 && allCategoryValue !== "Transactions" 
         && (categoryDetermination === undefined || !categoryDetermination )
       && (valueCategoryDetermination === undefined || !valueCategoryDetermination)
-      && (startDateValueState?.length < 1 || startDateValueState === null)
+      && ((startDateValueState?.length < 1 || startDateValueState === null))
      ){
       return allCategoryRequest
       } else if( categoryDetermination?.length > 1  && (startDateValueState?.length < 1 || startDateValueState === null) ){
@@ -601,6 +601,8 @@ const FilterByDateFunc = async()=> {
                       setAllCategoryValue("");
                       setTelecomCategoryValue("");
                       setPaymentCategoryValue("");
+                    
+                     
                     }}
                      src = {cancelIcon} alt = ""/>
                   )}
@@ -611,10 +613,11 @@ const FilterByDateFunc = async()=> {
 <div className="relative w-full mt-[10px]">
               {showCategories && (
                   <div
-                className="border md:rounded-[10px] text-[10px]
+                className={`border md:rounded-[10px] text-[10px]
                  md:text-[12px] absolute lg:text-[16px] lg:mt-2
                   rounded-[4px] right-0 w-full
-                   md:w-full bg-[#FFF] z-[10]">
+                   md:w-full ${isDarkMode ? "bg-black border border-white" : "bg-white border"} 
+                     bg-[#FFF] z-[10]`}>
          <div  onClick={()=> {
                     if(allCategoryDisplay === false){
                     setAllCategoryDisplay(true);
@@ -628,9 +631,9 @@ const FilterByDateFunc = async()=> {
           className="flex  cursor-pointer
    justify-between w-full items-center px-[5px] py-[12px]">
                   <p 
-                  className=" text-[12px] font-[500] leading-[18px]
+                  className={` text-[12px] font-[500] leading-[18px]
                    lg:text-[15px] lg:leading-[20px] 
-                  text-[#7C7C7C]">
+                   ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
                     All : {allCategoryValue}
                   </p>
                      <button className="lg:w-6 lg:h-6 w-[11px] h-[11px]">
@@ -731,10 +734,10 @@ const FilterByDateFunc = async()=> {
     className="flex justify cursor-pointer
    justify-between w-full items-center px-[5px] py-[12px]">
                   <p 
-                    className=" text-[12px] font-[500] leading-[18px]
+                    className={`text-[12px] font-[500] leading-[18px]
                    lg:text-[15px] lg:leading-[20px] 
-                  text-[#7C7C7C]"
-                  >
+                  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"} 
+                `}>
                     Telecom : {telecomCategoryValue}
                   </p>
                      <button className="lg:w-6 lg:h-6 w-[11px] h-[11px]">
@@ -746,40 +749,35 @@ const FilterByDateFunc = async()=> {
                   <div className="flex flex-col justify-center items-center 
                    gap-[5px] pt-[10px] pb-[20px]">
                     <div className="flex justify-center gap-[25px] py-[10px]">
-                      <p 
-
-                        onClick={() =>{
+                      <p onClick={() =>{
                            handleCategoryFilter("Airtime Top-up")
                            setTelecomCategoryValue("Airtime Top-up")
-
-                          }}
-                        className={`rounded-[2px] text-[10px] lg:text-[15px]
-                           px-[5px] font-semibold cursor-pointer ${
-                          activeCategory === "Airtime Top-up"
-                            ? "text-[#fff] bg-[#04177F]"
-                            : "text-[#7C7C7C] bg-[#F2FAFF]"
-                        }`}
+                       }}
+                  className={`rounded-[2px] text-[10px] lg:text-[15px]
+                   px-[5px] font-semibold cursor-pointer ${
+                    activeCategory === "Airtime Top-up"
+                     ? "text-[#fff] bg-[#04177F]"
+                     : "text-[#7C7C7C] bg-[#F2FAFF]"
+                  }`}
                       >
                         Airtime Top-up
                       </p>
                       <p
                         onClick={() => {
                           handleCategoryFilter("Data Top-up")
-                            setTelecomCategoryValue("Data Top-up")
+                          setTelecomCategoryValue("Data Top-up")
                         }}
                         className={`rounded-[2px] text-[10px] cursor-pointer lg:text-[15px] px-[5px] font-semibold ${
                           activeCategory === "Data Top-up"
                             ? "text-[#fff] bg-[#04177F]"
                             : "text-[#7C7C7C] bg-[#F2FAFF]"
-                        }`}
-                      >
+                        }`}>
                         Data Top-up
                       </p>
                     </div>
 
                     <div className="flex justify-center gap-[25px] py-[10px]">
-                      <p
-                        onClick={() =>  { 
+                      <p onClick={() =>  { 
                           handleCategoryFilter("Education Pins")
                            setTelecomCategoryValue("Education Pins")
                           }}
@@ -801,8 +799,7 @@ const FilterByDateFunc = async()=> {
                           activeCategory === "Tv Subscription"
                             ? "text-[#fff] bg-[#04177F]"
                             : "text-[#7C7C7C] bg-[#F2FAFF]"
-                        }`}
-                      >
+                        }`}>
                         Tv Subscription
                       </p>
                     </div>
@@ -871,9 +868,9 @@ const FilterByDateFunc = async()=> {
                 }}
              className="flex justify cursor-pointer
    justify-between w-full items-center px-[5px] py-[12px]">
-                  <p className="text-[#7C7C7C] text-[12px] font-[500] leading-[18px]
-                   lg:text-[15px] lg:leading-[20px] 
-                  ">
+                  <p className={`text-[#7C7C7C] text-[12px] font-[500] leading-[18px]
+                   lg:text-[15px] lg:leading-[20px]   ${isDarkMode ? "text-white" : "text-[#7C7C7C]"} 
+`}>
                     Payments : {paymentCategoryValue}
                   </p>
    <button className="lg:w-6 lg:h-6 w-[11px] h-[11px]">
@@ -902,15 +899,12 @@ const FilterByDateFunc = async()=> {
                         Virtual Accounts
                       </p>
                       <p
-                        onClick={() =>{
-                    handleCategoryFilter("Money Transfer")
-                    setPaymentCategoryValue("Money Transfer")     
-                        }}
-                        className={`rounded-[2px] text-[10px] cursor-pointer lg:text-[15px] px-[5px] font-semibold ${
-                          activeCategory === "Money Transfer"
-                            ? "text-[#fff] bg-[#04177F]"
-                            : "text-[#7C7C7C] bg-[#F2FAFF]"
-                        }`}
+                       
+                       
+                         className={`rounded-[2px] text-[10px]
+                           lg:text-[15px]  cursor-not-allowed
+                           px-[5px] font-semibold text-[#7C7C7C]
+                           text-opacity-50 bg-gray-100`}
                       >
                         Money Transfer
                       </p>
