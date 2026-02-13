@@ -92,7 +92,7 @@ const Data = GetLocalStorage()
         alert("Copied to clipboard");
       })
       .catch((err) => {
-        console.error("Error copying text: ", err);
+       throw new Error("Error")
       });
   };
 
@@ -107,8 +107,7 @@ const Data = GetLocalStorage()
  // Handling the getLocalStoarge information by passing it to data and making available through
  // the body of the  component
  
-//const ConfirmAcc = localStorage.getItem("ConfirmAcc")
-//console.log(Data)
+
   const handleClick = (index) => {
     const updatedButtons = activeButtons.map((isActive, i) => i === index);
     setActiveButtons(updatedButtons);
@@ -137,7 +136,6 @@ const Data = GetLocalStorage()
   const handleSelectedOption2 = (event) => {
     const clickedoption = event.target.value;
     setSelected2(clickedoption);
-console.log(clickedoption)
 if((clickedoption === "NGN")){
      setBlur(false);
      setSymbol("₦")
@@ -191,7 +189,8 @@ if((clickedoption === "NGN")){
           alert("Virtual Account Creation failed")
           setDashLoading(false);
         }else if(error.response.status === 404){
-      alert("Check your Network connection")
+      if(networkIssue) return;
+      if(!networkIssue) return setNetworkIssue(true)
        setDashLoading(false)
         }else if(error.response.status === 401){
       setSessionModal(true)

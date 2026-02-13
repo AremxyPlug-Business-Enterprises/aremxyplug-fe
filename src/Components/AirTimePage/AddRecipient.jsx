@@ -62,12 +62,25 @@ const AddRecipient = () => {
 
     const Network = ({ name, image, onClick }) => {
         return (
-            <li className={styles.netList} onClick={onClick}>
-                <div className={styles.netImage}>
-                    <img src={image} alt="" className={styles.NoImage} />
+            <div className={`pb-[20px] pt-[20px] md:pb-[14px] 
+                                md:pt-[14px] font-weight-bold text-[14px] leading-[18.4px] 
+                                md:py-[15px]
+                                 py-[8px] pl-[10px] font-[500]  
+         md:text-[13.227px] md:leading-[17.195px] 
+         shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] 
+         lg:text-[16px] lg:leading-[20.8px] cursor-pointer ${
+           isDarkMode
+             ? "bg-black text-white border border-white"
+             : "hover:bg-[#EDEAEA] bg-white text-[#7C7C7C]"
+         }`}
+             onClick={onClick}>
+                <div className= "flex gap-[5px] lg:gap-[10px] items-center">
+                    <img src={image} alt=""
+                     className="md:h-[29.27px] h-[14.27px]" />
+               
+                <h2 >{name}</h2>
                 </div>
-                <h2 className={styles.netName}>{name}</h2>
-            </li>
+            </div>
         )
     }
 
@@ -182,7 +195,8 @@ const setFetchedResponse = ()=> {
            if(networkIssue) return;
            if(!networkIssue) return setNetworkIssue(true)
           }else if(ErrorType === "Server error"){
-          alert("Unable to save recipients try again later.")
+          alert("Unable to save recipients try again later.");
+          setSave(false)
           }else {
             alert("Unable to save recipients try again later.")
           }
@@ -194,19 +208,27 @@ const setFetchedResponse = ()=> {
         <DashBoardLayout>
             <div className={styles.AirtimeTops1}>
                 <div className={styles.airtimeTop}>
-                    <div className="w-full h-[90px] md:h-[112.29px] lg:h-[196px] rounded-[7px] md:rounded-[11.5px] bg-gradient-to-r from-[#73FF9A] to-[#6EDCFF] flex px-[16px] lg:px-[50px] justify-between items-center lg:rounded-[20px]">
-                        <div className="w-[80%] pt-[19px] lg:pt-[20px]">
-                            <h2 className="text-[10px] md:text-[13.75px] font-bold mb-2 lg:text-[24px] lg:mb-4">
+                    <div 
+                    className="min-h-[90px] py-[15px] lg:h-[196px] md:h-[112.29px] rounded-[6.6px] 
+                    md:rounded-[11.46px] lg:rounded-[20px] mx-auto  flex gap-6 justify-between
+                 px-[16.51px] md:px-[28.65px] lg:px-[50px] bg-gradient-to-r from-[#73FF9A] to-[#6EDCFF] ">
+                        <div className="w-[80%] flex flex-col justify-center
+                         pt-[19px] lg:pt-[20px] h-[100%] gap-[10px] lg:gap-[20px]">
+                            <h2  className="text-[11px] leading-[14px]  lg:leading-[30px]
+                   lg:text-[24px] md:text-[13.75px] font-semibold">
                                 AIRTIME VTU, FAST AND AUTOMATED.</h2>
-                            <h2 className="text-[7px] md:text-[11.46px] lg:text-[20px] lg:leading-[26px] mb-3">
+                            <h2 className="text-[10px] leading-[13px] lg:text-[20px]
+                   lg:leading-[25px] md:text-[11.46px]">
                                 Top up your mobile sim using our automated airtime vending directly from network providers, enjoy discounts without any hassle or hidden fee.
                             </h2>
                         </div>
-                        <div className="w-[91px] h-[66px] lg:w-[170px] lg:h-[150px]">
-                            <img src="./Images/airtimeTopUp/young.png" className="h-full" alt="" />
+                        <div className="flex w-[23%] h-[97%] pt-2 shrink-0">
+                            <img src="./Images/airtimeTopUp/young.png" 
+                            className="h-full" alt="" />
                         </div>
                     </div>
-                    <div className="flex text-[#7c7c7c] text-[10px] leading-[26px] items-center gap-[8px] md:text-[12px] lg:text-[20px]">
+                    <div className={`flex ${isDarkMode ? "text-white" : "text-black"} text-[15px] leading-[26px] 
+                    items-center gap-[8px] md:text-[12px] lg:text-[20px]`}>
                         <p>Add Recipient Details </p>
                         <img
                             className="w-[15px] h-[15px] md:w-[] md:h-[] lg:w-[20px] lg:h-[20px]"
@@ -214,75 +236,70 @@ const setFetchedResponse = ()=> {
                             alt="/"
                         />
                     </div>
-                       <div className="grid grid-cols-1 mt-[25px] md:grid-cols-2 gap-y-[20px] md:gap-x-[58.68px] lg:gap-x-[100px] md:gap-y-[15px] lg:gap-y-[25px] pb-[30px] lg:py-[30px] md:mt-[20px]">
-                    {/* <div className={styles.mainGrid}> */}
-                        {/* <div className={styles.mainGridCol}> */}
-                          <div className="flex flex-col lg:gap-[14px] gap-[7px]">
-                            <div>
-                                <div className={styles.NetworkFlex}>
-                                    <h2 className={`lg:text-[18px] text-[#7c7c7c] lg:leading-[24px] mb-4 text-[15px] md:text-[12px] md:font-[600] font-[400] leading-[12px]   ${isDarkMode 
-                                              ? "text-[#7c7c7c]" : "text-[#7c7c7c]"
+                    <div className="flex flex-col gap-[10px]">
+                       <div className="flex flex-col  md:flex-row gap-[20px]
+                 md:gap-[12px] lg:gap-[22px] ">
+                   <div className="relative flex flex-col gap-[10px]
+                   lg:gap-[15px] md:gap-15 w-full md:w-1/2">
+                                    <h2 className={`lg:text-[18px]  ${isDarkMode ? "text-white" : "text-black"}  lg:leading-[24px]  text-[15px] md:text-[12px] md:font-[600] font-[400] leading-[12px]   ${isDarkMode 
+                                              ? "text-white" : "text-[#7C7C7C]"
                                           }`}>Select Network</h2>
-                                    <div className={`${styles.input} !h-[44.927px] md:!h-[58px]
-                                                                             ${
-        isDarkMode 
-            ? "!bg-black !text-white !border !border-solid !border-white !mt-2 md:!mt-0" 
-            : "border border-solid border-[#0003] bg-white text-black !mt-2 md:!mt-0"
-    }
-                                    `}
-                                    
-                                    >
-                                        <div className={`${styles.output2}
-                                            
-
-                                        !relative !top-[17px] md:!relative md:!top-base !text-[14px] md:!text-base
-                                     `
-                                        }>
-                                            {selected ?
-                                                <li onClick={handleShowList} className={`${styles.labelInput
-
-                                                }
-                                               
-                                                 
-                                                 `}>
-                                                    <div className={styles.network}>
-                                                        {networkImage && <img src={networkImage} alt="" />}
-                                                    </div>
-                                                    <h2 className={`
-                                                                                                        ${
-                                                                                                            isDarkMode ? "!text-[#7C7C7C] !bg-black !border !border-none !border-0 !border-width:0" : ""
-                                                                                                        }
-                                                                                                        ${styles.head2}
-                                                                                                         !text-[13px] md:!text-[13px]`}>{networkName}</h2>
-                                                </li>
-                                                :
-                                                <h2 onClick={handleShowList} className={`
-                                                    ${isDarkMode ? "!text-[#7C7C7C] " : ""}
-                                                    ${styles.head6}
-                                                 
-                                                
-                                                !text-[14px] md:!text-base`}>Select Network</h2>
-                                            }
-                                            <button className={`
-                                                                                        ${isDarkMode ? "!text-[#7C7C7C] " : ""}
-                                                                                        ${styles.btnDrop} !text-[14px] md:!text-base
-                                                                                                 
-                                                                                        `} onClick={handleShowList}>
-                                                <img src={arrowDown} alt="" />
-                                            </button>
+                                    <div className={`mt-2 md:mt-0 rounded-[10px] 
+             md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
+         sm:p-3 sm:text-lg  flex justify-between pt-[8.803px]
+         pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px]
+     lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}>
+                                  
+                          <div onClick={handleShowList} 
+                          className={`flex justify-left  w-[100%] items-center`}>
+                                   {networkName ? (
+                                       <div onClick={handleShowList} 
+                                       className={` items-center h-[100%] ${styles.labelInput}`}  >
+             <div className={styles.network}>
+                                                  {networkImage && <img className=""
+                                              src={networkImage} alt="" />}
+                                                                              </div>
+                                       <h2 className={`text-left text-[13.2px]  font-[400] 
+                                   leading-[17.4px] md:text-[11px] md:leading-[12.206px]
+                                      lg:text-[16px] lg:leading-[20.8px] 
+                                   ${isDarkMode ? "text-white" : "text-[#7E7E7E]" }`}>
+                                                  {networkName}
+                                                  </h2>
+                                                                          </div>
+                                                                      ) : (
+                                                    
+                           <div className="flex justify-between w-[100%]">
+                              <h2 className="text-[#7E7E7E] text-[14px] lg:text-[17px]
+                              md:text-[13px] md:font-[600] font-[400]
+                                                              ">Select Network</h2>
+                                                                <img className="decdrop  self-center
+                                                                 align-middle md:h-[14.038px] md:w-[14.038px] 
+                                          lg:h-[24px] lg:w-[24px] w-[14px] h-[16px]"
+                                           src={arrowDown} alt="" />
+                                           </div>
+                                                  )}
+                                                                   
+                               </div>
                                         </div>
-                                    </div>
-                                </div>
-                                 <div className="relative">
+                                   
+                            
+                                
                                 {showList &&
                                     // <div className={styles.colDown}>
-                                    <div className={`text-[16px] md:text-[12px]  bvnQuery text-[#7C7C7C]
-                  shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
-                   lg:text-[16px] lg:mt-2 rounded-[4px] absolute w-full bg-[#FFF] z-[10]
-                 
-
-                  ${isDarkMode ? "!bg-black md:!bg-black border border-white border-2 rounded-[5px]" : "border border-none rounded-[5px] text-[#7C7C7C] bg-[#FFF]"}
-                  `}>
+                                    <div      className={`absolute lg:top-[90px] md:top-[60px] left-0 top-[74px] 
+                          z-[2]  flex flex-col w-[100%] lg:h-225px md:h-[210px]  
+          ${
+            isDarkMode
+              ? "bg-black text-white border border-white"
+              : "hover:bg-[#EDEAEA]"
+          }`}>
                                         {networkList.map((item) => (
                                             <div className='text-[#7C7C7C]'>
                                             <Network key={item.id} image={item.image} name={item.name} onClick={() => handleSelectNetwork(item.name, item.image, item.discount)} />
@@ -290,56 +307,42 @@ const setFetchedResponse = ()=> {
                                         ))}
                                     </div>
                                 }
-                            </div>
-                            </div>
-                             <div className="flex flex-col lg:gap-[14px] gap-[7px] md:mt-12 mt-8"> 
+                           
+                          
+                        </div>
+                             <div className="relative flex flex-col gap-[10px]
+                   md:gap-[15px]  w-full md:w-1/2"> 
                                 <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
                                             isDarkMode 
-                                              ? "!text-[#7c7c7c]" : "!text-[#7c7c7c]"
+                                              ? "text-white" : "text-black"
                                           }`}>Phone Number <span onClick = {()=> {
                                            setSelectRecipientDisplay(true);
                                           }}
                                           className={`
-                                       
-                                       
-                                    ${styles.span3} !text-[15px] md:!text-base`}>(Select Recipient)</span></h2>
-                                <div className={`!mt-2 md:!mt-0
-                                                                   ${
-                                                                            isDarkMode 
-                                                                                ? "!bg-black !text-white !border !border-solid !border-white" 
-                                                                                : "border border-solid border-[#0003] bg-white text-black"
-                                                                        }
-                                                                ${styles.input} !h-[48.927px] md:!h-[57px]
-                                                                          `}>
-                                    <div className={`
-                                         ${
-                                            isDarkMode 
-                                                ? "!bg-black !text-[#7E7E7E]]" 
-                                                : ""
-                                        }
-                                        ${styles.output} !relative !top-[11px] md:!relative md:!top-[14px] !text-[14px] md:!text-base`}>
-                                        
-                                        <input type='number' className={`
-                                                                                          ${
-                                                                                    isDarkMode 
-                                                                                        ? "!bg-black !text-[#7c7c7c]" 
-                                                                                        : ""
-                                                                                }
-                                                                                        ${styles.phone} !text-[14px] md:!top-[14px]`} required placeholder='Add recipient phone number' onChange={(event) => {
+                                          ${styles.span3} !text-[15px] md:!text-base`}>(Select Recipient)</span></h2>
+                          
+                                    <div className={`relative h-full`}>
+                    <input type='number' className={`mt-2   md:mt-0 rounded-[10px] 
+             md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
+         sm:p-3 sm:text-lg  flex justify-between pt-[8.803px]
+         pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}
+               required placeholder='Add recipient phone number' onChange={(event) => {
                                             handleChange(event);
                                             setRecipientNumber(event.target.value);
                                         }} value={inputValue} />
-                                        <div className={`${styles.call}
-                                            ${
-                                            isDarkMode 
-                                                ? "!bg-black !text-[#7c7c7c]" 
-                                                : ""
-                                        }
-                                        `}>
-                                            <img src={call} alt="" />
-                                        </div>
-                                    </div>
+                                        
+                                            <img className="absolute top-[40%] right-5" src={call} alt="" />
+                                      
+                              
                                 </div>
+                                
                                 {errors.recipientNumber && (
                                     <div className={`
                                         ${
@@ -353,48 +356,37 @@ const setFetchedResponse = ()=> {
                                     </div>
                                 )}
                             </div>
-                        </div>
-                        <div className={styles.mainGridCol}>
-                              <div className='flex flex-col lg:gap-[14px] gap-[7px]'>
+                          </div>
+                       
+                              <div className='flex flex-col lg:gap-[14px] gap-[7px] md:w-1/2 w-full'>
                             
                                 <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
                                             isDarkMode 
-                                              ? "!text-[#7c7c7c]" : "!text-[#7c7c7c]"
+                                              ? "text-white" : "text-black"
                                           }
                                           `}>Recipient Name <span className={`${styles.span4} !text-[15px] md:!text-base`}>(optional)</span></h2>
-                                <div className={`!mt-2 md:!mt-0
-                                                                     ${
-                                                                            isDarkMode 
-                                                                                ? "!bg-black !text-[#7c7c7c] !border !border-solid !border-white" 
-                                                                                : "border border-solid border-[#0003] bg-white text-[#7c7c7c]"
-                                                                        }
-                                                                    ${styles.input} !h-[44.927px] md:!h-[51px]`}>
-                                    <div className={` ${
-                                            isDarkMode 
-                                                ? "!bg-black !text-[#7E7E7E]" 
-                                                : ""
-                                        }
-                                        ${styles.output} !relative !top-[11px] md:!relative md:!top-base !text-[14px] md:!text-base`}>
+                               
+                                  
                                        
-                                        <input type='text' className={`
-                                                                                     ${
-                                                                                    isDarkMode 
-                                                                                        ? "!bg-black !text-[#7E7E7E]" 
-                                                                                        : ""
-                                                                                }
-                                                                                    ${styles.phone} !text-[14px] md:!text-base`} required placeholder='Add recipient name' onChange={(event) => setRecipientName(event.target.value)} value={recipientName} />
-                                        <div className={styles.call}>
-                                            <img src={user} alt="" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                                        <input type='text'className={`mt-2   md:mt-0 rounded-[10px] 
+             md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
+         sm:p-3 sm:text-lg  flex justify-between pt-[8.803px]
+         pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}required placeholder='Add recipient name' onChange={(event) => setRecipientName(event.target.value)} value={recipientName} />
+ <img className="absolute top-[40%] right-5" src={user} alt="" />
+            </div>
+            </div>
+   
+                 
                     {save && (
                         <Modal>
-                            <div
-                                className={`${styles.successfulThree} ${toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+                            <div className={`${styles.successfulThree} ${toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
                                     } md:w-[45%] w-[90%] overflow-auto`}
                             >
                                 <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">

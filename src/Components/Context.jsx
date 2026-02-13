@@ -1418,6 +1418,7 @@ const [nabtebPinsGenerated, setNabtebPinsGenerated] = useState([]);
     //Date for the Calenders
 
                 //Transfer Data
+                 const [discount, setDiscount] = useState('');
                 const [sessionModal, setSessionModal] = useState(false)
                   const [transferValue, setTransferValue] = useState("");
                   const [sessionExpiration, setSessionExpiration] = useState(false);
@@ -1450,7 +1451,7 @@ const [currentDateInTimeStamps, setCurrentDateInTimeStamps] = useState(0);
 
   const hold = {
     //Transfer Data
-
+  discount, setDiscount,
    webSocketMessage, setWebSocketMessage,
     progressTaskBarResponse, 
     setProgressTaskBarResponse,

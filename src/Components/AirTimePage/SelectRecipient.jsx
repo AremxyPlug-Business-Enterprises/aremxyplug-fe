@@ -14,14 +14,15 @@ import Delete from "../AirTimePage/Images/Deleted.svg";
 import { Loader } from "../Loader/Loader";
 import cancelIcon from "../EducationPins/imagesEducation/close-circle.svg";
 import NoRecordImage  from "../Add&SelectRecipient/RecipientImages/NoRecordImage.svg";
+import { BalanceLoading } from "../Loader/Loader";
 // import { Oval } from 'react-loader-spinner';
 
 
 const SelectRecipient = ({loadingRecipient,
    setSelectRecipientDisplay}) => {
 
-  const { networkIssue, setNetworkIssue, setSessionModal,  recipientsAirtime, setRecipientsAirtime,
-    sessionModal,  } = useContext(ContextProvider);
+  const { networkIssue, setNetworkIssue, setSessionModal, discount, setDiscount, recipientsAirtime, setRecipientsAirtime,
+    sessionModal, isDarkMode } = useContext(ContextProvider);
   const { toggleSideBar } = useContext(ContextProvider);
   const { networkName, setNetworkName } = useContext(ContextProvider);
   const { recipientName, setRecipientName } = useContext(ContextProvider);
@@ -42,7 +43,7 @@ const SelectRecipient = ({loadingRecipient,
   const [continueState, setContinue] = useState("");
   const [editingRecipientId, setEditingRecipientId] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-
+ const [pageLoading, setPageLoading] = useState(false)
   // const [loading, setLoading] = useState(true);
   const [inputValue, setInputValue] = useState("");
 
@@ -65,9 +66,9 @@ const SelectRecipient = ({loadingRecipient,
   };
 
   // }
-
+const [confirmRecipient, setConfirmRecipient] = useState(false)
   const updateRecipient = async (recipientId) => {
-
+ setConfirmRecipient(true)
     const requestBody = {
       id: recipientId,
       network: networkName,  // Changed from networkName
@@ -82,7 +83,8 @@ const SelectRecipient = ({loadingRecipient,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(requestBody),
-      });
+        credentials : "include"
+      },);
 
       const data = await response.json();
 
@@ -108,12 +110,14 @@ const SelectRecipient = ({loadingRecipient,
     }else {
       alert("An unexpected error has occured.")
     }
+    }finally{
+      setConfirmRecipient(false)
     }
   };
 
   const deleteRecipient = async (recipientId) => {
     try {
-
+    setPageLoading(true)
       const requestBody = {
         id: recipientId,
       };
@@ -124,17 +128,15 @@ const SelectRecipient = ({loadingRecipient,
           'Content-Type': 'application/json'
           // Add any authentication headers if required
         },
-        body: JSON.stringify(requestBody)
+        body: JSON.stringify(requestBody),
+        credentials: "include"
       });
 
-     
+     console.log(response?.status);
 
-      if (response.ok && response?.data.status === 200) {
+      if (response.ok && response?.status === 200) {
         return true; // Indicate successful deletion
-      } else {
-        
-        return false; // Indicate failed deletion
-      }
+      } 
     } catch (error) {
       if(error && error?.response === undefined){
         if(networkIssue) return;
@@ -150,7 +152,9 @@ const SelectRecipient = ({loadingRecipient,
     }else {
       alert("An unexpected error has occured.")
     }
-      return false; // Indicate failed deletion
+     
+    }finally{
+      setPageLoading(false);
     }
   };
 
@@ -167,16 +171,15 @@ const SelectRecipient = ({loadingRecipient,
 
   const handleEdit = (recipient) => {
     setEdit(true);
-    setEditingRecipientId(recipient.id);
-    setNetworkName(recipient.network);
-    setRecipientName(recipient.name);
-    setRecipientNumber(recipient.phone);
+    setEditingRecipientId(recipient?.id);
+    setNetworkName(recipient?.network);
+    setRecipientName(recipient?.name);
+    setRecipientNumber(recipient?.phone);
     // setInputValue(recipient.phone);
   };
 
   const handleConfirm = async () => {
     if (!editingRecipientId) {
-      console.error('No recipient selected for editing');
       return;
     }
 
@@ -205,17 +208,18 @@ const SelectRecipient = ({loadingRecipient,
       setInputValue('');
     } else {
       // Handle error (e.g., show error message to user)
-      console.error('Failed to update recipient');
+      return;
     }
   };
   
-  const handleDelete = (recipientId) => {
-    setRecipientToDelete(recipientId);
+  const handleDelete = (recipient) => {
+    setRecipientToDelete(recipient?.id);
+    setRecipientNumber(recipient?.phone)
     setdeleted(true);
   };
 
   const handleSuccessDelete = async (recipientId) => {
-    console.log('Attempting to delete recipient with id:', recipientId);
+    
     if (recipientToDelete !== null) {
       const success = await deleteRecipient(recipientToDelete);
       if (success) {
@@ -237,25 +241,25 @@ const SelectRecipient = ({loadingRecipient,
       id: 1,
       name: 'MTN',
       image: require('./Images/mtn.svg').default,
-      discount: 3,
+      discount: 2,
     },
     {
       id: 2,
       name: 'AIRTEL',
       image: require('./Images/airtel.png'),
-      discount: 4,
+      discount: 2,
     },
     {
       id: 3,
       name: 'GLO',
       image: require('./Images/glo.png'),
-      discount: 3,
+      discount: 2,
     },
     {
       id: 4,
       name: '9MOBILE',
       image: require('./Images/9mobile.svg').default,
-      discount: 3,
+      discount: 2,
     }
   ];
 
@@ -365,8 +369,8 @@ const SelectRecipient = ({loadingRecipient,
    <div className="h-full w-full px-[15px] 
    bg-white">
     <Modal>
-  <div className="pt-[15px] w-[90%] px-[20px] h-[450px]
-   bg-white rounded-[15px] lg:w-[40%] md:w-[50%] ">
+  <div className={`pt-[15px] w-[90%] px-[20px] h-[450px]
+   rounded-[15px] lg:w-[40%] md:w-[50%] ${isDarkMode ? "bg-black" : "bg-white"} `}>
         <img onClick=  {()=> {
           setSelectRecipientDisplay(false);
         }}
@@ -425,22 +429,26 @@ const SelectRecipient = ({loadingRecipient,
                 <div
                   onClick={() => {
                     setSelectRecipientDisplay(false);
-                    setNetworkName(recipient.network);
-                    setNetworkImage(networkImages[recipient.network]);
+                    setNetworkName(recipient?.network ? 
+                      recipient?.network?.toUpperCase() : "");
+                    setNetworkImage(networkImages[recipient?.network ? recipient?.network?.toUpperCase() : ""]);
                     setRecipientName(recipient.name);
                     setRecipientNumber(recipient.phone);
+                const NetworkObject =     networkList?.find((focusedObject)=> focusedObject?.name === recipient?.network?.toUpperCase())
+                    setDiscount( NetworkObject?.discount)
+                   //   console.log(recipient?.network?.toUpperCase())
                     navigate('/airtime-vtu');
                   }}
                   className="flex flex-col my-auto gap-[1.67px] md:gap-[2.93px]">
                   <h2 className="lg:text-[16px] font-medium lg:leading-6 md:text-[9px] text-[9px]">
-                    <span className ="capitalize"></span>({recipient.phone})
+                    <span className ="capitalize"></span>({recipient?.phone})
                   </h2>
                   <p className="lg:text-[14.05px] lg:font-medium lg:leading-[21.07px] text-[#7C7C7C] text-[9px] font-semibold leading-3 md:text-[8px]">
-                    {recipient.name}
+                    {recipient?.name}
                   </p>
                 </div>
                 <div
-                  onClick={() => handleRecipient(recipient.id)}
+                  onClick={() => handleRecipient(recipient?.id)}
                   className="relative h-[16px] cursor-pointer w-[16px] my-auto lg:w-[50px] lg:h-[25px]"
                 >
                   <img
@@ -448,14 +456,16 @@ const SelectRecipient = ({loadingRecipient,
                     alt=""
                     className="h-full"
                   />
-                  {showPopup && activeImage === recipient.id && (
+                  {showPopup && activeImage === recipient?.id && (
                     <div
-                      className="input border absolute bg-white top-[8px] right-[17px] lg:top-[20px] lg:right-[50px] w-[100px] h-[60px] z-50 flex flex-col justify-center items-start py-[5px]"
+                      className="input border absolute bg-white top-[8px] right-[17px] lg:top-[20px] lg:right-[50px] w-[100px] lg:w-[150px] lg:h-[80px]
+                       h-[60px] z-50 flex flex-col justify-center items-start py-[5px]"
                       style={{ boxShadow: "0 0 5px rgba(0, 0, 0, 0.2)" }}
                     >
                       <div
                         onClick={() => handleEdit(recipient)}
-                        className="text-[10px] text-[#7C7C7C] px-[5px] py-[5px]"
+                        className="text-[10px] lg:text-[12px] leading-[15px] lg:leadin-[16px]
+                         text-[#7C7C7C] px-[5px] py-[5px]"
                       >
                         Edit Recipient
                       </div>
@@ -463,9 +473,11 @@ const SelectRecipient = ({loadingRecipient,
                       <div
                         onClick={(e) => {
                           e.stopPropagation(); // Prevent event from bubbling up
-                          handleDelete(recipient.id);
+                          handleDelete(recipient);
                         }}
-                        className="text-[#FA6B6B] text-[10px] px-[5px] py-[5px]"
+                        className="text-[10px] lg:text-[12px] leading-[15px] lg:leadin-[16px]
+                          px-[5px] py-[5px]
+                        text-[#FA6B6B] "
                       >
                         Delete Recipient
                       </div>
@@ -565,14 +577,14 @@ const SelectRecipient = ({loadingRecipient,
                           <div className="network w-full">
                             {networkList.map((item) => (
                               <Network
-                                key={item.id}
-                                image={item.image}
-                                name={item.name}
+                                key={item?.id}
+                                image={item?.image}
+                                name={item?.name}
                                 onClick={() =>
                                   handleSelectNetwork(
-                                    item.name,
-                                    item.image,
-                                    item.discount
+                                    item?.name,
+                                    item?.image,
+                                    item?.discount
                                   )
                                 }
                               />
@@ -599,7 +611,7 @@ const SelectRecipient = ({loadingRecipient,
                             value={inputValue}
                             onChange={(event) => {
                               handleChange(event);
-                              setRecipientNumber(event.target.value);
+                              setRecipientNumber(event?.target?.value);
                             }}
                           />
                           <div className={airtimestyles.call}>
@@ -630,7 +642,7 @@ const SelectRecipient = ({loadingRecipient,
                               required
                               placeholder="Add recipient name"
                               onChange={(event) =>
-                                setRecipientName(event.target.value)
+                                setRecipientName(event?.target?.value)
                               }
                               value={recipientName}
                             />
@@ -741,7 +753,7 @@ const SelectRecipient = ({loadingRecipient,
                     onClick={handleConfirm}
                     disabled={inputValue.length < 11}
                   >
-                    Confirmed
+                    {confirmRecipient === false ? "Confirmed" : <BalanceLoading/>} 
                   </button>
                 </div>
               </Modal>
@@ -905,7 +917,7 @@ const SelectRecipient = ({loadingRecipient,
                     Successful
                   </p>
                   <p className="text-[10px] text-[#04177f] md:text-[14px] px-[20px] lg:text-[18px] font-extrabold text-center my-[1%] lg:my-[%]">
-                    Recipient *****2345 has been deleted successfully. You can
+                    Recipient ******{recipientNumber?.slice(7)} has been deleted successfully. You can
                     add recipient again anytime!
                   </p>
                   <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[5%]">
@@ -922,6 +934,7 @@ const SelectRecipient = ({loadingRecipient,
                     <button
                       className={`bg-[#04177F] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
                       onClick={() => {
+                        setRecipientNumber("");
                         setSuccessDeleted(false);
                       }}
                     >
@@ -935,6 +948,12 @@ const SelectRecipient = ({loadingRecipient,
         </div>
       
       </Modal>
+      {pageLoading && (
+        <Modal>
+            <Loader/>
+        </Modal>
+      
+      )}
         </div>
 
 

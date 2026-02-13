@@ -6,7 +6,7 @@ import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 import { CheckVirtualAcc } from "../../ApiCollection.jsx/ApiBuck";
 import axios from "axios";
 import { Loader } from "../../Loader/Loader";
-import { InternalLoginSession } from "../../ApiCollection.jsx/ApiBuck";
+
 
 function NgnVirtualAccount(Data) {
   const { isDarkMode,
@@ -14,18 +14,22 @@ function NgnVirtualAccount(Data) {
     accountNameState,
     accountNumberState ,
   customerDetail,setVirtualAccCreated, setBankNameState, setAccountNumberState, setAccountNameState,
-           twoStepVerificationSuccess,setTwoStepVerificationSuccess} = useContext(ContextProvider)
+           twoStepVerificationSuccess,setTwoStepVerificationSuccess, sessionModal, networkIssue, 
+           setNetworkIssue, setSessionModal} = useContext(ContextProvider)
 
   //const accNoRef = useRef(null);
  // const accNameRef = useRef(null);
 //  const bankNameRef = useRef(null);
   const [loading, setLoading]= useState(false);
-  const [sessionModal, setSessionModal] = useState(false)
+
 
    const GenerateVirtualAccount = async(AuthUsed)=>{
       const usernameToken = localStorage.getItem("xcss{}")
       const emailToken  = localStorage.getItem("xcss[]");
-     if(!navigator.onLine) return alert("Check your internet connection")
+     if(!navigator.onLine){
+      if(networkIssue) return;
+      if(!networkIssue) return setNetworkIssue(true)
+     }
       if((usernameToken|| emailToken ) && navigator.onLine){
       try{
       setLoading(true)
@@ -41,27 +45,31 @@ function NgnVirtualAccount(Data) {
            AuthUsed = usernameToken || emailToken;
            await CheckVirtualAcc(AuthUsed, customerDetail, setLoading, setVirtualAccCreated, 
             setBankNameState, setAccountNameState, setAccountNumberState, 
-           twoStepVerificationSuccess,setTwoStepVerificationSuccess)
+           twoStepVerificationSuccess,setTwoStepVerificationSuccess, setNetworkIssue)
            } 
             if(CheckVirtualAcc  && Data.ConfirmAcc === "true"){
         setLoading(false);
         }
 
       }catch(error){
-        if( error.response && error.response.status === 400){
+        if(error && error.response === undefined){
+           if(networkIssue) return;
+      if(!networkIssue) return setNetworkIssue(true)
+        }
+       else  if( error.response && error.response.status === 400){
           alert("Virtual Account Creation failed")
           setLoading(false)
         }else if(error.response &&error.response.status === 401){
-        setSessionModal(true)
+          if(sessionModal) return ;
+      if(!sessionModal) return  setSessionModal(true)
         }else if(error.response.status === 404){
-
-       alert("Check your Network connection")
-       setLoading(false)
+ setLoading(false)
+       return;
         }else if(error.response &&error.response.status === 500){
           alert("SERVER ERROR");
           setLoading(false)
         }else {
-          alert("Check your internet connection");
+         alert("An unexpected error had occured")
             setLoading(false);
         }
       }
@@ -106,7 +114,7 @@ function NgnVirtualAccount(Data) {
 
     if (navigator.share) {
       navigator.share(combineText)
-        .then(() => console.log('Details shared successfully'))
+        .then(() => console.log("Successfully shared"))
         .catch(() => console.log('navigator.share is not supported'))
     } else {
       console.log('navigator.share is not supported')
@@ -303,9 +311,7 @@ function NgnVirtualAccount(Data) {
           </Link>
         </div>
       </div>
-      {sessionModal && (
-        <InternalLoginSession setExpiredSessionLogin={setSessionModal}/>
-      )}
+    
     </DashBoardLayout>
   );
 }

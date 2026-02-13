@@ -15,6 +15,11 @@ export const SideBar = ({ fullname, userId, BvnVerify, NinVerify }) => {
     isDarkMode,
     handleClickOutside,
     customerDetail,
+    profilePage,
+    verificationOpen,
+     authenticationOpen,
+    accountUpgrade,
+
   } = useContext(ContextProvider);
 
   const { full_name, id } = customerDetail;
@@ -575,10 +580,16 @@ const bgUsername = UserBgFormatting()
                     <p>Product Pricing</p>
                   </Link>
                 </div>
-                <div
+                <Link to ="/ProfileSettingMain"
                   onClick={() => {
                     dropHandler("dropdown5");
-                    navigate("/AccountUpgrade");
+                    //navigate("/ProfileSettingMain");
+                  }}
+                  state={{
+                    authenticationOpen : false,
+                    verficationOpen : true,
+                    profilePage : false,
+                    accountUpgrade : true
                   }}
                   className="flex justify-between"
                 >
@@ -590,7 +601,7 @@ const bgUsername = UserBgFormatting()
                     />
                     <p>Account Upgrade</p>
                   </div>
-                </div>
+                </Link>
                 <div
                   onClick={() => dropHandler("dropdown6")}
                   className="flex justify-between"

@@ -7,7 +7,7 @@ import { TaskProgressController } from './Motion';
 
 export const RealTimeUpdates = ({children}) => {
      const {setProgressTaskBarResponse, setNetworkIssue, networkIssue,
-         setWebSocketMessage,   setOpenTaskBar, progressTaskBarResponse, sessionModal, setSessionModal} = useContext(ContextProvider)
+         setWebSocketMessage,  progressTaskBarResponse, sessionModal, setSessionModal} = useContext(ContextProvider)
   
          const locationObj = useLocation()
           
@@ -63,7 +63,7 @@ export const RealTimeUpdates = ({children}) => {
 }, 2000)
  
 //Functions we dont necessarily have to run every 2 seconds
- setOpenTaskBar(true);
+ 
 CreateWebSocket()
 return ()=> clearInterval(realTimeUpdate.current)
 //eslint-disable-next-line

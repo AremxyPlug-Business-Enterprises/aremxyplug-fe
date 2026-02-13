@@ -70,10 +70,11 @@ const DataBundleSelectRecipient = () => {
   const fetchRecipients = async () => {
     try {
       const response = await fetch(
-        "https://aremxyplug.onrender.com/api/v1/data/recipient"
+        "https://aremxyplug.onrender.com/api/v1/data/recipient",
+        {credentials : "include"}
       );
       const responseData = await response.json();
-      console.log("Fetched data:", responseData);
+     
 
       if (responseData.status === 200 && responseData.data) {
         const recipients = responseData.data.recipients?.recipients;

@@ -36,7 +36,8 @@ const AirtimeVtu = () => {
     const tFee = 0;
     const points = '+2.00';
       const [airtimeResponse, setAirtimeResponse] = useState({})
-    const { networkName, setNetworkName, newBalance, setNewBalance,    setSessionModal,
+    const { networkName, setNetworkName, newBalance, setNewBalance, discount, setDiscount,
+            setSessionModal,
           sessionModal } = useContext(ContextProvider);
     const { selectedProduct, setSelectedProduct, recipientsAirtime, setRecipientsAirtime } = useContext(ContextProvider);
     const { recipientName, setRecipientName, networkIssue } = useContext(ContextProvider);
@@ -47,8 +48,6 @@ const AirtimeVtu = () => {
     const [restrictUser, setRestrictUser] = useState(false)
     const [balanceLoader, setBalanceLoader] = useState(false);
     const [loadingRecipient, setLoadingRecipient] = useState(false);
-
-    const [discount, setDiscount] = useState('');
     const [proceed, setProceed] = useState(false);
   
     const [paymentSelected, setPaymentSelected] = useState(false);
@@ -149,8 +148,7 @@ setRecipientsAirtime(response?.data?.data?.recipients?.recipients);
                     setRecipientNumber("");
                     setRecipientName("");
                     setNetworkName("")
-                     // Simulate async data loading
-                    // Simulate async data loading
+                  
             if (Data?.ConfirmAcc === "true"){                    
              GetBalance();
           setNewBalance(passDataBalance?.data?.data?.data !== undefined
@@ -316,7 +314,6 @@ const amountToNumber = Number(amount)
   networkName &&
   paymentSelected;
 
-console.log(canProceed);
    //validating the prefix of Nigeria network providers with the
     // network name selected
      // Nigerian number validate
@@ -400,6 +397,7 @@ const RecipientExistCheck = CheckRecipientInfoInList(recipientNumber)
   const handleAddRecipient = async() => {
 
       const successHandler = (response)=> {
+       GetRecipientList()
             alert("Recipients saved successfully");
             setFetchedResponse(response)
         }
@@ -798,7 +796,7 @@ className={`flex justify-left  w-[100%] items-center`}>
 <h2 className={`text-left text-[13.2px]  font-[400] 
          leading-[17.4px] md:text-[11px] md:leading-[12.206px]
             lg:text-[16px] lg:leading-[20.8px] 
-         ${isDarkMode ? "text-white" : "text-[#7E7E7E]" }`}>{discount ? `${networkName + ' ' + discount}%` : ''}
+         ${isDarkMode ? "text-white" : "text-[#7E7E7E]" }`}>{discount && networkName?.length > 0 ? `${networkName + ' ' + discount}%` : ''}
                        </h2>
                                  
                                    
@@ -1154,11 +1152,14 @@ className={`flex justify-left  w-[100%] items-center`}>
                         {isLoading === false  ? (
                             
                         <div onClick={() => { 
+                           
                        if(networkName?.length > 1 && 
                          recipientNumber?.length > 1 && recipientNumber?.length === 11
                             && RecipientExistCheck?.phone === undefined && RecipientExistCheck?.phone !== recipientNumber
                            &&   !errors?.recipientNumber) {
                                handleAddRecipient();
+                            }else if(recipientNumber?.length < 11 && recipientName?.length < 1) {
+                                alert("Input the recipient Number and the recipient Name")
                             }
                          }}
                             className={`w-[16px] h-[8.4px] md:w-[30px] md:h-[12px]
@@ -1166,7 +1167,7 @@ className={`flex justify-left  w-[100%] items-center`}>
                              rounded cursor-pointer 
                              ${
                              (RecipientExistCheck?.phone === recipientNumber
-                               &&  recipientNumber?.length === 11   
+                               &&  recipientNumber?.length === 11   && recipientName?.length > 1
                                && !errors?.recipientNumber  ) 
                              ? "bg-[#77ff60]" : "bg-[#b1b0b0]"}`}>
                             <div className={`rounded-full w-[8.5px]

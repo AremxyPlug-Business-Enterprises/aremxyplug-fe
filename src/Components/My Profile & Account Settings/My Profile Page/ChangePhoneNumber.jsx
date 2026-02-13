@@ -21,7 +21,7 @@ import Success from "../ProfileImages/success.gif";
 import { PostFunction } from "../../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../../Loader/Loader";
 const ChangePhoneNumber = () => {
-  const { isDarkMode, sessionModal, setSessionModal } = useContext(ContextProvider);
+  const { isDarkMode, sessionModal, networkIssue, setNetworkIssue, setSessionModal } = useContext(ContextProvider);
   // const { recipientPhoneNumber, setRecipientPhoneNumber } =
   //   useContext(ContextProvider);
     const [loading, setLoading] = useState(false);
@@ -97,9 +97,10 @@ const VerifyPopUpHandler =async()=> {
       ()=> {
         setSessionModal(true)
       },
-       setFetchedResponse)  
+       setFetchedResponse,setNetworkIssue)  
       }else if(Error === undefined){
-        alert("Your internet connection is quite unstable.")
+       if(networkIssue) return;
+      if(!networkIssue) return setNetworkIssue(true)
       }
         else{
         alert("An unexpected error occured, please try again later.")
@@ -127,7 +128,7 @@ const VerifyPopUpHandler =async()=> {
      body, 
      SuccessHandler,
       FailedHandler,
-       setFetchedResponse)  
+       setFetchedResponse, setNetworkIssue)  
   }
   
 
@@ -149,9 +150,10 @@ const VerifyPopUpHandler =async()=> {
      ()=> {
       setSessionModal(true);
      },
-       setFetchedResponse)
+       setFetchedResponse,setNetworkIssue)
       }else if(ErrorType === undefined){
-        alert("Your internet connection is quite unstable.")
+      if(networkIssue) return;
+      if(!networkIssue) return setNetworkIssue(true)
       }else if(ErrorType=== "Bad request"){
         alert("The phone number you entered is already in use. Please try another phone number.")
       }else{
@@ -163,7 +165,6 @@ const VerifyPopUpHandler =async()=> {
     setUpdate(true);
       setErrors({});
       setCountdown(60);
-     console.log("Successful");
    }
     const body ={
       new_phone: `234${inputValue?.slice(1)}`
@@ -187,7 +188,7 @@ const VerifyPopUpHandler =async()=> {
      body, 
      SuccessHandler,
       FailedHandler,
-       setFetchedResponse)
+       setFetchedResponse, setNetworkIssue)
   }
     }
     const schema = Joi.object({
@@ -211,7 +212,7 @@ const VerifyPopUpHandler =async()=> {
 
   
   
-   console.log(fetchedResponse)
+   //console.log(fetchedResponse)
   
   
   return (
