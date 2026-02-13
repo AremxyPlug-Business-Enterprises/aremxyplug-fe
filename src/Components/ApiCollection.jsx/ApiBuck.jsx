@@ -210,7 +210,12 @@ export const InternalLoginSession = ()=> {
       alert("Account Blocked try after one hour");
      window.location.replace("/Login")
      RemoveLocalStorage()
-     }
+     }else if(ErrorType === "Network error"){
+      setSessionModal(false);
+      if(!networkIssue)  setNetworkIssue(true);
+     }else {
+      alert("An unexpected error has occured.")
+   }
    }
   
 
@@ -341,7 +346,7 @@ export const refreshToken = async(setNetworkIssue, setSessionModal)=> {
       }else if(ErrorType === "Server error"){
     return;
     }else if(ErrorType === "unauthorised"){
-       setSessionModal(true)
+    setSessionModal ??   setSessionModal(true) 
     }
   }, ()=> {}, setNetworkIssue ? setNetworkIssue : ()=> {})
 }

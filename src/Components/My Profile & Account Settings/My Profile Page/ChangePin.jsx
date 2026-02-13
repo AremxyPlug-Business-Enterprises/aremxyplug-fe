@@ -20,7 +20,7 @@ import { PostFunction } from "../../ApiCollection.jsx/ApiBuck";
 import { PutFunction } from "../../ApiCollection.jsx/ApiBuck";
 
 const ChangePin = (Data) => {
-  const { toggleSideBar, isDarkMode, customerDetail, state, sessionModal, setSessionModal } = useContext(ContextProvider);
+  const { toggleSideBar, isDarkMode, customerDetail, state, networkIssue, setNetworkIssue, sessionModal, setSessionModal } = useContext(ContextProvider);
   const [loading, setLoading] =useState(false);
   const [activeBtn, setActiveBtn] = useState([true, false, false]);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -72,8 +72,8 @@ Data = GetLocalStorage();
 const [resetPin1, setResetPin1] = useState(false);
   const [createPin, setCreatePin] = useState("");
   const [confirmPinInputBgColor, setConfirmPinInputBgColor] = useState("");
-const [verifyResponse, setVerifyResponse] = useState({})
-  const [resetResponse, setResetResponse] = useState({})
+// const [verifyResponse, setVerifyResponse] = useState({})
+//   const [resetResponse, setResetResponse] = useState({})
 
 
 // An Api to help change the user's pin
@@ -89,7 +89,6 @@ const ChangeUserPin = async()=> {
     "new_pin" : newPin
    }
    const dataJson = JSON.stringify(data);
-   console.log(dataJson);
    const url = "https://api.aremxyplug.com/api/v1/pin";
    const response = await axios.patch(url,dataJson,
     {headers : {"Content-Type":"application/json" }, 
@@ -100,19 +99,19 @@ const ChangeUserPin = async()=> {
    }
 
    }catch(error){
-   // console.error(error);
+
      if(error && (error.response.status === 400  )){
       alert("Invalid Old Pin")
-      console.error(`errorMessage : ${error} errorStatus : ${error.response.status}`);
      }else if(error && (error.response.status === 401  )){
       
        
     }else if(error && error.response.status === 404){
-      alert("Check your internet connection")
+     if(networkIssue) return;
+      if(!networkIssue) return setNetworkIssue(true)
      }else if(error && error.response.status === 500){
       alert("SERVER ERROR")
      }else {
-      console.error(`errorMessage : ${error} errorStatus : ${error.response.status}`);
+     return;
      }
    }finally{
     setLoading(false)
@@ -149,9 +148,8 @@ setErrorMessage("Pin digits for old,new and Confirm input must be 4 digits long"
     const body = {
       email : Data.UserEmail
     }
-    console.log(resetResponse)
 
-await PostFunction(path, setLoading, body, SuccessHandler, FailedHandler,setResetResponse );
+await PostFunction(path, setLoading, body, SuccessHandler, FailedHandler,()=> {}, setNetworkIssue );
   }
 
   const handleResetPinUpdate = async() => {
@@ -162,7 +160,10 @@ await PostFunction(path, setLoading, body, SuccessHandler, FailedHandler,setRese
     } else {
     setResetPinErrorMessage(false);
       setEmailInputColor("#2ED173");
-      if(!navigator.onLine) return alert("Check your internet connection");
+      if(!navigator.onLine) {
+   if(networkIssue) return;
+      if(!networkIssue) return setNetworkIssue(true)
+      }
       if(navigator.onLine){
    await ResetFunction();
       }
@@ -184,19 +185,19 @@ await PostFunction(path, setLoading, body, SuccessHandler, FailedHandler,setRese
     const body = {
       otp : inputPin
     }
-console.log(verifyResponse);
+
 await PostFunction(path, 
   setLoading, 
   body,
    SuccessHandler, 
    FailedHandler, 
-   setVerifyResponse);
+  ()=>{}, setNetworkIssue);
   }
 
 
    const PutNewFunction = async()=> {
     const SuccessHandler = ()=> {
-   console.log("Successful");
+  
     setCreatePin(true);
     setErrorCreateNewPin("");
 }
@@ -207,7 +208,8 @@ await PostFunction(path,
        }else if(ErrorType === "Server error"){
        alert("An Unexpected error has occured")
        }else if(ErrorType === "Network error" || ErrorType === "User error"){
-         alert("Check your internet connection.")
+       if(networkIssue) return;
+      if(!networkIssue) return setNetworkIssue(true)
        }else{
         alert("An unexpected error has occured");
        }
@@ -217,7 +219,7 @@ await PostFunction(path,
       pin : newResetPin
     }
 
-await PutFunction(path, setLoading, body, SuccessHandler, FailedHandler);
+await PutFunction(path, setLoading, body, SuccessHandler, FailedHandler, setNetworkIssue);
   }
 
   const handleCreatePin = async() => {

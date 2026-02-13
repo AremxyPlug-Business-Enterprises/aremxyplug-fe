@@ -20,7 +20,7 @@ import { PostFunction } from "../../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../../Loader/Loader";
 const ChangeEmail = () => {
   const { isDarkMode } = useContext(ContextProvider);
-  const { emailId, setEmailId, sessionModal, setSessionModal } = useContext(ContextProvider);
+  const { emailId, setEmailId, sessionModal, networkIssue, setNetworkIsssue, setSessionModal, setNetworkIssue } = useContext(ContextProvider);
   const [verificationPinError, setVerificationPinError] = useState(false)
   
   const {
@@ -76,11 +76,12 @@ const ChangeEmail = () => {
        ()=> {
         setSessionModal(true)
        },
-         setFetchedResponse)
+         setFetchedResponse, setNetworkIssue)
      }else if(ErrorType === "Server error"){
         alert("Failed to process your request. Please try again later.")
      }else if(ErrorType === "Network error" || ErrorType === "User error"){
-      alert("Kindly check your internet connection and try again")
+     if(networkIssue) return;
+     if(!networkIssue) setNetworkIssue(true)
      }else{
       alert("An Unexpected error occured, please try again later.")
      }
@@ -109,7 +110,7 @@ const ChangeEmail = () => {
        body, 
        SuccessHandler,
         FailedHandler,
-         setFetchedResponse)
+         setFetchedResponse, setNetworkIssue)
     } else {
       setErrorMessage("Invalid email..");
       setEmailInputColor("#F95252");
@@ -124,7 +125,8 @@ const ChangeEmail = () => {
                  if(Error === "Server error" ){
               setVerificationPinError(true);
                  }else if(Error  === "Network error" || Error === "user error"){
-                 alert("Kindly check your internet connection.")
+             if(networkIssue) return;
+             if(!networkIssue) return setNetworkIssue(true)
                }else if(Error === "unauthorised"){
                await PostFunction("change-email/update",
               setLoading, 
@@ -133,9 +135,10 @@ const ChangeEmail = () => {
                ()=> {
                  setSessionModal(true)
                },
-                setFetchedResponse)  
+                setFetchedResponse, setNetworkIssue)  
                }else if(Error === undefined){
-                 alert("Your internet connection is quite unstable.")
+              if(networkIssue) return;
+              if(!networkIssue) return setNetworkIssue(true)
                }
                  else{
                  alert("An unexpected error occured, please try again later.")
@@ -159,7 +162,7 @@ const ChangeEmail = () => {
          body, 
          SuccessHandler,
           FailedHandler,
-           setFetchedResponse)  
+           setFetchedResponse, setNetworkIssue)  
       }
       
     

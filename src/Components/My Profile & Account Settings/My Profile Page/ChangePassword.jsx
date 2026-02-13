@@ -10,7 +10,7 @@ import Success from "../ProfileImages/success.gif";
 import axios from "axios";
 import { Loader } from "../../Loader/Loader";
 const ChangePassword = () => {
-  const { toggleSideBar, isDarkMode, sessionModal, setSessionModal } = useContext(ContextProvider);
+  const { toggleSideBar, isDarkMode, sessionModal, networkIssue, setNetworkIssue, setSessionModal } = useContext(ContextProvider);
 
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -28,7 +28,7 @@ const [loading, setLoading] = useState(false);
   const ChangeUserPin = async()=> {
     const usernameToken = localStorage.getItem("xcss{}");
     const emailToken = localStorage.getItem("xcss[]");
-    if(!navigator.onLine) return alert("Check your internet connection");
+    if(!navigator.onLine && !networkIssue ) return setNetworkIssue(true)
     if((usernameToken || emailToken) && navigator.onLine){
       setLoading(true)
     try{
@@ -44,20 +44,20 @@ const [loading, setLoading] = useState(false);
      }
   
      }catch(error){
-       if(error.response.status === 400){
+       if(error.response.status === undefined){
+       if(networkIssue) return;
+       if(!networkIssue) setNetworkIssue(true)
+       }else  if(error.response.status === 400){
         alert("Invalid Old Password")
        }else if(error && error.response.status === 401){
-        return setSessionModal(true);
+       if(!sessionModal) return setSessionModal(true);
       
-        
-       }else if(error.response.status === 404){
-        alert("Check your internet connection")
+ }else if(error.response.status === 404){
+      return;
        }else if(error.response.status === 500){
         alert("SERVER ERROR");
-       }else if(error.response.status === undefined){
-        alert("Check your internet connection")
        }else{
-      alert("Check your internet connection");
+      alert("An unexpected error had occured.");
        }
      }finally{
       setLoading(false);

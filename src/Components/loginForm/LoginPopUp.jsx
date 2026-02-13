@@ -18,6 +18,7 @@ import { SetLocalStorage } from "../LocalStorage/LocalStorage";
 function LoginPopUp() {
 
   const {
+    setOpenTaskBar,
     openTranspin,
     setOpenTranspinSuccessful,
     openTranspinSuccessful,
@@ -346,6 +347,7 @@ return assignImageByUsername
      SessionTiming();
      UserIconFormatting();
       refreshToken();
+      setOpenTaskBar(true);
      if(UserIconFormatting && SessionTiming){
       navigate("/dashboard");
      }

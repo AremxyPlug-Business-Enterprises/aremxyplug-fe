@@ -12,7 +12,7 @@ import DataBundle from "../DataBundles/DataBundles-Images/DataBundles.svg";
 import styles from "../../DataTopUpPage/DataTopUp.css";
 
 const DataBundleAddRecipient = () => {
-  const { networkName, setNetworkName } = useContext(ContextProvider);
+  const { networkName, setNetworkName, networkIssue, setNetworkIssue, setSessionModal, sessionModal } = useContext(ContextProvider);
   const { recipientName, setRecipientName } = useContext(ContextProvider);
   const { recipientNumber, setRecipientNumber } = useContext(ContextProvider);
   const { networkImage, setNetworkImage } = useContext(ContextProvider);
@@ -163,26 +163,40 @@ const DataBundleAddRecipient = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(requestBody), // Use the new object here
+          body: JSON.stringify(requestBody),
+          credentials : "include" // Use the new object here
         }
       );
-
+console.log(response?.status);
       if (!response.ok) {
         const errorData = await response.json();
         setErrors(errorData.errors || { server: "An error occurred" });
-        return;
-      }
-
-      // Handle successful response
-      const data = await response.json();
-      console.log("Recipient added successfully:", data, requestBody);
-      setSave(false);
+         setSave(false);
       setConfirm(true);
       setSelected(false);
       setRecipientNumber("");
       setRecipientName("");
+      
+      }
+
+      // Handle successful response
+
+     
     } catch (error) {
-      console.error("Network error:", error);
+      console.log(error)
+     if(error && error.response === undefined){
+      if(networkIssue) return;
+      if(!networkIssue) return setNetworkIssue(true)
+     }else if(error && error.response?.status === 401){
+    if(sessionModal) return;
+  if(!sessionModal) setSessionModal(true)
+  }else if(error && error.status === 500){
+console.log(error);
+if(error?.response?.data?.phone){
+      alert(`${error.response?.data?.phone}`)
+}
+alert("Internal server error")
+  }
       setErrors({ network: "Network error, please try again later." });
     } finally {
       setIsLoading(false);
@@ -509,7 +523,7 @@ const DataBundleAddRecipient = () => {
                       className={`bg-[#04177f] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:mx-auto md:px-[10%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`}
                       onClick={() => {
                         setConfirm(false);
-                        window.location.reload();
+                        
                       }}
                     >
                       Done
