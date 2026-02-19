@@ -276,7 +276,7 @@ const Data = GetLocalStorage();
     }
  // Simulate async data loading
 
-  
+   
     GetBalance();
       if (GetBalance) {
         setNewBalance(

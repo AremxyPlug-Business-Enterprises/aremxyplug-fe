@@ -1404,7 +1404,8 @@ const [nabtebPinsGenerated, setNabtebPinsGenerated] = useState([]);
 
     // ========== Transfer to aremxyPlug======
     const [recipientResponse, setRecipientResponse] = useState([]);
-    const [recipientsAirtime, setRecipientsAirtime] = useState([])
+    const [recipientsAirtime, setRecipientsAirtime] = useState([]);
+      const [recipientsData, setRecipientsData] = useState([])
      const formatDateISO = ()=> {
             const HoldInitialDate = new Date();
               const ISOStringDateFormat = HoldInitialDate?.toLocaleString("sv-SE", {
@@ -2358,6 +2359,7 @@ const [currentDateInTimeStamps, setCurrentDateInTimeStamps] = useState(0);
     setResultValue,
     recipientNumberA,
     recipientsAirtime, setRecipientsAirtime,
+    recipientsData, setRecipientsData,
     setRecipientNumberA,
     firstName,
     setFirstName,

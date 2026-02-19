@@ -27,10 +27,12 @@ import {
   GetFunction,
   VerifyTransPin,
   RestrictionPopUp,
+  PostFunction
 } from "../../../../../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../../../../../Loader/Loader";
 import { GetLocalStorage } from "../../../../../LocalStorage/LocalStorage";
 import { BalanceLoading } from "../../../../../Loader/Loader";
+import { DataBundleSelectRecipient } from "../DataBundleSelectRecipient";
 const AirtelDataBundle = () => {
   const Data = GetLocalStorage()
   const { isDarkMode, 
@@ -61,13 +63,15 @@ const AirtelDataBundle = () => {
     sessionModal,
     setSessionModal,
     // inputPinHandler,
+    recipientsData,
+    setRecipientsData,
     toggleVisibility,
     isVisible,
   } = useContext(ContextProvider);
-  const [balanceLoader, setBalanceLoader] = useState(false)
+  const [balanceLoader, setBalanceLoader] = useState(false);
+  const [dataRecipientsDisplay, setDataRecipientsDisplay] = useState(false)
   const [showProductList, setShowProductList] = useState(false);
   const [showOptionList, setShowOptionList] = useState(false);
-  const [addRecipient, setAddRecipient] = useState(false);
   const [proceed, setProceed] = useState(false);
   const [confirm, setConfirm] = useState(false);
   // const [receipt] = useState(false);
@@ -92,7 +96,7 @@ const AirtelDataBundle = () => {
   const [restrictUser, setRestrictUser] = useState(false);
   const [checkNetworkError, setCheckNetworkError] = useState(false);
   const [airtelSuccessfulResponse, setAirtelSuccessfulResponse] = useState({})
-
+  const [loadingRecipient, setLoadingRecipient] = useState(false);
   let balanceStringToNum = Number(newBalance);
 
 const assumedString = selectedAmountAirtel?.toString()
@@ -132,16 +136,92 @@ const assumedString = selectedAmountAirtel?.toString()
             "Service for airtel is currently not available, Try again later."
           );
         }else {
-          alert("Error occured: Kindly check your network connection.");
+          alert("An error has occured");
         }
       } finally {
         setLoadingProducts(false);
       }
     };
+
+    // Data Recipients
+    const GetRecipientList = async()=> {
+      const successHandler = (response)=> {
+setRecipientsData(response?.data?.data?.recipients?.recipients);
+      }
+      const failedHandler = async(errorType)=> {
+   
+        if(errorType === "Network error" || errorType === "User error"){
+             if(!networkIssue) return  setNetworkIssue(true)
+                        if(networkIssue) return;
+        }else if(errorType === "unauthorised"){
+        if(sessionModal) return;
+        if(!sessionModal) return setSessionModal(true)
+        }else if(errorType === "Server error"){
+    alert("Unable to fetch your recipient List try again later.")
+        }
+      }
+   await GetFunction("data/recipient", 
+    setLoadingRecipient, 
+    successHandler, 
+    failedHandler,()=> {}, setNetworkIssue)
+   }
+const [isLoading, setIsLoading] = useState(false)
+//Function to add Recipients add the bottom of transaction fields
+    const AddRecipientToList = async()=> {
+      const successHandler = async(response)=> {
+     await GetRecipientList();
+alert("Recipients Saved Successfully")
+     
+      }
+      const requestBody = {
+        network: "airtel", // Changed from networkName
+        name: recipientNamesAirtel, // Changed from recipientName
+        phone: recipientPhoneNumberAirtel, // Changed from recipientNumber
+      };
+      const failedHandler = async(errorType)=> {
+   
+        if(errorType === "Network error" || errorType === "User error"){
+             if(!networkIssue) return  setNetworkIssue(true)
+                        if(networkIssue) return;
+        }else if(errorType === "unauthorised"){
+        if(sessionModal) return;
+        if(!sessionModal) return setSessionModal(true)
+        }else if(errorType === "Server error"){
+    alert("Unable to fetch your recipient List try again later.")
+       
+      } else if(errorType === "Bad request"){
+         alert("An unexpected error has occured");
+      }else{
+          alert("An unexpected error has occured");
+        }
+      }
+   await PostFunction("data/recipient",
+    setIsLoading, requestBody,
+    successHandler, 
+    failedHandler,()=> {}, setNetworkIssue)
+   }
+
+   //CheckingRecipientList
+
+   const CheckRecipientInfoInList =(value)=> {
+   if(value && value?.length === 11){
+   const findingRecipient = recipientsData?.length > 0 && recipientsData !== null && recipientsData !== undefined ? 
+     recipientsData?.find((item)=>{ 
+    return value === item?.phone
+   }
+) : []
+  return findingRecipient
+  }
+}
+const RecipientExistCheck = CheckRecipientInfoInList(recipientPhoneNumberAirtel)
+
+  
   useEffect(() => {
   if(Data?.ConfirmAcc === "true"){
     fetchProducts();
+    GetRecipientList();
   }
+
    
     const HandleBalanceStatus = () => {
       if (CheckSufficiency) {
@@ -196,7 +276,7 @@ const assumedString = selectedAmountAirtel?.toString()
 
   const handleSelectProduct = (product) => {
     if (!navigator.onLine) {
-      alert("Check your internet connection.");
+   setNetworkIssue(true)
        setCheckNetworkError(true);
        if(product?.Plan_Type !== selectedProductAirtel){
         setProductPlans([])
@@ -350,7 +430,7 @@ const methodOptions = [
     setTransactSuccessPopUp(false);
   };
 
-  const [inputValue, setInputValue] = useState("");
+  // const [inputValue, setInputValue] = useState("");
 
   const schema = Joi.object({
     recipientPhoneNumberAirtel: Joi.string()
@@ -379,7 +459,7 @@ const methodOptions = [
   const handleChange = (e) => {
     const value = e.target.value;
     const numericValue = value.replace(/\D/g, "");
-    setInputValue(numericValue);
+    setRecipientPhoneNumberAirtel(numericValue);
     // Validate phone number if it's complete
     if (numericValue.length === 11) {
       const error = validatePhoneNumber(numericValue);
@@ -564,7 +644,7 @@ const path = "/data";
     // usage
     await buyData(
       4, // Network ID for MTN
-      inputValue, // Use inputValue instead of recipientPhoneNumber
+      recipientPhoneNumberAirtel, // Use inputValue instead of recipientPhoneNumber
       selectedPlan.ID,
       recipientNamesAirtel
     );
@@ -581,8 +661,11 @@ const path = "/data";
     setRecipientPhoneNumberAirtel("");
     setAirtelPurchaseStatus(null);
     setRecipientPhoneNumberAirtel("");
-    setInputValue("");
+   // setInputValue("");
   };
+//const path ="/data/recipient"
+
+//Getting recipient
 
   return (
     <DashBoardLayout>
@@ -636,18 +719,20 @@ const path = "/data";
                   : "border border-[#0003]"
               }`}
             >
-              <Link
-                to="/DataBundleSelectRecipient"
+              <div
+                onClick= {()=> {
+               setDataRecipientsDisplay(true);
+                }}
                 style={{ display: "inline-flex", width: "100%" }}
                 className="justify-between"
               >
-                <p className="font-semibold">Select Recipient</p>
+                <p className="font-semibold cursor-pointer">Select Recipient</p>
                 <img
                   className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
                   src={Recipient}
                   alt=""
                 />
-              </Link>
+              </div>
             </div>
             <div
               className={`w-full flex items-center justify-between border text-[10px] md:py-[15px] md:w-[40%] md:mr-[9%]  rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003] 
@@ -969,10 +1054,12 @@ const path = "/data";
                 }`}
               >
                 Phone Number{" "}
-                <span className="text-[#04177F]">
-                  <Link to="/DataBundleSelectRecipient">
+                <span onClick={()=> {
+                  setDataRecipientsDisplay(true)
+                }} className="text-[#04177F] cursor-pointer">
+         
                     (Select Recipient)
-                  </Link>
+                
                 </span>{" "}
               </h2>
               <div className="relative mt-[5px]">
@@ -986,9 +1073,9 @@ const path = "/data";
                     ? "bg-black text-white border border-white"
                     : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
                 }
-  `}
+  `}              maxLength ={11}
                   placeholder="11 digits phone number"
-                  value={inputValue}
+                  value={recipientPhoneNumberAirtel}
                   onChange={(event) => {
                     handleChange(event);
                     setRecipientPhoneNumberAirtel(event.target.value);
@@ -1086,7 +1173,10 @@ const path = "/data";
                   className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.8px]
                  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] 
                  pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
-                lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
+                lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] 
+                md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] 
+                 items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px]
+                  w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
                   isDarkMode
                     ? "bg-black text-white border border-white"
                     : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
@@ -1121,7 +1211,7 @@ const path = "/data";
                                        <img
                                          src={image}
                                          alt=""
-                                          className="decdrop absolute left-[92%] lg:left-[94%]
+                                          className="decdrop absolute left-[92%] lg:left-[96%]
                                self-center align-middle md:h-[14.038px] md:w-[14.038px] 
                        lg:h-[24px] lg:w-[24px] w-[14px] h-[16px]"
                                        />
@@ -1132,7 +1222,7 @@ const path = "/data";
                                        onClick={handleShowPayment}
                                      >
                                        <img src={arrowDown} alt="" 
-                                       className="decdrop absolute left-[92%] lg:left-[94%]
+                                       className="decdrop absolute left-[92%] lg:left-[96%]
                                self-center align-middle md:h-[14.038px] md:w-[14.038px] 
                        lg:h-[24px] lg:w-[24px] w-[14px] h-[16px]" />
                                      </button>
@@ -1158,7 +1248,7 @@ const path = "/data";
                            {methodOptions.map((methodOption) => {
                                          return (
                                            <div
-                                             onClick={(e) => {
+                                             onClick={() => {
                                                //onchange = { setMethodOptions }
                
                                                setWalletNameAirtel(
@@ -1217,7 +1307,7 @@ const path = "/data";
                                              key={methodOption.id}
                                            >
                                              <img
-                                               className="md:h-[29.27px]  h-[14.27px]"
+                                               className="md:h-[29.27px] h-[14.27px]"
                                                src={methodOption.flag}
                                                alt=""
                                              />
@@ -1238,19 +1328,50 @@ const path = "/data";
           </div>
 
           <div className="flex items-center gap-2 lg:mt-[30px]">
-            <h2 className="text-[13px] font-[400] leading-[12px] lg:leading-[24px] md:text-[12px] lg:text-[18px]">
-              Add to Recipient?
-            </h2>
-            <div
-              onClick={() => setAddRecipient(!addRecipient)}
-              className={` w-[20px] h-[8.4px] md:w-[30px] md:h-[12px] lg:w-[50px] lg:h-[22px] lg:rounded-full rounded 
-                    ${addRecipient ? "bg-[#77ff60]" : "bg-[#b1b0b0]"}`}
-            >
-              <div
-                className={`rounded-full w-[9.5px] h-[8.4px] md:w-[14px] md:h-[12px] lg:h-[22px] lg:w-[21px] lg:drop-shadow-md bg-[#fff] 
-                    ${addRecipient ? "float-right" : "float-left"}`}
-              ></div>
-            </div>
+  
+                                   <h2 className='!text-[13px] md:!text-base'>
+                                     {RecipientExistCheck?.phone === recipientPhoneNumberAirtel
+                                     
+                                     && !errors?.recipientPhoneNumberAirtel
+                                    
+                                      ? "Exists in recipients" : "Add to recipients"}
+                                   </h2>
+                                   {isLoading === false  ? (
+                                       
+                                   <div onClick={() => { 
+                                      
+                                  if(
+                                    recipientPhoneNumberAirtel?.length > 1 && recipientPhoneNumberAirtel?.length === 11
+                                       && RecipientExistCheck?.phone === undefined 
+                                       && RecipientExistCheck?.phone !== recipientPhoneNumberAirtel && !errors?.recipientPhoneNumberAirtel
+                                      ) {
+                                         AddRecipientToList();
+                                       }else if(recipientPhoneNumberAirtel?.length < 11 && recipientNamesAirtel?.length < 1) {
+                                           alert("Input the recipient Number and the recipient Name")
+                                       }
+                                    }}
+                                       className={`w-[16px] h-[8.4px] md:w-[30px] md:h-[12px]
+                                        lg:w-[50px] lg:h-[22px] lg:rounded-full 
+                                        rounded cursor-pointer 
+                                        ${
+                                        (RecipientExistCheck?.phone === recipientPhoneNumberAirtel
+                                          &&  recipientPhoneNumberAirtel?.length === 11   && recipientPhoneNumberAirtel?.length > 1
+                                          && !errors?.recipientPhoneNumberAirtel  ) 
+                                        ? "bg-[#77ff60]" : "bg-[#b1b0b0]"}`}>
+                                       <div className={`rounded-full w-[8.5px]
+                                            h-[7.4px] md:w-[14px] md:h-[12px] lg:h-[22px] lg:w-[21px] lg:drop-shadow-md bg-[#fff]
+                                             ${
+                                               ( RecipientExistCheck?.phone === recipientPhoneNumberAirtel &&  recipientPhoneNumberAirtel?.length === 11
+                                            &&   recipientNamesAirtel?.length > 1  && !errors?.recipientPhoneNumberAirtel)
+                                       ? "float-right" : "float-left"}`}>
+                                       </div>
+                                   </div>
+                                      
+                                   ) : (
+                               <BalanceLoading/>
+                                   )}
+                                   
+                              
           </div>
 
           {/* ================Proceed=================== */}
@@ -1342,7 +1463,7 @@ const path = "/data";
                                   </span>
                                   <div className="flex gap-1">
                                     <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
-                                      {inputValue}
+                                      {recipientPhoneNumberAirtel}
                                     </span>
                                   </div>
                                 </div>
@@ -1354,7 +1475,7 @@ const path = "/data";
                                   </span>
                                   <div className="flex gap-1">
                                     <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
-                                      {recipientNamesAirtel}
+                                      {recipientNamesAirtel?.length && recipientNamesAirtel?.length ? "NIL" : recipientNamesAirtel}
                                     </span>
                                   </div>
                                 </div>
@@ -1513,7 +1634,7 @@ const path = "/data";
                       airtelorderID: airtelOrderID,
                      // airteldescription: airtelDescription,
                       airtelReceiptInfo: airtelReceiptInfo,
-                      inputValue: inputValue,
+                      inputValue: recipientPhoneNumberAirtel,
                     }}
                   
                    className={`w-[50%]  max-w-xs 
@@ -1648,7 +1769,8 @@ const path = "/data";
                                    setFailed,
                                    setLoading,
                                    setErrorMessage,
-                                   AirtelDataHandler
+                                   AirtelDataHandler,
+                                   setNetworkIssue
                                  );
                                }}
                                disabled={inputPin.length !== 4}
@@ -1775,7 +1897,7 @@ const path = "/data";
                    </span>
                   
                      <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
-                              {inputValue}
+                              {recipientPhoneNumberAirtel}
                              </span>
                         
                    </div>
@@ -1862,7 +1984,7 @@ const path = "/data";
                     to="/AirtelReceipt"
                     state={{
                       selectedProduct: selectedProductAirtel,
-                      inputValue: inputValue,
+                      inputValue: recipientPhoneNumberAirtel,
                       selectedOption: selectedOptionAirtel,
                       recipientNames: recipientNamesAirtel,
                       selectedAmount: selectedAmountAirtel,
@@ -1898,7 +2020,7 @@ const path = "/data";
              text-[#fff] w-full md:w-[100px] lg:w-[170px] justify-center  ${
                    !selectedProductAirtel ||
                    !selectedOptionAirtel ||
-                   !inputValue ||
+                   !recipientPhoneNumberAirtel||
                    !selectedAmountAirtel ||
                    !paymentSelected ||
                    !validatePhoneNumber
@@ -1909,7 +2031,7 @@ const path = "/data";
               disabled={
                 !selectedProductAirtel ||
                 !selectedOptionAirtel ||
-                !inputValue ||
+                !recipientPhoneNumberAirtel ||
                 !selectedAmountAirtel ||
                 !paymentSelected ||
                 !validatePhoneNumber
@@ -1946,6 +2068,11 @@ const path = "/data";
         <Modal>
           <Loader />
         </Modal>
+      )}
+      {dataRecipientsDisplay && (
+        <DataBundleSelectRecipient loadingRecipient={loadingRecipient} 
+        setDataRecipientsDisplay ={setDataRecipientsDisplay} setDataRecipient ={setRecipientNamesAirtel}
+        setRecipientPhoneNumber={setRecipientPhoneNumberAirtel}/>
       )}
       {restrictUser && sessionModal === false  && <RestrictionPopUp/>}
     </DashBoardLayout>

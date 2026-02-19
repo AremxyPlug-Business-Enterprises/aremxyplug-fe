@@ -27,8 +27,8 @@ export const AirtimeTransReceipt = () => {
   const network = receiptData?.network?.length > 0 ? receiptData?.network : "";
   const amount = receiptData?.amount?.length > 0 ? receiptData?.amount : "";
   const amountToNumber = Number(amount);
-  const full_name =
-    receiptData?.full_name?.length > 0 ? receiptData?.full_name : "";
+  // const full_name =
+  //   receiptData?.full_name?.length > 0 ? receiptData?.full_name : "";
   const order_id =
     receiptData?.order_id !== undefined ? receiptData?.order_id : "";
   const phone = receiptData?.phone_no?.length > 0 ? receiptData?.phone_no : "";
@@ -45,6 +45,16 @@ export const AirtimeTransReceipt = () => {
   const reference_number =
     receiptData?.reference_number?.length > 0
       ? receiptData?.reference_number
+      : "";
+
+       const receipient_name =
+    receiptData?.receipient_name
+      ? receiptData?.receipient_name
+      : "NIL";
+
+         const discountAmount =
+    receiptData?.discount_amount
+      ? Number(receiptData?.discount_amount)
       : "";
 
   function handleClick() {
@@ -253,7 +263,7 @@ export const AirtimeTransReceipt = () => {
                     >
                       Recipient Name
                     </p>
-                    <span>{full_name}</span>
+                    <span>{receipient_name}</span>
                   </div>
                   <div className="flex text-[10px] font-medium md:text-sm w-[90%] mx-auto justify-between lg:text-base">
                     <p
@@ -267,6 +277,26 @@ export const AirtimeTransReceipt = () => {
                       amount
                         ? `${String(
                             amountToNumber.toLocaleString("en-NG", {
+                              style: "currency",
+                              currency: "NGN",
+                            })
+                          )}`
+                        : "₦"
+                    }`}</span>
+                  </div>
+                  {/* Amount Charged */}
+                    <div className="flex text-[10px] font-medium md:text-sm w-[90%] mx-auto justify-between lg:text-base">
+                    <p
+                      className={` ${
+                        isDarkMode ? "text-white" : "text-[#7C7C7C]"
+                      }`}
+                    >
+                   Actual Amount
+                    </p>
+                    <span>{`${
+                      amount
+                        ? `${String(
+                            discountAmount?.toLocaleString("en-NG", {
                               style: "currency",
                               currency: "NGN",
                             })

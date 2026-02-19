@@ -14,7 +14,7 @@ export const AirtimeVtuReceipt = (Data) => {
   const location = useLocation();
   const navigate = useNavigate();
   const { networkName, selectedProduct,recipientNumber, amount, 
-    transactionID, refNumber, orderID, description } = location.state;
+    transactionID, refNumber, orderID, description, discount_amount } = location.state;
   
   const {
     toggleSideBar,
@@ -37,18 +37,7 @@ export const AirtimeVtuReceipt = (Data) => {
 
   const contentRef = useRef(null);
 
-  // ===============Copy to Clipboard Function============
-  // const handleCopyClick = () => {
-  //   const text = textRef.current.innerText;
-  //   navigator.clipboard
-  //     .writeText(text)
-  //     .then(() => {
-  //       alert("Copied to clipboard");
-  //     })
-  //     .catch((err) => {
-  //       console.error("Error copying text: ", err);
-  //     });
-  // };
+
 
   // ==============Share pdf Function=============
   const handleShareClick = () => {
@@ -170,11 +159,23 @@ export const AirtimeVtuReceipt = (Data) => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Recipient Name</p>
-                  <span>{recipientName}</span>
+                  <span>{recipientName?.length && recipientName?.length < 1 ? "NIL" : recipientName}</span>
                 </div>
+                {/* Airtime Charge    */}
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Amount</p>
                   <span>&#8358;{amount}</span>
+                </div>
+               
+                {/* Amount Deducted */}
+                   {/* <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                  <p className="text-[#0008]">Discount_fee</p>
+                  <span>&#8358;{amount}</span>
+                </div> */}
+                {/* Amount Deducted */}
+                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                  <p className="text-[#0008]">Actual Amount</p>
+                  <span>&#8358;{discount_amount}</span>
                 </div>
               </div>
 

@@ -200,8 +200,6 @@ export const RecentTransaction = ({transactionResponse, transactionHistoryError,
         </div>
       </div>
 
-       
-     ir
 
       <TransactionHistory transactionResponse = {transactionResponse} 
       transactionHistoryError= {transactionHistoryError} loading={loading} 

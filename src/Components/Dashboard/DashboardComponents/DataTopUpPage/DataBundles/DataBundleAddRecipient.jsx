@@ -10,7 +10,7 @@ import user from "../../../../AirTimePage/Images/user.svg";
 import { Modal } from "../../../../Screens/Modal/Modal";
 import DataBundle from "../DataBundles/DataBundles-Images/DataBundles.svg";
 import styles from "../../DataTopUpPage/DataTopUp.css";
-
+import { BalanceLoading } from "../../../../Loader/Loader";
 const DataBundleAddRecipient = () => {
   const { networkName, setNetworkName, networkIssue, setNetworkIssue, setSessionModal, sessionModal } = useContext(ContextProvider);
   const { recipientName, setRecipientName } = useContext(ContextProvider);
@@ -21,7 +21,7 @@ const DataBundleAddRecipient = () => {
   const [errors, setErrors] = useState({});
   const [save, setSave] = useState(false);
   const [showList, setShowList] = useState(false);
-  const [selected, setSelected] = useState(false);
+ const [confirmRecipient, setConfirmRecipient] = useState(false)
   const [confirm, setConfirm] = useState(false);
   const [isLoading, setIsLoading] = useState(false); // For managing loading state
 
@@ -70,12 +70,26 @@ const DataBundleAddRecipient = () => {
 
   const Network = ({ name, image, onClick }) => {
     return (
-      <li className={airtimestyles.netList} onClick={onClick}>
-        <div className={airtimestyles.netImage}>
-          <img src={image} alt="" className={styles.NoImage} />
-        </div>
-        <h2 className={airtimestyles.netName}>{name}</h2>
-      </li>
+     <div  className={`pb-[20px] pt-[20px] md:pb-[14px] 
+                                md:pt-[14px] font-weight-bold text-[14px] leading-[18.4px] 
+                                md:py-[15px]
+                                 py-[8px] pl-[10px] font-[500]  
+         md:text-[13.227px] md:leading-[17.195px] 
+         shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)] 
+         lg:text-[16px] lg:leading-[20.8px] cursor-pointer ${
+           isDarkMode
+             ? "bg-black text-white border border-white"
+             : "hover:bg-[#EDEAEA] bg-white text-[#7C7C7C]"
+         }`}
+                      
+                               onClick={onClick}>
+                <div className= "flex gap-[5px] lg:gap-[10px] items-center">
+                    <img src={image} alt=""
+                     className="md:h-[29.27px] h-[14.27px]" />
+               
+                <h2 >{name}</h2>
+                </div>
+            </div>
     );
   };
 
@@ -83,7 +97,7 @@ const DataBundleAddRecipient = () => {
     setNetworkName(name);
     setNetworkImage(image);
     setShowList(false);
-    setSelected(true);
+
   };
 
   const handleShowList = () => {
@@ -151,6 +165,7 @@ const DataBundleAddRecipient = () => {
     setErrors({});
 
     try {
+      setConfirmRecipient(true)
       const requestBody = {
         network: networkName, // Changed from networkName
         name: recipientName, // Changed from recipientName
@@ -173,7 +188,6 @@ console.log(response?.status);
         setErrors(errorData.errors || { server: "An error occurred" });
          setSave(false);
       setConfirm(true);
-      setSelected(false);
       setRecipientNumber("");
       setRecipientName("");
       
@@ -264,71 +278,110 @@ alert("Internal server error")
               alt="/"
             />
           </div>
-          <div className={airtimestyles.mainGrid}>
-            <div className={airtimestyles.mainGridCol}>
-              <div>
-                <div className={airtimestyles.NetworkFlex}>
-                  <h2 className={airtimestyles.head3}>Select Network</h2>
-                  <div className={airtimestyles.input}>
-                    <div className={airtimestyles.output2}>
-                      {selected ? (
-                        <li
-                          onClick={handleShowList}
-                          className={airtimestyles.labelInput}
-                        >
-                          <div className={airtimestyles.network}>
-                            {networkImage && <img src={networkImage} alt="" />}
-                          </div>
-                          <h2 className={airtimestyles.head2}>{networkName}</h2>
-                        </li>
-                      ) : (
-                        <h2
-                          onClick={handleShowList}
-                          className={airtimestyles.head6}
-                        >
-                          Select Network
-                        </h2>
-                      )}
-                      <button
-                        className={airtimestyles.btnDrop}
-                        onClick={handleShowList}
-                      >
-                        <img src={arrowDown} alt="" />
-                      </button>
-                    </div>
-                  </div>
-                </div>
+        
+         
+            <div className="flex flex-col gap-[20px]  lg:mb-[100px] md:gap-0">
+              <div className="flex flex-col  md:flex-row gap-[20px]
+                 md:gap-[12px] lg:gap-[22px] md:my-2 lg:my-4">
+                  {/* Start network */}
+                <div className="relative flex flex-col gap-[3px]
+                   lg:gap-[5px] w-full md:w-1/2">
+                  <h2 className={` ${isDarkMode ? "text-white" : "text-black"} text-[14px] lg:text-[17px]
+                       md:text-[13px]
+                      md:font-[600] font-[400`}>Select Network</h2>
+                       <div  className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
+         sm:p-3 sm:text-lg  flex justify-between pt-[8.803px]
+         pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}
+    >
+              <div onClick={handleShowList} 
+              className={`flex justify-left  w-[100%] items-center`}>
+                       {networkName ? (
+                           <div onClick={handleShowList} 
+                           className={` items-center flex h-[100%] ${styles.labelInput}  
+                       `}
+                                   >
+            
+                                      {networkImage && <img className="h-5 w-5"
+                                  src={networkImage} alt="" />}
+                                                                  
+                           <h2 className={`text-left text-[13.2px]  font-[400] 
+                       leading-[17.4px] md:text-[11px] md:leading-[12.206px]
+                          lg:text-[16px] lg:leading-[20.8px] 
+                       ${isDarkMode ? "text-white" : "text-[#7E7E7E]" }`}>
+                                      {networkName}
+                                      </h2>
+                                                              </div>
+                                                          ) : (
+                                        
+               <div className="flex justify-between w-[100%]">
+                  <h2 className="text-[#7E7E7E] text-[14px] lg:text-[17px]
+                  md:text-[13px] md:font-[600] font-[400]
+                                                  ">Select Network</h2>
+                                                    <img className="decdrop  self-center
+                                                     align-middle md:h-[14.038px] md:w-[14.038px] 
+                              lg:h-[24px] lg:w-[24px] w-[14px] h-[16px]"
+                               src={arrowDown} alt="" />
+                               </div>
+                                      )}
+                                                       
+                   </div>
+               
+                {/* End */}
                 {showList && (
-                  <div className={airtimestyles.colDown}>
-                    {networkList.map((item) => (
-                      <Network
-                        key={item.id}
-                        image={item.image}
-                        name={item.name}
-                        onClick={() =>
-                          handleSelectNetwork(
-                            item.name,
-                            item.image,
-                            item.discount
-                          )
-                        }
-                      />
-                    ))}
-                  </div>
+               <div 
+                       className={`absolute lg:top-[90px] md:top-[60px] left-0 top-[74px] 
+                          z-[2]  flex flex-col w-[100%] lg:h-225px md:h-[210px]  
+          ${
+            isDarkMode
+              ? "bg-black text-white border border-white"
+              : "hover:bg-[#EDEAEA]"
+          }`}>
+                                        {networkList.map((item) => (
+                                             <div className='text-[#7C7C7C]'>
+                                            <Network key={item.id} 
+                                            image={item.image} 
+                                            name={item.name} 
+                                            onClick={() => {
+                                              handleSelectNetwork(item.name, item.image, item.discount)
+                                            }}
+                                            
+                                            />
+                                             </div>
+                                        ))}
+                                    </div>
                 )}
               </div>
-              <div>
-                <h2 className={airtimestyles.head3}>
+              </div>
+              <div  className="relative z-0 flex flex-col gap-[3px]
+                   lg:gap-[5px] w-full md:w-1/2">
+                <h2  className={` ${isDarkMode ? "text-white" : "text-black"} text-[14px] lg:text-[17px]
+                       md:text-[13px]
+                      md:font-[600] font-[400`}>
                   Phone Number{" "}
                   <span className={airtimestyles.span3}>
                     (Select Recipient)
                   </span>
                 </h2>
-                <div className={airtimestyles.input}>
-                  <div className={airtimestyles.output}>
+            
+                 <div className="relative">
                     <input
                       type="number"
-                      className={airtimestyles.phone}
+                       className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.8px]
+                 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+                   leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+                lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
+                  isDarkMode
+                    ? "bg-black text-white border border-white"
+                    : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
+                }`}
                       required
                       placeholder="Add recipient phone number"
                       value={inputValue}
@@ -337,51 +390,67 @@ alert("Internal server error")
                         setRecipientNumber(event.target.value);
                       }}
                     />
-                    <div className={airtimestyles.call}>
-                      <img src={call} alt="" />
-                    </div>
+                   
+                      <img  className="absolute left-[90%] top-[40%] md:top-[30%]
+                         lg:left-[94%] self-center align-middle md:h-[14.038px] md:w-[14.038px] 
+      lg:h-[24px] lg:w-[24px] w-[14px] h-[16px] " src={call} alt="" />
                   </div>
-                </div>
+                  </div>
+                  </div>
+            
                 {errors.recipientNumber && (
                   <div className="text-[12px] text-red-500 italic lg:text-[14px]">
                     {errors.recipientNumber}
                   </div>
                 )}
-              </div>
-            </div>
-            <div className={airtimestyles.mainGridCol}>
-              <div>
-                <h2 className={airtimestyles.head3}>
+             
+          
+            <div className=" flex flex-col gap-[3px]
+                   lg:gap-[5px] w-full md:w-1/2">
+           
+                <h2  className={` ${isDarkMode ? "text-white" : "text-black"} text-[14px] lg:text-[17px]
+                       md:text-[13px]
+                      md:font-[600] font-[400`}>
                   Recipient Name{" "}
-                  <span className={airtimestyles.span4}>(optional)</span>
+                  <span className={`${styles.span4} !text-[15px] md:!text-base`}>
+                    (optional)
+                    </span>
                 </h2>
-                <div className={airtimestyles.input}>
-                  <div className={airtimestyles.output}>
+                <div className={`relative `}>
+                
                     <input
                       type="text"
-                      className={airtimestyles.phone}
+                      className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.8px]
+                 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+                   leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+                lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
+                  isDarkMode
+                    ? "bg-black text-white border border-white"
+                    : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
+                }`}
                       required
                       placeholder="Add recipient name"
                       onChange={(event) => setRecipientName(event.target.value)}
                       value={recipientName}
                     />
-                    <div className={airtimestyles.call}>
-                      <img src={user} alt="" />
-                    </div>
-                  </div>
-                </div>
+                   
+                      <img className=" absolute left-[90%] top-[40%] md:top-[30%]
+                         lg:left-[94%] self-center align-middle md:h-[14.038px] md:w-[14.038px] 
+      lg:h-[24px] lg:w-[24px] w-[14px] h-[16px] " src={user} alt="" />
+                   
               </div>
             </div>
           </div>
+         
           {save && (
             <Modal>
-              <div
-                className={`mx-[5%] ${
-                  isDarkMode ? "border bg-[#000]" : "bg-[#fff]"
-                } ${
-                  toggleSideBar ? "confirmEdit01" : "confirmEdit"
-                } grow pt-[10px] pb-[20px] rounded-tr-[8px] rounded-tl-[8px] relative md:rounded-[11.5px] md:mx-auto md:my-auto md:overflow-auto`}
-              >
+                <div className={`w-full flex justify-center h-full 
+                         py-[30px] px-[15px] lg:px-[0px] lg:items-center
+                          items-end`}>
+                <div className={` bvnQuery lg:rounded-[12px] rounded-[10px]  pb-3
+                          h-[400px] ${ toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+                          } w-[100%] md:w-[60%] overflow-auto  ${isDarkMode ? "bg-black text-white border rounded-[10px] border-white": "bg-white text-black"} `}
+                          >
                 <div className="flex justify-between items-end mx-[3%] my-[2%] lg:my-[1%] ">
                   <img
                     onClick={() => setSave(false)}
@@ -394,7 +463,7 @@ alert("Internal server error")
                     onClick={() => {
                       setSave(false);
                       // window.location.reload();
-                      setSelected("");
+                   
                       setRecipientNumber("");
                       setRecipientName("");
                     }}
@@ -463,20 +532,23 @@ alert("Internal server error")
                     className={` bg-[#04177f] w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[40%] md:h-[50px] md:mx-auto md:px-[10%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] xl:h-[50px] lg:my-[4%]`}
                     onClick={handleConfirm}
                   >
-                    Confirmed
+                   {confirmRecipient === false ? "Confirmed" : <BalanceLoading/>} 
                   </button>
                   {isLoading && <p>Loading...</p>}
                 </div>
+              </div>
               </div>
             </Modal>
           )}
           {confirm && (
             <Modal>
-              <div
-                className={` ${
-                  toggleSideBar ? "confirm02" : "confirm2"
-                } bg-white md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px]`}
-              >
+                 <div className={`w-full flex justify-center h-full 
+                         py-[30px] px-[15px] lg:px-[0px] lg:items-center
+                          items-end`}>
+                <div className={` bvnQuery lg:rounded-[12px] rounded-[10px] 
+                          h-[270px] ${ toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+                          } w-[100%] md:w-[60%] overflow-auto  ${isDarkMode ? "bg-black text-white border rounded-[10px] border-white": "bg-white text-black"} `}
+                          >
                 <div className="flex justify-between items-center mx-[3%] my-[2%] lg:mt-[3%] xl:mt-0 ">
                   <img
                     onClick={() => {
@@ -530,6 +602,7 @@ alert("Internal server error")
                     </button>
                   </Link>
                 </div>
+              </div>
               </div>
             </Modal>
           )}
