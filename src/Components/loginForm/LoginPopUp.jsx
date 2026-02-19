@@ -165,7 +165,7 @@ function LoginPopUp() {
           localStorage.setItem("80pcs", true);
           const nin = response?.data?.data?.nin;
           const bvn = response?.data?.data?.bvn;
-          //console.log(bvn,nin)
+          
           if (!bvn && nin) {
             setIdButtonState("Verified");
             setVerifyImage(VerificationSuccess);
@@ -197,9 +197,8 @@ function LoginPopUp() {
         if (error && error.response === undefined) {
           alert("Check your network connection");
         } else if (error.response.status === 400) {
-          // alert(`ERROR : ${error}`)
-          console.log(error);
-          // console.log(error.response.data.message);
+      
+        
           if (error && error?.response?.data?.message === "unverified") {
             setBvnNumber("");
             setIdNumber("");
@@ -368,7 +367,6 @@ return assignImageByUsername
         otp: otp3,
       };
     }
-    console.log(`URL:${url}`, `BODY:${body}`);
     if (!navigator.onLine) return alert("Check your internet connection");
     if (navigator.onLine) {
       await VerifyOtpFunction(url, body);
@@ -391,7 +389,6 @@ return assignImageByUsername
         alert("Check your network connection");
       } else if (error && error.response.status === 400) {
         setVerificationPinError(true);
-        console.log("The Verification failed");
         setOtp3("");
       } else if (error.response.status === 404) {
         setVerificationPinError(true);
@@ -536,7 +533,7 @@ return assignImageByUsername
    }, ()=> {})
   };
  
-  //console.log(GetLocalStorage());
+
   return (
     <div>
       {/* FORM OVERLAY AND 2 STEP VERIFICATION */}
@@ -600,7 +597,6 @@ return assignImageByUsername
                min-h-[60px] p-[7px] gap-[5px] md:w-[161px] lg:h-[60px] lg:rounded-[8px] "
                   onClick={() => {
                     setSmsOrEmail("email");
-                    console.log(customerDetail);
                   }}
                   style={{
                     borderWidth: 1,

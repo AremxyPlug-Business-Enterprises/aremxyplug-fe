@@ -15,13 +15,14 @@ import { Loader } from "../Loader/Loader";
 import cancelIcon from "../EducationPins/imagesEducation/close-circle.svg";
 import NoRecordImage  from "../Add&SelectRecipient/RecipientImages/NoRecordImage.svg";
 import { BalanceLoading } from "../Loader/Loader";
+import { useLocation  } from "react-router-dom";
 // import { Oval } from 'react-loader-spinner';
 
 
 const SelectRecipient = ({loadingRecipient,
    setSelectRecipientDisplay}) => {
 
-  const { networkIssue, setNetworkIssue, setSessionModal, discount, setDiscount, recipientsAirtime, setRecipientsAirtime,
+  const { networkIssue, setNetworkIssue, setSessionModal,  setDiscount, recipientsAirtime, setRecipientsAirtime,
     sessionModal, isDarkMode } = useContext(ContextProvider);
   const { toggleSideBar } = useContext(ContextProvider);
   const { networkName, setNetworkName } = useContext(ContextProvider);
@@ -46,8 +47,8 @@ const SelectRecipient = ({loadingRecipient,
  const [pageLoading, setPageLoading] = useState(false)
   // const [loading, setLoading] = useState(true);
   const [inputValue, setInputValue] = useState("");
-
-  
+  const location = useLocation()
+  const pathname = location?.pathname
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
@@ -435,11 +436,14 @@ const [confirmRecipient, setConfirmRecipient] = useState(false)
                     setRecipientName(recipient.name);
                     setRecipientNumber(recipient.phone);
                 const NetworkObject =     networkList?.find((focusedObject)=> focusedObject?.name === recipient?.network?.toUpperCase())
-                    setDiscount( NetworkObject?.discount)
+                    setDiscount( NetworkObject?.discount ? NetworkObject?.discount : "");
+
                    //   console.log(recipient?.network?.toUpperCase())
+                   if(pathname === "/add-vtu-recipient"){
                     navigate('/airtime-vtu');
+                   }
                   }}
-                  className="flex flex-col my-auto gap-[1.67px] md:gap-[2.93px]">
+                  className="flex flex-col my-auto gap-[1.67px] w-full md:gap-[2.93px]">
                   <h2 className="lg:text-[16px] font-medium lg:leading-6 md:text-[9px] text-[9px]">
                     <span className ="capitalize"></span>({recipient?.phone})
                   </h2>
@@ -454,7 +458,7 @@ const [confirmRecipient, setConfirmRecipient] = useState(false)
                   <img
                     src="./Images/airtimeTopUp/Frame.png"
                     alt=""
-                    className="h-full"
+                    className="h-full flex p-0.5"
                   />
                   {showPopup && activeImage === recipient?.id && (
                     <div
@@ -493,6 +497,7 @@ const [confirmRecipient, setConfirmRecipient] = useState(false)
             )  }
             </div>
 
+{/* End for the recipients and loading state */}
             {edit && (
               <Modal>
                 <div
@@ -780,7 +785,7 @@ const [confirmRecipient, setConfirmRecipient] = useState(false)
                     <img
                       onClick={() => {
                         setConfirm(false);
-                        window.location.reload();
+                       window.location.reload();
                       }}
                       className="absolute cursor-pointer right-2 w-[18px] h-[18px] my-[1%] md:w-[35px] md:h-[25px] lg:w-[25px] lg:h-[25px] "
                       src="/Images/transferImages/close-circle.png"

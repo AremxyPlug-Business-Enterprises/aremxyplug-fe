@@ -26,11 +26,11 @@ import axiosInstance from "../../../../../ApiCollection.jsx/apiClient";
 import { RestrictionPopUp, VerifyTransPin } from "../../../../../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../../../../../Loader/Loader";
 import {
-  GetFunction,
+  GetFunction, PostFunction
 } from "../../../../../ApiCollection.jsx/ApiBuck";
 import { BalanceLoading } from "../../../../../Loader/Loader";
 import { GetLocalStorage } from "../../../../../LocalStorage/LocalStorage";
-
+import { DataBundleSelectRecipient } from "../DataBundleSelectRecipient";
 
 const MtnDataTopUpBundle = () => {
   const Data = GetLocalStorage();
@@ -51,11 +51,20 @@ const MtnDataTopUpBundle = () => {
     purchaseMtnErrorType, 
     setPurchaseMtnErrorType,
     sessionModal, setSessionModal,
-  setNetworkIssue} = useContext(ContextProvider);
+  setNetworkIssue,
+    toggleSideBar,
+    inputPin,
+    setInputPin,
+    recipientsData,
+    setRecipientsData,
+    // inputPinHandler,
+    toggleVisibility,
+    isVisible,
+    networkIssue,} = useContext(ContextProvider);
 
   const [showProductList, setShowProductList] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [showOptionList, setShowOptionList] = useState(false);
-  const [addRecipient, setAddRecipient] = useState(false);
   const [proceed, setProceed] = useState(false);
   const [confirm, setConfirm] = useState(false);
   const [errors, setErrors] = useState({});
@@ -81,7 +90,8 @@ const MtnDataTopUpBundle = () => {
   const [checkNetworkError, setCheckNetworkError] = useState(false)
    const [mtnSuccessfulResponse, setMtnSuccessfulResponse] = useState({});
    const [balanceLoader, setBalanceLoader] = useState(false)
-   
+    const [dataRecipientDisplay, setDataRecipientDisplay] = useState(false);
+    const [loadingRecipient, setLoadingRecipient] = useState(false)
   let balanceStringToNum = Number(newBalance);
 const assumedString = selectedAmountMtn?.toString()
   let mtnDataAmount = Number(selectedAmountMtn?.toString()
@@ -94,8 +104,7 @@ const Balance = newBalance !== null &&
   || newBalance === undefined || newBalance === null) ?
    Number(passDataBalance?.data?.data?.data?.balance) : undefined;
   
-
-  let CheckSufficiency =
+let CheckSufficiency =
     mtnDataAmount >
    Balance
 
@@ -119,16 +128,19 @@ const Balance = newBalance !== null &&
           alert("Service for mtn is currently not available, Try again later.");
         }  else if (error && error?.response?.status === 500) {
           alert("Service for mtn is currently not available, Try again later.");
-        }
+        }else if(error && error.response?.status ===401){
+          if(sessionModal)return;
+          if(!sessionModal) return setSessionModal(true)
+        }else{
+      alert("An unexpected error has occured")
+    }
       } finally {
         setLoadingProducts(false);
       }
     };
+
+    // Checking the user financial sufficiency
   useEffect(() => {
-   
-   if(Data?.ConfirmAcc === "true"){
-    fetchProducts();
-   }
     const HandleBalanceStatus = () => {
       if (CheckSufficiency) {
         setBalanceStatus("Insufficient fund");
@@ -283,7 +295,10 @@ const Balance = newBalance !== null &&
   useEffect(() => {
     // Simulate async data loading
  if (Data?.ConfirmAcc === "true"){                     // Simulate async data loading
-                GetBalance();
+              GetBalance()
+    fetchProducts();
+    GetRecipientList()
+   
          if(GetBalance()){
           setNewBalance(passDataBalance?.data?.data?.data !== undefined
                ? passDataBalance?.data?.data?.data?.balance : "");
@@ -311,14 +326,7 @@ const Balance = newBalance !== null &&
 
 
 
-  const {
-    toggleSideBar,
-    inputPin,
-    setInputPin,
-    // inputPinHandler,
-    toggleVisibility,
-    isVisible,
-  } = useContext(ContextProvider);
+
 
   const handleConfirm = () => {
     setProceed(false);
@@ -342,7 +350,7 @@ const Balance = newBalance !== null &&
       }),
   });
 
-  const [inputValue, setInputValue] = useState("");
+  //const [inputValue, setInputValue] = useState("");
 
   // const proceedToShowReceipt = purchaseStatus === "paid" || purchaseStatus === "failed";
 
@@ -357,7 +365,6 @@ const Balance = newBalance !== null &&
     if (!mtnRegex.test(inputValue)) {
       return "Invalid MTN number. Please enter a valid MTN number.";
     }
-   // console.log("its me");
 
     return null;
   };
@@ -365,7 +372,7 @@ const Balance = newBalance !== null &&
   const handleChange = (e) => {
     const value = e.target.value;
     const numericValue = value.replace(/\D/g, "");
-    setInputValue(numericValue);
+    setRecipientPhoneNumberMtn(numericValue);
 
     // Validate phone number if it's complete
     if (numericValue.length === 11) {
@@ -410,8 +417,8 @@ const Balance = newBalance !== null &&
       for (let network in networks) {
         for (let prefix of networks[network]) {
           if (
-            inputValue.startsWith(prefix) &&
-            inputValue.length === prefix.length + 7
+            recipientPhoneNumberMtn?.startsWith(prefix) &&
+           recipientPhoneNumberMtn?.length === prefix.length + 7
           ) {
             return network;
           }
@@ -449,12 +456,83 @@ const Balance = newBalance !== null &&
     setRecipientNamesMtn(e.target.value);
   };
 
-  // console.log("confirm:", confirm);
 
   const [mtntransactionID, setMtnTransactionID] = useState("");
   const [mtnOrderID, setMtnOrderID] = useState("");
   const [mtnrefNumber, setMtnRefNumber] = useState("");
   const [mtndescription, setMtnDescription] = useState("");
+
+//Getting Recipients List immediately a user enters the 
+// page and after a recipient has been added to the listg
+   const GetRecipientList = async()=> {
+      const successHandler = (response)=> {
+setRecipientsData(response?.data?.data?.recipients?.recipients);
+      }
+      const failedHandler = async(errorType)=> {
+   
+        if(errorType === "Network error" || errorType === "User error"){
+             if(!networkIssue) return  setNetworkIssue(true)
+                        if(networkIssue) return;
+        }else if(errorType === "unauthorised"){
+        if(sessionModal) return;
+        if(!sessionModal) return setSessionModal(true)
+        }else if(errorType === "Server error"){
+    alert("Unable to fetch your recipient List try again later.")
+        }
+      }
+   await GetFunction("data/recipient", 
+    setLoadingRecipient, 
+    successHandler, 
+    failedHandler,()=> {}, setNetworkIssue)
+   }
+   //Add Data Recipients
+ const AddRecipientToList = async()=> {
+      const successHandler = async(response)=> {
+     await GetRecipientList();
+alert("Recipients Saved Successfully")
+     
+      }
+      const requestBody = {
+        network: "mtn", // Changed from networkName
+        name: recipientNamesMtn, // Changed from recipientName
+        phone: recipientPhoneNumberMtn, // Changed from recipientNumber
+      };
+      const failedHandler = async(errorType)=> {
+   
+        if(errorType === "Network error" || errorType === "User error"){
+             if(!networkIssue) return  setNetworkIssue(true)
+                        if(networkIssue) return;
+        }else if(errorType === "unauthorised"){
+        if(sessionModal) return;
+        if(!sessionModal) return setSessionModal(true)
+        }else if(errorType === "Server error"){
+    alert("Unable to fetch your recipient List try again later.")
+       
+      } else if(errorType === "Bad request"){
+         alert("An unexpected error has occured");
+      }else{
+          alert("An unexpected error has occured");
+        }
+      }
+   await PostFunction("data/recipient",
+    setIsLoading, requestBody,
+    successHandler, 
+    failedHandler,()=> {}, setNetworkIssue)
+   }
+
+   //Recipient History
+   const CheckRecipientInfoInList =(value)=> {
+   if(value && value?.length === 11){
+   const findingRecipient = recipientsData?.length > 0 && recipientsData !== null && recipientsData !== undefined ? 
+     recipientsData?.find((item)=>{ 
+    return value === item?.phone
+   }
+) : []
+  return findingRecipient
+  }
+}
+const RecipientExistCheck = CheckRecipientInfoInList(recipientPhoneNumberMtn);
+
 
   const handleReceipt = () => {
     setTransactSuccessPopUp(false);
@@ -554,7 +632,7 @@ const Balance = newBalance !== null &&
     // usage
     await buyData(
       1, // Network ID for MTN
-      inputValue, // Use inputValue instead of recipientPhoneNumber
+      recipientPhoneNumberMtn, // Use inputValue instead of recipientPhoneNumber
       selectedPlan?.ID,
       recipientNamesMtn
     );
@@ -571,7 +649,7 @@ const Balance = newBalance !== null &&
     setRecipientPhoneNumberMtn("");
     setPurchaseStatus(null);
     setRecipientPhoneNumberMtn("");
-    setInputValue("");
+    setRecipientPhoneNumberMtn("");
     setWalletNameMtn("");
     setPaymentSelected(false);
   };
@@ -651,18 +729,20 @@ const Balance = newBalance !== null &&
                   : "border border-[#0003]"
               }`}
             >
-              <Link
-                to="/DataBundleSelectRecipient"
+              <div
+              onClick={()=> {
+                setDataRecipientDisplay(true)
+              }}
                 style={{ display: "inline-flex", width: "100%" }}
                 className="justify-between"
               >
-                <p className="font-semibold">Select Recipient</p>
+                <p className="font-semibold curor-pointer">Select Recipient</p>
                 <img
                   className="w-[13px] h-[14px] lg:w-[29px] lg:h-[29px]"
                   src={Recipient}
                   alt=""
                 />
-              </Link>
+              </div>
             </div>
             <div
               className={`w-full flex items-center justify-between border text-[12px] md:py-[15px] md:w-[40%] md:mr-[9%]  rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]
@@ -860,11 +940,11 @@ const Balance = newBalance !== null &&
                     ) : (
                       products.map((product) => (
                         <div
-                          key={product.Product_ID}
+                          key={product?.Product_ID}
                           className={`  font-weight-bold text-[13px] leading-[18px] lg:leading-[20px]
                           font-[400] cursor-pointer border-b-[0.5px] text-[#7C7C7C] md:text-[12px] 
                            lg:text-[16px]  md:rounded-[0px] lg:mt-2 lg:py-[20px] py-[15px]  pl-[5px] ${
-                             selectedProductMtn === product.Plan_Type ? "" : ""
+                             selectedProductMtn === product?.Plan_Type ? "" : ""
                            }
                           ${isDarkMode ? "bg-black text-white " : ""}
                           `}
@@ -872,14 +952,14 @@ const Balance = newBalance !== null &&
                             handleSelectProduct(product);
                             setSelectPlanWarn(false);
                             setShowOptionList(false);
-                            if (product.plan === null) {
+                            if (product?.plan === null) {
                               setSelectProductWarn(true);
                             } else {
                               setSelectProductWarn(false);
                             }
                           }}
                         >
-                          {`${product.Plan_Type}`}
+                          {`${product?.Plan_Type}`}
                         </div>
                       ))
                     )}
@@ -927,7 +1007,8 @@ const Balance = newBalance !== null &&
                   }
                 }}
               >
-                <h2 className="text-[12px] font-[400] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
+                <h2 className="text-[12px] font-[400] leading-[12px]
+                 capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
                   {selectedOptionMtn}
                 </h2>
                 <button className="lg:w-6 lg:h-6 w-[12px] h-[12px]">
@@ -936,7 +1017,7 @@ const Balance = newBalance !== null &&
               </div>
 
               <div className="relative">
-                {showOptionList && selectedProductMtn.length > 1 && (
+                {showOptionList && selectedProductMtn?.length > 1 && (
                   <div
                     className={`text-[12px] absolute  border md:rounded-[10px] 
                    bvnQuery shadow-[0px_3.30667px_8.26667px_0px_rgba(0,0,0,0.25)]
@@ -958,12 +1039,12 @@ const Balance = newBalance !== null &&
                     ) : (
                       productPlans.map((plan) => (
                         <div
-                          key={plan.PlanID}
+                          key={plan?.PlanID}
                           className={` 
                           font-[400] text-[13px] leading-[18px] lg:leading-[20px] cursor-pointer border-b-[0.5px] 
                           md:rounded-[0px] text-[#7C7C7C] md:text-[12px] lg:text-[16px] lg:mt-2 py-[15px] lg:py-[20px]
                            pl-[5px] ${
-                             selectedOptionMtn === plan.PlanID
+                             selectedOptionMtn === plan?.PlanID
                                ? "bg-gray-200"
                                : ""
                            }
@@ -973,8 +1054,8 @@ const Balance = newBalance !== null &&
                             handleSelectOption(plan);
                           }}
                         >
-                          {`${plan.PlanType} ${plan.Size} (₦${plan.Amount}) ~ ${
-                            plan.Validity ? plan.Validity.toUpperCase() : ""
+                          {`${plan?.PlanType} ${plan?.Size} (₦${plan?.Amount}) ~ ${
+                            plan?.Validity ? plan?.Validity.toUpperCase() : ""
                           } `}
                         </div>
                       ))
@@ -1000,14 +1081,17 @@ const Balance = newBalance !== null &&
                 }`}
               >
                 Phone Number{" "}
-                <span className="text-[#04177F]">
-                  <Link to="/DataBundleSelectRecipient">
+                <span  onClick={()=> {
+                    setDataRecipientDisplay(true)
+                  }} className="text-[#04177F] cursor-pointer">
+
                     (Select Recipient)
-                  </Link>
+              
                 </span>{" "}
               </h2>
               <div className="relative">
                 <input
+                maxLength={11}
                   type="number"
                   className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.8px]
                  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
@@ -1019,10 +1103,10 @@ const Balance = newBalance !== null &&
                 }
   `}
                   placeholder="11 digits phone number"
-                  value={inputValue}
+                  value={recipientPhoneNumberMtn}
                   onChange={(event) => {
                     handleChange(event);
-                    setRecipientPhoneNumberMtn(event.target.value);
+                    setRecipientPhoneNumberMtn(event?.target?.value);
                   }}
                 />
                 <div className="absolute inset-y-0 top-[4px] right-0 flex items-center pr-6 pointer-events-none">
@@ -1272,21 +1356,52 @@ const Balance = newBalance !== null &&
             </div>
           </div>
 
-          <div className="flex items-center gap-2 lg:mt-[30px]">
-            <h2 className="text-[13px] font-[400] leading-[12px] lg:leading-[24px] md:text-[12px] lg:text-[18px]">
-              Add to Recipient?
-            </h2>
-            <div
-              onClick={() => setAddRecipient(!addRecipient)}
-              className={` w-[20px] h-[8.4px] md:w-[30px] md:h-[12px] lg:w-[50px] lg:h-[22px] lg:rounded-full rounded 
-                    ${addRecipient ? "bg-[#77ff60]" : "bg-[#b1b0b0]"}`}
-            >
-              <div
-                className={`rounded-full w-[9.5px] h-[8.4px] md:w-[14px] md:h-[12px] lg:h-[22px] lg:w-[21px] lg:drop-shadow-md bg-[#fff] 
-                    ${addRecipient ? "float-right" : "float-left"}`}
-              ></div>
-            </div>
-          </div>
+   <div className="flex items-center gap-2 lg:mt-[30px]">
+     
+                                      <h2 className='!text-[13px] md:!text-base'>
+                                        {RecipientExistCheck?.phone === recipientPhoneNumberMtn
+                                        
+                                        && !errors?.recipientPhoneNumberMtn
+                                       
+                                         ? "Exists in recipients" : "Add to recipients"}
+                                      </h2>
+                                      {isLoading === false  ? (
+                                          
+                                      <div onClick={() => { 
+                                         
+                                     if(
+                                       recipientPhoneNumberMtn?.length > 1 && recipientPhoneNumberMtn?.length === 11
+                                          && RecipientExistCheck?.phone === undefined 
+                                          && RecipientExistCheck?.phone !== recipientPhoneNumberMtn && !errors?.recipientPhoneNumberMtn
+                                         ) {
+                                            AddRecipientToList();
+                                          }else if(recipientPhoneNumberMtn?.length < 11 && recipientNamesMtn?.length < 1) {
+                                              alert("Input the recipient Number and the recipient Name")
+                                          }
+                                       }}
+                                          className={`w-[16px] h-[8.4px] md:w-[30px] md:h-[12px]
+                                           lg:w-[50px] lg:h-[22px] lg:rounded-full 
+                                           rounded cursor-pointer 
+                                           ${
+                                           (RecipientExistCheck?.phone === recipientPhoneNumberMtn
+                                             &&  recipientPhoneNumberMtn?.length === 11   && recipientPhoneNumberMtn?.length > 1
+                                             && !errors?.recipientPhoneNumberMtn  ) 
+                                           ? "bg-[#77ff60]" : "bg-[#b1b0b0]"}`}>
+                                          <div className={`rounded-full w-[8.5px]
+                                               h-[7.4px] md:w-[14px] md:h-[12px] lg:h-[22px] lg:w-[21px] lg:drop-shadow-md bg-[#fff]
+                                                ${
+                                                  ( RecipientExistCheck?.phone === recipientPhoneNumberMtn&&  recipientPhoneNumberMtn?.length === 11
+                                               &&   recipientNamesMtn?.length > 1  && !errors?.recipientPhoneNumberMtn)
+                                          ? "float-right" : "float-left"}`}>
+                                          </div>
+                                      </div>
+                                         
+                                      ) : (
+                                  <BalanceLoading/>
+                                      )}
+                                      
+                                 
+             </div>
 
           {/* ================Proceed=================== */}
 
@@ -1378,7 +1493,7 @@ const Balance = newBalance !== null &&
                       </span>
                       <div className="flex gap-1">
                         <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
-                          {inputValue}
+                          {recipientPhoneNumberMtn}
                         </span>
                       </div>
                     </div>
@@ -1390,7 +1505,7 @@ const Balance = newBalance !== null &&
                       </span>
                       <div className="flex gap-1">
                         <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
-                          {recipientNamesMtn}
+                         {recipientNamesMtn?.length && recipientNamesMtn?.length < 1 ? "NIL" : recipientNamesMtn}
                         </span>
                       </div>
                     </div>
@@ -1543,7 +1658,7 @@ const Balance = newBalance !== null &&
                       selectedProduct: selectedProductMtn,
                       selectedOption: selectedOptionMtn,
                       recipientPhoneNumber: recipientPhoneNumberMtn,
-                      inputValue: inputValue,
+                      inputValue: recipientPhoneNumberMtn,
                       recipientNames: recipientNamesMtn,
                       selectedAmount: selectedAmountMtn,
                       mtntransactionID: mtntransactionID,
@@ -1685,7 +1800,8 @@ const Balance = newBalance !== null &&
                       setFailed,
                       setLoading,
                       setErrorMessage,
-                      DataHandler
+                      DataHandler,
+                      setNetworkIssue
                     );
                   }}
                   disabled={inputPin.length !== 4}
@@ -1813,7 +1929,7 @@ const Balance = newBalance !== null &&
                                       Phone Number
                                     </span>
               <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
-                          {inputValue}
+                          {recipientPhoneNumberMtn}
                          </span>
                              </div>
                 
@@ -1903,7 +2019,7 @@ const Balance = newBalance !== null &&
                     to="/MtnReceipt"
                     state={{
                       selectedProduct: selectedProductMtn,
-                      inputValue: inputValue,
+                      inputValue: recipientPhoneNumberMtn,
                       recipientPhoneNumber: recipientPhoneNumberMtn,
                       selectedOption: selectedOptionMtn,
                       recipientNames: recipientNamesMtn,
@@ -1913,9 +2029,7 @@ const Balance = newBalance !== null &&
                       mtnorderID: mtnOrderID,
                       mtndescription: mtndescription,
                       mtnReceiptInfo: mtnReceiptInfo,
-                     
-                    }}
-                  >
+                     }}>
                     <button
                       onClick={handleReceipt}
                       style={{boxShadow : '0px 0px 2.0368096828460693px 0px #00000040'}} 
@@ -1942,7 +2056,7 @@ const Balance = newBalance !== null &&
              text-[#fff] w-full md:w-[100px] lg:w-[170px] justify-center  ${
                    !selectedProductMtn ||
                    !selectedOptionMtn ||
-                   !inputValue ||
+                   !recipientPhoneNumberMtn ||
                    !selectedAmountMtn ||
                    !paymentSelected
                      ? "bg-[#63616188] cursor-not-allowed"
@@ -1952,7 +2066,7 @@ const Balance = newBalance !== null &&
               disabled={
                 !selectedProductMtn ||
                 !selectedOptionMtn ||
-                !inputValue ||
+                !recipientPhoneNumberMtn ||
                 !selectedAmountMtn ||
                 !paymentSelected
               }
@@ -1992,6 +2106,12 @@ const Balance = newBalance !== null &&
           <Loader />
         </Modal>
       )}
+      {dataRecipientDisplay  && (
+        <DataBundleSelectRecipient loadingRecipient ={loadingRecipient} 
+        setDataRecipientsDisplay={ setDataRecipientDisplay}
+        setDataRecipient ={setRecipientNamesMtn} 
+        setRecipientPhoneNumber={setRecipientPhoneNumberMtn}/>
+      )} 
      
       {restrictUser && sessionModal === false  && <RestrictionPopUp/>}
     </DashBoardLayout>

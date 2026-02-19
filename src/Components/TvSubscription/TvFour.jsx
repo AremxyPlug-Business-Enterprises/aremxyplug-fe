@@ -119,7 +119,7 @@ const Decoders  = [
               return setSessionModal(true);
               }
             }, 
-            fetchedResponse)
+            fetchedResponse, setNetworkIssue)
         }
       }
      

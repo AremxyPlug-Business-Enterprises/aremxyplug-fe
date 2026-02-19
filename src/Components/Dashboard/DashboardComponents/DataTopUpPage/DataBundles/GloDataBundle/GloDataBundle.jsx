@@ -26,12 +26,12 @@ import axiosInstance from "../../../../../ApiCollection.jsx/apiClient";
 import {
   VerifyTransPin,
   GetFunction,
-  RestrictionPopUp,
+  RestrictionPopUp, PostFunction
 } from "../../../../../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../../../../../Loader/Loader";
 import { BalanceLoading } from "../../../../../Loader/Loader";
 import { GetLocalStorage } from "../../../../../LocalStorage/LocalStorage";
-
+import { DataBundleSelectRecipient } from "../DataBundleSelectRecipient";
 const GloDataBundle = () => {
   const Data = GetLocalStorage()
   const { isDarkMode, newBalance } = useContext(ContextProvider);
@@ -63,12 +63,12 @@ const GloDataBundle = () => {
     gloPurchaseErrorType,
      setGloPurchaseErrorType,
      sessionModal,
-     setSessionModal
+     setSessionModal,
+      setRecipientsData, recipientsData
   } = useContext(ContextProvider);
 
   const [showProductList, setShowProductList] = useState(false);
   const [showOptionList, setShowOptionList] = useState(false);
-  const [addRecipient, setAddRecipient] = useState(false);
   const [proceed, setProceed] = useState(false);
   const [confirm, setConfirm] = useState(false);
   const [errors, setErrors] = useState({});
@@ -78,7 +78,7 @@ const GloDataBundle = () => {
   const [paymentAmount, setPaymentAmount] = useState("");
   const [codes, setCodes] = useState(false);
   const [plan, setPlan] = useState("");
-  const [loading, setLoading] = useState("");
+  const [loading, setLoading] = useState(false);
   const [glotransactionID, setGloTransactionID] = useState("");
   const [gloorderID, setGloOrderID] = useState("");
   const [glorefNumber, setGloRefNumber] = useState("");
@@ -98,9 +98,9 @@ const GloDataBundle = () => {
   const [restrictUser, setRestrictUser] = useState(false)
   const [balanceLoader, setBalanceLoader] = useState(false)
 const [gloSuccessfulResponse, setGloSuccessfulResponse] = useState({})
-
-
-
+const [loadingRecipient, setLoadingRecipient] = useState(false);
+const [isLoading, setIsLoading] = useState(false);
+ const [dataRecipientDisplay, setDataRecipientDisplay] = useState(false)
 
   
  const balanceStringToNum = Number(newBalance);
@@ -127,7 +127,6 @@ const Balance = newBalance !== null &&
         const response = await axiosInstance.get("/products/telecom/list/2");
         if (response.status === 201 || response.status === 200) {
           setProducts(response?.data?.data?.products || []);
-         // console.log(response?.data?.data?.plans)
            if (
           response?.data?.data?.plans === null ||
           response?.data?.data?.length < 1
@@ -138,11 +137,17 @@ const Balance = newBalance !== null &&
       } catch (error) {
        
         if (error && error.response === undefined) {
-          setNetworkIssue(true)
+         if(!networkIssue) return setNetworkIssue(true);
+         if(networkIssue) return;
         } else if (error && error.response.status === 400) {
           alert("Service for glo is currently not available, Try again later.");
         } else if (error && error.response.status === 500) {
           alert("Service for glo is currently not available, Try again later.");
+        }else if(error && error?.response?.status === 401){
+         if(!sessionModal) return setSessionModal(true);
+         if(sessionModal) return;
+        }else{
+          alert("An unexpected error has occured")
         }
       } finally {
         setLoadingProducts(false);
@@ -285,6 +290,77 @@ const Balance = newBalance !== null &&
         , flag:   require("../DataBundles-Images/ke.svg").default, id: 6, code : "KSH Wallet"  },
     ];
 
+
+    //Getting Recipients List immediately a user enters the 
+// page and after a recipient has been added to the listg
+   const GetRecipientList = async()=> {
+      const successHandler = (response)=> {
+setRecipientsData(response?.data?.data?.recipients?.recipients);
+      }
+      const failedHandler = async(errorType)=> {
+   
+        if(errorType === "Network error" || errorType === "User error"){
+             if(!networkIssue) return  setNetworkIssue(true)
+                        if(networkIssue) return;
+        }else if(errorType === "unauthorised"){
+        if(sessionModal) return;
+        if(!sessionModal) return setSessionModal(true)
+        }else if(errorType === "Server error"){
+    alert("Unable to fetch your recipient List try again later.")
+        }
+      }
+   await GetFunction("data/recipient", 
+    setLoadingRecipient, 
+    successHandler, 
+    failedHandler,()=> {}, setNetworkIssue)
+   }
+//Adding recipients to the data
+     const AddRecipientToList = async()=> {
+          const successHandler = async(response)=> {
+         await GetRecipientList();
+    alert("Recipients Saved Successfully")
+         
+          }
+          const requestBody = {
+            network: "glo", // Changed from networkName
+            name: recipientNamesGlo, // Changed from recipientName
+            phone: recipientPhoneNumberGlo, // Changed from recipientNumber
+          };
+          const failedHandler = async(errorType)=> {
+       
+            if(errorType === "Network error" || errorType === "User error"){
+                 if(!networkIssue) return  setNetworkIssue(true)
+                            if(networkIssue) return;
+            }else if(errorType === "unauthorised"){
+            if(sessionModal) return;
+            if(!sessionModal) return setSessionModal(true)
+            }else if(errorType === "Server error"){
+        alert("Unable to fetch your recipient List try again later.")
+           
+          } else if(errorType === "Bad request"){
+             alert("An unexpected error has occured");
+          }else{
+              alert("An unexpected error has occured");
+            }
+          }
+       await PostFunction("data/recipient",
+        setIsLoading, requestBody,
+        successHandler, 
+        failedHandler,()=> {}, setNetworkIssue)
+       }
+    //Recipient History
+    const CheckRecipientInfoInList =(value)=> {
+   if(value && value?.length === 11){
+   const findingRecipient = recipientsData?.length > 0 && recipientsData !== null && recipientsData !== undefined ? 
+     recipientsData?.find((item)=>{ 
+    return value === item?.phone
+   }
+) : []
+  return findingRecipient
+  }
+}
+const RecipientExistCheck = CheckRecipientInfoInList(recipientPhoneNumberGlo);
+
     const GetBalance = async () => {
        if(!navigator.onLine) return setCheckNetworkError(true)
           const FailedHandler = async (ErrorType) => {
@@ -316,6 +392,7 @@ const Balance = newBalance !== null &&
   if(Data?.ConfirmAcc === "true"){
     fetchProducts()
       GetBalance();
+      GetRecipientList();
       if (GetBalance) {
         setNewBalance(
           passDataBalance?.data?.data?.data
@@ -356,7 +433,7 @@ const Balance = newBalance !== null &&
       }),
   });
 
-  const [inputValue, setInputValue] = useState("");
+  
 
   const GloRegex =
     /^(234|0)(705[0-9]|805[0-9]|807[0-9]|811[0-9]|815[0-9]|905[0-9]|915[0-9])\d{6}$/;
@@ -375,8 +452,8 @@ const Balance = newBalance !== null &&
 
   const handleChange = (e) => {
     const value = e.target.value;
-    const numericValue = value.replace(/\D/g, "");
-    setInputValue(numericValue);
+    const numericValue = value?.replace(/\D/g, "");
+    setRecipientPhoneNumberGlo(numericValue);
 
     // Validate phone number if it's complete
     if (numericValue.length === 11) {
@@ -427,10 +504,10 @@ const Balance = newBalance !== null &&
         }, {})
       );
     } else if (
-      validateNigerianNumberByNetwork(inputValue) !== "GLO"
+      validateNigerianNumberByNetwork(recipientPhoneNumberGlo) !== "GLO"
     ) {
       setErrors({
-        recipientPhoneNumber: `Invalid GLO number. Please enter a valid GLO number.`,
+        recipientPhoneNumberGlo : `Invalid GLO number. Please enter a valid GLO number.`,
       });
     } else {
       setProceed(true);
@@ -547,7 +624,7 @@ try {
     // usage
     await buyData(
       2, // Network ID for MTN
-      inputValue, // Use inputValue instead of recipientPhoneNumber
+      recipientPhoneNumberGlo, // Use inputValue instead of recipientPhoneNumber
       selectedPlan?.ID,
       recipientNamesGlo
     );
@@ -564,7 +641,6 @@ try {
     setRecipientPhoneNumberGlo("");
     setPaymentSelected(false);
     setPaymentAmount("");
-    setInputValue("");
   };
 
 
@@ -632,8 +708,9 @@ try {
                         : "border border-[#0003]"
                     }`}
             >
-              <Link
-                to="/DataBundleSelectRecipient"
+              <div onClick={()=> {
+                setDataRecipientDisplay(true);
+              }}
                 style={{ display: "inline-flex", width: "100%" }}
                 className="justify-between"
               >
@@ -643,7 +720,7 @@ try {
                   src={Recipient}
                   alt=""
                 />
-              </Link>
+              </div>
             </div>
             <div
               className={`w-full flex items-center justify-between border text-[10px] md:py-[15px] md:w-[40%] md:mr-[9%]  rounded-[5px] h-[25px] p-1 md:text-[14px] lg:h-[45px] lg:text-[16px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]
@@ -958,11 +1035,11 @@ try {
                 }`}
               >
                 Phone Number{" "}
-                <span className="text-[#04177F]">
-                  <Link to="/DataBundleSelectRecipient">
-                    (Select Recipient)
-                  </Link>
-                </span>{" "}
+                <span onClick={()=> {
+                  setDataRecipientDisplay(true)
+                }} className="text-[#04177F] cursor-pointer">
+                   (Select Recipient)
+                   </span>{" "}
               </h2>
               <div className="relative mt-[5px]">
                 <input
@@ -976,7 +1053,7 @@ try {
                     : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
                 }`}
                   placeholder="11 digits phone number"
-                  value={inputValue}
+                  value={recipientPhoneNumberGlo}
                   onChange={(event) => {
                     handleChange(event);
                     setRecipientPhoneNumberGlo(event.target.value);
@@ -1219,22 +1296,52 @@ try {
             </div>
           </div>
 
-          <div className="flex items-center gap-2 lg:mt-[30px]">
-            <h2 className="text-[13px] font-[400] leading-[12px] lg:leading-[24px] md:text-[12px] lg:text-[18px]">
-              Add to Recipient?
-            </h2>
-            <div
-              onClick={() => setAddRecipient(!addRecipient)}
-              className={` w-[20px] h-[8.4px] md:w-[30px] md:h-[12px] lg:w-[50px] lg:h-[22px] lg:rounded-full rounded 
-                    ${addRecipient ? "bg-[#77ff60]" : "bg-[#b1b0b0]"}`}
-            >
-              <div
-                className={`rounded-full w-[9.5px] h-[8.4px] md:w-[14px] md:h-[12px] lg:h-[22px] lg:w-[21px] lg:drop-shadow-md bg-[#fff] 
-                    ${addRecipient ? "float-right" : "float-left"}`}
-              ></div>
-            </div>
-          </div>
-
+        <div className="flex items-center gap-2 lg:mt-[30px]">
+     
+                                      <h2 className='!text-[13px] md:!text-base'>
+                                        {RecipientExistCheck?.phone === recipientPhoneNumberGlo
+                                        
+                                        && !errors?.recipientPhoneNumberGlo
+                                       
+                                         ? "Exists in recipients" : "Add to recipients"}
+                                      </h2>
+                                      {isLoading === false  ? (
+                                          
+                                      <div onClick={() => { 
+                                         
+                                     if(
+                                       recipientPhoneNumberGlo?.length > 1 && recipientPhoneNumberGlo?.length === 11
+                                          && RecipientExistCheck?.phone === undefined 
+                                          && RecipientExistCheck?.phone !== recipientPhoneNumberGlo && !errors?.recipientPhoneNumberGlo
+                                         ) {
+                                            AddRecipientToList();
+                                          }else if(recipientPhoneNumberGlo?.length < 11 && recipientNamesGlo?.length < 1) {
+                                              alert("Input the recipient Number and the recipient Name")
+                                          }
+                                       }}
+                                          className={`w-[16px] h-[8.4px] md:w-[30px] md:h-[12px]
+                                           lg:w-[50px] lg:h-[22px] lg:rounded-full 
+                                           rounded cursor-pointer 
+                                           ${
+                                           (RecipientExistCheck?.phone === recipientPhoneNumberGlo
+                                             &&  recipientPhoneNumberGlo?.length === 11   && recipientPhoneNumberGlo?.length > 1
+                                             && !errors?.recipientPhoneNumberGlo  ) 
+                                           ? "bg-[#77ff60]" : "bg-[#b1b0b0]"}`}>
+                                          <div className={`rounded-full w-[8.5px]
+                                               h-[7.4px] md:w-[14px] md:h-[12px] lg:h-[22px] lg:w-[21px] lg:drop-shadow-md bg-[#fff]
+                                                ${
+                                                  ( RecipientExistCheck?.phone === recipientPhoneNumberGlo &&  recipientPhoneNumberGlo?.length === 11
+                                               &&   recipientNamesGlo?.length > 1  && !errors?.recipientPhoneNumberGlo )
+                                          ? "float-right" : "float-left"}`}>
+                                          </div>
+                                      </div>
+                                         
+                                      ) : (
+                                  <BalanceLoading/>
+                                      )}
+                                      
+                                 
+             </div>
           {/* ================Proceed=================== */}
 
           {loading && (
@@ -1331,7 +1438,7 @@ try {
                                    </span>
                                    <div className="flex gap-1">
                                      <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
-                                       {inputValue}
+                                       {recipientPhoneNumberGlo}
                                      </span>
                                    </div>
                                  </div>
@@ -1343,7 +1450,7 @@ try {
                                    </span>
                                    <div className="flex gap-1">
                                      <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
-                                       {recipientNamesGlo}
+                                      {recipientNamesGlo?.length && recipientNamesGlo?.length < 1 ? "NIL" : recipientNamesGlo}
                                      </span>
                                    </div>
                                  </div>
@@ -1533,8 +1640,7 @@ try {
             
      <div className="flex flex-col gap-[10px] px-[20px]" >
                 <button
-                  onClick={(e) => {
-                    console.log("inputPin", inputPin);
+                  onClick={() => {
                     const DataHandler = async() => {
                     //alert("I am running what could be the error.")
                       // Close modal on PIN success
@@ -1555,7 +1661,8 @@ try {
                       setFailed,
                       setLoading,
                       setErrorMessage,
-                      DataHandler
+                      DataHandler,
+                      setNetworkIssue
                     );
                   }}
                   disabled={inputPin.length !== 4}
@@ -1584,8 +1691,7 @@ try {
                       ${isDarkMode ? "bg-black border-[1px] rounded-[7px] border-white": "bg-white"}`}>
                       <div className="flex justify-between items-center p-4">
                         <img
-                        
-                          className={`w-6 h-6  `}
+                        className={`w-6 h-6  `}
                           src="/Images/login/arpLogo.png"
                           alt="Logo"
                         />
@@ -1629,7 +1735,6 @@ try {
                       selectedProduct: selectedProductGlo,
                       selectedOption: selectedOptionGlo,
                       recipientPhoneNumber: recipientPhoneNumberGlo,
-                      inputValue: inputValue,
                       recipientNames: recipientNamesGlo,
                       selectedAmount: selectedAmountGlo,
                       glotransactionID: glotransactionID,
@@ -1680,7 +1785,6 @@ try {
                   <img
                     onClick={() => {
                       setTransactSuccessPopUp(false);
-                      window.location.reload();
                     }}
                     className=" w-[18px] h-[15px] md:w-[35px] md:h-[32px] lg:w-[35px] lg:h-[22px]"
                     src="/Images/login/arpLogo.png"
@@ -1690,7 +1794,6 @@ try {
                   <img
                     onClick={() => {
                       setTransactSuccessPopUp(false);
-                      window.location.reload();
                     }}
                     className=" w-[18px] h-[18px] md:w-[35px] md:h-[35px] lg:w-[29px] lg:h-[29px]"
                     src="/Images/transferImages/close-circle.png"
@@ -1763,7 +1866,7 @@ try {
                       Phone Number
                     </span>
                   <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
-                        {inputValue}
+                        {recipientPhoneNumberGlo}
                       </span>
                 </div>
 
@@ -1848,7 +1951,6 @@ try {
                     to="/GloReceipt"
                     state={{
                       selectedProduct: selectedProductGlo,
-                      inputValue: inputValue,
                       recipientPhoneNumber: recipientPhoneNumberGlo,
                       selectedOption: selectedOptionGlo,
                       recipientNames: recipientNamesGlo,
@@ -1887,7 +1989,7 @@ try {
              text-[#fff] w-full md:w-[100px] lg:w-[170px] justify-center ${
                 !selectedProductGlo ||
                 !selectedOptionGlo ||
-                !inputValue ||
+                !recipientPhoneNumberGlo ||
                 !selectedAmountGlo ||
                 !paymentSelected
                    ? "bg-[#63616188] cursor-not-allowed"
@@ -1900,7 +2002,7 @@ try {
               disabled={
                 !selectedProductGlo ||
                 !selectedOptionGlo ||
-                !inputValue ||
+                !recipientPhoneNumberGlo ||
                 !selectedAmountGlo ||
                 !paymentSelected
               }
@@ -1940,6 +2042,12 @@ try {
       {sessionModal  === false && restrictUser && (
         <RestrictionPopUp/>
       )}
+        {dataRecipientDisplay  && (
+              <DataBundleSelectRecipient loadingRecipient ={loadingRecipient} 
+              setDataRecipientsDisplay={ setDataRecipientDisplay}
+              setDataRecipient ={setRecipientNamesGlo} 
+              setRecipientPhoneNumber={setRecipientPhoneNumberGlo}/>
+            )} 
     </DashBoardLayout>
   );
 };

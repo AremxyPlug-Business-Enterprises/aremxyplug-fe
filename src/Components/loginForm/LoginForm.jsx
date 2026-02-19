@@ -362,7 +362,12 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
                   className={`${
                     usernameORemail === "username" ? "text-[#04177F]" : ""
                   }  cursor-pointer hover:text-gray-700`}
-                  onClick={() => setUsernameORemail("username")}
+                  onClick={() => {
+                    setUsernameORemail("username")
+                    setErrors((obj)=>({
+                      ...obj, email : ""
+                    }))
+                    }}
                 >
                   Username
                 </span>{" "}
@@ -373,6 +378,9 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
                   }  cursor-pointer hover:text-gray-700`}
                   onClick={() =>{
                     setUsernameORemail("email");
+                         setErrors((obj)=>({
+                      ...obj, username : ""
+                    }))
                   } }
                 >
                   {" "}

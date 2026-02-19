@@ -93,7 +93,7 @@ import { SmileReceipt } from "./Components/Dashboard/DashboardComponents/DataTop
 import SpectranetDataBundle from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/SpectranetDataBundle/SpectranetDataBundle";
 import { SpectranetReceipt } from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/SpectranetDataBundle/SpectranetReceipt";
 import AddRecipient from "./Components/AirTimePage/AddRecipient";
-import DataBundleSelectRecipient from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundleSelectRecipient";
+//import DataBundleSelectRecipient from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundleSelectRecipient";
 import DataBundleAddRecipient from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundleAddRecipient";
 import ElectricitySubscription from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/ElectricitySubscription";
 import IKEDC from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/IKEDC";
@@ -335,7 +335,7 @@ export   const RoutingObjectLimitScope = [
   { id: 116, Routepath: "/AirtelReceipt", RouteComponent: <ProtectedRoute><AirtelReceipt /></ProtectedRoute> },
   { id: 117, Routepath: "/EtisalatReceipt", RouteComponent: <ProtectedRoute><EtisalatReceipt /></ProtectedRoute> },
   { id: 118, Routepath: "/GloReceipt", RouteComponent: <ProtectedRoute><GloReceipt /></ProtectedRoute> },
-  { id: 119, Routepath: "/DataBundleSelectRecipient", RouteComponent: <ProtectedRoute><DataBundleSelectRecipient /></ProtectedRoute> },
+ // { id: 119, Routepath: "/DataBundleSelectRecipient", RouteComponent: <ProtectedRoute><DataBundleSelectRecipient /></ProtectedRoute> },
   { id: 120, Routepath: "/DataBundleAddRecipient", RouteComponent: <ProtectedRoute><DataBundleAddRecipient /></ProtectedRoute> },
   { id: 121, Routepath: "/TvSubscription", RouteComponent: <ProtectedRoute><TvSubscription /></ProtectedRoute> },
   { id: 122, Routepath: "/GoTv", RouteComponent: <ProtectedRoute><GoTv /></ProtectedRoute> },
@@ -382,7 +382,7 @@ export   const RoutingObjectLimitScope = [
   { id: 163, Routepath: "/payment-page", RouteComponent: <ProtectedRoute><PaymentPage /></ProtectedRoute> },
   { id: 164, Routepath: "/CardPayment", RouteComponent: <ProtectedRoute><CardPayment /></ProtectedRoute> },
   { id: 165, Routepath: "/AddNewCardPayment", RouteComponent: <ProtectedRoute><AddNewCardPayment /></ProtectedRoute> },
-  { id: 166, Routepath: "/ExistingCardPage", RouteComponent: <ProtectedRoute><ExistingCardPage /></ProtectedRoute> },
+  { id: 166, Routepath: "/ExistingCardPage", RouteComponent : <ProtectedRoute><ExistingCardPage /></ProtectedRoute> },
   { id: 167, Routepath: "/FundWithCard", RouteComponent: <ProtectedRoute><FundWithCard /></ProtectedRoute> },
   { id: 168, Routepath: "/CardPaymentReceipt", RouteComponent: <ProtectedRoute><CardPaymentReceipt /></ProtectedRoute> },
   { id: 169, Routepath: "/MtnfailedReceipt", RouteComponent: <ProtectedRoute><MtnFailedReceipt /></ProtectedRoute> },
@@ -399,9 +399,8 @@ export   const RoutingObjectLimitScope = [
   { id: 180, Routepath: "/NecoFailedReceipt", RouteComponent: <ProtectedRoute><NecoFailedReceipt /></ProtectedRoute> },
   { id: 181, Routepath: "/NabtebFailedReceipt", RouteComponent: <ProtectedRoute><NabtebFailedReceipt /></ProtectedRoute> },
   {id : 182, Routepath : "/TestingPhase", RouteComponent : <TestingDesign/>},
-     {id : 183, Routepath : "*", RouteComponent : <NotFound/>}
+     {id : 183, Routepath : "*", RouteComponent :  <ProtectedRoute><NotFound/></ProtectedRoute>}
   ];
-  const UserStatus = localStorage.getItem("cxccxfd");
 export const Router = () => {
  return (
     <div>

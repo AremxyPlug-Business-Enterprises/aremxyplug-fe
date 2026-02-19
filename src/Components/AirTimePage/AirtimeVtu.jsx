@@ -108,11 +108,18 @@ setRecipientsAirtime(response?.data?.data?.recipients?.recipients);
             return totalAmount;
         }
      }
-      const newAmount = calcAmount(discount, amount) ;
+      const newAmount = calcAmount(discount, amount) ;  
      // console.log(newAmount);   
-               const updateBalance = (newBalance === "" || newBalance === undefined || newBalance === null)
-                ?  Number(passDataBalance?.data?.data?.data?.balance) : balanceStringToNum;
-          //  console.log(updateBalance);
+     //Balance state Handling
+             const updateBalance = typeof newBalance === "string" && newBalance !== undefined && newBalance !== null
+              && newBalance?.length > 0
+             ? balanceStringToNum  : ((typeof newBalance === "string" &&  newBalance?.length < 1) || (typeof newBalance !== "string" &&
+               newBalance === undefined
+             )) && typeof passDataBalance?.data?.data?.data?.balance === "string"  ? 
+ Number(passDataBalance?.data?.data?.data?.balance) :  passDataBalance?.data?.data?.data?.balance  
+             && typeof passDataBalance?.data?.data?.data?.balance  === "string" && passDataBalance?.data?.data?.data?.balance?.length > 0
+             ? Number(passDataBalance?.data?.data?.data?.balance)   : "";
+             
                  let CheckSufficiency = newAmount  >  updateBalance
                  
 
@@ -144,6 +151,8 @@ setRecipientsAirtime(response?.data?.data?.recipients?.recipients);
                              FailedHandler,
                             ()=>{}, setNetworkIssue)
                            } 
+
+
                  useEffect(() => {
                     setRecipientNumber("");
                     setRecipientName("");
@@ -151,11 +160,13 @@ setRecipientsAirtime(response?.data?.data?.recipients?.recipients);
                   
             if (Data?.ConfirmAcc === "true"){                    
              GetBalance();
+             GetRecipientList();
           setNewBalance(passDataBalance?.data?.data?.data !== undefined
                ? passDataBalance?.data?.data?.data?.balance : "");
              }else {
                       setRestrictUser(true);
                     }
+                       
                   //eslint-disable-next-line
                           }, []);
                      
@@ -171,9 +182,7 @@ setRecipientsAirtime(response?.data?.data?.recipients?.recipients);
         },[CheckSufficiency]);
 
         //Getting Recipient Details
-        useEffect(()=> {
-        GetRecipientList();
-        },[])
+       
 
  const networkList = [
         {
@@ -205,18 +214,15 @@ setRecipientsAirtime(response?.data?.data?.recipients?.recipients);
             networkId: "4",
         },
     ];
-    const updateBalanceToNumber = Number(updateBalance)
-  const newBalanceToNumber = Number(newBalance)
-  const balanceOption = newBalance === "" || newBalance === null ? updateBalanceToNumber : newBalanceToNumber
+
+ 
     const methodOptions = [
       {
         method: "Nigeria",
-        balance:
-     balanceOption !== null ||  balanceOption !== undefined
-            ? `(${ balanceOption?.toLocaleString("en-NG", {
+        balance: `(${ updateBalance?.toLocaleString("en-NG", {
                  style : "currency",
                  currency : "NGN"
-            })})` : "", 
+            })})`, 
            flag:  require("./Images/ng.svg").default,
         id: 1,
         code : "NGN Wallet"
@@ -393,7 +399,7 @@ const RecipientExistCheck = CheckRecipientInfoInList(recipientNumber)
   }
 
 };
-
+const [airtimeReceiptDiscountValue, setAirtimeReceiptDiscountValue] = useState({})
   const handleAddRecipient = async() => {
 
       const successHandler = (response)=> {
@@ -480,11 +486,13 @@ const handleTransactionSuccessClose = async()=> {
   mobileno : recipientNumber,
   amount : amount,
    discount : `${discount}%`,
-  discounted_amount : newAmount
-  }
+  discounted_amount : newAmount,
+  recipient : recipientName
+ }
   const successHandler = (response)=> {
     const result = response?.data?.data?.data; // Access the nested `data`
            setTransactionID(result?.transaction_id);
+           setAirtimeReceiptDiscountValue(result?.discount_amount)
           setRefNumber(result?.reference_number);
            setOrderID(result?.order_id);
            setDescription(result?.transaction_description);
@@ -492,7 +500,7 @@ const handleTransactionSuccessClose = async()=> {
            setTransactSuccessPopUp(true); 
            setConfirm(false);
            setAirtimeResponse(response)
-           return response
+           return response;
   }
   const FailedHandler = (ErrorType)=> {
       setInputPin("");
@@ -512,8 +520,8 @@ if(ErrorType === "Network error" || ErrorType === "User error"){
 }
   }
   await PostFunction("airtime",  setIsLoading, requestBody,
-    successHandler, FailedHandler, ()=>{}, setNetworkIssue
-   )
+    successHandler, FailedHandler, 
+    ()=> {}, setNetworkIssue);
 //   return typeof successHandler() === "object" ? successHandler() : null;
 }
 
@@ -824,6 +832,7 @@ className={`flex justify-left  w-[100%] items-center`}>
             <div className="relative flex flex-col h-full 
             gap-[3px] lg:gap-[5px] w-full ">
                  <input type='number'
+                 maxLength={11}
                className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.8px]
                  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
                    leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
@@ -871,7 +880,7 @@ className={`flex justify-left  w-[100%] items-center`}>
                  md:gap-[12px] lg:gap-[22px] md:my-2 lg:my-4">
                             <div className=" flex flex-col gap-[3px]
                    lg:gap-[5px] w-full md:w-1/2"> 
-                                <h2    className={` ${isDarkMode ? "text-white" : "text-black"} text-[14px] lg:text-[17px]
+                                <h2 className={` ${isDarkMode ? "text-white" : "text-black"} text-[14px] lg:text-[17px]
                        md:text-[13px]
                       md:font-[600] font-[400`}>Recipient Name 
                     <span className={`${styles.span4} !text-[15px] md:!text-base`}>(optional)</span></h2>
@@ -936,7 +945,7 @@ className={`flex justify-left  w-[100%] items-center`}>
                                         </div>
                                 {errors.amountToNumber && (
                                     <div className="text-[14px] text-red-500 italic lg:text-[14px]">
-                                        {errors. amountToNumber}
+                                        {errors.amountToNumber}
                                    </div>
                                 )}
                                   {(!errors.amountToNumber && networkName === "" && amount?.length > 1) && (
@@ -1152,14 +1161,13 @@ className={`flex justify-left  w-[100%] items-center`}>
                         {isLoading === false  ? (
                             
                         <div onClick={() => { 
-                           
-                       if(networkName?.length > 1 && 
+                      if(networkName?.length > 1 && 
                          recipientNumber?.length > 1 && recipientNumber?.length === 11
                             && RecipientExistCheck?.phone === undefined && RecipientExistCheck?.phone !== recipientNumber
                            &&   !errors?.recipientNumber) {
                                handleAddRecipient();
                             }else if(recipientNumber?.length < 11 && recipientName?.length < 1) {
-                                alert("Input the recipient Number and the recipient Name")
+                                alert("Input the recipient Number and the recipient Name");
                             }
                          }}
                             className={`w-[16px] h-[8.4px] md:w-[30px] md:h-[12px]
@@ -1167,14 +1175,13 @@ className={`flex justify-left  w-[100%] items-center`}>
                              rounded cursor-pointer 
                              ${
                              (RecipientExistCheck?.phone === recipientNumber
-                               &&  recipientNumber?.length === 11   && recipientName?.length > 1
-                               && !errors?.recipientNumber  ) 
+                               && !errors?.recipientNumber) 
                              ? "bg-[#77ff60]" : "bg-[#b1b0b0]"}`}>
                             <div className={`rounded-full w-[8.5px]
                                  h-[7.4px] md:w-[14px] md:h-[12px] lg:h-[22px] lg:w-[21px] lg:drop-shadow-md bg-[#fff]
                                   ${
-                                    ( RecipientExistCheck?.phone === recipientNumber &&  recipientNumber?.length === 11
-                                 &&   recipientName?.length > 1 && (networkName?.length > 1 || networkName !== undefined)    && !errors?.recipientNumber)
+                                    ( RecipientExistCheck?.phone === recipientNumber &&
+                               (networkName?.length > 1 || networkName !== undefined)    && !errors?.recipientNumber)
                             ? "float-right" : "float-left"}`}>
                             </div>
                         </div>
@@ -1302,7 +1309,7 @@ className={`flex justify-left  w-[100%] items-center`}>
                                     </div>
                                     <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                                         <p className={`text-[#0008] ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Recipient Name</p>
-                                        <span>{recipientName}</span>
+                                        <span>{recipientName?.length && recipientName?.length < 1 ? "NIL" : recipientName}</span>
                                     </div>
                                     <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                                         <p className={`text-[#0008] ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Payment Method</p>
@@ -1484,10 +1491,14 @@ className={`flex justify-left  w-[100%] items-center`}>
                     {transactSuccessPopUp && (
                         <Modal>
                             {/* <TransactFailedPopUp/> */}
-                            <div
-                                className={`${styles.successfulTwo} ${toggleSideBar ? "md:w-[45%] lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
-                                    } w-[90%] md:w-[70%]  overflow-auto`}
-                            >
+                       <div  className={`w-full flex justify-center h-full 
+             py-[30px] px-[15px] lg:px-[0px] lg:items-center
+              items-end`}>
+              <div
+               className={` bvnQuery lg:rounded-[12px] rounded-[10px] 
+              h-[520px] ${ toggleSideBar ? " lg:ml-[20%] lg:w-[40%]" : "lg:w-[40%]"
+              } w-[100%] md:w-[60%] overflow-auto  ${isDarkMode ? "bg-black text-white border rounded-[10px] border-white": "bg-white text-black"} `}
+              >
                                 <div className="flex justify-between items-center mx-[3%] my-[2%] lg:my-[1%]">
                                     <img
                                         onClick={() => setTransactSuccessPopUp(false)}
@@ -1527,7 +1538,8 @@ className={`flex justify-left  w-[100%] items-center`}>
                                             <div className="rounded-full w-[12.02px] h-[12.02px] flex items-center justify-center text-[6px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px]">
                                                 <img src={networkImage} alt="" className='w-full h-full object-cover' />
                                             </div>
-                                            <h2 className="text-[10px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">{networkName}</h2>
+                                            <h2 className="text-[10px] leading-[12px]
+                                             capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">{networkName}</h2>
                                         </span>
                                     </div>
                                     <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
@@ -1540,7 +1552,7 @@ className={`flex justify-left  w-[100%] items-center`}>
                                     </div>
                                     <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                                         <p className="text-[#0008]">Recipient Name</p>
-                                        <span>{recipientName}</span>
+                                        <span>{recipientName?.length && recipientName?.length < 1 ? "NIL" : recipientName}</span>
                                     </div>
                                     <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                                         <p className="text-[#0008]">Payment Method</p>
@@ -1588,6 +1600,7 @@ className={`flex justify-left  w-[100%] items-center`}>
                                         refNumber: refNumber,
                                         orderID: orderID,
                                         description: description,
+                                     discount_amount : airtimeReceiptDiscountValue
                                     }}>
                                         <button
                                             onClick={handleReceipt}
@@ -1597,6 +1610,7 @@ className={`flex justify-left  w-[100%] items-center`}>
                                         </button>
                                     </Link>
                                 </div>
+                            </div>
                             </div>
                         </Modal>
                     )}

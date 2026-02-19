@@ -346,7 +346,7 @@ const Balance = newBalance !== null &&
       }),
   });
 
-  const [inputValue, setInputValue] = useState("");
+ 
 
   const mtnRegex =
     /^(234|0)(809[0-9]|817[0-9]|818[0-9]|909[0-9]|908[0-9])\d{6}$/;
@@ -367,7 +367,7 @@ const Balance = newBalance !== null &&
   const handleChange = (e) => {
     const value = e.target.value;
     const numericValue = value.replace(/\D/g, "");
-    setInputValue(numericValue);
+    setRecipientPhoneNumberEtisalat(numericValue);
 
     // Validate phone number if it's complete
     if (numericValue.length === 11) {
@@ -464,7 +464,7 @@ for (let network in networks) {
         setLoading(true);
         const response = await axiosInstance.post(path, data);
         const resData = response?.data?.data?.data; // Accessing the nested `data` object
-        setInputValue(resData?.Phone_Number);
+        setRecipientPhoneNumberEtisalat(resData?.Phone_Number);
         setEtisalatTransactionID(resData?.transaction_id);
         setEtisalatRefNumber(resData?.reference_number);
         setEtisalatOrderID(resData?.order_id); // No `order_id`, using `id` instead
@@ -545,8 +545,8 @@ for (let network in networks) {
     // usage
     await buyData(
       3, // Network ID for MTN
-      inputValue, // Use inputValue instead of recipientPhoneNumber
-      selectedPlan.ID,
+      recipientPhoneNumberEtisalat, // Use inputValue instead of recipientPhoneNumber
+      selectedPlan?.ID,
       recipientNamesEtisalat
     );
     // The Done handler for the done Changing the
@@ -561,7 +561,7 @@ for (let network in networks) {
     setRecipientPhoneNumberEtisalat("");
     setEtisalatPurchaseStatus(null);
     setRecipientPhoneNumberEtisalat("");
-    setInputValue("");
+    setRecipientPhoneNumberEtisalat("");
   };
 
 //Function for Getting balance and fetchProduct()
@@ -977,7 +977,7 @@ if(Data?.ConfirmAcc === "true"){
                 }
   `}
                   placeholder="11 digits phone number"
-                  value={inputValue}
+                  value={recipientPhoneNumberEtisalat}
                   onChange={(event) => {
                     handleChange(event);
                     setRecipientPhoneNumberEtisalat(event.target.value);
@@ -1341,7 +1341,7 @@ if(Data?.ConfirmAcc === "true"){
                                    </span>
                                    <div className="flex gap-1">
                                      <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
-                                       {inputValue}
+                                       {recipientPhoneNumberEtisalat}
                                      </span>
                                    </div>
                                  </div>
@@ -1353,7 +1353,8 @@ if(Data?.ConfirmAcc === "true"){
                                    </span>
                                    <div className="flex gap-1">
                                      <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
-                                       {recipientNamesEtisalat}
+                                       {recipientNamesEtisalat?.length && recipientNamesEtisalat?.length  < 1
+                                       ? "NIL" : recipientNamesEtisalat  }
                                      </span>
                                    </div>
                                  </div>
@@ -1630,7 +1631,7 @@ if(Data?.ConfirmAcc === "true"){
                       selectedProduct: selectedProductEtisalat,
                       selectedOption: selectedOptionEtisalat,
                       recipientPhoneNumber: recipientPhoneNumberEtisalat,
-                      inputValue: inputValue,
+                      inputValue: recipientNamesEtisalat,
                       recipientNames: recipientNamesEtisalat,
                       selectedAmount: selectedAmountEtisalat,
                       etisalattransactionID: etisalattransactionID,
@@ -1762,9 +1763,9 @@ if(Data?.ConfirmAcc === "true"){
                     <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
                           Phone Number
                                                  </span>
-                                                
+                                                   
                                                    <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
-                                                            {inputValue}
+                                                        {recipientPhoneNumberEtisalat}
                                                            </span>
                                                        
                                                  </div>
@@ -1776,7 +1777,8 @@ if(Data?.ConfirmAcc === "true"){
                                                    </span>
                                          
                                            <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
-                                                  {recipientNamesEtisalat}
+                                                 {recipientNamesEtisalat?.length && recipientNamesEtisalat?.length <1 ?
+                                                            "NIL" : recipientNamesEtisalat}
                                                   </span>
                                                   
                                           </div>
@@ -1868,7 +1870,7 @@ if(Data?.ConfirmAcc === "true"){
                       selectedProduct: selectedProductEtisalat,
                       selectedOption: selectedOptionEtisalat,
                       recipientPhoneNumber: recipientPhoneNumberEtisalat,
-                      inputValue: inputValue,
+                      inputValue: recipientPhoneNumberEtisalat,
                       recipientNames: recipientNamesEtisalat,
                       selectedAmount: selectedAmountEtisalat,
                       etisalattransactionID: etisalattransactionID,
@@ -1907,7 +1909,6 @@ if(Data?.ConfirmAcc === "true"){
                   py-[15px] ${
                     !selectedProductEtisalat ||
                     !selectedOptionEtisalat ||
-                    !inputValue ||
                     !selectedAmountEtisalat ||
                     !paymentSelected
                       ? "bg-[#63616188] cursor-not-allowed"
@@ -1917,8 +1918,7 @@ if(Data?.ConfirmAcc === "true"){
               disabled={
                 !selectedProductEtisalat ||
                 !selectedOptionEtisalat ||
-                !inputValue ||
-                !selectedAmountEtisalat ||
+               !selectedAmountEtisalat ||
                 !paymentSelected
               }
             >
