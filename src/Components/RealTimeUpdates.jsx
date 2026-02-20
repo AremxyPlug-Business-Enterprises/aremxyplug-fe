@@ -69,7 +69,6 @@ return ()=> clearInterval(realTimeUpdate.current)
 //eslint-disable-next-line
     }, [])
    
-   
     
    
   return (

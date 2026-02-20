@@ -418,11 +418,7 @@ const RecipientExistCheck = CheckRecipientInfoInList(recipientPhoneNumberGlo);
     setTransactSuccessPopUp(false);
   };
 
-  // if (addRecipient) {
-  //   console.log("recipient added");
-  // } else {
-  //   console.log("did not add recipient");
-  // }
+  
 
   const schema = Joi.object({
     recipientPhoneNumberGlo: Joi.string()
@@ -582,7 +578,7 @@ try {
         }
         return { statusCode: response.status, data: response.data };
       } catch (error) {
-        console.log(error);
+    
         if (error && error.response === undefined) {
           setGloPurchaseErrorType("Network error: Purchase Failed");
           setGloPurchaseStatus(true);
@@ -776,7 +772,8 @@ try {
                   <img
                     src={GloLogo}
                     alt=""
-                    className="md:w-[20px] md:h-[15px] mt-[px] lg:w-[30px] lg:h-[25px] 2xl:mt-[5px]"
+                    className="md:w-[20px] md:h-[15px] 
+                    mt-[px] lg:w-[30px] lg:h-[25px] 2xl:mt-[5px]"
                   />
                 </span>{" "}
                 GLO Data Instantly
@@ -1311,12 +1308,14 @@ try {
                                          
                                      if(
                                        recipientPhoneNumberGlo?.length > 1 && recipientPhoneNumberGlo?.length === 11
-                                          && RecipientExistCheck?.phone === undefined 
+                                          && RecipientExistCheck?.phone === undefined &&  recipientNamesGlo?.length > 2
                                           && RecipientExistCheck?.phone !== recipientPhoneNumberGlo && !errors?.recipientPhoneNumberGlo
                                          ) {
                                             AddRecipientToList();
-                                          }else if(recipientPhoneNumberGlo?.length < 11 && recipientNamesGlo?.length < 1) {
+                                          }else if((recipientPhoneNumberGlo?.length < 11 && recipientNamesGlo?.length <= 2)) {
                                               alert("Input the recipient Number and the recipient Name")
+                                          }else if( (recipientPhoneNumberGlo?.length === 11 && recipientNamesGlo?.length <= 2)){
+                                            alert("RecipientName must be more than two characters to save recipient")
                                           }
                                        }}
                                           className={`w-[16px] h-[8.4px] md:w-[30px] md:h-[12px]
@@ -1330,8 +1329,9 @@ try {
                                           <div className={`rounded-full w-[8.5px]
                                                h-[7.4px] md:w-[14px] md:h-[12px] lg:h-[22px] lg:w-[21px] lg:drop-shadow-md bg-[#fff]
                                                 ${
-                                                  ( RecipientExistCheck?.phone === recipientPhoneNumberGlo &&  recipientPhoneNumberGlo?.length === 11
-                                               &&   recipientNamesGlo?.length > 1  && !errors?.recipientPhoneNumberGlo )
+                                                  ( RecipientExistCheck?.phone === recipientPhoneNumberGlo
+                                                     &&  recipientPhoneNumberGlo?.length === 11 
+                                               && !errors?.recipientPhoneNumberGlo )
                                           ? "float-right" : "float-left"}`}>
                                           </div>
                                       </div>
@@ -1450,7 +1450,7 @@ try {
                                    </span>
                                    <div className="flex gap-1">
                                      <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
-                                      {recipientNamesGlo?.length && recipientNamesGlo?.length < 1 ? "NIL" : recipientNamesGlo}
+                                      { recipientNamesGlo?.length < 1 ? "NIL" : recipientNamesGlo}
                                      </span>
                                    </div>
                                  </div>
@@ -1876,7 +1876,7 @@ try {
                       Recipient Name
                     </span>
                      <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
-                        {recipientNamesGlo}
+                        {recipientNamesGlo?.length < 1 ? "NIL" : recipientNamesGlo}
                       </span>
                   
                   </div>

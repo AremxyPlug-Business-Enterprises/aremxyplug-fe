@@ -49,7 +49,7 @@ const AirtimeVtu = () => {
     const [balanceLoader, setBalanceLoader] = useState(false);
     const [loadingRecipient, setLoadingRecipient] = useState(false);
     const [proceed, setProceed] = useState(false);
-  
+     const [discountPercentage, setDiscountPercentage] = useState("%")
     const [paymentSelected, setPaymentSelected] = useState(false);
     const [showList, setShowList] = useState(false);
     const [showPayment, setShowPayment] = useState(false);
@@ -496,6 +496,7 @@ const handleTransactionSuccessClose = async()=> {
           setRefNumber(result?.reference_number);
            setOrderID(result?.order_id);
            setDescription(result?.transaction_description);
+           setDiscountPercentage(result?.discount_percentage)
            setInputPin("");
            setTransactSuccessPopUp(true); 
            setConfirm(false);
@@ -1309,7 +1310,7 @@ className={`flex justify-left  w-[100%] items-center`}>
                                     </div>
                                     <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                                         <p className={`text-[#0008] ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Recipient Name</p>
-                                        <span>{recipientName?.length && recipientName?.length < 1 ? "NIL" : recipientName}</span>
+                                        <span>{ recipientName?.length < 1 ? "NIL" : recipientName}</span>
                                     </div>
                                     <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                                         <p className={`text-[#0008] ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Payment Method</p>
@@ -1342,7 +1343,8 @@ className={`flex justify-left  w-[100%] items-center`}>
                                                                                         Available Balance {"  "} 
                                                                                          </p>
                                                                                          <span className="text-black">
-                                                                                          {`(${typeof updateBalance === "number" ? updateBalance?.toLocaleString("en-NG", {
+                                                                                          {`(${typeof updateBalance === "number" ? 
+                                                                                          updateBalance?.toLocaleString("en-NG", {
                                                                                             style : "currency",
                                                                                             currency : "NGN"
                                                                                           }) : ""})`}
@@ -1552,7 +1554,7 @@ className={`flex justify-left  w-[100%] items-center`}>
                                     </div>
                                     <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                                         <p className="text-[#0008]">Recipient Name</p>
-                                        <span>{recipientName?.length && recipientName?.length < 1 ? "NIL" : recipientName}</span>
+                                        <span>{ recipientName?.length < 1 ? "NIL" : recipientName}</span>
                                     </div>
                                     <div className="flex text-[10px] md:text-[12px] w-[90%] mx-auto justify-between  lg:text-[14px]">
                                         <p className="text-[#0008]">Payment Method</p>
@@ -1600,7 +1602,8 @@ className={`flex justify-left  w-[100%] items-center`}>
                                         refNumber: refNumber,
                                         orderID: orderID,
                                         description: description,
-                                     discount_amount : airtimeReceiptDiscountValue
+                                     discount_amount : airtimeReceiptDiscountValue,
+                                     discountPercentage : discountPercentage
                                     }}>
                                         <button
                                             onClick={handleReceipt}

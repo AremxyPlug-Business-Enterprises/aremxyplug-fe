@@ -14,7 +14,7 @@ export const AirtimeVtuReceipt = (Data) => {
   const location = useLocation();
   const navigate = useNavigate();
   const { networkName, selectedProduct,recipientNumber, amount, 
-    transactionID, refNumber, orderID, description, discount_amount } = location.state;
+    transactionID, refNumber, orderID, description, discount_amount, discountPercentage } = location.state;
   
   const {
     toggleSideBar,
@@ -161,21 +161,10 @@ export const AirtimeVtuReceipt = (Data) => {
                   <p className="text-[#0008]">Recipient Name</p>
                   <span>{recipientName?.length && recipientName?.length < 1 ? "NIL" : recipientName}</span>
                 </div>
-                {/* Airtime Charge    */}
-                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Amount</p>
-                  <span>&#8358;{amount}</span>
-                </div>
-               
-                {/* Amount Deducted */}
-                   {/* <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Discount_fee</p>
-                  <span>&#8358;{amount}</span>
-                </div> */}
-                {/* Amount Deducted */}
+                
                  <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
-                  <p className="text-[#0008]">Actual Amount</p>
-                  <span>&#8358;{discount_amount}</span>
+                  <p className="text-[#0008]">Discount</p>
+                  <span>&#8358;{discount_amount} {`(${discountPercentage})`}</span>
                 </div>
               </div>
 
