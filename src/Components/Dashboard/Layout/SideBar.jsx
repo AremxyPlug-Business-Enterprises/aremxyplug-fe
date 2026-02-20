@@ -15,7 +15,7 @@ export const SideBar = ({ fullname, userId, BvnVerify, NinVerify }) => {
     isDarkMode,
     handleClickOutside,
     customerDetail,
-   
+   progressTaskBarResponse
 
   } = useContext(ContextProvider);
 
@@ -29,7 +29,6 @@ export const SideBar = ({ fullname, userId, BvnVerify, NinVerify }) => {
     if (navigateLogin) {
       window.location.reload();
     }
-    console.log(window.location);
   };
   const [dropDownOpen, setDropDownOpen] = useState({
     dropdown1: false,
@@ -94,7 +93,8 @@ assignBgByUsername ="bg-[#7850f2]  bg-opacity-10 p-5 rounded-full"
 return assignBgByUsername 
 } 
 
-const bgUsername = UserBgFormatting()
+const bgUsername = UserBgFormatting();
+console.log(progressTaskBarResponse?.data?.data?.beta);
   return (
       <div
       className={`bvnQuery fixed overflow-auto ${
@@ -136,14 +136,23 @@ const bgUsername = UserBgFormatting()
           <div className="px-[5%] pt-[5%] ">
             {/* ======Profile picture and name======== */}
             <div className="sticky top-0">
+              
               <div className="flex gap-[10px] md:gap-[5px] justify-left
                items-center ">
+                <div className="flex flex-col gap-2">
                 <div className={`${bgUsername} bg-opacity-10`}>
                 <img
                   className="w-[20.97px] h-[20.97px] md:w-[30px] md:h-[30px] lg:w-[40px] lg:h-[40px]"
                   src={UserIcon}
                   alt="DP"
                 />
+
+                </div>
+              {progressTaskBarResponse?.data?.data?.beta === true && (
+                <p className="text-[9px] md:text-[12px] text-green-400 text-center leading-[13px] lg:leading-[15px] font-[700]">
+                  Beta User
+                </p>
+              )}
                 </div>
                 <div className="flex flex-col gap-[3px] justify-center mt-[4%]">
                   <p className="text-[8px] font-semibold md:text-[14px] lg:text-[14px]">
@@ -174,6 +183,7 @@ const bgUsername = UserBgFormatting()
                     </div>
                   </div>
                 </div>
+               
               </div>
             </div>
           </div>

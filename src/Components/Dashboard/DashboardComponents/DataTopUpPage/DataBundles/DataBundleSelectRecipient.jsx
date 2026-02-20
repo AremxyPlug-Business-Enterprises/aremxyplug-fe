@@ -386,7 +386,6 @@ const [confirmRecipient, setConfirmRecipient] = useState(false)
                   <div
                     onClick={() => {
                       setNetworkName(recipient?.network);
-                      console.log(recipient?.phone);
                       // setNetworkImage(networkImages[recipient.network]);
                       setDataRecipient(recipient?.name);
                       setRecipientPhoneNumber(recipient?.phone);

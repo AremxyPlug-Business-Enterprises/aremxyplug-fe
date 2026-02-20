@@ -1377,6 +1377,10 @@ const RecipientExistCheck = CheckRecipientInfoInList(recipientPhoneNumberMtn);
                                             AddRecipientToList();
                                           }else if(recipientPhoneNumberMtn?.length < 11 && recipientNamesMtn?.length < 1) {
                                               alert("Input the recipient Number and the recipient Name")
+                                          }else if((recipientPhoneNumberMtn?.length < 11 && recipientNamesMtn?.length <= 2)) {
+                                              alert("Input the recipient Number and the recipient Name")
+                                          }else if( (recipientPhoneNumberMtn?.length === 11 && recipientNamesMtn?.length <= 2)){
+                                            alert("RecipientName must be more than two characters to save recipient")
                                           }
                                        }}
                                           className={`w-[16px] h-[8.4px] md:w-[30px] md:h-[12px]
@@ -1391,7 +1395,7 @@ const RecipientExistCheck = CheckRecipientInfoInList(recipientPhoneNumberMtn);
                                                h-[7.4px] md:w-[14px] md:h-[12px] lg:h-[22px] lg:w-[21px] lg:drop-shadow-md bg-[#fff]
                                                 ${
                                                   ( RecipientExistCheck?.phone === recipientPhoneNumberMtn&&  recipientPhoneNumberMtn?.length === 11
-                                               &&   recipientNamesMtn?.length > 1  && !errors?.recipientPhoneNumberMtn)
+                                               && !errors?.recipientPhoneNumberMtn)
                                           ? "float-right" : "float-left"}`}>
                                           </div>
                                       </div>
@@ -1505,7 +1509,7 @@ const RecipientExistCheck = CheckRecipientInfoInList(recipientPhoneNumberMtn);
                       </span>
                       <div className="flex gap-1">
                         <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
-                         {recipientNamesMtn?.length && recipientNamesMtn?.length < 1 ? "NIL" : recipientNamesMtn}
+                         { recipientNamesMtn?.length < 1 ? "NIL" : recipientNamesMtn}
                         </span>
                       </div>
                     </div>
@@ -1939,7 +1943,7 @@ const RecipientExistCheck = CheckRecipientInfoInList(recipientPhoneNumberMtn);
                                       Recipient Name
                                     </span>
               <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
-               {recipientNamesMtn}
+               {recipientNamesMtn?.length < 1 ? "NIL" : recipientNamesMtn}
                      </span>
               </div>
                 

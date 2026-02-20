@@ -56,6 +56,8 @@ export const AirtimeTransReceipt = () => {
     receiptData?.discount_amount
       ? Number(receiptData?.discount_amount)
       : "";
+      const percentage = receiptData?.discount_percentage ? 
+      receiptData?.discount_percentage : ""
 
   function handleClick() {
     setOrderIdResponse({});
@@ -265,7 +267,7 @@ export const AirtimeTransReceipt = () => {
                     </p>
                     <span>{receipient_name}</span>
                   </div>
-                  <div className="flex text-[10px] font-medium md:text-sm w-[90%] mx-auto justify-between lg:text-base">
+                  {/* <div className="flex text-[10px] font-medium md:text-sm w-[90%] mx-auto justify-between lg:text-base">
                     <p
                       className={` ${
                         isDarkMode ? "text-white" : "text-[#7C7C7C]"
@@ -283,7 +285,7 @@ export const AirtimeTransReceipt = () => {
                           )}`
                         : "₦"
                     }`}</span>
-                  </div>
+                  </div> */}
                   {/* Amount Charged */}
                     <div className="flex text-[10px] font-medium md:text-sm w-[90%] mx-auto justify-between lg:text-base">
                     <p
@@ -291,7 +293,7 @@ export const AirtimeTransReceipt = () => {
                         isDarkMode ? "text-white" : "text-[#7C7C7C]"
                       }`}
                     >
-                   Actual Amount
+                  Discount
                     </p>
                     <span>{`${
                       amount
@@ -302,7 +304,7 @@ export const AirtimeTransReceipt = () => {
                             })
                           )}`
                         : "₦"
-                    }`}</span>
+                    }`} {`(${percentage})`}</span>
                   </div>
                 </div>
 

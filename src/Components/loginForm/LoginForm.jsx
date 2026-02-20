@@ -224,6 +224,7 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
                  localStorage.setItem("xcss{}", true);
                 setOpenTranspin(true);
               const customer  =  response?.data?.data?.customer;
+             
              if(customer){
                    setCustomerDetail(customer);
                } 

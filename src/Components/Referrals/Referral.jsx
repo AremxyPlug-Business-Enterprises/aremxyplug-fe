@@ -69,12 +69,9 @@ const [referralResponds, setReferralResponds] = useState({});
   const handleReferralGenerate = async () => {
     const Path = "extra/referral";
     const successHandler = (response) => {
-      console.log("successfully fetched");
       localStorage.setItem("ReferralLink", response?.data?.data?.referral_link);
 
       localStorage.setItem("ReferralCode", response?.data?.data?.referral_code);
-
-      //console.log("Referral Response:", referralResponds);
     };
 
     const FailedHandler = async (ErrorType) => {
@@ -168,8 +165,6 @@ const [referralResponds, setReferralResponds] = useState({});
       setNetworkIssue
     );
   };
-
-  console.log(totalUsers)
 
   const referredUsers = referredUsersResponse
     ? referredUsersResponse?.data?.data?.referrals

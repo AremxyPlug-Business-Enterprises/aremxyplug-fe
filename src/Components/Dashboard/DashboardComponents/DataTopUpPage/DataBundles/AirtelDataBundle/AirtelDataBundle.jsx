@@ -537,6 +537,7 @@ const methodOptions = [
     setRecipientNamesAirtel(e.target.value);
   };
 
+
   const handleReceipt = () => {
     setTransactSuccessPopUp(false);
   };
@@ -1346,9 +1347,13 @@ const path = "/data";
                                        && RecipientExistCheck?.phone !== recipientPhoneNumberAirtel && !errors?.recipientPhoneNumberAirtel
                                       ) {
                                          AddRecipientToList();
-                                       }else if(recipientPhoneNumberAirtel?.length < 11 && recipientNamesAirtel?.length < 1) {
+                                       }else if(recipientPhoneNumberAirtel?.length < 11 && recipientNamesAirtel?.length < 2) {
                                            alert("Input the recipient Number and the recipient Name")
-                                       }
+                                       }else if((recipientPhoneNumberAirtel?.length < 11 && recipientNamesAirtel?.length <= 2)) {
+                                              alert("Input the recipient Number and the recipient Name")
+                                          }else if( (recipientPhoneNumberAirtel?.length === 11 && recipientNamesAirtel?.length <= 2)){
+                                            alert("RecipientName must be more than two characters to save recipient")
+                                          }
                                     }}
                                        className={`w-[16px] h-[8.4px] md:w-[30px] md:h-[12px]
                                         lg:w-[50px] lg:h-[22px] lg:rounded-full 
@@ -1362,7 +1367,7 @@ const path = "/data";
                                             h-[7.4px] md:w-[14px] md:h-[12px] lg:h-[22px] lg:w-[21px] lg:drop-shadow-md bg-[#fff]
                                              ${
                                                ( RecipientExistCheck?.phone === recipientPhoneNumberAirtel &&  recipientPhoneNumberAirtel?.length === 11
-                                            &&   recipientNamesAirtel?.length > 1  && !errors?.recipientPhoneNumberAirtel)
+                                         && !errors?.recipientPhoneNumberAirtel)
                                        ? "float-right" : "float-left"}`}>
                                        </div>
                                    </div>
@@ -1475,7 +1480,7 @@ const path = "/data";
                                   </span>
                                   <div className="flex gap-1">
                                     <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
-                                      {recipientNamesAirtel?.length && recipientNamesAirtel?.length ? "NIL" : recipientNamesAirtel}
+                                      { recipientNamesAirtel?.length < 1 ? "NIL" : recipientNamesAirtel}
                                     </span>
                                   </div>
                                 </div>
@@ -1908,7 +1913,7 @@ const path = "/data";
                       Recipient Name
                      </span>
 <span className={`text-[#0008]  ${isDarkMode ? "text-white" : "text-black"}`}>
-                    {recipientNamesAirtel}
+                    {recipientNamesAirtel?.length < 1 ? "NIL" : recipientNamesAirtel}
                     </span>
                     
             </div>
