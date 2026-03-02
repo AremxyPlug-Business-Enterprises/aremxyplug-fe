@@ -790,26 +790,27 @@ const RecipientExistCheck = CheckRecipientInfoInList(recipientPhoneNumberMtn);
             </div>
             <div className="hidden md:w-[50%] md:block"></div>
           </div>
-          <div className="flex gap-[15px]  justify-between md:w-full md:gap-[10%]">
-            <div className="flex gap-[15px] md:w-[50%] md:justify-between">
-              <p className="flex text-[#7c7c7c] gap-[7px] text-[14px] md:gap-[7px] leading-[130%] md:text-[12px] lg:text-[16px] 2xl:text-[20px]">
+          <div className="flex gap-[8px] md:w-full md:gap-[10%] mb-10">
+            <div className="flex gap-[5px] justify-center md:w-[50%] ">
+              <p className="flex text-[#7c7c7c] text-[14px]
+               md:gap-[7px] leading-[130%] md:text-[12px] lg:text-[16px] ">
                 Purchase
-                <span>
-                  <img
+                 </p>
+              <div className='flex gap-2'>
+                 <img
                     src={MtnLogo}
                     alt=""
                     className="md:w-[20px] md:h-[15px] mt-[px] lg:w-[30px] lg:h-[25px] 2xl:mt-[5px]"
                   />
-                </span>{" "}
-                MTN Data Instantly
-              </p>
+                    <p className="text-[#7c7c7c] text-[14px] ">MTN Data Instantly</p>
+                  </div>
               <img
                 src={Select}
                 alt=""
                 className="md:w-[20px] md:h-[18px] lg:w-[30px] lg:h-[30px]"
               />
             </div>
-            <div className="md:w-[50%]"></div>
+            {/* <div className="md:w-[50%]"></div> */}
           </div>
 
           {codes && (
@@ -884,7 +885,7 @@ const RecipientExistCheck = CheckRecipientInfoInList(recipientPhoneNumberMtn);
           {/* =========================PRODUCTS============================== */}
 
           <div
-            className="grid grid-cols-1 mt-[25px] md:grid-cols-2 gap-y-[20px]
+            className="grid grid-cols-1 mt-[25px] md:grid-cols-2 gap-y-[25px]
            md:gap-x-[58.68px] lg:gap-x-[100px] md:gap-y-[15px] lg:gap-y-[25px] pb-[30px] lg:py-[30px] md:mt-[20px]"
           >
             <div className=" flex flex-col lg:gap-[12px] gap-[7px]">
@@ -896,19 +897,17 @@ const RecipientExistCheck = CheckRecipientInfoInList(recipientPhoneNumberMtn);
                 Select Product
               </h2>
               <div
-                className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.8px]
-                 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px]
-                  pr-[13px] pl-[10.876px] font-[400] 
-                   leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
-                lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px]
-                 md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] 
-                 lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 
-                 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] 
-                 md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
-                   isDarkMode
-                     ? "bg-black text-white border border-white"
-                     : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
-                 } `}
+               className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}
                 onClick={() => {
                   setShowOptionList(false);
                   setShowProductList(!showProductList);
@@ -916,7 +915,7 @@ const RecipientExistCheck = CheckRecipientInfoInList(recipientPhoneNumberMtn);
                 }}
               >
                 <h2
-                  className="text-[12px] font-[400] leading-[12px] 
+                  className="text-base font-[400] leading-[20px] 
                 capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]"
                 >
                   {selectedProductMtn}
@@ -988,15 +987,17 @@ const RecipientExistCheck = CheckRecipientInfoInList(recipientPhoneNumberMtn);
               </h2>
 
               <div
-                className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.8px]
-                 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
-                   leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
-                lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
-                  isDarkMode
-                    ? "bg-black text-white border border-white"
-                    : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
-                }
-  `}
+              className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}
                 onClick={() => {
                   if (selectedProductMtn.length > 1) {
                     setShowProductList(false);
@@ -1007,7 +1008,7 @@ const RecipientExistCheck = CheckRecipientInfoInList(recipientPhoneNumberMtn);
                   }
                 }}
               >
-                <h2 className="text-[12px] font-[400] leading-[12px]
+                <h2 className="text-base leading-[20px] font-[400] 
                  capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">
                   {selectedOptionMtn}
                 </h2>
@@ -1093,15 +1094,17 @@ const RecipientExistCheck = CheckRecipientInfoInList(recipientPhoneNumberMtn);
                 <input
                 maxLength={11}
                   type="number"
-                  className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.8px]
-                 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
-                   leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
-                lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
-                  isDarkMode
-                    ? "bg-black text-white border border-white"
-                    : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
-                }
-  `}
+                 className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}
                   placeholder="11 digits phone number"
                   value={recipientPhoneNumberMtn}
                   onChange={(event) => {
@@ -1136,15 +1139,17 @@ const RecipientExistCheck = CheckRecipientInfoInList(recipientPhoneNumberMtn);
               <div className="relative mt-[5px]">
                 <input
                   type="text"
-                  className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.8px]
-                 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
-                   leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
-                lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
-                  isDarkMode
-                    ? "bg-black text-white border border-white"
-                    : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
-                }
-  `}
+               className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}
                   placeholder=""
                   value={recipientNamesMtn}
                   onChange={handleRecipientNameChange}
@@ -1170,15 +1175,17 @@ const RecipientExistCheck = CheckRecipientInfoInList(recipientPhoneNumberMtn);
               <div className="relative mt-[5px]">
                 <input
                   type="text"
-                  className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.8px]
-                 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
-                   leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
-                lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
-                  isDarkMode
-                    ? "bg-black text-white border border-white"
-                    : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
-                }
-  `}
+                className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}
                   // placeholder="&#8358;100"
                   value={`${selectedAmountMtn  }`}
                   readOnly
@@ -1200,16 +1207,17 @@ const RecipientExistCheck = CheckRecipientInfoInList(recipientPhoneNumberMtn);
                   Payment Method
                 </h2>
                 <div
-                  className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.8px]
-                 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
-                   leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
-                lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
-                  isDarkMode
-                    ? "bg-black text-white border border-white"
-                    : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
-                }
-                  
-  `}
+               className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}
                 >
                   {paymentSelected ? (
                     <li
@@ -1224,7 +1232,7 @@ const RecipientExistCheck = CheckRecipientInfoInList(recipientPhoneNumberMtn);
                   ) : (
                     <h2
                       onClick={handleShowPayment}
-                     className="text-[13.2px] text-[#7C7C7C] lg:text-[14px]"
+                     className="text-base leading-[20px] text-[#7C7C7C] lg:text-[14px]"
                     >
                       Select Payment Method
                     </h2>

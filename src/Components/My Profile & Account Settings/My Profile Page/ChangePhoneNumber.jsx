@@ -256,8 +256,8 @@ const VerifyPopUpHandler =async()=> {
 
           <div className="mt-[30px]">
             <h2
-              className={`text-[12px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px] ${
-                isDarkMode ? "text-white" : ""
+              className={`text-[13px]  font-semibold md:text-[14px] lg:text-[18px] ${
+                isDarkMode ? "text-white" : "text-black"
               }`}
             >
               New Phone Number
@@ -266,9 +266,17 @@ const VerifyPopUpHandler =async()=> {
               <input
                 type="tel"
              
-                className={`w-full md:w-[50%] lg:w-[40%] py-[10.33px] pl-[5.867px] pr-1 md:py-[10] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] text-[12px] leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] rounded-md md:rounded-[10px] focus:outline-none ${
-                  isDarkMode ? "bg-black text-white border-white" : ""
-                }`}
+                className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`} 
                 placeholder="088*******"
                 value={inputValue}
                 style={{ borderColor: emailInputColor }}
@@ -345,7 +353,7 @@ const VerifyPopUpHandler =async()=> {
                           : "1px solid #ccc",
                       }}
                       renderInput={(props) => (
-                        <input {...props} className="inputOTP mx-[3px]" />
+                        <input {...props} className="inputOTP text-base mx-[3px]" />
                       )}
                     />
                   ) : (

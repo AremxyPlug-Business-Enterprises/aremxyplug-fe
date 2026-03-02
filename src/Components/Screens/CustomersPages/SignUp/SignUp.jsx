@@ -13,9 +13,6 @@ import { Loader } from "../../../Loader/Loader";
 import { Modal } from "../../Modal/Modal";
 import { RemoveLocalStorage } from "../../../LocalStorage/LocalStorage";
 
-
-// import { number } from "joi";
-
 export const SignUp = () => {
   const {
     // hideNavbar,
@@ -155,8 +152,19 @@ const ChangeEventFunctionUsername = (value)=> {
               Country
             </p>
             <div
-              className={`inputBorder px-[2%] flex justify-center items-center w-[98%] h-[42px] 
-                rounded-[10px] lg:rounded-[15px] lg:w-[286px] border-black lg:h-[50px]`}
+               className={`mt-2  md:mt-0 rounded-[10px]  w-[98%]
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px]
+     lg:pt-[15px] lg:pb-[12px] lg:pr-[9px]
+      lg:pl-[10px]  items-center cursor-pointer
+       outline-0 border-[0.24px] lg:border-[0.4px] 
+        h-[45.927px] md:h-[35px] lg:h-[50px] 
+       border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center
+       `} 
             >
            
                 <ReactFlagsSelect
@@ -186,16 +194,22 @@ const ChangeEventFunctionUsername = (value)=> {
             </p>
 
             <div
-              className={`inputBorder px-[2%] flex flex-col justify-center items-center w-[98%] h-[42px] 
-                rounded-[10px] lg:rounded-[15px] lg:w-[286px] border-black lg:h-[50px] ${
-                isFocused.includes(1) ? "border-[#2684fe] border" : " border-[1.5px] "
+              className={`flex flex-col justify-center items-center w-[98%] 
+                 ${
+                isFocused.includes(1) ? "" : " "
               }`}
               onFocus={() => handleFocus(1)}
               onBlur={() => handleBlur(1)}
             >
               <input 
-                className="outline-none flex justify-center items-center leading-[18px] lg:leading-[24px]
-              font-[400] lg:font-[500] text-[14px] h-full w-full lg:h-full lg:text-[16px]"
+               className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base outline-none
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  
+     `} 
                 type="text"
           placeholder ="Enter your full legal name"
                 value={state.fullName}
@@ -218,18 +232,26 @@ const ChangeEventFunctionUsername = (value)=> {
               Username
             </p>
             <div
-              className={`inputBorder px-[2%] flex justify-center items-center w-[98%] h-[42px] 
-                rounded-[10px] lg:rounded-[15px] lg:w-[286px] border-black lg:h-[50px] ${
+              className={` flex justify-center items-center w-[98%] ${
                 isFocused.includes(2)
-                  ? "border-[#2684fe] border"
-                  : " border-[1.5px] "
+                  ? ""
+                  : ""
               }`}
               onFocus={() => handleFocus(2)}
               onBlur={() => handleBlur(2)}
             >
               <input title ="username"
-                className="outline-none flex justify-center items-center leading-[18px] lg:leading-[24px]
-              font-[400] lg:font-[500] text-[14px] h-full w-full lg:text-[16px]"
+                className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
+     items-center cursor-pointer w-full
+    outline-0 border-[0.24px] lg:border-[0.4px]  h-[45.927px]
+     md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center 
+     `} 
                 type="text"
                 value={state.userName}
                 name="userName"
@@ -262,19 +284,26 @@ const ChangeEventFunctionUsername = (value)=> {
               Email
             </p>
             <div
-              className={`inputBorder px-[2%] flex justify-center items-center w-[98%] h-[42px] 
-                rounded-[10px] lg:rounded-[15px] lg:w-[286px] border-black lg:h-[50px] ${
+              className={`flex justify-center items-center ${
                 isFocused.includes(3)
-                  ? "border-[#2684fe] border"
-                  : " border-[1.5px] "
+                  ? ""
+                  : ""
               }`}
               onFocus={() => handleFocus(3)}
               onBlur={() => handleBlur(3)}
             >
               <input
               title ="email"
-                className="outline-none flex justify-center items-center leading-[18px] lg:leading-[24px]
-              font-[400] lg:font-[500] text-[14px] h-full w-full  lg:text-[16px]"
+                className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base 
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  
+    items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full
+     h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px]
+      lg:px-[10px] text-[#7C7C7C] self-center `} 
                 type="email"
                 value={email}
                 placeholder ="example@gmail.com"
@@ -297,9 +326,18 @@ const ChangeEventFunctionUsername = (value)=> {
               Phone number
             </p>
             <div
-              className={`inputBorder px-[2%] flex  items-center w-[98%] h-[42px] 
-                rounded-[10px] lg:rounded-[15px] lg:w-[286px] border-black lg:h-[50px] ${
-                isFocused.includes(4) ? "border-[#2684fe] border" : " border-[1.5px]"
+              className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] 
+    lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px]
+     border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  
+     
+                 ${
+                isFocused.includes(4) ? "" : ""
               }`}
               
               onFocus={() => handleFocus(4)}
@@ -350,16 +388,23 @@ const ChangeEventFunctionUsername = (value)=> {
               Referral Code (optional)
             </p>
             <div
-              className={`inputBorder px-[2%] flex justify-center items-center w-[98%] h-[42px] 
-                rounded-[10px] lg:rounded-[15px] lg:w-[286px] border-black lg:h-[50px] ${
-                isFocused.includes(5) ? "border-[#2684fe] border" : "border-[1.5px] "
+              className={`flex justify-center items-center ${
+                isFocused.includes(5) ? "" : ""
               }`}
               onFocus={() => handleFocus(5)}
               onBlur={() => handleBlur(5)}
             >
               <input
-                className="outline-none flex justify-center items-center leading-[18px] lg:leading-[24px]
-              font-[400] lg:font-[500] text-[14px] h-full w-full lg:text-[16px]"
+               className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]
+      items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px]
+       w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C]
+        px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center `} 
                 type="text"
                 value={IVcode}
                 name="IVcode"
@@ -377,24 +422,30 @@ const ChangeEventFunctionUsername = (value)=> {
                Password
             </p>
             <div
-              className={`inputBorder px-[2%] flex justify-center items-center w-[98%] h-[42px] 
-                rounded-[10px] lg:rounded-[15px] lg:w-[286px] border-black lg:h-[50px] ${
-                isFocused.includes(6) ? "border-[#2684fe] border" : "border-[1.5px] "
+              className={`flex relative justify-center items-center w-[98%]  ${
+                isFocused.includes(6) ? "" : ""
               }`}
               onFocus={() => handleFocus(6)}
               onBlur={() => handleBlur(6)}
             >
               <input
               title="password"
-                className="outline-none flex justify-center items-center leading-[18px] lg:leading-[24px]
-              font-[400] lg:font-[500] text-[14px] h-full w-full lg:text-[16px]"
+               className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center
+     cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px]
+      lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  `} 
                 type={showPassword ? "text" : "password"}
                 value={state.password}
                 name="password"
                 onChange={changeHandler}
               />
               <div
-                className="float-right"
+                className="absolute right-[10px] top-[25%] float-right"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {!showPassword ? (
@@ -423,24 +474,32 @@ const ChangeEventFunctionUsername = (value)=> {
               Confirm Password
             </p>
             <div
-              className={`inputBorder px-[2%] flex justify-center items-center w-[98%] h-[42px] 
-                rounded-[10px] lg:rounded-[15px] lg:w-[286px] border-black lg:h-[50px] ${
-                isFocused.includes(7) ? "border-[#2684fe] border" : "border-[1.5px] "
+              className={`flex relative justify-center items-center w-[98%]  ${
+                isFocused.includes(7) ? "" : ""
               }`}
               onFocus={() => handleFocus(7)}
               onBlur={() => handleBlur(7)}
             >
               <input
               title="password"
-                className="outline-none flex justify-center items-center leading-[18px] lg:leading-[24px]
-              font-[400] lg:font-[500] text-[14px] h-full w-full lg:text-[16px]"
+               className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px]
+     lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center 
+     cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px]
+      w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] 
+      px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center `} 
                 type={showPasswordTwo ? "text" : "password"}
                 value={state.confirmPassword}
                 name="confirmPassword"
                 onChange={changeHandler}
               />
               <div
-                className="float-right"
+                className="absolute right-[10px] top-[25%] float-right"
                 onClick={() => setShowPasswordTwo(!showPasswordTwo)}
               >
                 {!showPasswordTwo ? (

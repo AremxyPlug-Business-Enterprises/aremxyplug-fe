@@ -512,7 +512,8 @@ const GetBalance = async () => {
       setPinFailed,
       setIsLoading,
       setErrorMessage,
-      EduPinHandler
+      EduPinHandler,
+      setNetworkIssue
     );
   };
 
@@ -628,11 +629,17 @@ const GetBalance = async () => {
                       setNecoQuantityActive(false);
                       setNecoMethodActive(false);
                     }}
-                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-5 md:p-0 text-[13.2px] sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-normal leading-[10.4px] md:text-[11px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
-                      isDarkMode
-                        ? "bg-black hover:bg-gray-800 text-white border border-white"
-                        : "hover:bg-[#EDEAEA]"
-                    }`}
+                  className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}
                   >
                     {necoExamType}
                     <img
@@ -697,11 +704,17 @@ const GetBalance = async () => {
                   {/* input */}
                   <div
                     // className="w-full relative"
-                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-5 md:p-0 text-[13.2px] sm:p-3 sm:text-lg  flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-normal leading-[10.4px] md:text-[11px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] items-center outline-0 w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] self-center  ${
-                      isDarkMode
-                        ? "bg-black hover:bg-gray-800 text-white border border-white"
-                        : "hover:bg-[#EDEAEA] border-[0.24px] lg:border-[0.4px] border-[#9C9C9C] text-[#7C7C7C]"
-                    } ${
+                  className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }${
                       !necoQuantityAmount
                         ? "cursor-not-allowed"
                         : "cursor-pointer"
@@ -810,12 +823,17 @@ const GetBalance = async () => {
                         e.target.style.border = "1px solid red";
                       }
                     }}
-                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-5 md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-normal leading-[10.4px] md:text-[11px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-3 lg:pr-[9px] lg:pl-[10px]  items-center focus:outline-0 outline-0 border lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px]  self-center
-                    ${
-                      isDarkMode
-                        ? "bg-black text-white border-white"
-                        : "border-[#9C9C9C] text-[#7C7C7C] hover:bg-[#EDEAEA] bg-white"
-                    }`}
+                  className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}
                     type="tel"
                     name="phone"
                     id="phone"
@@ -850,12 +868,17 @@ const GetBalance = async () => {
                   </h2>
 
                   <input
-                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-5 md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[13px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-3 lg:pr-[9px] lg:pl-[10px]  items-center focus:outline-0 outline-0 border lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center  
-                    ${
-                      isDarkMode
-                        ? "bg-black text-white border-white"
-                        : "placeholder:text-[#7E7E7E] border-[#9C9C9C] text-[#7C7C7C]"
-                    }`}
+                 className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}
                     value={necoEducationPinEmail}
                     onChange={(e) => {
                       setNecoEducationPinEmail(e.target.value);
@@ -891,12 +914,17 @@ const GetBalance = async () => {
                   </label>
                   {/* input */}
                   <input
-                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-5 md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-normal leading-[10.4px] md:text-[13px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-3 lg:pr-[9px] lg:pl-[10px]  items-center cursor-not-allowed focus:outline-0 outline-0 border lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px]  self-center  
-                    ${
-                      isDarkMode
-                        ? "bg-black text-white border-white"
-                        : "border-[#9C9C9C] text-[#7C7C7C]"
-                    }`}
+                    className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}
                     value={
                       necoEducationAmount
                         ? `₦${necoEducationAmount.toLocaleString()}`
@@ -922,14 +950,21 @@ const GetBalance = async () => {
                       setNecoExamActive(false);
                       setNecoQuantityActive(false);
                     }}
-                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-5 md:p-0 text-[13px]  sm:p-3 sm:text-lg flex items-center justify-between border lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] cursor-pointer px-[11px] md:px-[6px] lg:px-[10px] ${
-                      isDarkMode
-                        ? "bg-black hover:bg-gray-800 text-white border-white"
-                        : "border-[#9C9C9C] hover:bg-[#EDEAEA] "
-                    }`}
+                  className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}
                   >
                     <p
-                      className={`font-medium text-[13px] leading-[10.4px] md:text-xs md:leading-[12.206px] lg:text-base  lg:leading-[20.8px] cursor-pointer
+                      className={`font-medium text-base leading-[20px] md:text-xs 
+                        md:leading-[12.206px] lg:text-base  lg:leading-[20.8px] cursor-pointer
                       ${isDarkMode ? " text-white" : " text-[#7C7C7C] "}`}
                       readOnly
                     >

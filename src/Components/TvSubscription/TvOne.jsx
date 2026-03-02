@@ -667,7 +667,7 @@ const timer = useRef(null)
                 </div>
               </div>
 
-              <div className=" mx-auto flex gap-1.5 py-[25.29px] lg:py-[37px] md:py-[28.64px]">
+              <div className=" mx-auto flex gap-1.5 py-[25.29px] lg:py-[37px] md:py-[28.64px] mb-5">
                 <div className="flex text-[#7E7E7E] text-[12px] lg:text-[18px] md:text-[13px] font-semibold">
                   <span>Subscribe Your</span> &nbsp;
                   <img
@@ -699,16 +699,13 @@ const timer = useRef(null)
                     </label>
                     {/* <button className="border-[0.23px] lg:border-[0.4px] w-full md:w-1/2 h-[30px] md:h-[35px] lg:h-[50px] border-[#9C9C9C]">Gotv</button> */}
                     <div
-                      className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
-                         sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px]
-                          pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
-                          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] 
-    md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] 
-    lg:pl-[10px]  items-center cursor-pointer outline-0 
-    border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] 
-    md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] 
-    md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+                        className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
       isDarkMode
         ? "bg-black text-white border border-white"
         : "hover:bg-[#EDEAEA]"
@@ -788,15 +785,16 @@ const timer = useRef(null)
                     </label>
 
                     <div
-  className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
-    sm:p-3 sm:text-lg flex justify-between pt-[8.803px] 
-    pb-[7.794px] pr-[13px]
-     pl-[10.876px] font-[400] leading-[10.4px] md:text-[12px]
-      md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center" onClick={packageDropdown} ${
-      isDarkMode 
-        ? "bg-black text-white border border-white" 
-        : "hover:bg-[#EDEAEA] border-[rgb(156,156,156)] text-[#7C7C7C] "
+       className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
     }`}
                       onClick={packageDropdown}
                     >
@@ -881,13 +879,16 @@ const timer = useRef(null)
                       }}
                     
                    
-                      className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] 
-                        md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] 
-                        pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
+                         className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
       isDarkMode
         ? "bg-black text-white border border-white"
-        : "border border-[#0003] border-[#9C9C9C] hover:bg-[#EDEAEA] text-[#7C7C7C]"
+        : "hover:bg-[#EDEAEA]"
     }`}
                     />
                     {errors.smartCard && (
@@ -920,17 +921,16 @@ const timer = useRef(null)
                        placeholder="Input card number to get verified name"
                       value={userVerifiedName}
                       readOnly
-                      className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]
-                         md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between
-                          pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400]
-                           leading-[10.4px] md:text-[13px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px]
-     md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center
-      cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] 
-      md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
+                         className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
       isDarkMode
         ? "bg-black text-white border border-white"
-        : "border border-[#0003] border-[#9C9C9C] hover:bg-[#EDEAEA] text-[#7C7C7C]"
+        : "hover:bg-[#EDEAEA]"
     }`}
                     />
                     {gotvLoading && (
@@ -966,11 +966,16 @@ const timer = useRef(null)
                       type="tel"
                       placeholder="XXX XXXX XXXX"
                       maxLength={11}
-                      className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[12.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[13px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
+                        className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
       isDarkMode
-        ? "bg-black text-white border border-white text-[12px]"
-        : "border border-[#0003] border-[#9C9C9C] hover:bg-[#EDEAEA] text-[#7E7E7E]"
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
     }`}
                     />
                     {errors.mobileNumber && (
@@ -994,19 +999,16 @@ const timer = useRef(null)
                       onChange={handleTvEmail}
                       placeholder="example@gmail.com"
                       required
-                      className={`mt-2 md:mt-0 rounded-[10px] 
-                        md:rounded-0 p-[20px] md:p-0  sm:p-3 sm:text-lg 
-                        flex justify-between pt-[8.803px] pb-[7.794px] 
-                        pr-[13px] pl-[10.876px] font-[400] text-[14px] 
-                        leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+                         className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
-    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
-     items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full 
-     h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px] 
-      self-center ${
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
       isDarkMode
         ? "bg-black text-white border border-white"
-        : "border border-[#0003] hover:bg-[#EDEAEA] border-[#9C9C9C] text-[#7E7E7E]"
+        : "hover:bg-[#EDEAEA]"
     }`}
                     />
                     {errors.tvEmail && (
@@ -1030,18 +1032,17 @@ const timer = useRef(null)
                     <input
                     placeholder={"0.00"}
                       type="text"
-                      className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]
-                         md:p-0 text-[13.8px] 
-                        sm:p-3 sm:text-lg flex justify-between pt-[8.803px] 
-                        pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
-                   leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
-                lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
-                md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px]
-                 lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
-                  isDarkMode
-                    ? "bg-black text-white border border-white"
-                    : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
-                }`}
+                        className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}
                       value={`${tvAmount !== undefined ? tvAmount?.toLocaleString("en-NG", {
                       style : "currency",
                       currency : "NGN"
@@ -1062,16 +1063,19 @@ const timer = useRef(null)
                     </label>
                     <div
                       onClick={methodDropDown}
-                      className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] 
-                        md:p-0 text-[13px]  sm:p-3 sm:text-lg flex items-center 
-                        justify-between border-[0.23px] lg:border-[0.4px]
-                         w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px]  ${
-                        isDarkMode
-                          ? "bg-black text-white  border border-white"
-                          : "border-[#9C9C9C] text-black"
-                      }`}
+                         className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}
                     >
-                      <p className={`font-[500] text-[13px] leading-[10.4px] 
+                      <p className={`font-[500] text-base leading-[20px] 
                       md:text-[12px] md:leading-[12.206px] lg:text-[16px]
                        lg:leading-[20.8px] cursor-pointer
                          ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>

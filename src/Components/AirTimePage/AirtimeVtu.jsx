@@ -622,7 +622,7 @@ if(Data?.ConfirmAcc === "true"){
                              onClick={()=> {
                                 setSelectRecipientDisplay(true);
                             }}>
-                             <h2 className = "text-[10px] font-[700] leading-[15px]">
+                             <h2>
                                 Select Recipient
                                 </h2>
                                     <div className={styles.FlexImg} 
@@ -643,7 +643,8 @@ if(Data?.ConfirmAcc === "true"){
                                   `}>
                             <Link to="/add-vtu-recipient">
                                 <div className={`
-                                ${styles.conPut} !relative !top-[12px] md:!relative md:!top-base !text-[12px] md:!text-base
+                                ${styles.conPut} !relative !top-[12px] md:!relative 
+                                md:!top-base !text-[12px] md:!text-base
                              
                                   `}>
                                     <h2>Add Recipient</h2>
@@ -683,12 +684,12 @@ if(Data?.ConfirmAcc === "true"){
                       md:font-[600] font-[400`}>
                         Select Network</h2>
                 <div  className={`mt-2  md:mt-0 rounded-[10px] 
-             md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
-         sm:p-3 sm:text-lg  flex justify-between pt-[8.803px]
-         pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
-    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
       isDarkMode
         ? "bg-black text-white border border-white"
         : "hover:bg-[#EDEAEA]"
@@ -705,8 +706,8 @@ className={`flex justify-left  w-[100%] items-center`}>
                         {networkImage && <img className=""
                     src={networkImage} alt="" />}
                                                     </div>
-             <h2 className={`text-left text-[13.2px]  font-[400] 
-         leading-[17.4px] md:text-[11px] md:leading-[12.206px]
+             <h2 className={`text-left text-base  font-[400] 
+         leading-[20px] md:text-[11px] md:leading-[12.206px]
             lg:text-[16px] lg:leading-[20.8px] 
          ${isDarkMode ? "text-white" : "text-[#7E7E7E]" }`}>
                         {networkName}
@@ -715,7 +716,7 @@ className={`flex justify-left  w-[100%] items-center`}>
                                             ) : (
                           
  <div className="flex justify-between w-[100%]">
-    <h2 className="text-[#7E7E7E] text-[14px] lg:text-[17px]
+    <h2 className="text-[#7E7E7E] text-base leading-[20px] lg:text-[17px]
     md:text-[13px] md:font-[600] font-[400]
                                     ">Select Network</h2>
                                       <img className="decdrop  self-center
@@ -763,13 +764,13 @@ className={`flex justify-left  w-[100%] items-center`}>
                        md:text-[13px]
                       md:font-[600] font-[400`}> Product</h2>
                                 <div 
-                               className={` mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]
-                                 md:p-0 text-[13.2px] 
-                         sm:p-3 sm:text-lg  z-4  flex justify-between pt-[8.803px]
-                          pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
-                          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px]
-     lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+                             className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
       isDarkMode
         ? "bg-black text-white border border-white"
         : "hover:bg-[#EDEAEA]"
@@ -791,13 +792,15 @@ className={`flex justify-left  w-[100%] items-center`}>
                  md:gap-[12px] lg:gap-[22px] md:my-2 lg:my-4">
                             <div  className="relative flex flex-col gap-[3px]
                    lg:gap-[5px] w-full md:w-1/2">
-                                <h2     className={` ${isDarkMode ? "text-white" : "text-black"} text-[14px] lg:text-[17px]
+ <h2     className={` ${isDarkMode ? "text-white" : "text-black"} text-[14px] lg:text-[17px]
                        md:text-[13px]  md:font-[600] font-[400`}>Discount</h2>
-    <div className={` mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px]
-  md:p-0 text-[13.2px] sm:p-3 sm:text-lg  z-4  flex justify-between pt-[8.803px]
-    pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px]
-     lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+    <div  className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
       isDarkMode
         ? "bg-black text-white border border-white"
         : "hover:bg-[#EDEAEA]"
@@ -834,14 +837,17 @@ className={`flex justify-left  w-[100%] items-center`}>
             gap-[3px] lg:gap-[5px] w-full ">
                  <input type='number'
                  maxLength={11}
-               className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.8px]
-                 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
-                   leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
-                lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
-                  isDarkMode
-                    ? "bg-black text-white border border-white"
-                    : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
-                } `}
+               className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}
  required placeholder='Add recipient phone number' onChange={(event) => {
      handleChange(event);
       setRecipientNumber(event.target.value);
@@ -888,19 +894,17 @@ className={`flex justify-left  w-[100%] items-center`}>
                  
                                 <div className={`relative `}>
                                    
-               <input type='text' className={`mt-2 md:mt-0 rounded-[10px]
-                 md:rounded-0 p-[20px] md:p-0 text-[13.8px]
-                 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px]
-                  pr-[13px] pl-[10.876px] font-[400] 
-                   leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
-                lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
-                  isDarkMode
-                    ? "bg-black text-white border border-white"
-                    : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
-                }
-                  
-  `}
-                 required placeholder='Add recipient name'
+               <input type='text'  className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}   required placeholder='Add recipient name'
                   onChange={(event) => setRecipientName(event.target.value)} value={recipientName} />
                                       
               <img  className=" absolute left-[90%] top-[40%] md:top-[30%]
@@ -925,20 +929,17 @@ className={`flex justify-left  w-[100%] items-center`}>
                                         <input type='number' 
                                         placeholder='Type amount' 
                                         required 
-                  className={`mt-2 md:mt-0 rounded-[10px]
-                 md:rounded-0 p-[20px] md:p-0 text-[13.8px]
-                 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] 
-                 pr-[13px] pl-[10.876px] font-[400] 
-                   leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
-                lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
-                  isDarkMode
-                    ? "bg-black text-white border border-white"
-                    : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
-                }
-                  
-  `}
-                onChange={(event) => setAmount(event.target.value)} value={amount} />
-                 
+                  className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}   onChange={(event) => setAmount(event.target.value)} value={amount} />     
                                             <img className="absolute left-[90%] top-[40%] md:top-[30%]
                          lg:left-[94%] self-center align-middle md:h-[14.038px] md:w-[14.038px] 
       lg:h-[24px] lg:w-[24px] w-[14px] h-[16px]"
@@ -972,16 +973,17 @@ className={`flex justify-left  w-[100%] items-center`}>
                       md:font-[600] font-[400`}>
                         Total Amount
                       </h2>
-        <div className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.8px]
-                 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
-                   leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
-                lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px]
-                 md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center
-                  ${
-                  isDarkMode
-                    ? "bg-black text-white border border-white"
-                    : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
-                }`}>
+        <div  className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}>
 
      <h2 className={`text-left text-[13.2px]  font-[400] 
          leading-[17.4px] md:text-[11px] md:leading-[12.206px]
@@ -1002,16 +1004,17 @@ className={`flex justify-left  w-[100%] items-center`}>
                        md:text-[13px]
                       md:font-[600] font-[400`}>Payment Method</h2>
                         <div onClick={handleShowPayment}
-                                     className={`mt-2 md:mt-0 relative rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.8px]
-                 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
-                   leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
-                lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
-                  isDarkMode
-                    ? "bg-black text-white border border-white"
-                    : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
-                }
-                  
-  `}
+                                     className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}
                 >
                                        {paymentSelected ? (
                    <div className={airtimestyles.labelInput}
@@ -1024,8 +1027,8 @@ className={`flex justify-left  w-[100%] items-center`}>
                                          </h2>
                                                           </div>
                                                         ) : (
-             <h2 className={`text-left text-[13.2px]  font-[400] 
-         leading-[17.4px] md:text-[11px] md:leading-[12.206px]
+             <h2 className={`text-left text-base  font-[400] 
+         leading-[20px] md:text-[11px] md:leading-[12.206px]
             lg:text-[16px] lg:leading-[20.8px] 
          ${isDarkMode ? "text-white" : "text-[#7E7E7E]" }`}>
                                                             Select Payment Method
@@ -1034,7 +1037,7 @@ className={`flex justify-left  w-[100%] items-center`}>
                                        {paymentSelected ? (
                                                           <button
                                                             className={`rounded-full w-[12.02px] h-[12.02px] flex 
-                                                              items-center justify-center text-[15px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px] 
+                                                              items-center justify-center text-[16px] leading-[20px] overflow-hidden md:w-[12.02px] lg:w-[25px] md:h-[12.02px] lg:h-[25px] 
                                                                ${isDarkMode ? "bg-black text-white" : ""}`}
                                                             onClick={handleShowPayment}
                                                           >

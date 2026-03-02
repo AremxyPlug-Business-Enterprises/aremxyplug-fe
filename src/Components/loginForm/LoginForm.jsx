@@ -400,7 +400,7 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
                 onBlur={() => handleBlur(1)}
               >
                 <input
-                  className="w-full h-full text-[13.93px] lg:leading-[24px] leading-[18px] font-[500]
+                  className="w-full h-full text-base lg:leading-[24px] leading-[18px] font-[500]
                   md:text-[14.58px] lg:text-[16px] px-[7.5px] md:px-[10px] rounded  text-[#403f3f] outline-none "
                   type="text"
                   value={usernameORemail === "username" ? username : email}
@@ -498,8 +498,8 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
                 <input
                   className={`w-full h-full ${
                     passwordHidden === "password"
-                      ? "text-[13.93px] leading-[18px] md:text-[14px] lg:text-[16px] lg:leading-[24px] font-[500]"
-                      : "text-[13.93px] leading-[18px] md:text-[14.58px] lg:text-[16px] lg:leading-[24px] font-[500]"
+                      ? "text-base leading-[18px] md:text-[14px] lg:text-[16px] lg:leading-[24px] font-[500]"
+                      : "text-base leading-[18px] md:text-[14.58px] lg:text-[16px] lg:leading-[24px] font-[500]"
                   }  pl-[7.5px] md:pl-[10px] pr-[40px] md:pr-[50px] rounded  text-[#403f3f] outline-none`}
                   value={password}
                   onChange={passwordHandler}

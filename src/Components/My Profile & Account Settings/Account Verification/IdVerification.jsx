@@ -310,26 +310,29 @@ export default function IdVerification(Data) {
  {/* COUNTRY */}
                  <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
                                  <h2
-                                   className={`font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${
-                                     isDarkMode ? "text-slate-50" : ""
+                                   className={`font-semibold  text-[13px] leading-[10.4px] 
+                                    lg:text-[16px] lg:leading-[20.8px] ${
+                                     isDarkMode ? "text-white" : "text-black"
                                    }`}
                                  >
                                    Country
                                  </h2>
-                                 <div  className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
-                         sm:p-3 sm:text-lg relative  flex gap-[5px] pt-[8.803px]
-                          pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
-                          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+        <div className={`mt-2 md:mt-0 rounded-[10px] 
+        md:rounded-0  md:p-0 text-base
+        sm:p-3  flex gap-2 py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
       isDarkMode
         ? "bg-black text-white border border-white"
         : "hover:bg-[#EDEAEA]"
-    }`}>
+    }`} >
                                       <img className=" md:h-[20.27px]  h-[14.27px]"
                                  src={countryImage} alt="Country flag" />
-                                 <p className={`text-[12px] leading-[18px] 
+                                 <p className={`text-base leading-[18px] 
                                   lg:text-[16px] lg:leading-[20.8px] ${
-                                     isDarkMode ? " text-slate-50 " : "text-black"
+                                     isDarkMode ? " text-white " : "text-[#7E7E7E]"
                                    }`}>Nigeria</p>
                                 
                                </div>
@@ -338,25 +341,27 @@ export default function IdVerification(Data) {
                 {/* Full Name */}
                 <div className="flex flex-col md:w-[50%] w-full md:gap-[10px] gap-2.5">
                   <h2
-                    className={`font-semibold text-[#7E7E7E] 
-                      text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${
-                      isDarkMode ? "text-slate-50" : ""
-                    }`}
+                    className={`font-semibold 
+                      text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] 
+                      ${
+                                     isDarkMode ? "text-white" : "text-black"
+                                   }
+                                   `}
                   >
                     Full Name
                   </h2>
                   <p
-                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
-                         sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px]
-                          pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
-                          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px]
-     md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer 
-     outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#000] self-center  ${
+                    className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
       isDarkMode
         ? "bg-black text-white border border-white"
         : "hover:bg-[#EDEAEA]"
-    }`}>
+    }`} >
                   {full_name ? full_name : Data.UserFullName }
                   </p>
                 </div>
@@ -370,9 +375,11 @@ export default function IdVerification(Data) {
                               <div className="relative flex flex-col md:w-[50%]
                                w-[100%] md:gap-[10px] gap-2.5">
                   <h2
-                    className={`font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${
-                      isDarkMode ? "text-slate-50" : ""
-                    }`}
+                    className={`font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px]
+                       lg:text-[16px] lg:leading-[20.8px] 
+                    ${
+                                     isDarkMode ? "text-white" : "text-black"
+                                   }`}
                   >
                     Gender
                   </h2>
@@ -384,23 +391,21 @@ export default function IdVerification(Data) {
                         return null;
                       }
                     }}
-                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
-                         sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px]
-                          pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
-                          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px]
-     md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
-      items-center cursor-pointer outline-0 border-[0.24px] 
-      lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]
-       border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#000] self-center  ${
+                   className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
       isDarkMode
         ? "bg-black text-white border border-white"
         : "hover:bg-[#EDEAEA]"
-    }`}
+    }`} 
                   >
                     <h2
-                      className={`text-[#000] font-[400] text-[12px] leading-[18px] lg:text-[16px] lg:leading-[20.8px] ${
-                        isDarkMode ? "text-slate-50" : ""
+                      className={`text-base font-[400] text-[12px] leading-[18px] lg:text-[16px] lg:leading-[20.8px] ${
+                        isDarkMode ? "text-white" : "text-[#7E7E7E]"
                     }`}
                     >
                       {((Data?.ConfirmId === "false" && Data?.ConfirmBvn === "false") || (!Data?.ConfirmId  || !Data?.ConfirmBvn ))
@@ -457,9 +462,9 @@ export default function IdVerification(Data) {
                 {/* Date of Birth*/}
                 <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
                   <h2
-                    className={`font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${
-                      isDarkMode ? "text-slate-50" : ""
-                    }`}
+                    className={`font-semibold  text-[13px] leading-[10.4px]
+                       lg:text-[16px] lg:leading-[20.8px] 
+                      ${ isDarkMode ? "text-white" : "text-black" }`}
                   >
                     D.O.B
                   </h2>
@@ -485,19 +490,17 @@ export default function IdVerification(Data) {
                       setIdDateOfBirth(e.target.value);
                       }
                     }}
-                   className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
-                         sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px]
-                          pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
-                          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] 
-    md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer
-     outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px]
-      md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] 
-      md:px-[6px] lg:px-[10px] text-[#000] self-center  ${
+                    className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
       isDarkMode
         ? "bg-black text-white border border-white"
         : "hover:bg-[#EDEAEA]"
-    }`}
+    }`} 
                     type="date"
                     id="dob"
                     name="dob"
@@ -514,9 +517,11 @@ export default function IdVerification(Data) {
     {/*House Address and postal code  */}
   <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-2.5">
                   <h2
-                    className={`font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${
-                      isDarkMode ? "text-white" : ""
-                    }`}
+                    className={`font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px]
+                       lg:text-[16px] lg:leading-[20.8px]
+                       ${
+                                     isDarkMode ? "text-white" : "text-black"
+                                   }`}
                   >
                     House Address
                   </h2>
@@ -528,22 +533,20 @@ export default function IdVerification(Data) {
                       setIdAddress(e.target.value);
                       }
                     }}
-                   className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
-                         sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px]
-                          pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
-                          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] 
-    md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer
-     outline-0 border-[0.24px] lg:border-[0.4px] w-full 
-     h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C]
-     ${ verificationResponse?.data?.data?.address === undefined && 
-      ((Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false" ) || (!Data?.ConfirmId && !Data?.ConfirmBvn)) 
-      ? "" : "uppercase"}
-      px-[11px] md:px-[6px] lg:px-[10px] text-[#000] self-center  ${
+                    className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
       isDarkMode
         ? "bg-black text-white border border-white"
         : "hover:bg-[#EDEAEA]"
-    }`}
+    } 
+     ${ verificationResponse?.data?.data?.address === undefined && 
+      ((Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false" ) || (!Data?.ConfirmId && !Data?.ConfirmBvn)) 
+      ? "" : "uppercase"}`}
                     placeholder=""
                     type="text"
                     onInvalid={validAddress}
@@ -555,9 +558,11 @@ export default function IdVerification(Data) {
               {/* Postal code starts here */}
              <div className="flex flex-col md:w-[49%] w-[100%] md:gap-[10px] gap-2.5">
                 <h2
-                  className={`font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px] lg:text-[16px] lg:leading-[20.8px] ${
-                    isDarkMode ? "text-slate-50" : ""
-                  }`}
+                  className={`font-semibold text-[#7E7E7E] text-[13px] leading-[10.4px]
+                     lg:text-[16px] lg:leading-[20.8px] 
+                     ${
+                                     isDarkMode ? "text-white" : "text-black"
+                                   }`}
                 >
                   Postal Code(optional)
                 </h2>
@@ -573,20 +578,17 @@ export default function IdVerification(Data) {
                     setIdPostalCode(e.target.value);
                   }}
                   readOnly={Data.ConfirmId === "true" || Data.ConfirmBvn === "true"}
-                  className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
-                         sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px]
-                          pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
-                          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] 
-    md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] 
-    lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer 
-    outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px]
-     md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px]
-      lg:px-[10px] text-[#000] self-center  ${
+                 className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
       isDarkMode
         ? "bg-black text-white border border-white"
         : "hover:bg-[#EDEAEA]"
-    }`}
+    }`} 
                   placeholder=""
                   type="text"
                   inputMode="numeric"
@@ -601,8 +603,10 @@ export default function IdVerification(Data) {
     <div className='flex flex-col md:flex-row lg:gap-[22px] gap-[35px] w-[100%]'>
         {/* ID TYPE */}
         <div className='relative flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]'>
-   <h2 className='font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] 
-   lg:text-[16px] lg:leading-[20.8px]'>
+   <h2 className={`font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] 
+   lg:text-[16px] lg:leading-[20.8px]  ${
+                                     isDarkMode ? "text-white" : "text-black"
+                                   }`}>
      ID Type
     </h2>
     <div onClick={()=> {
@@ -614,19 +618,17 @@ export default function IdVerification(Data) {
      return null;
     }
     }}
-    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
-                         sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px]
-                          pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
-                          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px]
-     md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
-      items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] 
-      w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C]
-       px-[11px] md:px-[6px] lg:px-[10px] text-[#000] self-center  ${
+      className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
       isDarkMode
         ? "bg-black text-white border border-white"
         : "hover:bg-[#EDEAEA]"
-    }`}>
+    }`}  >
       <h2 className={`text-[#000] font-[400]  leading-[10.4px]
       lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : "text-black"}`}>
         {idResult || (Data.ConfirmId ==="true"   ? "National ID" : idResult)}
@@ -713,7 +715,7 @@ export default function IdVerification(Data) {
   
     {/*  */}
     <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]">
-   <h2 className="font-[600] text-[#7E7E7E] text-[13px] leading-[10.4px] 
+   <h2 className="font-[600]  text-[13px] leading-[10.4px] 
    lg:text-[16px] lg:leading-[20.8px]">
      ID Number
     </h2>
@@ -732,19 +734,17 @@ export default function IdVerification(Data) {
       setIdNumber(e.target.value);
       }
     }}
-     className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
-    sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px]
-     pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
-      leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px]
-     md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]
-       items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px]
-        w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] 
-        px-[11px] md:px-[6px] lg:px-[10px] text-[#000] self-center  ${
+     className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
       isDarkMode
         ? "bg-black text-white border border-white"
         : "hover:bg-[#EDEAEA]"
-    }`}
+    }`} 
     placeholder=''
     type="text" inputMode='numeric' maxLength={11} onInvalid={validId}  required/>
     {(verificationReason?.length > 1 ) && (

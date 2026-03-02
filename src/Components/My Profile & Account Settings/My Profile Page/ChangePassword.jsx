@@ -91,18 +91,25 @@ setErrorMessage("Please fill in all fields");
         <div className="flex flex-col mt-[10px] lg:gap-[25px] gap-[20px] w-full pb-[30px] lg:py-[30px] md:mt-[20px]">
           <div className="mt-[10px] flex flex-col md:flex-row lg:gap-[22px] gap-[20px] md:items-center w-full">
           <div className="flex flex-col md:w-1/2 w-full md:gap-[10px] gap-2.5">
-            <h2 className={`text-[12px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px] ${isDarkMode ? "text-white" : "" }`}>
+            <h2 className={`text-[13px]  font-semibold md:text-[14px] lg:text-[18px]
+               ${isDarkMode ? "text-white" : "text-black" }`}>
               Old Password
             </h2>
             {/* <div className="relative mt-[5px] lg:mt-[15px]"> */}
             <div className="relative">
               <input
                 type="text"
-                className={`w-full py-[10.33px] pl-[5.867px] pr-1 md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border text-[12px] leading-[18px] lg:leading-[20.8px] text-[#7E7E7E] focus:outline-none rounded-[10px] lg:text-[16px] border-[#9C9C9C]  ${
-                  isDarkMode
-                    ? "border-slate-50 text-slate-50 bg-black"
-                    : "bg-white"
-                }`}
+              className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`} 
                 placeholder="Password at login"
                 value={oldPassword}
                 onChange={(event) => setOldPassword(event.target.value)}
@@ -111,7 +118,8 @@ setErrorMessage("Please fill in all fields");
           </div>
 
           <div className="flex flex-col md:w-1/2 w-full md:gap-[10px] gap-2.5">
-            <h2 className={`text-[12px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px] ${isDarkMode ? "text-white" : "" }`}>
+            <h2 className={`text-[13px] font-semibold md:text-[14px] lg:text-[18px] 
+              ${isDarkMode ? "text-white" : "text-black" }`}>
               New Password
             </h2>
             <div className="relative ">
@@ -132,7 +140,7 @@ setErrorMessage("Please fill in all fields");
           </div>
 
           <div className="flex flex-col md:w-[50%] w-full md:gap-[10px] gap-2.5">
-            <h2 className={`text-[12px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px] ${isDarkMode ? "text-white" : "" }`}>
+            <h2 className={`text-[13px] text-black font-semibold md:text-[14px] lg:text-[18px] ${isDarkMode ? "text-white" : "" }`}>
               Confirm Password
             </h2>
             <div className="relative">
@@ -140,11 +148,17 @@ setErrorMessage("Please fill in all fields");
                 id="confirmPinInput"
                 type="text"
                 placeholder="Confirm your new password"
-                className={`w-full py-[10.33px] pl-[5.867px] pr-1 md:py-[10] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border text-sm leading-[18px] lg:leading-[20.8px] text-[#7E7E7E] focus:outline-none rounded-[10px] lg:text-[16px] border-[#9C9C9C]  ${
-                  isDarkMode
-                    ? "border-slate-50 text-slate-50 focus:bg-black bg-black"
-                    : "bg-white"
-                }`}
+               className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`} 
                 value={confirmPassword}
                 onChange={(event) => setConfirmPassword(event.target.value)}
               />

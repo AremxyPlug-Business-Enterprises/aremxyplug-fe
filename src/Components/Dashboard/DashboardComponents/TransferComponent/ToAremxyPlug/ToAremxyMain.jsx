@@ -384,16 +384,21 @@ const GetBalance = async () => {
              // navigate("/aremxy-select-user");
              setSelectRecipientPopUp(true)
             }}
-            className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] 
-                        md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] 
-                        pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
+          className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
       isDarkMode
         ? "bg-black text-white border border-white"
-        : "border border-[#0003] border-[#9C9C9C]  text-[#7C7C7C]"
-    }`}>
-              <p className="text-[#7E7E7E] text-[15px] lg:text-[17px]
-                       md:text-[13px] md:font-[600] font-[400]">Select User</p>
+        : "hover:bg-[#EDEAEA]"
+    }`} >
+              <p className={`text-[15px] lg:text-[17px]
+                       md:text-[13px] md:font-[600] font-[400]
+                       ${isDarkMode ? "text-white" : "text-[#7E7E7E]"}
+                       `}>Select User</p>
               <img
                 className="w-[13px] h-[13px] lg:w-[29px] lg:h-[29px]"
                 src="./Images/otherBanksImages/weight.png"
@@ -404,20 +409,17 @@ const GetBalance = async () => {
         </div>
         <div className="w-full">
          
-            <div className={`mt-2 md:mt-0 rounded-[10px] 
-                        md:rounded-0 p-[20px] md:p-0  sm:p-3 sm:text-lg 
-                        flex justify-between pt-[8.803px] pb-[7.794px] 
-                        pr-[13px] pl-[10.876px] font-[400] text-[14px] 
-                        leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+            <div  className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
-    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
-     items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full 
-     h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px] 
-      self-center ${
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
       isDarkMode
         ? "bg-black text-white border border-white"
-        : "border border-[#0003] hover:bg-[#EDEAEA] border-[#9C9C9C] text-[#7C7C7C]"
-    }`} onClick ={()=> {
+        : "hover:bg-[#EDEAEA]"
+    }`}  onClick ={()=> {
        navigate("/aremxy-add-user")
     }}>
               <p className="text-[#7E7E7E] text-[15px] lg:text-[17px]
@@ -440,7 +442,7 @@ const GetBalance = async () => {
           {/* <p className="text-[10px] font-extrabold md:text-[14px] lg:text-[20px]"> */}
           <p
             id ="selectCountry"
-            className={`text-[#7E7E7E] text-[15px] lg:text-[17px]
+            className={` text-[15px] lg:text-[17px]
                        md:text-[13px] md:font-[600] font-[400]
                        ${isDarkMode ? "text-white" : "text-black"}`}>
             Select Country
@@ -452,14 +454,17 @@ const GetBalance = async () => {
               } }
             
             // className="border rounded-[5px] h-[25px] flex justify-between items-center p-1 lg:h-[45px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]"
-           className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] 
-                        md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] 
-                        pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
+          className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
       isDarkMode
         ? "bg-black text-white border border-white"
-        : "border border-[#0003] border-[#9C9C9C]  text-[#7C7C7C]"
-    }`}>
+        : "hover:bg-[#EDEAEA]"
+    }`} >
          {mainCountry}
        
           <img
@@ -590,7 +595,7 @@ const GetBalance = async () => {
           
           <p
             // className="text-[10px] font-extrabold md:text-[14px] lg:text-[20px]"
-             className={`text-[#7E7E7E] text-[15px] lg:text-[17px]
+             className={`text-[15px] lg:text-[17px]
                        md:text-[13px] md:font-[600] font-[400]
                        ${isDarkMode ? "text-white" : "text-black"}`}
           >
@@ -598,14 +603,17 @@ const GetBalance = async () => {
           </p>
           <div
             // className="border text-[10px]  rounded-[5px] h-[25px] p-1 lg:h-[45px] lg:text-[14px] lg:rounded-[10px] lg:border-[1px] lg:border-[#0003]"
-             className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] 
-                        md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] 
-                        pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
+              className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
       isDarkMode
         ? "bg-black text-white border border-white"
-        : "border border-[#0003] border-[#9C9C9C]  text-[#7C7C7C]"
-    }`}
+        : "hover:bg-[#EDEAEA]"
+    }`} 
           >
             {selected ? (
               <div className="flex items-center gap-[7px]">
@@ -633,7 +641,7 @@ const GetBalance = async () => {
       <div className='flex flex-col lg:gap-[25px] gap-[20px] w-[100%] mb-[50px]'>
       <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-full">
         <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px]">
-          <p     className={`text-[#7E7E7E] text-[15px] lg:text-[17px]
+          <p     className={` text-[15px] lg:text-[17px]
                        md:text-[13px] md:font-[600] font-[400]
                        ${isDarkMode ? "text-white" : "text-black"}`}>
             Email\Username\UID
@@ -652,19 +660,17 @@ const GetBalance = async () => {
           value={transferValue}
       placeholder="Username29 / name@email.com"
      disabled={Data?.ConfirmAcc === "false"}
-    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] 
-     md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] 
-     pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
-     leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] 
-    md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] 
-    lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  
-    items-center cursor-pointer outline-0 border-[0.24px]
-     lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
+    className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
       isDarkMode
         ? "bg-black text-white border border-white"
-        : "border border-[#0003] border-[#9C9C9C] text-[#7C7C7C]"
-    }`}
+        : "hover:bg-[#EDEAEA]"
+    }`} 
     type="text"
             />
             <img
@@ -697,7 +703,7 @@ const GetBalance = async () => {
          w-[100%] md:gap-[10px] gap-[5.868px]">
           <p
             // className="text-[10px] font-extrabold md:text-[14px] lg:text-[20px]"
-          className={`text-[#7E7E7E] text-[15px] lg:text-[17px]
+          className={` text-[15px] lg:text-[17px]
                        md:text-[13px] md:font-[600] font-[400]
                        ${isDarkMode ? "text-white" : "text-black"}`}
           >
@@ -713,19 +719,17 @@ const GetBalance = async () => {
                readOnly
               value={fetchedResponse?.data?.data?.userDetails?.full_name !== undefined ?
             fetchedResponse?.data?.data?.userDetails?.full_name : "" }
-        className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] 
-     md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] 
-     pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px]
-      md:text-[11px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px]
-       md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] 
-    lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  
-    items-center cursor-pointer outline-0 border-[0.24px]
-     lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] 
-      px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
+       className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
       isDarkMode
         ? "bg-black text-white border border-white"
-        : "border border-[#0003] border-[#9C9C9C] text-[#7C7C7C]"
-    }`}
+        : "hover:bg-[#EDEAEA]"
+    }`} 
   type="text"
             />
             <img
@@ -750,7 +754,7 @@ const GetBalance = async () => {
          w-[100%] md:gap-[10px] gap-[5.868px]">
           <p
             // className="text-[10px] font-extrabold md:text-[14px] lg:text-[20px]"
-          className={`text-[#7E7E7E] text-[15px] lg:text-[17px]
+          className={`text-[15px] lg:text-[17px]
                        md:text-[13px] md:font-[600] font-[400]
                        ${isDarkMode ? "text-white" : "text-black"}`}
           >
@@ -768,19 +772,18 @@ const GetBalance = async () => {
               value={standardPhoneNumber?.length > 1
                  && standardPhoneNumber !== undefined && fetchedResponse?.data?.data
                  ?  standardPhoneNumber: ""}
-        className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] 
-     md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] 
-     pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px]
-      md:text-[11px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px]
-       md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] 
-    lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  
-    items-center cursor-pointer outline-0 border-[0.24px]
-     lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] 
-      px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
+        className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
       isDarkMode
         ? "bg-black text-white border border-white"
-        : "border border-[#0003] border-[#9C9C9C] text-[#7C7C7C]"
-    }`}
+        : "hover:bg-[#EDEAEA]"
+    }`} 
+    
   type="text"
             />
             <img
@@ -800,7 +803,7 @@ const GetBalance = async () => {
 
           {/* Phone Number end */}
             <div className="flex flex-col md:w-[50%] w-[100%] md:gap-[10px] gap-[5.868px] ">
-            <p    className={`text-[#7E7E7E] text-[15px] lg:text-[17px]
+            <p    className={` text-[15px] lg:text-[17px]
                        md:text-[13px] md:font-[600] font-[400]
                        ${isDarkMode ? "text-white" : "text-black"}`}>
           {/* <p className="text-[10px] font-extrabold md:text-[16px] lg:text-[20px]"> */}
@@ -816,20 +819,17 @@ const GetBalance = async () => {
         const formatInput =  amountInput.replace(/\D/g, "");
           e.target.value = formatInput;
     }}
-     className={`mt-2 md:mt-0 rounded-[10px] 
-     md:rounded-0 p-[20px] md:p-0 text-[13.2px]
-      sm:p-3 sm:text-lg flex justify-between pt-[8.803px] 
-     pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
-     leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] 
-    md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] 
-    lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  
-    items-center cursor-pointer outline-0 border-[0.24px]
-     lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
+  className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
       isDarkMode
         ? "bg-black text-white border border-white"
-        : "border border-[#0003] border-[#9C9C9C] text-[#7C7C7C]"
-    }`}
+        : "hover:bg-[#EDEAEA]"
+    }`} 
               onChange={(e)=> {
              setErrorTransAmount(false)
        console.log(e.target.value)
@@ -897,7 +897,7 @@ const GetBalance = async () => {
         gap-[20px] w-[100%]">
           <div className="flex flex-col md:w-[50%] 
             w-[100%] md:gap-[10px] gap-[5.868px]">
-          <p    className={`text-[#7E7E7E] text-[15px] lg:text-[17px]
+          <p    className={` text-[15px] lg:text-[17px]
                        md:text-[13px] md:font-[600] font-[400]
                        ${isDarkMode ? "text-white" : "text-black"}`}>
             Available Balance
@@ -907,17 +907,17 @@ const GetBalance = async () => {
            handleScrollAndHighlight()
                }
         }}
-          className={` relative mt-2 md:mt-0 rounded-[10px]
-           md:rounded-0 p-[20px] gap-[5px]
-                        md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] 
-                        pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px]
-     lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px]
-      lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
+         className={` relative mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
       isDarkMode
         ? "bg-black text-white border border-white"
-        : "border border-[#0003] border-[#9C9C9C] text-[#7C7C7C]"
-    }`}>
+        : "hover:bg-[#EDEAEA]"
+    }`} >
       {mainCountry === "Nigeria" ?  (
            <p className="text-[13.2px]  sm:p-3 sm:text-lg
             font-[400] leading-[10.4px] md:text-[11px]
@@ -952,7 +952,7 @@ const GetBalance = async () => {
   <div className="flex flex-col md:w-[50%] w-[100%] 
         md:gap-[10px] gap-[5.868px]">
           <p
-            className={`text-[#7E7E7E] text-[15px] lg:text-[17px]
+            className={`text-[#7E7E7E] text-base lg:text-[17px]
                        md:text-[13px] md:font-[600] font-[400]
                        ${isDarkMode ? "text-white" : "text-black"}`}
           >
