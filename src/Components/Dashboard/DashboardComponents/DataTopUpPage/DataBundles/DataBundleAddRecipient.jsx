@@ -151,20 +151,9 @@ const DataBundleAddRecipient = () => {
   // };
 
   const handleConfirm = async () => {
-    // setSave(false);
-    // setConfirm(true);
-    // setSelected("");
-    // setRecipientNumber("");
-    setRecipientName("");
-    setSave(false);
-    setConfirm(true);
-    setRecipientNumber(false);
-    // setRecipientName(event.target.value);
-
     setIsLoading(true);
     setErrors({});
-
-    try {
+   try {
       setConfirmRecipient(true)
       const requestBody = {
         network: networkName, // Changed from networkName
@@ -182,7 +171,6 @@ const DataBundleAddRecipient = () => {
           credentials : "include" // Use the new object here
         }
       );
-console.log(response?.status);
       if (!response.ok) {
         const errorData = await response.json();
         setErrors(errorData.errors || { server: "An error occurred" });
@@ -217,14 +205,12 @@ alert("Internal server error")
     }
   };
 
-  const [inputValue, setInputValue] = useState("");
+ // const [inputValue, setInputValue] = useState("");
 
   const handleChange = (e) => {
     const value = e.target.value;
-
-    const numericValue = value.replace(/\D/g, "").slice(0, 11);
-
-    setInputValue(numericValue);
+ const numericValue = value.replace(/\D/g, "").slice(0, 11);
+setRecipientNumber(numericValue);
   };
 
   return (
@@ -384,7 +370,7 @@ alert("Internal server error")
                 }`}
                       required
                       placeholder="Add recipient phone number"
-                      value={inputValue}
+                      value={recipientNumber}
                       onChange={(event) => {
                         handleChange(event);
                         setRecipientNumber(event.target.value);

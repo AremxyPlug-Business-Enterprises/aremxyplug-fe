@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { DashBoardLayout } from '../Dashboard/Layout/DashBoardLayout';
 import { BsEyeFill } from 'react-icons/bs'
 import FaqCard from './FaqCard';
@@ -7,12 +7,13 @@ import './faq.css'
 import { Link } from 'react-router-dom';
 import { GetFunction} from "../../Components/ApiCollection.jsx/ApiBuck";
 import { useEffect } from 'react';
+import { ContextProvider } from '../Context';
 
 
 
 const PointBalance = () => {
       const [isLoading, setLoading] = useState(false);
-   
+   const {networkIssue, setNetworkIssue} = useContext(ContextProvider)
 const [userPoints, setUserPoints] = useState(0);
  const [transactionPoints, setTransactionPoints] = useState(0);
 const [referralPoints, setReferralPoints] = useState(0);
@@ -24,23 +25,33 @@ const [fetchedResponse, setFetchedResponse] = useState([]);
    useEffect(() => {
     
      const  successHandler = (response) => {
+      
         if (!response?.data?.data) return;
-        // console.log("fetch points succefully");
-     const total = response?.data?.data?.point?.earned_points ?? 0;
+       const total = response?.data?.data?.point?.earned_points ?? 0;
      const trxPoints = response?.data?.data?.point?.transaction_points ?? 0;
      const referralPts = response?.data?.data?.point?.referral_points ?? 0;
-      console.log("fetch points succefully", total);
-     setUserPoints(total);
+      setUserPoints(total);
      setTransactionPoints(trxPoints);
      setReferralPoints(referralPts);
      };
      const FailedHandler = (error) => {
-       console.error("Failed to fetch points,", error);
+       if(error === "Network error" ){
+ if(!networkIssue) return setNetworkIssue(true)
+ } else if(error === "Server error"){
+alert("An unexpected error occured while fetching points")
+}else{
+    alert("An unexpcted error has occured.")
+}
      };
  
     
-       GetFunction("extra/point", setLoading,  successHandler, FailedHandler, setFetchedResponse)
-    
+       GetFunction("extra/point",
+         setLoading,  
+         successHandler, 
+         FailedHandler, 
+         setFetchedResponse,
+          setNetworkIssue)
+  //eslint-disable-next-line  
    }, []);
 
   const [clicked, setClicked] = useState(true);

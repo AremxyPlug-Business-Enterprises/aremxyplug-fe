@@ -89,11 +89,7 @@ export const GotvReceipt = (Data) => {
       
      //Get the amount or mm that remaininHeight has surpassed pageHeight
      // 
-        
-     
-      
-        
-      }
+  }
     
     const pdfBlob = pdf.output("blob");
    
@@ -101,7 +97,7 @@ export const GotvReceipt = (Data) => {
     if (navigator.canShare && navigator.canShare({files : [file]})) {
       navigator
         .share({
-          title: "AremxyPlug Receipt",
+          title: "AremxyPlug_GOTV_Receipt",
           text: "TransactionReceipt",
           files : [file], // Replace with the actual URL of your receipt
         })

@@ -13,7 +13,8 @@ export const AirtimeTransReceipt = () => {
   const navigate = useNavigate();
   const [showReceipt, setShowReceipt] = useState(true);
   const data = GetLocalStorage();
-  const { toggleSideBar, isDarkMode, orderIdResponse, setOrderIdResponse } =
+  const { toggleSideBar, textRef, 
+     isDarkMode, orderIdResponse, setOrderIdResponse } =
     useContext(ContextProvider);
 
   const receiptData = orderIdResponse?.data
@@ -69,34 +70,96 @@ export const AirtimeTransReceipt = () => {
   const contentRef = useRef(null);
 
   // ==============Share pdf Function=============
-  const handleShareClick = () => {
-    if (navigator.share) {
-      navigator
-        .share({
-          title: "Receipt",
-          text: "Check out this receipt!",
-          url: "https://example.com", // Replace with the actual URL of your receipt
+   const handleCopyClick = () => {
+      const text = textRef.current.innerText;
+      navigator.clipboard
+        .writeText(text)
+        .then(() => {
+          alert("Copied to clipboard");
         })
-        .then(() => console.log("Shared successfully"))
-        .catch((error) => console.error("Error sharing:", error));
-    } else {
-      console.log("Web Share API not supported.");
-      // Handle sharing fallback for unsupported browsers
+        .catch((err) => {
+          console.error("Error copying text: ", err);
+        });
+    };
+  
+    // ==============Share pdf Function=============
+    const handleShareClick = async() => {
+      const content = contentRef.current;
+      if(!content) return alert("Receipt not recorded")
+      if(content){
+        try {
+       const pdf = new jsPDF("p", "mm", "a4");
+     //  alert(pdf.internal?.pageSize.getHeight())
+        const canvas = await html2canvas(content,
+           {scale : 2,
+             useCORS : true,
+             backgroundColor : `${isDarkMode ? "#000" : "#fff"}`
+          }
+            )
+           
+        const bgPdf = pdf.setFillColor(isDarkMode ? 0 : 255, isDarkMode ? 0 : 255, isDarkMode ? 0 : 255 )
+        if(bgPdf){
+          const pageHeight = pdf.internal.pageSize.getHeight();
+          const pageWidth = pdf.internal.pageSize.getWidth();
+          const imgWidth = pageWidth;
+          const imgData = canvas.toDataURL("image/jpeg", 1.0);
+          pdf.addImage(imgData, 
+            "jpeg",0, 0, imgWidth, pageHeight, undefined, "FAST");
     }
-  };
+       const pdfBlob = pdf.output("blob");
+      const file = new File([pdfBlob], "AremxyPlug_Receipt.pdf", {type : "application/pdf"})
+      if (navigator.canShare && navigator.canShare({files : [file]})) {
+        navigator
+          .share({
+            title: "AremxyPlug_Airtime",
+            files : [file], 
+          })
+          .then(() => console.log("Shared successfully"))
+          .catch((error) => console.error("Error sharing:", error));
+      }else{
+      alert("Sharing this pdf isn't supported in your browser.")
+      }
+    }catch(error){
+     alert(error)
+    }
+      }
+    };
+  
+    // ==============Save Pdf Function==============
+    const handleSaveAsPDFClick = async() => {
+      const content = contentRef.current;
+      if (content) {
+        const pdf = new jsPDF();
+    const canvas=  await html2canvas(content, {
+          scale : 2,
+          useCORS : true,
+          backgroundColor :  `${isDarkMode ? "#000" : "#fff"}`
 
-  // ==============Save Pdf Function==============
-  const handleSaveAsPDFClick = () => {
-    const content = contentRef.current;
-    if (content) {
-      const pdf = new jsPDF();
-      html2canvas(content).then((canvas) => {
-        const imgData = canvas.toDataURL("image/png");
-        pdf.addImage(imgData, "PNG", 10, 10, 190, 0);
-        pdf.save(`${transaction_product} Receipt.pdf`);
-      });
-    }
-  };
+        }).then(() => { 
+          console.log("Successful")
+        } 
+      ).catch((error)=> {
+         console.log("ERROR:", error)
+      })
+      
+        const bgPdf = pdf.setFillColor(isDarkMode ? 0 : 255, isDarkMode ? 0 : 255, isDarkMode ? 0 : 255 )
+        if(bgPdf){
+          const imgHeight = pdf.internal.pageSize.getHeight();
+          const imgWidth = pdf.internal.pageSize.getWidth();
+          const imgData = canvas.toDataURL("image/jpeg", 1);
+          pdf.addImage(imgData, "jpeg", 10, 10, imgWidth, imgHeight, "FAST");
+         
+          pdf.setTextColor(isDarkMode? 0: 255,isDarkMode? 0: 255,isDarkMode? 0: 255 )
+       //    const pdfBlob = pdf.output("blob");
+   //   const file = new File([pdfBlob], "AremxyPlug_Receipt.pdf", {type : "application/pdf"})
+    
+        //  pdf.text("GoTv Subscription Receipt", 20, 20);
+        }
+       
+     //  pdf.save("AremxyPlug_Airtime.pdf");
+      }
+    };
+  
   return (
     <DashBoardLayout>
       {showReceipt && (
@@ -122,19 +185,19 @@ export const AirtimeTransReceipt = () => {
               </div>
             </div>
             <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]" />
-            <div ref={contentRef}>
+            <div
+            ref={contentRef}>
               {" "}
               <h3 className="font-extrabold text-[12px] my-[2%] text-center md:text-[20px] md:my-[3%] lg:text-base lg:my-[2%]">
                 Transaction Receipt
               </h3>
-              <div className="w-full flex justify-center ">
-                <img
-                  className="absolute w-[250px] h-[450px] md:w-[70%] lg:w-[50%] lg:h-[550px]"
-                  src="./Images/transferImages/receipt-background.png"
-                  alt="/"
-                />
+               <div className="w-full flex justify-center ">
+               <img
+                  className="absolute w-[250px] h-[500px] md:w-[70%] lg:w-[50%] lg:h-[550px]"
+                  src="./Images/transferImages/receipt-background.jpeg"
+                  alt="/" />
               </div>
-              <h3
+             <h3
                 className={`font-medium text-xs mt-[2%] text-center md:text-[20px] md:my-[7px] lg:text-base lg:my-[10px]
             ${isDarkMode ? "text-white" : "text-black"}
           `}
@@ -457,7 +520,13 @@ export const AirtimeTransReceipt = () => {
             <div className="flex w-[70%] mx-auto mb-[5%] md:w-[60%] ">
               <button
                 onClick={() => {
-                  handleShareClick();
+                  // setImgAppear(false)
+                //   setTimeout(()=> {
+                //   if(imgAppear === false){
+                //   handleShareClick();
+                //   }
+                // }, 1000)
+                handleShareClick();
                 }}
                 className={`bg-[#04177f] w-[111px] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
               >
