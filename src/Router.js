@@ -1,4 +1,4 @@
-import React from "react";
+import React , {useContext} from "react";
 import { Route, Routes } from "react-router-dom";
 import { Home } from "./Components/Screens/Home/Home";
 import OurServices from "./Components/Screens/OurServices/OurServices";
@@ -195,11 +195,12 @@ import { Loader } from "./Components/Loader/Loader";
 import { Suspense } from "react";
 import NotFound from "./Components/NotFound";
 import ProtectedRoutes from "./Components/ProtectedRoute"
+import { ContextProvider } from "./Components/Context";
 const ProtectedRoute = ({children})=> {
  //const pathname = typeof location.pathname  === "string" ? location?.pathname?.slice(1) : ""
 const LazyRoutes =  React.lazy(()=> import("./Components/ProtectedRoute"))
   const SessionExpiration = localStorage.getItem("SessionExpiration")
-
+const {} = useContext(ContextProvider)
   //eslint-disable-next-line
 
   return(

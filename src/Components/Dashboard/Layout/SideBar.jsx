@@ -94,7 +94,6 @@ return assignBgByUsername
 } 
 
 const bgUsername = UserBgFormatting();
-console.log(progressTaskBarResponse?.data?.data?.beta);
   return (
       <div
       className={`bvnQuery fixed overflow-auto ${
@@ -149,7 +148,7 @@ console.log(progressTaskBarResponse?.data?.data?.beta);
 
                 </div>
               {progressTaskBarResponse?.data?.data?.beta === true && (
-                <p className="text-[9px] md:text-[12px] text-green-400 text-center leading-[13px] lg:leading-[15px] font-[700]">
+                <p className="text-[9px] md:text-[12px] text-[#8A2BE2] rounded-[5px] p-0.5 bg-purple-200 text-center leading-[13px] lg:leading-[15px] font-[700]">
                   Beta User
                 </p>
               )}

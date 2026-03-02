@@ -61,21 +61,48 @@ export default function EduReceipt() {
   // }
 
   //   Share function
-  const shareClick = () => {
-    if (navigator.share) {
-      navigator
-        .share({
-          title: "Receipt",
-          text: "Check out this receipt!",
-          url: "https://test.aremxyplug.com/",
-        })
-        .then(() => console.log("Shared successfully"))
-        .catch((error) => console.error("Error sharing:", error));
-    } else {
-      console.log("Web Share API not supported.");
+   const handleShareClick = async() => {
+      const content = contentRef.current;
+      if(!content) return alert("Receipt not recorded")
+      if(content){
+        try {
+       const pdf = new jsPDF("p", "mm", "a4");
+     //  alert(pdf.internal?.pageSize.getHeight())
+        const canvas = await html2canvas(content,
+           {scale : 2,
+             useCORS : true,
+             backgroundColor : `${isDarkMode ? "#000" : "#fff"}`
+          }
+            )
+           
+        const bgPdf = pdf.setFillColor(isDarkMode ? 0 : 255, isDarkMode ? 0 : 255, isDarkMode ? 0 : 255 )
+        if(bgPdf){
+          const pageHeight = pdf.internal.pageSize.getHeight();
+          const pageWidth = pdf.internal.pageSize.getWidth();
+          const imgWidth = pageWidth;
+          const imgData = canvas.toDataURL("image/jpeg", 1.0);
+          pdf.addImage(imgData, 
+            "jpeg",0, 0, imgWidth, pageHeight, undefined, "FAST");
     }
-  };
-
+       const pdfBlob = pdf.output("blob");
+      const file = new File([pdfBlob], "AremxyPlug_Receipt.pdf", {type : "application/pdf"})
+      if (navigator.canShare && navigator.canShare({files : [file]})) {
+        navigator
+          .share({
+            title: `AremxyPlug_${receiptData?.exam_type?.toUpperCase()}_Receipt`,
+            files : [file], 
+          })
+          .then(() => console.log("Shared successfully"))
+          .catch((error) => console.error("Error sharing:", error));
+      }else{
+      alert("Sharing this pdf isn't supported in your browser.")
+      }
+    }catch(error){
+     alert(error)
+    }
+      }
+    };
+  
   // ==============Save Pdf Function==============
   const saveAsPDFClick = () => {
     const contentWaec = contentRef.current;
@@ -448,7 +475,7 @@ export default function EduReceipt() {
             >
               <button
                 onClick={() => {
-                  shareClick();
+                  handleShareClick();
                 }}
                 // className={`bg-[#04177f] w-[111px]
                 // cursor-pointer text-xs font-extrabold h-[40px] text-white rounded-[6px] md:w-[150px] md:rounded-[8px] md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
