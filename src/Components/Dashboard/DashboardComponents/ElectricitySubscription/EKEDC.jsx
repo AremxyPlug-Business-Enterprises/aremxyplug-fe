@@ -4,13 +4,11 @@ import { ContextProvider } from "../../../Context";
 import { useState } from "react";
 import styles from "../TransferComponent/transfer.module.css";
 import style from "../../../AirTimePage/AirtimeVtu.module.css";
-import bulb from "../ElectricitySubscription/Electricity-sub-images/Group 13115.svg";
 import arrow from "../ElectricitySubscription/Electricity-sub-images/arrow-square-right.png";
 import logo from "../ElectricitySubscription/Electricity-sub-images/1584714918161-ekedc-logo 1.svg";
 import arrowDown from "../ElectricitySubscription/Electricity-sub-images/arrow-down.png";
 import arrowRight from "../../../EducationPins/imagesEducation/educationArrowRight.svg";
 import nig from "../ElectricitySubscription/Electricity-sub-images/nigeriaFlag.png";
-
 import Joi from "joi";
 import { Modal } from "../../../Screens/Modal/Modal";
 import { AiFillEyeInvisible } from "react-icons/ai";
@@ -18,6 +16,7 @@ import { AiFillEye } from "react-icons/ai";
 import OtpInput from "react-otp-input";
 import { Link, useNavigate } from "react-router-dom";
 import { GetLocalStorage } from "../../../LocalStorage/LocalStorage";
+import { ElecHeroComponents } from "./HeroComponents";
 import {
   PostFunction,
   VerifyTransPin,
@@ -657,24 +656,7 @@ const GetBalance = async () => {
       >
         <div>
           {/* top part after nav bar */}
-          <div className="flex flex-row w-full pt-[10px] min-h-[91px] md:h-[112.29px] lg:h-[196px] lg:px-[50px]  px-[16px] rounded-lg md:rounded-[11.5px] lg:rounded-[20px] justify-between  py-0 bg-gradient-to-r from-[#FFA733] via-[#58FF4A] to-[#98B0FF]">
-            <div className="flex flex-col gap-2  ">
-              <div className="text-[11px] font-semibold  pt-[10px] md:text-xs md:leading-[20.63px] lg:pt-[25px] lg:text-[24px] lg:leading-[36px] text-[#000000] leading-[12px]">
-                ELECTRICITY BILLS, PREPAID AND POSTPAID <br /> PAYMENTS.
-              </div>
-              <div className="text-[9px] font-normal leading-[12px] md:text-[10px] md:leading-[14.9px] lg:text-[20px] lg:leading-[26px] text-[#000000] ">
-                Recharge your metre and pay bills with our electricity bills
-                payment feature for both prepaid and postpaid metertypes.
-              </div>
-            </div>
-            <div>
-              <img
-                className="w-[55px] h-[70px] md:w-[151.9px] md:h-[85.9px] lg:w-[265px] lg:h-[150px]"
-                src={bulb}
-                alt=""
-              />
-            </div>
-          </div>
+          <ElecHeroComponents/>
           <div
             className={`flex lg:mt-[20px] text-[10px] sm:text-xs lg:text-base font-semibold pt-[30px] items-center ${
               isDarkMode ? "text-white" : "text-[#7E7E7E]"
@@ -735,17 +717,23 @@ const GetBalance = async () => {
                 {/* header */}
                 <label
                   className={`text-sm lg:text-base md:text-[13px]  md:font-semibold font-normal ${
-                    isDarkMode ? "text-white" : "text-[#7E7E7E]"
+                    isDarkMode ? "text-white" : "text-black"
                   }`}
                 >
                   Select Meter Type
                 </label>
                 <div
-                  className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-5 md:p-0 text-[13.2px]  sm:p-3 sm:text-lg relative flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-normal leading-[10.4px] md:text-[11px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] self-center  ${
-                    isDarkMode
-                      ? "bg-black hover:bg-gray-800 text-white border border-white"
-                      : "hover:bg-[#EDEAEA] border-[#9C9C9C] text-[#7C7C7C]"
-                  }`}
+                   className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`} 
                   onClick={() => {
                     setShowProductList(!showProductList);
                     setShowList(false);
@@ -790,7 +778,7 @@ const GetBalance = async () => {
               <div className="relative flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2 ">
                 <label
                   className={`text-sm md:text-[13px] lg:text-base md:font-semibold font-normal ${
-                    isDarkMode ? "text-white" : "text-[#7E7E7E]"
+                    isDarkMode ? "text-white" : "text-black"
                   }`}
                 >
                   Meter Number
@@ -826,12 +814,17 @@ const GetBalance = async () => {
   return ()=> clearTimeout(timer.current);
                   }}
                   onClick={() => setShowProductList(false)}
-                  className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-5 md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-normal leading-[10.4px] md:text-[11px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center focus:outline-0 outline-0 border lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px]  self-center
-                    ${
-                      isDarkMode
-                        ? "bg-black text-white border-white"
-                        : "border-[#9C9C9C] text-[#7C7C7C] hover:bg-[#EDEAEA] bg-white"
-                    }`}
+                  className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`} 
                 />
 
                 {errors.ekedcMeterNumber && (
@@ -855,7 +848,7 @@ const GetBalance = async () => {
               <div className=" flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
                 <label
                   className={`text-sm md:text-[13px] lg:text-base md:font-semibold font-normal ${
-                    isDarkMode ? "text-white" : "text-[#7E7E7E]"
+                    isDarkMode ? "text-white" : "text-black"
                   }`}
                 >
                   Verified Name
@@ -866,12 +859,17 @@ const GetBalance = async () => {
                     placeholder="Input Meter Number to Verify Name"
                     value={handleVerifiedName}
                     readOnly
-                    className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-5 md:p-0 text-[13.2px]  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-normal leading-[10.4px] md:text-[11px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center focus:outline-0 outline-0 border lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] cursor-not-allowed self-center
-                    ${
-                      isDarkMode
-                        ? "bg-black text-white border-white"
-                        : "border-[#9C9C9C] text-[#7C7C7C] hover:bg-[#EDEAEA] bg-white"
-                    }`}
+                    className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`} 
                   />
                   {meterNumberLoading && (
                     <p className="left-4 absolute top-5 md:top-3 lg:top-4">
@@ -885,7 +883,7 @@ const GetBalance = async () => {
               <div className=" container-phone relative flex flex-col gap-[3px] lg:gap-[5px] w-full md:w-1/2">
                 <label
                   className={`text-sm md:text-[13px] lg:text-base md:font-semibold font-normal ${
-                    isDarkMode ? "text-white" : "text-[#7E7E7E]"
+                    isDarkMode ? "text-white" : "text-black"
                   }`}
                 >
                   Phone Number
@@ -908,12 +906,17 @@ const GetBalance = async () => {
                   //     : (e.target.style.border = "1px solid #9C9C9C");
                   // }}
                   onChange={handlePhoneNumber}
-                  className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0  sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-normal text-sm leading-[10.4px] md:text-[11px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center  focus:outline-0 outline-0 border lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px] self-center 
-                    ${
-                      isDarkMode
-                        ? "bg-black text-white border-white"
-                        : "placeholder:text-[#7E7E7E] hover:bg-[#EDEAEA] border-[#9C9C9C] text-[#7C7C7C]"
-                    }`}
+                  className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`} 
                 />
 
                 {errors.ekedcPhoneNumber && (
@@ -934,7 +937,7 @@ const GetBalance = async () => {
                 {/* header */}
                 <label
                   className={`text-sm md:text-[13px] lg:text-base md:font-semibold font-normal ${
-                    isDarkMode ? "text-white" : "text-[#7E7E7E]"
+                    isDarkMode ? "text-white" : "text-black"
                   }`}
                 >
                   Email
@@ -947,12 +950,17 @@ const GetBalance = async () => {
                   onInput={() => {
                     setErrors((prev) => ({ ...prev, ekedcEmail: "" }));
                   }}
-                  className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px]  sm:p-3 text-sm flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[13px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center focus:outline-0 outline-0 border lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center  
-                    ${
-                      isDarkMode
-                        ? "bg-black text-white border-white"
-                        : "border-[#9C9C9C] text-[#7C7C7C]"
-                    }`}
+                  className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`} 
                 />
 
                 {errors.ekedcEmail && (
@@ -965,18 +973,23 @@ const GetBalance = async () => {
               <div className="flex flex-col relative gap-[3px] lg:gap-[5px] w-full md:w-1/2">
                 <label
                   className={`text-sm md:text-[13px] lg:text-base md:font-semibold font-normal ${
-                    isDarkMode ? "text-white " : "text-[#7E7E7E]"
+                    isDarkMode ? "text-white " : "text-black"
                   }`}
                 >
                   Amount
                 </label>
                 <div
-                  className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px]  sm:p-3 text-sm flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] leading-[10.4px] md:text-[13px] md:leading-[12.206px] lg:text-base lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center border lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center   
-                    ${
-                      isDarkMode
-                        ? "bg-black text-white border-white"
-                        : "border-[#9C9C9C] text-[#7C7C7C]"
-                    }`}
+                 className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between 
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`} 
                 >
                   <span className="mt-0.5">&#8358;</span>
                   <input
@@ -1003,17 +1016,23 @@ const GetBalance = async () => {
               <div className="flex flex-col gap-[3px] lg:gap-[5px] relative w-full md:w-1/2">
                 <label
                   className={` text-sm md:text-[13px] lg:text-base md:font-semibold font-normal ${
-                    isDarkMode ? "text-white" : "text-[#7E7E7E]"
+                    isDarkMode ? "text-white" : "text-black"
                   }`}
                 >
                   Payment Method
                 </label>
                 <div
-                  className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-5 md:p-0 text-[13px]  sm:p-3 sm:text-lg flex items-center cursor-pointer justify-between border lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] px-[11px] md:px-[6px] lg:px-[10px] ${
-                    isDarkMode
-                      ? "bg-black hover:bg-gray-800 text-white border-white"
-                      : "border-[#9C9C9C] hover:bg-[#EDEAEA] "
-                  }`}
+                 className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`} 
                   onClick={() => {
                     setShowList(!showList);
                     setShowProductList(false);
@@ -1026,7 +1045,7 @@ const GetBalance = async () => {
                    ${isDarkMode ? "text-white " : "text-[#7E7E7E]"}`}
                     >
                       <p
-                        className={`text-xs lg:text-sm
+                        className={`text-base
                      ${isDarkMode ? "text-white " : "text-[#7E7E7E]"}`}
                       >
                         {/* font-extrabold */}

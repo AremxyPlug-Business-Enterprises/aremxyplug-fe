@@ -677,9 +677,10 @@ return assignImageByUsername
                   width: 40,
                   height: 40,
                   borderRadius: 3,
+            
                 }}
                 renderInput={(props) => (
-                  <input {...props} className="inputOTP mx-[3px]" />
+                  <input {...props} className="inputOTP mx-[3px] text-base" />
                 )}
               />
             </div>
@@ -708,7 +709,7 @@ return assignImageByUsername
                   <input
                     type="password"
                     {...props}
-                    className="inputOTP mx-[3px]"
+                    className="inputOTP mx-[3px] text-base"
                   />
                 )}
               />
@@ -798,8 +799,8 @@ text-[10px] font-bold leading-[11.31px] w-full md:w-[300px] px-[25px] py-5 round
                       <input
                         type="password"
                         {...props}
-                        className="flex h-[35px] md:h-[45px] lg:h-[65px] text-[12px]
-                   md:text-[14px] lg:text-[20px] md:rounded-[12px] rounded-[10px]
+                        className="flex h-[35px] md:h-[45px] lg:h-[65px] text-base
+                lg:text-[20px] md:rounded-[12px] rounded-[10px]
                         lg:rounded-[14px] border-2 border-blue-300 lg:mx-2 mx-1 focus:outline-pink-300"
                       />
                     )}
@@ -923,8 +924,8 @@ text-[10px] font-bold leading-[11.31px] w-full md:w-[300px] px-[25px] py-5 round
                       <input
                         type="password"
                         {...props}
-                        className="flex h-[35px] md:h-[45px] lg:h-[65px] text-[12px]
-                   md:text-[14px] lg:text-[20px] md:rounded-[12px] rounded-[10px]
+                        className="flex h-[35px] md:h-[45px] lg:h-[65px] text-base
+                    lg:text-[20px] md:rounded-[12px] rounded-[10px]
                         lg:rounded-[14px] border-2 border-blue-300 lg:mx-2 mx-1 focus:outline-pink-300"
                       />
                     )}

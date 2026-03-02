@@ -292,8 +292,8 @@ await PutFunction(path, setLoading, body, SuccessHandler, FailedHandler, setNetw
                 className="w-[12px] h-[12px] md:w-[14.083px] md:h-[14.083px] lg:w-[24px] lg:h-[24px]"
               />
             </div>
-
-            <div className="text-[12px] flex  md:text-[18px] lg:text-[20px] justify-between md:justify-between md:gap-[5%]">
+              <div className="text-[12px] flex  md:text-[18px] 
+            lg:text-[20px] justify-between md:justify-between md:gap-[5%]">
               <div
                 onClick={() => {
                   handleClick(0);
@@ -315,7 +315,8 @@ await PutFunction(path, setLoading, body, SuccessHandler, FailedHandler, setNetw
                     : ""
                 } cursor-pointer w-[144px] justify-center rounded-[2px] md:w-[180px] md:rounded-[3px] md:justify-center md:items-center flex lg:w-[248px] lg:rounded-[6px] 2xl:text-[24px]`}
               >
-              <p className="md:text-[10px] md:leading-[14px] font-[400] lg:text-[14px] lg:leading-[20px] ">
+              <p className="md:text-[10px] md:leading-[14px]
+               font-[400] lg:text-[14px] lg:leading-[20px] ">
                   Change Pin
                   </p>
               </div>
@@ -381,8 +382,8 @@ await PutFunction(path, setLoading, body, SuccessHandler, FailedHandler, setNetw
                     {/* <div className="mt-[30px] w-1/2 md:w-full "> */}
                     <div className="flex flex-col md:w-[50%] w-full md:gap-[10px] gap-2.5 ">
                       <h2
-                        className={`text-[12px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px] mt-2 md:mt-0 ${
-                          isDarkMode ? "text-white" : ""
+                        className={`text-[13px] font-semibold md:text-[14px] lg:text-[18px] mt-2 md:mt-0 ${
+                          isDarkMode ? "text-white" : "black"
                         }`}
                       >
                         Old PIN
@@ -391,11 +392,17 @@ await PutFunction(path, setLoading, body, SuccessHandler, FailedHandler, setNetw
                       <div className="relative">
                         <input
                           type="number"
-                          className={`w-full py-[10.33px] pl-[5.867px] pr-1 md:py-[10] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border text-[12px] leading-[18px] lg:leading-[20.8px] text-[#7E7E7E] focus:outline-none rounded-[10px] lg:text-[16px] border-[#9C9C9C]  ${
-                            isDarkMode
-                              ? "border-slate-50 text-slate-50 bg-black"
-                              : "bg-white"
-                          }`}
+                        className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`} 
                           placeholder="Your Old pin"
                           maxLength={4}
                           value={oldPin}
@@ -409,8 +416,8 @@ await PutFunction(path, setLoading, body, SuccessHandler, FailedHandler, setNetw
                     {/* <div className="mt-[30px] md:ml-[-20px] lg:ml-[-50px] w-1/2 md:w-full "> */}
                     <div className="flex flex-col md:w-1/2 w-full md:gap-[10px] gap-2.5 ">
                       <h2
-                        className={`text-[12px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px] ${
-                          isDarkMode ? "text-slate-50" : ""
+                        className={`text-[13px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px] ${
+                          isDarkMode ? "text-white" : "text-black"
                         }`}
                       >
                         New PIN
@@ -418,11 +425,17 @@ await PutFunction(path, setLoading, body, SuccessHandler, FailedHandler, setNetw
                       <div className="relative ">
                         <input
                           type="number"
-                          className={`w-full py-[10.33px] pl-[5.867px] pr-1 md:py-[10] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border text-[12px] leading-[18px] lg:leading-[20.8px] text-[#7E7E7E] focus:outline-none rounded-[10px] lg:text-[16px] border-[#9C9C9C]  ${
-                            isDarkMode
-                              ? "border-slate-50 text-slate-50 bg-black"
-                              : "bg-white"
-                          }`}
+                          className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`} 
                           placeholder="Your New Pin"
                           maxLength={4}
                           value={newPin}
@@ -436,8 +449,8 @@ await PutFunction(path, setLoading, body, SuccessHandler, FailedHandler, setNetw
 
                   <div className="flex flex-col md:w-1/2 w-full md:gap-[10px] gap-2.5">
                     <h2
-                      className={`text-[12px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px] mt-2 md:mt-0 ${
-                        isDarkMode ? "text-slate-50" : ""
+                      className={`text-[13px] font-semibold md:text-[14px] lg:text-[18px] mt-2 md:mt-0 ${
+                        isDarkMode ? "text-white" : "text-black"
                       }`}
                     >
                       Confirm PIN
@@ -446,11 +459,17 @@ await PutFunction(path, setLoading, body, SuccessHandler, FailedHandler, setNetw
                       <input
                         id="confirmPinInput"
                         type="number"
-                        className={`w-full py-[10.33px] pl-[5.867px] pr-1 md:py-[10] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border text-sm leading-[18px] lg:leading-[20.8px] text-[#7E7E7E] focus:outline-none rounded-[10px] lg:text-[16px] border-[#9C9C9C]  ${
-                          isDarkMode
-                            ? "border-slate-50 text-slate-50 bg-black"
-                            : "bg-white"
-                        }`}
+                        className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`} 
                         placeholder="Inputs to confirm your new pin"
                         maxLength ={4}
                         value={confirmPin}
@@ -556,8 +575,8 @@ await PutFunction(path, setLoading, body, SuccessHandler, FailedHandler, setNetw
                 <section className="">
                   <div className="mt-[30px] flex flex-col md:w-[50%] w-full md:gap-[10px] gap-2.5">
                     <h2
-                      className={`text-[12px] text-[#7E7E7E] font-semibold md:text-[14px] lg:text-[18px]  ${
-                        isDarkMode ? "text-white" : ""
+                      className={`text-[13px]  font-semibold md:text-[14px] lg:text-[18px]  ${
+                        isDarkMode ? "text-white" : "text-black"
                       }`}
                     >
                        Email
@@ -566,11 +585,17 @@ await PutFunction(path, setLoading, body, SuccessHandler, FailedHandler, setNetw
                       <input
                         type="text"
                         readOnly
-                        className={`w-full py-[10.33px] pl-[5.867px] pr-1 md:py-[10] md:pl-[8.67px] md:pr-[5.867px] lg:py-[15.5px] lg:pl-[10px] border text-sm leading-[18px] lg:leading-[20.8px] text-[#7E7E7E] focus:outline-none rounded-[10px] lg:text-[16px] border-[#9C9C9C] ${
-                          isDarkMode
-                            ? "border-slate-50 text-slate-50 bg-black"
-                            : "bg-white"
-                        }`}
+                         className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`} 
                       
                         value={
                           !email && state.email.length > 1
@@ -660,7 +685,7 @@ await PutFunction(path, setLoading, body, SuccessHandler, FailedHandler, setNetw
                             : "1px solid #ccc",
                           }}
                           renderInput={(props) => (
-                            <input {...props} className="inputOTP mx-[3px]" />
+                            <input {...props} className="inputOTP mx-[3px] text-base" />
                           )}
                         />
                       ) : (
@@ -823,7 +848,7 @@ await PutFunction(path, setLoading, body, SuccessHandler, FailedHandler, setNetw
                         renderInput={(props) => (
                           <input
                             {...props}
-                            className="inputOTP text-sm leading-[18px] lg:leading-[20.8px] lg:text-[20px] mx-[3px]"
+                            className="inputOTP text-base leading-[18px] lg:leading-[20.8px] lg:text-[20px] mx-[3px]"
                           />
                         )}
                         isInputNum

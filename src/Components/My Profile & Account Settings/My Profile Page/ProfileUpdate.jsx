@@ -61,26 +61,24 @@ const UserIcon = localStorage.getItem("UserIcon") ? localStorage.getItem("UserIc
                   {/* Country */}
                   <div className="flex flex-col w-[100%] md:w-[50%] gap-[5.868px] lg:gap-[10px]">
                     <h2
-                      className={`text-[#7E7E7E] text-[12px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] font-semibold lg:text-[16px] lg:leading-[20.8px] cursor-default ${
-                        isDarkMode ? "text-stone-50" : ""
+                      className={` text-[12px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] font-semibold lg:text-[16px] lg:leading-[20.8px] cursor-default ${
+                        isDarkMode ? "text-white" : "text-black"
                       }`}
                     >
                       Country
                     </h2>
                     <div
-                       className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
-                         sm:p-3 sm:text-lg relative  flex gap-[5px]  pt-[8.803px]
-                          pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
-                          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px]
-     md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]
-       items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px]
-        w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] 
-        px-[11px] md:px-[6px] lg:px-[10px] text-[#000] self-center  ${
+                        className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex gap-2 py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
       isDarkMode
         ? "bg-black text-white border border-white"
         : "hover:bg-[#EDEAEA]"
-    }`}
+    }`} 
                     >
                       {/* {`flex items-center py-[10.33px] pl-[5.867px] lg:py-[15.5px] lg:pl-[10px] border-[0.4px] md:py-[12px] md:pl-[8.67px] md:pr-[5.867px] text-sm leading-[18px] border-[#9C9C9C] lg:text-[16px] lg:leading-[20.8px] focus:outline-none placeholder:text-[12px] placeholder:leading-[10.4px]placeholder:lg:text-[16px] placeholder:lg:leading-[20.8px] rounded-[10px] h-full  ${
                         isDarkMode ? "border-slate-50" : ""
@@ -91,9 +89,9 @@ const UserIcon = localStorage.getItem("UserIcon") ? localStorage.getItem("UserIc
                         alt=""
                       />
                       <p
-                        className={`text-[#7E7E7E] text-[12px] leading-[18px] 
+                        className={` text-base leading-[18px] 
                           md:text-[10.389px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] ${
-                          isDarkMode ? "text-white" : ""
+                          isDarkMode ? "text-white" : "text-[#7C7C7C]"
                         }`}
                       >
                         Nigeria
@@ -104,30 +102,30 @@ const UserIcon = localStorage.getItem("UserIcon") ? localStorage.getItem("UserIc
                   {/* Full Name */}
                   <div className=" flex flex-col w-[100%] md:w-[50%] gap-[5.868px] lg:gap-[10px] ">
                     <h2
-                      className={`text-[#7E7E7E] text-[12px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] font-semibold lg:text-[16px] lg:leading-[20.8px] cursor-default ${
-                        isDarkMode ? "text-stone-50" : ""
+                      className={` text-[13px] 
+                        leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] font-semibold lg:text-[16px] lg:leading-[20.8px] cursor-default ${
+                        isDarkMode ? "text-white" : "text-black"
                       }`}
                     >
                       Full Name
                     </h2>
                     <div
-                      className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
-                         sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px]
-                          pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
-                          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px]
-     md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]
-       items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px]
-        w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] 
-        px-[11px] md:px-[6px] lg:px-[10px] text-[#000] self-center  ${
+                      className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
       isDarkMode
         ? "bg-black text-white border border-white"
         : "hover:bg-[#EDEAEA]"
-    }`}
+    }`} 
                     >
                       <p
-                        className={`text-[#7E7E7E] text-[12px] leading-[18px] md:text-[9.389px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] cursor-default ${
-                          isDarkMode ? "text-white" : ""
+                        className={` text-base leading-[18px]
+                           md:text-[9.389px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] cursor-default ${
+                          isDarkMode ? "text-white" : "text-[#7E7E7E]"
                         }`}
                       >
                         {full_name ? full_name : fullname ? fullname : ""}
@@ -143,31 +141,29 @@ const UserIcon = localStorage.getItem("UserIcon") ? localStorage.getItem("UserIc
                   <div className="flex flex-col gap-[5.868px] w-[100%] md:w-[50%] lg:gap-[10px] ">
                     <h2
                       className={`text-[#7E7E7E] text-[12px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px] font-semibold lg:text-[16px] lg:leading-[20.8px] cursor-default ${
-                        isDarkMode ? "text-stone-50" : ""
+                        isDarkMode ? "text-white" : "text-black"
                       }`}
                     >
                       UserName
                     </h2>
                     <div
-                      className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
-                         sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px]
-                          pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
-                          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px]
-     md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]
-       items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px]
-        w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] 
-        px-[11px] md:px-[6px] lg:px-[10px] text-[#000] self-center  ${
+                     className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
       isDarkMode
         ? "bg-black text-white border border-white"
         : "hover:bg-[#EDEAEA]"
-    }`}
+    }`} 
                     >
                       <p
-                        className={`text-[#7E7E7E] text-[12px] 
+                        className={` text-base 
                           leading-[18px] md:leading-[12.206px] lg:text-[16px]
                            lg:leading-[20.8px] cursor-default ${
-                          isDarkMode ? "text-white" : ""
+                          isDarkMode ? "text-white" : "text-[#7E7E7E]"
                         }`}
                       >
                         {username ? username : Username ? Username : ""}
@@ -180,29 +176,27 @@ const UserIcon = localStorage.getItem("UserIcon") ? localStorage.getItem("UserIc
                       className={`text-[#7E7E7E] text-[12px] leading-[10.4px]
                          md:leading-[12.206px] font-semibold lg:text-[16px] 
                          lg:leading-[20.8px] cursor-default ${
-                        isDarkMode ? "text-stone-50" : ""
+                        isDarkMode ? "text-white" : "text-black"
                       }`}
                     >
                       Email
                     </h2>
                     <div
-                        className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
-                         sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px]
-                          pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
-                          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px]
-     md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]
-       items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px]
-        w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] 
-        px-[11px] md:px-[6px] lg:px-[10px] text-[#000] self-center  ${
+                         className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
       isDarkMode
         ? "bg-black text-white border border-white"
         : "hover:bg-[#EDEAEA]"
-    }`}
+    }`} 
                     >
                       <p
-                        className={`text-[#7E7E7E] text-[12px] leading-[18px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] cursor-default ${
-                          isDarkMode ? "text-white" : ""
+                        className={`text-[#7E7E7E] text-base leading-[18px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] cursor-default ${
+                          isDarkMode ? "text-white" : "text-[#7E7E7E]"
                         }`}
                       >
                         {email? email : Email ? Email : ""}
@@ -218,31 +212,31 @@ const UserIcon = localStorage.getItem("UserIcon") ? localStorage.getItem("UserIc
                   <div className="flex flex-col w-[100%] md:w-[50%] 
                   gap-[5.868px] lg:gap-[10px]">
                     <h2
-                      className={`text-[#7E7E7E] text-[12px] leading-[10.4px] md:leading-[12.206px] font-semibold lg:text-[16px] lg:leading-[20.8px] cursor-default mb-[5.868px] lg:mb-[10px] ${
-                        isDarkMode ? "text-stone-50" : ""
+                      className={`text-[#7E7E7E] text-[12px] leading-[10.4px]
+                         md:leading-[12.206px] font-semibold lg:text-[16px] lg:leading-[20.8px] 
+                         cursor-default mb-[5.868px] lg:mb-[10px] ${
+                        isDarkMode ? "text-white" : "text-black"
                       }`}
                     >
                       Phone Number
                     </h2>
 
                     <div
-                       className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
-                         sm:p-3 sm:text-lg relative  flex justify-between pt-[8.803px]
-                          pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
-                          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px]
-     md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]
-       items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px]
-        w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] 
-        px-[11px] md:px-[6px] lg:px-[10px] text-[#000] self-center  ${
+                    className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
       isDarkMode
         ? "bg-black text-white border border-white"
         : "hover:bg-[#EDEAEA]"
-    }`}
+    }`} 
                     >
                       <p
-                        className={` text-[#7E7E7E] text-[12px] leading-[18px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] cursor-default ${
-                          isDarkMode ? "text-white" : ""
+                        className={`  text-base leading-[18px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px] cursor-default ${
+                          isDarkMode ? "text-white" : "text-[#7E7E7E]"
                         }`}
                       >
                         {phone?  `+${phone}`:Phone ? `+${Phone}` :""

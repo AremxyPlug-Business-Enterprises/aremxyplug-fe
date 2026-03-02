@@ -70,7 +70,7 @@ const navigate = useNavigate()
        if (navigator.canShare && navigator.canShare({files : [file]})) {
          navigator
            .share({
-             title: "AremxyPlug_MTN_Data_Receipt",
+             title: "AremxyPlug_MTN_Data_ReceiptLoginF",
              files : [file], 
            })
            .then(() => console.log("Shared successfully"))
