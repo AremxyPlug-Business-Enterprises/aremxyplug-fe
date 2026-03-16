@@ -48,9 +48,9 @@ export const AirtimeTransReceipt = () => {
       ? receiptData?.reference_number
       : "";
 
-       const receipient_name =
-    receiptData?.receipient_name
-      ? receiptData?.receipient_name
+       const recipient_name =
+    receiptData?.recipient_name
+      ? receiptData?.recipient_name
       : "NIL";
 
          const discountAmount =
@@ -102,7 +102,7 @@ export const AirtimeTransReceipt = () => {
           const pageHeight = pdf.internal.pageSize.getHeight();
           const pageWidth = pdf.internal.pageSize.getWidth();
           const imgWidth = pageWidth;
-          const imgData = canvas.toDataURL("image/jpeg", 1.0);
+          const imgData = canvas.toDataURL("image/jpeg", 1);
           pdf.addImage(imgData, 
             "jpeg",0, 0, imgWidth, pageHeight, undefined, "FAST");
     }
@@ -130,34 +130,28 @@ export const AirtimeTransReceipt = () => {
       const content = contentRef.current;
       if (content) {
         const pdf = new jsPDF();
-    const canvas=  await html2canvas(content, {
+   await html2canvas(content, {
           scale : 2,
           useCORS : true,
           backgroundColor :  `${isDarkMode ? "#000" : "#fff"}`
 
-        }).then(() => { 
+        }).then((canvas) => { 
           console.log("Successful")
+            const bgPdf = pdf.setFillColor(isDarkMode ? 0 : 255, isDarkMode ? 0 : 255, isDarkMode ? 0 : 255 )
+        if(bgPdf){
+          const imgHeight = pdf.internal.pageSize.getHeight();
+          const imgWidth = pdf.internal.pageSize.getWidth();
+          const imgData = canvas.toDataURL("jpeg", 1);
+          pdf.addImage(imgData, "jpeg", 0, 0, imgWidth, imgHeight, "FAST");
+           pdf.save("AremxyPlugAirtimeReceipt.pdf");
+          pdf.setTextColor(isDarkMode? 0: 255,isDarkMode? 0: 255,isDarkMode? 0: 255 )
         } 
+      }
       ).catch((error)=> {
          console.log("ERROR:", error)
       })
       
-        const bgPdf = pdf.setFillColor(isDarkMode ? 0 : 255, isDarkMode ? 0 : 255, isDarkMode ? 0 : 255 )
-        if(bgPdf){
-          const imgHeight = pdf.internal.pageSize.getHeight();
-          const imgWidth = pdf.internal.pageSize.getWidth();
-          const imgData = canvas.toDataURL("image/jpeg", 1);
-          pdf.addImage(imgData, "jpeg", 10, 10, imgWidth, imgHeight, "FAST");
-         
-          pdf.setTextColor(isDarkMode? 0: 255,isDarkMode? 0: 255,isDarkMode? 0: 255 )
-       //    const pdfBlob = pdf.output("blob");
-   //   const file = new File([pdfBlob], "AremxyPlug_Receipt.pdf", {type : "application/pdf"})
-    
-        //  pdf.text("GoTv Subscription Receipt", 20, 20);
-        }
-       
-     //  pdf.save("AremxyPlug_Airtime.pdf");
-      }
+ }
     };
   
   return (
@@ -328,7 +322,7 @@ export const AirtimeTransReceipt = () => {
                     >
                       Recipient Name
                     </p>
-                    <span>{receipient_name}</span>
+                    <span>{recipient_name}</span>
                   </div>
                   {/* <div className="flex text-[10px] font-medium md:text-sm w-[90%] mx-auto justify-between lg:text-base">
                     <p
@@ -536,7 +530,13 @@ export const AirtimeTransReceipt = () => {
                 onClick={() => {
                   handleSaveAsPDFClick();
                 }}
-                className={`bg-[#ffffff] border-[1px] w-[111px] border-[#0003] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+               className={` border-[1px] w-[111px]
+                   border-[#0003] flex justify-center 
+                   items-center mx-auto cursor-pointer text-[12px]
+                    font-extrabold h-[40px] rounded-[6px] 
+                    md:w-[25%] md:rounded-[8px] md:text-base
+                     lg:w-[163px] lg:h-[38px] lg:my-[2%]
+                     ${isDarkMode ? "bg-black border-[0.2px] text-white border-[#04177f]" : "text-black bg-white border-[0.2px] border-black"}`}
               >
                 Save as PDF
               </button>

@@ -836,6 +836,7 @@ export const Context = ({ children }) => {
   const [inputValues, setInputValues] = useState("");
   const [networkId, setNetworkId] = useState("");
   const [productId, setProductId] = useState("");
+  const [airtimeResponse, setAirtimeResponse] = useState({})
 
   // ===================== MTN  DATABUNDLE========================
   const [selectedOptionMtn, setSelectedOptionMtn] = useState("");
@@ -1340,6 +1341,7 @@ const [nabtebPinsGenerated, setNabtebPinsGenerated] = useState([]);
   const [idNumber, setIdNumber] = useState("");
   const [idPostalCode, setIdPostalCode] = useState("");
   const [bvnNumber, setBvnNumber] = useState("");
+    const [bvnPhone, setBvnPhone] = useState("");
   const [bvnVerifyImage, setBvnVerifyImage] = useState(NotVerifiedIcon);
   const [idDateOfBirth, setIdDateOfBirth] = useState("");
   const [genderResult, setGenderResult] = useState("");
@@ -2354,6 +2356,7 @@ const [currentDateInTimeStamps, setCurrentDateInTimeStamps] = useState(0);
 
     //Airtime Conversion
     inputValueA,
+    airtimeResponse, setAirtimeResponse,
     setInputValueA,
     resultValue,
     setResultValue,
@@ -2750,6 +2753,7 @@ const [currentDateInTimeStamps, setCurrentDateInTimeStamps] = useState(0);
 
     bvnNumber,
     setBvnNumber,
+    bvnPhone, setBvnPhone,
     bvnVerifyImage,
     setBvnVerifyImage,
     bvnStatus,

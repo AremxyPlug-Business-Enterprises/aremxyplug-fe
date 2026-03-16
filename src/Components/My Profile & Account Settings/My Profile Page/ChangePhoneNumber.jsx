@@ -267,7 +267,7 @@ const VerifyPopUpHandler =async()=> {
                 type="tel"
              
                 className={`mt-2  md:mt-0 rounded-[10px] 
-             md:rounded-0  md:p-0 text-base
+             md:rounded-0  md:p-0 text-base  lg:w-1/2 md:w-3/4
          sm:p-3  flex justify-between py-[8.803px]
          pr-[13px] pl-[10.876px] font-[400] 
          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
@@ -311,8 +311,8 @@ const VerifyPopUpHandler =async()=> {
             <div
               className={` ${
                 toggleSideBar
-                  ? "absolute w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] md:ml-[20%] h-[250px] lg:h-[405px] shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)] top-[0%]"
-                  : "absolute w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] h-[250px] lg:h-[405px]  shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)]"
+                  ? "absolute w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] md:ml-[20%] h-[250px] lg:h-[405px] shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)] top-[20%]"
+                  : "absolute w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] h-[250px] lg:h-[405px] top-1/2  shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)]"
               } md:mx-auto md:my-auto rounded-[12px] ${
                 isDarkMode ? "bg-black border-white border" : "bg-white"
               } `}
@@ -424,11 +424,20 @@ const VerifyPopUpHandler =async()=> {
 
         {verify && (
           <Modal className="">
-            <div
-              className={` ${
-                    toggleSideBar ? "bottom-[0%] absolute w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] md:ml-[20%] h-[250px] lg:h-[405px] shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)] top-[0%]" : "bottom-[0%] absolute w-[90%] md:w-[45%] lg:w-[40%] md:h-[350px] h-[250px] lg:h-[405px]  shrink-0 rounded-[8px] shadow-[0px_0px_7.068181991577148px_0px_rgba(0,0,0,0.25)]"
-                    } flex flex-col justify-between items-center pb-[10px] md:pb-[30px] lg:pb-[30px] md:mx-auto md:my-auto lg:mx-auto lg:my-auto rounded-[12px] ${isDarkMode ? "bg-stone-950 border-white border": "bg-white"}`}
-            >
+           <div className=" h-[100%] flex flex-col w-[100%]
+               items-center justify-center">
+                <div
+                  className={`bvnQuery flex flex-col shadow-[0px_0px_8.3274px_0px_rgba(0 0 0,0.25)]
+                     rounded-[8px] shadow-[0px_0px_8.3274px_0px_rgba(0,0,0,0.25)] md:rounded-[11.736px]  
+                     lg:rounded-[20px] md:w-[55%]
+            md:shadow-[0px_0px_11.73611px_0px_rgba(0,0,0,0.25)]
+             lg:shadow-[0px_0px_20px_0px_rgba(0,0,0,0.25)] justify-center 
+              items-center px-[18px] md:px-[30px] md:h-[550px] h-[430px]
+              gap-[10px] md:gap-[40px] lg:gap-[50px] lg:justify-normal md:mx-[0px]
+               mx-[19px]  lg:pt-[30px]  md:pt-[270px] pt-[270px] ${
+              isDarkMode ? "bg-black border border-white" : "bg-white"
+            }`}
+                >
               <div className="absolute z-0 right-0" style={{ zIndex: 0 }}>
                 <img
                   src={PopUpGreen}
@@ -474,6 +483,7 @@ const VerifyPopUpHandler =async()=> {
               >
                 Done
               </button>
+            </div>
             </div>
           </Modal>
         )}

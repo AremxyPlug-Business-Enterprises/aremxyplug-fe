@@ -1,6 +1,5 @@
 
 import { Navigate } from 'react-router-dom';
-import { RemoveLocalStorage } from './LocalStorage/LocalStorage';
  import { useEffect, useRef,  useContext} from 'react';
 import {  refreshToken} from './ApiCollection.jsx/ApiBuck';
 import { ContextProvider } from './Context';
@@ -24,9 +23,7 @@ useEffect(()=> {
  },[])
 
 
-
-
- const authToken = localStorage.getItem("xcss{}")//On Username Login
+const authToken = localStorage.getItem("xcss{}")//On Username Login
  const emailToken = localStorage.getItem("xcss[]");// on Email Login
 const UserStatus = localStorage.getItem("cxccxfd");//Tracking The UserStatus from the frontend
  if(((!authToken && !emailToken) || !UserStatus) 

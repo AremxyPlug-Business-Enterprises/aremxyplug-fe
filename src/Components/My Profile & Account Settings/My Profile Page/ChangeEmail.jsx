@@ -232,7 +232,12 @@ const ChangeEmail = () => {
          pr-[13px] pl-[10.876px] font-[400] 
          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
-    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
+     items-center cursor-pointer outline-0 border-[0.24px] 
+     lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px]
+      lg:w-1/2 md:w-3/4
+      border-[#9C9C9C] px-[11px] md:px-[6px]
+       lg:px-[10px] text-[#7C7C7C] self-center  ${
       isDarkMode
         ? "bg-black text-white border border-white"
         : "hover:bg-[#EDEAEA]"

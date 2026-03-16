@@ -1,9 +1,7 @@
-import React from "react";
 import "../../../App.css";
 import { DashBoardLayout } from "../../Dashboard/Layout/DashBoardLayout";
 import ProfileHero from "../ProfileHero";
 import ArrowRight from "../../EducationPins/imagesEducation/educationArrowRight.svg";
-import changePic from "../ProfileImages/pickPinIcon.svg";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { ContextProvider } from "../../Context";
@@ -12,11 +10,17 @@ import cameraProfile from "../ProfileImages/cameraProfile.svg";
 import galleryProfile from "../ProfileImages/galleryProfile.svg";
 import closeCircle from "../../EducationPins/imagesEducation/close-circle.svg";
 import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
-export default function EditProfile(Data) {
-  const { openImage, setOpenImage, isDarkMode, customerDetail } = useContext(ContextProvider);
-  const {phone, email} = customerDetail;
+import { UserBgFormatting } from "../../ProfileImageModule";
+export default function EditProfile() {
+  const { openImage, setOpenImage,
+     isDarkMode,
+      customerDetail, 
+      progressTaskBarResponse } = useContext(ContextProvider);
+  const {phone, email, full_name} = customerDetail;
   const UserIcon = localStorage.getItem("UserIcon")
- Data = GetLocalStorage();
+const Data = GetLocalStorage();
+  const UserData = Data?.aremxyUsername?.toString();
+const bgUsername = UserBgFormatting(UserData);
   return (
     <div>
       <DashBoardLayout>
@@ -40,8 +44,8 @@ export default function EditProfile(Data) {
                 />
               </div>
               {/* EDIT PROFILE PIC */}
-              <div className="flex md:justify-start justify-center gap-[7.042px] lg:gap-[12px]">
-                <div className="relative">
+              <div className="flex md:justify-start my-10 justify-center gap-[7.042px] lg:gap-[12px]">
+            <div className={`${bgUsername} bg-opacity-10`}>
                   <img
                     src={UserIcon}
                     className="h-[48px] w-[46.753px] rounded-[48px]
@@ -51,7 +55,8 @@ export default function EditProfile(Data) {
       md:rounded-[88.201px] lg:rounded-[150px]"
                     alt="profilePic"
                   />
-                  <img
+                  </div>
+                  {/* <img
                     onClick={(e) => {
                       setOpenImage(true);
                       console.log(e);
@@ -60,15 +65,29 @@ export default function EditProfile(Data) {
                     className="absolute bottom-0 right-0 h-[25px] w-[25px] 
    md:h-[25.82px] md:w-[25.82px] lg:h-[44px] lg:w-[44px] cursor-pointer"
                     alt=""
-                  />
-                </div>
+                  /> */}
+                
                 {/* Profile text */}
-                <div className="flex flex-col justify-center gap-[3.52px] lg:gap-[12px]">
-                  <p className="font-[500] text-[12px] leading-[15px] md:text-[9.389px] md:leading-[12.206px] lg:text-[16px] lg:leading-[20.8px]"></p>
+                <div className="flex flex-col justify-center  gap-[3.52px] lg:gap-[12px]">
+              <div className="flex gap-2 items-center">
                   <p
-                    className={`font-[500] text-[#7C7C7C] text-[12px] leading-[15px] md:text-[7.042px] md:leading-[9.154px] lg:text-[12px] lg:leading-[15.6px] ${
-                      isDarkMode ? "text-white" : ""
-                    }`}
+                 className={`text-[#7E7E7E] text-[12px] leading-[18px] md:text-[12.042px] md:leading-[16px] lg:text-[16px] lg:leading-[24.8px] ${
+                    isDarkMode ? "text-white" : "text-black"
+                  }`}>
+                    {full_name ? full_name : Data?.UserFullName}
+                  </p>
+                   {progressTaskBarResponse?.data?.data?.beta === true && (
+                <p className="text-[11px] md:text-[12px] text-[#7109d3] w-[60px]
+                rounded-[5px] px-0.5 py-[3px] bg-[#f5ecfd] text-center leading-[14px] 
+                lg:leading-[15px] lg:py-[5px]   lg:w-[80px] font-bold">
+                  Beta
+                </p>
+              )}
+                  </div>
+                  <p
+                  className={`text-[#7E7E7E] text-[12px] leading-[18px] md:text-[12.042px] md:leading-[16px] lg:text-[16px] lg:leading-[24.8px] ${
+                    isDarkMode ? "text-white" : "text-black"
+                  }`}
                   >
                     {email ? email : Data.UserEmail}
                   </p>
@@ -82,7 +101,7 @@ export default function EditProfile(Data) {
                 {/* SELECT EMAIL CHANGE */}
                 <div
                   className="flex flex-col w-full md:w-1/2 
-gap-2.5 lg:gap-[10px] cursor-default lg:mb-[26px] md:mb-[15.26px] mb-[20px]"
+gap-[25px] lg:gap-[15px] cursor-default lg:mb-[26px] md:mb-[15.26px] mb-[20px]"
                 >
                   <h2
                     className={`text-[ font-[600] text-[13px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px]
@@ -129,7 +148,7 @@ gap-2.5 lg:gap-[10px] cursor-default lg:mb-[26px] md:mb-[15.26px] mb-[20px]"
                 {/* SELECT PHONE NUMBER CHANGE */}
                 <div
                   className="flex flex-col w-full md:w-1/2
-gap-2.5 lg:gap-[10px] cursor-default"
+gap-[25px] lg:gap-[10px] cursor-default"
                 >
              <h2
         className={` font-[600] text-[13px] leading-[10.4px] md:text-[9.389px] md:leading-[12.206px]

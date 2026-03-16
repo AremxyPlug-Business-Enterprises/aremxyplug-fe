@@ -244,7 +244,11 @@ export default function IdVerification(Data) {
         >
           <div className="flex md:gap-[25px] gap-[11px] lg:pt-[50px]  pt-[35px] lg:mb-[50px] mb-[35px] ">
             {/* ICON == NOT VERIFIED */}
-            <div className=" flex gap-[5px] py-[23px] pr-[12px] pl-[12px] md:py-[25px] md:pr-[41px] md:pl-[16px] bg-white shadow-[0px_2.34722px_5.86806px_0px_rgba(0,0,0,0.25)] md:shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)]">
+            <div  className={`flex gap-[5px] py-[23px]
+             pr-[12px] pl-[12px] md:py-[25px] md:pr-[41px]
+              md:pl-[16px]  shadow-[0px_2.34722px_5.86806px_0px_rgba(0,0,0,0.25)]
+               md:shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)]
+               ${isDarkMode ? "bg-[#0F0F0F] text-white" : "bg-white"}`}>
               <img
                 src={
                   verifyImage ===  NotVerifiedIcon
@@ -262,10 +266,14 @@ export default function IdVerification(Data) {
                   isDarkMode ? "text-stone-800" : ""
                 }`}
               >
-                <h2 className="font-medium lg:text-[12px] lg:leading-[15.6px] text-[9.042px] leading-[12.45px]">
+                <h2 className={`font-[500] lg:text-[12px] lg:leading-[15.6px] text-[8.042px] leading-[10.45px] ${
+                    isDarkMode ? "text-white" : "text-black"
+                  }`}>
                   ID Status
                 </h2>
-                <h2 className="font-medium lg:text-[12px] lg:leading-[15.6px] text-[8.042px] leading-[12.45px]">
+                <h2 className={`font-[500] lg:text-[12px] lg:leading-[15.6px] text-[8.042px] leading-[10.45px] ${
+                    isDarkMode ? "text-white" : "text-black"
+                  }`}>
                  { idStatus ===  "Not Verified"
                    && (Data.ConfirmId === "true" || Data.ConfirmBvn === "true") ? "Verified" 
                    :   idStatus ===  "Not Verified"

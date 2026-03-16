@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useContext, useMemo } from "react";
+import { useContext, useMemo, useRef } from "react";
 import { ContextProvider } from "./Context";
 import { Link } from "react-router-dom";
 
@@ -139,12 +139,26 @@ export const  TaskProgressModal =
 
 //Floating Progress bar
 export const FloatingProgressCircle = ({
-  onClick, progressNumber})=>  {
+  containerRef, onClick, progressNumber})=>  {
+   // const containerRef = useRef(null)
+  //  const windowHeight = window.innerHeight;
+  //  const suitableScale =windowHeight / 2;
+  //  const windowWidth = window.innerWidth;
+  //  const suitableScaleWidth = windowWidth / 2
+  //  console.log("windowScale", suitableScale)
+  
      return (
+    
     <motion.button
       onClick={onClick}
+        drag
+        dragConstraints={containerRef}
+      dragMomentum={false}
+
+      dragElastic={0.2}
+      whileDrag={{ scale: 0.95, cursor: "grabbing" }}
       whileTap={{ scale: 0.9 }}
-      className="fixed right-6 top-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-white shadow-lg 
+      className="fixed right-6 top-1/2 -translate-y-1/2 cursor-grab w-16 h-16 rounded-full bg-white shadow-lg 
       flex items-center justify-center z-50"
     >
        <p className = "absolute bottom-1/4 text-blue-500 text-[12px] text-center leading-[16px] font-[500]">
@@ -173,11 +187,13 @@ export const FloatingProgressCircle = ({
       
       </svg>
     </motion.button>
+  
   );
 }
 
  
 export  const TaskProgressController = ()=> {
+const refValue = useRef(null);
   /// Order set on the frontend to ensure consistency on the response the frontend is using
    const order = [
   "signup",
@@ -211,7 +227,7 @@ const floatingProgressBarUpdate
  ? progressNumber + 20
   : typeof CheckCurrentUpdate === "object" && CheckCurrentUpdate?.completed === true ? progressNumber : progressNumber
  return (
-    <>
+    <div  ref={refValue}>
       <FloatingProgressCircle
         onClick={() => {
           if(openTaskBar === true){
@@ -245,7 +261,7 @@ const floatingProgressBarUpdate
           
           </motion.div>
       </AnimatePresence>
-    </>
+    </div>
   );
 }
 //Fold and throw the modal

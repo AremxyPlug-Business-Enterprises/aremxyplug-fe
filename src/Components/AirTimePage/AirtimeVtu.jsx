@@ -35,10 +35,10 @@ const AirtimeVtu = () => {
     // const {  isDarkMode } = useContext(ContextProvider);
     const tFee = 0;
     const points = '+2.00';
-      const [airtimeResponse, setAirtimeResponse] = useState({})
+      
     const { networkName, setNetworkName, newBalance, setNewBalance, discount, setDiscount,
             setSessionModal,
-          sessionModal } = useContext(ContextProvider);
+          sessionModal, airtimeResponse, setAirtimeResponse } = useContext(ContextProvider);
     const { selectedProduct, setSelectedProduct, recipientsAirtime, setRecipientsAirtime } = useContext(ContextProvider);
     const { recipientName, setRecipientName, networkIssue } = useContext(ContextProvider);
     const { recipientNumber, setRecipientNumber } = useContext(ContextProvider);
@@ -69,7 +69,8 @@ const AirtimeVtu = () => {
     const [errorMessage, setErrorMessage] = useState(false);
     const [passDataBalance, setPassDataBalance] = useState({});
     const [balanceStatus, setBalanceStatus] = useState("");
-    const [selectRecipientDisplay, setSelectRecipientDisplay] = useState(false)
+    const [selectRecipientDisplay, setSelectRecipientDisplay] = useState(false);
+    const [discountLoader, setDiscountLoader] = useState(false)
    const balanceStringToNum = Number(newBalance);
  
    const [airtimeTransactionNetwork, setAirtimeTransactionNetwork] = useState(false)
@@ -182,35 +183,54 @@ setRecipientsAirtime(response?.data?.data?.recipients?.recipients);
         },[CheckSufficiency]);
 
         //Getting Recipient Details
-       
+       //Endpoint to get the discount percentage
+       const [discountObj, setDiscountObj] = useState({})
+       const getDiscountPercentage = async(network)=> {
+        setDiscountObj({});
+        console.log(network);
+         const successHandler = (response)=> {
+            setDiscountObj(response);
+            setDiscount(response?.data?.data?.discount_percent);
+         }
+         const FailedHandler = (ErrorType)=> {
+            if(ErrorType === "Network Error" || ErrorType === "User error"){
+                setNetworkIssue(true)
+            }
+         }
+const path = `products/telecom/airtime/${network === "MTN" ? "mtn"  
+    : network === "AIRTEL" ? "airtel" 
+    : network === "GLO" ? "glo" 
+    : network === "9MOBILE" ? "9mobile" : ""}`
+         await GetFunction(path,
+             setDiscountLoader,
+               successHandler, FailedHandler,
+               setDiscountObj,
+                setNetworkIssue)
+       }
 
  const networkList = [
         {
             id: 1,
             name: 'MTN',
             image: require('./Images/mtn.svg').default,
-            discount: 2,
             networkId: "1",
         },
         {
             id: 2,
             name: 'AIRTEL',
             image: require('./Images/airtel.png'),
-            discount: 2,
             networkId: "2",
         },
         {
             id: 3,
             name: 'GLO',
             image: require('./Images/glo.png'),
-            discount: 2,
             networkId: "3",
         },
         {
             id: 4,
             name: '9MOBILE',
             image: require('./Images/9mobile.svg').default,
-            discount: 2,
             networkId: "4",
         },
     ];
@@ -443,6 +463,7 @@ const [airtimeReceiptDiscountValue, setAirtimeReceiptDiscountValue] = useState({
 //Setting the network on the user interface
  const handleSelectNetwork = (name, image, val, netId) => {
   setErrors({});
+  getDiscountPercentage(name)
         setNetworkName(name)
         setNetworkImage(image);
         setDiscount(val);
@@ -479,7 +500,7 @@ const [airtimeReceiptDiscountValue, setAirtimeReceiptDiscountValue] = useState({
 
 
 
-
+const [airtimePurchaseError, setAirtimePurchaseError] = useState("")
 const handleTransactionSuccessClose = async()=> {
   const requestBody = {
    network : networkId, 
@@ -490,7 +511,11 @@ const handleTransactionSuccessClose = async()=> {
   recipient : recipientName
  }
   const successHandler = (response)=> {
-    const result = response?.data?.data?.data; // Access the nested `data`
+    console.log(response?.data?.data?.data?.status)
+        const result = response?.data?.data?.data;
+    if(response?.data?.data?.data?.status === "success" 
+        || response?.data?.data?.data?.status === "successful"){
+ // Access the nested `data`
            setTransactionID(result?.transaction_id);
            setAirtimeReceiptDiscountValue(result?.discount_amount)
           setRefNumber(result?.reference_number);
@@ -502,30 +527,46 @@ const handleTransactionSuccessClose = async()=> {
            setConfirm(false);
            setAirtimeResponse(response)
            return response;
+    }else if(response?.data?.data?.data?.status === "failed"|| response?.data?.data?.data?.status === "Failed"){
+        setAirtimePurchaseError("Internal Server error")
+        setInputPin("")
+        setConfirm(false)
+         setAirtimeResponse(response);
+          setTransactFailedPopUp(true); 
+           setTransactionID(result?.transaction_id);
+           setAirtimeReceiptDiscountValue(result?.discount_amount)
+          setRefNumber(result?.reference_number);
+           setOrderID(result?.order_id);
+           setDescription(result?.transaction_description);
+           setDiscountPercentage(result?.discount_percentage)
+    }
   }
   const FailedHandler = (ErrorType)=> {
       setInputPin("");
 if(ErrorType === "Network error" || ErrorType === "User error"){
         setInputPin("");
+          setAirtimePurchaseError("Network Error")
            setTransactFailedPopUp(true); 
                  setConfirm(false)// 
 }else if(ErrorType === "Server error" ) {
    setInputPin("");
+     setAirtimePurchaseError("Server error")
   setTransactFailedPopUp(true); 
   setConfirm(false)//
 }else if(ErrorType === "unauthorised"){
  if(sessionModal) return;
  if(sessionModal === false) return setSessionModal(true)
 }else{
-  alert("Purchase Failed")
+  //alert("Purchase Failed")
+    setAirtimePurchaseError("an unxpected error has occured");
+    setTransactFailedPopUp(true);
 }
   }
   await PostFunction("airtime",  setIsLoading, requestBody,
     successHandler, FailedHandler, 
     ()=> {}, setNetworkIssue);
-//   return typeof successHandler() === "object" ? successHandler() : null;
-}
 
+}
     const [receipt] = useState(false);
     const [receiptFailed] = useState(false);
 
@@ -808,7 +849,12 @@ className={`flex justify-left  w-[100%] items-center`}>
 <h2 className={`text-left text-[13.2px]  font-[400] 
          leading-[17.4px] md:text-[11px] md:leading-[12.206px]
             lg:text-[16px] lg:leading-[20.8px] 
-         ${isDarkMode ? "text-white" : "text-[#7E7E7E]" }`}>{discount && networkName?.length > 0 ? `${networkName + ' ' + discount}%` : ''}
+         ${isDarkMode ? "text-white" : "text-[#7E7E7E]" }`}>
+             {discountLoader === true  ? <BalanceLoading/>
+              :  networkName?.length > 0 && discountObj?.data?.data?.discount_percent && discountLoader=== false 
+              ? `${networkName + ' ' + discountObj?.data?.data?.discount_percent}%` : ''}
+           
+
                        </h2>
                                  
                                    
@@ -926,7 +972,13 @@ className={`flex justify-left  w-[100%] items-center`}>
                               
                                     <div className={`relative
                                 `}>
-                                        <input type='number' 
+                                        <input 
+                                        onInput={(e)=> {
+                                        const value = e.target.value;
+                                        const numericValue = value.replace(/\D/g, "");
+                                        e.target.value = numericValue;
+                                        }}
+                                        type='tel' 
                                         placeholder='Type amount' 
                                         required 
                   className={`mt-2  md:mt-0 rounded-[10px] 
@@ -1433,7 +1485,7 @@ className={`flex justify-left  w-[100%] items-center`}>
                 }
                     
                     renderInput={(props) => (
-                      <input {...props} className={`inputOTP mx-[2px] 
+                      <input {...props} className={`text-base inputOTP mx-[2px] 
                       `}/>
                     )}
                   />
@@ -1658,9 +1710,10 @@ className={`flex justify-left  w-[100%] items-center`}>
                                 />
                                 <p className="text-[14px] text-red-500 font-[600]
                                  mx-[10px] text-center my-[60px] md:text-[14px] lg:text-[12px]">
-                                    An unexpected error has occurred, please try again.
+                                    {airtimePurchaseError}
                                 </p>
- {airtimeResponse?.data?.data?.data ?  (
+ {airtimeResponse?.data?.data?.data?.status === "failed"
+ || airtimeResponse?.data?.data?.data?.status === "Failed" ?  (
                                 <div className="flex w-[70%] mx-auto items-center gap-[5%] md:w-[60%] lg:my-[5%]">
                                  
                                     <button

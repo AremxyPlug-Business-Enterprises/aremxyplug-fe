@@ -75,7 +75,9 @@ return ()=> clearInterval(realTimeUpdate.current)
     <div className="flex flex-col h-full  w-full">
       {children}
        {(progressTaskBarResponse?.data?.data) && (
+        <div className="relative">
            <TaskProgressController/>
+           </div>
            )} 
            {networkIssue === true && <NetworkPopUp Page ={Page}  />}
            {sessionModal  && <InternalLoginSession/>}

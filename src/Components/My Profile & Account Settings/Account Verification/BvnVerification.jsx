@@ -28,7 +28,6 @@ export default function BvnVerification(Data) {
   const [bvnDateOfBirth, setBvnDateOfBirth] = useState("");
   const { bvnNumber, setBvnNumber } = useContext(ContextProvider);
   const [bvnQuery, setBvnQuery] = useState(false);
-  const [bvnPhone, setBvnPhone] = useState("");
   const [bvnPopVerified, setBvnPopVerified] = useState(false);
   const [bvnPhoneMessage, setBvnPhoneMessage] = useState(false);
   const [errorVerify, setErrorVerify] = useState(false);
@@ -36,7 +35,9 @@ export default function BvnVerification(Data) {
   const { toggleSideBar, customerDetail } = useContext(ContextProvider);
   const { idAddress, setIdAddress } = useContext(ContextProvider);
   const { dropDownGender, setDropDownGender } = useContext(ContextProvider);
-  const { isDarkMode, verificationResponse, verificationReason } =
+  const { isDarkMode, 
+    verificationResponse,
+     verificationReason, bvnPhone, setBvnPhone } =
     useContext(ContextProvider);
   const [loading, setLoading] = useState(false);
   const [genderResult, setGenderResult] = useState("");
@@ -54,7 +55,7 @@ export default function BvnVerification(Data) {
     );
   };
 
-  const { full_name, phone } = customerDetail;
+  const { full_name} = customerDetail;
 
 
   const BvnFunctionState = async (
@@ -68,8 +69,8 @@ export default function BvnVerification(Data) {
     statusBvn,
     verifyPopBvn
   ) => {
-    if (!navigator.onLine) return alert("Check your internet connection");
-    if (bvnButtonState === "Verify" && navigator.onLine) {
+    if (!navigator.onLine) return setNetworkIssue(true);
+    if ( navigator.onLine) {
       url = "https://api.aremxyplug.com/api/v1/verify";
       buttonStateSuccess = "Verified";
       ErrorMessage = "Bvn Name Mismatch or Network Failure";
@@ -81,6 +82,7 @@ export default function BvnVerification(Data) {
       data = {
         bvn: bvnNumber.toString(),
         dob: bvnDateOfBirth,
+        phone : bvnPhone,
         address: idAddress,
         gender: genderResult,
       };
@@ -117,11 +119,10 @@ export default function BvnVerification(Data) {
          setErrorVerify(false);
       // console.log(data)
       try {
-        if (bvnButtonState === "Verify") {
           setErrorVerify(false);
           PendingImageFxn();
           PendingText();
-        }
+        
         const response = await axios.post(url, data, {
           headers: {
             "Content-Type": "application/json",
@@ -172,6 +173,7 @@ export default function BvnVerification(Data) {
     ValueRef.current = Data;
     if (verificationResponse?.data?.data) {
       setBvnNumber(verificationResponse?.data?.data?.bvn);
+      setBvnPhone(verificationResponse?.data?.data?.phone);
     }
     // eslint-disable-next-line
   }, [Data]);
@@ -179,7 +181,7 @@ export default function BvnVerification(Data) {
 
   // console.log(bvnDateOfBirth);
 
-  const genderInfo = ["Male", "Female", "Others.."];
+  const genderInfo = ["Male", "Female"];
 
   return (
     <div>
@@ -204,7 +206,11 @@ export default function BvnVerification(Data) {
           {/* VERIFICATION */}
           <div className="flex md:gap-[25px] gap-[11px] lg:mb-[50px] mb-[35px]">
             {/* ICON == NOT VERIFIED */}
-            <div className=" flex gap-[5px] py-[23px] pr-[12px] pl-[12px] md:py-[25px] md:pr-[41px] md:pl-[16px] bg-white shadow-[0px_2.34722px_5.86806px_0px_rgba(0,0,0,0.25)] md:shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)]">
+            <div className={`flex gap-[5px] py-[23px]
+             pr-[12px] pl-[12px] md:py-[25px] md:pr-[41px]
+              md:pl-[16px]  shadow-[0px_2.34722px_5.86806px_0px_rgba(0,0,0,0.25)]
+               md:shadow-[0px_4px_10px_0px_rgba(0,0,0,0.25)]
+               ${isDarkMode ? "bg-[#0F0F0F] text-white" : "bg-white text-black"}`}>
               <img
                 src={
                   bvnVerifyImage === NotVerifiedImage &&
@@ -226,14 +232,14 @@ export default function BvnVerification(Data) {
               <div className="flex flex-col gap-[4.694px] md:gap-[8px] justify-center">
                 <h2
                   className={`font-[500] lg:text-[12px] lg:leading-[15.6px] text-[8.042px] leading-[10.45px] ${
-                    isDarkMode ? "text-black" : ""
+                    isDarkMode ? "text-white" : "text-black"
                   }`}
                 >
                   Bvn Status
                 </h2>
                 <h2
                   className={`font-[500] lg:text-[12px] lg:leading-[15.6px] text-[8.042px] leading-[10.45px] ${
-                    isDarkMode ? "text-black" : ""
+                    isDarkMode ? "text-white" : "text-black"
                   }`}
                 >
                   {bvnStatus === "Not Verified" &&
@@ -346,7 +352,7 @@ export default function BvnVerification(Data) {
         : "hover:bg-[#EDEAEA]"
     }`} 
                   >
-                    {full_name ? full_name : Data.UserFullName}
+                    {full_name ? full_name : Data?.UserFullName}
                   </div>
                 </div>
               </div>
@@ -557,11 +563,10 @@ export default function BvnVerification(Data) {
                   <input
                     readOnly
                     value={
-                      phone
-                        ? `+${phone}`
-                        : Data.UserPhone
-                        ? `+${Data.UserPhone}`
-                        : ""
+                      (verificationResponse?.data?.data?.phone !== undefined && Data.ConfirmBvn === "true")
+                        ? `${bvnPhone?.slice(0, 4)}*******`
+                        : verificationResponse?.data?.data?.phone === undefined && (Data?.ConfirmId === "true" || Data?.ConfirmBvn === "true") ? "NO Phone Number"
+                         :  (bvnPhone?.length < 1 &&( Data?.ConfirmBvn === "false" || !Data?.ConfirmBvn)) ? bvnPhone : ""
                     }
                     onInput={(e) => {
                       const numericValue = e.target.value.replace(/\D/g, "");

@@ -70,7 +70,7 @@ export const VirtualAccountReceipt = () => {
       if(!content) return alert("Receipt not recorded")
       if(content){
         try {
-       const pdf = new jsPDF("p", "mm", "a4");
+       const pdf = new jsPDF("p", "mm", "a3");
      //  alert(pdf.internal?.pageSize.getHeight())
         const canvas = await html2canvas(content,
            {scale : 2,
@@ -173,8 +173,8 @@ export const VirtualAccountReceipt = () => {
               <h3
                 className="font-bold text-xs my-[2%] 
             text-center md:text-[20px] md:my-[3%] lg:text-base lg:my-[2%]"
-              >
-                Transaction Receipt
+              > 
+              Transaction Receipt
               </h3>
               <div className="w-full flex justify-center ">
                 <img
@@ -228,7 +228,7 @@ export const VirtualAccountReceipt = () => {
                 {["delivered", "successful", "success"].includes(
                   receiptData?.status
                 )
-                  ? "You NGN Wallet has been Credited Successfully With "
+                  ? "Your NGN Wallet has been Credited Successfully With"
                   : receiptData?.status === "pending"
                   ? "Your transaction is under process please wait while the system confirm."
                   : receiptData?.status === "refunded"

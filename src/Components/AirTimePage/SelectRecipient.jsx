@@ -436,7 +436,7 @@ const [confirmRecipient, setConfirmRecipient] = useState(false)
                     setRecipientName(recipient.name);
                     setRecipientNumber(recipient.phone);
                 const NetworkObject =     networkList?.find((focusedObject)=> focusedObject?.name === recipient?.network?.toUpperCase())
-                    setDiscount( NetworkObject?.discount ? NetworkObject?.discount : "");
+                 //   setDiscount( NetworkObject?.discount ? NetworkObject?.discount : "");
 
                    //   console.log(recipient?.network?.toUpperCase())
                    if(pathname === "/add-vtu-recipient"){
