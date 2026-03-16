@@ -182,9 +182,9 @@ return localStorage.setItem("SessionExpiration", resetExpiration);
 ///Login Session =======//
 export const InternalLoginSession = ()=> {
   const [password, setPassword] = useState();
-  const {setNetworkIssue, networkIssue, setSessionModal} = useContext(ContextProvider)
+  const {setNetworkIssue, networkIssue, setSessionModal, isDarkMode} = useContext(ContextProvider)
   const [loading, setLoading] = useState(false)
-   const isDarkMode = localStorage.getItem("darkModeEnabled");
+
    const getUsername = JSON.parse(localStorage.getItem("aremxyUserName"));
    const UserEmail = JSON.parse(localStorage.getItem("userEmail"))
    const emailToken = localStorage.getItem("xcss[]");
@@ -267,19 +267,20 @@ const SubmitUserLoginDetails = ()=> {
                </p>
              
                <input
-               className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] 
-                md:p-0 text-[14px]  sm:p-3 sm:text-lg flex justify-between 
-                pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400]  
-                leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px]
-     md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] 
-     lg:pr-[9px] lg:pl-[10px] items-center cursor-pointer 
-     outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[50.927px]
-      md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
-      isDarkMode === "true" 
-      ? "bg-black text-white border border-white" 
-      : "hover:bg-[#EDEAEA] border-[#9C9C9C] bg-white text-[#7C7C7C] "
-  }`} 
+             className={`mt-2 md:mt-0 rounded-[10px] 
+        md:rounded-0  md:p-0 text-base
+        sm:p-3  flex gap-2 py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px]
+     lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px]
+      lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px]
+       border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}
   readOnly
   value={HoldValue}
    type="text" />
@@ -294,18 +295,20 @@ const SubmitUserLoginDetails = ()=> {
                </p>
              
                <input
-               className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] 
-                md:p-0 text-[14px]  sm:p-3 sm:text-lg flex justify-between 
-                pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400]  
-                leading-[10.4px] md:text-[12px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px]
-     md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
-     items-center cursor-pointer outline-0 border-[0.24px]
-      lg:border-[0.4px] w-full h-[50.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
-      isDarkMode === "true"
-      ? "bg-black text-white border border-white" 
-      : "hover:bg-[#EDEAEA] border-[#9C9C9C] bg-white text-[#7C7C7C] "
-  }`} 
+                className={`mt-2 md:mt-0 rounded-[10px] 
+        md:rounded-0  md:p-0 text-base
+        sm:p-3  flex gap-2 py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px]
+     lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px]
+      lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px]
+       border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}
   placeholder="Your Current Password"
 
   value={password}
@@ -321,8 +324,8 @@ const SubmitUserLoginDetails = ()=> {
                 
                 }}
          disabled={loading === true}
-                 className="bg-[#04177f]  cursor-pointer mt-[5%] mx-auto w-full py-[12px] flex justify-center items-center text-[#ffffff] 
-               text-[11px] font-[600] rounded-md md:w-[95px] md:h-[26px]
+                 className="bg-[#04177f]  cursor-pointer mt-[5%] mx-auto w-full py-[18px] flex justify-center items-center text-[#ffffff] 
+               text-[14px] font-[600] rounded-md md:w-[95px] md:h-[26px]
                    md:p-[2%] lg:w-[113px] lg:h-[38px] lg:text-[13px]"
             >
              {loading === true ? <BalanceLoading/> : "Continue"}
@@ -719,7 +722,6 @@ export const PostFunction = async (
         
     }else if(error && error.response.status === 404){
          functionAtFailed("User error")
-         alert("Check your internet connection");
            if(functionAtFailed) {
             setFetchedResponse(error?.response?.data?.data)
               console.log(error?.response?.data?.data)
@@ -738,10 +740,8 @@ export const PostFunction = async (
         if (functionAtFailed) {
           setFetchedResponse(error?.response?.data?.data);
         }
-      } else if (error && error.response.status === undefined) {
-        alert("Check your internet Connection");
       } else {
-        alert("Check your network connection");
+        alert("An unexpected error has occured");
       }
     } finally {
       setLoading(false);

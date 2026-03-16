@@ -195,12 +195,12 @@ import { Loader } from "./Components/Loader/Loader";
 import { Suspense } from "react";
 import NotFound from "./Components/NotFound";
 import ProtectedRoutes from "./Components/ProtectedRoute"
-import { ContextProvider } from "./Components/Context";
+//import { ContextProvider } from "./Components/Context";
 const ProtectedRoute = ({children})=> {
  //const pathname = typeof location.pathname  === "string" ? location?.pathname?.slice(1) : ""
 const LazyRoutes =  React.lazy(()=> import("./Components/ProtectedRoute"))
   const SessionExpiration = localStorage.getItem("SessionExpiration")
-const {} = useContext(ContextProvider)
+//const {} = useContext(ContextProvider)
   //eslint-disable-next-line
 
   return(
@@ -246,7 +246,11 @@ export   const RoutingObjectLimitScope = [
   { id: 26, Routepath: "/Verification", RouteComponent: <Verification /> },
   { id: 27, Routepath: "/passwordReset", RouteComponent: <PasswordReset /> },
   { id: 28, Routepath: "/newPassword", RouteComponent: <NewPassword /> },
-  { id: 29, Routepath: "/dashboard", RouteComponent: <ProtectedRoute><MainDashboard /></ProtectedRoute> },
+  { id: 29, Routepath: "/dashboard", RouteComponent: 
+   <ProtectedRoute>
+  <MainDashboard /> 
+     </ProtectedRoute>
+     },
   { id: 30, Routepath: "/wallet", RouteComponent: <ProtectedRoute><Wallet /></ProtectedRoute> },
   { id: 31, Routepath: "/top-up", RouteComponent: <ProtectedRoute><TopUpScreen /></ProtectedRoute> },
   { id: 32, Routepath: "/fiat-wallet", RouteComponent: <ProtectedRoute><FiatWallet /></ProtectedRoute> },

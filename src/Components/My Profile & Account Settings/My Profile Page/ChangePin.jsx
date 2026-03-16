@@ -390,8 +390,13 @@ await PutFunction(path, setLoading, body, SuccessHandler, FailedHandler, setNetw
                       </h2>
                       {/* <div className="relative mt-[5px] lg:mt-[0px]"> */}
                       <div className="relative">
-                        <input
-                          type="number"
+                        <input 
+                        onInput={(e)=> {
+                         const value = e.target.value;
+                         const numericValue = value.replace(/\D/g, "");
+                         e.target.value = numericValue
+                        }}
+                          type="tel"
                         className={`mt-2  md:mt-0 rounded-[10px] 
              md:rounded-0  md:p-0 text-base
          sm:p-3  flex justify-between py-[8.803px]
@@ -424,7 +429,12 @@ await PutFunction(path, setLoading, body, SuccessHandler, FailedHandler, setNetw
                       </h2>
                       <div className="relative ">
                         <input
-                          type="number"
+                           onInput={(e)=> {
+                         const value = e.target.value;
+                         const numericValue = value.replace(/\D/g, "");
+                         e.target.value = numericValue
+                        }}
+                          type="tel"
                           className={`mt-2  md:mt-0 rounded-[10px] 
              md:rounded-0  md:p-0 text-base
          sm:p-3  flex justify-between py-[8.803px]
@@ -457,8 +467,13 @@ await PutFunction(path, setLoading, body, SuccessHandler, FailedHandler, setNetw
                     </h2>
                     <div className="relative">
                       <input
+                         onInput={(e)=> {
+                         const value = e.target.value;
+                         const numericValue = value.replace(/\D/g, "");
+                         e.target.value = numericValue
+                        }}
                         id="confirmPinInput"
-                        type="number"
+                        type="tel"
                         className={`mt-2  md:mt-0 rounded-[10px] 
              md:rounded-0  md:p-0 text-base
          sm:p-3  flex justify-between py-[8.803px]
@@ -666,7 +681,8 @@ await PutFunction(path, setLoading, body, SuccessHandler, FailedHandler, setNetw
                     Verification code has been sent to your email - {emailId || Data.UserEmail}
                   </p>
                   <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
-                    <div className={`flex justify-center items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px] ${!isVisible ? "flex gap-[1px] ml-[0px] " : "flex justify-center items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]"}`}>
+                    <div className={`flex justify-center items-center
+                       ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px] ${!isVisible ? "flex gap-[1px] ml-[0px] " : "flex justify-center items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]"}`}>
                       {isVisible ? (
                         <OtpInput
                           value={inputPin}

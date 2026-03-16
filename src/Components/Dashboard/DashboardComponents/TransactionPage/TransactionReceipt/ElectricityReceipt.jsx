@@ -230,7 +230,7 @@ export const ElectricityReceipt = () => {
               <div className="w-full flex justify-center ">
                 <img
                   className="absolute w-[250px] h-[450px] md:w-[70%] lg:w-[50%] lg:h-[550px]"
-                  src="./Images/transferImages/receipt-background.png"
+                  src="./Images/transferImages/receipt-background.jpeg"
                   alt="/"
                 />
               </div>
@@ -559,7 +559,7 @@ export const ElectricityReceipt = () => {
                 //     ? "bg-black border-white"
                 //     : "bg-[#ffffff] border-[#0003]"
                 // }`}
-                  className={` border-[1px] w-[111px]
+                 className={` border-[1px] w-[111px]
                    border-[#0003] flex justify-center 
                    items-center mx-auto cursor-pointer text-[12px]
                     font-extrabold h-[40px] rounded-[6px] 

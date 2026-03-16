@@ -12,15 +12,25 @@ export const AirtimeReceiptFailed = (Data) => {
   const location = useLocation();
   Data = GetLocalStorage()
   const navigate = useNavigate();
-  const { networkName, selectedProduct, recipientNumber, amount} = location.state
+  const { networkName,
+     selectedProduct, recipientNumber, amount} = location.state
 
   const { 
     recipientName, 
     setSelectedProduct,
     setAmount,
-    setRecipientName
+    setRecipientName,
+    airtimeResponse
   } = useContext(ContextProvider);
-
+const {discount_amount, 
+  reference_number,
+   order_id,
+   transaction_id,
+  transaction_description,
+discount_percentage,
+transaction_product
+ } = airtimeResponse?.data?.data?.data || {};
+ 
 
   function handleClick() {
     setSelectedProduct("");
@@ -42,34 +52,61 @@ export const AirtimeReceiptFailed = (Data) => {
 
 
   // ==============Share pdf Function=============
-  const handleShareClick = () => {
-    if (navigator.share) {
-      navigator
-        .share({
-          title: "Receipt",
-          text: "Check out this receipt!",
-          url: "https://example.com", // Replace with the actual URL of your receipt
-        })
-        .then(() => console.log("Shared successfully"))
-        .catch((error) => console.error("Error sharing:", error));
-    } else {
-      console.log("Web Share API not supported.");
-      // Handle sharing fallback for unsupported browsers
-    }
-  };
-
-  // ==============Save Pdf Function==============
-  const handleSaveAsPDFClick = () => {
-    const content = contentRef.current;
-    if (content) {
-      const pdf = new jsPDF();
-      html2canvas(content).then((canvas) => {
-        const imgData = canvas.toDataURL("image/png");
-        pdf.addImage(imgData, "PNG", 10, 10, 190, 0);
-        pdf.save("AremxyPlugAirtimeReceipt.pdf");
-      });
-    }
-  };
+   const handleShareClick = async() => {
+         const content = contentRef.current;
+         if(!content) return alert("Receipt not recorded")
+         if(content){
+           try {
+          const pdf = new jsPDF("p", "mm", "a4");
+        //  alert(pdf.internal?.pageSize.getHeight())
+           const canvas = await html2canvas(content,
+              {scale : 2,
+                useCORS : true,
+                backgroundColor : `${isDarkMode ? "#000" : "#fff"}`
+             }
+               )
+              
+           const bgPdf = pdf.setFillColor(isDarkMode ? 0 : 255, isDarkMode ? 0 : 255, isDarkMode ? 0 : 255 )
+           if(bgPdf){
+             const pageHeight = pdf.internal.pageSize.getHeight();
+             const pageWidth = pdf.internal.pageSize.getWidth();
+             const imgWidth = pageWidth;
+             const imgData = canvas.toDataURL("image/jpeg", 1.0);
+             pdf.addImage(imgData, 
+               "jpeg",0, 0, imgWidth, pageHeight, undefined, "FAST");
+       }
+          const pdfBlob = pdf.output("blob");
+         const file = new File([pdfBlob], "AremxyPlug_Receipt.pdf", {type : "application/pdf"})
+         if (navigator.canShare && navigator.canShare({files : [file]})) {
+           navigator
+             .share({
+               title: "AremxyPlug_Airtime",
+               files : [file], 
+             })
+             .then(() => console.log("Shared successfully"))
+             .catch((error) => console.error("Error sharing:", error));
+         }else{
+         alert("Sharing this pdf isn't supported in your browser.")
+         }
+       }catch(error){
+        alert(error)
+       }
+         }
+       };
+     
+  
+    // ==============Save Pdf Function==============
+    const handleSaveAsPDFClick = () => {
+      const content = contentRef.current;
+      if (content) {
+        const pdf = new jsPDF();
+        html2canvas(content).then((canvas) => {
+          const imgData = canvas.toDataURL("image/png");
+          pdf.addImage(imgData, "PNG", 10, 10, 190, 0);
+          pdf.save("AremxyPlugAirtimeReceipt.pdf");
+        });
+      }
+    };
   return (
     <DashBoardLayout>
      <div className="flex flex-col gap-[35px] lg:gap-[85px]">
@@ -105,14 +142,19 @@ export const AirtimeReceiptFailed = (Data) => {
             <div className="w-full flex justify-center ">
               <img
                 className="absolute w-[250px] h-[450px] md:w-[70%] lg:w-[50%] lg:h-[550px]"
-                src="./Images/transferImages/receipt-background.png"
+                src="./Images/transferImages/receipt-background.jpeg"
                 alt="/"
               />
             </div>
-            <h3 className="font-extrabold text-[12px] mt-[2%] text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
+            <h3 className="font-medium text-[12px] mt-[2%] 
+            text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
               Purchase failed on
             </h3>
-            <span className={`text-[11px] text-[#0008] font-extrabold flex justify-center items-center  ${isDarkMode ? "text-white" : "text-black"}`}
+            <span className={`text-[11px] ${
+                  isDarkMode ? "text-white" : "text-[#7C7C7C]"
+                }
+             font-medium flex justify-center items-center pt-1
+            `}
             >
               {date.toLocaleDateString(undefined, {
                 year: "numeric",
@@ -124,7 +166,11 @@ export const AirtimeReceiptFailed = (Data) => {
                 hour12: true,
               })}
             </span>
-            <p className={`text-[9px] text-[#F95252] bg-[#FDCECE] rounded-[11px] border-2 border-[#F95252] py-[5px] px-[2px] text-center mx-[3px] lg:mx-[130px] md:mx-[80px] my-2 md:text-[14px] lg:text-[14px]   ${isDarkMode ? "text-white" : "text-black" }
+            <p className={`text-[10px] p-[5.729px] border-[0.573px] rounded-[6.302px] md:p-[5.868px]
+                 md:border-[0.578px] md:rounded-[6.455px]  lg:border-[1px] lg:rounded-[11px]
+                   leading-[15px] md:leading-[20px] font-[600]
+                    lg:p-[10px] text-center my-2 md:text-sm
+                    lg:text-base  lg:leading-[24px]  md:mb-7 border-[#F95252] text-[#F95252] bg-[#FDCECE]
               `}>
               Purchase Failed due to an unexpected error that occured. Please try again.
             </p>
@@ -157,7 +203,7 @@ export const AirtimeReceiptFailed = (Data) => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className={`text-[#0008] ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Amount</p>
-                  <span>&#8358;{amount}</span>
+                  <span>&#8358;{discount_amount + `(${discount_percentage})` }</span>
                 </div>
               </div>
 
@@ -193,23 +239,23 @@ export const AirtimeReceiptFailed = (Data) => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className={`text-[#0008] ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Product</p>
-                  <span>Airtime Top-up</span>
+                  <span>{transaction_product}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className={`text-[#0008] ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Description</p>
-                  <span className={`${isDarkMode ? "text-white" : "text-black"}`}>Failed</span>
+                  <span className={`${isDarkMode ? "text-white" : "text-black"}`}>{transaction_description}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}text-[rgba(0,0,0,0.53)]`}>Order Number</p>
-                  <span className={`${isDarkMode ? "text-white" : "text-black"}`}></span>
+                  <span className={`${isDarkMode ? "text-white" : "text-black"}`}>{order_id}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className={`text-[#0008] ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Transaction ID</p>
-                  <span className={`${isDarkMode ? "text-white" : "text-black"}`}></span>
+                  <span className={`${isDarkMode ? "text-white" : "text-black"}`}>{transaction_id}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}text-[#0008]`}>Reference Number</p>
-                  <span className={`${isDarkMode ? "text-white" : "text-black"}`}></span>
+                  <span className={`${isDarkMode ? "text-white" : "text-black"}`}>{reference_number}</span>
                 </div>
               </div>
             </div>
@@ -237,7 +283,13 @@ export const AirtimeReceiptFailed = (Data) => {
               onClick={() => {
                 handleSaveAsPDFClick();
               }}
-              className={`${isDarkMode ? " bg-black border-1 border-white" : " bg-[#ffffff]"} bg-[#ffffff] border-[1px] w-[111px] border-[#0003] flex justify-center items-center mx-auto cursor-pointer text-[12px] font-extrabold h-[40px] rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+             className={` border-[1px] w-[111px]
+                   border-[#0003] flex justify-center 
+                   items-center mx-auto cursor-pointer text-[12px]
+                    font-extrabold h-[40px] rounded-[6px] 
+                    md:w-[25%] md:rounded-[8px] md:text-base
+                     lg:w-[163px] lg:h-[38px] lg:my-[2%]
+                     ${isDarkMode ? "bg-black border-[0.2px] text-white border-[#04177f]" : "text-black bg-white border-[0.2px] border-black"}`}
             >
               Save as PDF
             </button>

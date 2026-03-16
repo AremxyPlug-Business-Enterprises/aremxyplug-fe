@@ -1,18 +1,20 @@
 import React, { useContext } from "react";
 import "../../../App.css";
-
-import pickPinIcon from "../ProfileImages/pickPinIcon.svg";
 import naijaFlag from "../../EducationPins/imagesEducation/Nigeriaflag.svg";
 import messageQuestion from "../ProfileImages/message-question.svg";
 import { Link } from "react-router-dom";
 import { ContextProvider } from "../../Context";
+import { UserBgFormatting } from "../../ProfileImageModule";
 // import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 
 export default function ProfileUpdate(  {fullname, Email, Phone, Username} ) {
-  const { profilePage, customerDetail } = useContext(ContextProvider);
+  const { profilePage, customerDetail, 
+    progressTaskBarResponse } = useContext(ContextProvider);
   const { isDarkMode } = useContext(ContextProvider);
   const { full_name, username, email, phone } = customerDetail;
 const UserIcon = localStorage.getItem("UserIcon") ? localStorage.getItem("UserIcon") : "";
+const UserData = Username?.toString()
+const bgUsername = UserBgFormatting(UserData)
 // Data = GetLocalStorage()
   return (
     <div className="">
@@ -20,31 +22,36 @@ const UserIcon = localStorage.getItem("UserIcon") ? localStorage.getItem("UserIc
         <div className="flex flex-col mt-[30px]">
           <div className="flex flex-col gap-[50px] md:gap-[30px]  lg:gap-[40px]">
             {/* Profile pic */}
-            <div className="flex md:justify-start justify-center gap-[7.042px] lg:gap-[12px]">
-              <div className="relative pt-[30px]">
+            <div className="flex md:justify-start items-center h-full justify-center gap-[7.042px] lg:gap-[12px]">
+              <div className={`${bgUsername} bg-opacity-10`}>
                 <img
                   src={UserIcon}
                   className="h-[48px] w-[46.753px] rounded-[48px] lg:h-[150px] lg:w-[150px] md:h-[88.801px]  md:w-[88.801px] md:rounded-[88.201px] lg:rounded-[150px]"
                   alt="profilePic"
                 />
-                <img
-                  src={pickPinIcon}
-                  className="absolute bottom-0 right-0 h-[25px] w-[25px] md:h-[25.82px] md:w-[25.82px] lg:h-[44px] lg:w-[44px]"
-                  alt=""
-                />
+                
               </div>
               {/* Profile text */}
-              <div className="flex flex-col justify-center gap-[3.52px] lg:gap-[12px] pt-[30px]">
+              <div className="flex flex-col justify-center gap-[3.52px] lg:gap-[12px] ">
+                <div className ="flex gap-2 items-center">
                 <p
                   className={`text-[#7E7E7E] text-[12px] leading-[18px] md:text-[12.042px] md:leading-[16px] lg:text-[16px] lg:leading-[24.8px] ${
-                    isDarkMode ? "text-white" : ""
+                    isDarkMode ? "text-white" : "text-black"
                   }`}
                 >
                   {full_name ? full_name : fullname ? fullname : ""}
                 </p>
+                    {progressTaskBarResponse?.data?.data?.beta === true && (
+                <p className="text-[11px] md:text-[12px] text-[#7109d3] w-[60px]
+                rounded-[5px] px-0.5 py-[3px] bg-[#f5ecfd] text-center leading-[14px] 
+                lg:leading-[15px] lg:py-[5px]   lg:w-[80px] font-bold">
+                  Beta
+                </p>
+              )}
+                </div>
                 <p
-                  className={`text-[#7C7C7C] text-[12px] leading-[18px] md:text-[12.042px] md:leading-[16px] lg:text-[16px] lg:leading-[24.8px] ${
-                    isDarkMode ? "text-white" : ""
+                  className={`text-[12px] leading-[18px] md:text-[12.042px] md:leading-[16px] lg:text-[16px] lg:leading-[24.8px] ${
+                    isDarkMode ? "text-white" : "text-black"
                   }`}
                 >
                   {email ? email : Email ? Email : ""}

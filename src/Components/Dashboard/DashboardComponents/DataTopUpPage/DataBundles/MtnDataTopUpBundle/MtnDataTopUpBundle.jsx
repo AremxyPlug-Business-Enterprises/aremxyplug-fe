@@ -1762,7 +1762,7 @@ const RecipientExistCheck = CheckRecipientInfoInList(recipientPhoneNumberMtn);
                           : "1px solid #ccc",
                     }}
                         renderInput={(props) => (
-                          <input {...props} className="inputOTP mx-[3px]"  />
+                          <input {...props} className="text-base inputOTP mx-[3px]"  />
                         )}
                       />
                       <div

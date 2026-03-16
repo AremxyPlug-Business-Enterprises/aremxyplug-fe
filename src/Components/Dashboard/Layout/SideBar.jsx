@@ -7,7 +7,7 @@ import { RemoveLocalStorage } from "../../LocalStorage/LocalStorage";
 import { useNavigate } from "react-router-dom";
 import Logo from "./Image/Logo.svg";
 import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
-
+import { UserBgFormatting } from "../../ProfileImageModule";
 export const SideBar = ({ fullname, userId, BvnVerify, NinVerify }) => {
   const Data = GetLocalStorage(); 
   const {
@@ -61,39 +61,9 @@ export const SideBar = ({ fullname, userId, BvnVerify, NinVerify }) => {
   })
   const UserData = Data?.aremxyUsername?.toString();
 
- const UserBgFormatting = ()=> {
-  const alphabetsName = "abcdefghijklmnopqrstuvwxyz".split("");
-  
-  const Username =  UserData !== null && UserData !== undefined ? UserData?.toString()?.toLowerCase()  : "";
-const firstCharacter = Username?.charAt(0);
-const alphabetPlacementIndex = alphabetsName?.indexOf(firstCharacter);
-let assignBgByUsername ;//default Value/ Image
-if(alphabetPlacementIndex >= 0 && alphabetPlacementIndex < 3){
-   assignBgByUsername = "bg-[#228be6] bg-opacity-10 p-5 rounded-full"
-}else if(alphabetPlacementIndex >= 3 && alphabetPlacementIndex < 6){
-  assignBgByUsername = "bg-[#40c057] bg-opacity-10 p-5 rounded-full"
-}else if(alphabetPlacementIndex >= 6 && alphabetPlacementIndex < 9){
-  assignBgByUsername ="bg-[#fab005]  bg-opacity-19 p-5 rounded-full" 
-}else if(alphabetPlacementIndex >= 9 && alphabetPlacementIndex < 12){
-  assignBgByUsername = "bg-[#fa5252]  bg-opacity-10 p-5 rounded-full";
-}else if(alphabetPlacementIndex >=12 && alphabetPlacementIndex < 15){
-assignBgByUsername ="bg-[#7850f2]  bg-opacity-10 p-5 rounded-full"
-}else if(alphabetPlacementIndex >= 15  && alphabetPlacementIndex < 18){
-  assignBgByUsername =  "bg-[#e70f0f]  bg-opacity-10 p-5 rounded-full"
-}else if(alphabetPlacementIndex >= 18 && alphabetPlacementIndex < 21){
-  assignBgByUsername ="bg-[#804a4a]  bg-opacity-10 p-5 rounded-full"
-}else if(alphabetPlacementIndex >= 21 && alphabetPlacementIndex < 24){
-  assignBgByUsername ="bg-[#804a4a]  bg-opacity-10 p-5 rounded-full"
-}else if(alphabetPlacementIndex >=  24 && alphabetPlacementIndex <= 27){
-    assignBgByUsername =" bg-opacity-10  p-5 rounded-full"
-}else {
-  assignBgByUsername ="bg-[#228be6] bg-opacity-10 p-5 rounded-full"
-}
 
-return assignBgByUsername 
-} 
 
-const bgUsername = UserBgFormatting();
+const bgUsername = UserBgFormatting(UserData);
   return (
       <div
       className={`bvnQuery fixed overflow-auto ${
@@ -132,31 +102,38 @@ const bgUsername = UserBgFormatting();
             />
           </div>
 
-          <div className="px-[5%] pt-[5%] ">
+          <div className="pl-[5px] pt-[5%] ">
             {/* ======Profile picture and name======== */}
             <div className="sticky top-0">
               
-              <div className="flex gap-[10px] md:gap-[5px] justify-left
+              <div className="flex gap-[5px] md:gap-[5px] justify-left
                items-center ">
-                <div className="flex flex-col gap-2">
-                <div className={`${bgUsername} bg-opacity-10`}>
+                
+                <div className={`${bgUsername}  bg-opacity-10`}>
                 <img
                   className="w-[20.97px] h-[20.97px] md:w-[30px] md:h-[30px] lg:w-[40px] lg:h-[40px]"
                   src={UserIcon}
                   alt="DP"
                 />
 
-                </div>
-              {progressTaskBarResponse?.data?.data?.beta === true && (
-                <p className="text-[9px] md:text-[12px] text-[#8A2BE2] rounded-[5px] p-0.5 bg-purple-200 text-center leading-[13px] lg:leading-[15px] font-[700]">
-                  Beta User
-                </p>
-              )}
+                
+           
                 </div>
                 <div className="flex flex-col gap-[3px] justify-center mt-[4%]">
-                  <p className="text-[8px] font-semibold md:text-[14px] lg:text-[14px]">
+                  <div className="flex gap-0.5 items-center">
+                  <p className={`text-[9px] w-[30%] font-bold  md:text-[14px]
+                   text-left  lg:text-[14px] ${progressTaskBarResponse?.data?.data?.beta === true ? "lg:w-[40%] w-[40%]" : "w-full"}`}>
                     {full_name ? full_name : fullname}
+                     
                   </p>
+              {progressTaskBarResponse?.data?.data?.beta === true && (
+                <span className="text-[11px] md:text-[12px]  text-[#7109d3] text-center  w-[60px]
+                rounded-[5px] px-0.5 py-[3px] bg-[#f5ecfd]  leading-[14px] 
+                lg:leading-[15px] lg:py-[5px]   lg:w-[80px] font-bold">
+                  Beta
+                </span>
+              )}
+                  </div>
                   <p className="text-[8px] font-semibold md:text-[14px] lg:text-[14px] ">
                     UID: {id ? id : userId}
                   </p>
