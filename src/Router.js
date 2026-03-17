@@ -1,4 +1,4 @@
-import React , {useContext} from "react";
+import React  from "react";
 import { Route, Routes } from "react-router-dom";
 import { Home } from "./Components/Screens/Home/Home";
 import OurServices from "./Components/Screens/OurServices/OurServices";
@@ -363,7 +363,11 @@ export   const RoutingObjectLimitScope = [
   { id: 139, Routepath: "/Smilereceipt", RouteComponent: <ProtectedRoute><SmileReceipt /></ProtectedRoute> },
   { id: 140, Routepath: "/SpectranetDataBundle", RouteComponent: <ProtectedRoute><SpectranetDataBundle /></ProtectedRoute> },
   { id: 141, Routepath: "/SpectranetReceipt", RouteComponent: <ProtectedRoute><SpectranetReceipt /></ProtectedRoute> },
-  { id: 142, Routepath: "/ProfileSettingMain", RouteComponent: <ProtectedRoute><ProfileSettingsMain /></ProtectedRoute> },
+  { id: 142, Routepath: "/ProfileSettingMain", RouteComponent:
+      <ProtectedRoute>
+      <ProfileSettingsMain />
+       </ProtectedRoute>
+   },
   { id: 143, Routepath: "/EditProfile", RouteComponent: <ProtectedRoute><EditProfile /></ProtectedRoute> },
   { id: 144, Routepath: "/TransactionPage", RouteComponent: <ProtectedRoute><TransactionPage /></ProtectedRoute> },
   { id: 145, Routepath: "/SuccessfullReceipt", RouteComponent: <ProtectedRoute><SuccessfullReceipt /></ProtectedRoute> },

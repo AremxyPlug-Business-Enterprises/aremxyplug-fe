@@ -217,7 +217,7 @@ const requestData = {
                           : "1px solid #ccc",
                     }}
                         renderInput={(props) => (
-                          <input {...props} className="inputOTP mx-[3px]"
+                          <input {...props} className="inputOTP text-base mx-[3px]"
                            onFocus={handleFocus} onBlur={handleBlur}  />
                         )}
                       />

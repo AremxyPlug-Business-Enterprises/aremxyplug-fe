@@ -23,7 +23,7 @@ import idSuccess from "../ProfileImages/user-tick.svg";
 import countryImage from "../../EducationPins/imagesEducation/Nigeriaflag.svg";
 
 
-export default function IdVerification(Data) {
+export default function IdVerification() {
   const { verificationOpen } = useContext(ContextProvider);
   const dateInputRef = useRef(null);
 
@@ -64,7 +64,7 @@ export default function IdVerification(Data) {
   const { full_name } = customerDetail;
 
   // Genders
-  const genderInfo = ["Male", "Female", "Others.."];
+  const genderInfo = ["Male", "Female"];
   const {genderResult, setGenderResult} = useContext(ContextProvider);
   const chooseGender = () => {
     setDropDownGender(!dropDownGender);
@@ -112,7 +112,7 @@ export default function IdVerification(Data) {
     statusId,
     verifyPopId
   ) => {
-     if(!navigator.onLine) return alert("Check your internet connection");
+     if(!navigator.onLine && !networkIssue)  setNetworkIssue(true);
     if (idButtonState === "Verify" && navigator.onLine) {
       url = "https://api.aremxyplug.com/api/v1/verify";
       buttonStateSuccess = "Verified";
@@ -165,12 +165,12 @@ export default function IdVerification(Data) {
        idResult &&
       idDateOfBirth &&
       genderResult &&
-      idAddress 
+      idAddress &&
+      Data?.UserFullName?.length > 1
       // idCountry
     ) {
      
     
-     // console.log(data)
       try {
          setLoading(true);
           setErrorSubmit(false);
@@ -223,7 +223,7 @@ export default function IdVerification(Data) {
   // UseEffect to retain the current data object of getLocalStorage data()
  
   const VerifyRef = useRef();
-  Data = GetLocalStorage();
+  const Data = GetLocalStorage();
   useEffect(() => {
     VerifyRef.current = Data;
    if(verificationResponse?.data?.data){
@@ -231,12 +231,12 @@ export default function IdVerification(Data) {
   }
     // eslint-disable-next-line
   }, [Data]);
- // console.log(Data);
+
 
   
 
   return (
-    <div className="flex flex-col ">
+    <div className="flex flex-col">
       {idVerificationOpen && (
         <div
           className={`flex flex-col  ${verificationOpen ? "block" : "hidden"}

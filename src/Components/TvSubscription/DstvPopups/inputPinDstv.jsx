@@ -102,7 +102,7 @@ await  VerifyPinHandler()
                 }
                     
                     renderInput={(props) => (
-                      <input {...props} className={`inputOTP mx-[2px] 
+                      <input {...props} className={`inputOTP text-base mx-[2px] 
                         ${isFocused ? 'focused' : ''}`} onFocus={handleFocus}
                       onBlur={handleBlur}/>
                     )}

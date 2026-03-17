@@ -28,8 +28,7 @@ function Verification( Data) {
     setOtpVerifySmsSignup,
     setSuccess,
     state,
-    setState,
-    webSocketMessage
+    setState
   } = useContext(ContextProvider);
 const { phoneNumber, email} = state;
 // console.log("Phone:",phoneNumber)
@@ -372,7 +371,7 @@ return () => clearInterval(timer);
                 renderInput={(props) => (
                   <input 
                   type="password"
-                  {...props} className="inputOTP mx-[3px] " />
+                  {...props} className="inputOTP text-base mx-[3px] " />
                 )}/>
   {/* Error message starts here */}
   {verificationPinError === true ? (
@@ -454,7 +453,7 @@ return () => clearInterval(timer);
                 renderInput={(props) => (
                   <input 
                   type="password"
-                  {...props} className="inputOTP mx-[3px] " />
+                  {...props} className="inputOTP text-base mx-[3px] " />
                 )}/>
       
        {/* Error message starts here */}
