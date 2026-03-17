@@ -1374,7 +1374,7 @@ authenticationOpen,
                               renderInput={(props) => (
                                 <input
                                   {...props}
-                                  className={`inputOTP mx-[2px] ${
+                                  className={`inputOTP text-base mx-[2px] ${
                                     isFocused ? "focused" : ""
                                   }`}
                                   onFocus={handleFocus}

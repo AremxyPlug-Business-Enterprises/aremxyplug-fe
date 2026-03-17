@@ -1300,7 +1300,7 @@ const Data = GetLocalStorage();
                             renderInput={(props) => (
                               <input
                                 {...props}
-                                className={`inputOTP mx-[2px] ${
+                                className={`inputOTP mx-[2px] text-base ${
                                   isFocused ? "focused" : ""
                                 }`}
                                 onFocus={handleFocus}

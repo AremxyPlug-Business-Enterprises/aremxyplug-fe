@@ -19,7 +19,7 @@ import NotVerifiedImage from "../ProfileImages/NotVerifiedIcon.svg";
 import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 import { Loader } from "../../Loader/Loader";
 import countryImage from "../../EducationPins/imagesEducation/Nigeriaflag.svg";
-export default function BvnVerification(Data) {
+export default function BvnVerification() {
   const dateInputRef = useRef(null);
   const { bvnVerificationOpen, networkIssue, setNetworkIssue, setSessionModal } = useContext(ContextProvider)
   const { verificationOpen } = useContext(ContextProvider);
@@ -31,7 +31,7 @@ export default function BvnVerification(Data) {
   const [bvnPopVerified, setBvnPopVerified] = useState(false);
   const [bvnPhoneMessage, setBvnPhoneMessage] = useState(false);
   const [errorVerify, setErrorVerify] = useState(false);
-  const { bvnButtonState, setBvnButtonState } = useContext(ContextProvider);
+  const { setBvnButtonState } = useContext(ContextProvider);
   const { toggleSideBar, customerDetail } = useContext(ContextProvider);
   const { idAddress, setIdAddress } = useContext(ContextProvider);
   const { dropDownGender, setDropDownGender } = useContext(ContextProvider);
@@ -56,6 +56,7 @@ export default function BvnVerification(Data) {
   };
 
   const { full_name} = customerDetail;
+  const Data = GetLocalStorage()
 
 
   const BvnFunctionState = async (
@@ -113,11 +114,13 @@ export default function BvnVerification(Data) {
     statusBvn,
     verifyPopBvn
   ) => {
-    if (bvnDateOfBirth !== "" 
-    && bvnNumber !== ""  && genderResult !== ""  && idAddress !== "" ) {
+    if (bvnDateOfBirth  
+   && bvnNumber  
+     && genderResult  
+      && idAddress 
+       && Data?.UserFullName?.length > 1) {
       setLoading(true);
          setErrorVerify(false);
-      // console.log(data)
       try {
           setErrorVerify(false);
           PendingImageFxn();
@@ -168,7 +171,7 @@ export default function BvnVerification(Data) {
 
   const ValueRef = useRef();
 
-  Data = GetLocalStorage();
+ 
   useEffect(() => {
     ValueRef.current = Data;
     if (verificationResponse?.data?.data) {
@@ -179,7 +182,6 @@ export default function BvnVerification(Data) {
   }, [Data]);
 
 
-  // console.log(bvnDateOfBirth);
 
   const genderInfo = ["Male", "Female"];
 
@@ -561,12 +563,14 @@ export default function BvnVerification(Data) {
                   </div>
                   {/* Input */}
                   <input
-                    readOnly
+                    readOnly = {Data?.ConfirmId === "true" 
+                      || Data?.ConfirmBvn === "true"}
                     value={
                       (verificationResponse?.data?.data?.phone !== undefined && Data.ConfirmBvn === "true")
                         ? `${bvnPhone?.slice(0, 4)}*******`
                         : verificationResponse?.data?.data?.phone === undefined && (Data?.ConfirmId === "true" || Data?.ConfirmBvn === "true") ? "NO Phone Number"
-                         :  (bvnPhone?.length < 1 &&( Data?.ConfirmBvn === "false" || !Data?.ConfirmBvn)) ? bvnPhone : ""
+                         : verificationResponse?.data?.data?.phone === undefined &&
+                          ( Data?.ConfirmBvn === "false" || !Data?.ConfirmBvn) ? bvnPhone : ""
                     }
                     onInput={(e) => {
                       const numericValue = e.target.value.replace(/\D/g, "");
@@ -575,7 +579,7 @@ export default function BvnVerification(Data) {
                     onChange={(e) => {
                       setBvnPhone(e.target.value);
                     }}
-                    type="tel"
+                    type="tel"   
                     name="phone"
                     id="phone"
                     maxLength={11}
@@ -618,7 +622,7 @@ export default function BvnVerification(Data) {
                       (verificationResponse?.data?.data?.bvn !== undefined && Data.ConfirmBvn === "true")
                         ? `${bvnNumber?.slice(0, 4)}*******`
                         : verificationResponse?.data?.data?.bvn === undefined && (Data?.ConfirmId === "true" || Data?.ConfirmBvn === "true") ? "NO BVN"
-                         :  (bvnNumber?.length < 1 &&( Data?.ConfirmBvn === "false" || !Data?.ConfirmBvn)) ? bvnNumber : ""
+                         :  (verificationResponse?.data?.data?.bvn === undefined &&( Data?.ConfirmBvn === "false" || !Data?.ConfirmBvn)) ? bvnNumber : ""
                     }
                     onChange={(e) => {
                       setBvnNumber(e.target.value);
@@ -653,7 +657,8 @@ export default function BvnVerification(Data) {
               <div className="flex flex-col md:gap-[15px] gap-[10px] justify-start">
                 <button
                   disabled={
-                    Data.ConfirmBvn === "true" || Data.ConfirmId === "true"
+                    Data.ConfirmBvn === "true"
+                     || Data.ConfirmId === "true"
                   }
                   onClick={() => {
                     BvnFunctionState();
