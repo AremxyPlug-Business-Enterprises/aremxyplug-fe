@@ -112,7 +112,10 @@ export default function IdVerification() {
     statusId,
     verifyPopId
   ) => {
-     if(!navigator.onLine && !networkIssue)  setNetworkIssue(true);
+     if(!navigator.onLine && !networkIssue){
+      setNetworkIssue(true);
+      setErrorSubmit("A Network connection error")
+     } 
     if (idButtonState === "Verify" && navigator.onLine) {
       url = "https://api.aremxyplug.com/api/v1/verify";
       buttonStateSuccess = "Verified";
@@ -130,7 +133,7 @@ export default function IdVerification() {
       };
     
   
-    CheckIdForm(
+    await CheckIdForm(
       url,
       data,
       buttonStateSuccess,
@@ -141,6 +144,11 @@ export default function IdVerification() {
       statusId,
       verifyPopId
     );
+   //setErrorSubmit("")
+    }else if(idButtonState === "Verify" && !navigator.online){
+      setErrorSubmit("A Network connection error");
+    }else{
+      setErrorSubmit("An unexpected error has occurred upon verification.")
     }
   };
 
@@ -172,6 +180,7 @@ export default function IdVerification() {
      
     
       try {
+        setErrorSubmit("");
          setLoading(true);
           setErrorSubmit(false);
           PendingImageFxn();
@@ -194,8 +203,9 @@ export default function IdVerification() {
             localStorage.setItem("Qhfde", "true"); // Id Verification
         }
       } catch (error) {
-        if(error && (error.response === undefined)){
-              if(networkIssue) return;
+        if(error && (error?.response === undefined)){
+              // if(networkIssue) return;
+               setErrorSubmit("A Network connection error")
              if(!networkIssue) return setNetworkIssue(true)
         } else if (error.response.status === 400) {
           alert(ErrorMessage);
@@ -208,16 +218,17 @@ export default function IdVerification() {
           setIdStatus("Not Verified");
           setVerifyImage(NotVerifiedIcon);
         }else if( error.response.status === 401){
-          setSessionModal(true)
+        return  setSessionModal(true)
         }else {
-          alert("Unexpected error occured, try again later")
+          setErrorSubmit("An unexpected error has occured upon verification")
         }
       } finally {
         setLoading(false);
         //alert("success")
       }
     } else {
-      setErrorSubmit(true);
+      //alert("In bound error")
+      setErrorSubmit("Fill all the details to proceed");
     }
   };
   // UseEffect to retain the current data object of getLocalStorage data()
@@ -638,7 +649,7 @@ export default function IdVerification() {
         : "hover:bg-[#EDEAEA]"
     }`}  >
       <h2 className={`text-[#000] font-[400]  leading-[10.4px]
-      lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : "text-black"}`}>
+      lg:text-[16px] lg:leading-[20.8px] ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>
         {idResult || (Data.ConfirmId ==="true"   ? "National ID" : idResult)}
       </h2>
       <img src={ArrowDown} alt=""
@@ -748,10 +759,10 @@ export default function IdVerification() {
          pr-[13px] pl-[10.876px] font-[400] 
          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
-    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px]  self-center  ${
       isDarkMode
         ? "bg-black text-white border border-white"
-        : "hover:bg-[#EDEAEA]"
+        : "hover:bg-[#EDEAEA] text-[#7C7C7C]"
     }`} 
     placeholder=''
     type="text" inputMode='numeric' maxLength={11} onInvalid={validId}  required/>
@@ -819,10 +830,10 @@ border-[0.4px]  border-[#7E7E7E] opacity-50 cursor-pointer ${isDarkMode ? "bg-bl
        {( Data.ConfirmId === "true"  || Data.ConfirmBvn=== "true" ? "Verified" : "Verify" )}
 
         </button>
-       { errorSubmit  && (
+       { errorSubmit?.length > 1   && (
         <h2 className={`font-[500] lg:text-[14px] lg:leading-[18px] md:text-[14px] md:leading-[18px] 
         text-[13px] leading-[16px] text-red-600` }>
-          Fill the forms complete to proceed
+          {errorSubmit}
        </h2>
        )}
        
