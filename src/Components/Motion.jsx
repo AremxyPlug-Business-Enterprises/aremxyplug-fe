@@ -220,12 +220,13 @@ const filterTaskNotCompleted =  orderedUpdatedTask?.filter((dataBaseRes)=> dataB
    const progressNumber = Array?.isArray(getCompletedTask) ?  getCompletedTask?.length * 20 : 0;
    //Update the task progress
  const CheckCurrentUpdate = webSocketMessage?.completed === true
- ?   filterTaskNotCompleted?.find((value)=> value?.task_code === webSocketMessage?.task && value?.completed === webSocketMessage?.completed ) 
+ ?   filterTaskNotCompleted?.find((value)=> value?.task_code === webSocketMessage?.meta?.task_code && webSocketMessage?.completed === true ) 
  : "Error"
 const floatingProgressBarUpdate
  = CheckCurrentUpdate === undefined && CheckCurrentUpdate !== "Error" && progressTaskBarResponse?.length < 5
  ? progressNumber + 20
-  : typeof CheckCurrentUpdate === "object" && CheckCurrentUpdate?.completed === true ? progressNumber : progressNumber
+  : typeof CheckCurrentUpdate === "object" && CheckCurrentUpdate?.completed === true ? progressNumber : progressNumber;
+
  return (
     <div  ref={refValue}>
       <FloatingProgressCircle

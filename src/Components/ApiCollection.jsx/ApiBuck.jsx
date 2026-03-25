@@ -108,11 +108,10 @@ export const InActionVirtualAccountState = (
 
   // A reusable component to handle user session management.
   export const HandleUserSession = ({sec, setSec})=> {
-    const { setSessionExpiration, setOpenTaskBar}= useContext(ContextProvider)
+    const { setSessionExpiration, setOpenTaskBar, isDarkMode}= useContext(ContextProvider)
      setOpenTaskBar(false)
     const holdSecRef = useRef(null);
-    const isDarkMode = localStorage.getItem("darkModeEnabled");
-    console.log(sec);
+   
     useEffect(()=> {   
     if(holdSecRef.current) return clearInterval(holdSecRef.current)
     if(sec > 0){
@@ -244,15 +243,15 @@ const SubmitUserLoginDetails = ()=> {
              `}>
             <div className = {`flex flex-col justify-left items-center
              py-[20px] px-[10px] gap-[20px] w-[100%] md:w-[60%] md:h-auto lg:w-[30%]  rounded-[10px]
-             lg:rounded-[20px]   ${isDarkMode === "true" ? "bg-black border border-white rounded-[10px]" 
+             lg:rounded-[20px]   ${isDarkMode  ? "bg-black border border-white rounded-[10px]" 
                : "bg-white"}`}>
                <div className ="flex flex-col  gap-[20px]">
                <h2 className={`text-[14px] text-center font-[600] leading-[18px]
-               text-black lg:text-[16px] lg:leading-[22px] ${isDarkMode === "true" ? "text-white" : "text-black"}`}>
+               text-black lg:text-[16px] lg:leading-[22px] ${isDarkMode ? "text-white" : "text-black"}`}>
                   Your Session has expired.
                   </h2>
-              <p className ={`text-[14px] text-center font-[600] leading-[18px]
-               lg:text-[16px] lg:leading-[22px] ${isDarkMode === "true" ? "text-white" : "text-[#04177f]"}`}>
+              <p className ={`text-[14px] text-center font-[600] leading-[18px] text-[#04177f]
+               lg:text-[16px] lg:leading-[22px] ${isDarkMode  ? "text-white" : "text-[#04177f]"}`}>
            Login to renew your session to continue transactions 
             and operations.
                </p>
@@ -262,7 +261,7 @@ const SubmitUserLoginDetails = ()=> {
                 {/* Username */}
                <div className="flex flex-col gap-[5px] lg:gap-[10px] ">
                <p className={`text-[14px] text-start font-[600] leading-[18px]
-               text-black lg:text-[16px] lg:leading-[22px] ${isDarkMode === "true" ? "text-white" : "text-black"}`}>
+               text-black lg:text-[16px] lg:leading-[22px] ${isDarkMode  ? "text-white" : "text-black"}`}>
                 {usernameToken && !emailToken ? "Username" : "Email"}
                </p>
              
@@ -284,13 +283,11 @@ const SubmitUserLoginDetails = ()=> {
   readOnly
   value={HoldValue}
    type="text" />
-              
-              
-                </div>
+            </div>
                 {/* Password */}
                <div className="flex flex-col gap-[5px] lg:gap-[10px] ">
               <p className={`text-[14px] text-start font-[600] leading-[18px]
-               text-black lg:text-[16px] lg:leading-[22px] ${isDarkMode === "true" ? "text-white" : "text-black"}`}>
+               text-black lg:text-[16px] lg:leading-[22px] ${isDarkMode  ? "text-white" : "text-black"}`}>
                 Password
                </p>
              
@@ -409,19 +406,20 @@ const {setNetworkIssue} = useContext(ContextProvider);
         setIdVerificationOpen, 
         setAccountUpgrade,
       setAuthenticationOpen,
+      isDarkMode
      } = useContext(ContextProvider)
      const Data = GetLocalStorage();
      const VerificationNavigationAndState = ()=> {
-         setVerificationOpen(true)
-       setProfilePage(false)
-       setBvnVerificationOpen(false)
+         setVerificationOpen(true);
+       setProfilePage(false);
+       setBvnVerificationOpen(false);
         setIdVerificationOpen(true)
         setAccountUpgrade(false)
       setAuthenticationOpen(false)
      navigate("/ProfileSettingMain")
      }
           //id Verification
-   const isDarkMode = localStorage.getItem("darkModeEnabled")
+  // const isDarkMode = localStorage.getItem("darkModeEnabled")
   return (
   <div className={`w-full h-full justify-center items-center
    flex`}>
@@ -429,23 +427,23 @@ const {setNetworkIssue} = useContext(ContextProvider);
      <div className={`w-full flex  justify-center items-center `}>
             <div className = {`flex flex-col justify-center items-center
              py-[20px] px-[12px] gap-[20px] w-[80%] md:w-[60%] lg:w-[30%] md:h-[300px]  rounded-[10px]
-             lg:rounded-[20px]   ${isDarkMode === "true" ? "bg-black border border-white rounded-[10px]" 
+             lg:rounded-[20px]   ${isDarkMode ? "bg-black border border-white rounded-[10px]" 
                : "bg-white"}`}>
                <div className ="flex flex-col  gap-[20px]">
                <h2 className={`text-[14px] text-center font-[600] leading-[18px]
-               text-black lg:text-[16px] lg:leading-[22px] ${isDarkMode === "true" ? "text-white" : "text-black"}`}>
+               text-black lg:text-[16px] lg:leading-[22px] ${isDarkMode  ? "text-white" : "text-black"}`}>
                    You are restricted from accessing this page.
                   </h2>
              
                 {Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false" ? (
                    <p className ={`text-[14px] text-center font-[400] leading-[18px]
-               text-black lg:text-[16px] lg:leading-[22px] ${isDarkMode === "true" ? "text-white" : "text-black"}`}>
+               text-black lg:text-[16px] lg:leading-[22px] ${isDarkMode  ? "text-white" : "text-black"}`}>
                 Your Identity matters, kindly verify
-                your user account to continue smooth operation.
+                your user account to continue with smooth operations.
               </p>
                 ) : (
                       <p className ={`text-[14px] text-center font-[400] leading-[18px]
-               text-black lg:text-[16px] lg:leading-[22px] ${isDarkMode === "true" ? "text-white" : "text-black"}`}>
+               text-black lg:text-[16px] lg:leading-[22px] ${isDarkMode  ? "text-white" : "text-black"}`}>
                  Create an account to access this feature,
               navigate to dashboard to generate an account.
               </p>

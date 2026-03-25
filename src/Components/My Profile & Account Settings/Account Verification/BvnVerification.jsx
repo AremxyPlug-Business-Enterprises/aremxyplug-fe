@@ -30,7 +30,7 @@ export default function BvnVerification() {
   const [bvnQuery, setBvnQuery] = useState(false);
   const [bvnPopVerified, setBvnPopVerified] = useState(false);
   const [bvnPhoneMessage, setBvnPhoneMessage] = useState(false);
-  const [errorVerify, setErrorVerify] = useState(false);
+  const [errorVerify, setErrorVerify] = useState("");
   const { setBvnButtonState } = useContext(ContextProvider);
   const { toggleSideBar, customerDetail } = useContext(ContextProvider);
   const { idAddress, setIdAddress } = useContext(ContextProvider);
@@ -41,7 +41,8 @@ export default function BvnVerification() {
     useContext(ContextProvider);
   const [loading, setLoading] = useState(false);
   const [genderResult, setGenderResult] = useState("");
- 
+  const [bvnNumberError, setBvnNumberError] = useState(false);
+  const [phoneNumberMismatch, setPhoneNumberMismatch] = useState(false)
   // const genderInfo = ["Male", "Female", "Others.."];
   const chooseGender = () => {
     setDropDownGender(!dropDownGender);
@@ -63,18 +64,27 @@ export default function BvnVerification() {
     url,
     data,
     buttonStateSuccess,
-    ErrorMessage,
     PendingImageFxn,
     PendingText,
     verifyBvnImage,
     statusBvn,
     verifyPopBvn
   ) => {
-    if (!navigator.onLine) return setNetworkIssue(true);
-    if ( navigator.onLine) {
+    if (!navigator.onLine) {
+   setNetworkIssue(true);
+   setErrorVerify("A Network connection error")
+  // setErrorVerify("A Network connection error")
+    } 
+     if(bvnNumber?.length < 11) setBvnNumberError("Bvn Number must be 11 digits")
+      if(bvnPhone?.length < 11) setPhoneNumberMismatch("Your Phone Number must be 11 digits")
+    if ( navigator.onLine 
+      && bvnNumber?.length === 11
+      && idAddress
+      && genderResult
+      && bvnPhone?.length === 11
+    ) {
       url = "https://api.aremxyplug.com/api/v1/verify";
       buttonStateSuccess = "Verified";
-      ErrorMessage = "Bvn Name Mismatch or Network Failure";
       PendingImageFxn = () => setBvnVerifyImage(PendingImage);
       PendingText = () => setBvnStatus("Pending");
       verifyBvnImage = () => setBvnVerifyImage(bvnVerifiedSuccess);
@@ -92,13 +102,16 @@ export default function BvnVerification() {
         url,
         data,
         buttonStateSuccess,
-        ErrorMessage,
         PendingImageFxn,
         PendingText,
         verifyBvnImage,
         statusBvn,
         verifyPopBvn
       );
+    }else {
+      setErrorVerify("Fill all your details to proceed");
+      //  setBvnNumberError("");
+      //        setPhoneNumberMismatch("");
     }
   };
 
@@ -107,22 +120,23 @@ export default function BvnVerification() {
     url,
     data,
     buttonStateSuccess,
-    ErrorMessage,
     PendingImageFxn,
     PendingText,
     verifyBvnImage,
     statusBvn,
     verifyPopBvn
   ) => {
+    if(bvnNumber?.length < 11) setBvnNumberError("BvnNumber must be 11 digits")
     if (bvnDateOfBirth  
-   && bvnNumber  
+   && bvnNumber?.length === 11  
      && genderResult  
       && idAddress 
        && Data?.UserFullName?.length > 1) {
       setLoading(true);
-         setErrorVerify(false);
+      setBvnNumberError("");
+       setPhoneNumberMismatch("")
       try {
-          setErrorVerify(false);
+          setErrorVerify("");
           PendingImageFxn();
           PendingText();
         
@@ -133,6 +147,7 @@ export default function BvnVerification() {
         });
         if (response.status === 201 || response.status ===  200) {
           setBvnNumber(bvnNumber);
+          
           verifyBvnImage();
           statusBvn();
           verifyPopBvn();
@@ -141,29 +156,44 @@ export default function BvnVerification() {
             localStorage.setItem("Qhfde", "true"); // Id Verification
         }
       } catch (error) {
+        //console.log(error?.response?.data?.data?.data);
         if (error && error.response === undefined) {
-              if(networkIssue) return;
-             if(!networkIssue) return setNetworkIssue(true)
-        } else if ( error.response.status ===  400) {
-          alert(ErrorMessage);
-          console.log(`ERROR : ${error}`);
+             if(!networkIssue) return setNetworkIssue(true);
+             setErrorVerify("A Network connection error");
+             setBvnNumberError("");
+             setPhoneNumberMismatch("")
+        } else if (error.response.status ===  400) {
+           if(error?.response?.data?.data?.data === "BVN name mismatch"){
+                 setBvnNumberError("BVN name mismatch")
+            }else  if(error?.response?.data?.data?.data === "BVN phone mismatch"){
+                setPhoneNumberMismatch("Phone Number Attached to your BVN");
+          }
           setBvnVerifyImage(NotVerifiedImage);
-          setBvnStatus("Not Verified");
+  setBvnStatus("Not Verified");
+  
         } else if (error.status === 500) {
-          alert("SERVER ERROR, Try again some other time.");
+          setErrorVerify("Internal Server error");
           setBvnStatus("Not Verified");
           setBvnVerifyImage(NotVerifiedImage);
         }else if(error.response.status === 401){
             setSessionModal(true)
         } else {
-          setErrorVerify(true);
+           setErrorVerify("An unexpected error has occured upon verification");
+            setBvnNumberError("");
+             setPhoneNumberMismatch("")
         }
       } finally {
         setLoading(false);
-        //alert("success")
+      
       }
     }else{
-       setErrorVerify(true);
+      if(!bvnNumber || !genderResult  
+      || !idAddress  ||!bvnDateOfBirth
+       || Data?.UserFullName?.length < 1){
+       setErrorVerify("Fill all the details to proceed");
+        setBvnNumberError("");
+             setPhoneNumberMismatch("")
+      }
     }
   };
 
@@ -560,6 +590,7 @@ export default function BvnVerification() {
                       alt=""
                       className="h-[14.083px] w-[14.083px] lg:h-[24px] lg:w-[24px] cursor-pointer"
                     />
+                    
                   </div>
                   {/* Input */}
                   <input
@@ -597,6 +628,15 @@ export default function BvnVerification() {
         : "hover:bg-[#EDEAEA]"
     }`} 
                   />
+                     {phoneNumberMismatch?.length > 1  && (
+                  <h2
+                    className={`font-[500] lg:text-[14px] lg:leading-[18px] 
+                      md:text-[14px] md:leading-[18px] text-[12px] leading-[16px]
+                       text-red-600`}
+                  >
+                    {phoneNumberMismatch}
+                  </h2>
+                )}
                 </div>
               </div>
               <div className="flex flex-col md:flex-row lg:gap-[22px] gap-[20px] w-[100%]">
@@ -643,7 +683,7 @@ export default function BvnVerification() {
                     maxLength={11}
                     required
                   />
-                  {verificationReason?.length > 1 && bvnNumber?.length < 1 && (
+                  {(verificationReason?.length > 1 && bvnNumber?.length < 1 && bvnNumberError?.length < 1) && (
                     <p
                       className="text-[12px] font-[600] leading-[12px] text-red-500
   capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]"
@@ -651,6 +691,15 @@ export default function BvnVerification() {
                       {verificationReason}
                     </p>
                   )}
+                  {bvnNumberError?.length > 1 && verificationReason?.length < 1 &&  (
+                  <h2
+                    className={`font-[500] lg:text-[14px] lg:leading-[18px] 
+                      md:text-[14px] md:leading-[18px] text-[12px] leading-[16px]
+                       text-red-600`}
+                  >
+                  {bvnNumberError}
+                  </h2>
+                )}
                 </div>
               </div>
 
@@ -673,13 +722,13 @@ export default function BvnVerification() {
                     ? "Verified"
                     : "Verify"}
                 </button>
-                {errorVerify && (
+                {errorVerify?.length > 1 && (
                   <h2
                     className={`font-[500] lg:text-[14px] lg:leading-[18px] 
                       md:text-[14px] md:leading-[18px] text-[12px] leading-[16px]
                        text-red-600`}
                   >
-                    Fill all to Confirm Verification
+                    {errorVerify}
                   </h2>
                 )}
               </div>
