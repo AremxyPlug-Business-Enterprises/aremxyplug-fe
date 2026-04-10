@@ -37,7 +37,7 @@ const AirtimeVtu = () => {
     const points = '+2.00';
       
     const { networkName, setNetworkName, newBalance, setNewBalance, discount, setDiscount,
-            setSessionModal,
+            setSessionModal, selectRecipientDisplay, setSelectRecipientDisplay,
           sessionModal, airtimeResponse, setAirtimeResponse } = useContext(ContextProvider);
     const { selectedProduct, setSelectedProduct, recipientsAirtime, setRecipientsAirtime } = useContext(ContextProvider);
     const { recipientName, setRecipientName, networkIssue } = useContext(ContextProvider);
@@ -69,11 +69,9 @@ const AirtimeVtu = () => {
     const [errorMessage, setErrorMessage] = useState(false);
     const [passDataBalance, setPassDataBalance] = useState({});
     const [balanceStatus, setBalanceStatus] = useState("");
-    const [selectRecipientDisplay, setSelectRecipientDisplay] = useState(false);
     const [discountLoader, setDiscountLoader] = useState(false)
    const balanceStringToNum = Number(newBalance);
- 
-   const [airtimeTransactionNetwork, setAirtimeTransactionNetwork] = useState(false)
+  const [airtimeTransactionNetwork, setAirtimeTransactionNetwork] = useState(false)
 
 
    const GetRecipientList = async()=> {
@@ -110,8 +108,7 @@ setRecipientsAirtime(response?.data?.data?.recipients?.recipients);
         }
      }
       const newAmount = calcAmount(discount, amount) ;  
-     // console.log(newAmount);   
-     //Balance state Handling
+  
              const updateBalance = typeof newBalance === "string" && newBalance !== undefined && newBalance !== null
               && newBalance?.length > 0
              ? balanceStringToNum  : ((typeof newBalance === "string" &&  newBalance?.length < 1) || (typeof newBalance !== "string" &&
@@ -182,14 +179,12 @@ setRecipientsAirtime(response?.data?.data?.recipients?.recipients);
  HandleBalanceStatus();
         },[CheckSufficiency]);
 
-        //Getting Recipient Details
-       //Endpoint to get the discount percentage
-       const [discountObj, setDiscountObj] = useState({})
+       
+      //The Discount Retrieval Function...
        const getDiscountPercentage = async(network)=> {
-        setDiscountObj({});
         console.log(network);
          const successHandler = (response)=> {
-            setDiscountObj(response);
+           // setDiscountObj(response);
             setDiscount(response?.data?.data?.discount_percent);
          }
          const FailedHandler = (ErrorType)=> {
@@ -204,7 +199,7 @@ const path = `products/telecom/airtime/${network === "MTN" ? "mtn"
          await GetFunction(path,
              setDiscountLoader,
                successHandler, FailedHandler,
-               setDiscountObj,
+               ()=> {},
                 setNetworkIssue)
        }
 
@@ -548,7 +543,7 @@ if(ErrorType === "Network error" || ErrorType === "User error"){
           setAirtimePurchaseError("Network Error")
            setTransactFailedPopUp(true); 
                  setConfirm(false)// 
-}else if(ErrorType === "Server error" ) {
+}else if(ErrorType === "Server error") {
    setInputPin("");
      setAirtimePurchaseError("Server error")
   setTransactFailedPopUp(true); 
@@ -851,10 +846,8 @@ className={`flex justify-left  w-[100%] items-center`}>
             lg:text-[16px] lg:leading-[20.8px] 
          ${isDarkMode ? "text-white" : "text-[#7E7E7E]" }`}>
              {discountLoader === true  ? <BalanceLoading/>
-              :  networkName?.length > 0 && discountObj?.data?.data?.discount_percent && discountLoader=== false 
-              ? `${networkName + ' ' + discountObj?.data?.data?.discount_percent}%` : ''}
-           
-
+              :  networkName?.length > 0  && discountLoader=== false 
+              ? `${networkName + ' ' + discount}%` : ''}
                        </h2>
                                  
                                    
@@ -1517,7 +1510,11 @@ className={`flex justify-left  w-[100%] items-center`}>
             }
              <div className="flex flex-col gap-[10px] px-[20px]" >
             <button
-              onClick={HandleAirtime}
+              onClick={()=> {
+             if(isLoading === false){
+                HandleAirtime()
+               }
+              }}
               disabled={inputPin.length !== 4 ? true : false}
               className={`${
                 inputPin.length !== 4 && !isDarkMode ? "bg-[#0008]" : 
@@ -1842,11 +1839,13 @@ className={`flex justify-left  w-[100%] items-center`}>
                     <Loader/>
                 </Modal>
             )}
+            
         
             {restrictUser && <RestrictionPopUp/>}
             {selectRecipientDisplay && <SelectRecipient 
             loadingRecipient ={loadingRecipient}
-             setSelectRecipientDisplay = {setSelectRecipientDisplay}/>}
+             setSelectRecipientDisplay = {setSelectRecipientDisplay} setDiscount={setDiscount}
+              setDiscountLoader ={setDiscountLoader}/>}
         </DashBoardLayout>
     );
 }

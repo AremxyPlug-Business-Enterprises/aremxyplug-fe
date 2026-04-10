@@ -62,7 +62,8 @@ export default function IdVerification() {
   const [loading, setLoading] = useState(false);
   const { toggleSideBar, customerDetail } = useContext(ContextProvider);
   const { full_name } = customerDetail;
-
+//const [phoneNumberMismatch, setPhoneNumberMismatch] = useState("");
+const [idNumberError, setIdNumberError] = useState("")
   // Genders
   const genderInfo = ["Male", "Female"];
   const {genderResult, setGenderResult} = useContext(ContextProvider);
@@ -105,7 +106,6 @@ export default function IdVerification() {
     url,
     data,
     buttonStateSuccess,
-    ErrorMessage,
     PendingImageFxn,
     PendingText,
     verifyIdImage,
@@ -119,14 +119,13 @@ export default function IdVerification() {
     if (idButtonState === "Verify" && navigator.onLine) {
       url = "https://api.aremxyplug.com/api/v1/verify";
       buttonStateSuccess = "Verified";
-      ErrorMessage = "NIN Name Mismatch or Network Failure";
       PendingImageFxn = () => setVerifyImage(Pending);
       PendingText = () => setIdStatus("Pending");
       verifyIdImage = () => setVerifyImage(idSuccess);
       statusId = () => setIdStatus("Verified");
       verifyPopId = () => setIdPopVerified(true);
       data = {
-        nin: idNumber.toString(),
+        nin: idNumber?.toString(),
         dob: idDateOfBirth,
         address:idAddress,
         gender:genderResult,
@@ -137,7 +136,6 @@ export default function IdVerification() {
       url,
       data,
       buttonStateSuccess,
-      ErrorMessage,
       PendingImageFxn,
       PendingText,
       verifyIdImage,
@@ -158,7 +156,6 @@ export default function IdVerification() {
     url,
     data,
     buttonStateSuccess,
-    ErrorMessage,
     PendingImageFxn,
     PendingText,
     verifyIdImage,
@@ -167,21 +164,23 @@ export default function IdVerification() {
   ) => {
    
     // const AccCreated = localStorage.getItem("80pcs")
-    
+      //We Clear the Present error or past mistakes then give it a chance at redemption
+     setIdNumberError("")
+     setErrorSubmit("");
+      if(idNumber?.length < 11) setIdNumberError("ID Number must be 11 digits");
     if (
-      idNumber &&
+      idNumber?.length === 11 &&
+      
        idResult &&
       idDateOfBirth &&
       genderResult &&
       idAddress &&
       Data?.UserFullName?.length > 1
-      // idCountry
+   
     ) {
-     
     
       try {
-        setErrorSubmit("");
-         setLoading(true);
+          setLoading(true);
           setErrorSubmit(false);
           PendingImageFxn();
           PendingText();
@@ -193,7 +192,7 @@ export default function IdVerification() {
           },withCredentials : true
         })
         if (response.status === 201 || response.status === 200) {
-          setIdNumber(idNumber);
+          setIdNumber(response?.data?.data?.nin);
           verifyIdImage();
           statusId();
           verifyPopId();
@@ -206,15 +205,17 @@ export default function IdVerification() {
         if(error && (error?.response === undefined)){
               // if(networkIssue) return;
                setErrorSubmit("A Network connection error")
-             if(!networkIssue) return setNetworkIssue(true)
+             if(!networkIssue) setNetworkIssue(true)
         } else if (error.response.status === 400) {
-          alert(ErrorMessage);
-          console.log(`ERROR : ${error}`);
+           if(error?.response?.data?.data?.data === "NIN name mismatch"){
+                 setIdNumberError("NIN name mismatch. Hint: Ensure it is a valid ID Number with a matching fullname from your profile.")
+           }
+         
          setVerifyImage(NotVerifiedIcon);
           setIdStatus("Not Verified");
          // alert("Please check your ID Number and try again.")
         } else if (error.response.status === 500) {
-          alert("SERVER_ERROR, Try again some other time.");
+          setErrorSubmit("An unexpected error has occured");
           setIdStatus("Not Verified");
           setVerifyImage(NotVerifiedIcon);
         }else if( error.response.status === 401){
@@ -227,8 +228,12 @@ export default function IdVerification() {
         //alert("success")
       }
     } else {
-      //alert("In bound error")
-      setErrorSubmit("Fill all the details to proceed");
+   
+      if(!idNumber || !idDateOfBirth || !genderResult || !idResult || !idAddress){
+      // setErrorSubmit("")
+    //  setIdNumberError("");
+      setErrorSubmit("Fill all your details to proceed");
+      }
     }
   };
   // UseEffect to retain the current data object of getLocalStorage data()
@@ -237,6 +242,10 @@ export default function IdVerification() {
   const Data = GetLocalStorage();
   useEffect(() => {
     VerifyRef.current = Data;
+    if(Data?.ConfirmId === "true" ){
+      setErrorSubmit("");
+      setIdNumberError("");
+    }
    if(verificationResponse?.data?.data){
     setIdNumber(verificationResponse?.data?.data?.nin)
   }
@@ -319,7 +328,7 @@ export default function IdVerification() {
             onSubmit={(e) => {
               e.preventDefault();
             }}
-            action=""
+            action="POST"
           >
             {/* Container for all Forms */}
             <div className="flex flex-col lg:gap-[25px] gap-[35px] w-full mb-[50px]">
@@ -427,9 +436,9 @@ export default function IdVerification() {
                         isDarkMode ? "text-white" : "text-[#7E7E7E]"
                     }`}
                     >
-                      {((Data?.ConfirmId === "false" && Data?.ConfirmBvn === "false") || (!Data?.ConfirmId  || !Data?.ConfirmBvn ))
-                       && verificationResponse?.data?.data?.gender === undefined ?
-                        genderResult : verificationResponse?.data?.data?.gender}
+                      {((Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false") || (!Data?.ConfirmId && !Data?.ConfirmBvn)) 
+                       && verificationResponse?.data?.data?.gender === undefined ? genderResult : 
+                       verificationResponse?.data?.data?.gender === undefined && (Data?.ConfirmId === "true" || Data?.ConfirmBvn === "true") ? "NO GENDER INFO AVAILABLE" : verificationResponse?.data?.data?.gender}
                     </h2>
                     <img
                       src={ArrowDown}
@@ -498,9 +507,10 @@ export default function IdVerification() {
                       }
                     }}>
                   <input
-
-                    value={((Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false") || (!Data?.ConfirmId && !Data?.ConfirmBvn ))
-                       && verificationResponse?.data?.data?.dob === undefined ? idDateOfBirth : verificationResponse?.data?.data?.dob}
+                    required
+                    value={((Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false") || (!Data?.ConfirmId && !Data?.ConfirmBvn)) 
+                       && verificationResponse?.data?.data?.dob === undefined ? idDateOfBirth : 
+                       verificationResponse?.data?.data?.dob === undefined && (Data?.ConfirmId === "true" || Data?.ConfirmBvn === "true") ? "NO DATE OF BIRTH" : verificationResponse?.data?.data?.dob}
                     ref={dateInputRef}
                     onChange={(e) => {
                       // const dobValue = dateInputRef.current ? dateInputRef.current.value : "";
@@ -545,8 +555,9 @@ export default function IdVerification() {
                     House Address
                   </h2>
                   <input
-                    value={((Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false") || (!Data?.ConfirmId && !Data?.ConfirmBvn))
-                       && verificationResponse?.data?.data?.address === undefined ? idAddress : verificationResponse?.data?.data?.address}
+                    value={((Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false") || (!Data?.ConfirmId && !Data?.ConfirmBvn)) 
+                       && verificationResponse?.data?.data?.address === undefined ? idAddress : 
+                       verificationResponse?.data?.data?.address === undefined && (Data?.ConfirmId === "true" || Data?.ConfirmBvn === "true") ? "NO ADDRESS" : verificationResponse?.data?.data?.address}
                     onChange={(e) => {
                       if(((Data.ConfirmId === "false" || Data.ConfirmBvn === "false") || (!Data?.ConfirmId && !Data?.ConfirmBvn)) ){
                       setIdAddress(e.target.value);
@@ -591,7 +602,7 @@ export default function IdVerification() {
                     e.target.value = numbersOnly;
                   }}
                   value={((Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false") || (!Data?.ConfirmId && !Data?.ConfirmBvn)) 
-                       && verificationResponse?.data?.data?.postalcode === undefined ? idPostalCode : (Data?.ConfirmId === "true" || Data?.ConfirmBvn === "true") && 
+                       && verificationResponse?.data?.data?.postalcode === undefined ? idPostalCode : 
                        verificationResponse?.data?.data?.postalcode === undefined && (Data?.ConfirmId === "true" || Data?.ConfirmBvn === "true") ? "NO POSTAL CODE" : verificationResponse?.data?.data?.postalcode}
                   onChange={(e) => {
                     setIdPostalCode(e.target.value);
@@ -743,7 +754,7 @@ export default function IdVerification() {
       const numbersOnly = e.target.value.replace(/\D/g, '');
       e.target.value = numbersOnly;
     })}
-    value={  (verificationResponse?.data?.data?.nin !== undefined && Data.ConfirmId === "true")
+    value={  ((verificationResponse?.data?.data?.nin !== undefined && Data.ConfirmId === "true") || (verificationResponse?.data?.data?.nin && idNumber?.length > 1) )
                         ? `${idNumber?.slice(0, 4)}*******`
                         : verificationResponse?.data?.data?.nin === undefined  && (Data?.ConfirmId === "true" || Data?.ConfirmBvn === "true")
                          ? "NO ID" :  idNumber}
@@ -772,6 +783,15 @@ export default function IdVerification() {
   {verificationReason}
   </p>
 
+    )}
+    {idNumberError?.length > 1 && verificationReason?.length < 1 &&(
+       <h2
+                    className={`font-[500] lg:text-[14px] lg:leading-[18px] 
+                      md:text-[14px] md:leading-[18px] text-[12px] leading-[16px]
+                       text-red-600`}
+                  >
+                  {idNumberError}
+                  </h2>
     )}
     </div>
       </div>
@@ -989,49 +1009,52 @@ Confirming your identity ensures that the person accessing the account is indeed
           </form>
 
           {idPopVerified && (
-            <Modal>
-              <div
-                className={`confirm2 ${styles.inputPin} ${
-                  toggleSideBar
-                    ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
-                    : "lg:w-[40%]"
-                }
-               relative md:w-[55%] w-[90%] flex flex-col justify-between md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
-              >
-                <div className="absolute z-0 right-0" style={{ zIndex: 0 }}>
-                  <img
-                    src={PopUpGreen}
-                    alt=""
-                    className="md:hidden rounded-tr-[10px]"
-                  />
-                  <img
-                    src={PopUpGreenTab}
-                    alt=""
-                    className="hidden md:block lg:hidden rounded-tr-[10px]"
-                  />
-                  <img
-                    src={PopUpGreenDeskTop}
-                    alt=""
-                    className="hidden lg:block rounded-tr-[20px]"
-                  />
-                </div>
+              <div className={`w-full h-full  justify-center items-center
+   flex`}>
 
-                <div className="relative z-10">
-                  <p
-                    className={`text-[12px] px-[20px] md:text-[16px] lg:text-[18px] font-semibold text-center mt-[4%] lg:my-[%] z-[1000] ${styles.overlayText}`}
+            <Modal>
+             <div
+               className={`w-full relative flex px-[17px] lg:px-[20px]  items-center justify-center 
+             `}>
+               <div className = {`flex flex-col justify-left relative items-center
+             py-[20px] px-[10px] gap-[20px] w-[100%] md:w-[60%] md:h-auto lg:w-[30%]  rounded-[10px]
+             lg:rounded-[20px]   ${isDarkMode  ? "bg-black border border-white rounded-[10px]" 
+               : "bg-white"}`}>
+                  <img
+                                   src={PopUpGreen}
+                                   alt=""
+                                   className="md:hidden absolute z-0 right-0 top-0   rounded-tr-[10px]"
+                                 />
+                                  <img
+                                   src={PopUpGreenTab}
+                                   alt=""
+                                   className="absolute top-0 right-0 hidden md:block lg:hidden rounded-tr-[10px]"
+                                 />
+                                 <img
+                                   src={PopUpGreenDeskTop}
+                                   alt=""
+                                   className="hidden w-[200px] absolute z-0 opacity-70  top-0 right-0 lg:block rounded-tr-[20px]"
+                                 />
+              
+
+              
+                  
+                  <h2 className={`text-[14px] text-center font-[600] leading-[18px]
+               text-black lg:text-[16px] lg:leading-[22px]
+                 ${isDarkMode   ? "text-white" : "text-black"}`}
                   >
                     Your request has been submitted successfully. You can check
                     your ID Status in the next 24 hours.
-                  </p>
-                </div>
+                  </h2>
+              
 
-                <div>
+               
                   <img
-                    src={Success}
-                    alt=""
-                    className="absolute top-[25%] left-[32%] h-[50%] lg:left-[36.5%]"
+                  src={Success}
+                   alt=""
+                   className="h-[100px] w-[100px]"
                   />
-                </div>
+              
 
                 <button
                   onClick={(e) => {
@@ -1051,8 +1074,11 @@ Confirming your identity ensures that the person accessing the account is indeed
                 >
                   Done
                 </button>
+                </div>
               </div>
-            </Modal>
+              </Modal>
+              </div>
+           
           )}
         </div>
       )}

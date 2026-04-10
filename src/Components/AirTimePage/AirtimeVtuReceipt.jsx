@@ -137,8 +137,13 @@ export const AirtimeVtuReceipt = (Data) => {
             <h3 className="font-extrabold text-[12px] mt-[2%] text-center md:text-[20px] md:my-[3%] lg:text-[16px] lg:my-[2%]">
               Purchase Successful on
             </h3>
-            <span className={`text-[11px] text-[#0008] font-extrabold flex justify-center items-center ${isDarkMode ? "text-white" : "text-black"}`}
-            >
+            <span
+                className={`text-[11px] ${
+                  isDarkMode ? "text-white" : "text-[#7C7C7C]"
+                }
+             font-medium flex justify-center items-center pt-1
+            `}
+              >
               {date.toLocaleDateString(undefined, {
                 year: "numeric",
                 month: "long",

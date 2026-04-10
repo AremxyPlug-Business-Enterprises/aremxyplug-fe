@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import { useContext, useState } from 'react'
 import styles from './AirtimeVtu.module.css'
 import { DashBoardLayout } from '../Dashboard/Layout/DashBoardLayout';
 import { Link } from 'react-router-dom';
@@ -8,18 +8,18 @@ import Joi from "joi";
 import call from './Images/call.svg';
 import user from './Images/user.svg';
 import { Modal } from "../Screens/Modal/Modal";
-import SelectRecipient from './SelectRecipient';
+//import SelectRecipient from './SelectRecipient';
 import { PostFunction } from '../ApiCollection.jsx/ApiBuck';
 import { BalanceLoading } from '../Loader/Loader';
 
 
 const AddRecipient = () => {
 
-    const { networkName, setNetworkName,  } = useContext(ContextProvider);
+    const { networkName, setNetworkName,  setSelectRecipientDisplay  } = useContext(ContextProvider);
     const { recipientName, setRecipientName } = useContext(ContextProvider);
     const { recipientNumber, setRecipientNumber } = useContext(ContextProvider);
     const { networkImage, setNetworkImage, setSessionModal, sessionModal, networkIssue, setNetworkIssue } = useContext(ContextProvider);
-    const [selectRecipientDisplay, setSelectRecipientDisplay] = useState(false);
+
     
 
     const [errors, setErrors] = useState({});
@@ -29,7 +29,6 @@ const AddRecipient = () => {
     const [confirm, setConfirm] = useState(false);
     const [inputValue, setInputValue] = useState("");
     const [saveRecipient, setSaveRecipient] = useState(false);
-    const [isLoading, setIsLoading] = useState(false); // For managing loading state
     
   const { isDarkMode } = useContext(ContextProvider);
 
@@ -237,31 +236,33 @@ const setFetchedResponse = ()=> {
                         />
                     </div>
                     <div className="flex flex-col gap-[10px]">
-                       <div className="flex flex-col  md:flex-row gap-[20px]
+                       <div className="flex flex-col  md:flex-row gap-[25px]
                  md:gap-[12px] lg:gap-[22px] ">
                    <div className="relative flex flex-col gap-[10px]
                    lg:gap-[15px] md:gap-15 w-full md:w-1/2">
                                     <h2 className={`lg:text-[18px]  ${isDarkMode ? "text-white" : "text-black"}  lg:leading-[24px]  text-[15px] md:text-[12px] md:font-[600] font-[400] leading-[12px]   ${isDarkMode 
                                               ? "text-white" : "text-[#7C7C7C]"
                                           }`}>Select Network</h2>
-                                    <div className={`mt-2 md:mt-0 rounded-[10px] 
-             md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
-         sm:p-3 sm:text-lg  flex justify-between pt-[8.803px]
-         pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+ <div className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex gap-2 py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
-    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px]
-     lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]
+      items-center cursor-pointer outline-0 border-[0.24px] 
+      lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px]
+       border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
       isDarkMode
         ? "bg-black text-white border border-white"
         : "hover:bg-[#EDEAEA]"
-    }`}>
+    }`} >
                                   
                           <div onClick={handleShowList} 
                           className={`flex justify-left  w-[100%] items-center`}>
                                    {networkName ? (
-                                       <div onClick={handleShowList} 
-                                       className={` items-center h-[100%] ${styles.labelInput}`}  >
+             <div onClick={handleShowList} 
+             className={` items-center h-[100%] ${styles.labelInput}`}  >
              <div className={styles.network}>
                                                   {networkImage && <img className=""
                                               src={networkImage} alt="" />}
@@ -315,24 +316,29 @@ const setFetchedResponse = ()=> {
                                 <h2 className={`text-[15px] md:font-[600] font-[400] md:text-[12px] lg:text-[18px] ${
                                             isDarkMode 
                                               ? "text-white" : "text-black"
-                                          }`}>Phone Number <span onClick = {()=> {
+                                          }`}>Phone Number <Link to ="/airtime-vtu" onClick = {()=> {
                                            setSelectRecipientDisplay(true);
                                           }}
                                           className={`
-                                          ${styles.span3} !text-[15px] md:!text-base`}>(Select Recipient)</span></h2>
+                                          ${styles.span3} !text-[15px] md:!text-base`}>
+                                            (Select Recipient)
+                                            </Link></h2>
                           
                                     <div className={`relative h-full`}>
-                    <input type='number' className={`mt-2   md:mt-0 rounded-[10px] 
-             md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
-         sm:p-3 sm:text-lg  flex justify-between pt-[8.803px]
-         pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+                    <input type='number'  className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex gap-2 py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
-    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]
+      items-center cursor-pointer outline-0 border-[0.24px] 
+      lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px]
+       border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
       isDarkMode
         ? "bg-black text-white border border-white"
         : "hover:bg-[#EDEAEA]"
-    }`}
+    }`} 
                required placeholder='Add recipient phone number' onChange={(event) => {
                                             handleChange(event);
                                             setRecipientNumber(event.target.value);
@@ -366,22 +372,25 @@ const setFetchedResponse = ()=> {
                                           }
                                           `}>Recipient Name <span className={`${styles.span4} !text-[15px] md:!text-base`}>(optional)</span></h2>
                                
-                                  
-                                       
-                                        <input type='text'className={`mt-2   md:mt-0 rounded-[10px] 
-             md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
-         sm:p-3 sm:text-lg  flex justify-between pt-[8.803px]
-         pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+            <div className = "relative">                   
+     <input type='text'   className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex gap-2 py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
-    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]
+      items-center cursor-pointer outline-0 border-[0.24px] 
+      lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px]
+       border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
       isDarkMode
         ? "bg-black text-white border border-white"
         : "hover:bg-[#EDEAEA]"
-    }`}required placeholder='Add recipient name' onChange={(event) => setRecipientName(event.target.value)} value={recipientName} />
+    }`}  required placeholder='Add recipient name' onChange={(event) => setRecipientName(event.target.value)} value={recipientName} />
  <img className="absolute top-[40%] right-5" src={user} alt="" />
-            </div>
-            </div>
+ </div>
+     </div>
+         </div>
    
                  
                     {save && (
@@ -440,7 +449,7 @@ const setFetchedResponse = ()=> {
                                 >
                                   {loadingRecipient === false ? "Confirmed" : <BalanceLoading/>}  
                                 </button>
-                                {isLoading && <p>Loading...</p>}
+                               
                             </div>
                         </Modal>
                     )}
@@ -486,9 +495,15 @@ const setFetchedResponse = ()=> {
                             </Modal>
                         )
                     }
+
+
+                  
                     <div className={styles.containFlex3}>
                         <button className={`${recipientNumber.length < 11 ? "bg-[#0008]" : "bg-[#04177f]"
-                            } w-full flex justify-center items-center mr-auto cursor-pointer text-[14px] font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px] lg:my-[4%]`} onClick={handleSave}>Save
+                            } w-full flex justify-center items-center mr-auto cursor-pointer 
+                            text-[14px] font-extrabold h-[40px] text-white rounded-[6px] 
+                            md:w-[25%] md:rounded-[8px] md:text-[20px] lg:text-[16px] lg:h-[38px]
+                             lg:my-[4%]`} onClick={handleSave}>Save
                         </button>
                     </div>
                 </div>
@@ -497,12 +512,12 @@ const setFetchedResponse = ()=> {
                     <Link to={`/ContactUs`} className={styles.btnContact}>Contact Us</Link>
                 </div>
             </div>
-            {selectRecipientDisplay && (
+            {/* {selectRecipientDisplay && (
                 <SelectRecipient 
                 loadingRecipient={loadingRecipient}
                   setSelectRecipientDisplay={setSelectRecipientDisplay}
                   />
-            )}
+            )} */}
             
         </DashBoardLayout>
     )

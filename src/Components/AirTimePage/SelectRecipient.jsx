@@ -16,11 +16,12 @@ import cancelIcon from "../EducationPins/imagesEducation/close-circle.svg";
 import NoRecordImage  from "../Add&SelectRecipient/RecipientImages/NoRecordImage.svg";
 import { BalanceLoading } from "../Loader/Loader";
 import { useLocation  } from "react-router-dom";
+import { GetFunction } from "../ApiCollection.jsx/ApiBuck";
 // import { Oval } from 'react-loader-spinner';
 
 
 const SelectRecipient = ({loadingRecipient,
-   setSelectRecipientDisplay}) => {
+   setSelectRecipientDisplay, setDiscountLoader}) => {
 
   const { networkIssue, setNetworkIssue, setSessionModal,  setDiscount, recipientsAirtime, setRecipientsAirtime,
     sessionModal, isDarkMode } = useContext(ContextProvider);
@@ -363,20 +364,46 @@ const [confirmRecipient, setConfirmRecipient] = useState(false)
         ?   recipientsAirtime.filter((recipient) =>
           recipient.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
           recipient.phone.includes(searchQuery)
-        ) : []
+        ) : [];
+
+
+        //Discount Objects or Info
+        //  const [discountObj, setDiscountObj] = useState({});
+          
+               const getDiscountPercentage = async(network)=> {
+             //   setDiscountObj({});
+              //  console.log(network);
+                 const successHandler = (response)=> {
+                  //  setDiscountObj(response);
+                    setDiscount(response?.data?.data?.discount_percent);
+                 }
+                 const FailedHandler = (ErrorType)=> {
+                    if(ErrorType === "Network Error" || ErrorType === "User error"){
+                        setNetworkIssue(true)
+                    }
+                 }
+        const path = `products/telecom/airtime/${network}`
+                 await GetFunction(path,
+                     setDiscountLoader,
+                       successHandler, FailedHandler,
+                       ()=> {},
+                        setNetworkIssue)
+               }
 
   return (
   
    <div className="h-full w-full px-[15px] 
    bg-white">
     <Modal>
-  <div className={`pt-[15px] w-[90%] px-[20px] h-[450px]
+  <div className={`pt-[15px]  w-[90%] px-[20px] h-[450px] 
    rounded-[15px] lg:w-[40%] md:w-[50%] ${isDarkMode ? "bg-black" : "bg-white"} `}>
+    <div className="w-full flex justify-end">
         <img onClick=  {()=> {
           setSelectRecipientDisplay(false);
         }}
-        src={cancelIcon} className = "h-[30px] w-[30px]" alt="" />
-      <div className="flex text-[#7c7c7c] mt-[5%] text-[10px]
+        src={cancelIcon} className = "h-[30px] flex w-[30px]" alt="" />
+        </div>
+      <div className="flex text-[#7C7C7C] mt-[5%] text-[10px]
        leading-[26px] items-center gap-[8px] md:text-[12px] lg:text-[20px]">
          <p className = "text-[12px] font-[500] leading-[16px] lg:text-[13px] lg:leading-[18px]">
           Select Recipient Details 
@@ -428,17 +455,16 @@ const [confirmRecipient, setConfirmRecipient] = useState(false)
                  md:rounded-[7px] lg:py-2 lg:px-5"
               >
                 <div
-                  onClick={() => {
+                  onClick={async() => {
                     setSelectRecipientDisplay(false);
+                    await getDiscountPercentage(recipient?.network);
+                   
                     setNetworkName(recipient?.network ? 
                       recipient?.network?.toUpperCase() : "");
                     setNetworkImage(networkImages[recipient?.network ? recipient?.network?.toUpperCase() : ""]);
                     setRecipientName(recipient.name);
                     setRecipientNumber(recipient.phone);
-                const NetworkObject =     networkList?.find((focusedObject)=> focusedObject?.name === recipient?.network?.toUpperCase())
-                 //   setDiscount( NetworkObject?.discount ? NetworkObject?.discount : "");
-
-                   //   console.log(recipient?.network?.toUpperCase())
+                
                    if(pathname === "/add-vtu-recipient"){
                     navigate('/airtime-vtu');
                    }

@@ -92,6 +92,8 @@ export const RecentTransaction = ({transactionResponse, transactionHistoryError,
                 }else{
                   setCalender(false)
                 }
+              }else{
+                alert("This feature can only be accessed by users with virtual account.")
               }
               }}
   className={` md:text-[9.16px] text-center py-[2px]

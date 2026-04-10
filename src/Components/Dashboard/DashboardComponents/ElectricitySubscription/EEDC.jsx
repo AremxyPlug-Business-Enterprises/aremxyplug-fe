@@ -21,7 +21,6 @@ import { ElecHeroComponents } from "./HeroComponents";
 import {
   PostFunction,
   VerifyTransPin,
-  InternalLoginSession,
   GetFunction,
   RestrictionPopUp
 } from "../../../ApiCollection.jsx/ApiBuck";

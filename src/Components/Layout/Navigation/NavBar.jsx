@@ -29,10 +29,13 @@ export const NavBar = () => {
     };
   }, []);
 
-const userStatus= localStorage.getItem("cxccxfd")
+const userStatus= localStorage.getItem("cxccxfd");
+const pathname = location?.pathname === "/DigitalServices" 
+|| location?.pathname === "/VTU_DEV" || location?.pathname === "/businessDev" 
+|| location?.pathname === "/ContactUs" || location?.pathname === "/pricing";
   return (
    
-!userStatus && (
+((!userStatus) || (userStatus && pathname)) && (
     <>
       <div className={`
        ${hideNavbar === true ? "hidden" : "flex "} relative z-[55]`}>

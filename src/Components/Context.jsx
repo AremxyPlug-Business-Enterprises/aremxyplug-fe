@@ -839,6 +839,7 @@ export const Context = ({ children }) => {
   const [airtimeResponse, setAirtimeResponse] = useState({})
 
   // ===================== MTN  DATABUNDLE========================
+   const [dataRecipientDisplay, setDataRecipientDisplay] = useState(false);
   const [selectedOptionMtn, setSelectedOptionMtn] = useState("");
   const [purchaseMtnErrorType, setPurchaseMtnErrorType] = useState("")
   const [selectedNetworkProduct, setSelectedNetworkProduct] = useState("");
@@ -1429,7 +1430,8 @@ const [nabtebPinsGenerated, setNabtebPinsGenerated] = useState([]);
                   const [editCalenderTwo, setEditCalenderTwo] = useState("End Date");
 const [currentDateInTimeStamps, setCurrentDateInTimeStamps] = useState(0);
  const [startDateValueState, setStartDateValueState] = useState("");
-     const [endDateValueState, setEndDateValueState] = useState("")
+     const [endDateValueState, setEndDateValueState] = useState("");
+      const [selectRecipientDisplay, setSelectRecipientDisplay] = useState(false);
   //Calender State
     const handleStateCalender = (value)=> {
            const dateConvert = new Date(value)
@@ -1454,6 +1456,7 @@ const [currentDateInTimeStamps, setCurrentDateInTimeStamps] = useState(0);
 
   const hold = {
     //Transfer Data
+    selectRecipientDisplay, setSelectRecipientDisplay,
   discount, setDiscount,
    webSocketMessage, setWebSocketMessage,
     progressTaskBarResponse, 
@@ -1830,6 +1833,8 @@ const [currentDateInTimeStamps, setCurrentDateInTimeStamps] = useState(0);
     setProductId,
 
     // ==============MTN DataBundle===============
+    dataRecipientDisplay,
+     setDataRecipientDisplay,
     purchaseMtnErrorType,
      setPurchaseMtnErrorType,
     selectedOptionMtn,

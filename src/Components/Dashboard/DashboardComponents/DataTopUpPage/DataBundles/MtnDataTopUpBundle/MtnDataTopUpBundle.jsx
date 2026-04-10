@@ -60,7 +60,8 @@ const MtnDataTopUpBundle = () => {
     // inputPinHandler,
     toggleVisibility,
     isVisible,
-    networkIssue,} = useContext(ContextProvider);
+    networkIssue,
+  dataRecipientDisplay, setDataRecipientDisplay} = useContext(ContextProvider);
 
   const [showProductList, setShowProductList] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -90,7 +91,7 @@ const MtnDataTopUpBundle = () => {
   const [checkNetworkError, setCheckNetworkError] = useState(false)
    const [mtnSuccessfulResponse, setMtnSuccessfulResponse] = useState({});
    const [balanceLoader, setBalanceLoader] = useState(false)
-    const [dataRecipientDisplay, setDataRecipientDisplay] = useState(false);
+  //  const [dataRecipientDisplay, setDataRecipientDisplay] = useState(false);
     const [loadingRecipient, setLoadingRecipient] = useState(false)
   let balanceStringToNum = Number(newBalance);
 const assumedString = selectedAmountMtn?.toString()
@@ -104,9 +105,7 @@ const Balance = newBalance !== null &&
   || newBalance === undefined || newBalance === null) ?
    Number(passDataBalance?.data?.data?.data?.balance) : undefined;
   
-let CheckSufficiency =
-    mtnDataAmount >
-   Balance
+let CheckSufficiency = mtnDataAmount > Balance
 
 
 //fetching the products
@@ -632,7 +631,7 @@ const RecipientExistCheck = CheckRecipientInfoInList(recipientPhoneNumberMtn);
     // usage
     await buyData(
       1, // Network ID for MTN
-      recipientPhoneNumberMtn, // Use inputValue instead of recipientPhoneNumber
+      recipientPhoneNumberMtn, 
       selectedPlan?.ID,
       recipientNamesMtn
     );
@@ -736,7 +735,7 @@ const RecipientExistCheck = CheckRecipientInfoInList(recipientPhoneNumberMtn);
                 style={{ display: "inline-flex", width: "100%" }}
                 className="justify-between"
               >
-                <p className="font-semibold curor-pointer">Select Recipient</p>
+                <p className="font-semibold cursor-pointer">Select Recipient</p>
                 <img
                   className="w-[13px] h-[14px] lg:w-[29px] lg:h-[29px]"
                   src={Recipient}
@@ -790,9 +789,9 @@ const RecipientExistCheck = CheckRecipientInfoInList(recipientPhoneNumberMtn);
             </div>
             <div className="hidden md:w-[50%] md:block"></div>
           </div>
-          <div className="flex gap-[8px] md:w-full md:gap-[10%] mb-10">
-            <div className="flex gap-[5px] justify-center md:w-[50%] ">
-              <p className="flex text-[#7c7c7c] text-[14px]
+          <div className="flex gap-[8px] md:w-full md:gap-5 mb-10 md:mb-0">
+            <div className="flex gap-[5px] justify-start md:w-[50%] ">
+              <p className="flex text-[#7c7c7c] text-[14px] font-bold
                md:gap-[7px] leading-[130%] md:text-[12px] lg:text-[16px] ">
                 Purchase
                  </p>
@@ -802,7 +801,8 @@ const RecipientExistCheck = CheckRecipientInfoInList(recipientPhoneNumberMtn);
                     alt=""
                     className="md:w-[20px] md:h-[15px] mt-[px] lg:w-[30px] lg:h-[25px] 2xl:mt-[5px]"
                   />
-                    <p className="text-[#7c7c7c] text-[14px] ">MTN Data Instantly</p>
+                    <p className="text-[#7c7c7c] font-bold text-[14px]">
+                      MTN Data Instantly</p>
                   </div>
               <img
                 src={Select}
@@ -885,8 +885,8 @@ const RecipientExistCheck = CheckRecipientInfoInList(recipientPhoneNumberMtn);
           {/* =========================PRODUCTS============================== */}
 
           <div
-            className="grid grid-cols-1 mt-[25px] md:grid-cols-2 gap-y-[25px]
-           md:gap-x-[58.68px] lg:gap-x-[100px] md:gap-y-[15px] lg:gap-y-[25px] pb-[30px] lg:py-[30px] md:mt-[20px]"
+            className="grid grid-cols-1 mt-[25px]  md:grid-cols-2 gap-y-[25px]
+           md:gap-x-[58.68px] lg:gap-x-[100px] md:gap-y-[15px] lg:gap-y-[25px] pb-[30px] lg:py-[30px] md:mt-[0px]"
           >
             <div className=" flex flex-col lg:gap-[12px] gap-[7px]">
               <h2

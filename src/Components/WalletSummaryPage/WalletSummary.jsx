@@ -170,6 +170,7 @@ export default function WalletSummaryPage() {
         setTransactionHistoryError(null);
       }
     };
+    if(Data?.ConfirmAcc === "true"){
     await GetFunction(
       path,
       setLoading,
@@ -178,6 +179,9 @@ export default function WalletSummaryPage() {
       setWalletTransactionResponse,
       setNetworkIssue
     );
+  }else{
+    alert("This feature can only be accessed by users with virtual account.")
+  }
   };
 
   const GetBalance = async () => {
@@ -335,10 +339,11 @@ export default function WalletSummaryPage() {
             : ""
         );
       }
-    
+    if(Data?.ConfirmAcc === "true"){
     GetTransactionInformation("",
        endDateValueState,
         selectRecords);
+    }
     //eslint-disable-next-line
   }, []);
   
@@ -710,6 +715,8 @@ const FormatTime =(DateValue)=> {
                       }else{
                         setCalender(false)
                       }
+                    }else{
+                      alert("This feature can only be used by users with virtual account.");
                     }
                 }}
                className={`${isDarkMode ? "text-white" :"text-[#04177f]"} text-[11px] 
@@ -957,6 +964,7 @@ const FormatTime =(DateValue)=> {
  {/* Select by status */}
   <div
                 onClick={() => {
+                  if(Data?.ConfirmAcc === "true"){
                   setCalender(false);
                   setSelectRecordDropDown(false)
                    setSelectCollectionDropDown(false)
@@ -965,6 +973,9 @@ const FormatTime =(DateValue)=> {
                   } else {
                     setIsOpen1(false);
                   }
+                }else{
+                  alert("This feature can only be used by users with virtual account.")
+                }
                 }}
                  className={`cursor-pointer shadow-[0px_1.3290735483169556px_1.3290735483169556px_0p_rgba(0,0,0,0.25)] ${
                 isDarkMode ? "border-[0.5px]   border-white rounded-[12px]" : "border-[0.5px] bg-white rounded-[12px]"} 

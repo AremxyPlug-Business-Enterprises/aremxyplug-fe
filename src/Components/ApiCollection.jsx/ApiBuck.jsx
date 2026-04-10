@@ -139,15 +139,15 @@ return localStorage.setItem("SessionExpiration", resetExpiration);
               <div className = {`flex flex-col h-[300px] justify-center items-center
              py-[20px] px-[12px] gap-[20px] w-[90%] md:w-[60%] lg:w-[30%] md:h-[300px] 
               rounded-[10px] lg:rounded-[20px]  
-               ${isDarkMode === "true" ? "bg-black border border-white rounded-[10px]" 
+               ${isDarkMode  ? "bg-black border border-white rounded-[10px]" 
                : "bg-white"}`}>
                <div className ="flex flex-col  gap-[20px]">
                <h2 className={`text-[14px] text-center font-[600] leading-[18px]
-               text-black lg:text-[16px] lg:leading-[22px]  ${isDarkMode === "true"  ? "text-white" : "text-black"}`}>
+               text-black lg:text-[16px] lg:leading-[22px]  ${isDarkMode   ? "text-white" : "text-black"}`}>
                   Warning⚠️
                   </h2>
               <p className ={`text-[14px] text-center font-[400] leading-[18px]
-               text-black lg:text-[16px] lg:leading-[22px] ${isDarkMode === "true" ? "text-white" : "text-black"}`}>
+               text-black lg:text-[16px] lg:leading-[22px] ${isDarkMode ? "text-white" : "text-black"}`}>
           You are being logged out of your session due to inactivity,
            for your safety we carry this out to reduce or prevent unauthorised access,
            click on "<b>Stay</b>" to avoid being logged out.

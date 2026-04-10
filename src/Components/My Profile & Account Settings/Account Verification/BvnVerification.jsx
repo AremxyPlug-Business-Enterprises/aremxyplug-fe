@@ -21,7 +21,8 @@ import { Loader } from "../../Loader/Loader";
 import countryImage from "../../EducationPins/imagesEducation/Nigeriaflag.svg";
 export default function BvnVerification() {
   const dateInputRef = useRef(null);
-  const { bvnVerificationOpen, networkIssue, setNetworkIssue, setSessionModal } = useContext(ContextProvider)
+  const { bvnVerificationOpen, networkIssue, setNetworkIssue, setVerificationResponse,
+     setSessionModal } = useContext(ContextProvider)
   const { verificationOpen } = useContext(ContextProvider);
   const { bvnVerifyImage, setBvnVerifyImage } = useContext(ContextProvider);
   const { bvnStatus, setBvnStatus } = useContext(ContextProvider);
@@ -75,6 +76,7 @@ export default function BvnVerification() {
    setErrorVerify("A Network connection error")
   // setErrorVerify("A Network connection error")
     } 
+   
      if(bvnNumber?.length < 11) setBvnNumberError("Bvn Number must be 11 digits")
       if(bvnPhone?.length < 11) setPhoneNumberMismatch("Your Phone Number must be 11 digits")
     if ( navigator.onLine 
@@ -109,6 +111,10 @@ export default function BvnVerification() {
         verifyPopBvn
       );
     }else {
+      if( !bvnNumber
+      || !idAddress
+      || !genderResult
+      || !bvnPhone)
       setErrorVerify("Fill all your details to proceed");
       //  setBvnNumberError("");
       //        setPhoneNumberMismatch("");
@@ -126,6 +132,10 @@ export default function BvnVerification() {
     statusBvn,
     verifyPopBvn
   ) => {
+    //A chance to reset the errors of the past and redemption point,
+    //before we try the necessary request
+     setBvnNumberError("");
+             setPhoneNumberMismatch("")
     if(bvnNumber?.length < 11) setBvnNumberError("BvnNumber must be 11 digits")
     if (bvnDateOfBirth  
    && bvnNumber?.length === 11  
@@ -146,9 +156,10 @@ export default function BvnVerification() {
            }, withCredentials : true
         });
         if (response.status === 201 || response.status ===  200) {
-          setBvnNumber(bvnNumber);
-          
-          verifyBvnImage();
+          setBvnNumber(response?.data?.data?.bvn);
+          setBvnPhone(response?.data?.data?.phone);
+          setVerificationResponse(response)
+           verifyBvnImage();
           statusBvn();
           verifyPopBvn();
           setBvnButtonState(buttonStateSuccess);
@@ -158,13 +169,13 @@ export default function BvnVerification() {
       } catch (error) {
         //console.log(error?.response?.data?.data?.data);
         if (error && error.response === undefined) {
-             if(!networkIssue) return setNetworkIssue(true);
+             if(!networkIssue)  setNetworkIssue(true);
              setErrorVerify("A Network connection error");
              setBvnNumberError("");
              setPhoneNumberMismatch("")
         } else if (error.response.status ===  400) {
            if(error?.response?.data?.data?.data === "BVN name mismatch"){
-                 setBvnNumberError("BVN name mismatch")
+                 setBvnNumberError("BVN name mismatch. Hint: Ensure it is a valid BVN Number with a matching fullname from your profile.")
             }else  if(error?.response?.data?.data?.data === "BVN phone mismatch"){
                 setPhoneNumberMismatch("Phone Number Attached to your BVN");
           }
@@ -190,20 +201,23 @@ export default function BvnVerification() {
       if(!bvnNumber || !genderResult  
       || !idAddress  ||!bvnDateOfBirth
        || Data?.UserFullName?.length < 1){
-       setErrorVerify("Fill all the details to proceed");
-        setBvnNumberError("");
-             setPhoneNumberMismatch("")
+       setErrorVerify("Fill all your details to proceed");
       }
     }
   };
 
   //To GetLocalStorage Data
-
+//console.log(verificationResponse?.data?.data?.details?.BVN);
   const ValueRef = useRef();
 
  
   useEffect(() => {
     ValueRef.current = Data;
+     if(Data?.ConfirmBvn === "true" ){
+      setErrorVerify("");
+      setBvnNumberError("");
+      setPhoneNumberMismatch("");
+    }
     if (verificationResponse?.data?.data) {
       setBvnNumber(verificationResponse?.data?.data?.bvn);
       setBvnPhone(verificationResponse?.data?.data?.phone);
@@ -429,8 +443,9 @@ export default function BvnVerification() {
                                      isDarkMode ? "text-white" : "text-[#7C7C7C]"
                                    }`}
                     >
-                      {((Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false") || (!Data?.ConfirmId  || !Data?.ConfirmBvn ))
-                       && verificationResponse?.data?.data?.gender === undefined ? genderResult : verificationResponse?.data?.data?.gender}
+                      {((Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false") || (!Data?.ConfirmId && !Data?.ConfirmBvn)) 
+                       && verificationResponse?.data?.data?.gender === undefined ? genderResult : 
+                       verificationResponse?.data?.data?.gender === undefined && (Data?.ConfirmId === "true" || Data?.ConfirmBvn === "true") ? "NO GENDER INFO AVAILABLE" : verificationResponse?.data?.data?.gender}
                     </h2>
                     <img
                       src={ArrowDown}
@@ -499,8 +514,9 @@ export default function BvnVerification() {
                     }}
                   >
                     <input
-                      value={((Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false") || (!Data?.ConfirmId && !Data?.ConfirmBvn))
-                       && verificationResponse?.data?.data?.dob === undefined ? bvnDateOfBirth : verificationResponse?.data?.data?.dob}
+                      value={((Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false") || (!Data?.ConfirmId && !Data?.ConfirmBvn)) 
+                       && verificationResponse?.data?.data?.dob === undefined ? bvnDateOfBirth : 
+                       verificationResponse?.data?.data?.dob === undefined && (Data?.ConfirmId === "true" || Data?.ConfirmBvn === "true") ? "NO DATE OF BIRTH" : verificationResponse?.data?.data?.dob}
                       ref={dateInputRef}
                       onChange={(e) => {
                          setBvnDateOfBirth(e.target.value);
@@ -543,8 +559,9 @@ export default function BvnVerification() {
                     House Address
                   </h2>
                   <input
-                    value={((Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false") || (!Data?.ConfimId && !Data?.ConfirmBvn))
-                       && verificationResponse?.data?.data?.address === undefined ? idAddress : verificationResponse?.data?.data?.address}
+                    value={((Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false") || (!Data?.ConfirmId && !Data?.ConfirmBvn)) 
+                       && verificationResponse?.data?.data?.address === undefined ? idAddress : 
+                       verificationResponse?.data?.data?.address === undefined && (Data?.ConfirmId === "true" || Data?.ConfirmBvn === "true") ? "NO ADDRESS" : verificationResponse?.data?.data?.address}
                     onChange={(e) => {
                       setIdAddress(e.target.value);
                     }}
@@ -597,7 +614,7 @@ export default function BvnVerification() {
                     readOnly = {Data?.ConfirmId === "true" 
                       || Data?.ConfirmBvn === "true"}
                     value={
-                      (verificationResponse?.data?.data?.phone !== undefined && Data.ConfirmBvn === "true")
+                      ((verificationResponse?.data?.data?.phone !== undefined && Data.ConfirmBvn === "true")|| (verificationResponse?.data?.data?.phone && bvnPhone?.length > 1))
                         ? `${bvnPhone?.slice(0, 4)}*******`
                         : verificationResponse?.data?.data?.phone === undefined && (Data?.ConfirmId === "true" || Data?.ConfirmBvn === "true") ? "NO Phone Number"
                          : verificationResponse?.data?.data?.phone === undefined &&
@@ -659,7 +676,7 @@ export default function BvnVerification() {
                       e.target.value = numbersOnly;
                     }}
                     value={
-                      (verificationResponse?.data?.data?.bvn !== undefined && Data.ConfirmBvn === "true")
+                      ((verificationResponse?.data?.data?.bvn !== undefined && Data.ConfirmBvn === "true") || (verificationResponse?.data?.data?.bvn && bvnNumber?.length > 1))
                         ? `${bvnNumber?.slice(0, 4)}*******`
                         : verificationResponse?.data?.data?.bvn === undefined && (Data?.ConfirmId === "true" || Data?.ConfirmBvn === "true") ? "NO BVN"
                          :  (verificationResponse?.data?.data?.bvn === undefined &&( Data?.ConfirmBvn === "false" || !Data?.ConfirmBvn)) ? bvnNumber : ""
@@ -807,55 +824,51 @@ export default function BvnVerification() {
             </Modal>
           )}
           {bvnPopVerified && (
-            <Modal className="">
+          <div className={`w-full h-full  justify-center items-center
+   flex`}>
+    <Modal>
               <div
-                className={`confirm2 ${styles.inputPin} ${
-                  toggleSideBar
-                    ? "md:w-[45%] md:ml-[20%] lg:w-[40%] lg:ml-[20%]"
-                    : "lg:w-[40%]"
-                }relative md:w-[55%] w-[90%] flex flex-col justify-between md:mb-[0%] md:mx-auto md:my-auto lg:mx-auto lg:my-auto`}
-              >
-                <div className="absolute z-0 right-0" style={{ zIndex: 0 }}>
-                  <img
+               className={`w-full relative flex px-[17px] lg:px-[20px]  items-center justify-center 
+             `}>
+               <div className = {`flex flex-col justify-left relative items-center
+             py-[20px] px-[10px] gap-[20px] w-[100%] md:w-[60%] md:h-auto lg:w-[30%]  rounded-[10px]
+             lg:rounded-[20px]   ${isDarkMode  ? "bg-black border border-white rounded-[10px]" 
+               : "bg-white"}`}>
+                <img
                     src={PopUpGreen}
                     alt=""
-                    className="md:hidden rounded-tr-[10px]"
+                    className="md:hidden absolute z-0 right-0 top-0   rounded-tr-[10px]"
                   />
-                  <img
+                   <img
                     src={PopUpGreenTab}
                     alt=""
-                    className="hidden md:block lg:hidden rounded-tr-[10px]"
+                    className="absolute top-0 right-0 hidden md:block lg:hidden rounded-tr-[10px]"
                   />
                   <img
                     src={PopUpGreenDeskTop}
                     alt=""
-                    className="hidden lg:block rounded-tr-[20px]"
+                    className="hidden w-[200px] absolute z-0 opacity-70  top-0 right-0 lg:block rounded-tr-[20px]"
                   />
-                </div>
-
-                <div className="relative z-10">
-                  <p
-                    className={`text-[10px] px-[20px] md:text-[16px] lg:text-[18px] 
-                  font-semibold text-center mt-[4%] lg:my-[%] z-[1000] ${styles.overlayText}`}
-                  >
-                    Successful
-                  </p>
-
+                  <h2 className={`text-[14px] text-center font-[600] leading-[18px]
+               text-black lg:text-[16px] lg:leading-[22px]  ${isDarkMode   ? "text-white" : "text-black"}`}>
+                Successful
+           </h2>
+                    
+                  <img
+                    src={Success}
+                    alt=""
+                    className="h-[100px] w-[100px]"
+                  />
+              
                   <p
                     className={`text-[10px] px-[20px] md:text-[16px] lg:text-[18px] 
                   font-semibold text-center mt-[4%] lg:my-[%] z-[1000] ${styles.overlayText}`}
                   >
                     Your BVN has been verified successfully.
                   </p>
-                </div>
+               
 
-                <div>
-                  <img
-                    src={Success}
-                    alt=""
-                    className="absolute top-[25%] left-[32%] h-[50%] lg:left-[36.5%]"
-                  />
-                </div>
+             
 
                 <button
                   onClick={(e) => {
@@ -871,7 +884,9 @@ export default function BvnVerification() {
                   Done
                 </button>
               </div>
+              </div>
             </Modal>
+            </div>
           )}
           {bvnPhoneMessage && (
             <Modal>

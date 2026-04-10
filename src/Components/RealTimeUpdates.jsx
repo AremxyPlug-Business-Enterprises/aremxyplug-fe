@@ -20,7 +20,7 @@ export const RealTimeUpdates = ({children}) => {
     }
      connectionSocket = new WebSocket(`wss://api.aremxyplug.com/api/v1/ws/events`);
       connectionSocket.onopen =()=> {
-        console.log("Socket running")
+     //   console.log("Socket running")
       }
     
       connectionSocket.onmessage = (event)=>{

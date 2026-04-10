@@ -9,7 +9,7 @@ import { GrMail } from "react-icons/gr";
 import { Link } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 import { ContextProvider } from "../../Context";
-
+import { useLocation } from "react-router-dom";
 export const Footer = () => {
   const { hideNavbar } = useContext(ContextProvider);
 
@@ -34,8 +34,12 @@ export const Footer = () => {
   const userStatus = localStorage.getItem("cxccxfd");
   const getDate = new Date()
   const getCurrentYear = getDate?.getFullYear();
+const location = useLocation()
+const pathname = location?.pathname === "/DigitalServices" 
+|| location?.pathname === "/VTU_DEV" || location?.pathname === "/businessDev" 
+|| location?.pathname === "/ContactUs" || location?.pathname === "/pricing"
   return (
-    !userStatus && (
+    ((!userStatus) || (userStatus && pathname)) && (
     <>
       {/* MOBILE VIEW */}
       <div

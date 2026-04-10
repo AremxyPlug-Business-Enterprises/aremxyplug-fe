@@ -176,7 +176,7 @@ export const DataTransReceipt = () => {
                 className={`text-[11px] ${
                   isDarkMode ? "text-white" : "text-[#7C7C7C]"
                 }
-             font-extrabold flex justify-center items-center pt-1
+             font-medium flex justify-center items-center pt-1
             `}
               >
                 {formatDate(receiptData?.created_at)}

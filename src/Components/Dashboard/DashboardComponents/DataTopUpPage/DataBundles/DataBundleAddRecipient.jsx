@@ -11,8 +11,10 @@ import { Modal } from "../../../../Screens/Modal/Modal";
 import DataBundle from "../DataBundles/DataBundles-Images/DataBundles.svg";
 import styles from "../../DataTopUpPage/DataTopUp.css";
 import { BalanceLoading } from "../../../../Loader/Loader";
+//import { DataBundleSelectRecipient } from "./DataBundleSelectRecipient";
 const DataBundleAddRecipient = () => {
-  const { networkName, setNetworkName, networkIssue, setNetworkIssue, setSessionModal, sessionModal } = useContext(ContextProvider);
+  const { networkName, setNetworkName, networkIssue, setNetworkIssue, 
+    setSessionModal, sessionModal,  setDataRecipientDisplay } = useContext(ContextProvider);
   const { recipientName, setRecipientName } = useContext(ContextProvider);
   const { recipientNumber, setRecipientNumber } = useContext(ContextProvider);
   const { networkImage, setNetworkImage } = useContext(ContextProvider);
@@ -30,47 +32,43 @@ const DataBundleAddRecipient = () => {
       id: 1,
       name: "MTN",
       image: require("../../../../AirTimePage/Images/mtn.svg").default,
-      discount: 3,
+    
     },
     {
       id: 2,
       name: "AIRTEL",
       image: require("../../../../AirTimePage/Images/airtel.png"),
-      discount: 4,
     },
     {
       id: 3,
       name: "GLO",
       image: require("../../../../AirTimePage/Images/glo.png"),
-      discount: 3,
     },
     {
       id: 4,
       name: "9MOBILE",
       image: require("../../../../AirTimePage/Images/9mobile.svg").default,
-      discount: 3,
     },
     {
-      id: 4,
+      id: 5,
       name: "SMILE",
       image:
         require("../DataBundles/SmileDataBundle/SmileDataBundleImages/SmileLogo.svg")
           .default,
-      discount: 3,
+    
     },
     {
-      id: 4,
+      id: 6,
       name: "SPECTRANET",
       image:
         require("../DataBundles/SpectranetDataBundle/SpectranetDataBundleImages/SpectranetLogo.svg")
           .default,
-      discount: 3,
-    },
+   },
   ];
 
   const Network = ({ name, image, onClick }) => {
     return (
-     <div  className={`pb-[20px] pt-[20px] md:pb-[14px] 
+     <div className={`pb-[20px] pt-[20px] md:pb-[14px] 
                                 md:pt-[14px] font-weight-bold text-[14px] leading-[18.4px] 
                                 md:py-[15px]
                                  py-[8px] pl-[10px] font-[500]  
@@ -87,7 +85,7 @@ const DataBundleAddRecipient = () => {
                     <img src={image} alt=""
                      className="md:h-[29.27px] h-[14.27px]" />
                
-                <h2 >{name}</h2>
+                <h2>{name}</h2>
                 </div>
             </div>
     );
@@ -137,18 +135,9 @@ const DataBundleAddRecipient = () => {
 
   const {
     toggleSideBar,
-    // inputPin,
-    // setInputPin,
-    // toggleVisibility,
-    // isVisible,
+
   } = useContext(ContextProvider);
 
-  // const handleConfirm = (event) => {
-  //   setSave(false);
-  //   setConfirm(true);
-  //   setRecipientNumber(false);
-  //   setRecipientName(event.target.value);
-  // };
 
   const handleConfirm = async () => {
     setIsLoading(true);
@@ -193,7 +182,7 @@ const DataBundleAddRecipient = () => {
     if(sessionModal) return;
   if(!sessionModal) setSessionModal(true)
   }else if(error && error.status === 500){
-console.log(error);
+  
 if(error?.response?.data?.phone){
       alert(`${error.response?.data?.phone}`)
 }
@@ -276,12 +265,12 @@ setRecipientNumber(numericValue);
                        md:text-[13px]
                       md:font-[600] font-[400`}>Select Network</h2>
                        <div  className={`mt-2  md:mt-0 rounded-[10px] 
-             md:rounded-0 p-[20px] md:p-0 text-[13.2px] 
-         sm:p-3 sm:text-lg  flex justify-between pt-[8.803px]
-         pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
-    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
       isDarkMode
         ? "bg-black text-white border border-white"
         : "hover:bg-[#EDEAEA]"
@@ -352,22 +341,28 @@ setRecipientNumber(numericValue);
                        md:text-[13px]
                       md:font-[600] font-[400`}>
                   Phone Number{" "}
-                  <span className={airtimestyles.span3}>
-                    (Select Recipient)
-                  </span>
+                 <Link   onClick = {()=> {
+                  setDataRecipientDisplay(true);
+                   }}
+                     className={`${styles.span3} text-blue-800 !text-[15px] md:!text-base`}>
+                      (Select Recipients)
+                     </Link>
                 </h2>
             
                  <div className="relative">
                     <input
                       type="number"
-                       className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.8px]
-                 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
-                   leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
-                lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
-                  isDarkMode
-                    ? "bg-black text-white border border-white"
-                    : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
-                }`}
+                      className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}
                       required
                       placeholder="Add recipient phone number"
                       value={recipientNumber}
@@ -406,14 +401,17 @@ setRecipientNumber(numericValue);
                 
                     <input
                       type="text"
-                      className={`mt-2 md:mt-0 rounded-[10px] md:rounded-0 p-[20px] md:p-0 text-[13.8px]
-                 sm:p-3 sm:text-lg flex justify-between pt-[8.803px] pb-[7.794px] pr-[13px] pl-[10.876px] font-[400] 
-                   leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
-                lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[40.927px] md:h-[35px] lg:h-[50px]  px-[11px] md:px-[6px] lg:px-[10px]  self-center ${
-                  isDarkMode
-                    ? "bg-black text-white border border-white"
-                    : "border border-[#0003] hover:bg-[#EDEAEA] text-[#7C7C7C] border-[#9C9C9C]"
-                }`}
+                      className={`mt-2  md:mt-0 rounded-[10px] 
+             md:rounded-0  md:p-0 text-base
+         sm:p-3  flex justify-between py-[8.803px]
+         pr-[13px] pl-[10.876px] font-[400] 
+         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+      isDarkMode
+        ? "bg-black text-white border border-white"
+        : "hover:bg-[#EDEAEA]"
+    }`}
                       required
                       placeholder="Add recipient name"
                       onChange={(event) => setRecipientName(event.target.value)}

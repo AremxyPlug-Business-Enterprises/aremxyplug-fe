@@ -45,8 +45,8 @@ export const TransferReceipt = () => {
       : "";
   const customer_name =
     receiptData?.full_name?.length > 0 ? receiptData?.full_name : "";
-  const session_id =
-    receiptData?.session_id?.length > 0 ? receiptData?.session_id : "";
+  // const session_id =
+  //   receiptData?.session_id?.length > 0 ? receiptData?.session_id : "";
 
   const [showReceipt, setShowReceipt] = useState(true);
 
@@ -60,17 +60,17 @@ export const TransferReceipt = () => {
   const contentRef = useRef(null);
   const amountNumeric = Number(amount);
   // ===============Copy to Clipboard Function============
-  const handleCopyClick = () => {
-    const text = textRef.current.innerText;
-    navigator.clipboard
-      .writeText(text)
-      .then(() => {
-        alert("Copied to clipboard");
-      })
-      .catch((err) => {
-        console.error("Error copying text: ", err);
-      });
-  };
+  // const handleCopyClick = () => {
+  //   const text = textRef.current.innerText;
+  //   navigator.clipboard
+  //     .writeText(text)
+  //     .then(() => {
+  //       alert("Copied to clipboard");
+  //     })
+  //     .catch((err) => {
+  //       console.error("Error copying text: ", err);
+  //     });
+  // };
 
   // ==============Share pdf Function=============
   const handleShareClick = async() => {
@@ -159,10 +159,10 @@ export const TransferReceipt = () => {
               <h3 className="font-extrabold text-xs my-[2%] text-center md:text-[20px] md:my-[3%] lg:text-base lg:my-[2%]">
                 Transaction Receipt
               </h3>
-              <div className="w-full flex justify-center ">
+              <div className="w-full flex justify-center">
                 <img
                   className="absolute w-[250px] h-[450px] md:w-[70%] lg:w-[50%] lg:h-[550px]"
-                  src="./Images/transferImages/receipt-background.png"
+                  src="./Images/transferImages/receipt-background.jpeg"
                   alt="/"
                 />
               </div>
@@ -180,7 +180,7 @@ export const TransferReceipt = () => {
                   : "Transaction Failed on"}
               </h3>
               <span
-                className={`text-[11px] font-extrabold flex justify-center items-center ${
+                className={`text-[11px] font-medium flex justify-center items-center ${
                   isDarkMode ? "text-white" : "text-[#7C7C7C]"
                 }`}
               >
@@ -217,7 +217,7 @@ export const TransferReceipt = () => {
                   receiptData?.status.toLowerCase()
                 ) && (
                   <span className="">
-                    <span className=" font-medium text-[10.9px] md:text-[14.9px] lg:text-[16.9px]">
+                    <span className=" font-extrabold text-[10.9px] md:text-[14.9px] lg:text-[16.9px]">
                       (
                       {amountNumeric !== undefined || amountNumeric !== null
                         ? amountNumeric?.toLocaleString("en-NG", {

@@ -141,14 +141,20 @@ export default function SalesSummaryPage ()  {
       setTransactionHistoryError(null)
     }
       }   
+      if(Data?.ConfirmAcc === "true"){
       await GetFunction(path, 
         setLoading, 
         SuccessHandler,
          FailedHandler,
           ()=> {},
           setNetworkIssue
-        )}
+        )
+         }else {
+         alert("This feature can only be accessed by users with virtual account.")
+      }
+    }
 
+     
 
      
 
@@ -240,13 +246,16 @@ export default function SalesSummaryPage ()  {
  }
    useEffect(()=> {
     ResetDateFilterFields();
-  
+   if(Data?.ConfirmAcc === "true"){
     if(salesResponse?.data?.data?.data === undefined){
  GetTransactionInformation(slicedBread ,
   endDateValueState,
     "All Products" );
+ } 
+}
+
  
-    }
+    
 
 setDateEdit(()=> {
     const setToCurrentDate = new Date();
@@ -543,7 +552,10 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
                 }else{
                   setCalender(false)
                 }
-              }
+               }else {
+         alert("This feature can only be accessed by users with virtual account.")
+      }
+
             }}
         className={`${isDarkMode ? "text-white" :"text-[#04177f]"} text-[11px] 
                 leading-[14px] font-[500] 
@@ -585,6 +597,7 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
     {/* filter by product */}
         <div 
          onClick={() => {
+          if(Data?.ConfirmAcc === "true"){
      setMethodBalance(false)
    setCalender(false)
   // setIsOpen5(false)
@@ -593,6 +606,11 @@ gap-[5px] lg:mt-[25px] bg-indigo-300
    }else{
     setIsOpen1(false);
    }
+  } 
+  else {
+         alert("This feature can only be accessed by users with virtual account.")
+      }
+
  }} 
  className={`flex flex-col cursor-pointer rounded-[12px]
  ${ isDarkMode ? "border-[0.5px] border-white " : ""}
