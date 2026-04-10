@@ -180,7 +180,7 @@ export const PointRedeemReceipt = () => {
               <div className="w-full flex justify-center ">
                 <img
                   className="absolute w-[250px] h-[450px] md:w-[70%] lg:w-[50%] lg:h-[550px]"
-                  src="./Images/transferImages/receipt-background.png"
+                  src="./Images/transferImages/receipt-background.jpeg"
                   alt="/"
                 />
               </div>

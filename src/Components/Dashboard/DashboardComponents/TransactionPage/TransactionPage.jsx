@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import { useState} from "react";
 import { DashBoardLayout } from "../../Layout/DashBoardLayout";
 import { useContext, useEffect } from "react";
 import { ContextProvider } from "../../../Context";
@@ -11,7 +11,6 @@ import { Calender } from "../Calender";
 import "../DataTopUpPage/DataTopUp.css";
 import {
   GetFunction,
-  InternalLoginSession,
 } from "../../../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../../../Loader/Loader";
 import NoRecordImage from "../../../Add&SelectRecipient/RecipientImages/NoRecordImage.svg";
@@ -206,7 +205,7 @@ const fullQuery = `?flow=${allCategoryValue}&category=${categoryDetermination}&s
         && categoryDetermination?.length > 1 && startDateValueState?.length > 1 && endDateValueState?.length > 1 ){
      return  fullQuery
       }else{
-        return  ""
+        return  "";
       }
       
     }
@@ -230,6 +229,7 @@ const fullQuery = `?flow=${allCategoryValue}&category=${categoryDetermination}&s
         setTransactionHistoryError(null);
       }
     };
+    if(Data?.ConfirmAcc === "true"){
     await GetFunction(
       path,
       setLoading,
@@ -238,6 +238,7 @@ const fullQuery = `?flow=${allCategoryValue}&category=${categoryDetermination}&s
       setTransactionResponse,
       setNetworkIssue
     );
+  }
   };
 
   const handleFilterButtonClick = async() => {
@@ -398,7 +399,8 @@ const pictorialStatus = [
         ? "edu"
         : product === "Electricity Bills"
         ? "electric-sub"
-        : product === "Internal Deposit" || product === "Virtual Account"
+        : product === "Internal Deposit" || product === "Virtual Account" 
+        || product === "System Top-Up" || product === "System Debit"
         ? "deposit"
         : product === "Internal Transfer"
         ? "transfer" : product === "Point Redeem"
@@ -1623,6 +1625,7 @@ h-[100px]  rounded-[12px] px-[20px]
                               : transaction?.product === "Internal Transfer"
                               ? "/TransferReceipt"
                               : transaction?.product === "Internal Deposit" ||  transaction?.product === "Virtual Account"
+                               || transaction?.product === "System Debit" || transaction?.product === "System Top-Up"
                               ? "/VirtualAccountReceipt"
                               :  transaction?.product ===  "Point Redeem" 
                               ? "/PointRedeemReceipt"  : null,
@@ -1907,7 +1910,9 @@ h-[100px]  rounded-[12px] px-[20px]
                           ? "/DataTransReceipt"
                           : transaction?.product === "Internal Transfer"
                           ? "/TransferReceipt"
-                          : transaction?.product === "Virtual Account" || transaction?.product === "Internal Deposit"
+                          : transaction?.product === "Virtual Account" || 
+                          transaction?.product === "Internal Deposit"
+                           || transaction?.product === "System Debit" || transaction?.product === "System Top-Up"
                           ? "/VirtualAccountReceipt" : 
                           transaction?.product ===  "Point Redeem" 
                               ? "/PointRedeemReceipt" 
@@ -2071,7 +2076,7 @@ h-[100px]  rounded-[12px] px-[20px]
           <Loader />
         </Modal>
       )}
-      {sessionModal && <InternalLoginSession setExpiredSessionLogin={setSessionModal} />}
+    
     </DashBoardLayout>
   );
 };

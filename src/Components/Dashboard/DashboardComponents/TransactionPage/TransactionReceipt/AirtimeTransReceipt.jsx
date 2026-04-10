@@ -52,7 +52,8 @@ export const AirtimeTransReceipt = () => {
     receiptData?.recipient_name
       ? receiptData?.recipient_name
       : "NIL";
-
+const full_name = receiptData?.full_name?.length > 0 ?
+receiptData?.full_name : "" 
          const discountAmount =
     receiptData?.discount_amount
       ? Number(receiptData?.discount_amount)
@@ -211,15 +212,16 @@ export const AirtimeTransReceipt = () => {
               <span
                 className={`text-[11px] ${
                   isDarkMode ? "text-white" : "text-[#7C7C7C]"
-                }
-             font-medium flex justify-center items-center pt-1
-            `}
-              >
+                } font-medium flex justify-center items-center pt-1
+            `}>
                 {formatDate(receiptData?.created_at)}
               </span>
               <p
                 // className="text-[10px] font-bold pt-3 text-[#000] text-center mb-2 md:text-sm lg:text-[12px]"
-                className={`text-[10px] p-[5.729px] border-[0.573px] rounded-[6.302px] md:p-[5.868px] md:border-[0.578px] md:rounded-[6.455px] lg:border lg:rounded-[11px] leading-[15px] md:leading-[20px] lg:p-2.5 text-center my-2 md:text-sm lg:text-base lg:leading-6 font-medium md:mb-7
+                className={`text-[10px] p-[5.729px] border-[0.573px] rounded-[6.302px] md:p-[5.868px] md:border-[0.578px] 
+                  md:rounded-[6.455px] lg:border lg:rounded-[11px] leading-[15px]
+                   md:leading-[20px] lg:p-2.5 text-center my-2 md:text-sm lg:text-base 
+                   lg:leading-6 font-medium md:mb-7
              ${
                ["delivered", "successful", "success"].includes(
                  receiptData?.status
@@ -250,7 +252,7 @@ export const AirtimeTransReceipt = () => {
                   receiptData?.status
                 ) && (
                   <span className="">
-                    <span className="font-medium text-[10.9px] md:text-[14.9px] lg:text-[16.9px] capitalize">
+                   <span className={` font-extrabold text-[12px] md:text-[16px] lg:text-[16px] tracking-wide`}>
                       {network_product}{" "}
                       {`${String(
                         amountToNumber.toLocaleString("en-NG", {
@@ -390,7 +392,7 @@ export const AirtimeTransReceipt = () => {
                     <span
                       className={` ${isDarkMode ? "text-white" : "text-black"}`}
                     >
-                      {data?.aremxyUsername ? data.aremxyUsername : ""}
+                      {full_name ?  full_name :   data?.aremxyUsername}
                     </span>
                   </div>
                   <div className="flex text-[10px] font-medium md:text-sm w-[90%] mx-auto justify-between lg:text-base">

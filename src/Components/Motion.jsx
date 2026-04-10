@@ -205,7 +205,6 @@ const refValue = useRef(null);
   const {progressTaskBarResponse,
      webSocketMessage, openTaskBar, setOpenTaskBar} = useContext(ContextProvider)
  const memoedProgress = useMemo(()=>  progressTaskBarResponse?.data?.data?.tasks, [progressTaskBarResponse])
- 
 
    const orderedUpdatedTask = 
   progressTaskBarResponse?.data?.data?.tasks?.length > 1 ? 

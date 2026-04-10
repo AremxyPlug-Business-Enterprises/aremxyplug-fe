@@ -1,4 +1,4 @@
-import React, { useState, useRef, useMemo } from "react";
+import  { useState, useRef, } from "react";
 import { SideBar } from "../Layout/SideBar";
 import { useEffect, useContext } from "react";
 import { ContextProvider } from "../../Context";
@@ -28,46 +28,16 @@ import { GetFunction} from "../../../Components/ApiCollection.jsx/ApiBuck";
 
 
 export const MainDashboard = () => {
-//   const DashBoardImages = [
-//     "./Images/dashboardImages/hero1image.png",
-//     "./Images/dashboardImages/hero2image.png",
-//     "./Images/dashboardImages/hero3image.png",
-//     "./Images/dashboardImages/topup.png",
-//     "./Images/dashboardImages/withdraw.png",
-//     "./Images/dashboardImages/transfer.png",
-//     "./Images/dashboardImages/convert.png",
-//     "./Images/dashboardImages/arrowright.png",
-//     "./Images/dashboardImages/feature1.png",
-//     "./Images/dashboardImages/feature2.png",
-//     "./Images/dashboardImages/feature3.png",
-//     "./Images/dashboardImages/feature4.png",
-//     "./Images/dashboardImages/feature5.png",
-//     "./Images/dashboardImages/feature6.png",
-//     "./Images/dashboardImages/feature7.png",
-//     "./Images/dashboardImages/feature8.png",
-//     "./Images/dashboardImages/feature9.png",
-//     "./Images/dashboardImages/feature10.png",
-// ]
-// const ImageLoadingExecution = useImageHook(DashBoardImages);
-
-   //  const [loading, setLoading] = useState(false)
-
-
-
-
-    const [userPoints, setUserPoints] = useState(null);
+  const [userPoints, setUserPoints] = useState(null);
    
-   
-  
-
-  const { setHideNavbar, toggleSideBar, isDarkMode,
+   const { setHideNavbar, toggleSideBar, isDarkMode,
     dashLoading, bankNameState, accountNameState, accountNumberState,
     customerDetail, setDashLoading, setVirtualAccCreated, 
     setBankNameState, setAccountNameState, setAccountNumberState, 
     twoStepVerificationSuccess,setTwoStepVerificationSuccess, setDateEdit,
     newBalance, setNewBalance,  setEditCalenderOne, setEditCalenderTwo, 
      setStartDateValueState, setEndDateValueState, setCurrentDateInTimeStamps,
-      setCountCalender, networkIssue, setNetworkIssue, setSessionModal, sessionModal
+      setCountCalender, networkIssue, setNetworkIssue, setSessionModal,
   } = useContext(ContextProvider);
   //const {account_no, bank_name, account_name} = virtualAccCreated;
 const navigate = useNavigate()

@@ -140,7 +140,9 @@ const DataTopUpPage = () => {
                     ? "bg-[#E2F3FF] rounded-[2px] border-b-[2px] border-b-[#04177f] h-[25px] flex items-center p-[5px] md:h-[35px] lg:rounded-[6px] lg:border-b-[4px] lg:h-[60px]"
                     : ""
 
-                } cursor-pointer w-[144px] justify-center rounded-[2px] md:w-[180px] md:rounded-[3px] md:justify-center md:items-center flex lg:w-[248px] lg:rounded-[6px]`}
+                } cursor-pointer w-[144px] justify-center rounded-[2px] md:w-[180px] md:rounded-[3px] md:justify-center md:items-center
+                 flex lg:w-[248px] lg:rounded-[6px] ${isDarkMode && activeBtn[0] ? "text-[#04177f]"
+                   : isDarkMode && !activeBtn[0] ? "text-black" : "" }`}
               >
                 Local Data
               </div>
@@ -150,10 +152,12 @@ const DataTopUpPage = () => {
                   showPopup();
                 }}
                 className={`${
-                  activeBtn[1]
+                  activeBtn[1] 
                     ? "bg-[#E2F3FF] rounded-[2px] border-b-[2px] border-b-[#04177f] h-[25px] flex items-center p-[5px]  md:h-[35px] lg:rounded-[6px] lg:border-b-[4px] lg:h-[60px] lg:py-[40px]"
                     : ""
-                }cursor-pointer w-[144px] justify-center rounded-[2px] md:w-[180px] md:rounded-[3px] md:justify-center md:items-center flex lg:w-[248px] lg:rounded-[6px] `}
+                }cursor-pointer w-[144px] justify-center rounded-[2px] md:w-[180px] md:rounded-[3px] md:justify-center
+                 md:items-center flex lg:w-[248px] lg:rounded-[6px]  ${isDarkMode && activeBtn[1] ? "text-[#04177f]"
+                   : isDarkMode && !activeBtn[1] ? "text-white" : "" }`}
               >
                 International Data
               </div>

@@ -1,7 +1,7 @@
 import  { useState, useEffect, useMemo} from "react";
 import { RxDotFilled } from "react-icons/rx";
 import styles from "./component.module.css";
-import { GetFunction, InternalLoginSession} from "../../ApiCollection.jsx/ApiBuck";
+import { GetFunction} from "../../ApiCollection.jsx/ApiBuck";
 import { useContext } from "react";
 import { ContextProvider } from "../../Context";
 import  { RecentTransaction } from  "./RecentTransaction";

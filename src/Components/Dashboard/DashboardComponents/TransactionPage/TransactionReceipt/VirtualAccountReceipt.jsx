@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useContext, useRef } from "react";
-import { RiFileCopyFill } from "react-icons/ri";
 // import styles from "../../../Components/Dashboard/DashboardComponents/TransferComponent/transfer.module.css";
 import styles from "../../../DashboardComponents/TransferComponent/transfer.module.css";
 import { Link, useNavigate } from "react-router-dom";
@@ -49,20 +48,8 @@ export const VirtualAccountReceipt = () => {
     receiptData?.transaction_product?.length > 0
       ? receiptData?.transaction_product
       : "";
-  const session_id =
-    receiptData?.session_id?.length > 0 ? receiptData?.session_id : "";
-  // ===============Copy to Clipboard Function============
-  const handleCopyClick = () => {
-    const text = textRef.current.innerText;
-    navigator.clipboard
-      .writeText(text)
-      .then(() => {
-        alert("Copied to clipboard");
-      })
-      .catch((err) => {
-        console.error("Error copying text: ", err);
-      });
-  };
+const senderName = receiptData?.sender_name?.length > 0 ? 
+receiptData?.sender_name : "";
 
   // ==============Share pdf Function=============
    const handleShareClick = async() => {
@@ -312,7 +299,7 @@ export const VirtualAccountReceipt = () => {
                       alt="/"
                     />
                   </div>
-                  {transaction_product === "Internal Deposit" ? ( 
+                  {transaction_product === "Internal Deposit" || transaction_product === "System Debit" || transaction_product === "System Top-Up" ? ( 
                     <div className="flex flex-col gap-[5px] ">
                   <div className="flex text-[10px] font-medium md:text-sm w-[90%] mx-auto justify-between lg:text-base">
                     <p
@@ -320,12 +307,12 @@ export const VirtualAccountReceipt = () => {
                         isDarkMode ? "text-white" : "text-[#7C7C7C]"
                       }`}
                     >
-                       Customer Name
+                       Sender Name
                     </p>
                     <span
                       className={` ${isDarkMode ? "text-white" : "text-black"}`}
                     >
-                      {account_name}
+                      {senderName}
                     </span>
                   </div>
                   <div className="flex text-[10px] font-medium md:text-sm w-[90%] mx-auto justify-between lg:text-base">
