@@ -1,7 +1,7 @@
 import React from 'react'
 import TelecomsHeader from './TelecomsHeader';
 import TelecomsCard from './TelecomsCard';
-import bgImage from './images/bgImage.png'
+import bgImage from './images/TelecomBg.avif';
 import { desktopData } from './data/telecomData';
 import { mobileData } from './data/telecomData';
 import { Link } from 'react-router-dom';
@@ -10,11 +10,11 @@ import mobileBg from './images/mobileBg.png'
 const Telecoms = () => {
   return (
     <>
-        <div className='w-[90%] mx-auto pt-[15%] lg:pt-[5%] md:pt-[5%] md:w-[84%]'>
+        <div className='w-[90%]  pt-[15%] lg:pt-[5%] md:pt-[5%] md:w-[84%]'>
             <TelecomsHeader/>
         </div>
-        <div className="w-[90%] mx-auto mb-[25%] md:mb-[15%]">
-            <div className="w-full bg-white md:hidden bg-center bg-no-repeat bg-cover p-[11px]" style={{backgroundImage: `url(${mobileBg})`}}>
+        <div className="w-full  mb-[25%] md:mb-[15%]">
+            <div className="w-full h-auto bg-white md:hidden bg-center bg-no-repeat px-[5%] bg-cover p-[11px]" style={{backgroundImage: `url(${mobileBg})`}}>
                 <div className="flex flex-col gap-[80px] mb-[80px]">
                     { mobileData.map((data) => (
                         <TelecomsCard key={data.id} cardData={data}/>

@@ -13,8 +13,10 @@ const locationObject = useLocation();
 const pathname = locationObject.pathname;
 
 
-  const { handleClickOutside } = useContext(ContextProvider);
+  const { handleClickOutside} = useContext(ContextProvider);
   if(!pathname) return;
+
+ 
   return (
     <div className={`flex flex-col ${pathname === "/TestingPhase" ? "gap-[40px] md:gap-[50px]" 
       : "gap-[100px] md:gap-[160px]"} `} 

@@ -32,7 +32,7 @@ export const Solution = () => {
           <img
             className=" w-full mx-auto md:w-[283px] md:h-[290px]
              lg:h-[500px] lg:w-[489.67px]"
-            src="./Images/solutionImages/solutionImg.png"
+            src="./Images/solutionImages/solutionImg.avif"
             alt="/"
           />
         </div>
@@ -54,7 +54,7 @@ export const Solution = () => {
         </div>
         <img
           className="w-[80%] mx-auto my-[25%] md:h-[247px] md:w-[301px] md:my-[0] lg:h-[421px] lg:w-[514px]"
-          src="./Images/solutionImages/solutionImg2.png"
+          src="./Images/solutionImages/solutionImg2.avif"
           alt="/"
         />
       </div>
@@ -147,7 +147,7 @@ export const Solution = () => {
       <div id="ecommerce" className="bg-[#ffcc8997] mb-[30%] mx-[-6%] py-[10%] md:mb-[20%] md:flex md:justify-center md:items-center lg:mx-[-10%] lg:px-[5%] lg:py-[5%]">
         <img
           className="mb-[10%] h-[240px] w-[237px] mx-auto md:mb-[0] lg:w-[395px] lg:h-[400px]"
-          src="./Images/solutionImages/Image.png"
+          src="./Images/solutionImages/Economic.avif"
           alt="/"
         />
         <div className="mx-[5%]">
@@ -259,7 +259,7 @@ export const Solution = () => {
   <img
     className="mb-[10%] h-[240px] w-[237px] mx-auto md:mb-[0] lg:w-[395px] lg:h-[400px] 
                animate-manifest" 
-    src="./Images/solutionImages/Image2.png"
+    src="./Images/solutionImages/Convert.avif"
     alt="/"
   />
 

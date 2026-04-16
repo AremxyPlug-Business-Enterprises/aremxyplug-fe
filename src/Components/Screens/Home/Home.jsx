@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import styles from "./Home.module.css";
 import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
@@ -19,7 +19,7 @@ import MultiCurrency from "./Images/MultiCurrency.svg";
 import BlockChain from "./Images/BlockChain.svg";
 import VirtualSim from "./Images/VirtualSim.svg";
 import API from "./Images/API.gif";
-import CrossBorder2 from "./Images/CrossBorder2.svg";
+import CrossBorder2 from "./Images/CrossBorder.svg";
 import MultiCurrency2 from "./Images/MultiCurrency2.svg";
 import NewsLetter from "./Images/NewsLetter.svg";
 import Successful from "./Images/Success.gif";
@@ -27,6 +27,13 @@ import FeedBack from "./Images/Feedback.svg";
 import Quote1 from "./Images/Quote1.svg";
 import { HashLink } from "react-router-hash-link";
 import { RemoveLocalStorage } from "../../LocalStorage/LocalStorage";
+import { motion } from "framer-motion";
+import CustomerSupport from "./Images/CustomerSupport.svg";
+import Security from "./Images/Security.svg";
+import Sprint from "./Images/Sprint.svg";
+import Affordable from "./Images/Afford.svg";
+import Trust from "./Images/Trusted.svg";
+import Reliable from "./Images/Reliable.svg";
 
 // import HeroImage from "./Images/HeroImage.svg"
 // import Hero from "./Images/desktop_phone.png"
@@ -271,39 +278,57 @@ useEffect(()=> {
   RemoveLocalStorage()
   }
 })
+
+//Animation For Why Choose Us
+const cardVariants = {
+  hidden: { opacity: 0, y: 20, scale: 0.95 },
+  visible: (i) => ({
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      delay: i * 0.1, // Stagger effect
+      duration: 0.5,
+      ease: "easeOut",
+    },
+  }),
+};
   return (
     <>
-      <div className="fixed top-[25.5%] left-0 right-0 z-50 md:top-[55%] lg:top-[45%]">
+      <div className="fixed top-[25.5%] left-0 right-0 z-50 md:top-[55%] 
+      lg:top-[45%]">
       
         <CookieBanner />
       </div>
      
-    
-
-      <div className={`${styles.hero} `}>
-      <div className=" w-[90%] pt-[40%] mx-auto md:pt-[10%] md:w-[]">
-      <div className="text-left w-[100%] text-[#04177F] text-[20px] font-extrabold md:text-[25px] 
+     <div className={`${styles.hero}  pt-[40%] pb-[20%] lg:pt-[25%] lg:pb-[10%] px-[5%] lg:px-[8%] md:pt-[10%] md:pb-[10%] `}>
+      <div className=" w-[90%] md:w-[]">
+      <div className="text-left w-[100%] text-[#04177F] text-[20px] 
+      font-extrabold md:text-[25px] 
       md:font-bold lg:text-[45px] lg:font-extrabold lg:leading-[px]">
             The One-Stop Shop for Individuals and Businesses for Telecom,
             Payments, and Digital Services.
           </div>
-          <div className="text-justify text-[16px] w-[100%] mt-[5%] lg:text-[18px] lg:w-[515px]">
+          <div className="text-left  font-medium text-base w-[100%] mt-[5%] lg:text-[18px] lg:leading-[30px] lg:w-[515px]">
             With AremxyPlug's robust APIs and software solutions intended to
             help you increase revenue, you can accept payments and transfer
             money internationally.
           </div>
-          <div className="flex gap-[6%] mt-[5%]">
+          <div className="flex md:flex-row flex-col md:gap-[6%] gap-[20px] mt-[5%]">
             <HashLink
               to="/signUp"
-              className="bg-[#04177F] text-[#ffffff] p-[3%] text-center rounded-lg w-[108px] text-[10px] lg:w-[25%] lg:text-[20px] lg:p-[1%] lg:h-[45px]"
+              className="bg-transparent border-2 border-[#04177F] text-[#04177F] md:p-[3%] py-[16px] 
+              text-center rounded-lg w-full text-[16px] leading-[20px] font-bold lg:w-[25%] 
+              lg:text-[20px] lg:py-[2%] "
             >
               Sign up
             </HashLink>
 
             <HashLink
               to="/Login"
-              className="bg-[#04177F] text-[#ffffff] p-[3%] text-center
-               rounded-lg w-[108px] text-[10px] lg:w-[25%] lg:text-[20px] lg:p-[1%] lg:h-[45px]"
+              className="bg-[#04177F] text-[#ffffff] md:p-[3%] text-center py-[16px]
+               rounded-lg w-full text-[16px] leading-[20px] font-medium
+                lg:w-[25%] lg:text-[20px] lg:py-[2%] "
             >
               Sign in
             </HashLink>
@@ -313,13 +338,278 @@ useEffect(()=> {
           <img
           className="mx-auto mt-[12%] md:w-[40%]  md:h-[30%] 
            lg:w-[50%] lg:h-[40%] px-[20px] md:px-0 "
-          src="./Images/desktop_phone.png"
+          src="./Images/desktop_phone.avif"
           alt="/"
         />
       </div>
 
       {/* WHY CHOOSE US */}
-      <div className="flex flex-col bg-[#04177F] text-[#ffffff] px-[5%] py-[15%] gap-[30px]
+      {/* The Generated part */}
+      <div 
+       className="flex flex-col bg-[#04177F] h-auto  
+       px-[5%] py-[20%] lg:py-[8%] md:py-[10%]  gap-[30px]  lg:px-[8%] overflow-hidden">
+  {/* Header Section */}
+  <motion.div
+    initial={{ opacity: 0, y: -20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, amount: 0.3 }}
+    transition={{ duration: 0.6 }}
+  >
+  
+    <h1 className="mb-[5%] text-[30px] leading-[40px]   font-bold text-center  text-white
+    md:text-[26px] lg:text-[50px] lg:leading-[60px] tracking-tight">
+      Why Choose Us?
+    </h1>
+    <p className="text-center font-medium mx-auto text-[14px] 
+    leading-relaxed opacity-90 w-[95%]
+     md:text-[12px] lg:text-[20px] lg:w-[70%] mb-10 text-white">
+     The team at AremxyPlug is made up of a variety of individuals who
+            share the traits of resilience and problem-solving abilities. As a
+            result, we made the decision to pool our resources and develop a
+            platform that offers services for your digital needs.
+    </p>
+  </motion.div>
+
+  {/* Cards Grid */}
+  <div className="flex flex-col gap-2 lg:gap-10 w-full">
+    
+    {/* Card 1: Reliable */}
+  <div className={`flex md:flex-row flex-col w-full gap-4 md:h-[250px] h-auto`}>
+    <motion.div
+      custom={1}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      variants={cardVariants}
+      className="bg-white flex flex-col text-[#04177F] md:w-1/3 w-full p-6 justify-center h-full rounded-[20px] 
+   shadow-lg hover:shadow-2xl transition-shadow duration-300 md:gap-4 gap-3">
+     <div className="flex gap-2 w-full h-auto items-center justify-left">
+      <img src={Reliable} alt="" />
+      <h2 className="text-[20px] leading-[30px]
+       font-extrabold  lg:text-[24px]">
+        Reliable
+      </h2>
+      </div>
+      <p className="text-[14px] font-bold text-black leading-[20px] 
+      md:text-[11px] lg:text-[16px] opacity-80">
+          We use technology to provide business solutions that open up new
+              possibilities, and enhance company's productivity.
+      </p>
+    </motion.div>
+
+    {/* Card 2: Trusted */}
+   <motion.div
+      custom={2}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      variants={cardVariants}
+      className="bg-white flex flex-col text-[#04177F] md:w-1/3 w-full p-6 justify-center h-full rounded-[20px] 
+   shadow-lg hover:shadow-2xl transition-shadow duration-300 md:gap-4 gap-3"
+    >
+       <div className="flex gap-2 w-full h-auto items-center justify-left">
+      <img src={Trust} alt="" />
+      <h2 className="text-[20px] leading-[30px]
+       font-extrabold  lg:text-[24px]">
+        Trusted
+      </h2>
+      </div>
+      <p className="text-[14px] font-bold text-black leading-[20px] 
+      md:text-[11px] lg:text-[16px] opacity-80">
+       We built reputation as a trusted service provider to deliver
+              high-quality services with honesty, integrity, and transparency.
+      </p>
+    </motion.div>
+
+    {/* Card 3: Affordable */}
+    <motion.div
+      custom={3}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      variants={cardVariants}
+    className="bg-white flex flex-col text-[#04177F] md:w-1/3 w-full p-6  justify-center h-full rounded-[20px] 
+   shadow-lg hover:shadow-2xl transition-shadow duration-300 md:gap-4 gap-3"
+    >
+         <div className="flex gap-2 w-full h-auto items-center justify-start">
+      <img src={Affordable} alt="" />
+      <h2 className="text-[20px]  leading-[30px]
+       font-extrabold  lg:text-[24px]">
+        Affordable
+      </h2>
+      </div>
+      <p className="text-[14px] font-bold text-black leading-[20px] 
+      md:text-[11px] lg:text-[16px] opacity-80">
+        We offer competitive and affordable pricing to ensure that our
+              services are accessible to everyone.
+      </p>
+      
+    </motion.div>
+    </div>
+
+    {/* Desktop/Tablet Only Grid Items (Hidden on Mobile unless firstDrop is true) */}
+    <div className="hidden md:flex w-full gap-4 h-[250px] ">
+    <motion.div
+      custom={4}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      variants={cardVariants}
+     className="hidden bg-white md:flex flex-col text-[#04177F] md:w-1/3 w-full p-6 justify-center h-full rounded-[20px] 
+    shadow-lg md:gap-4"
+    >
+         <div className="flex gap-2 w-full h-auto items-center justify-left">
+      <img src={Sprint} alt="" />
+      <h2 className="text-[20px] leading-[30px]
+       font-extrabold  lg:text-[24px] ">
+        Swift 24/7 Delivery
+      </h2>
+      </div>
+      <p className="text-[14px] font-bold text-black leading-[20px] 
+      md:text-[11px] lg:text-[16px] opacity-80">
+        We offer swift 24/7 delivery to ensure that your needs are met
+        promptly and efficiently.
+      </p>
+    </motion.div>
+     <motion.div
+      custom={5}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      variants={cardVariants}
+     className="hidden bg-white md:flex flex-col text-[#04177F] 
+     md:w-1/3 w-full p-6 justify-center h-full rounded-[20px] 
+    shadow-lg md:gap-4"
+    >
+         <div className="flex gap-2 w-full h-auto items-center justify-left">
+      <img src={Security} alt="" />
+      <h2 className="text-[20px] leading-[30px]
+       font-extrabold lg:text-[24px]">
+        Secure and Automated
+      </h2>
+      </div>
+      <p className="text-[14px] font-bold text-black leading-[20px] 
+      md:text-[11px] lg:text-[16px] opacity-80">
+        We use the latest security protocols and technologies to protect
+        your data and sensitive information.
+      </p>
+    </motion.div>
+      <motion.div
+      custom={6}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      variants={cardVariants}
+     className="hidden bg-white md:flex flex-col text-[#04177F] md:w-1/3 
+     w-full p-6 justify-center h-full rounded-[20px] 
+    shadow-lg md:gap-4"
+    >
+         <div className="flex gap-2 w-full h-auto items-center justify-left">
+      <img src={CustomerSupport} alt="" />
+      <h2 className="text-[20px] leading-[30px]
+       font-extrabold  lg:text-[24px]">
+        Customer Support
+      </h2>
+      </div>
+      <p className="text-[14px] font-bold text-black leading-[20px] 
+      md:text-[11px] lg:text-[16px] opacity-80">
+        We value your feedback and strive to provide exceptional customer
+        support whenever you need assistance.
+      </p>
+    </motion.div>
+  </div>
+  </div>
+
+
+  {/* Mobile Dropdown Content - Wrapped in Cards */}
+  {firstDrop && (
+    <div className="flex flex-col gap-4 h-auto md:hidden">
+   <motion.div
+      custom={4}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      variants={cardVariants}
+     className="bg-white flex flex-col text-[#04177F]  w-full p-6 justify-center rounded-[20px] 
+    shadow-xl transform transition-all duration-500 hover:scale-105 delay-100 gap-3"
+    >
+         <div className="flex gap-2 w-full h-auto items-center justify-left">
+      <img src={Sprint} alt="" />
+        <h2 className="text-[20px] leading-[30px]
+       font-extrabold">
+        Swift 24/7 Delivery</h2>
+        </div>
+        <p className="text-[14px] font-bold text-black leading-[20px] 
+     opacity-80">
+         We offer swift 24/7 delivery to ensure that your needs are met
+              promptly and efficiently.
+           </p>
+      </motion.div>
+       <motion.div
+      custom={5}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      variants={cardVariants}
+     className="bg-white flex flex-col text-[#04177F] w-full p-6 justify-center rounded-[20px] 
+    shadow-xl transform transition-all duration-500 hover:scale-105 delay-100 gap-3"
+    >
+         <div className="flex gap-2 w-full items-center h-auto justify-left">
+      <img src={Security} alt="" />
+        <h2 className="text-[20px] leading-[30px]
+       font-extrabold lg:text-[24px]">
+          Secure and Automated
+          </h2>
+          </div>
+        <p className="text-[14px] font-bold text-black leading-[20px] 
+       opacity-80">
+         We use the latest security protocols and technologies to protect
+              your data and information.
+          </p>
+      </motion.div>
+        <motion.div
+      custom={4}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      variants={cardVariants}
+     className="bg-white flex flex-col text-[#04177F]  w-full p-6 justify-center rounded-[20px] 
+    shadow-xl transform transition-all duration-500 hover:scale-105 delay-100 gap-3"
+    >
+         <div className="flex gap-2 w-full items-center h-auto justify-left">
+      <img src={CustomerSupport} alt="" />
+        <h2 className="text-[20px] leading-[30px]
+       font-extrabold  lg:text-[24px]">
+          Customer Support
+          </h2>
+          </div>
+        <p className="text-[14px] font-bold text-black leading-[20px] 
+      md:text-[11px] lg:text-[16px] opacity-80">
+          We value your feedback and strive to provide exceptional customer
+              support when you need help.
+</p>
+      </motion.div>
+    </div>
+  )}
+
+  {/* Toggle Button */}
+  <div
+    className="md:hidden flex justify-center items-center font-bold text-[#04177F] bg-[#ffffff]
+     w-[40%] mx-auto rounded-full py-3 shadow-lg active:scale-95 transition-transform"
+    onClick={handleClick}
+  >
+    <div className="text-[14px]">{buttonText}</div>
+    <div className="text-[24px]">
+      {!firstDrop ? <RiArrowDropDownLine /> : <RiArrowDropUpLine />}
+    </div>
+  </div>
+</div>
+
+
+
+
+      {/* The main Code  */}
+      {/* <div className="flex flex-col bg-[#04177F] text-[#ffffff] px-[5%] py-[15%] gap-[30px]
        md:py-[8%] lg:py-[8%] lg:px-[8%]">
         <div>
           <p className="mb-[5%] text-[20px] font-semibold text-center md:text-[26px] lg:text-[35px]">
@@ -428,15 +718,28 @@ useEffect(()=> {
             {!firstDrop ? <RiArrowDropDownLine /> : <RiArrowDropUpLine />}
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* ABOUT US */}
-      <div className="px-[5%] flex flex-col gap-[20px] py-[20%] md:flex-row md:justify-center md:items-center md:py-[10%] lg:py-[5%] lg:gap-[10px] lg:px-[8%]">
-        <div className="flex flex-col gap-[15px]">
-          <div className="mb-[5%] text-[20px] font-semibold text-center text-[#04177F] md:text-left md:text-[26px] lg:text-[45px]">
+
+<section id="About" className="flex flex-col overflow-x-hidden
+ gap-6 md:gap-10 md:py-[10%] lg:py-[5%] px-[5%] lg:px-[8%] py-[20%]">
+    <h1 className="text-[30px] leading-[40px]   font-bold text-center  
+    md:text-[26px] lg:text-[50px] lg:leading-[60px] tracking-tight
+           text-[#04177F]">
             About Us
-          </div>
-          <p className="text-justify text-[14px] md:text-[10px] lg:text-[16px] lg:w-[80%]">
+          </h1>
+      <div className="flex flex-col gap-[20px] md:items-center  md:flex-row md:justify-between   ">
+
+        <motion.div
+    initial={{ x: -100, opacity: 0 }}
+    whileInView={{ x: 0, opacity: 1 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.8, ease: "easeOut" }}
+    className="flex flex-col md:items-start gap-7 md:gap-10 w-full md:w-1/2 bg-[#E2F3FF] px-4 py-6 rounded-l-lg">
+       
+      <p className="text-center md:text-left  font-medium text-[16px] leading-[25px]
+          md:text-[10px] lg:text-[18px] lg:leading-[24px] lg:w-[80%]">
             AremxyPlug is a business enterprise and telecommunication service
             provider that offers individuals and businesses full access to
             quick, secure, and dependable solutions for their digital and
@@ -449,200 +752,308 @@ useEffect(()=> {
             ensure that our services take our customers to the pinnacle of their
             aspirations in order to be the best service provider.
           </p>
-          <Link to="/About-us">
-            <div className="mx-auto flex text-[12px] bg-[#04177F] text-[#ffffff] w-[28%] h-[35px] justify-center items-center rounded-md md:mx-[0px] md:text-[14px] lg:w-[20%] lg:h-[45px]">
+          <Link to="/About-us" className="flex text-[14px] font-bold bg-[#04177F] text-[#ffffff]
+             md:w-[30%] w-full md:py-4 py-4 justify-center items-center lg:w-[20%] lg:h-[45px] rounded-md">
+            <p className="flex text-[14px] font-bold text-[#ffffff]
+           rounded-md md:mx-[0px] md:text-[14px]">
               Learn more
-            </div>
+            </p>
           </Link>
-        </div>
-        <img
-          className="w-[65%] mx-auto py-[5%] md:w-[50%]"
-          src="./Images/illustration.png"
+        </motion.div>
+       
+ <motion.div
+    initial={{ x: 100, opacity: 0 }}
+    whileInView={{ x: 0, opacity: 1 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.8, ease: "easeOut" }}
+    className="w-full md:w-1/2 flex justify-center "
+  >
+        
+           <img
+          className="w-full lg:w-full h-full"
+          src="./Images/illustration.avif"
           alt="/"
         />
-      </div>
+        </motion.div>
+       </div>
+       </section>
+      
 
       {/* OUR SERVICE */}
-      <div className="bg-[#04177f] flex flex-col gap-[15px] py-[7%] h-[] lg:px-[8%]">
-        <div className="mb-[5%] text-[20px] text-[#ffffff] font-semibold text-center md:text-[25px] lg:text-[45px]">
+      <div className="bg-[#04177f] flex flex-col gap-[15px] py-[20%] lg:py-[8%] h-auto lg:px-[8%]">
+        <h1 className="mb-[5%] text-[20px] text-[#ffffff] 
+        font-bold text-center md:text-[25px] lg:text-[50px]">
           Our Services
-        </div>
-        <div className="md:grid md:grid-cols-2 flex flex-col gap-[15px] md:gap-y-[35px]">
-          <div className="flex items-center gap-[9%] bg-[#E2F3FF] p-[5%] mx-[5%] rounded-md">
+        </h1>
+        <div className="md:grid md:grid-cols-2 flex flex-col px-[5%] md:gap-[30px] gap-10 md:gap-y-[35px]">
+          <div className="flex flex-col w-full gap-5  bg-[#E2F3FF]
+           p-[5%]  rounded-md">
+          <div className="flex items-center w-full gap-[9%]">
             <img
               className="w-[28%] h-[80px] lg:w-[40%] lg:h-[120px]"
-              src="./Images/telecom.png"
+              src="./Images/telecom.avif"
               alt="/"
             />
-            <div>
-              <div className="text-[13px] font-semibold lg:text-[24px]">
+            <div className="flex flex-col gap-[10px]">
+              <h2 className="text-[20px]  leading-[30px]
+       font-extrabold  lg:text-[24px]">
                 Telecom
-              </div>
-              <div className="text-justify text-[10px] w-[80%] lg:text-[16px]">
+              </h2>
+              <p className="text-[14px] font-bold text-black leading-[20px] 
+      md:text-[11px] lg:text-[16px] opacity-80">
                 We offer secure VTU development, affordable airtime, and data
                 purchase.
-              </div>
-              <div className="bg-[#04177f] mt-[10%] w-[35%] text-[9px] text-[#ffffff] p-[3%] text-center rounded-md lg:text-[14px] lg:h-[45px]">
-                <Link to="/our-services/telecoms">Learn More</Link>
-              </div>
+              </p>
+              
             </div>
-          </div>
-          <div className="flex items-center gap-[5%] bg-[#E2F3FF] p-[5%] mx-[5%] rounded-md">
+            </div>
+            <div className="flex justify-center md:w-full w-full">
+                <Link className="bg-[#04177f] text-[14px] md:p-[3%]
+                 font-bold py-[16px] md:w-[35%] w-full rounded-md
+             text-[#ffffff] text-center lg:text-[14px] lg:leading-[20px]"
+              to="/our-services/telecoms">Learn More</Link>
+              </div>
+              </div>
+
+          {/* Payment */}
+          <div  className="flex flex-col w-full gap-5  bg-[#E2F3FF]
+           p-[5%]  rounded-md">
+          <div className="flex items-center w-full gap-[9%]">
             <img
               className="w-[34%] h-[75px] lg:w-[30%] lg:h-[90px]"
-              src="./Images/payment.png"
+              src="./Images/payment.avif"
               alt="/"
             />
-            <div>
-              <div className="text-[13px] font-semibold lg:text-[24px]">
+            <div className="flex flex-col gap-[10px]">
+              <h2 className="text-[20px] leading-[30px]
+       font-extrabold  lg:text-[24px]">
                 Payment
-              </div>
-              <div className="text-justify text-[10px] w-[80%] lg:text-[16px]">
+              </h2>
+              <p className="text-[14px] font-bold text-black leading-[20px] 
+      md:text-[11px] lg:text-[16px] opacity-80">
                 Our payment solutions ensure our clients have the utmost control
                 of their finances.
+              </p>
               </div>
-              <div className="bg-[#04177f] mt-[10%] w-[35%] text-[9px] text-[#ffffff] p-[3%] text-center rounded-md lg:text-[14px] lg:h-[45px]">
-                <Link to="/our-services/payment">Learn More</Link>
               </div>
-            </div>
-          </div>
-          <div className="flex items-center gap-[9%] bg-[#E2F3FF] p-[5%] mx-[5%] rounded-md">
-            <img
-              className="w-[30%] h-[55px] lg:w-[30%] lg:h-[90px]"
-              src="./Images/cardissuing.png"
-              alt="/"
-            />
-            <div>
-              <div className="text-[13px] font-semibold lg:text-[24px]">
-                Card Issuing
-              </div>
-              <div className="text-justify text-[9px] w-[80%] lg:text-[16px]">
-                We issue 3D secured virtual and physical debit USD and NGN cards
-                to both individuals and businesses.
-              </div>
-              <div className="bg-[#04177f] mt-[10%] w-[35%] text-[9px] text-[#ffffff] p-[3%] text-center rounded-md lg:text-[14px] lg:h-[45px]">
-                <Link to="CardIssuing">Learn More</Link>
-              </div>
+              <div className="flex justify-center md:w-full w-full">
+                <Link className="bg-[#04177f] text-[14px] md:p-[3%]
+                 font-bold py-[16px] md:w-[35%] w-full rounded-md
+             text-[#ffffff] text-center lg:text-[14px] lg:leading-[20px]"
+              to="/our-services/payment">Learn More</Link>
+              
             </div>
           </div>
 
-          <div className="hidden sm:flex items-center gap-[9%] bg-[#E2F3FF] p-[5%] mx-[5%] rounded-md">
+
+          
+          
+           {/* Card issuing */}
+           <div className="flex flex-col w-full gap-5  bg-[#E2F3FF]
+           p-[5%]  rounded-md">
+          <div  className="flex items-center w-full gap-[9%]">
+            <img
+              className="w-[30%] h-[55px] lg:w-[30%] lg:h-[90px]"
+              src="./Images/cardissuing.avif"
+              alt="/"
+            />
+            <div>
+            <h2 className="text-[20px]  leading-[30px]
+       font-extrabold  lg:text-[24px]">
+                Card Issuing
+              </h2>
+              <p className="text-[14px] font-bold text-black leading-[20px] 
+      md:text-[11px] lg:text-[16px] opacity-80">
+                We issue 3D secured virtual and physical debit USD and NGN cards
+                to both individuals and businesses.
+              </p>
+              </div>
+              </div>
+              <div className="flex justify-center md:w-full w-full">
+                <Link className="bg-[#04177f] text-[14px] md:p-[3%]
+                 font-bold py-[16px] md:w-[35%] w-full rounded-md
+             text-[#ffffff] text-center lg:text-[14px] lg:leading-[20px]"
+              to="CardIssuing">Learn More</Link>
+              
+            </div>
+         </div>
+
+{/* Digital Services */}
+<div className="hidden sm:flex flex-col w-full gap-5  bg-[#E2F3FF]
+           p-[5%]  rounded-md">
+          <div className="flex items-center w-full gap-[9%]">
             <img
               className="w-[28%] h-[80px] lg:w-[40%] lg:h-[120px]"
-              src="./Images/digital.png"
+              src="./Images/digital.avif"
               alt="/"
             />
-            <div>
-              <div className="text-[13px] font-semibold lg:text-[24px]">
+            <div className="flex flex-col gap-[10px]">
+              <h2 className="text-[20px]  leading-[30px]
+       font-extrabold  lg:text-[24px]">
                 Digital Services
-              </div>
-              <div className="text-justify text-[10px] w-[80%] lg:text-[16px]">
+              </h2>
+              <p className="text-[14px] font-bold text-black leading-[20px] 
+      md:text-[11px] lg:text-[16px] opacity-80">
                 We offer a variety of digital services that can be customized to
                 fit your company's needs.
+              </p>
               </div>
-              <div className="bg-[#04177f] mt-[10%] w-[35%] text-[9px] text-[#ffffff] p-[3%] text-center rounded-md lg:text-[14px] lg:h-[45px]">
-                <Link to="DigitalServices">Learn More</Link>
               </div>
-            </div>
+              <div className="flex justify-center md:w-full w-full">
+                <Link className="bg-[#04177f] text-[14px] md:p-[3%]
+                 font-bold py-[16px] md:w-[35%] w-full rounded-md
+             text-[#ffffff] text-center lg:text-[14px] lg:leading-[20px]"
+              to="DigitalServices">Learn More</Link>
+              </div>
+           
+          
           </div>
-          <div className="hidden sm:flex items-center gap-[9%] bg-[#E2F3FF] p-[5%] mx-[5%] rounded-md">
+          {/* VTU Development */}
+          <div className="hidden sm:flex flex-col w-full gap-5  bg-[#E2F3FF]
+           p-[5%]  rounded-md">
+            <div className="flex items-center w-full gap-[9%]">
             <img
               className="w-[28%] h-[80px] md:h-[60px] lg:w-[30%] lg:h-[90px]"
-              src="./Images/VTU.png"
+              src="./Images/VTU.avif"
               alt="/"
             />
-            <div>
-              <div className="text-[13px] font-semibold lg:text-[24px]">
+            <div className="flex flex-col gap-[10px]">
+              <h2 className="text-[20px]  leading-[30px]
+       font-extrabold  lg:text-[24px]">
                 VTU Development
-              </div>
-              <div className="text-[9px] tracking-wide w-[100%] lg:text-[16px]">
+              </h2>
+              <p className="text-[14px] font-bold text-black leading-[20px] 
+      md:text-[11px] lg:text-[16px] opacity-80">
                 We develop a VTU website with services like airtime top-up, data
                 bundles, and bills payment platform.
+              </p>
               </div>
-              <div className="bg-[#04177f] mt-[10%] w-[35%] text-[9px] text-[#ffffff] p-[3%] text-center rounded-md lg:text-[14px] lg:h-[45px]">
-                <Link to="VTU_DEV">Learn More</Link>
               </div>
-            </div>
+              <div className="flex justify-center md:w-full w-full">
+                <Link className="bg-[#04177f] text-[14px] md:p-[3%]
+                 font-bold py-[16px] md:w-[35%] w-full rounded-md
+             text-[#ffffff] text-center lg:text-[14px] lg:leading-[20px]" to="/VTU_DEV">Learn More</Link>
+              </div>
+            
           </div>
-          <div className="hidden sm:flex items-center gap-[9%] bg-[#E2F3FF] p-[5%] mx-[5%] rounded-md">
+
+          {/* Business Development */}
+          <div className="hidden sm:flex flex-col w-full gap-5  bg-[#E2F3FF]
+           p-[5%]  rounded-md">
+          <div className="flex items-center w-full gap-[9%]">
             <img
               className="w-[28%] h-[80px] lg:w-[30%] lg:h-[90px]"
-              src="./Images/Business.png"
+              src="./Images/Business.avif"
               alt="/"
             />
-            <div>
-              <div className="text-[13px] font-semibold lg:text-[24px]">
+            <div className="flex flex-col gap-[10px]">
+              <h2 className="text-[20px]  leading-[30px]
+       font-extrabold  lg:text-[24px]">
                 Business Development
-              </div>
-              <div className="text-[9px] tracking-wide w-[100%] lg:text-[16px]">
+              </h2>
+              <p className="text-[14px] font-bold text-black leading-[20px] 
+      md:text-[11px] lg:text-[16px] opacity-80">
                 When it comes to business development, trust us to save you time
                 and stress.
+              </p>
               </div>
-              <div className="bg-[#04177f] mt-[10%] w-[35%] text-[9px] text-[#ffffff] p-[3%] text-center rounded-md lg:text-[14px] lg:h-[45px]">
-                <Link to="/businessDev">Learn More</Link>
               </div>
-            </div>
+              <div className="flex justify-center md:w-full w-full">
+                <Link className="bg-[#04177f] text-[14px] md:p-[3%]
+                 font-bold py-[16px] md:w-[35%] w-full rounded-md
+             text-[#ffffff] text-center lg:text-[14px] lg:leading-[20px]" to="/businessDev">Learn More</Link>
+              </div>
+          
           </div>
         </div>
 
         {secondDrop && (
-          <>
-            <div className="flex items-center gap-[10%] bg-[#E2F3FF] p-[5%] mx-[5%] rounded-md">
+          <div className="flex flex-col gap-10 px-[5%]   md:gap-[35px]">
+          <div className="flex md:hidden flex-col w-full gap-5  bg-[#E2F3FF]
+           p-[5%]  rounded-md">
+            <div className="flex items-center w-full gap-[9%]">
+           
               <img
                 className="w-[30%] h-[80px]"
-                src="./Images/digital.png"
+                src="./Images/digital.avif"
                 alt="/"
               />
-              <div>
-                <div className="text-[13px] font-semibold">
+              <div className="flex flex-col gap-[10px]">
+                <h2 className="text-[20px]  leading-[30px]
+       font-extrabold  lg:text-[24px]">
                   Digital Services
-                </div>
-                <div className="text-justify text-[9px] w-[80%]">
+                </h2>
+                <p className="text-[14px] font-bold text-black leading-[20px] 
+      md:text-[11px] lg:text-[16px] opacity-80">
                   We offer a variety of digital services that can be customized
                   to fit your company's needs.
+                </p>
                 </div>
-                <div className="bg-[#04177f] mt-[10%] w-[35%] text-[9px] text-[#ffffff] p-[3%] text-center rounded-md">
-                  <Link to="DigitalServices">Learn More</Link>
                 </div>
-              </div>
-            </div>
-            <div className="flex items-center gap-[9%] bg-[#E2F3FF] p-[5%] mx-[5%] rounded-md">
+                <div className="flex justify-center md:w-full w-full">
+                <Link className="bg-[#04177f] text-[14px] md:p-[3%]
+                 font-bold py-[16px] md:w-[35%] w-full rounded-md
+             text-[#ffffff] text-center lg:text-[14px] lg:leading-[20px]" to="/DigitalServices">Learn More</Link>
+                </div>
+            </div> 
+
+            {/* VTU Development */}
+            <div  className="md:hidden flex flex-col w-full gap-5  bg-[#E2F3FF]
+           p-[5%]  rounded-md">
+            <div className="flex items-center w-full gap-[9%]">
               <img
                 className="w-[28%] h-[60px]"
-                src="./Images/vtu.png"
+                src="./Images/vtu.avif"
                 alt="/"
               />
-              <div>
-                <div className="text-[13px] font-semibold">VTU Development</div>
-                <div className="text-justify text-[9px] w-[80%]">
+              <div className="flex flex-col gap-[10px]">
+                <h2 className="text-[20px]  leading-[30px]
+       font-extrabold  lg:text-[24px]">VTU Development</h2>
+                <p className="text-[14px] font-bold text-black leading-[20px] 
+      md:text-[11px] lg:text-[16px] opacity-80">
                   We develop a VTU website with services like airtime top-up,
                   data bundles, and bills payment platform.
+                </p>
                 </div>
-                <div className="bg-[#04177f] mt-[10%] w-[35%] text-[9px] text-[#ffffff] p-[3%] text-center rounded-md lg:h-[45px]">
-                  <Link to="/VTU_DEV">Learn More</Link>
+                </div>
+                <div className="flex justify-center md:w-full w-full">
+                <Link className="bg-[#04177f] text-[14px] md:p-[3%]
+                 font-bold py-[16px] md:w-[35%] w-full rounded-md
+             text-[#ffffff] text-center lg:text-[14px] lg:leading-[20px]"to="/VTU_DEV">Learn More</Link>
                 </div>
               </div>
-            </div>
-            <div className="flex gap-[9%] bg-[#E2F3FF] p-[5%] mx-[5%] rounded-md">
+            
+
+            {/* Business Development */}
+            <div  className="md:hidden flex flex-col w-full gap-5  bg-[#E2F3FF]
+           p-[5%]  rounded-md">
+            <div className="flex items-center w-full gap-[9%]">
               <img
                 className="w-[28%] h-[80px]"
-                src="./Images/Business.png"
+                src="./Images/Business.avif"
                 alt="/"
               />
               <div>
-                <div className="text-[13px] font-semibold">
+                <h2 className="text-[20px]  leading-[30px]
+       font-extrabold  lg:text-[24px]">
                   Business Development
-                </div>
-                <div className="text-justify text-[9px] w-[80%]">
+                </h2>
+                <p className="text-[14px] font-bold text-black leading-[20px] 
+      md:text-[11px] lg:text-[16px] opacity-80">
                   When it comes to business development, trust us to save you
                   time and stress.
+                </p>
                 </div>
-                <div className="bg-[#04177f] mt-[10%] w-[35%] text-[9px] text-[#ffffff] p-[3%] text-center rounded-md lg:h-[45px]">
-                  <Link to="/businessDev">Learn More</Link>
                 </div>
-              </div>
+                <div className="flex justify-center md:w-full w-full">
+                <Link className="bg-[#04177f] text-[14px] md:p-[3%]
+                 font-bold py-[16px] md:w-[35%] w-full rounded-md
+             text-[#ffffff] text-center lg:text-[14px] lg:leading-[20px]"
+              to="/businessDev">Learn More</Link>
+              
             </div>{" "}
-          </>
+          </div>
+          </div>
         )}
         <div
           className="md:hidden lg:hidden flex justify-center items-center font-semibold text-[#04177F] bg-[#ffffff] w-[25%] mx-auto rounded-md p-[2%]"
@@ -659,9 +1070,10 @@ useEffect(()=> {
       <div className="px-[5%] pt-[10%] lg:px-[8%] lg:pt-[5%] ">
         <div className="">
           <div className="flex justify-between md:justify-start items-center md:space-x-5 lg:space-x-[44px] text-[#04177f]">
-            <div className=" items-center  font-semibold text-[20px] lg:text-[30px]">
+            <h1  className="text-[20px] text-[#04177F]
+        font-bold text-center md:text-[25px] lg:text-[50px]">
               Telecom Services
-            </div>
+            </h1>
             <div
               className="lg:text-2xl"
               onClick={() => setTelecomIcon((prev) => !prev)}
@@ -669,11 +1081,12 @@ useEffect(()=> {
               {!telecomIcon ? <AiFillPlusCircle /> : <AiFillMinusCircle />}
             </div>
           </div>
-          <div className="text-justify text-[12px] mt-[5%] w-[100%] md:w-[60%] lg:text-[18px] ">
+          <p className="text-left text-[14px] leading-[18px] font-medium
+           mt-[5%] md:w-[60%] lg:text-[18px] lg:leading-[26px]">
             We are the telecom company you can trust, with affordable prices and
             excellent customer support. Sign up today and start enjoying
             seamless Telecom service!
-          </div>
+          </p>
         </div>
         {/* <br /> */}
         <br />
@@ -742,7 +1155,8 @@ useEffect(()=> {
             </div>
 
             <div
-              className="flex flex-col justify-between gap-[10px] h-[190px] w-[209px] m-[2%] p-[5%] rounded-md bg-[#F2FAFF]  md:w-[206px] md:p-[3%] lg:w-[359px] lg:h-[276px] lg:gap-[18px]"
+              className="flex flex-col justify-between gap-[10px] h-[190px] w-[209px] m-[2%] p-[5%] rounded-md bg-[#F2FAFF]  
+              md:w-[206px] md:p-[3%] lg:w-[359px] lg:h-[276px] lg:gap-[18px]"
               style={{ boxShadow: "0px 0px 11.676px rgba(28, 12, 249, 0.5)" }}
             >
               <div className="font-medium lg:text-[24px] lg:mb-[-5%]">
@@ -837,9 +1251,10 @@ useEffect(()=> {
       <div className="px-[5%] pt-[20%] lg:px-[8%] lg:pt-[5%]">
         <div className="">
           <div className="flex justify-between md:justify-start items-center md:space-x-5 lg:space-x-10 text-[#04177f]">
-            <div className=" items-center  font-semibold text-[20px] lg:text-[30px]">
+            <h1  className="text-[20px] text-[#04177F]
+        font-bold text-center md:text-[25px] lg:text-[50px]">
               Payment Services
-            </div>
+            </h1>
             <div
               className="lg:text-2xl"
               onClick={() => setPaymentIcon((prev) => !prev)}
@@ -847,11 +1262,12 @@ useEffect(()=> {
               {!paymentIcon ? <AiFillPlusCircle /> : <AiFillMinusCircle />}
             </div>
           </div>
-          <div className="text-justify text-[12px] mt-[5%] md:w-[60%] lg:text-[18px]">
+          <p className="text-left text-[14px] leading-[18px] font-medium
+           mt-[5%] md:w-[60%] lg:text-[18px] lg:leading-[26px]">
             We offer quick and secure payment processing to make sure your
             transactions go off without a hitch, using our user-friendly
             interface to receive money both locally and internationally.
-          </div>
+          </p>
         </div>
         <br />
         {/* <br /> */}
@@ -956,9 +1372,10 @@ useEffect(()=> {
       <div className="px-[5%] pt-[20%] pb-[25%] lg:pb-[5%] md:pb-[20%]  lg:px-[8%] lg:pt-[5%]">
         <div className="">
           <div className="flex justify-between md:justify-start items-center md:space-x-5 lg:space-x-[75px] text-[#04177f]">
-            <div className=" items-center  font-semibold text-[20px] lg:text-[30px]">
+            <h1  className=" text-[20px] text-[#04177F]
+        font-bold text-center md:text-[25px] lg:text-[50px]">
               Digital Services
-            </div>
+            </h1>
             <div
               className="lg:text-2xl"
               onClick={() => setDigitalIcon((prev) => !prev)}
@@ -966,11 +1383,12 @@ useEffect(()=> {
               {digitalIcon ? <AiFillMinusCircle /> : <AiFillPlusCircle />}
             </div>
           </div>
-          <div className="text-justify text-[12px] mt-[5%] md:w-[60%] lg:text-[18px]">
+          <p className="text-left text-[14px] leading-[18px] font-medium
+           mt-[5%] md:w-[60%] lg:text-[18px] lg:leading-[26px]">
             We offer a variety of digital services that can be customized to fit
             your company's needs. Our services are affordable and designed to
             deliver outstanding results for your company.
-          </div>
+          </p>
         </div>
         <br />
         {/* <br /> */}
@@ -1081,22 +1499,25 @@ useEffect(()=> {
       </div>
 
       {/* CARD ISSUING */}
-      <div className="mb-[5%] flex flex-col gap-[50px] bg-[#04177f] px-[5%] text-[#ffffff] py-[15%] md:py-[5%] md:flex-row md:px-[8%] md:gap-[10px] lg:gap-[30px]">
-        <div>
-          <div className="text-[20px] font-medium text-center mb-[4%] md:text-[26px] md:text-left lg:text-[45px]">
+      <div className="mb-[5%] flex flex-col gap-[50px] bg-[#04177f] px-[5%]
+       text-[#ffffff] py-[15%] md:py-[5%] md:flex-row md:px-[8%] md:gap-[10px] lg:gap-[30px]">
+        <div className="flex flex-col gap-10">
+          <h1 className="text-[20px] text-white
+        font-bold md:text-left  text-center md:text-[25px] lg:text-[50px]">
             Card Issuing
-          </div>
-          <div className="text-justify text-[12px] md:text-[10px] md:leading-2 md:tracking-widest lg:text-[18px] ">
+          </h1>
+          <p className="md:text-left text-center text-[14px] leading-[20px] font-medium
+           md:text-[10px] md:leading-2 md:tracking-widest lg:text-[18px] lg:leading-[26px]">
             Our card issuing service can be tailored to your specific needs as
             an Individual or business. we issue 3D secured virtual and physical
             debit USD and NGN cards to spend anywhere Verve, Visa, and
             Mastercard are accepted, both in-store and online, anytime,
             anywhere.
-          </div>
+          </p>
         </div>
         <img
           className="md:w-[40%] h-[] lg:w-[50%]"
-          src="./Images/cards.png"
+          src="./Images/cards.avif"
           alt="/"
         />
       </div>
@@ -1105,7 +1526,9 @@ useEffect(()=> {
 
       <div
         id="crossborder"
-        className="mt-[20%] md:mt-[5%] mb-[20%] md:mb-0 mx-[5%] lg:mx-[8%] flex flex-col gap-[20px] md:flex-row md:justify-between lg:mb-[5%]"
+        className="mt-[20%] md:mt-[5%] mb-[20%]
+         md:mb-0 mx-[5%] lg:mx-[8%] flex flex-col gap-[20px]
+          md:flex-row md:justify-between lg:mb-[5%]"
       >
         <img
           className="lg:w-[600px] lg:h-[500px] hidden md:block"
@@ -1113,15 +1536,18 @@ useEffect(()=> {
           alt="/"
         />
         <div className="md:flex md:flex-col md:justify-center">
-          <div className="text-[20px] font-semibold text-[#04177f] text-center w-[250px] mx-auto leading-[30px] md:w-[100%] lg:text-[30px] md:text-left">
+          <h1 className="text-[20px]
+        font-bold md:text-left  text-center md:text-[25px] lg:text-[50px]
+          text-[#04177f] ">
             Cross-border Payment
-          </div>
+          </h1>
           <br></br>
-          <div className="text-[12px] text-justify md:w-[280px] md:text-[10px] lg:text-[18px] lg:w-[480px]">
+          <p className="md:text-left text-center text-[14px] leading-[20px]
+           font-medium md:text-[10px] md:leading-2  lg:text-[18px] lg:leading-[26px]">
             Our cross-border payment services make it simple and practical to
             send money to family and friends, receive money both locally and
             internationally.
-          </div>
+          </p>
         </div>
 
         <img
@@ -1135,18 +1561,21 @@ useEffect(()=> {
 
       <div
         id="currencyconvert"
-        className="mb-[20%] md:mb-[10%] md:mt-[5%] mx-[5%] lg:mx-[8%] flex flex-col gap-[20px] md:flex-row md:justify-between lg:mb-[10%]"
+        className="mb-[20%] md:mb-[3%] md:mt-[5%] mx-[5%] lg:mx-[8%] flex flex-col gap-[20px] md:flex-row md:justify-between lg:mb-[10%]"
       >
         <div className="md:flex md:flex-col md:justify-center">
-          <div className="text-[20px] font-semibold text-[#04177f] text-center w-full mx-auto leading-[30px] md:w-[100%] lg:text-[30px] md:text-left">
+          <h1 className="text-[20px]
+        font-bold md:text-left  text-center md:text-[25px] lg:text-[50px]
+          text-[#04177f] ">
             Currency Conversion
-          </div>
+         </h1>
           <br></br>
-          <div className="text-[12px] text-justify md:w-[280px] md:text-[10px] lg:text-[18px] lg:w-[480px]">
+          <p className="md:text-left text-center text-[14px] leading-[20px]
+           font-medium md:text-[10px] md:leading-2  lg:text-[18px] lg:leading-[26px]">
             With our currency conversion service, You can get the most
             convenient exchange rates and convert any currency in a matter of
             seconds with no hidden fees.
-          </div>
+          </p>
         </div>
         <img
           className="w-full h-full mt-[10%] mx-auto md:hidden"
@@ -1165,25 +1594,29 @@ useEffect(()=> {
 
       <div
         id="multicurrency"
-        className="mb-[20%] md:mb-[10%] mx-[5%] lg:mx-[8%] flex flex-col gap-[20px] md:flex-row md:justify-between"
+        className="mb-[20%] md:mb-[7%] mx-[5%]
+         lg:mx-[8%] flex flex-col gap-[20px] md:flex-row md:justify-between"
       >
-        <div className="hidden md:block">
+        <div className="hidden md:block md:w-1/2 w-full ">
           <img
-            className="md:w-[250px] lg:w-[600px] lg:h-[500px] hidden md:block"
+            className="md:w-[250px] lg:w-[600px] lg:h-[350px] hidden md:block"
             src={MultiCurrency2}
             alt="/"
           />
         </div>
-        <div className="md:flex md:flex-col md:justify-center">
-          <div className="text-[20px] font-semibold text-[#04177f] text-center w-[200px] mx-auto leading-[30px] md:w-[100%] lg:text-[30px] md:text-left">
+        <div className="md:flex md:flex-col md:justify-center md:w-1/2 w-full">
+          <h1  className="text-[20px]
+        font-bold md:text-left  text-center md:text-[25px] lg:text-[50px]
+          text-[#04177f]">
             Multi-Currency Wallets
-          </div>
+          </h1>
           <br></br>
-          <div className="text-[12px] text-justify md:w-[280px] md:text-[10px] lg:text-[18px] lg:w-[480px]">
+          <p className="md:text-left text-center text-[14px] leading-[20px]
+           font-medium md:text-[10px] md:leading-2  lg:text-[18px] lg:leading-[26px]">
             Our Multi-Currency Wallets services are the best way to manage all
             your currencies, keep a track and conveniently store, send, and
             receive digital assets in one location.
-          </div>
+          </p>
         </div>
         <div className="md:hidden">
           <img
@@ -1198,27 +1631,31 @@ useEffect(()=> {
 
       <div
         id="multicurrency"
-        className="mb-[20%] md:mb-[10%] mx-[5%] lg:mx-[8%] flex flex-col gap-[20px] md:flex-row md:justify-between"
+        className="mb-[20%] md:mb-[7%]  mx-[5%] lg:mx-[8%] flex flex-col gap-[20px] md:flex-row md:justify-between"
       >
-        <div className="md:flex md:flex-col md:justify-center">
-          <div className="text-[20px] font-semibold text-[#04177f] text-center w-[200px] mx-auto leading-[30px] md:w-[100%] lg:text-[30px] md:text-left">
+        <div className="md:flex md:flex-col md:w-1/2 w-full
+         md:justify-center">
+          <h1  className="text-[20px]
+        font-bold md:text-left  text-center md:text-[25px] lg:text-[50px]
+          text-[#04177f] ">
             Blockchain Sim Card
-          </div>
+          </h1>
           <br></br>
-          <div className="text-[12px] text-justify md:w-[280px] md:text-[10px] lg:text-[18px] lg:w-[480px]">
+          <p className="md:text-left text-center text-[14px] leading-[20px]
+           font-medium md:text-[10px] md:leading-2  lg:text-[18px] lg:leading-[26px]">
             The new type of SIM card that uses blockchain technology to provide
             several benefits over traditional SIM cards, including improved
             security, privacy, and fraud prevention.
-          </div>
+          </p>
         </div>
         <div className="px-[20%] md:hidden">
           <img
-            className="w-full h-full mt-[10%] mx-auto"
+            className="w-full h-full  mx-auto"
             src={BlockChain}
             alt="/"
           />
         </div>
-        <div className="px-[10%] md:px-0 hidden md:block">
+        <div className="px-[10%] md:px-0 hidden md:block md:w-1/2 w-full ">
           <img
             className="w-[248px] h-[162px] md:w-[200%] md:h-[200px] mx-auto md:mx-0 lg:w-[100%] lg:h-[300px] xl:h-[400px]"
             src={BlockChain}
@@ -1231,27 +1668,30 @@ useEffect(()=> {
 
       <div
         id="multicurrency"
-        className="mb-[20%] md:mb-[10%] mx-[5%] lg:mx-[8%] flex flex-col gap-[20px] md:flex-row md:justify-between"
+        className="mb-[20%] md:mb-[7%] mx-[5%] lg:mx-[8%] flex flex-col gap-[20px] md:flex-row md:justify-between"
       >
-        <div className="px-[10%] md:px-0 hidden md:block">
+        <div className="px-[10%] md:px-0 hidden md:block md:w-1/2 w-full">
           <img
             className="w-[248px] h-[162px] md:w-[200%] md:h-[200px] mx-auto md:mx-0 lg:w-[100%] lg:h-[300px] xl:h-[400px]"
             src={VirtualSim}
             alt="/"
           />
         </div>
-        <div className="md:flex md:flex-col md:justify-center">
-          <div className="text-[20px] font-semibold text-[#04177f] text-center w-[200px] mx-auto leading-[30px] md:w-[100%] lg:text-[30px] md:text-left">
+        <div className="md:flex md:flex-col md:justify-center md:w-1/2 w-full">
+          <h1  className="text-[20px]
+        font-bold md:text-left  text-center md:text-[25px] lg:text-[50px]
+          text-[#04177f] ">
             Virtual E-Sim
-          </div>
+          </h1>
           <br></br>
-          <div className="text-[12px] text-justify md:w-[280px] md:text-[10px] lg:text-[18px] lg:w-[480px]">
+          <p className="md:text-left text-center text-[14px] leading-[20px]
+           font-medium md:text-[10px] md:leading-2  lg:text-[18px] lg:leading-[26px]">
             An eSIM is an industry-standard digital SIM that allows you to
             activate a cellular plan from your carrier without having to use a
             physical SIM.
-          </div>
+          </p>
         </div>
-        <div className="px-[20%] md:hidden">
+        <div className="px-[20%] md:hidden w-full">
           <img
             className="w-full h-full mt-[10%] mx-auto"
             src={VirtualSim}
@@ -1266,10 +1706,13 @@ useEffect(()=> {
         className=" mx-[5%] mb-[25%] mt-[5%] md:mb-[10%] md:flex md:flex-row md:justify-center md:items-center md:gap-[15%] md:mx-[8%] lg:gap-[10%]"
       >
         <div className="flex flex-col gap-[30px] md:gap-[15px] lg:gap-[40px] ">
-          <div className="text-[20px] text-[#04177F] text-center font-medium md:text-[18px] md:text-left lg:text-[30px] lg:font-extrabold ">
+          <h1  className="text-[20px]
+        font-bold md:text-left  text-center md:text-[25px] lg:text-[50px]
+          text-[#04177f] ">
             Become an Agent
-          </div>
-          <div className="text-justify tracking-widest text-[12px] md:text-[10.291px] lg:tracking-widest lg:text-[16px]">
+          </h1>
+          <p className="md:text-left text-center text-[14px] leading-[20px]
+           font-medium md:text-[10px] md:leading-2  lg:text-[18px] lg:leading-[26px]">
             Becoming AremxyPlug agent will be a lucrative and rewarding
             opportunity. You will have the opportunity to make money while
             giving your clients beneficial services.
@@ -1279,8 +1722,10 @@ useEffect(()=> {
             full- or part-time. You will assist clients in managing their
             accounts, making payments using digital tools that can simplify
             their lives and work at your own schedule. 
-          </div>
-          <div className="text-[10px] bg-[#04177f] w-[197px] text-center text-[#ffffff] p-[2%] rounded-md mx-auto md:mx-0 lg:text-[15px] lg:font-semibold lg:w-[247px]">
+          </p>
+          <div className="text-[14px] bg-[#04177f] w-full py-[16px]
+           text-center text-[#ffffff] p-[2%] rounded-md mx-auto md:mx-0
+            lg:text-[15px] font-bold lg:w-[247px]">
             Join Our Agent Program
           </div>
         </div>
@@ -1298,10 +1743,13 @@ useEffect(()=> {
           alt="/"
         />
         <div className="flex flex-col gap-[30px] lg:w-[50%]">
-          <div className="text-center text-[20px] font-semibold md:text-left lg:text-[30px]">
+          <h1  className="text-[20px]
+        font-bold md:text-left  text-center md:text-[25px] lg:text-[50px]
+          text-white ">
             Earn on Our Platform
-          </div>
-          <div className="text-justify text-[12px] tracking-wide lg:text-[16px]">
+          </h1>
+          <p className="md:text-left text-center text-[14px] leading-[20px]
+           font-medium md:text-[10px] md:leading-2  lg:text-[18px] lg:leading-[26px]">
             You have the opportunity to earn with AremxyPlug, The Nigeria's
             fastest-growing payment company to distribute in-demand services
             throughout your network and beyond.
@@ -1310,7 +1758,7 @@ useEffect(()=> {
             With services like airtime top-up, data bundles, education pins,
             among others, you can generate revenue using our API and Earn a 50%
             bonus on all of our services when you refer a friend.
-          </div>
+          </p>
           <div className="mx-auto bg-[#ffffff] text-[#04177f] p-[3%] text-[10px] font-bold w-[35%] text-center rounded-md md:mx-[0px] lg:text-[14px] lg:w-[30%] lg:font-extrabold">
             Learn More
           </div>
@@ -1320,12 +1768,14 @@ useEffect(()=> {
       {/* OUR PARTNERS */}
       <div
         id="partners"
-        className="flex flex-col gap-[20px] py-[20%] md:py-[5%]
+        className="flex flex-col gap-[20px] px-[5%] py-[20%] md:py-[5%]
       "
       >
-        <div className="mb-[3%] text-[20px] text-[#04177f] text-center font-semibold lg:text-[30px] lg:font-bold">
+        <h1  className="text-[20px]
+        font-bold md:text-left  text-center md:text-[25px] lg:text-[50px]
+          text-[#04177f] ">
           Partners & Businesses
-        </div>
+        </h1>
 
         <Carousel
           swipeable={true}
@@ -1361,17 +1811,20 @@ useEffect(()=> {
 
       <div className="px-[5%] py-[20%] flex flex-col gap-[20px] bg-[#04177f] text-[#ffffff] md:py-[10%] md:flex-row md:gap-[70px] md:jsutfiy-center md:items-center lg:gap-[90px] lg:tracking-widest ">
         <div className="flex flex-col gap-[25px]">
-          <div className="text-[20px] text-center md:text-[17px] md:text-left lg:text-[30px] lg:font-bold">
+          <h1  className="text-[20px]
+        font-bold md:text-left  text-center md:text-[25px] lg:text-[50px]
+          text-white ">
             Are you a Developer?
-          </div>
-          <div className="text-justify text-[12px] tracking-widermd:text-[11px] lg:text-[18px] lg:w-[90%]">
+          </h1>
+          <p className="md:text-left text-center text-[14px] leading-[20px]
+           font-medium md:text-[10px] md:leading-2  lg:text-[18px] lg:leading-[26px]">
             AremxyPlug API offers robust and comprehensive functionality that
             developers can use to build high-quality applications with several
             features, such as data access, integration with third-party
             services, and custom workflows. Our API is well-documented and it
             provides clear instructions for integration and usage, with
             easy-to-use integration with your existing workflows.
-          </div>
+          </p>
           <div className="text-[20px] mx-auto w-[60%] my-[10%] md:mx-0 lg:text-[30px] lg:font-bold lg:w-[40%]">
             A Well Documented Easy-to-use API
           </div>
@@ -1385,9 +1838,11 @@ useEffect(()=> {
 
       {/* FEEDBACK */}
       <div className="py-[20%] mx-[5%] md:py-[10%]">
-        <div className="text-[#04177f] text-center font-semibold text-[20px] lg:text-[30px] lg:font-extrabold mb-[5%]">
+        <h1  className="text-[20px]
+        font-bold   text-center md:text-[25px] lg:text-[50px]
+          text-[#04177f]">
           Feedbacks
-        </div>
+        </h1>
         <AliceCarousel
           mouseTracking
           disableButtonsControls
@@ -1401,12 +1856,16 @@ useEffect(()=> {
       </div>
 
       {/* Subscribe to our Newsletter */}
-      <div className="bg-[#04177f] text-[#ffffff] py-[15%] px-[5%] flex flex-col gap-[50px] md:py-[10%] md:flex-col md:justify-center md:items-center mb-[20%] lg:mb-[5%]">
-        <div className="text-center">
-          <p className="text-[20px] font-semibold  md:text-[26px]  lg:text-[45px]">
+      <div className="bg-[#04177f] text-[#ffffff] py-[15%] px-[5%] flex flex-col gap-[50px] 
+      md:py-[10%] md:flex-col md:justify-center md:items-center mb-[20%] lg:mb-[5%] w-full">
+        <div className="flex flex-col w-full gap-5 items-center">
+          <h1 className="text-[20px]
+        font-bold   text-center md:text-[25px] lg:text-[50px]
+          text-white">
             Subscribe to our Newsletter
-          </p>
-          <p className="text-[10px] mt-[5%] lg:text-[16px] lg:w-[80%] mx-auto">
+          </h1 >
+          <p className="text-center text-[14px] leading-[20px]
+           font-medium md:text-[10px] md:leading-2  lg:text-[18px] lg:leading-[26px]">
             Get the latest updates, exclusive offers, and expert insights
             delivered right to your inbox. Subscribe to our newsletter today and
             never miss out on what's happening in the tech industry!

@@ -1,7 +1,7 @@
 import React from 'react';
 import OurServiceHeader from './OurServiceHeader';
 import OurServiceCard from './OurServiceCard';
-import bgImage from './images/bgImage.png'
+import bgImage from './images/bgImage.avif'
 import { ourServiceDetails } from './data/data';
 
 const OurServices = () => {
@@ -10,15 +10,16 @@ const OurServices = () => {
         <div className='w-[90%] mx-auto pt-[15%] lg:pt-[5%] md:pt-[5%] md:w-[84%]'>
             <OurServiceHeader/>
         </div>
-        <div className="w-[90%] md:w-[84%] mx-auto bg-cover bg-center bg-no-repeat mb-[25%] md:mb-[15%]" style={{backgroundImage:`url(${bgImage})`}}>
-            <div className="p-[14.5px] md:p-[25px]">
-                <div className="flex flex-col gap-[30px] lg:gap-[165px] md:gap-[134px]">
-                    { ourServiceDetails.map((data) => (
+        <div className="w-full flex flex-col lg:gap-[60px] gap-[20px] px-[2%] bg-cover bg-center bg-no-repeat"
+         style={{backgroundImage:`url(${bgImage})`}}>
+          
+                
+                    {ourServiceDetails.map((data) => (
                         <OurServiceCard key={data.id} cardDetails={data}/>
                     ))}
                     {/* check the data file for the names used to link each of the service page links on explore */}
-                </div>
-            </div>
+                
+            
         </div>
     </div>
   );

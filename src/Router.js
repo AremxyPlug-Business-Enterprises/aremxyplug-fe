@@ -195,7 +195,7 @@ import { Loader } from "./Components/Loader/Loader";
 import { Suspense } from "react";
 import NotFound from "./Components/NotFound";
 import ProtectedRoutes from "./Components/ProtectedRoute"
-//import { ContextProvider } from "./Components/Context";
+
 const ProtectedRoute = ({children})=> {
  //const pathname = typeof location.pathname  === "string" ? location?.pathname?.slice(1) : ""
 const LazyRoutes =  React.lazy(()=> import("./Components/ProtectedRoute"))
@@ -209,7 +209,7 @@ const LazyRoutes =  React.lazy(()=> import("./Components/ProtectedRoute"))
 }>
   {!SessionExpiration  ? (
     <LazyRoutes>{children}</LazyRoutes>
-  ) : (
+) : (
     <ProtectedRoutes>{children}</ProtectedRoutes>
   )}
   </Suspense>
@@ -411,25 +411,25 @@ export   const RoutingObjectLimitScope = [
      {id : 183, Routepath : "*", RouteComponent :  <ProtectedRoute><NotFound/></ProtectedRoute>}
   ];
 export const Router = () => {
+
+   const MobileUsers = window.innerWidth ? window.innerWidth < 465 : 0;
+   
+     
+
+   
  return (
     <div>
       <ThemeHandler />
       <Routes>
         {RoutingObjectLimitScope.map(({ id, Routepath, RouteComponent }) => (
           <Route key={id} path={Routepath} element={
-           
            RouteComponent}
-            
-            
-             />
+          />
         ))}
 
         {/* Protected Routes */}
   
-      
-        
-         
-      </Routes>
+     </Routes>
     </div>
   );
 };

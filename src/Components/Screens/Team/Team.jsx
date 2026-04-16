@@ -3,16 +3,15 @@ import TeamMember from './TeamMember';
 import { memberData } from './data/data';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Ameenat  from "../AboutUs/ImageAbout/Ameenat CLO (1).jpg"
-import Habib  from "../AboutUs/ImageAbout/Founder & CEO.jpg";
-import Victory from "../AboutUs/ImageAbout/Victory CTO.jpg";
-import pranay from "../AboutUs/ImageAbout/Pranay CPO.jpg";
+import Ameenat  from "../AboutUs/ImageAbout/Ameenat_CLO.avif";
+import Habib  from "../AboutUs/ImageAbout/Founder & CEO.avif";
+import Victory from "../AboutUs/ImageAbout/Victory_CTO.avif";
+import pranay from "../AboutUs/ImageAbout/Pranay_CPO.avif";
 import Habeebat from "../AboutUs/ImageAbout/Habibat CFO.jpg"
 
 
 const Team = () => {
-  const halfData = memberData.slice(0, 10);
-  const secondHalfData = memberData.slice(10, 20);
+ 
 
   const theProfileArray = [
     { name : "Habib Kamaldeen", image : Habib,
@@ -39,8 +38,6 @@ const Team = () => {
            linkedIn : "https://www.linkedin.com/in/amina-abiola-a64483238", email : "", twitter : "https://x.com/meenahlawdesk"},]
   
   
-
-  const [show, setShow] = useState(false)
   return (
     <div className='w-[90%] md:w-[84%] mx-auto pt-[15%] md:pt-[5%] mb-[25%] md:mb-[15%]'>
       <div className="flex flex-col gap-[53.39px] mb-[53px] md:gap-[100px] md:mb-[125.97px] lg:gap-[150px] lg:mb-[150px]">

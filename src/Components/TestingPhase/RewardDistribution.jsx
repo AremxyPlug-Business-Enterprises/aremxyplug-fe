@@ -11,7 +11,7 @@ export default function RewardDistributionMinimal() {
     {
       icon: CheckCircle,
       title: "Process Rewards",
-      desc: "Rewards will be processed and sent out to all qualified testers.",
+      desc: "Rewards will be processed and distributed to all eligible testers via their AremxyPlug accounts within 2 – 4 weeks after the public launch.",
     },
     {
       icon: Mail,
