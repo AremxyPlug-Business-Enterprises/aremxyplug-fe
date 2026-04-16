@@ -19,6 +19,7 @@ export const Context = ({ children }) => {
   const [webSocketMessage, setWebSocketMessage] = useState({})
   const [taskBarResponse, setTaskBarResponse] = useState({})
   const [hideNavbar, setHideNavbar] = useState(false);
+    const [navOpen, setNavOpen] = useState(false);
   const [resetEmail, setResetEmail] = useState("");
   const [resetNumber, setResetNumber] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -1571,6 +1572,8 @@ const [currentDateInTimeStamps, setCurrentDateInTimeStamps] = useState(0);
     // *****************************************
     hideNavbar,
     setHideNavbar,
+    navOpen, 
+    setNavOpen,
     // *****************************************
 
     // *****************************************

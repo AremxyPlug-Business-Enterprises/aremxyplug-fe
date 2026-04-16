@@ -33,7 +33,7 @@ function DigitalServices() {
             </p>
 
             <div className="my-6">
-              <Link to="/ontactUs">
+              <Link to="/contactUs">
                 <Bluebutton text="Contact Sales" />
               </Link>
             </div>

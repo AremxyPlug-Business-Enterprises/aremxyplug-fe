@@ -4,16 +4,16 @@ import banking from  './images/Banking.svg'
 import onlineBanking from './images/Online money.svg'
 import ImageHolder from './ImageHolder';
 import PaymentCard from './PaymentCard';
-import bgImg from './images/bgImg.png'
+import bgImg from './images/PaymentBg.avif';
 import { Link } from 'react-router-dom';
 
 const PaymentServices = () => {
   return (
-    <div className='w-[90%] mx-auto pt-[15%] lg:pt-[5%] md:pt-[5%] md:w-[84%]'>
+    <div className='flex flex-col w-full py-[10%]'>
       <PaymentServiceHeader/>
       <div className="w-full p-[10px] flex flex-col gap-[80px] bg-center bg-cover md:p-[20px] lg:p-[25px] md:gap-[120px] lg:gap-[150px] md:mb-[15%] mb-[25%]" style={{backgroundImage: `url(${bgImg})`}}>
         {/* row 1 start here*/}
-        <div className="flex flex-col gap-[80px] md:flex-row lg:gap-[127px] md:gap-[73.55px] md:text-left">
+        <div className="flex flex-col gap-[80px] md:flex-row px-[5%] lg:gap-[127px] md:gap-[73.55px] md:text-left">
           <PaymentCard 
             title={'Wallet System'}
             message={'You can conveniently store, send, and receive money without any hassle by using our user-friendly wallet system.'}
@@ -56,7 +56,10 @@ const PaymentServices = () => {
 
         {/* cta link */}
         <div className='flex justify-center'>
-          <Link to={`/pricing`} className='bg-primary text-[10px] font-bold leading-[11.31px] text-white px-[35px] py-[12px] inline-block rounded-[7px] lg:px-[37px] lg:py-[15px] lg:text-[14px] lg:leading-[16px]'>Explore Pricing</Link>
+          <Link to={`/pricing`} className='bg-primary 
+          text-[10px] font-bold leading-[11.31px]
+           text-white px-[35px] py-[12px] inline-block 
+           rounded-[7px] lg:px-[37px] lg:py-[15px] lg:text-[14px] lg:leading-[16px]'>Explore Pricing</Link>
         </div>
       </div>
     </div>
