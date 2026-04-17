@@ -4,7 +4,7 @@ import { Info } from "lucide-react";
 export const EligibilityRules=()=> {
   const rules = [
     "Only users who joined the waitlist before the testing phase began are eligible.",
-    "New sign-ups after November 24th will not qualify for rewards but can explore limited features.",
+    "New sign-ups after April 22nd will not qualify for rewards but can explore limited features.",
     "Rewards will be shared among all eligible testers — it is not a winner-takes-all system.",
   ];
 

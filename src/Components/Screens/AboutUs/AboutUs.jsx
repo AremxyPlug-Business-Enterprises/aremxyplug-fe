@@ -882,7 +882,7 @@ const cardVariants = {
             alt="/"
           />
         </div>
-      <p className="text-[14px] font-extrabold text-black leading-[20px] 
+      <p className="text-[14px] font-medium text-black leading-[20px] 
       md:text-[11px] lg:text-[16px] opacity-80">
         We provide a varierty of products to meet the needs of both individuals and businesses,
         we are dedicated to offering products that are dependable, secure and simple to use at our company.

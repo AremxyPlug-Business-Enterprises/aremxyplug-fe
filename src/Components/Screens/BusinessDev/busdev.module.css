@@ -8,7 +8,7 @@
     /* position: relative; */
     /* background-size: "contain"; */
     width: "312px";
-    height: "250px";
+    height: "auto";
 }
 .img2{
     display: none;
@@ -20,11 +20,11 @@
     /* position: relative; */
     /* background-size: "contain"; */
     width: "312px";
-    height: "250px";
+    height: "a";
 }
 
 .special{
-    background-image: url("../../../../public/Images/businessimages/dottedBG.png");
+    background-image: url("../../../../public/Images/businessimages/dottedBG.avif");
     height: 300px;
     width: 100%;
     background-position: center;

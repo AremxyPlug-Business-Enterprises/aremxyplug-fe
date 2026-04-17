@@ -22,7 +22,9 @@ export default function TestingHeroSection() {
           </h1>
           <p className="text-lg text-gray-700 leading-relaxed">
             Thank you for being part of the AremxyPlug early users community.
-            From 22 April to 05 May, we’re opening controlled access to our platform to allow waitlisted users to test, explore, and help improve the product before public launch.
+            From 22 April to 06 May, we’re opening controlled
+             access to our platform to allow waitlisted users to test, 
+             explore, and help improve the product before public launch.
           </p>
         </motion.div>
 

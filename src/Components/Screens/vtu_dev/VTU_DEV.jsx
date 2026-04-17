@@ -659,163 +659,182 @@ function VTU_DEV() {
   ];
 
   return (
-    <>
+    <div className="h-full w-full lg:mt-[-10%] mt-[-10%]">
       {/* HEADER */}
-      <div className="bgClass h-[1050px] md:h-[800px] lg:h-[1200px] mt-[-100px] md:mt-[-170px] lg:mt-[-200px]    lg:px-[8%] px-[5%]  ">
-        <div
-          className=" grid lg:grid-cols-2   lg:gap-x-4 md:gap-x-4  md:grid-cols-2  
-       grid-cols-1 gap-y-4 
-      
-        "
-        >
-          <div className="rounded sm:rounded-md  lg:rounded-lg     mt-[150px] md:mt-[220px] lg:mt-[250px]">
-            <p
-              className="text-[20px]  md:text-[26.06px] lg:text-[45px] font-bold lg:tracking-wider  "
-              style={{
+      <div className="bgClass px-[5%] md:py-40 py-20 h-auto flex flex-col 
+      gap-10 justify-center  lg:gap-15 ">
+         <div className="flex md:flex-row flex-col">
+          <div className="flex flex-col lg:gap-10 gap-5 md:w-1/2 w-full">
+            <h2 className="text-[30px] leading-[40px] font-bold md:text-left text-center 
+    md:text-[26px] lg:text-[50px]  lg:leading-[60px] 
+           text-[#04177F]" style={{
                 color: primaryColor,
-              }}
-            >
+              }}>
               VTU Development
-            </p>
-            <p className="text-[#000] text-justify text-[12px] md:text-[9.34px] lg:text-lg mt-4 sm:mt-6 md:mt-10 sm:text:lg  lg:mt-12 ">
+            </h2>
+            <p className="text-[14px] md:text-left text-center font-bold
+         text-black leading-[20px] 
+      md:text-[11px] lg:text-[16px] lg:leading-[26px] opacity-80">
               AremxyPlug is a company that has a team of technical experts that
               can easily and quickly design and develop a VTU platform to start
               your telecom business with services like airtime top-up, data
               bundles, education pins, TV subscription, and bills payment
               platform.
             </p>
-
-            <div className="my-8">
-              <Link to="/OwnVTU">
-                <Bluebutton text="Contact Sales" />
-              </Link>
-            </div>
-          </div>
-
-          <div className="flex justify-center  md:mt-[220px] lg:mt-[250px]">
+   </div>
+{ /* Image */ }
+  <div className="flex justify-center w-full h-auto md:w-1/2">
             <img
-              src="./Images/vtu_dev/VTU_bg.png"
-              alt="background_image "
-              className="sm:w-[80%] md:w-[100%] "
+              src="./Images/vtu_dev/VTU_bg.avif"
+              alt="background_image"
+              className="w-[80%] md:w-[50%]"
             />
           </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3">
-          <div className="mt-[100px] md:mt-[unset] rounded sm:rounded-md  lg:rounded-lg   md:col-span-2">
-            <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold lg:tracking-wider  text-[#000]">
-              Own a VTU platform to start your telecom business
+ </div>
+{/* Button */}
+         
+              <Link   className='w-full md:w-[197px] px-2 bg-primary text-[14px] leading-[18px]
+              font-bold  text-white  py-[16px]  text-center
+         rounded-[7px]  lg:text-[14px] lg:leading-[16px]' to="/OwnVTU">
+                <Bluebutton text="Contact Sales" />
+              </Link>
+          
+         {/* SubText below */}
+                 {/* <div className="flex flex-col"> */}
+          {/* <div className=" md:mt-[unset] rounded sm:rounded-md  lg:rounded-lg   md:col-span-2"> */}
+            <p className=" md:text-left text-center text-[14px] leading-[20px] 
+            font-bold lg:text-[16px] lg:leading-[24px]">
+             - Own a VTU platform to start your telecom business
             </p>
-            <p className="text-[#000] text-justify text-[12px] md:text-[9.34px] lg:text-lg mt-4 sm:mt-6 md:mt-10 sm:text:lg  lg:mt-12 ">
+            {/* <p className="text-[#000] text-justify text-[12px] md:text-[9.34px] lg:text-lg mt-4 sm:mt-6 md:mt-10 sm:text:lg  lg:mt-12 ">
               We put the needs of our users in a digital world first while
               prioritizing users experience, security, and scalability with a
               well-designed VTU system that can offer a secure and practical
               bills payments.
-            </p>
-          </div>
+            </p> */}
+          {/* </div> */}
+        {/* </div> */}
         </div>
-      </div>
+
+
+      
       {/* HEADER ENDS */}
 
       {/* 1 */}
       <div
-        className=" grid  lg:gap-x-4  md:grid-cols-3 md:gap-x-4    
-    grid-cols-1 gap-y-4 
-    px-[5%] lg:px-[8%]
-     "
-      >
-        <div className=" py-4 sm:py-6  lg:py-8 md:py-6 md:col-span-2 ">
-          <p
-            className="text-2xl sm:text-2xl md:text-3xl lg:text-4xl font-bold lg:tracking-wider  "
-            style={{
-              color: primaryColor,
-            }}
-          >
+        className="flex flex-col px-[5%] h-auto py-10
+      gap-10 justify-center  lg:gap-15">
+         <div className="flex md:flex-row flex-col h-full">
+          <div className="flex flex-col  lg:gap-10 gap-5 md:w-1/2 w-full">
+          <h2
+           className="text-[30px] leading-[40px] font-bold md:text-left text-center 
+    md:text-[26px] lg:text-[50px]  lg:leading-[60px] 
+           text-[#04177F]">
             Start Your VTU Business
-          </p>
-          <p className="text-[#000] text-justify text-[12px] md:text-[9.34px] lg:text-lg mt-4 sm:mt-6 md:mt-10 sm:text:lg  lg:mt-12 ">
+          </h2>
+          <p className="text-[14px] md:text-left text-center font-bold
+         text-black leading-[20px] 
+      md:text-[11px] lg:text-[16px] lg:leading-[26px] opacity-80">
             Digital recharge is now a well-liked method of purchasing airtime,
             data bundles, and bills payments. We make it easy for you to start
             your telecom business without any hassle. You can start right away
             with any of our plans, very secured, convenient, flexible, and
             cost-effective. 
           </p>
-          <div className="my-6">
-            <Link to="/OwnVTU">
-              <Bluebutton text="Start Now" />
-            </Link>
           </div>
-        </div>
-
-        <div className="rounded-lg flex flex-col items-center  md:block ">
+          {/* Image Container */}
+             <div className="flex justify-center w-full h-full 
+             md:w-1/2">
           <img
-            src="./Images/vtu_dev/startVTU.png"
-            alt="background_image "
-            className="w-[60%]  md:w-[100%]"
+            src="./Images/vtu_dev/startVTU.avif"
+            alt="background_image"
+             className="w-full md:h-[300px] h-[150px]"
           />
         </div>
-      </div>
-      {/* 2 */}
+        
+ {/*  Own your VTU Page*/}
+       </div>
+        <Link to="/OwnVTU" 
+          className='w-full md:w-[197px] px-2 bg-primary text-[14px] leading-[18px]
+          font-bold  text-white  py-[16px]  text-center
+         rounded-[7px]  lg:text-[14px] lg:leading-[16px]'>
+              <Bluebutton text="Start Now" />
+            </Link>
+    </div>
+      {/* Setting Up a plan */}
 
-      <div
-        className=" grid  lg:gap-x-4  md:grid-cols-3 md:gap-x-4    
-    grid-cols-1 gap-y-4 
-    lg:px-[8%]  px-[5%]
-     "
-      >
-        <div className=" py-4 sm:py-6  lg:py-8 md:py-6 md:col-span-2 ">
-          <p
-            className="text-2xl sm:text-2xl md:text-3xl lg:text-4xl font-bold lg:tracking-wider  "
+       <div
+        className="flex flex-col px-[5%] h-auto py-10
+      gap-10 justify-center  lg:gap-15">
+         <div className="flex md:flex-row flex-col">
+          <div className="flex flex-col lg:gap-10 gap-5 md:w-1/2 w-full">
+          <h2
+             className="text-[30px] leading-[40px] font-bold md:text-left text-center 
+    md:text-[26px] lg:text-[50px]  lg:leading-[60px] 
+           text-[#04177F]"
             style={{
               color: primaryColor,
             }}
           >
             Setting up a VTU platform
-          </p>
-          <p className="text-[#000] text-justify text-[12px] md:text-[9.34px] lg:text-lg mt-4 sm:mt-6 md:mt-10  lg:mt-12 ">
+          </h2>
+          <p  className="text-[14px] md:text-left text-center font-bold
+         text-black leading-[20px] md:text-[11px] lg:text-[16px] 
+         lg:leading-[26px] opacity-80">
             With AremxyPlug’s robust API and software solutions, you can set up
             a VTU platform to manage your telecom business as an individual or
             business owner, student, or full house wife, you can vend all
             telecom products with services like airtime top-up, data bundles,
             and bills payment in just a few easy steps.
           </p>
-          <div className="my-6">
-            <Link to="/OwnVTU">
-              <Bluebutton text="Set-up Now" />
-            </Link>
           </div>
-        </div>
-
-        <div className="rounded-lg flex flex-col items-center  md:block ">
+ {/* Image Container */}
+    <div className="md:w-1/2 w-full">
           <img
-            src="./Images/vtu_dev/settingsVTU.png"
-            alt="background_image "
-            className="w-[60%]  md:w-[100%]"
+            src="./Images/vtu_dev/settingsVTU.avif"
+            alt="background_image"
+            className="w-full md:h-[300px] h-[150px]"
           />
         </div>
-      </div>
+        {/* Close Image Container */}
+     
+   </div>
+        <Link className='w-full md:w-[197px] px-2 bg-primary text-[14px] leading-[18px]
+              font-bold  text-white  py-[16px]  text-center
+         rounded-[7px]  lg:text-[14px] lg:leading-[16px]' to="/OwnVTU">
+              <Bluebutton text="Set-up Now" />
+            </Link>
+</div>
 
-      <div className="lg:px-[8%]  px-[5%] ">
-        <p
-          className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold lg:tracking-wider  text-center mt-[70px] mb-[50px]"
+{/* CHHOSING PLAN */}
+      <div className="lg:px-[8%]  px-[5%] flex flex-col lg:gap-10 gap-5 mt-20">
+        <h2
+         className="text-[30px] leading-[40px] font-bold text-center 
+    md:text-[26px] lg:text-[50px]  lg:leading-[60px] 
+           text-[#04177F]"
           style={{
             color: primaryColor,
           }}
         >
           Choose Plan
-        </p>
+        </h2>
         {/* VTU Payment plans */}
 
-        <div className=" grid md:grid-cols-2 lg:grid-cols-3 lg:gap-x-8 gap-y-8 md:gap-y-14 lg:gap-y-8  justify-center">
-          <div className="relative myCardShadow h-[760px] md:h-[800px] lg:h-[760px] md:w-[86%] lg:w-[unset] bg-[#fff] rounded-lg gap-x-2 overflow-hidden">
+        <div className=" grid md:grid-cols-2 lg:grid-cols-3 lg:gap-x-8 gap-y-8 md:gap-y-14 
+        lg:gap-y-8  justify-center">
+          <div className="relative myCardShadow h-[500px] md:h-[800px] lg:h-[760px] 
+          md:w-[86%] lg:w-[unset] bg-[#fff] rounded-lg gap-x-2 overflow-hidden">
             <VTU_PAY color="#90D7FF" />
 
             <div className="absolute top-0 bottom-0 right-0 left-0 ">
-              <p className="text-center font-bold text-3xl my-8">Starter</p>
+              <p className="text-center font-bold text-3xl my-8">
+                Starter
+                </p>
 
               <div className="flex justify-center">
                 <p
-                  className="myButtonShadow text-[#000] text-xl w-[150px] text-center rounded-lg py-2 font-semibold  cursor-pointer"
+                  className="myButtonShadow text-[#000] text-xl w-[150px] 
+                  text-center rounded-lg py-2 font-semibold  cursor-pointer"
                   style={{
                     backgroundColor: "#fff",
                   }}
@@ -827,7 +846,8 @@ function VTU_DEV() {
               <div className="flex justify-center my-8">
                 <Link to="/OwnVTU">
                   <p
-                    className="myButton2 text-[#fff] myButtonShadow  text-xl w-[150px] text-center rounded-lg py-2 font-semibold  cursor-pointer"
+                    className="myButton2 text-[#fff] myButtonShadow  text-xl w-[150px] 
+                    text-center rounded-lg py-2 font-semibold  cursor-pointer"
                     style={{
                       backgroundColor: "#fff",
                     }}
@@ -889,7 +909,7 @@ function VTU_DEV() {
               </div>
             </div>
           </div>
-          <div className="relative  myCardShadow h-[760px] md:h-[800px] lg:h-[760px] md:w-[86%] lg:w-[unset] bg-[#fff] rounded-lg gap-x-2 overflow-hidden">
+          <div className="relative  myCardShadow h-[600px] md:h-[800px] lg:h-[760px] md:w-[86%] lg:w-[unset] bg-[#fff] rounded-lg gap-x-2 overflow-hidden">
             <VTU_PAY color="#dce4ff" />
 
             <div className="absolute top-0 bottom-0 right-0 left-0 ">
@@ -991,7 +1011,7 @@ function VTU_DEV() {
               </div>
             </div>
           </div>
-          <div className="relative myCardShadow h-[760px] md:h-[800px] lg:h-[760px] md:w-[86%] lg:w-[unset] bg-[#fff] rounded-lg gap-x-2 overflow-hidden">
+          <div className="relative myCardShadow h-[600px] md:h-[800px] lg:h-[760px] md:w-[86%] lg:w-[unset] bg-[#fff] rounded-lg gap-x-2 overflow-hidden">
             <VTU_PAY color="#edd6ff" />
 
             <div className="absolute top-0 bottom-0 right-0 left-0 ">
@@ -1093,7 +1113,7 @@ function VTU_DEV() {
               </div>
             </div>
           </div>
-          <div className="relative  myCardShadow h-[760px]  md:h-[800px] lg:h-[760px] md:w-[86%] lg:w-[unset] bg-[#fff] rounded-lg gap-x-2 overflow-hidden lg:hidden">
+          <div className="relative  myCardShadow h-[550px]  md:h-[800px] lg:h-[760px] md:w-[86%] lg:w-[unset] bg-[#fff] rounded-lg gap-x-2 overflow-hidden lg:hidden">
             <VTU_PAY color="#feeebe" />
 
             <div className="absolute top-0 bottom-0 right-0 left-0 ">
@@ -1195,7 +1215,7 @@ function VTU_DEV() {
               </div>
             </div>
           </div>
-          <div className=" md:hidden  relative myCardShadow h-[760px] md:h-[800px] lg:h-[760px] md:w-[86%] lg:w-[unset] bg-[#fff] rounded-lg gap-x-2 overflow-hidden lg:hidden">
+          <div className=" md:hidden  relative myCardShadow h-[600px] md:h-[800px] lg:h-[760px] md:w-[86%] lg:w-[unset] bg-[#fff] rounded-lg gap-x-2 overflow-hidden lg:hidden">
             <VTU_PAY color="#dbffd2" />
 
             <div className="absolute top-0 bottom-0 right-0 left-0 ">
@@ -1724,7 +1744,7 @@ function VTU_DEV() {
       </div>
 
       {/*  Difference Key Features  ends here */}
-    </>
+    </div>
   );
 }
 

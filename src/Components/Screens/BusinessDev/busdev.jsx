@@ -4,6 +4,7 @@ import { RiArrowDropUpLine } from "react-icons/ri";
 import { Player } from "@lottiefiles/react-lottie-player";
 import styles from "../BusinessDev/busdev.module.css";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 export const BusinessDev = () => {
   const [firstDrop, setFirstDrop] = useState(false);
@@ -14,57 +15,168 @@ export const BusinessDev = () => {
     setButtonText((prevText) => (prevText === "More" ? "Less" : "More"));
   }
 
+
+  // Business Development Array
+  const businessServices = [
+  {
+    title: "Critical and Innovative Thinking",
+    description: "Innovative thinking benefits fostering a growth mindset, enhancing problem-solving abilities, and boosting adaptability and resilience, which all contribute to the success of businesses.",
+    lottie: "https://assets3.lottiefiles.com/packages/lf20_o18imdcr.json",
+  },
+  {
+    title: "Strategic Business Planning",
+    description: "This is the systematic process used to articulate the objectives and actions required to achieve the future vision of purchasing habits of your business perspectives.",
+    lottie: "https://assets5.lottiefiles.com/packages/lf20_NAl0oidcCj.json",
+  },
+  {
+    title: "Strategic Partnerships",
+    description: "The mutually beneficial business relationship called 'strategic partnership' are formal agreements between two companies with the main objective of accomplishing particular goals.",
+    lottie: "https://assets2.lottiefiles.com/packages/lf20_ER8E6HKqBl.json",
+  },
+  {
+    title: "Project Management",
+    description: "This involves the discipline of planning, organizing, and controlling resources to achieve specific goals within defined constraints, ensuring successful outcomes.",
+    lottie: "https://assets8.lottiefiles.com/packages/lf20_w98qte06.json",
+  },
+  {
+    title: "Product Management",
+    description: "The discipline of overseeing the development, strategy, and lifecycle of a product involves market research, prioritization, and delivering valuable solutions.",
+    lottie: "https://assets2.lottiefiles.com/packages/lf20_yqoxehdn.json",
+  },
+  {
+    title: "Marketing, Sales & Growth",
+    description: "Marketing, sales, and growth synergistically fuel business success by attracting, converting, and expanding customer relationships through strategic integration.",
+    lottie: "https://assets10.lottiefiles.com/packages/lf20_vLxVkbToAJ.json",
+  },
+  {
+    title: "Cost Saving",
+    description: "Strategic actions taken to reduce expenses, optimize resources, and improve efficiency, leading to financial benefits and increased profitability.",
+    lottie: "https://assets9.lottiefiles.com/packages/lf20_uf2ng6jq.json",
+  }
+];
+
   return (
-    <div className="mx-[5%] mt-[15%] md:mt-[10%] lg:px-[3%]">
+    <div className="">
       {/* SECTION ONE */}
-      <div className="md:flex md:gap-[100px] md:mb-[15%]">
-        <div className="flex flex-col gap-[25px] md:gap-[30px]">
-          <div className="text-[20px] text-[#04177f] w-[195px] font-semibold lg:text-[45px]">
+      <div className="h-auto flex flex-col pb-12 pt-14 lg:py-10
+      gap-10 justify-center  lg:gap-15 px-[5%]">
+          <div className="flex md:flex-row flex-col gap-5 items-center">
+          <div className="flex flex-col lg:gap-10 gap-5 md:w-1/2 w-full">
+          <h1 className="text-[30px] leading-[40px]   font-bold md:text-left text-center 
+    md:text-[26px] lg:text-[50px]  lg:leading-[60px] 
+           text-[#04177F]">
             Business Development
-          </div>
-          <div className="text-[12px] text-justify md:w-[289px] h-[80px] lg:text-[18px] lg:w-[500px] lg:h-[135px]">
+          </h1 >
+          <p className="text-[14px] md:text-left text-center font-bold
+         text-black leading-[20px] 
+      md:text-[11px] lg:text-[16px] lg:leading-[26px] opacity-80">
             Our team of business experts will develop the best strategies to
             assist you in developing, implementing, and enhancing your digital
             business capabilities within your company. When it comes to business
             development, trust us to save you time and stress.
+          </p>
           </div>
-          <Link to="/ContactUs">
-            {" "}
-            <div className="text-white bg-[#04177f] text-[7.9px] w-[122px] h-[28px] rounded-md flex justify-center items-center lg:w-[196px] lg:h-[45px] lg:text-[12px] lg:font-bold">
-              Talk to an Expert Today!
-            </div>
-          </Link>
-        </div>
-        <img
-          className="w-[270px] h-[185px] my-[20%] mx-auto md:my-[0] md:w-[318px] md:h-[219px] lg:w-[550px] lg:h-[379px]"
-          src="./Images/businessimages/busimg.png"
+          <div className="w-full md:w-1/2 flex md:justify-end justify-center">
+            <img
+          className="w-[270px] h-[185px] my-[20%] mx-auto md:my-[0] 
+          md:w-[318px] md:h-[219px] lg:w-[550px] lg:h-[379px]"
+          src="./Images/businessimages/busimg.avif"
           alt="/"
         />
-      </div>
-
-      <div className="mb-[20%] md:flex md:flex-col md:justify-center md:items-center">
-        <div className="text-[18px] font-extrabold w-[312px] h-[px] text-justify leading-[22.5px] md:text-[15px] md:w-[347px] md:text-center md:font-bold lg:text-[24px] lg:w-[600px]">
-          Let's take your strategic ideas into realities
         </div>
-        <br></br>
+        </div>
+     
+       
+    <Link to="/ContactUs"
+           className='py-[16px] lg:px-4 text-center w-full  text-[14px] md:w-[179px]
+      leading-[11.31px] rounded-[7px] lg:py-[15px]  bg-primary text-white
+       lg:rounded-[8px] capitalize lg:text-[14px] lg:leading-[16px] font-bold'>
+      
+             Talk to an Expert Today!
+            
+          </Link>
+
+      {/* <div className="mb-[20%] md:flex md:flex-col md:justify-center md:items-center"> */}
+        <p className=" md:text-left text-center text-[14px] leading-[20px] 
+            font-bold lg:text-[16px] lg:leading-[24px]">
+          Let's take your strategic ideas into realities
+        </p>
+
+        {/* <br></br>
         <div className="text-[12px] w-[312px] text-justify md:text-[10.42px] md:text-center md:w-[434px] lg:text-[18px] lg:w-[750px]">
           Our aim is to provide comprehensive support to businesses across
           various stages of development with holistic approach to drive growth,
           increase profitability, and achieve a long-term success.
-        </div>
+        </div> */}
+      {/* </div> */}
       </div>
+      
 
       {/* SECTION TWO */}
       <div
+      className="special  px-[5%] py-[10%] md:px-[10%] "
+      style={{
+        backgroundImage: "url(./Images/businessimages/dottedBG.avif)",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+        backgroundSize: "cover",
+      }}
+    >
+      {businessServices.map((service, index) => {
+        const isEven = index % 2 === 0;
+
+        return (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8, delay: index * 0.1 }}
+            className={`flex flex-col md:flex-row ${
+              isEven ? "" : "md:flex-row-reverse"
+            } items-center justify-center gap-[40px] md:gap-[150px] lg:gap-[250px] mb-[15%] lg:mb-[10%]`}
+          >
+            {/* Text Content */}
+            <div className="flex flex-col gap-[20px] max-w-[550px]">
+              <h2 className="text-[30px] leading-[40px]   font-bold md:text-left text-center 
+    md:text-[26px] lg:text-[50px]  lg:leading-[60px] 
+           text-black">
+                {service.title}
+              </h2>
+              <p className="text-[14px] md:text-left text-center font-bold
+         text-black leading-[20px] 
+      md:text-[11px] lg:text-[16px] lg:leading-[26px] opacity-80">
+                {service.description}
+              </p>
+            </div>
+
+            {/* Lottie Player */}
+            <motion.div 
+              whileHover={{ scale: 1.05 }}
+              className="relative"
+            >
+              <Player
+                autoplay
+                loop
+                src={service.lottie}
+                style={{ 
+                  height: window.innerWidth > 768 ? "350px" : "280px", 
+                  width: window.innerWidth > 768 ? "350px" : "280px" 
+                }}
+              />
+            </motion.div>
+          </motion.div>
+        );
+      })}
+    </div>
+      {/* <div
         className="special mx-[-6%] px-[5%] py-[10%] md:px-[10%] lg:mx-[-9.5%]"
         style={{
-          backgroundImage: "url(./Images/businessimages/dottedBG.png)",
+          backgroundImage: "url(./Images/businessimages/dottedBG.avif)",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
           backgroundSize: "cover",
-          // width:"100%"
-
-          // "url(.png), linear-gradient(90.67deg, #92ABFE 0.49%, #05E2FF 99.34%)",
+       
         }}
       >
         <div className="md:flex mb-[20%] md:justify-center md:items-center md:gap-[250px] lg:gap-[300px] lg:mb-[10%]">
@@ -79,11 +191,7 @@ export const BusinessDev = () => {
             </div>
           </div>
 
-          {/* <img
-            className="w-[234.11px] h-[234.11px] mx-auto md:w-[188px] md:h-[188px] md:mx-0 lg:w-[325px] lg:h-[325px]"
-            src="/Images/businessimages/busimg2.png"
-            alt="/"
-          /> */}
+        
           <Player
             autoplay
             loop
@@ -104,11 +212,7 @@ export const BusinessDev = () => {
             </div>
           </div>
 
-          {/* <img
-            className="w-[234.11px] h-[234.11px] mx-auto md:w-[188px] md:h-[188px] md:mx-0 lg:w-[325px] lg:h-[325px]"
-            src="/Images/businessimages/busimg3.png"
-            alt="/"
-          /> */}
+      
           <Player
             autoplay
             loop
@@ -129,11 +233,7 @@ export const BusinessDev = () => {
             </div>
           </div>
 
-          {/* <img
-            className="w-[234.11px] h-[234.11px] mx-auto md:w-[188px] md:h-[188px] md:mx-0 lg:w-[325px] lg:h-[325px]"
-            src="/Images/businessimages/busimg4.png"
-            alt="/"
-          /> */}
+        
           <Player
             autoplay
             loop
@@ -155,11 +255,6 @@ export const BusinessDev = () => {
             </div>
           </div>
 
-          {/* <img
-            className="w-[234.11px] h-[234.11px] mx-auto md:w-[188px] md:h-[188px] md:mx-0 lg:w-[325px] lg:h-[325px]"
-            src="/Images/businessimages/busimg5.png"
-            alt="/"
-          /> */}
           <Player
             autoplay
             loop
@@ -181,11 +276,6 @@ export const BusinessDev = () => {
             </div>
           </div>
 
-          {/* <img
-            className="w-[234.11px] h-[234.11px] mx-auto md:w-[188px] md:h-[188px] md:mx-0 lg:w-[325px] lg:h-[325px]"
-            src="/Images/businessimages/busimg6.png"
-            alt="/"
-          /> */}
           <Player
             speed={5}
             autoplay
@@ -207,11 +297,6 @@ export const BusinessDev = () => {
             </div>
           </div>
 
-          {/* <img
-            className="w-[234.11px] h-[234.11px] mx-auto md:w-[188px] md:h-[188px] md:mx-0 lg:w-[325px] lg:h-[325px]"
-            src="/Images/businessimages/busimg7.png"
-            alt="/"
-          /> */}
           <Player
             autoplay
             loop
@@ -233,11 +318,7 @@ export const BusinessDev = () => {
             </div>
           </div>
 
-          {/* <img
-            className="w-[234.11px] h-[234.11px] mx-auto md:w-[188px] md:h-[188px] md:mx-0 lg:w-[325px] lg:h-[325px]"
-            src="/Images/businessimages/busimg8.png"
-            alt="/"
-          /> */}
+
           <Player
             autoplay
             loop
@@ -245,10 +326,10 @@ export const BusinessDev = () => {
             style={{ height: "300px", width: "300px" }}
           ></Player>
         </div>
-      </div>
+      </div> */}
 
       {/* SECTION THREE */}
-      <div className="my-[15%] md:my-[10%]">
+      <div className="my-[15%] md:my-[10%] px-[5%]">
         <div className=" text-[20px] text-[#04177f] text-center lg:text-[30px]">
           Our Key Features
         </div>
@@ -258,7 +339,7 @@ export const BusinessDev = () => {
         </div>
       </div>
 
-      <div className="mb-[20%] md:mb-[10%] grid md:grid-cols-3 md:gap-x-[6%] gap-[80px]">
+      <div className="mb-[20%] md:mb-[10%] grid md:grid-cols-3 px-[5%] md:gap-x-[6%] gap-[80px]">
         {/* market research */}
         <div className={styles.img}>
           <img
@@ -536,12 +617,12 @@ export const BusinessDev = () => {
       {/* SECTION FOUR  */}
       <img
         className="lg:hidden md:w-[80%] md:mx-auto mb-[25%]"
-        src="./Images/businessimages/lastbg.png"
+        src="./Images/businessimages/lastbg.avif"
         alt="/"
       />
       <img
         className="hidden lg:block md:w-[80%] md:mx-auto mb-[25%]"
-        src="./Images/businessimages/lastbg2.png"
+        src="./Images/businessimages/lastbg2.avif"
         alt="/"
       />
 

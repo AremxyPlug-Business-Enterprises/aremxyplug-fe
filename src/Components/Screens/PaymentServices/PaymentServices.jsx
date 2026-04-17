@@ -9,11 +9,12 @@ import { Link } from 'react-router-dom';
 
 const PaymentServices = () => {
   return (
-    <div className='flex flex-col w-full py-[10%]'>
+    <div className='flex  flex-col pt-[15%] lg:pt-[5%] md:pt-[5%] w-full '>
       <PaymentServiceHeader/>
-      <div className="w-full p-[10px] flex flex-col gap-[80px] bg-center bg-cover md:p-[20px] lg:p-[25px] md:gap-[120px] lg:gap-[150px] md:mb-[15%] mb-[25%]" style={{backgroundImage: `url(${bgImg})`}}>
+      <div className="w-full py-10 flex flex-col gap-[80px] bg-center
+       bg-cover md:p-[20px] lg:p-[25px] md:gap-[120px] " style={{backgroundImage: `url(${bgImg})`}}>
         {/* row 1 start here*/}
-        <div className="flex flex-col gap-[80px] md:flex-row px-[5%] lg:gap-[127px] md:gap-[73.55px] md:text-left">
+        <div className="flex flex-col  gap-[80px] md:flex-row px-[5%] lg:gap-[127px] md:gap-[73.55px] md:text-left">
           <PaymentCard 
             title={'Wallet System'}
             message={'You can conveniently store, send, and receive money without any hassle by using our user-friendly wallet system.'}
@@ -32,7 +33,8 @@ const PaymentServices = () => {
         {/* row 2 ends here */}
 
         {/* row 3  starts here*/}
-        <div className="flex flex-col gap-[80px] md:flex-row lg:gap-[127px] md:gap-[73.55px] md:text-left">
+        <div className="flex flex-col gap-[80px] 
+        md:flex-row lg:gap-[127px] md:gap-[73.55px] px-[5%] md:text-left">
           <PaymentCard
             title={'Money Transfer'}
             message={'With our dependable money transfer services, you can send and receive money without any hassle.'}
@@ -45,8 +47,8 @@ const PaymentServices = () => {
         {/* row 3 ends here */}
 
         {/* row-4 starts here */}
-        <div className="flex flex-col items-center gap-[80px]">
-          <PaymentCard 
+        <div className="w-full flex flex-col md:items-center gap-[80px] ">
+      <PaymentCard 
             title={'International Payment'}
             message={'With our international payment structure, you can send and receive money from anywhere in the world.'}
           />
@@ -55,12 +57,13 @@ const PaymentServices = () => {
         {/* row-4 ends here */}
 
         {/* cta link */}
-        <div className='flex justify-center'>
-          <Link to={`/pricing`} className='bg-primary 
-          text-[10px] font-bold leading-[11.31px]
-           text-white px-[35px] py-[12px] inline-block 
-           rounded-[7px] lg:px-[37px] lg:py-[15px] lg:text-[14px] lg:leading-[16px]'>Explore Pricing</Link>
-        </div>
+       <div className='flex justify-center'>
+             <Link to='/pricing'className='rounded-[7px] 
+                          inline-block px-[25px] py-[12px] text-white font-bold 
+                          text-[10px] leading-[11.31px] bg-primary md:px-[21px] 
+                          lg:px-[37px] lg:py-[15px] lg:text-[14px] lg:leading-[16px]'>Explore Pricing</Link>
+                        
+                      </div>
       </div>
     </div>
   )
