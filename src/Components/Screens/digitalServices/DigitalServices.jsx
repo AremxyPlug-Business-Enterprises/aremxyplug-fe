@@ -1,30 +1,75 @@
 import React from "react";
 import { primaryColor } from "../cardIssuing/cardIssuing";
-import Bluebutton from "../../bluebutton/Bluebutton";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 function DigitalServices() {
+
+  // Digital Services
+  const marketingServices = [
+  {
+    title: "Content Marketing",
+    description: "Content marketing is a powerful tool for businesses looking to connect with their audience and drive engagement.",
+    image: "./Images/digitalServices/contentMarketing.avif",
+    link: "/content-marketing",
+    side: "left"
+  },
+  {
+    title: "Social Media Marketing",
+    description: "Social media marketing can be an effective way to reach a wide audience and build brand awareness.",
+    image: "./Images/digitalServices/Socialmediamarketing.avif",
+    link: "/social-media-marketing",
+    side: "right"
+  },
+  {
+    title: "SEO Marketing",
+    description: "SEO is the practice of optimizing your website and its content to improve its visibility and ranking on search engine results pages.",
+    image: "./Images/digitalServices/SEO.avif",
+    link: "/seo-marketing",
+    side: "left"
+  },
+  {
+    title: "Email Marketing",
+    description: "Your business needs an email marketing strategy that boost sales and create a bond with your customers.",
+    image: "./Images/digitalServices/emailMarketing.avif",
+    link: "/EmailMarketing",
+    side: "right"
+  },
+  {
+    title: "Product Design",
+    description: "Product design is the process of identifying a market opportunity, clearly defining the problem, and validating the solution.",
+    image: "./Images/digitalServices/productDesign.avif",
+    link: "/ProductDesign",
+    side: "left"
+  },
+  {
+    title: "Graphic Design",
+    description: "Graphic design is the creation of visual compositions to solve problems and communicate ideas through typography and imagery.",
+    image: "./Images/digitalServices/graphicDesign.avif",
+    link: "/GraphicDesign",
+    side: "right"
+  }
+];
   return (
     <div>
       {/* digitalServicesBG1 */}
 
-      <div className="overflow-hidden h-[950px] sm:h-[1100px] md:h-[570px] lg:h-[600px] xl:h-[650px] 2xl:h-[900px]  mt-[-200px] md:mt-[-150px]  lg:mt-[-200px] ">
+      <div className="overflow-hidden h-[950px] sm:h-[1100px] md:h-[570px] lg:h-[600px]
+       xl:h-[650px] 2xl:h-[900px]  mt-[-200px] md:mt-[-150px]  lg:mt-[-200px] w-full ">
         <div
-          className="absolute mt-[250px] md:mt-[180px] lg:mt-[230px] grid lg:grid-cols-2 lg:gap-x-4  md:grid-cols-2 md:gap-x-4    
-       grid-cols-1 gap-y-4 
-       lg:px-[8%] px-[5%]
-       
-        "
-        >
-          <div className=" py-4 sm:py-6  lg:py-8 md:py-6">
-            <p
-              className="text-[20px]  md:text-[26.06px] lg:text-[45px] font-bold lg:tracking-wider  "
+          className="absolute w-full mt-[250px] md:mt-[180px] lg:mt-[230px] grid lg:grid-cols-2 
+          lg:gap-x-4 gap-x-15 md:grid-cols-2 md:gap-x-4 grid-cols-1 gap-y-4 lg:px-[8%] px-[5%]">
+          <div className=" py-4 sm:py-6 w-full flex flex-col gap-10 lg:py-8 md:py-6">
+            <h1 className="text-[30px] leading-[40px]   font-bold md:text-left text-center 
+    md:text-[26px] lg:text-[50px]  lg:leading-[60px] 
+           text-[#04177F]"
               style={{
                 color: primaryColor,
               }}
             >
               Digital Services
-            </p>
-            <p className="text-[#000] text-justify text-[10.53px] md:text-[12px] lg:text-lg mt-4 sm:mt-6 md:mt-10  lg:mt-12 ">
+            </h1>
+            <p className="text-[14px] md:text-left text-center font-bold text-black leading-[20px] 
+      md:text-[11px] lg:text-[16px] lg:leading-[26px] opacity-80">
               We offer a variety of digital services that can be customized to
               fit your company's needs. Our services are affordable and designed
               to deliver outstanding results for your company. Our digital
@@ -32,17 +77,19 @@ function DigitalServices() {
               your digital needs.
             </p>
 
-            <div className="my-6">
-              <Link to="/contactUs">
-                <Bluebutton text="Contact Sales" />
+        
+              <Link className='w-full md:w-[197px] px-2 bg-primary text-[14px] leading-[18px]
+              font-bold  text-white  py-[16px]  text-center
+         rounded-[7px]  lg:text-[14px] lg:leading-[16px]' to="/contactUs">
+                Contact Us
               </Link>
-            </div>
+            
           </div>
 
           <div className="rounded-lg flex flex-col items-center  md:block ">
             <img
-              src="./Images/digitalServices/digitalServicesImage2.png"
-              alt="background_image "
+              src="./Images/digitalServices/digitalServicesImage2.avif"
+              alt="background_image"
               className="w-[90%]  md:float-right"
             />
           </div>
@@ -53,7 +100,7 @@ function DigitalServices() {
           className="hidden md:block h-[800px] w-[90%] lg:bg-right lg:h-[600px] md:w-[65%] lg:w-[65%]  bg-contain bg-no-repeat "
           style={{
             backgroundImage:
-              "url(./Images/digitalServices/digitalServicesBG1.png)",
+              "url(./Images/digitalServices/digitalServicesBG1.avif)",
             float: "right",
           }}
         ></div>
@@ -67,216 +114,66 @@ function DigitalServices() {
           }}
         ></div>
       </div>
+{/* NEW */}
+<div className="md:mt-[50px] lg:px-[8%] px-[5%] relative overflow-hidden">
+  
+  {/* Background Decoration */}
+  <div 
+    className="absolute bottom-0 left-0 h-[600px] w-full md:w-[65%] bg-contain bg-no-repeat opacity-30 pointer-events-none"
+    style={{ 
+      backgroundImage: "url(./Images/digitalServices/digitalServicesBG3.avif)",
+      zIndex: -1 
+    }}
+  />
 
-      <div className="md:mt-[50px]">
-        {/* section 1 */}
-        <div
-          className=" grid lg:grid-cols-2 lg:gap-x-4  md:grid-cols-2 md:gap-x-4    
-       grid-cols-1 gap-y-4 
-       lg:px-[8%] px-[5%]
-        "
-        >
-          <div className="  flex flex-col items-center  border-r border-gray-300 pr-[20px] ">
-            <img
-              src="./Images/digitalServices/contentMarketing.png"
-              alt="background_image "
-              className="w-[90%] md:float-right"
-            />
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-y-12 md:gap-y-0">
+    {marketingServices.map((service, index) => (
+      <motion.div
+        key={index}
+        initial={{ opacity: 0, x: service.side === "left" ? -100 : 100 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className={`flex flex-col items-center p-4 md:p-10 
+          ${service.side === "left" 
+            ? "md:border-r md:border-gray-300 md:pr-[40px]" 
+            : "md:border-l md:border-zinc-600 md:pl-[40px]"} 
+          border-b md:border-b-0 border-gray-100 last:border-b-0`}
+      >
+        {/* Marketing Image */}
+        <motion.img
+          whileHover={{ scale: 1.05 }}
+          src={service.image}
+          alt={service.title}
+          className="w-[90%] md:w-full h-auto object-contain mb-8"
+        />
 
-            <div className=" p-4 sm:p-6  lg:p-8 md:p-6 bg-[#dce4ff] rounded-lg lg:rounded-2xl mt-[50px] md:mt-[70px] xl:mt-[100px] mb-[70px] md:mb-[100px] xl:mb-[130px] h-[200px] md:h-[270px] lg:h-[370px] xl:h-[330px]">
-              <p
-                className="text-center  text-[10.97px] md:text-[17.4px] lg:text-[30px] font-bold lg:tracking-wider  "
-                style={{
-                  color: "#000",
-                }}
-              >
-                Content Marketing
-              </p>
-              <p className="text-[#000] text-justify  mt-4 sm:mt-6 md:mt-10 text-[11.23px] md:text-[10.44px] lg:text-[18px] lg:mt-12 ">
-                Content marketing is a powerful tool for businesses looking to
-                connect with their audience and drive engagement.
-              </p>
-              <Link to="/content-marketing">
-                <div className="mt-6 flex justify-center">
-                  <Bluebutton text="Explore" />
-                </div>
-              </Link>
-            </div>
+        {/* Text Window Card */}
+        <div className="w-full p-6 lg:p-8 bg-[#dce4ff] rounded-lg lg:rounded-2xl flex
+         flex-col justify-between h-[280px] md:h-[250px] lg:h-[300px] shadow-sm hover:shadow-md transition-shadow">
+          <div className="w-full">
+            <h3 className="text-[20px] leading-[30px]
+       font-extrabold  lg:text-[24px] text-black">
+              {service.title}
+            </h3>
+            <p className="text-[14px] text-left font-medium text-black leading-[20px] 
+      md:text-[11px] lg:text-[16px] lg:leading-[26px]">
+              {service.description}
+            </p>
           </div>
 
-          <div className="  flex flex-col items-center  border-l border-zinc-600 pl-[20px]">
-            <img
-              src="./Images/digitalServices/Socialmediamarketing.png"
-              alt="background_image "
-              className="w-[86%] md:float-right"
-            />
-
-            <div className=" p-4 sm:p-6  lg:p-8 md:p-6 bg-[#dce4ff] rounded-lg lg:rounded-2xl mt-[50px] md:mt-[70px] xl:mt-[100px] mb-[70px] md:mb-[100px] xl:mb-[130px] h-[200px] md:h-[270px] lg:h-[370px] xl:h-[330px]">
-              <p
-                className="text-center text-[10.97px] md:text-[17.4px] lg:text-[30px] font-bold lg:tracking-wider  "
-                style={{
-                  color: "#000",
-                }}
-              >
-                Social Media Marketing
-              </p>
-              <p className="text-[#000] text-justify  mt-4 sm:mt-6 md:mt-10 text-[11.23px] md:text-[10.44px] lg:text-[18px] lg:mt-12 ">
-                Social media marketing can be an effective way to reach a wide
-                audience and build brand awareness.
-                <span className="text-[#dce4ff]">a marketing effective</span>
-              </p>
-              <Link to="/social-media-marketing">
-                <div className="mt-6 flex justify-center">
-                  <Bluebutton text="Explore" />
-                </div>
-              </Link>
-            </div>
-          </div>
+          <Link to={service.link} className='w-full md:w-[197px] px-2 bg-primary text-[14x] leading-[18px]
+              font-bold  text-white  py-[16px]  text-center
+         rounded-md  lg:text-[14px] lg:leading-[16px]'>
+             Explore
+          </Link>
         </div>
+      </motion.div>
+    ))}
+  </div>
+</div>
 
-        {/* section2 */}
-        <div
-          className=" grid lg:grid-cols-2 lg:gap-x-4  md:grid-cols-2 md:gap-x-4    
-       grid-cols-1 gap-y-4 
-       lg:px-[8%] px-[5%]
-        "
-        >
-          <div className="  flex flex-col items-center  border-r border-gray-300 pr-[20px] ">
-            <img
-              src="./Images/digitalServices/SEO.png"
-              alt="background_image "
-              className="w-[82%] md:float-right"
-            />
 
-            <div className=" p-4 sm:p-6  lg:p-8 md:p-6 bg-[#dce4ff] rounded-lg lg:rounded-2xl mt-[50px] md:mt-[70px] xl:mt-[100px] mb-[70px] md:mb-[100px] xl:mb-[130px] h-[200px] md:h-[270px] lg:h-[370px] xl:h-[330px]">
-              <p
-                className="text-center text-[10.97px] md:text-[17.4px] lg:text-[30px] font-bold lg:tracking-wider  "
-                style={{
-                  color: "#000",
-                }}
-              >
-                SEO Marketing
-              </p>
-              <p className="text-[#000] text-justify  mt-4 sm:mt-6 md:mt-10 text-[11.23px] md:text-[10.44px] lg:text-[18px] lg:mt-12 ">
-                SEO is the practice of optimizing your website and its content
-                to improve its visibility and ranking on search engine results
-                pages.
-              </p>
-              <Link to="/seo-marketing">
-                <div className="mt-6 flex justify-center">
-                  <Bluebutton text="Explore" />
-                </div>
-              </Link>
-            </div>
-          </div>
-
-          <div className="  flex flex-col items-center  border-l border-zinc-600 pl-[20px]">
-            <img
-              src="./Images/digitalServices/emailMarketing.png"
-              alt="background_image "
-              className="w-[90%] md:float-right"
-            />
-
-            <div className=" p-4 sm:p-6  lg:p-8 md:p-6 bg-[#dce4ff] rounded-lg lg:rounded-2xl mt-[50px] md:mt-[70px] xl:mt-[100px] mb-[70px] md:mb-[100px] xl:mb-[130px] h-[200px] md:h-[270px] lg:h-[370px] xl:h-[330px]">
-              <p
-                className="text-center text-[10.97px] md:text-[17.4px] lg:text-[30px] font-bold lg:tracking-wider  "
-                style={{
-                  color: "#000",
-                }}
-              >
-                Email Marketing
-              </p>
-              <p className="text-[#000] text-justify  mt-4 sm:mt-6 md:mt-10 text-[11.23px] md:text-[10.44px] lg:text-[18px] lg:mt-12 ">
-                Your business needs an email marketing strategy that boost sales
-                and create a bond with your customers.
-                <span className="text-[#dce4ff]">a marketing</span>
-              </p>
-              <Link to="/EmailMarketing">
-                <div className="mt-6 flex justify-center">
-                  <Bluebutton text="Explore" />
-                </div>
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        {/* section3 */}
-        <div
-          className="relative grid lg:grid-cols-2 lg:gap-x-4  md:grid-cols-2 md:gap-x-4    
-       grid-cols-1 gap-y-4 
-       lg:px-[8%] px-[5%] md:pb-[15%] pb-[25%]
-        "
-        >
-          {/*  */}
-          <div
-            className=" bg-left-bottom absolute bottom-0 left-0 h-[800px] w-[90%]  lg:h-[600px] md:w-[65%] lg:w-[65%]  bg-contain bg-no-repeat "
-            style={{
-              backgroundImage:
-                "url(./Images/digitalServices/digitalServicesBG3.png)",
-
-              zIndex: -999,
-            }}
-          ></div>
-
-          <div className="  flex flex-col items-center  border-r border-gray-300 pr-[20px] ">
-            <img
-              src="./Images/digitalServices/productDesign.png"
-              alt="background_image "
-              className="w-[90%] md:float-right"
-            />
-
-            <div className=" p-4 sm:p-6  lg:p-8 md:p-6 bg-[#dce4ff] rounded-lg lg:rounded-2xl mt-[50px] md:mt-[70px] xl:mt-[100px]  h-[200px] md:h-[270px] lg:h-[370px] xl:h-[330px]">
-              <p
-                className="text-center text-[10.97px] md:text-[17.4px] lg:text-[30px] font-bold lg:tracking-wider  "
-                style={{
-                  color: "#000",
-                }}
-              >
-                Product Design
-              </p>
-              <p className="text-[#000] text-justify  mt-4 sm:mt-6 md:mt-10 text-[11.23px] md:text-[10.44px] lg:text-[18px] lg:mt-12 ">
-                Product design is the process of identifying a market
-                opportunity, clearly defining the problem, and validating the
-                solution with real user interfaces.
-              </p>
-              <Link to="/ProductDesign">
-                <div className="mt-6  flex justify-center">
-                  <Bluebutton text="Explore" />
-                </div>
-              </Link>
-            </div>
-          </div>
-
-          <div className="  flex flex-col items-center  border-l border-zinc-600 pl-[20px]">
-            <img
-              src="./Images/digitalServices/graphicDesign.png"
-              alt="background_image "
-              className="w-[95%] md:float-right"
-            />
-
-            <div className=" p-4 sm:p-6  lg:p-8 md:p-6 bg-[#dce4ff] rounded-lg lg:rounded-2xl mt-[50px] md:mt-[70px] xl:mt-[100px]  h-[200px] md:h-[270px] lg:h-[370px] xl:h-[330px]">
-              <p
-                className="text-center text-[10.97px] md:text-[17.4px] lg:text-[30px] font-bold lg:tracking-wider  "
-                style={{
-                  color: "#000",
-                }}
-              >
-                Graphic Design
-              </p>
-              <p className="text-[#000] text-justify  mt-4 sm:mt-6 md:mt-10 text-[11.23px] md:text-[10.44px] lg:text-[18px] lg:mt-12 ">
-                Graphic design is the creation of visual compositions to solve
-                problems and communicate ideas through typography, imagery,
-                color, and form.
-              </p>
-              <Link to="/GraphicDesign">
-                <div className="mt-6 flex justify-center">
-                  <Bluebutton text="Explore" />
-                </div>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }

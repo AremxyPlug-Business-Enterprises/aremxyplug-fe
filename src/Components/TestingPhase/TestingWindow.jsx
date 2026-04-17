@@ -3,7 +3,7 @@ import { Calendar } from "lucide-react";
 
 export default function TestingWindow() {
   const startDate = new Date("2026-04-22T00:00:00");
-  const endDate = new Date("2026-05-05T23:59:59");
+  const endDate = new Date("2026-05-06T23:59:59");
 
   const calculateTimeLeft = () => {
     const now = new Date();

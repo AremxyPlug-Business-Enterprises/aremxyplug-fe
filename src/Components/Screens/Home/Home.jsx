@@ -294,15 +294,16 @@ const cardVariants = {
   }),
 };
   return (
-    <>
+    <div className="flex flex-col gap-10">
       <div className="fixed top-[25.5%] left-0 right-0 z-50 md:top-[55%] 
       lg:top-[45%]">
       
         <CookieBanner />
       </div>
      
-     <div className={`${styles.hero}  pt-[40%] pb-[20%] lg:pt-[25%] lg:pb-[10%] px-[5%] lg:px-[8%] md:pt-[10%] md:pb-[10%] `}>
-      <div className=" w-[90%] md:w-[]">
+     <div className={`${styles.hero}  
+     pt-[40%] pb-[20%] lg:pt-[25%] lg:pb-[10%] px-[5%] lg:px-[8%] md:pt-[10%] md:pb-[10%] `}>
+      <div className=" w-full md:w-1/">
       <div className="text-left w-[100%] text-[#04177F] text-[20px] 
       font-extrabold md:text-[25px] 
       md:font-bold lg:text-[45px] lg:font-extrabold lg:leading-[px]">
@@ -314,7 +315,7 @@ const cardVariants = {
             help you increase revenue, you can accept payments and transfer
             money internationally.
           </div>
-          <div className="flex md:flex-row flex-col md:gap-[6%] gap-[20px] mt-[5%]">
+          <div className="flex w-full md:flex-row flex-col md:gap-[6%] gap-[20px] mt-[5%]">
             <HashLink
               to="/signUp"
               className="bg-transparent border-2 border-[#04177F] text-[#04177F] md:p-[3%] py-[16px] 
@@ -346,7 +347,7 @@ const cardVariants = {
       {/* WHY CHOOSE US */}
       {/* The Generated part */}
       <div 
-       className="flex flex-col bg-[#04177F] h-auto  
+       className="flex flex-col bg-[#04177F] h-auto  mt-[-40px]
        px-[5%] py-[20%] lg:py-[8%] md:py-[10%]  gap-[30px]  lg:px-[8%] overflow-hidden">
   {/* Header Section */}
   <motion.div
@@ -356,7 +357,7 @@ const cardVariants = {
     transition={{ duration: 0.6 }}
   >
   
-    <h1 className="mb-[5%] text-[30px] leading-[40px]   font-bold text-center  text-white
+    <h1 className="mb-[5%] text-[30px] leading-[40px] font-bold text-center  text-white
     md:text-[26px] lg:text-[50px] lg:leading-[60px] tracking-tight">
       Why Choose Us?
     </h1>
@@ -448,7 +449,7 @@ const cardVariants = {
     </div>
 
     {/* Desktop/Tablet Only Grid Items (Hidden on Mobile unless firstDrop is true) */}
-    <div className="hidden md:flex w-full gap-4 h-[250px] ">
+    <div className="hidden md:flex w-full gap-4 h-[250px]">
     <motion.div
       custom={4}
       initial="hidden"
@@ -1701,10 +1702,12 @@ const cardVariants = {
       </div>
 
       {/* BECOME AN AGENT */}
-      <div
-        id="becomeAgent"
-        className=" mx-[5%] mb-[25%] mt-[5%] md:mb-[10%] md:flex md:flex-row md:justify-center md:items-center md:gap-[15%] md:mx-[8%] lg:gap-[10%]"
-      >
+      <div className="flex flex-col gap-10 lg:gap-15 px-[5%] 
+      lg:px-[8%] py-[5%] "
+        id="becomeAgent">
+
+      <div className=" md:flex md:flex-row h-full
+      md:justify-center md:items-center md:gap-[15%]  lg:gap-[10%]">
         <div className="flex flex-col gap-[30px] md:gap-[15px] lg:gap-[40px] ">
           <h1  className="text-[20px]
         font-bold md:text-left  text-center md:text-[25px] lg:text-[50px]
@@ -1723,17 +1726,19 @@ const cardVariants = {
             accounts, making payments using digital tools that can simplify
             their lives and work at your own schedule. 
           </p>
-          <div className="text-[14px] bg-[#04177f] w-full py-[16px]
-           text-center text-[#ffffff] p-[2%] rounded-md mx-auto md:mx-0
-            lg:text-[15px] font-bold lg:w-[247px]">
-            Join Our Agent Program
-          </div>
+        
         </div>
         <img
           className=" w-[50%] mx-auto mt-[10%] md:w-[142.6px] md:h-[180.15px] md:mt-[0px] lg:mt-[0%] lg:w-[45%] lg:h-[280px]"
           src="./Images/agent.png"
           alt="/"
         />
+      </div>
+        <div className="text-[14px] bg-[#04177f] w-full py-[16px]
+           text-center text-[#ffffff] p-[2%] rounded-md mx-auto md:mx-0
+            lg:text-[15px] font-bold lg:w-[247px]">
+            Join Our Agent Program
+          </div>
       </div>
 
       <div className="bg-[#04177f] text-[#ffffff] py-[15%] px-[5%] flex flex-col gap-[50px] md:py-[10%] md:flex-row md:justify-center md:items-center">
@@ -2074,7 +2079,7 @@ const cardVariants = {
           </div>
         </Link>
       </div>
-    </>
+    </div>
   );
 };
 

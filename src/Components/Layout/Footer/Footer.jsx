@@ -113,10 +113,10 @@ const pathname = location?.pathname === "/DigitalServices"
             {secondDrop && (
               <div className="flex flex-col gap-[20px]">
                 <div className="w-[96px] h-[13px] text-[9px]">
-                  <HashLink to="#currencyconvert">Currency conversion</HashLink>
+                  <p>Currency conversion</p>
                 </div>
                 <div className="w-[100px] h-[13px] text-[9px]">
-                  <HashLink to="#multicurrency">Multi-Currency Wallet</HashLink>
+                  <p>Multi-Currency Wallet</p>
                 </div>
                 <div className="w-[96px] h-[13px] text-[9px]">
                   <Link to="/our-services/payment">International Payment</Link>
@@ -125,7 +125,7 @@ const pathname = location?.pathname === "/DigitalServices"
                   <Link to="/VTU_DEV">VTU development</Link>
                 </div>
                 <div className="w-[100px] h-[13px] text-[9px]">
-                  <Link to="/businessDev">Business Development</Link>
+                  <Link to="/Solutions#businessDev">Business Development</Link>
                 </div>
               </div>
             )}
@@ -139,39 +139,39 @@ const pathname = location?.pathname === "/DigitalServices"
           
           <div className="flex flex-col gap-[15px] mb-[15%]">
             <div className="w-[81px] h-[16px] text-[13px] font-semibold">
-              <Link to="/solutions">Solutions</Link>
+              <Link to="/Solutions">Solutions</Link>
             </div>
             <div className="w-[40px] h-[13px] text-[9px]">
-              <HashLink to="/solutions#baas">Baas</HashLink>
+              <HashLink to="/baas">Baas</HashLink>
             </div>
             <div className="w-[40px] h-[13px] text-[9px]">
-              <HashLink to="/solutions#saas">Saas</HashLink>
+              <HashLink to="/saas">Saas</HashLink>
             </div>
             <div className="w-[40px] h-[13px] text-[9px]">
-              <HashLink to="/solutions#saas">Businesses</HashLink>
+              <HashLink to="/saas">Businesses</HashLink>
             </div>
             <div className="w-[40px] h-[13px] text-[9px]">
-              <HashLink to="/solutions#businesses">Individuals</HashLink>
+              <HashLink to="/businesses">Individuals</HashLink>
             </div>
             <div className="w-[40px] h-[13px] text-[9px]">
-              <HashLink to="/solutions#ecommerce">Ecommerce</HashLink>
+              <HashLink to="/ecommerce">Ecommerce</HashLink>
             </div>
             {thirdDrop && (
               <div className="flex flex-col gap-[20px]">
                 <div className="w-[96px] h-[13px] text-[9px]">
-                  <HashLink to="/solutions#collect">Collect</HashLink>
+                  <Link to="/collect">Collect</Link>
                 </div>
                 <div className="w-[100px] h-[13px] text-[9px]">
-                  <HashLink to="/solutions#collect">Purchase</HashLink>
+                  <Link to="/solutions#collect">Purchase</Link>
                 </div>
                 <div className="w-[96px] h-[13px] text-[9px]">
-                  <HashLink to="/solutions#purchase">Automate</HashLink>
+                  <Link to="/purchase">Automate</Link>
                 </div>
                 <div className="w-[100px] h-[13px] text-[9px]">
-                  <HashLink to="/solutions/#transfer">Transfer</HashLink>
+                  <Link to="/transfer">Transfer</Link>
                 </div>
                 <div className="w-[94px] h-[13px] text-[9px]">
-                  <HashLink to="/solutions/#convert">Convert</HashLink>
+                  <Link to="/convert">Convert</Link>
                 </div>
               </div>
             )}
@@ -436,46 +436,46 @@ const pathname = location?.pathname === "/DigitalServices"
                 <Link to="/VTU_DEV">VTU development</Link>
               </div>
               <div className="w-[100px] h-[13px] text-[9px] lg:w-[166px] lg:text-[16px]">
-                <Link to="/businessDev">Business Development</Link>
+                <HashLink to="/Solutions#businessDev">Business Development</HashLink>
               </div>
             </div>
           </div>
 
           <div className="flex flex-col gap-[15px] lg:gap-[25px]">
             <div className="w-[81px] h-[16px] text-[14px] font-semibold lg:text-[25px]">
-              <Link to="/solutions">Solutions</Link>
+              <Link to="/Solutions">Solutions</Link>
             </div>
             <div className="w-[40px] h-[13px] text-[9px] lg:w-[71px] lg:text-[16px]">
-              <HashLink to="/solutions/#baas">Baas</HashLink>
+              <HashLink to="/Solutions#baas">Baas</HashLink>
             </div>
             <div className="w-[40px] h-[13px] text-[9px] lg:w-[71px] lg:text-[16px]">
-              <HashLink to="/solutions/#baas">saas</HashLink>
+              <HashLink to="/Solutions#baas">saas</HashLink>
             </div>
             <div className="w-[40px] h-[13px] text-[9px] lg:w-[71px] lg:text-[16px]">
-              <HashLink to="/solutions/#saas">Businesses</HashLink>
+              <HashLink to="/Solutions#business">Businesses</HashLink>
             </div>
             <div className="w-[40px] h-[13px] text-[9px] lg:w-[71px] lg:text-[16px]">
-              <HashLink to="/solutions/#saas">Individuals</HashLink>
+              <HashLink to="/Solutions#saas">Individuals</HashLink>
             </div>
             <div className="w-[40px] h-[13px] text-[9px] lg:w-[71px] lg:text-[16px]">
-              <HashLink to="/solutions/#ecommerce">Ecommerce</HashLink>
+              <HashLink to="/Solutions#ecommerce">Ecommerce</HashLink>
             </div>
 
             <div className="flex flex-col gap-[20px]">
               <div className="w-[96px] h-[13px] text-[9px] lg:w-[71px] lg:text-[16px]">
-                <HashLink to="/solutions/#collect">Collect</HashLink>
+                <HashLink to="/Solutions#collect">Collect</HashLink>
               </div>
               <div className="w-[100px] h-[13px] text-[9px] lg:w-[71px] lg:text-[16px]">
-                <HashLink to="/solutions/#collect">Purchase</HashLink>
+                <HashLink to="/Solutions#collect">Purchase</HashLink>
               </div>
               <div className="w-[96px] h-[13px] text-[9px] lg:w-[71px] lg:text-[16px]">
-                <HashLink to="/solutions/#automate">Automate</HashLink>
+                <HashLink to="/Solutions#automate">Automate</HashLink>
               </div>
               <div className="w-[100px] h-[13px] text-[9px] lg:w-[71px] lg:text-[16px]">
-                <HashLink to="/solutions/#automate">Transfer</HashLink>
+                <HashLink to="/Solutions#automate">Transfer</HashLink>
               </div>
               <div className="w-[94px] h-[13px] text-[9px] lg:w-[71px] lg:text-[16px]">
-                <HashLink to="/solutions/#convert">Convert</HashLink>
+                <HashLink to="/Solutions#convert">Convert</HashLink>
               </div>
             </div>
           </div>

@@ -43,7 +43,7 @@ const pathname = location?.pathname === "/DigitalServices"
          <Link to="/TestingPhase" className = "fixed bg-[#FFF8B0] w-full top-[0px] z-[55]">
        <div  className=" text-[12px] lg:text-[14px] py-[20px]
      text-center font-[500] leading-[18px] lg:leading-[20px] px-[20px]">
-       🔔 AremxyPlug Testing Phase: <span className="font-[800]">Live from 22 April – 05 May {" "}</span>
+       🔔 AremxyPlug Testing Phase: <span className="font-[800]">Live from 22 April – 06 May {" "}</span>
          Click to view details, eligibility, terms & rewards. 
        </div>
             </Link>
@@ -173,16 +173,15 @@ const pathname = location?.pathname === "/DigitalServices"
            text-black relative group">
             <Link to="/pricing">Pricing</Link>
             <span className="absolute bottom-0 left-1/2 transform 
-            -translate-x-1/2 bg-[#04177F] rounded-[100px] md:h-[2.5px] md:w-[80%] lg:h-[4px] lg:w-[80%] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+            -translate-x-1/2 bg-[#04177F] rounded-[100px] md:h-[2.5px] md:w-[80%] 
+            lg:h-[4px] lg:w-[80%] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
           </li>
           <li className="text-[18px] leading-[26px] font-medium
            text-black relative group">
             <Link to="/Solutions">Solutions</Link>
-            <span className="absolute bottom-0 left-1/2 transform 
-            -translate-x-1/2 bg-[#04177F] rounded-[100px]
-             md:h-[2.5px] md:w-[80%] lg:h-[4px] lg:w-[80%] o
-             pacity-0 group-hover:opacity-100 transition-opacity
-              duration-300"></span>
+            <span  className="absolute bottom-0 left-1/2 transform 
+            -translate-x-1/2 bg-[#04177F] rounded-[100px] md:h-[2.5px] md:w-[80%] 
+            lg:h-[4px] lg:w-[80%] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
           </li>
           <li className="text-[18px] leading-[26px] font-medium
            text-black relative group">
