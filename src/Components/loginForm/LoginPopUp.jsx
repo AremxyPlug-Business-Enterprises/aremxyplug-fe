@@ -530,7 +530,7 @@ return assignImageByUsername
    }else{
     alert("Unexpected error has occured")
    }
-   }, ()=> {})
+   }, ()=> {}, setNetworkIssue)
   };
  
 
