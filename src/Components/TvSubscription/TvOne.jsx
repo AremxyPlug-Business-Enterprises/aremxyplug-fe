@@ -1317,9 +1317,9 @@ const timer = useRef(null)
         </Modal>
       )}
     
-      {restrictUser && sessionModal === false && (
+      {/* {restrictUser && sessionModal === false && (
         <RestrictionPopUp/>
-      )}
+      )} */}
  
     </div>
   );

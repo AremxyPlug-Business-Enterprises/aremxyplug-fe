@@ -1,7 +1,7 @@
 import React from 'react';
 import ContentMarketingHeader from './ContentMarketingHeader';
 import { Link } from 'react-router-dom';
-import  ContentMain from './images/contentMain2.png'
+import  ContentMain from './images/contentMain2.avif';
 import ContentMarketingCard from './ContentMarketingCard';
 import KeyFeatureCard from './KeyFeatureCard';
 import { contentData } from './data/data';

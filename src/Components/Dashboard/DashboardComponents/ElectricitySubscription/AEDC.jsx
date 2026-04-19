@@ -1526,20 +1526,18 @@ const timer = useRef(null)
                 >
                   <div
                     // className=" flex justify-center  ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]"
-                    className="flex items-center gap-2.5"
+                    className="flex items-center gap-2.5 w-full justify-center"
                   >
                     <OtpInput
                       value={inputPin}
-                      inputType={!isVisible ? "tel" : "password"}
+                      inputType={"tel"}
                       onChange={setInputPin}
                       numInputs={4}
                       shouldAutoFocus={true}
                       inputStyle={{
                         // color: isDarkMode ? "#ffffff" : "#403f3f",
                         color: isDarkMode ? "#ffffff" : "#000000",
-                        // width: 30,
-                        // height: 30,
-                        // borderRadius: 3,
+                       
                         fontWeight: 700,
                         borderRadius: 4,
                         height: "35px",
@@ -1549,25 +1547,28 @@ const timer = useRef(null)
                           ? "1px solid white"
                           : "1px solid #ccc",
                       }}
-                      renderInput={(props) => (
-                        <input
-                          {...props}
-                          // className="inputOTP mx-[3px]"
-                          className={`inputOTP mx-[2px] ${
-                            isFocused ? "focused" : ""
-                          }`}
-                          onFocus={handleFocus}
-                          onBlur={handleBlur}
-                        />
-                      )}
-                    />
-                    <div className="text-[#0003]" onClick={toggleVisibility}>
-                      {isVisible ? (
-                        <AiFillEye className="w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]" />
-                      ) : (
-                        <AiFillEyeInvisible className="w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]" />
-                      )}
-                    </div>
+                       renderInput={(props) => (
+                                            <input {...props} className={`inputOTP text-base mx-[2px] 
+                                                 ${isFocused ? 'focused' : ''} ${isVisible ? 'otp-visible' : 'otp-hidden'}`} onFocus={handleFocus}
+                                                              onBlur={handleBlur}
+                                                          
+                                                        
+                                                style={{
+                                                  ...props.style,
+                                                  // Extra safety: force the color to stay consistent
+                                                  color: isDarkMode ? "#ffffff" : "#000000",
+                                                }}
+                                              />
+                                            )}
+                                          />
+                                        
+                                          <div className="cursor-pointer" onClick={()=>  toggleVisibility()}>
+                                            {isVisible ? (
+                                              <AiFillEye className={isDarkMode ? "text-white" : "text-black"} />
+                                            ) : (
+                                              <AiFillEyeInvisible className={isDarkMode ? "text-white" : "text-black"} />
+                                            )}
+                                          </div>
                   </div>
                   <Link
                     to={{

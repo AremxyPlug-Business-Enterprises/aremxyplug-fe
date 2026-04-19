@@ -207,7 +207,7 @@ export const Context = ({ children }) => {
       }),
 
     userName: Joi.string()
-      .pattern(new RegExp(/^[A-Za-z\s]+$/))
+      .pattern(new RegExp(/^[a-zA-Z0-9]+$/))
       .required()
       .messages({ "string.pattern.base": "Invalid Username" }),
 
@@ -327,7 +327,9 @@ export const Context = ({ children }) => {
             }
           })
           .catch((error) => {
-            if (error && error.response.data.status === 409) {
+            if(error && error.response === undefined){
+              alert("Kindly Check your internet connection and try again")
+            }else if (error && error.response.data.status === 409) {
               alert("Input already in use: " + error.response.data.data.data);
             } else if (error && error.response.data.status === 404) {
               alert("An error has occured on your end");
@@ -1717,6 +1719,7 @@ const [currentDateInTimeStamps, setCurrentDateInTimeStamps] = useState(0);
     handleClickOutside,
     toggleVisibility,
     isVisible,
+    setIsVisible,
     transferAmount,
     setTransferAmount,
     messageTransfer,

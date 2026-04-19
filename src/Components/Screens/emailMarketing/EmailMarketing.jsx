@@ -74,7 +74,7 @@ function EmailMarketing() {
           {/* EMAIL AND LADY IMAGE */}
           <div className="rounded-lg flex flex-col items-center  md:block ">
             <img
-              src="./Images/email_marketing/emailMarketingImage2.png"
+              src="./Images/email_marketing/emailMarketingImage2.avif"
               alt="background_image "
               className="w-[100%]   "
             />
@@ -94,7 +94,7 @@ function EmailMarketing() {
           className="row-start-2 md:row-start-1 h-[350px] md:h-[unset]  bg-contain bg-center bg-no-repeat lg:col-span-2"
           style={{
             backgroundImage:
-              "url(./Images/email_marketing/customerRelationImage.png)",
+              "url(./Images/email_marketing/customerRelationImage.avif)",
           }}
         >
           {/* <img
@@ -173,7 +173,7 @@ function EmailMarketing() {
           className="h-[350px] md:h-[unset]  bg-contain bg-center bg-no-repeat"
           style={{
             backgroundImage:
-              "url(./Images/email_marketing/communicatingImage.png)",
+              "url(./Images/email_marketing/communicatingImage.avif)",
           }}
         ></div>
       </div>
@@ -192,7 +192,7 @@ function EmailMarketing() {
           className="h-[350px] md:h-[unset]  bg-contain bg-center bg-no-repeat"
           style={{
             backgroundImage:
-              "url(./Images/email_marketing/increaseLeadsImage.png)",
+              "url(./Images/email_marketing/increaseLeadsImage.avif)",
           }}
         ></div>
         <div className=" py-4 sm:py-6  lg:py-8 md:py-6  ">
@@ -284,7 +284,7 @@ function EmailMarketing() {
           className="h-[350px] md:h-[unset]  bg-contain bg-center bg-no-repeat"
           style={{
             backgroundImage:
-              "url(./Images/email_marketing/providingMoreImage.png)",
+              "url(./Images/email_marketing/providingMoreImage.avif)",
           }}
         ></div>
       </div>

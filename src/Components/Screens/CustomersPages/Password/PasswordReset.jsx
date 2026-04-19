@@ -60,7 +60,6 @@ const PasswordReset = () => {
           }
          
        },[selectionType === "otp",submission === false])
-//console.log(forgetPassCountdown)
 
 
     const setNav = () => {
@@ -83,6 +82,7 @@ const PasswordReset = () => {
 // TO CHECK IF THE USER WANTS TO GET OTP VIA LINK OR OTP
 const userForgetPasswordSystem = async(url, alertMessage)=>{
 if(selectionType ==="otp"){
+  setForgetPassCountdown(60);
   url = "https://api.aremxyplug.com/api/v1/send-otp/resetpassword"
   alertMessage = "An otp has been sent to your email"
 }else if(selectionType === "link"){
@@ -209,8 +209,12 @@ if(inputForgetEmail?.length < 1){
                         <img src={aremxyPlug} alt="brand_logo" className='h-full w-full object-cover'/>
                     </Link>
                     <div className='w-full text-center flex flex-col gap-[28.65px] lg:gap-[50px]'>
-                        <h2 className='text-[11.5px] font-bold leading-normal lg:text-[20px]'>Reset Password</h2>
-                        <h2 className='text-[9.16px] font-bold leading-normal lg:text-[16px]'>Select how you want to reset your password ?</h2>
+                        <h2 className={`text-[30px] lg:text-[20px] leading-[30px] lg:leading-[40px]
+                       md:text-[13px] font-bold md:font-[600] font-[400`}>Reset Password</h2>
+                        <h2 className={`text-[14px] lg:text-[17px] leading-[20px] lg:leading-[24px]
+                       md:text-[13px]
+                      md:font-[600] font-[400`}>
+                          Select how you want to reset your password ?</h2>
                         <div className='flex flex-col gap-[14.32px]'>
                             <button
                             onClick ={()=> {
@@ -221,11 +225,12 @@ if(inputForgetEmail?.length < 1){
                     Send a verification link to my email-{inputForgetEmail}</button>
                             <button
                               className={selectionType === 'otp' ? `text-[9.16px] py-[9.17px] lg:text-[16px] 
-                              px-[5px] rounded border-[#d166ff] border` : `text-[9.16px] py-[9.17px] lg:text-[16px] px-[5px] rounded`}  style={{boxShadow: `0px 0px 11.5px 0px rgba(0, 0, 0, 0.25)`}} onClick={handleSubmitNumber}>Send a verification code to my email-{inputForgetEmail}</button>
+                              px-[5px] rounded border-[#d166ff] border` : `text-[9.16px] py-[9.17px] lg:text-[16px] px-[5px] rounded`}  
+                              style={{boxShadow: `0px 0px 11.5px 0px rgba(0, 0, 0, 0.25)`}} onClick={handleSubmitNumber}>Send a verification code to my email-{inputForgetEmail}</button>
                         </div>
-                        <div className='flex justify-center my-[14.32px] lg:my-[35px]'>
+                        <div className='flex w-full md:justify-center my-[14.32px] lg:my-[35px]'>
                             <button className={`bg-[#04177F] w-full flex justify-center
-                         items-center mr-auto cursor-pointer text-[14px] 
+                         items-center  cursor-pointer text-[14px] 
                          font-extrabold h-[40px] text-white rounded-[6px]
                           md:w-[25%] md:rounded-[8px] md:text-[20px]
                            lg:text-[16px] lg:h-[38px] lg:my-[4%] disabled:bg-[#ccc]`} disabled={!select} onClick={userForgetPasswordSystem}>Send</button>

@@ -9,7 +9,7 @@ function ProductDesign() {
       <div
         className="bg-contain bg-top bg-no-repeat  mt-[-130px] md:mt-[-170px] lg:mt-[-200px]"
         style={{
-          backgroundImage: "url(./Images/product_design/productDesignBg2.png)",
+          backgroundImage: "url(./Images/product_design/productDesignBg2.avif)",
         }}
       >
         {/* header bg */}
@@ -48,7 +48,7 @@ function ProductDesign() {
           {/* MAN IN SUIT */}
           <div className="rounded-lg flex flex-col items-center  md:block md:mt-[150px] lg:mt-[180px]">
             <img
-              src="./Images/product_design/manInSuitImage.png"
+              src="./Images/product_design/manInSuitImage.avif"
               alt="background_image "
               className="w-[100%]   "
             />
@@ -85,7 +85,7 @@ function ProductDesign() {
           className="bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage:
-              "url(./Images/product_design/gradientBackground1.png)",
+              "url(./Images/product_design/gradientBackground1.avif)",
           }}
         >
           {/*  Visual Appealing*/}
@@ -118,7 +118,7 @@ function ProductDesign() {
               className="  h-[350px] md:h-[unset]  bg-contain bg-center bg-no-repeat lg:col-span-2"
               style={{
                 backgroundImage:
-                  "url(./Images/product_design/visualAppealingImage.png)",
+                  "url(./Images/product_design/visualAppealingImage.avif)",
               }}
             ></div>
           </div>
@@ -137,7 +137,7 @@ function ProductDesign() {
               className="row-start-2 md:row-start-1 h-[350px] md:h-[unset]  bg-contain bg-center bg-no-repeat"
               style={{
                 backgroundImage:
-                  "url(./Images/product_design/improvedPerformanceImage.png)",
+                  "url(./Images/product_design/improvedPerformanceImage.avif)",
               }}
             ></div>
 
@@ -196,7 +196,7 @@ function ProductDesign() {
               className=" h-[350px] md:h-[unset]  bg-contain bg-center bg-no-repeat"
               style={{
                 backgroundImage:
-                  "url(./Images/product_design/flexibilityImage.png)",
+                  "url(./Images/product_design/flexibilityImage.avif)",
               }}
             ></div>
           </div>
@@ -215,7 +215,7 @@ function ProductDesign() {
               className="row-start-2 md:row-start-1 h-[350px] md:h-[unset]  bg-contain bg-center bg-no-repeat"
               style={{
                 backgroundImage:
-                  "url(./Images/product_design/increaseSalesImage.png)",
+                  "url(./Images/product_design/increaseSalesImage.avif)",
               }}
             ></div>
 
@@ -223,14 +223,16 @@ function ProductDesign() {
               {/* Text content 1 */}
               <div>
                 <p
-                  className="text-[15px] md:text-[13.9px] lg:text-[24px] font-bold lg:tracking-wider  "
+                  className="text-[15px] md:text-[13.9px] lg:text-[24px] font-bold 
+                  lg:tracking-wider"
                   style={{
                     color: "#000",
                   }}
                 >
                   Increase Sales
                 </p>
-                <p className="text-[#000] text-justify text-[12px] md:text-[9.34px] lg:text-lg mt-[14px] lg:mt-[25px] ">
+                <p className="text-[#000] text-justify text-[12px] md:text-[9.34px]
+                 lg:text-lg mt-[14px] lg:mt-[25px] ">
                   Customers are frequently willing to pay more for products that
                   are well-designed and offer better usability, functionality,
                   and a pleasant visual experience. This result in increasing
@@ -276,7 +278,7 @@ function ProductDesign() {
               className=" h-[350px] md:h-[unset]  bg-contain bg-center bg-no-repeat"
               style={{
                 backgroundImage:
-                  "url(./Images/product_design/influenceImage.png)",
+                  "url(./Images/product_design/influenceImage.avif)",
               }}
             ></div>
           </div>
@@ -295,7 +297,7 @@ function ProductDesign() {
               className="row-start-2 md:row-start-1 h-[350px] md:h-[unset]  bg-contain bg-center bg-no-repeat"
               style={{
                 backgroundImage:
-                  "url(./Images/product_design/lowerCostImage.png)",
+                  "url(./Images/product_design/lowerCostImage.avif)",
               }}
             ></div>
 
@@ -411,7 +413,7 @@ function ProductDesign() {
               className="h-[350px] md:h-[unset]  bg-contain bg-center bg-no-repeat"
               style={{
                 backgroundImage:
-                  "url(./Images/product_design/keyFeaturesImage3.png)",
+                  "url(./Images/product_design/keyFeaturesImage3.avif)",
               }}
             ></div>
           </div>

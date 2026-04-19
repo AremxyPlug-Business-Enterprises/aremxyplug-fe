@@ -44,7 +44,7 @@ function GraphicDesign() {
           {/* EMAIL AND LADY IMAGE */}
           <div className="rounded-lg flex flex-col items-center   ">
             <img
-              src="./Images/graphic_design/graphicsDesignImage.png"
+              src="./Images/graphic_design/graphicsDesignImage.avif"
               alt="background_image "
               className="w-[100%]   "
             />
@@ -63,7 +63,7 @@ function GraphicDesign() {
           // className="rounded-lg flex flex-col items-center  md:block lg:col-span-2"
           className="row-start-2 md:row-start-1  h-[350px] md:h-[unset]  bg-contain bg-center bg-no-repeat lg:col-span-2"
           style={{
-            backgroundImage: "url(./Images/graphic_design/weDesignImage.png)",
+            backgroundImage: "url(./Images/graphic_design/weDesignImage.avif)",
           }}
         ></div>
         <div className=" py-4 sm:py-6  lg:py-8 md:py-6 lg:col-span-3 ">
@@ -116,7 +116,7 @@ function GraphicDesign() {
         <div
           className="h-[350px] md:h-[unset]  bg-contain bg-center bg-no-repeat"
           style={{
-            backgroundImage: "url(./Images/graphic_design/buildTrustImage.png)",
+            backgroundImage: "url(./Images/graphic_design/buildTrustImage.avif)",
           }}
         ></div>
       </div>
@@ -134,7 +134,7 @@ function GraphicDesign() {
         <div
           className="row-start-2 md:row-start-1 h-[350px] md:h-[unset]  bg-contain bg-center bg-no-repeat"
           style={{
-            backgroundImage: "url(./Images/graphic_design/brandStoryImage.png)",
+            backgroundImage: "url(./Images/graphic_design/brandStoryImage.avif)",
           }}
         ></div>
         <div className=" py-4 sm:py-6  lg:py-8 md:py-6  ">
@@ -192,7 +192,7 @@ function GraphicDesign() {
         <div
           className="h-[350px] md:h-[unset]  bg-contain bg-center bg-no-repeat"
           style={{
-            backgroundImage: "url(./Images/graphic_design/savesTimeImage.png)",
+            backgroundImage: "url(./Images/graphic_design/savesTimeImage.avif)",
           }}
         ></div>
       </div>
@@ -210,7 +210,7 @@ function GraphicDesign() {
         <div
           className="row-start-2 md:row-start-1 h-[350px] md:h-[unset]  bg-contain bg-center bg-no-repeat"
           style={{
-            backgroundImage: "url(./Images/graphic_design/boostBrandImage.png)",
+            backgroundImage: "url(./Images/graphic_design/boostBrandImage.avif)",
           }}
         ></div>
         <div className=" py-4 sm:py-6  lg:py-8 md:py-6  ">

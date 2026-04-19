@@ -327,6 +327,18 @@ border-radius : 10px;
 .highlight-animate {
   animation: highlightInput 1s ease;
 }
+
+
+.otp-hidden {
+  -webkit-text-security: disc !important; 
+  
+  text-security: disc !important; 
+}
+
+.otp-visible {
+  -webkit-text-security: none !important;
+  text-security: none !important;
+}
   /* body{
     background-color: #04177f;
   } */

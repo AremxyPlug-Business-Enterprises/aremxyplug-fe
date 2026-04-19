@@ -105,7 +105,7 @@ const Balance = newBalance !== null &&
   || newBalance === undefined || newBalance === null) ?
    Number(passDataBalance?.data?.data?.data?.balance) : undefined;
   
-let CheckSufficiency = mtnDataAmount > Balance
+let CheckSufficiency = mtnDataAmount > Balance;
 
 
 //fetching the products
@@ -1740,10 +1740,10 @@ const RecipientExistCheck = CheckRecipientInfoInList(recipientPhoneNumberMtn);
                   </p>
                   <div className="flex flex-col items-center lg:gap-[0px]
              gap-[5px] font-extrabold">
-                    <div className=" flex items-center  gap-[10px]">
+                    <div className=" flex items-center w-full justify-center gap-[10px]">
                       <OtpInput
                         value={inputPin}
-                        inputType= {!isVisible ? "tel" : "password" }
+                        inputType= {"tel"}
                         onChange={setInputPin}
                         numInputs={4}
                         shouldAutoFocus={true}
@@ -1762,18 +1762,24 @@ const RecipientExistCheck = CheckRecipientInfoInList(recipientPhoneNumberMtn);
                           : "1px solid #ccc",
                     }}
                         renderInput={(props) => (
-                          <input {...props} className="text-base inputOTP mx-[3px]"  />
-                        )}
-                      />
-                      <div
-                        className="text-[#0003] text-[13px] md:text-3xl"
-                        onClick={toggleVisibility}
-                      >
-                        {isVisible ? <AiFillEye className={`w-[16px] h-[16px]
-                                          lg:w-[24px] lg:h-[24px]  ${isDarkMode ? " text-white" : "text-black" }`}/> : <AiFillEyeInvisible  
-                                          className={`w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]
-                                          ${isDarkMode ? " text-white" : "text-black" }`}/>}
-                      </div>
+                           <input {...props} className={`inputOTP text-base mx-[2px] 
+                                ${isVisible ? 'otp-visible' : 'otp-hidden'}`} 
+                                  style={{
+                                 ...props.style,
+                                 // Extra safety: force the color to stay consistent
+                                 color: isDarkMode ? "#ffffff" : "#000000",
+                               }}
+                             />
+                           )}
+                         />
+                       
+                         <div className="cursor-pointer" onClick={()=>  toggleVisibility()}>
+                           {isVisible ? (
+                             <AiFillEye className={isDarkMode ? "text-white" : "text-black"} />
+                           ) : (
+                             <AiFillEyeInvisible className={isDarkMode ? "text-white" : "text-black"} />
+                           )}
+                         </div>
                     </div>
                      <Link to={{
                                   pathname : "/ProfileSettingMain",

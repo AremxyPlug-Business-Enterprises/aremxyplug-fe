@@ -1303,12 +1303,12 @@ const GetBalance = async () => {
                       </p>
                       <div className="flex flex-col items-center lg:gap-[0px] gap-[5px] font-extrabold">
                   {/* dashboard(bg-color), acct upgrade(end user- regular, merchant), card issuing(click on get ur card now-show the pop up this feature is coming soon), data topup, data bundle(smile and spectranet- onclick(popup- this feature is currently unavailable), login(wen it shows the verification code has been sent there shld be the X to close d pop up, wen u switch from email to login the request for d email 4 e.g shld be made without waiting for the 60 secs to elapse)), payments(international payments onclick-popup- this feature is currently unavailable ), conversion(only  wat is avaible is points redeem), all withdrawals shld be currently unavailable, display the balance anywhere there is balance, the bg for hero section gradient alongside navbar, replicate using figma for everywhere including sidebar */}
-                        <div className="flex items-center gap-2.5">
+                        <div className="w-full flex justify-center items-center gap-2.5">
                           {" "}
                             <OtpInput
                               value={inputPin}
                               // inputType="tel"
-                              inputType={!isVisible ? "tel":"password"}
+                              inputType={"tel"}
                               onChange={setInputPin}
                               numInputs={4}
                               shouldAutoFocus={true}
@@ -1324,27 +1324,28 @@ const GetBalance = async () => {
                                   ? "1px solid white"
                                   : "1px solid #ccc",
                               }}
-                              renderInput={(props) => (
-                                <input
-                                  {...props}
-                                  className={`inputOTP text-base mx-[2px] ${
-                                    isFocused ? "focused" : ""
-                                  }`}
-                                  onFocus={handleFocus}
-                                  onBlur={handleBlur}
+                               renderInput={(props) => (
+                                  <input {...props} className={`inputOTP text-base mx-[2px] 
+                                       ${isFocused ? 'focused' : ''} ${isVisible ? 'otp-visible' : 'otp-hidden'}`} onFocus={handleFocus}
+                                                    onBlur={handleBlur}
+                                                
+                                              
+                                      style={{
+                                        ...props.style,
+                                        // Extra safety: force the color to stay consistent
+                                        color: isDarkMode ? "#ffffff" : "#000000",
+                                      }}
+                                    />
+                                  )}
                                 />
-                              )}
-                            />
-                          <div
-                            className="text-[#0003]"
-                            onClick={toggleVisibility}
-                          >
-                            {isVisible ? (
-                              <AiFillEye className="w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]" />
-                            ) : (
-                              <AiFillEyeInvisible className="w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]" />
-                            )}
-                          </div>
+                              
+                                <div className="cursor-pointer" onClick={()=>  toggleVisibility()}>
+                                  {isVisible ? (
+                                    <AiFillEye className={isDarkMode ? "text-white" : "text-black"} />
+                                  ) : (
+                                    <AiFillEyeInvisible className={isDarkMode ? "text-white" : "text-black"} />
+                                  )}
+                                </div>
                         </div>
                         <Link
                           to={{

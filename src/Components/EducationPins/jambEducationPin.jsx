@@ -83,7 +83,8 @@ setJambPinsGenerated,
 authenticationOpen,
     purchaseEduErrorType,
     setPurchaseEduErrorType,
-    sessionModal, setSessionModal
+    sessionModal, setSessionModal,
+    setNetworkIssue
   } = useContext(ContextProvider);
   const Data = GetLocalStorage()
   // UseStates
@@ -292,7 +293,7 @@ authenticationOpen,
               alert("An Unexpected error occured in attempt to retrieve balance")
             }
           },
-          setPassDataBalance
+          setPassDataBalance, setNetworkIssue
         );
       }
             else if(ErrorType === "Network error" || ErrorType === "User error"){
@@ -305,7 +306,7 @@ authenticationOpen,
             alert("An unexpected error occured in attempt to retrieve the balance.")
            }
          },
-          setPassDataBalance
+          setPassDataBalance, setNetworkIssue
         );
           }else if(ErrorType === "Network error" || ErrorType === "User error"){
               setCheckNetworkError(true);
@@ -319,7 +320,7 @@ authenticationOpen,
           setIsLoading,
           SuccessHandler,
           FailedHandler,
-          setPassDataBalance
+          setPassDataBalance, setNetworkIssue
         );
       };
   // get the amount and balance on entering the page
@@ -573,7 +574,8 @@ authenticationOpen,
                 return setSessionModal(true);
               }
             },
-            setFetchedPurchaseResponse
+            setFetchedPurchaseResponse,
+            setNetworkIssue
           );
         } else if (ErrorType === "Server error") {
           setPurchaseEduErrorType(
@@ -598,7 +600,8 @@ authenticationOpen,
         body,
         SuccessHandler,
         FailedHandler,
-        setFetchedPurchaseResponse
+        setFetchedPurchaseResponse,
+        setNetworkIssue
       );
     }
     const setPinFailed = async (ErrorType) => {
@@ -623,7 +626,7 @@ authenticationOpen,
           },
           setIsLoading,
           setErrorMessage,
-          EduPinHandler
+          EduPinHandler, setNetworkIssue
         );
       } else if (ErrorType === "Network error" || ErrorType === "User error") {
         return alert("Kindly Check your internet connection");
@@ -640,7 +643,8 @@ authenticationOpen,
       setPinFailed,
       setIsLoading,
       setErrorMessage,
-      EduPinHandler
+      EduPinHandler,
+      setNetworkIssue
     );
   };
 
@@ -1352,7 +1356,7 @@ authenticationOpen,
                           Input PIN to complete transaction
                         </p>
                         <div className="flex flex-col items-center lg:gap-[0px] gap-[5px] font-extrabold">
-                          <div className="flex items-center gap-2.5">
+                          <div className="flex w-full justify-center items-center gap-2.5">
                             {" "}
                             <OtpInput
                               value={inputPin}
@@ -1371,25 +1375,26 @@ authenticationOpen,
                                   ? "1px solid white"
                                   : "1px solid #ccc",
                               }}
-                              renderInput={(props) => (
-                                <input
-                                  {...props}
-                                  className={`inputOTP text-base mx-[2px] ${
-                                    isFocused ? "focused" : ""
-                                  }`}
-                                  onFocus={handleFocus}
-                                  onBlur={handleBlur}
+                           renderInput={(props) => (
+                              <input {...props} className={`inputOTP text-base mx-[2px] 
+                                   ${isFocused ? 'focused' : ''} ${isVisible ? 'otp-visible' : 'otp-hidden'}`} onFocus={handleFocus}
+                                                onBlur={handleBlur}
+                                            
+                                          
+                                  style={{
+                                    ...props.style,
+                                    // Extra safety: force the color to stay consistent
+                                    color: isDarkMode ? "#ffffff" : "#000000",
+                                  }}
                                 />
                               )}
                             />
-                            <div
-                              className="text-[#0003]"
-                              onClick={toggleVisibility}
-                            >
+                          
+                            <div className="cursor-pointer" onClick={()=>  toggleVisibility()}>
                               {isVisible ? (
-                                <AiFillEye className="w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]" />
+                                <AiFillEye className={isDarkMode ? "text-white" : "text-black"} />
                               ) : (
-                                <AiFillEyeInvisible className="w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]" />
+                                <AiFillEyeInvisible className={isDarkMode ? "text-white" : "text-black"} />
                               )}
                             </div>
                           </div>

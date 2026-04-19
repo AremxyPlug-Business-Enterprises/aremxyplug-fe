@@ -435,7 +435,8 @@ const {setNetworkIssue} = useContext(ContextProvider);
                    You are restricted from accessing this page.
                   </h2>
              
-                {Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false" ? (
+                {(Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false") 
+                || (!Data?.ConfirmId || !Data?.ConfirmBvn) ? (
                    <p className ={`text-[14px] text-center font-[400] leading-[18px]
                text-black lg:text-[16px] lg:leading-[22px] ${isDarkMode  ? "text-white" : "text-black"}`}>
                 Your Identity matters, kindly verify
@@ -453,7 +454,8 @@ const {setNetworkIssue} = useContext(ContextProvider);
                </div>
              
              
-               {Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false"
+               {(Data?.ConfirmId === "false" || Data?.ConfirmBvn === "false")
+               || (!Data?.ConfirmId || !Data?.ConfirmBvn)
                ?(
                  <button 
                  onClick = {()=> VerificationNavigationAndState()}

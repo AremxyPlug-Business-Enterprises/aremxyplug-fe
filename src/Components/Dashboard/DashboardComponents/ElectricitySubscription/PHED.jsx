@@ -1336,10 +1336,10 @@ const GetBalance = async () => {
                   Input PIN to complete transaction
                 </p>
                 <div className="flex flex-col items-center lg:gap-[0px] gap-[5px] font-extrabold">
-                  <div className="flex items-center gap-2.5">
+                  <div className="flex items-center w-full justify-center gap-2.5">
                     <OtpInput
                       value={inputPin}
-                      inputType={!isVisible ? "tel" : "password"}
+                      inputType={"tel"}
                       onChange={setInputPin}
                       numInputs={4}
                       shouldAutoFocus={true}
