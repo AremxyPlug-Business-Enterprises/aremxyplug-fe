@@ -75,10 +75,11 @@ export const InputStarTimesPopup = ({VerifyPinHandler}) => {
                    ">Input PIN to complete transaction</p>
                    <div className="flex flex-col items-center lg:gap-[0px]
                     gap-[5px] font-extrabold">
-                     <div className=" flex items-center  gap-[10px]">
+                     <div className=" flex items-center w-full justify-center 
+                     gap-[10px]">
                          <OtpInput
                            value={inputPin}
-                           inputType={!isVisible ? "tel" : "password"}
+                           inputType={"tel" }
                            onChange={setInputPin}
                            numInputs={4}
                            shouldAutoFocus={true}
@@ -99,20 +100,27 @@ export const InputStarTimesPopup = ({VerifyPinHandler}) => {
                        }
                            
                            renderInput={(props) => (
-                             <input {...props} className={`inputOTP text-base mx-[2px] 
-                               ${isFocused ? 'focused' : ''}`} onFocus={handleFocus}
-                             onBlur={handleBlur}/>
-                           )}
-                         />
-                       <div
-                         className="text-[#0003]"
-                         onClick={toggleVisibility}
-                       >
-                          {isVisible ? <AiFillEye className={`w-[16px] h-[16px]
-                                           lg:w-[24px] lg:h-[24px]  ${isDarkMode ? " text-white" : "text-black" }`}/> : <AiFillEyeInvisible  
-                                           className={`w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]
-                                           ${isDarkMode ? " text-white" : "text-black " }`}/>}
-                       </div>
+                              <input {...props} className={`inputOTP text-base mx-[2px] 
+                                   ${isFocused ? 'focused' : ''} ${isVisible ? 'otp-visible' : 'otp-hidden'}`} onFocus={handleFocus}
+                                                onBlur={handleBlur}
+                                            
+                                          
+                                  style={{
+                                    ...props.style,
+                                    // Extra safety: force the color to stay consistent
+                                    color: isDarkMode ? "#ffffff" : "#000000",
+                                  }}
+                                />
+                              )}
+                            />
+                          
+                            <div className="cursor-pointer" onClick={()=>  toggleVisibility()}>
+                              {isVisible ? (
+                                <AiFillEye className={isDarkMode ? "text-white" : "text-black"} />
+                              ) : (
+                                <AiFillEyeInvisible className={isDarkMode ? "text-white" : "text-black"} />
+                              )}
+                            </div>
                      </div>
                      <Link  to = {{
                       pathname : "/ProfileSettingMain",

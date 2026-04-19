@@ -2,8 +2,8 @@ import React from 'react'
 import SEOHeader from './SEOHeader';
 import SEOCard from './SEOCard';
 import SEOListItem from './SEOListItem';
-import seoMobileBg from './images/seoMobileBg.png'
-import seoDesktopBg from './images/seoDesktoBg.png'
+import seoMobileBg from './images/seoMobileBg.avif';
+import seoDesktopBg from './images/seoDesktoBg.avif';
 import keyFeatureImg from './images/Startup idea.svg'
 import { seoData } from './data/data';
 import { listData } from './data/data';

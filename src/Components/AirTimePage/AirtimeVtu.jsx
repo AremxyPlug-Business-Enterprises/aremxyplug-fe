@@ -118,7 +118,7 @@ setRecipientsAirtime(response?.data?.data?.recipients?.recipients);
              && typeof passDataBalance?.data?.data?.data?.balance  === "string" && passDataBalance?.data?.data?.data?.balance?.length > 0
              ? Number(passDataBalance?.data?.data?.data?.balance)   : "";
              
-                 let CheckSufficiency = newAmount  >  updateBalance
+                 let CheckSufficiency = newAmount  >  updateBalance;
                  
 
 //Getting The User Balance of the application.
@@ -555,6 +555,7 @@ if(ErrorType === "Network error" || ErrorType === "User error"){
   //alert("Purchase Failed")
     setAirtimePurchaseError("an unxpected error has occured");
     setTransactFailedPopUp(true);
+    setConfirm(false);
 }
   }
   await PostFunction("airtime",  setIsLoading, requestBody,
@@ -1457,10 +1458,10 @@ className={`flex justify-left  w-[100%] items-center`}>
             ">Input PIN to complete transaction</p>
             <div className="flex flex-col items-center lg:gap-[0px]
              gap-[5px] font-extrabold">
-              <div className=" flex items-center  gap-[10px]">
+              <div className=" flex w-full justify-center items-center  gap-[10px]">
                   <OtpInput
                     value={inputPin}
-                    inputType={!isVisible ? "tel" : "password"}
+                    inputType={"tel"}
                     onChange={setInputPin}
                     numInputs={4}
                     shouldAutoFocus={true}
@@ -1477,20 +1478,24 @@ className={`flex justify-left  w-[100%] items-center`}>
                     }
                 }
                     
-                    renderInput={(props) => (
-                      <input {...props} className={`text-base inputOTP mx-[2px] 
-                      `}/>
-                    )}
-                  />
-                <div
-                  className="text-[#0003]"
-                  onClick={toggleVisibility}
-                >
-                    {isVisible ? <AiFillEye className={`w-[16px] h-[16px]
-                  lg:w-[24px] lg:h-[24px]  ${isDarkMode ? " text-white" : "text-black" }`}/> : <AiFillEyeInvisible  
-                    className={`w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]
-                 ${isDarkMode ? " text-white" : "text-black" }`}/>}
-                </div>
+                 renderInput={(props) => (
+             <input {...props} className={`inputOTP text-base mx-[2px] 
+     ${isVisible ? 'otp-visible' : 'otp-hidden'}`} 
+         style={{ ...props.style,
+     // Extra safety: force the color to stay consistent
+      color: isDarkMode ? "#ffffff" : "#000000",
+                                               }}
+                                             />
+                                           )}
+                                         />
+                                       
+                                         <div className="cursor-pointer" onClick={()=>  toggleVisibility()}>
+                                           {isVisible ? (
+                                             <AiFillEye className={isDarkMode ? "text-white" : "text-black"} />
+                                           ) : (
+                                             <AiFillEyeInvisible className={isDarkMode ? "text-white" : "text-black"} />
+                                           )}
+                                         </div>
               </div>
               <Link  to = {{
                pathname : "/ProfileSettingMain",

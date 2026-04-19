@@ -115,7 +115,7 @@ const ChangeEventFunctionUsername = (value)=> {
 }
 
   return (
-    <div className="h-[240%] pb-[70px] lg:pb-[0px] lg:h-[200%] bg-[#04177f]
+    <div className="h-auto pb-[100px] lg:pb-[0px] lg:h-[200%] bg-[#04177f]
       md:flex md:justify-center md:items-center  md:h-[100vh] ">
       {/* =====Hero Image==== */}
       {showPassModal && <FirstModal />}
@@ -131,7 +131,7 @@ const ChangeEventFunctionUsername = (value)=> {
       <div className="md:h-[55%] pb-[2%] bg-[#ffffff]
        ml-[3%] rounded-bl-3xl rounded-tl-3xl px-[4%] md:pb-[5%] md:w-[573px] 
        md:ml-[30%] lg:min-h-[100%]  lg:w-[1024px] 
-        min-h-[1300px] lg:ml-[%] lg:px-0 lg:rounded-bl-[52px] lg:rounded-tl-[52px]">
+        h-auto lg:ml-[%] lg:px-0 lg:rounded-bl-[52px] lg:rounded-tl-[52px]">
         <Link to="/">
           <img
             className="w-[36px] py-[5%] lg:w-[93px] lg:h-[] lg:py-[2%] lg:pl-[3%]"
@@ -145,7 +145,8 @@ const ChangeEventFunctionUsername = (value)=> {
         <p className="text-[11px] font-bold text-center text-[#00000056] lg:text-[20px]">
           Create an account now to get started...
         </p>
-        <form className="pt-[10%] pb-[10%] md:grid md:grid-cols-2 md:gap-[2%] md:mx-[8%] lg:pt-[8%] lg:px-[10%] lg:pb-[6%]">
+        <form className="pt-[10%] pb-[10%] md:grid md:grid-cols-2 md:gap-[2%] 
+        md:mx-[8%] lg:pt-[8%] lg:px-[10%] lg:pb-[6%]">
           {/* =====Country Input start======= */}
           <div className="flex flex-col gap-[5px] md:gap-[10px] mt-[8%]  lg:mt-[2%] md:mt-[3%]">
             <p className="text-[14px] leading-[18px] font-[600] mb-[5px] lg:text-[16px] lg:leading-[24px]">
@@ -162,14 +163,14 @@ const ChangeEventFunctionUsername = (value)=> {
      lg:pt-[15px] lg:pb-[12px] lg:pr-[9px]
       lg:pl-[10px]  items-center cursor-pointer
        outline-0 border-[0.24px] lg:border-[0.4px] 
-        h-[45.927px] md:h-[35px] lg:h-[50px] 
-       border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center
+        h-[50.927px] md:h-[35px] lg:h-[50px] 
+       border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-black self-center
        `} 
             >
            
                 <ReactFlagsSelect
                   selected={state.country}
-                  className="w-[100%] m-[0px] h-[40px] lg:h-[50px] text-[14px]
+                  className="w-[100%] m-[0px] h-[40px] lg:h-[50px] text-[18px]
                    leading-[18px] lg:text-[16px] lg:leading-[24px]"
                   placeholder=" "
                   searchable
@@ -208,7 +209,8 @@ const ChangeEventFunctionUsername = (value)=> {
          pr-[13px] pl-[10.876px] font-[400] 
          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
-    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  
+    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px]
+     w-full h-[50.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-black self-center  
      `} 
                 type="text"
           placeholder ="Enter your full legal name"
@@ -250,7 +252,7 @@ const ChangeEventFunctionUsername = (value)=> {
     md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px] 
      items-center cursor-pointer w-full
     outline-0 border-[0.24px] lg:border-[0.4px]  h-[45.927px]
-     md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center 
+     md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-black self-center 
      `} 
                 type="text"
                 value={state.userName}
@@ -271,7 +273,7 @@ const ChangeEventFunctionUsername = (value)=> {
               
               <p className="text-[12px] text-red-500 italic lg:text-[14px]">
                  The Username field cannot accept the @ special character,
-                  you can include numbers for differentiation with names similar to yours.
+                  you can include numbers for differentiation if username already exists.
               </p>
         
             )}
@@ -302,8 +304,8 @@ const ChangeEventFunctionUsername = (value)=> {
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
     md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  
     items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full
-     h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px]
-      lg:px-[10px] text-[#7C7C7C] self-center `} 
+     h-[50.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px]
+      lg:px-[10px] text-black self-center `} 
                 type="email"
                 value={email}
                 placeholder ="example@gmail.com"
@@ -333,8 +335,8 @@ const ChangeEventFunctionUsername = (value)=> {
          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
     md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px] 
-    lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px]
-     border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  
+    lg:border-[0.4px] w-full h-[50.927px] md:h-[35px] lg:h-[50px]
+     border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-black self-center  
      
                  ${
                 isFocused.includes(4) ? "" : ""
@@ -403,8 +405,8 @@ const ChangeEventFunctionUsername = (value)=> {
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
     md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]
       items-center cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px]
-       w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C]
-        px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center `} 
+       w-full h-[50.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C]
+        px-[11px] md:px-[6px] lg:px-[10px] text-black self-center `} 
                 type="text"
                 value={IVcode}
                 name="IVcode"
@@ -437,15 +439,15 @@ const ChangeEventFunctionUsername = (value)=> {
          leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
     lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
     md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center
-     cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[45.927px] md:h-[35px]
-      lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  `} 
+     cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px] w-full h-[50.927px] md:h-[35px]
+      lg:h-[50px] border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-black self-center  `} 
                 type={showPassword ? "text" : "password"}
                 value={state.password}
                 name="password"
                 onChange={changeHandler}
               />
               <div
-                className="absolute right-[10px] top-[25%] float-right"
+                className="absolute flex items-center h-full right-[10px] top-0"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {!showPassword ? (
@@ -482,7 +484,7 @@ const ChangeEventFunctionUsername = (value)=> {
             >
               <input
               title="password"
-               className={`mt-2  md:mt-0 rounded-[10px] 
+               className={` rounded-[10px] 
              md:rounded-0  md:p-0 text-base
          sm:p-3  flex justify-between py-[8.803px]
          pr-[13px] pl-[10.876px] font-[400] 
@@ -491,15 +493,15 @@ const ChangeEventFunctionUsername = (value)=> {
     md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px]
      lg:pb-[12px] lg:pr-[9px] lg:pl-[10px]  items-center 
      cursor-pointer outline-0 border-[0.24px] lg:border-[0.4px]
-      w-full h-[45.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] 
-      px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center `} 
+      w-full h-[50.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C] 
+      px-[11px] md:px-[6px] lg:px-[10px] text-black self-center `} 
                 type={showPasswordTwo ? "text" : "password"}
                 value={state.confirmPassword}
                 name="confirmPassword"
                 onChange={changeHandler}
               />
               <div
-                className="absolute right-[10px] top-[25%] float-right"
+                className="absolute flex items-center h-full right-[10px] top-0"
                 onClick={() => setShowPasswordTwo(!showPasswordTwo)}
               >
                 {!showPasswordTwo ? (
@@ -532,7 +534,7 @@ const ChangeEventFunctionUsername = (value)=> {
               onChange={changeHandler}
             />
             <p className="ml-2 lg:text-[14px] md:text-[14.02px] 
-               text-[13.02px] leading-[18px] font-[400]
+               text-[14px] leading-[18px] font-[400]
                text-[#575757]  tracking-wider">
               I have read and agreed to the{" "}
               <Link
@@ -594,7 +596,7 @@ const ChangeEventFunctionUsername = (value)=> {
             {" "}
          
         </div>
-       <div className="flex justify-center mt-[20px]"
+       <div className="flex justify-center pt-[20px]"
         >
           <div
            onClick ={()=> {
@@ -619,13 +621,16 @@ const ChangeEventFunctionUsername = (value)=> {
             </p>
           </div>
         </div>
-        <p className="text-[14px] leading-[18px]  text-center mt-[5%] md:pb-[1%] 
-        lg:mt-[2%] lg:text-[16px] lg:leading-[24px]">
+        {/*  */}
+        <div className="flex flex-col  py-[15%] md:py-[1%] 
+        lg:pt-[2%]">
+        <p className="text-[16px] font-medium leading-[18px]  text-center lg:text-[16px] lg:leading-[24px]">
           Already have an account ?{" "}
           <span className="text-[#04177f]">
-            <Link to="/Login">Sign In</Link>
+            <Link className="font-bold" to="/Login">Sign In</Link>
           </span>
         </p>
+        </div>
       </div>
 
       {loadSignUp && (

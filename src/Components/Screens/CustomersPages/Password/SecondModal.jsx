@@ -34,7 +34,6 @@ const SecondModal = ({value, userForgetPasswordSystem}) => {
   const successVerifyPassword =()=> {
    setRedirect(true);
      setSubmission(null);
-   // console.log(e.target)
   }
 
 const dateAsAtAllocation =  Date.now();
@@ -78,6 +77,10 @@ const dateAsAtAllocation =  Date.now();
    // TO HANDLE RESEND OF OTP 
  const handleResendOTP = async()=> {
     await userForgetPasswordSystem();
+    setForgetPassVerificationPinError(false);
+    setOtpSent("")
+
+
     if(userForgetPasswordSystem){
         setForgetPassCountdown(60)
         setForgetPassCanResend(false)
@@ -113,7 +116,8 @@ const dateAsAtAllocation =  Date.now();
 
                 <div className="w-[100%] mx-[24px] flex flex-col lg:mx-[0px] 
                  rounded-[8.6px] h-auto bg-white py-6  lg:gap-[18px] p-4 lg:h-[301px] lg:w-[348px] lg:rounded-[15px]">
-                    <p className="text-[12px] lg:text-[14px] font-[500] lg:font-[700] mb-[20px]">Verification code has been sent to your email - {inputForgetEmail}</p>               
+                    <p className="text-[12px] lg:text-[14px] font-[500] lg:font-[700] mb-[20px]">Verification code has been sent to your email - {inputForgetEmail?.length ?
+                     `${inputForgetEmail?.slice(0,4)}******` : ""}</p>               
                     <div className=' flex flex-col  gap-[20px] lg:gap-[30px]'>
                         <div className="flex flex-col ">
                             <OtpInput 
@@ -131,13 +135,14 @@ const dateAsAtAllocation =  Date.now();
                                   renderInput={(props) => (
                                     <input 
                                     type="password"
-                                    {...props} className="inputOTP mx-[3px] " />
+                                    {...props} className="inputOTP mx-[3px]  text-base" />
                                   )}/>
                           
                       
                       
                         {forgetPassVerificationPinError === true ? (
-                    <p className="text-center text-red-500 md:font-[500] font-[400] lg:text-[16px] text-[9.167px] mt-[3px] lg:mt-[15px]">
+                    <p className="text-center text-[12px] lg:text-[14px] lg:leading-[18px] font-bold text-red-500 md:font-[500]
+                      mt-[3px] lg:mt-[15px]">
                      Incorrect otp provided
                     </p>
                   ) : (

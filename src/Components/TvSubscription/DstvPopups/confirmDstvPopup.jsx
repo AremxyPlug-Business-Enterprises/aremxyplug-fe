@@ -40,7 +40,7 @@ import arrowRight from "../../../Components/EducationPins/imagesEducation/educat
   //   }
   //   return '';
   // };
-const [balanceStatus,setBalanceStatus] = useState("")
+const [balanceStatus,setBalanceStatus] = useState("");
    let balanceStringToNum = Number(newBalance);
    const updateBalance = (newBalance === "" && passDataBalance?.data?.data?.data?.balance)
     ? Number(passDataBalance?.data?.data?.data?.balance) : balanceStringToNum;

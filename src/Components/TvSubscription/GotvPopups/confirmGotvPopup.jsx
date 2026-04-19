@@ -15,7 +15,6 @@ const ConfirmGotvPopup = ({passDataBalance, userVerifiedName}) => {
     tvEmail,
     smartCard,
     selectedOptionGOTV,
-    cardName,
     methodImage,
     isDarkMode,
     //tvWalletBalance,

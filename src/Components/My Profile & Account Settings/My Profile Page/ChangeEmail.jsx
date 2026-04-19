@@ -33,7 +33,7 @@ const ChangeEmail = () => {
   const [resendActive, setResendActive] = useState(false);
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
-  const [fetchedResponse, setFetchedResponse] = useState({})
+  //const [fetchedResponse, setFetchedResponse] = useState({})
   useEffect(() => {
     let timer;
 
@@ -76,7 +76,7 @@ const ChangeEmail = () => {
        ()=> {
         setSessionModal(true)
        },
-         setFetchedResponse, setNetworkIssue)
+         ()=> {}, setNetworkIssue)
      }else if(ErrorType === "Server error"){
         alert("Failed to process your request. Please try again later.")
      }else if(ErrorType === "Network error" || ErrorType === "User error"){
@@ -110,7 +110,7 @@ const ChangeEmail = () => {
        body, 
        SuccessHandler,
         FailedHandler,
-         setFetchedResponse, setNetworkIssue)
+       ()=> {}, setNetworkIssue)
     } else {
       setErrorMessage("Invalid email..");
       setEmailInputColor("#F95252");
@@ -135,7 +135,7 @@ const ChangeEmail = () => {
                ()=> {
                  setSessionModal(true)
                },
-                setFetchedResponse, setNetworkIssue)  
+                ()=> {}, setNetworkIssue)  
                }else if(Error === undefined){
               if(networkIssue) return;
               if(!networkIssue) return setNetworkIssue(true)
@@ -162,7 +162,7 @@ const ChangeEmail = () => {
          body, 
          SuccessHandler,
           FailedHandler,
-           setFetchedResponse, setNetworkIssue)  
+           ()=> {}, setNetworkIssue)  
       }
       
     

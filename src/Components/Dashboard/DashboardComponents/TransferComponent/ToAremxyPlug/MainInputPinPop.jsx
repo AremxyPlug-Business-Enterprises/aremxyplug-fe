@@ -33,8 +33,8 @@ export const MainInputPinPop = ({fetchedResponse}) => {
   const [transactSuccessToOtherBank, setTransactSuccessToOtherBank] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState(false);
-    const [transferErrorType, setTransferErrorType] = useState("");
-    const [failedPopup, setFailedPopup] = useState(false);
+    //const [transferErrorType, setTransferErrorType] = useState("");
+    //const [failedPopup, setFailedPopup] = useState(false);
   
 
      const [isFocused, setIsFocused] = useState(false);
@@ -107,13 +107,13 @@ const requestData = {
           //which doesn't only affect us through service of the platform we are using,
           //but also unrest and panic to the user and the amount for purchase and 
           //been removed twice without a result or successful output.
-          setTransferErrorType("Failed to process your request, try again some other time")
-       setFailedPopup(true);
+        //  setTransferErrorType("Failed to process your request, try again some other time")
+     //  setFailedPopup(true);
        setOtherInputPinPopUp(false);
          setInputPin("")
         }else if(ErrorType === "Network error" || ErrorType === "User error"){
-          setTransferErrorType("An internet connection error");
-          setFailedPopup(true);
+       //   setTransferErrorType("An internet connection error");
+    //      setFailedPopup(true);
        setOtherInputPinPopUp(false);
          setInputPin("")
         }else {
@@ -195,10 +195,10 @@ const requestData = {
                   </p>
                   <div className="flex flex-col items-center lg:gap-[0px]
              gap-[5px] font-extrabold">
-                    <div className=" flex items-center  gap-[10px]">
+                    <div className="w-full justify-center flex items-center  gap-[10px]">
                       <OtpInput
                         value={inputPin}
-                        inputType= {!isVisible ? "tel" : "password" }
+                        inputType= {"tel"}
                         onChange={setInputPin}
                         numInputs={4}
                         shouldAutoFocus={true}
@@ -216,20 +216,28 @@ const requestData = {
                           ? "1px solid white"
                           : "1px solid #ccc",
                     }}
-                        renderInput={(props) => (
-                          <input {...props} className="inputOTP text-base mx-[3px]"
-                           onFocus={handleFocus} onBlur={handleBlur}  />
-                        )}
-                      />
-                      <div
-                        className="text-[#0003] text-[13px] md:text-3xl"
-                        onClick={toggleVisibility}
-                      >
-                        {isVisible ? <AiFillEye className={`w-[16px] h-[16px]
-                                          lg:w-[24px] lg:h-[24px]  ${isDarkMode ? " text-white" : "text-black" }`}/> : <AiFillEyeInvisible  
-                                          className={`w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]
-                                          ${isDarkMode ? " text-white" : "text-black" }`}/>}
-                      </div>
+                      renderInput={(props) => (
+                         <input {...props} className={`inputOTP text-base mx-[2px] 
+                              ${isFocused ? 'focused' : ''} ${isVisible ? 'otp-visible' : 'otp-hidden'}`} onFocus={handleFocus}
+                                           onBlur={handleBlur}
+                                       
+                                     
+                             style={{
+                               ...props.style,
+                               // Extra safety: force the color to stay consistent
+                               color: isDarkMode ? "#ffffff" : "#000000",
+                             }}
+                           />
+                         )}
+                       />
+                     
+                       <div className="cursor-pointer" onClick={()=>  toggleVisibility()}>
+                         {isVisible ? (
+                           <AiFillEye className={isDarkMode ? "text-white" : "text-black"} />
+                         ) : (
+                           <AiFillEyeInvisible className={isDarkMode ? "text-white" : "text-black"} />
+                         )}
+                       </div>
                     </div>
                      <Link to={{
                                   pathname : "/ProfileSettingMain",

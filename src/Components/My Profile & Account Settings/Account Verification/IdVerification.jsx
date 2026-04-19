@@ -1,6 +1,5 @@
 import React, { useContext, useState, useRef, useEffect } from "react";
 import "../../../App.css";
-import styles from "../../../Components/Dashboard/DashboardComponents/TransferComponent/transfer.module.css";
 import { ContextProvider } from "../../Context";
 import NotVerifiedIcon from "../ProfileImages/NotVerifiedIcon.svg";
 import messageIcon from "../ProfileImages/message-question.svg";
@@ -247,7 +246,7 @@ const [idNumberError, setIdNumberError] = useState("")
       setIdNumberError("");
     }
    if(verificationResponse?.data?.data){
-    setIdNumber(verificationResponse?.data?.data?.nin)
+    setIdNumber(verificationResponse?.data?.data?.nin )
   }
     // eslint-disable-next-line
   }, [Data]);
@@ -1069,8 +1068,10 @@ Confirming your identity ensures that the person accessing the account is indeed
                     setIdNumber(idNumber);
                     setIdResult(idResult);
                   }}
-                  className={`my-[5%] bg-[#04177f] w-[90%] flex justify-center items-center mx-auto cursor-pointer text-[10px] 
-                font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
+                  className={`my-[5%] bg-[#04177f] w-[90%] py-[16px]
+                     flex justify-center items-center mx-auto cursor-pointer
+                      text-[14px]  font-extrabold h-[40px] text-white rounded-[6px] md:w-[25%] 
+                      md:rounded-[8px] md:text-[16px] lg:w-[163px] lg:h-[38px] lg:my-[2%]`}
                 >
                   Done
                 </button>

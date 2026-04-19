@@ -12,7 +12,9 @@ import marketingChartImg from './images/marketingChart.svg'
 const SocialMediaMarketing = () => {
   return (
     <>
-      <div className="w-full px-[5%] md:px-[8%] md:pt-[5%] pt-[15%] mb-[25%] md:mb-[15%] bg-no-repeat bg-cover flex flex-col gap-[50px] md:gap-[120px]" style={{backgroundImage:`url(${mainBg})`}}>
+      <div className="w-full px-[5%] md:px-[8%] md:pt-[5%] pt-[15%]
+       mb-[25%] md:mb-[15%] bg-no-repeat bg-cover flex flex-col gap-[50px] md:gap-[120px]"
+        style={{backgroundImage:`url(${mainBg})`}}>
         <SocialMediaHeader/>
 
         {/* bottom message ofthe header */}

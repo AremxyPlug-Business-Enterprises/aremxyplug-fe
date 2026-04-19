@@ -92,7 +92,7 @@ const pathname = location?.pathname === "/DigitalServices"
             justify-center ${currentLocation === "/TestingPhase" ? "top-[80px]":  "top-[120px]"} 
           text-center  w-full`}
         > 
-          <ul className="flex flex-col w-full gap-[20px] h-1/2 bg-[#04177f] rounded-lg
+          <ul className="flex flex-col w-full gap-[20px] h-[333.5px] bg-[#04177f] rounded-lg
            justify-center  text-[12px] text-center text-[#ffffff] p-6">
             <li onClick={() => setNavOpen((prev) => !prev)}>
               <Link to="/">Home</Link>

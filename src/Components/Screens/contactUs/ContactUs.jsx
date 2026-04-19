@@ -198,7 +198,7 @@ function ContactUs() {
           {/* Comapany starts here*/}
           <div className="flex items-center justify-between mb-[20px] md:mb-[24px] lg:mb-[26px]">
             <p className="text-[8.93px] md:text-[11.58px] lg:text-[20px] font-[600] w-[30%]">
-              Comapany
+              Company
             </p>
             <div
               className={`inputBoxShadow w-[67%] h-[40px] lg:h-[45px]   rounded  flex items-center lg:hover:border-[#b3b3b3] lg:duration-300
