@@ -41,11 +41,10 @@ export const RedeemReceipt = () => {
           text: "Check out this receipt!",
           url: "https://example.com", // Replace with the actual URL of your receipt
         })
-        .then(() => console.log("Shared successfully"))
-        .catch((error) => console.error("Error sharing:", error));
+        .then(() => {return;})
+        .catch((error) => {return;});
     } else {
-      console.log("Web Share API not supported.");
-      // Handle sharing fallback for unsupported browsers
+    return;
     }
   };
 
@@ -96,7 +95,7 @@ export const RedeemReceipt = () => {
             <div className="w-full flex justify-center ">
               <img
                 className="absolute w-[250px] h-[450px] md:w-[70%] lg:w-[50%] lg:h-[550px]"
-                src="./Images/transferImages/receipt-background.png"
+                src="./Images/transferImages/receipt-background.jpeg"
                 alt="/"
               />
             </div>

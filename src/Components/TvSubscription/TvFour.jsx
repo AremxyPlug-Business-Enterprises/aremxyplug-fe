@@ -91,7 +91,7 @@ setShowMaxMobileNumber,
     const [balanceLoader, setBalanceLoader] = useState(false)
     const [passDataBalance, setPassDataBalance] = useState({});
      const [showMaxData, setShowMaxData] = useState([]);
-                       const [checkNetworkError, setCheckNetworkError] = useState(false)
+                   //    const [checkNetworkError, setCheckNetworkError] = useState(false)
                     const [restrictUser, setRestrictUser] = useState(false)
             const navigate = useNavigate();
       
@@ -188,7 +188,7 @@ const Decoders  = [
         // ========= Retrieve User's Balance ======== //
            const GetBalance = async () => {
     if(!navigator.onLine) {
-      setCheckNetworkError(true)
+   //   setCheckNetworkError(true)
        if(networkIssue) return;
         if(!networkIssue) return setNetworkIssue(true)
     }
@@ -202,7 +202,7 @@ const Decoders  = [
             if(sessionModal) return;
             if(!sessionModal) return setSessionModal(true)
         }else if(ErrorType === "Network error" || ErrorType === "User error"){
-            setCheckNetworkError(true);
+         //   setCheckNetworkError(true);
              if(networkIssue) return;
         if(!networkIssue) return setNetworkIssue(true)
         }else{
@@ -372,49 +372,7 @@ const Decoders  = [
   }
 
 
-  // let userVerifiedName = showMaxVerifyResponse?.data ? showMaxVerifyResponse?.data?.name : "";
-  //  //Function to help Verify users account
-  //  const VerifyUserAccount = async(UserTvSubscription)=> {
-  //   setShowMaxVerifyResponse({});
-  //      const body = {
-  //             decoder_type : showMaxDecoderType.toLowerCase(),
-  //            iuc_number : UserTvSubscription
-  //          }
-  //     const SuccessHandler = (response)=> {
-  //     // console.log("Succesfully verified tv subscription account.");
-  //    setShowMaxSmartCard(UserTvSubscription);
-  //    setShowMaxCardName(response?.data?.data?.data?.name);
-  //  }
-  //  const FailedHandler = async(ErrorType)=> {
-  //   if(ErrorType === "unauthorised"){
-  //  await PostFunction("bills/verify",
-  //    setShowMaxLoading, 
-  //    bodyToJson, 
-  //    SuccessHandler,
-  //    (ErrorType)=> {
-  //    if(ErrorType === "unauthorised"){
-  //     return setSessionModal(true)
-  //    }
-  //    }, 
-  //    setShowMaxVerifyResponse )
-  //   }
-  //  }
-           
-  //          const bodyToJson = JSON.stringify(body);
-  //     if(UserTvSubscription?.length === 11 && 
-  //      (UserTvSubscription !== "" && 
-  //        UserTvSubscription !== null && 
-  //        UserTvSubscription !== undefined)){
-        
-  //  await PostFunction("bills/verify",
-  //    setShowMaxLoading, 
-  //    bodyToJson, 
-  //    SuccessHandler,
-  //    FailedHandler, 
-  //    setShowMaxVerifyResponse )
-  //  }
-  //  }
-   //console.log(userVerifiedName)
+
    
     const handleSmartCard = async(e) => {
      setShowMaxSmartCard(e.target.value)
@@ -663,7 +621,6 @@ const Decoders  = [
                  setDecoderActive(false);
                  GetOtherDataTv(decoder?.id, decoder?.path);
              document.querySelector('.decdrop').classList.remove('DropIt');
-             console.log(e);
               })}
               className={`pb-[20px] md:pb-[14px] md:pt-[14px] pt-[20px] font-weight-bold text-[14px] leading-[10.4px] md:py-[15px] py-[8px] pl-[10px] font-[500] text-[#7C7C7C]  
          md:text-[13.227px] md:leading-[17.195px] 

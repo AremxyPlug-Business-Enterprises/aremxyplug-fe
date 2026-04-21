@@ -79,7 +79,7 @@ export const PersonalAccountForm = () => {
   });
 
   const [errors, setErrors] = useState({});
-  console.log(state, countryCode, country, checkbox);
+ 
 
   const navigate = useNavigate();
 
@@ -197,8 +197,6 @@ export const PersonalAccountForm = () => {
     } else {
       setSuccessful(true);
     }
-
-    console.log(successful);
   };
 
   return (

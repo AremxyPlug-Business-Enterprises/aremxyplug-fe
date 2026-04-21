@@ -40,11 +40,7 @@ const AirtimeVtu = () => {
 
 
 
-    if (addRecipient) {
-        console.log('recipient added')
-    } else {
-        console.log('did not add recipient')
-    }
+   
 
     const networkList = [
         {
@@ -239,11 +235,6 @@ const AirtimeVtu = () => {
         setProceed(false);
         setConfirm(true)
       }
-
-      console.log(confirm)
-
-      console.log(recipientName, discount, newAmount, networkImage, selectedProduct, networkName, recipientNumber, name, image)
-
   return (
     <DashBoardLayout>
       <div className="flex flex-col justify-between h-full">

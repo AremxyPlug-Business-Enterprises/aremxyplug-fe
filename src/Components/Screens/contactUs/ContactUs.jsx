@@ -78,9 +78,10 @@ function ContactUs() {
        grid-cols-1 gap-y-4 mt-[70px] md:mt-[110px] lg:mt-[140px]
         "
       >
-        <div className="rounded-lg flex flex-col items-center  md:col-span-2 ">
+        <div className="rounded-lg flex flex-col items-center 
+         md:col-span-2 justify-center h-full w-full">
           <img
-            src="./Images/contactUs/contactUsImage.png"
+            src="./Images/contactUs/contactUsImage.avif"
             alt="background_image "
             className="w-[100%]  md:float-left"
           />

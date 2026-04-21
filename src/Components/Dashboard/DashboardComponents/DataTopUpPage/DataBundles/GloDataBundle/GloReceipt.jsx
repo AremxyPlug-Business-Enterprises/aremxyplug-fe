@@ -13,7 +13,6 @@ export const GloReceipt = (Data) => {
   Data = GetLocalStorage()
   const location = useLocation()
   const { 
-    selectedNetworkProduct, 
     selectedOption, 
     // recipientPhoneNumber, 
     inputValue,
@@ -86,8 +85,8 @@ export const GloReceipt = (Data) => {
             title: "AremxyPlug_GLO_Data_Receipt",
             files : [file], 
           })
-          .then(() => console.log("Shared successfully"))
-          .catch((error) => console.error("Error sharing:", error));
+          .then(() => {return;})
+          .catch((error) => {return;});
       }else{
       alert("Sharing this pdf isn't supported in your browser.")
       }

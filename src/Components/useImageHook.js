@@ -6,11 +6,7 @@ export const useImageHook= (imageurl = [])=> {
         ImageLoader(imageurl)
         .then((result)=>{
              setLoaded(true)
-            if(result.status === "fulfilled"){
-                console.log(`${imageurl} loaded successfully, : ${result.value}`)
-            }else{
-                console.log(`${imageurl} loading failed: ${result.value}`)
-            }  
+     
             })
         .catch(()=> setLoaded(true))
         .finally(()=> setLoaded(false))

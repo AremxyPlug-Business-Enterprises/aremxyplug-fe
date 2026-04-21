@@ -394,7 +394,7 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
             ${
               isFocused.includes(1)
                 ? "border-[#2684fe] border-2"
-                : "border-[#cdcdcd] border-[1px] "
+                : "border-[#cdcdcd] border-[1px]"
             }`}
                 onFocus={() => handleFocus(1)}
                 onBlur={() => handleBlur(1)}
@@ -612,7 +612,7 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
            font-semibold tracking-wider">
             Don’t have an account yet{" "}
           </p>
-          <Link to="/signup">
+          <Link to="/signUp">
             <p className="pl-2 text-[12.17px] leading-[16px] 
           lg:text-[16px] lg:leading-[24px]
            font-semibold  text-[#04177F] cursor-pointer tracking-wider">

@@ -31,7 +31,7 @@ export const NavBar = () => {
 
 const userStatus= localStorage.getItem("cxccxfd");
 const pathname = location?.pathname === "/DigitalServices" 
-|| location?.pathname === "/VTU_DEV" || location?.pathname === "/businessDev" 
+|| location?.pathname === "/VTU_DEV" || location?.pathname === "/businessDev" || location?.pathname ==="/CardIssuing"
 || location?.pathname === "/ContactUs" || location?.pathname === "/pricing";
   return (
    

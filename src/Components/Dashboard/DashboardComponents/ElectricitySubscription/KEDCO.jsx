@@ -523,7 +523,6 @@ const GetBalance = async () => {
     );
   };
 
-  // console.log(fetchedResponse);
 
   function handleReceivedData() {
     setLoading(true);
@@ -593,83 +592,7 @@ const GetBalance = async () => {
     HandleBalanceStatus();
   }, [CheckSufficiency]);
 
-  // console.log(fetchedResponse.data)
-  // console.log(fetchedResponse.data.description)
-  // console.log(fetchedResponse.data.request_id)
-  // console.log(fetchedResponse.data.transaction_id)
-  // console.log(fetchedResponse.data.order_id)
 
-  // const handleSuccess = async () => {
-  //   async function buyKEDCO(meter_type, meter_no, phone, email, amount) {
-  //     // const url = 'https://aremxyplug.onrender.com/api/v1/electric-bill';
-
-  //     const parsedAmount = parseInt(amount, 10);
-
-  // const data = {
-  //   meter_type: selectedNetworkProduct,
-  //   meter_no: meterNumber,
-  //   phone: phoneNumber, // Use the parsed integer value
-  //   email: ikedcEmail,
-  //   amount: parsedAmount, // Use the parsed integer value
-  //   disco_type: "kano-electric",
-  // };
-
-  //     console.log(data);
-
-  // const path = "electric-bill";
-
-  // const ElectricityHandler = () => {
-  //   PostFunction(
-  //     path,
-  //     setLoading,
-  //     data,
-  //     functionAtSuccess,
-  //     functionAtFailed
-  //   );
-  // };
-
-  //     try {
-  //       // const response = await axiosInstance.post(path, data);
-  //       const response = await verifyPin;
-  //       // if (pinFailed && errorMessage) return;
-  //       console.log(response.data);
-  //       console.log(response.status);
-  //       setSelectedNetworkProduct(response.data.data.meter_type);
-  // setMeterNumber(response.data.data.meter_number);
-  // setPhoneNumber(response.data.data.phone);
-  // setEmail(response.data.data.email);
-  // setIkedcamount(response.data.data.amount);
-  // setBillGenerate(response.data.data.bill_generated);
-  // setOrderId(response.data.data.order_id);
-  // setTransactionId(response.data.data.transaction_id);
-  // setServiceID(response.data.data.disco_type);
-  // setShowDescription(response.data.data.description);
-  //       return { statusCode: response.status, data: response.data.data };
-  //       // console.log(response.data);
-  //     } catch (error) {
-  //       console.error(error);
-  //       return { statusCode: error.response.status, data: null };
-  //     }
-  //   }
-
-  //   // Usage
-  //   const response = await buyKEDCO(
-  //     selectedNetworkProduct,
-  //     meterNumber,
-  //     phoneNumber,
-  //     ikedcEmail,
-  //     ikedcamount
-  //   );
-
-  //   setInputPinPopUp(false);
-  //   if (response.statusCode === 200) {
-  //     // Success response
-  //     setSuccessPopup(true); // Show success popup
-  //   } else {
-  //     // Failure response
-  //     setFailedPopup(true); // Show failure popup
-  //   }
-  // };
 
   const [InputPinPopUp, setInputPinPopUp] = useState(false);
   const [inputPin, setInputPin] = useState("");

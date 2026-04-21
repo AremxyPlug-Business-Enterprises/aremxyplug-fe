@@ -21,11 +21,11 @@ import Success from "../ProfileImages/success.gif";
 import { PostFunction } from "../../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../../Loader/Loader";
 const ChangePhoneNumber = () => {
-  const { isDarkMode, sessionModal, networkIssue, setNetworkIssue, setSessionModal } = useContext(ContextProvider);
+  const { isDarkMode,  networkIssue, setNetworkIssue, setSessionModal } = useContext(ContextProvider);
   // const { recipientPhoneNumber, setRecipientPhoneNumber } =
   //   useContext(ContextProvider);
     const [loading, setLoading] = useState(false);
-    const [fetchedResponse, setFetchedResponse] = useState({});
+   // const [fetchedResponse, setFetchedResponse] = useState({});
 
    
  const [otp, setOtp] = useState("");
@@ -97,7 +97,7 @@ const VerifyPopUpHandler =async()=> {
       ()=> {
         setSessionModal(true)
       },
-       setFetchedResponse,setNetworkIssue)  
+       ()=> {},setNetworkIssue)  
       }else if(Error === undefined){
        if(networkIssue) return;
       if(!networkIssue) return setNetworkIssue(true)
@@ -109,7 +109,6 @@ const VerifyPopUpHandler =async()=> {
 
     
     const SuccessHandler =(response)=> {
-     // console.log("Successful")
      setVerificationPinError("")
       setUpdate(false);
    setVerify(true);
@@ -128,7 +127,7 @@ const VerifyPopUpHandler =async()=> {
      body, 
      SuccessHandler,
       FailedHandler,
-       setFetchedResponse, setNetworkIssue)  
+       ()=> {}, setNetworkIssue)  
   }
   
 
@@ -150,7 +149,7 @@ const VerifyPopUpHandler =async()=> {
      ()=> {
       setSessionModal(true);
      },
-       setFetchedResponse,setNetworkIssue)
+       ()=> {},setNetworkIssue)
       }else if(ErrorType === undefined){
       if(networkIssue) return;
       if(!networkIssue) return setNetworkIssue(true)
@@ -161,7 +160,6 @@ const VerifyPopUpHandler =async()=> {
       }
     }
     const SuccessHandler =(response)=> {
-     // console.log("Successful")
     setUpdate(true);
       setErrors({});
       setCountdown(60);
@@ -188,7 +186,7 @@ const VerifyPopUpHandler =async()=> {
      body, 
      SuccessHandler,
       FailedHandler,
-       setFetchedResponse, setNetworkIssue)
+       ()=> {}, setNetworkIssue)
   }
     }
     const schema = Joi.object({
@@ -210,9 +208,7 @@ const VerifyPopUpHandler =async()=> {
     await HandleChangePhoneNumber();
   };
 
-  
-  
-   //console.log(fetchedResponse)
+
   
   
   return (

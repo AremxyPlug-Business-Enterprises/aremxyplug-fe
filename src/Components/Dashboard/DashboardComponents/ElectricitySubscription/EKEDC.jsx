@@ -378,7 +378,7 @@ const GetBalance = async () => {
           meter_no: meterNumber,
           meter_type: selectedEkedcMeterType.toLowerCase(),
         };
-        console.log(meterNumber);
+      
         const SuccessHandler = () => {
           setIsFailedMeterNumber(false);
           function handleReceivedMeterData() {
@@ -554,7 +554,6 @@ const GetBalance = async () => {
     setLoading(true);
     const receivedData = () => {
       setEkedcBillGenerate(ekedcFetchedResponse?.data?.bill_generated);
-      console.log("bill", ekedcFetchedResponse?.data?.bill_generated);
       setEkedcOrderId(ekedcFetchedResponse?.data?.order_id);
       setEkedcTransactionId(ekedcFetchedResponse?.data?.transaction_id);
       setEkedcServiceID(ekedcFetchedResponse?.data?.RequestID);
@@ -609,8 +608,7 @@ const GetBalance = async () => {
   let balanceStringToNum = Number(newBalance ? newBalance : updateBalance);
   let ekedcAmountToNumber = Number(ekedcAmount);
   let CheckSufficiency = ekedcAmountToNumber > balanceStringToNum;
-  console.log("typeb", typeof balanceStringToNum);
-  console.log("typee", typeof ekedcAmountToNumber);
+  
   useEffect(() => {
     const HandleBalanceStatus = () => {
       if (CheckSufficiency) {

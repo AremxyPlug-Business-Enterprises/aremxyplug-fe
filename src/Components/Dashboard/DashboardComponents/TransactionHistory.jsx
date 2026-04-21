@@ -108,7 +108,6 @@ const TransactionHistory = ({
     
       ? transactionResponse?.data?.data?.data?.transactions?.filter(
           (transaction, index) => {
-         //   console.log(transaction);
             return index < 10;
           }
         ) : [];

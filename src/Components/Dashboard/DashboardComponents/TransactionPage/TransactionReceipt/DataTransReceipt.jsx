@@ -93,8 +93,8 @@ export const DataTransReceipt = () => {
             title: `AremxyPlug_${receiptData?.network?.toUpperCase()}_Data_Receipt`,
             files : [file], 
           })
-          .then(() => console.log("Shared successfully"))
-          .catch((error) => console.error("Error sharing:", error));
+          .then(() => {return;})
+          .catch((error) => {return;});
       }else{
       alert("Sharing this pdf isn't supported in your browser.")
       }

@@ -14,6 +14,7 @@ const NewWallet = () => {
     // isDarkMode,
     newBalance,
     setNewBalance,
+    setNetworkIssue
   } = useContext(ContextProvider);
 
   // const amt = 10000
@@ -23,32 +24,30 @@ const NewWallet = () => {
 
   useEffect(() => {
     const GetBalance = async () => {
-      const SuccessHandler = () => {
-        //alert("Successful");
-        console.log("successfully retrieved balance");
-        //alert("Successful")
-      };
+   
       const FailedHandler = async (ErrorType) => {
         if (ErrorType === "unauthoriesed") {
           await GetFunction(
             "balance",
             setLoading,
-            SuccessHandler,
+           ()=> {},
             (ErrorType) => {
               if (ErrorType === "unauthorised") {
                 setSessionModal(true);
               }
             },
-            setPassDataBalance
+            setPassDataBalance,
+            setNetworkIssue
           );
         }
       };
       await GetFunction(
         "balance",
         setLoading,
-        SuccessHandler,
+        ()=> {},
         FailedHandler,
-        setPassDataBalance
+        setPassDataBalance,
+        setNetworkIssue
       );
     };
     // Simulate async data loading

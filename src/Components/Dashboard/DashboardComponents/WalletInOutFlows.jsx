@@ -30,12 +30,12 @@ export const WalletInOutFlows = () => {
     setCountCalender, setNetworkIssue }  =
     useContext(ContextProvider);
   const [blur] = useState(false);
- // console.log(setBlur)
+ 
   const [selected, setSelected] = useState("");
   const [toggleTotalTransaction] = useState(false);
-  //console.log(setToggleTotalTransaction)
-  const [walletLoading, setWalletLoading] = useState(false)
-  const [symbol, setSymbol] = useState("₦");
+
+  //const [walletLoading, setWalletLoading] = useState(false)
+  //const [symbol, setSymbol] = useState("₦");
  const [loading, setLoading] = useState(false);
  const {transactionResponse, setTransactionResponse} = useContext(ContextProvider);
  const [transactionHistoryError, setTransactionHistoryError] = useState("");
@@ -72,21 +72,21 @@ export const WalletInOutFlows = () => {
   const handleSelectedOption = (event) => {
     const clickedoption = event.target.value;
     setSelected(clickedoption);
-    setSymbol(
-      clickedoption === "NGN"
-        ? "₦"
-        : clickedoption === "USD"
-        ? "$"
-        : clickedoption === "GBP"
-        ? "£"
-        : clickedoption === "AUD"
-        ? "AU$"
-        : clickedoption === "KES"
-        ? "KSh"
-        : clickedoption === "EUR"
-        ? "€"
-        : ""
-    );
+    // setSymbol(
+    //   clickedoption === "NGN"
+    //     ? "₦"
+    //     : clickedoption === "USD"
+    //     ? "$"
+    //     : clickedoption === "GBP"
+    //     ? "£"
+    //     : clickedoption === "AUD"
+    //     ? "AU$"
+    //     : clickedoption === "KES"
+    //     ? "KSh"
+    //     : clickedoption === "EUR"
+    //     ? "€"
+    //     : ""
+    // );
   };
 
   
@@ -153,9 +153,7 @@ const handleDateFilter = ()=> {
     GetTransactionInformation();
    }
  })
-  //const [activeButton] = useState(0);
 
-  //console.log(setActiveButton)
   ///============== CHARTS INFORMATION===============//
 const HandleTransactionDataMgt = useMemo(()=> GetTransactionInformation, [transactionResponse])
 
@@ -225,8 +223,6 @@ useEffect(()=> {
 
 // const cachedChartResponse = useMemo(()=> chartFunc, [c])
 const [chartResponse, setChartResponse] = useState({});
-
- const [walletResponseError, setWalletResponseError] = useState("");
 const chartFunc = async(chartIndicator)=> {
 function handleDataFilter(){
   if((chartIndicator === "daily" ||
@@ -264,7 +260,7 @@ function handleDataFilter(){
 
 
 let path =`chart${typeof handleDataFilter() === "string" ? handleDataFilter() : ""}`
-  await GetFunction(path, setWalletLoading, (response)=> {
+  await GetFunction(path, ()=>{}, (response)=> {
       setChartResponse(response)
   }, (errorType)=> {
       if(errorType === "unauthorised"){
@@ -273,9 +269,9 @@ let path =`chart${typeof handleDataFilter() === "string" ? handleDataFilter() : 
       }else if(errorType === "Network error" ||
      errorType === "User error"
       || errorType === "Bad request"){
-       setWalletResponseError("Network error")
+      // setWalletResponseError("Network error")
     }else if(errorType === "Server error"){
-    setWalletResponseError("Server error")
+   // setWalletResponseError("Server error")
     }
   }, ()=> {}, setNetworkIssue)
 }

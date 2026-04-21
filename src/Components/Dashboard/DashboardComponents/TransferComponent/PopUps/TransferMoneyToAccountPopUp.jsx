@@ -47,7 +47,7 @@ export const TransferMoneyToAccountPopUp = () => {
     } else {
       setTfPopUp(false);
       setConfirmationPopUp(true);
-      // console.log(confirmationPopUp);
+      
       setErrors({});
     }
   };

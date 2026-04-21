@@ -14,7 +14,6 @@ import call from "../AirtimeConversion/images/call.png";
 import receive from "../AirtimeConversion/images/received.png";
 import { Modal } from "../../../Screens/Modal/Modal";
 import styles from "../TransferComponent/transfer.module.css";
-import { useLocation } from "react-router-dom";
 
 const ContactTeam = () => {
   const [showList, setShowList] = useState(false);
@@ -24,13 +23,6 @@ const ContactTeam = () => {
   const [success, setSuccess] = useState("");
   const [networkImageState, setNetworkImage] = useState("");
   const [networkNameState, setNetworkName] = useState("");
-
-  const location = useLocation();
-
-  const { networkImage, networkName } = location.state || {};
-
-  console.log(networkImage, networkName);
-
   // Access the state from the location object
   // const { networkImage, networkName } = location.state || {};
 
@@ -172,16 +164,15 @@ const ContactTeam = () => {
 
   useEffect(() => {
     // Update button style when both checkboxes are checked
-    const isButtonEnabled =
-      firstName &&
-      lastName &&
-      inputValue &&
-      airEmail &&
-      homeAdress &&
-      acknowledgeChecked &&
-      agreementChecked;
+    // const isButtonEnabled =
+    //   firstName &&
+    //   lastName &&
+    //   inputValue &&
+    //   airEmail &&
+    //   homeAdress &&
+    //   acknowledgeChecked &&
+    //   agreementChecked;
 
-    console.log(isButtonEnabled);
     // Update button style here or set it in your state
     // Example: setButtonStyle(isButtonEnabled ? 'bg-primary' : 'bg-[#63616188] cursor-not-allowed');
   }, [

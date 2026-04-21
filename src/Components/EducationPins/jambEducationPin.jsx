@@ -203,17 +203,13 @@ authenticationOpen,
   };
   const GetBalance = async () => {
       if(!navigator.onLine) return setCheckNetworkError(true)
-        const SuccessHandler = () => {
-          //alert("Successful");
-          console.log("successfully retrieved balance");
-          //alert("Successful")
-        };
+      
         const FailedHandler = async (ErrorType) => {
           if (ErrorType === "unauthorised") {
             await GetFunction(
               `balance`,
               setIsLoading,
-              SuccessHandler,
+              ()=> {},
               //Handling the error Use Cases of the Unauthorised inside
               // of the statement.
               async(ErrorType) => {
@@ -223,7 +219,7 @@ authenticationOpen,
                     await GetFunction(
           "balance",
           setIsLoading,
-          SuccessHandler,
+          ()=> {},
          async(ErrorType)=> {
           if(ErrorType === "Server error"){
             alert("Failed to retrieve the balance.")
@@ -250,13 +246,13 @@ authenticationOpen,
               await GetFunction(
           "balance",
           setIsLoading,
-          SuccessHandler,
+          ()=> {},
          async(ErrorType)=> {
            if(ErrorType === "unauthorised"){
               await GetFunction(
           "balance",
           setIsLoading,
-          SuccessHandler,
+          ()=> {},
           async(ErrorType)=> {
             if(ErrorType === "unauthorised"){
               return setSessionModal(true)
@@ -264,7 +260,7 @@ authenticationOpen,
                  await GetFunction(
           "balance",
           setIsLoading,
-          SuccessHandler,
+          ()=> {},
          async(ErrorType)=> {
           //if Statements
         //We run again cause the previous one was interrupted by 401
@@ -275,9 +271,9 @@ authenticationOpen,
           return sessionModal(true)
         }else if(ErrorType === "Network error" || ErrorType === "User error"){
            setCheckNetworkError(true);
-         alert("Kindly check your internet connection to retrieve balance")
+      setNetworkIssue(true)
         }else{
-         // console.log("yeah bro i am the one running blehh")
+         
           alert("An Unexpected error occured in attempt to retrieve balance")
         }
   
@@ -318,7 +314,7 @@ authenticationOpen,
         await GetFunction(
           "balance",
           setIsLoading,
-          SuccessHandler,
+        ()=> {},
           FailedHandler,
           setPassDataBalance, setNetworkIssue
         );

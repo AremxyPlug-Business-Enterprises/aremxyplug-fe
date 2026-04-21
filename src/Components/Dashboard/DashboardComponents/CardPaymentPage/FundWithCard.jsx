@@ -153,10 +153,10 @@ const FundWithCard = () => {
     setCardSelected(true);
     // setImage(flag);
 
-    const selectedCard = cardList.find((card) => card.code === code);
+  //   const selectedCard = cardList.find((card) => card.code === code);
 
-    setSelectedCardName(selectedCard.name);
-    setSelectedCardNumber(selectedCard.number);
+  //  setSelectedCardName(selectedCard.name);
+  //    setSelectedCardNumber(selectedCard.number);
   };
 
   const cardList = [
@@ -210,10 +210,10 @@ const FundWithCard = () => {
     },
   ];
 
-  const [selectedCardName, setSelectedCardName] = useState("");
-  const [selectedCardNumber, setSelectedCardNumber] = useState("");
+ // const [selectedCardName, setSelectedCardName] = useState("");
+ // const [selectedCardNumber, setSelectedCardNumber] = useState("");
 
-  console.log(selectedCardName, selectedCardNumber);
+  
 
   const Card = ({ code, flag, onClick }) => {
     return (
@@ -259,8 +259,7 @@ const FundWithCard = () => {
     } else {
       setError(""); // Clear any previous error
       setProceed(true);
-      // Proceed with your logic here
-      console.log("Proceeding with the amount:", cardPaymentAmount);
+
     }
   };
 
@@ -304,9 +303,6 @@ const FundWithCard = () => {
     });
   }, [location.search, setCardPaymentSelected]);
 
-  // console.log("code:", code);
-  // console.log("number:", number);
-  // console.log("name:", name);
 
   return (
     <DashBoardLayout>

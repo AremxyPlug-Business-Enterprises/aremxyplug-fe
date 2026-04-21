@@ -64,8 +64,6 @@ export const ReceiverCountrySelector = ({
     setCode(code);
     setShowList(false);
     setSelected(true);
-
-    console.log(id);
   };
 
   const dynamicClassName = `${w} ${className || ""}`;

@@ -59,7 +59,8 @@ const PointRedeem = () => {
           pointPointsRedeemed,
           setNetworkIssue,
           setSessionModal,
-          sessionModal
+          sessionModal,
+          networkIssue
           } = useContext(ContextProvider);
    
 
@@ -146,12 +147,11 @@ const schema = Joi.object({
 });
 
 
-    //Fetch Points
-  useEffect(() => {
-    if(Data?.ConfirmAcc === "true"){
-    const  successHandler = (response) => {
+// Call the GetFunction to get the User Points
+const PointRetrieval = ()=> {
+const  successHandler = (response) => {
      if (!response?.data?.data) return;
-    const available = response?.data?.data?.point?.available_points ?? 0;
+    const available = response?.data?.data?.point?.available_points ?? undefined;
     // const trxPoints = response?.data?.data?.point?.transaction_points ?? 0;
     // const referralPts = response?.data?.data?.point?.referral_points ?? 0;
     setUserPoints(available);
@@ -164,7 +164,7 @@ const schema = Joi.object({
       }else if(error === "Server error"){
     alert("Unable to retrieve points balance")
   }else if(error === "Network error" || error === "User error"){
-    alert("Kindly Check your internet connection.")
+    if(!networkIssue) return  setNetworkIssue(true)
   }
          
     };
@@ -176,11 +176,18 @@ const schema = Joi.object({
         FailedHandler, 
         setPointFetchedResponse,
       setNetworkIssue)
+}
+      // The End of the async Func
+
+    //Fetch Points
+  useEffect(() => {
+    if(Data?.ConfirmAcc === "true"){
+      PointRetrieval()
   }else{
     setRestrictUser(true)
   }
-   //eslint-disable-next-line
-  }, []);
+ 
+  }, [userPoints === undefined ]);
 
   
   
@@ -290,24 +297,12 @@ const redemptionData = response?.data?.data?.data;
 
   const refreshPoints = () => {
   GetFunction("extra/point", setLoading, (res) => {
-    const available = res?.data?.data?.point?.available_points ?? 0;
+    const available = res?.data?.data?.point?.available_points ?? undefined;
     setUserPoints(available);
     
   }, (err) => {
    if(err === "unauthorised"){
-        GetFunction("extra/point", setLoading, (res) => {
-    const available = res?.data?.data?.point?.available_points ?? 0;
-    setUserPoints(available);
-    
-  }, (err) => {
-   if(err === "unauthorised"){
-      setSessionModal(true)
-   }else if(err === "Server error"){
-    alert("Failed to retrieve points balance.")
-   }else if(err === "Network error" || err === "User error"){
-   setNetworkIssue(true)
-   }
-  }, setPointFetchedResponse)
+       setSessionModal(true)
    }else if(err === "Server error"){
     alert("Failed to retrieve points balance.")
    }else if(err === "Network error" || err=== "User error"){
@@ -360,6 +355,8 @@ setPointRateRedeemed("");
   setOutputValue("");
   setInputValue("")
 }
+
+
  
   return (
     <DashBoardLayout>
@@ -749,7 +746,7 @@ setPointRateRedeemed("");
 </div>
           
   <hr className="h-[6px] bg-[#04177f] border-none md:h-[10px]"/>
-          <div className="mx-auto">
+          <div className="px-3">
             <h2 className="text-[12px] my-[5%] text-center md:my-[3%] md:text-[15px] lg:my-[2%] lg:text-[16px] font-extrabold">
               Confirm Transaction
             </h2>
@@ -889,11 +886,10 @@ setPointRateRedeemed("");
                 >
                   <div
                     // className=" flex justify-center  ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]"
-                    className="flex items-center gap-2.5"
-                  >
+                    className="flex  w-full justify-center items-center gap-2.5">
         <OtpInput
   value={inputPin}
-  inputType={!isVisible ? "tel" : "password"}
+  inputType={"tel"}
   onChange={setInputPin}
   numInputs={4}
   shouldAutoFocus={true}
@@ -906,31 +902,29 @@ setPointRateRedeemed("");
     backgroundColor: isDarkMode ? "black" : "white",
     border: isDarkMode ? "1px solid white" : "1px solid #ccc",
   }}
-  renderInput={(props) => (
-    <input
-      {...props}
-      className={`inputOTP mx-[2px] ${isFocused ? "focused" : ""}`}
-      onFocus={handleFocus}
-      onBlur={handleBlur}
+   renderInput={(props) => (
+      <input {...props} className={`inputOTP text-base mx-[2px] 
+           ${isFocused ? 'focused' : ''} ${isVisible ? 'otp-visible' : 'otp-hidden'}`}
+            onFocus={handleFocus}
+                        onBlur={handleBlur}
+                    
+                  
+          style={{
+            ...props.style,
+            // Extra safety: force the color to stay consistent
+            color: isDarkMode ? "#ffffff" : "#000000",
+          }}
+        />
+      )}
     />
-  )}
-/>
-{/* 
-                    ) : (
-                      <div className="text-[24px] md:text-[24px] mt-1">
-                        * * * *
-                      </div>
-                    )} */}
-                    <div className={`text-[#0003]
-                     ${
-                            isDarkMode ? "text-[#7c7c7c7c]" :"inherit"
-                        }`} onClick={toggleVisibility}>
-                      {isVisible ? (
-                        <AiFillEye className="w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]" />
-                      ) : (
-                        <AiFillEyeInvisible className="w-[16px] h-[16px] lg:w-[24px] lg:h-[24px]" />
-                      )}
-                    </div>
+  
+    <div className="cursor-pointer" onClick={()=>  toggleVisibility()}>
+      {isVisible ? (
+        <AiFillEye className={isDarkMode ? "text-white" : "text-black"} />
+      ) : (
+        <AiFillEyeInvisible className={isDarkMode ? "text-white" : "text-black"} />
+      )}
+    </div>
                   </div>
                   <Link
                     to={{

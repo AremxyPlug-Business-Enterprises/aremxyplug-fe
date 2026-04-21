@@ -1,10 +1,10 @@
 import React from 'react'
 import PaymentServiceHeader from './PaymentServiceHeader';
-import banking from  './images/Banking.svg'
-import onlineBanking from './images/Online money.svg'
+import banking from  './PaymentImages/Banking.svg'
+import onlineBanking from './PaymentImages/OnlineMoney.svg'
 import ImageHolder from './ImageHolder';
 import PaymentCard from './PaymentCard';
-import bgImg from './images/PaymentBg.avif';
+import bgImg from './PaymentImages/PaymentBg.avif';
 import { Link } from 'react-router-dom';
 
 const PaymentServices = () => {
@@ -29,7 +29,7 @@ const PaymentServices = () => {
         {/* row 2 start here*/}
         <div className="flex justify-center">
           <ImageHolder image={banking}/>
-        </div>
+        </div>  
         {/* row 2 ends here */}
 
         {/* row 3  starts here*/}
@@ -59,9 +59,9 @@ const PaymentServices = () => {
         {/* cta link */}
        <div className='flex justify-center'>
              <Link to='/pricing'className='rounded-[7px] 
-                          inline-block px-[25px] py-[12px] text-white font-bold 
-                          text-[10px] leading-[11.31px] bg-primary md:px-[21px] 
-                          lg:px-[37px] lg:py-[15px] lg:text-[14px] lg:leading-[16px]'>Explore Pricing</Link>
+                inline-block px-[25px] py-[12px] text-white font-bold 
+                text-[10px] leading-[11.31px] bg-primary md:px-[21px] 
+                lg:px-[37px] lg:py-[15px] lg:text-[14px] lg:leading-[16px]'>Explore Pricing</Link>
                         
                       </div>
       </div>

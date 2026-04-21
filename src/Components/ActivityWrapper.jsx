@@ -22,8 +22,6 @@ export const ActivityWrapper = ({children}) => {
   const getDifferenceForExpiration = Date.now()  > Number(expiryTime);
   //Checking for the last 30 seconds difference between the expiryTime and the current Time,
   const HandleUserSessionPopUpTime = Number(expiryTime) - Date.now() <= 35000;
-  // Kindly Check this later
-  //console.log( Number(expiryTime) - Date.now())
   if(HandleUserSessionPopUpTime && sessionExpiration === false 
     && Number(expiryTime) - Date.now() > 5000 && Number(expiryTime) - Date.now() < 35000
   ){

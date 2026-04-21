@@ -167,7 +167,6 @@ export default function BvnVerification() {
             localStorage.setItem("Qhfde", "true"); // Id Verification
         }
       } catch (error) {
-        //console.log(error?.response?.data?.data?.data);
         if (error && error.response === undefined) {
              if(!networkIssue)  setNetworkIssue(true);
              setErrorVerify("A Network connection error");
@@ -205,9 +204,6 @@ export default function BvnVerification() {
       }
     }
   };
-
-  //To GetLocalStorage Data
-//console.log(verificationResponse?.data?.data?.details?.BVN);
   const ValueRef = useRef();
 
  

@@ -92,8 +92,8 @@ export default function EduReceipt() {
             title: `AremxyPlug_${receiptData?.exam_type?.toUpperCase()}_Receipt`,
             files : [file], 
           })
-          .then(() => console.log("Shared successfully"))
-          .catch((error) => console.error("Error sharing:", error));
+          .then(() => {return;})
+          .catch((error) => {return;});
       }else{
       alert("Sharing this pdf isn't supported in your browser.")
       }

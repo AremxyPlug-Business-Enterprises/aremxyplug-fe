@@ -154,7 +154,7 @@ const GetFunctionHandler = async(GlobalTvSubscription,tvPage, TvSubscriptionValu
       }
       return navigate(tvPage)
       
-     // console.log("Successfully fetched GotvPlans");
+     
     }
     const FailedHandler = async(DetectAuthorisation)=> {
         setLoading(true);
@@ -181,7 +181,8 @@ const GetFunctionHandler = async(GlobalTvSubscription,tvPage, TvSubscriptionValu
   await GetFunction(`products/tvsub/showmax`, setLoading, SuccessHandler, ()=> {
         setSessionModal(true);
     }, setFetchedShowMaxPlans, setNetworkIssue)
-     }else {console.log("This error did not result from unauthorization.")
+     }else {
+      return;
      }
     }
 
@@ -255,18 +256,12 @@ return navigate("/StarTimes");
    }
    }
 
-//console.log(fetchedPlans);
-// The conditional statement to help handle the getting of the plans when absent in the 
-// their respective variables
+
 
  handleSubscriptionFunction();
    if(handleSubscriptionFunction && GlobalTvSubscription === 0 && (fetchedGotvPlans.status !== 200)){
 await GetFunction(path, setLoading, SuccessHandler, FailedHandler, fetchedPlans, setNetworkIssue);
-//console.log(FailedHandler);
-//alert("Hello")
-//   if(GetFunction && (fetchedGotvPlans.status === 200 || fetchedGotvPlans.status === 201)){
-//    return navigate("/GoTv");
-//   }
+
     } else if(handleSubscriptionFunction && GlobalTvSubscription === 1 && (fetchedDstvPlans.status !== 200 )){
     
   await GetFunction(path, setLoading, SuccessHandler, FailedHandler, fetchedPlans, setNetworkIssue);
@@ -290,8 +285,7 @@ return navigate("/StarTimes");
        return LinkToPage();
      }
     }
-  //  console.log(fetchedGotvPlans)
- // console.log(sessionModal)
+
 return(
         <DashBoardLayout>
             <div className={style.AirtimeTops}>

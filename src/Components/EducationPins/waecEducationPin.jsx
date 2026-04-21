@@ -348,9 +348,9 @@ const GetBalance = async () => {
     {
       method: "NGN Wallet",
       balance:
-        newBalance === null || newBalance === undefined
+        newBalance === null || newBalance === undefined || newBalance === ""
           ? `(${
-              updateBalance > 1
+              updateBalance?.length > 1
                 ? updateBalanceToNumber?.toLocaleString("en-NG", {
                     style: "currency",
                     currency: "NGN",
@@ -358,7 +358,7 @@ const GetBalance = async () => {
                 : ""
             })`
           : `(${
-              newBalance > 1
+              newBalance?.length > 1
                 ? newBalanceToNumber?.toLocaleString("en-NG", {
                     style: "currency",
                     currency: "NGN",
@@ -479,7 +479,7 @@ const GetBalance = async () => {
     setMethodActive(false);
     setExamActive(false);
   }
-console.log(newBalance?.length)
+
   // function handleCalculatedAmount(quantity) {
   //   // setIsAmountLoading(true);
   //   const amountCalculated =

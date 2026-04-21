@@ -256,7 +256,6 @@ const ValueRef = useRef();
  
      const  successHandler = (response) => {
         if (!response?.data?.data) return;
-        // console.log("fetch points succefully");
    const available = response?.data?.data?.point?.available_points ?? "Points refresh failed";
     setUserPoints(available);
      };
@@ -283,19 +282,13 @@ const ValueRef = useRef();
     window.addEventListener("online", ()=> {
   if((balanceValue === "Check your internet connection." ||  balanceValue === "Your internet connection is quite unstable.")
   &&  Data?.ConfirmAcc === "true"){
+
     GenerateAccountBalance();
      ExecutePointFunction()
   }
 })
-
-// if(!ImageLoadingExecution) {
-//     return (
-// <div className ="h-[100%] w-[100%] items-center justify-center">
-//   Loading.....
-// </div>
-//   )
-// }
-// console.log(Data?.ConfirmId);
+const storageAccountName = Data?.aremxyAccountName?.length && Data?.aremxyAccountName?.includes("AP/")
+ ?  Data?.aremxyAccountName?.slice(3) :  Data?.aremxyAccountName?.length ? Data?.aremxyAccountName : '';  
 return (
     <div className="relative h-[200%] w-[100%]">
  {/* ============SIDE BAR========= */}
@@ -344,7 +337,7 @@ return (
      <div className="w-[91px] h-[66px] lg:w-[288px] lg:h-[200px]">
                 <img
                   className="h-full"
-                  src="./Images/dashboardImages/hero1image.png"
+                  src="./Images/dashboardImages/hero1image.avif"
                   alt=""
                 />
                 </div>
@@ -365,7 +358,7 @@ return (
                 </div>
                 <div className="w-[91px] h-[66px] lg:w-[275px] lg:h-[200px]">
                   <img
-                    src="./Images/dashboardImages/hero2image.png"
+                    src="./Images/dashboardImages/hero2image.avif"
                     alt=""
                     className="h-full"
                   />
@@ -388,7 +381,7 @@ return (
                 </div>
                 <div className="w-[91px] h-[66px] lg:w-[220px] lg:h-[180px]">
                   <img
-                    src="./Images/dashboardImages/hero3image.png"
+                    src="./Images/dashboardImages/hero3image.avif"
                     alt=""
                     className="h-full"
                   />
@@ -715,7 +708,8 @@ return (
                   }  flex text-[10px] gap-[20px] md:text-[15px] `}
                 >
                   <h2 className="font-semibold w-1/2 text-[11px] leading-[18px]  md:text-[11px] lg:text-[12px]">Account Name</h2>
-                  <p className="text-[11px] leading-[16px] font-[400] w-1/2 md:text-[11px] text-right lg:text-[12px] ">{accountNameState ? accountNameState :Data.aremxyAccountName ? Data.aremxyAccountName.slice(11) : ""}</p>
+                  <p className="text-[11px] leading-[16px] font-[400] w-1/2 md:text-[11px] text-right lg:text-[12px] ">
+                  {accountNameState ? accountNameState :Data.aremxyAccountName ? storageAccountName : ""}</p>
                 </div>
                
                 <div

@@ -95,7 +95,7 @@ export const TopBar = () => {
             <p>Dark</p>
           </div>
           <div className="flex items-center gap-[10px]">
-          <Link className=" w-[30px] h-[30px] md:w-[10px] md:h-[16px]
+          <div className=" w-[30px] h-[30px] md:w-[10px] md:h-[16px]
            lg:w-[28px] lg:h-[28px]" to="/notifications">
             <img className="cursor-pointer w-[100%]"
              
@@ -103,7 +103,7 @@ export const TopBar = () => {
               alt="notification"
               notifications
             />
-          </Link>
+          </div>
 
           <img
             onClick={toggleTrueFalse2}

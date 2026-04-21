@@ -367,7 +367,7 @@ const GetBalance = async () => {
           meter_no: meterNumber,
           meter_type: selectedPhedMeterType.toLowerCase(),
         };
-        // console.log("body", body);
+        
         const SuccessHandler = () => {
           setIsFailedMeterNumber(false);
           function handleReceivedMeterData() {

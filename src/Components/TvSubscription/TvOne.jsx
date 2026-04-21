@@ -103,7 +103,6 @@ const [balanceLoader , setBalanceLoader] = useState(false)
 //  const [holdCurrentFunction, setHoldCurrentFunction] = useState("")
 //  const [userBlocked, setUserBlocked] = useState(false)
 const Data = GetLocalStorage();
-//console.log(Data?.ConfirmAcc)
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -239,7 +238,6 @@ const Data = GetLocalStorage();
           setFetchedGotvPlans(response)
         };
         const failedHandler = async (ErrorType) => {
-          // console.log("Couldn't fetch gotv plans");
           if (ErrorType === "unauthorised") {
             setSessionModal(true)
           }else if(ErrorType === "User error" || ErrorType === "Network error"){
@@ -260,9 +258,8 @@ const Data = GetLocalStorage();
           ()=> {},
           setNetworkIssue
         );
-        // console.log(fetchedGotvPlans);
       };
-  //console.log(fetchedGotvPlans.status)
+
   const GotvOptionalPlan =
     gotvData?.length < 1 && fetchedGotvPlans.status === 200
       ? fetchedGotvPlans?.data?.data?.data
@@ -363,8 +360,6 @@ const Data = GetLocalStorage();
     ? passDataBalance?.data?.data?.data?.balance
     : "";
 
-  //console.log(passDataBalance);
-  //console.log(updateBalance);
   const updateBalanceToNumber = Number(updateBalance)
   const newBalanceToNumber = Number(newBalance)
   const methodOptions = [
@@ -453,7 +448,7 @@ const Data = GetLocalStorage();
 
       const Path = "bills/tvsub";
       const successHandler = (response) => {
-        //console.log(response?.data?.data)
+       
         if(response?.data?.data?.data?.status === "success"
           || response?.data?.data?.data?.status === "delivered"
         ||  response?.data?.data?.data?.status === "successful" ||
@@ -526,7 +521,7 @@ const Data = GetLocalStorage();
       setNetworkIssue
     );
   };
-  //console.log( passDataBalance.status)
+
 
   let userVerifiedName = gotvVerifyResponse?.data
     ? gotvVerifyResponse?.data?.name
@@ -588,7 +583,7 @@ const Data = GetLocalStorage();
       );
     }
   };
-  //console.log(userVerifiedName)
+
 
   const handleSmartCard = async (e) => {
     const inputValue = e.target.value;
@@ -743,7 +738,6 @@ const timer = useRef(null)
                                 document
                                   .querySelector(".decdrop")
                                   .classList.remove("DropIt");
-                                console.log(e);
                               }}
                               className={`pb-[20px] pt-[20px] md:pb-[14px] 
                                 md:pt-[14px] font-weight-bold text-[14px] leading-[18.4px] 
@@ -1317,9 +1311,9 @@ const timer = useRef(null)
         </Modal>
       )}
     
-      {/* {restrictUser && sessionModal === false && (
+      {restrictUser && sessionModal === false && (
         <RestrictionPopUp/>
-      )} */}
+      )}
  
     </div>
   );

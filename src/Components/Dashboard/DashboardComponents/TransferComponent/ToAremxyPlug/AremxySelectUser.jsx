@@ -23,7 +23,6 @@ const Data = GetLocalStorage();
        recipientResponse,
         setRecipientResponse, setNetworkIssue,
            setSessionModal,
-          sessionModal
         } = useContext(ContextProvider);
   const [activeTab, setActiveTab] = useState('tab_1');
     const [showPopup, setShowPopup] = useState(false);
@@ -95,7 +94,7 @@ const Data = GetLocalStorage();
     }
 
       const FirstUserIcon = "./Images/UserIcon/FirstUserIcon.png"
-const SecondUserIcon = "./Images/UserIcon/ SecondUserIcon.png"
+const SecondUserIcon = "./Images/UserIcon/SecondUserIcon.png"
 const  ThirdUserIcon = "./Images/UserIcon/ThirdUserIcon.png"
 const FourthUserIcon = "./Images/UserIcon/FourthUserIcon.png"
 const FifthUserIcon = "./Images/UserIcon/FifthUserIcon.png"
@@ -137,7 +136,7 @@ const NinethUserIcon ="./Images/UserIcon/NinethUserIcon.png"
 
 
 const GetRecipient = async()=> {
-  if(recipientResponse?.data?.data?.data === undefined){
+ 
       
       const FailedHandler = async(ErrorType)=> {
       if(ErrorType === "unauthorised"){
@@ -150,9 +149,16 @@ const GetRecipient = async()=> {
       }
       }
 await GetFunction("bank-recipient", 
-setLoading, ()=> {},
+(value)=>{
+  if(recipientResponse?.data?.data?.data){
+    return;
+  }else {
+   
+    setLoading(value)
+  }
+} , ()=> {},
  FailedHandler, setRecipientResponse, setNetworkIssue)
-    }
+    
   }
     useEffect(()=> {
    const fetchRecipient =async()=> {
@@ -235,7 +241,6 @@ return (
                 <img 
                 onClick={(e) => {
                 document.querySelector('.focusSearch').focus();
-                console.log(e);
                 }}
                 src={SearchIcon} alt="" 
                 className='absolute md:top-[30%] md:right-[10px]

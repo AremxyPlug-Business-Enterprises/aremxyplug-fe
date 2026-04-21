@@ -17,12 +17,11 @@ export const BusinessAccountPage = () => {
     tfImage,
     code,
     toggleSideBar,
-    amtToTransfer,
     setTfPopUp,
     setDeletePopUp,
   } = useContext(ContextProvider);
 
-  console.log(amtToTransfer);
+  
 
   return (
     <DashBoardLayout>

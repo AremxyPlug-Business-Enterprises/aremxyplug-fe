@@ -71,10 +71,10 @@ export const SmileReceipt = () => {
           text: "Check out this receipt!",
           url: "https://example.com",
         })
-        .then(() => console.log("Shared successfully"))
-        .catch((error) => console.error("Error sharing:", error));
+        .then(() => {return;})
+        .catch((error) => {return;});
     } else {
-      console.log("Web Share API not supported.");
+      return;
     }
   };
   

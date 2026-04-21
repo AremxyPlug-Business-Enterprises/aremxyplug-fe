@@ -31,8 +31,7 @@ function Verification( Data) {
     setState
   } = useContext(ContextProvider);
 const { phoneNumber, email} = state;
-// console.log("Phone:",phoneNumber)
-// console.log("Email:", email)
+
 
 
 
@@ -55,14 +54,13 @@ const getOtpSmsorEmail = async(body, url)=> {
     body = {
       phone_number : parsedPhone
     }
-    console.log(body);
+   
     url ="https://api.aremxyplug.com/api/v1/sms/send";
   }else if(viaEmailOrSms === "email" ){
    const parsedEmail =   email  ? email : Data.UserEmail ? Data.UserEmail : "";
     body = {
     email : parsedEmail
    }
-console.log(body)
    url = "https://api.aremxyplug.com/api/v1/send-otp/signup"
 }
 if(!navigator.onLine) return alert("Check your internet connection");
@@ -75,7 +73,7 @@ if(!navigator.onLine) return alert("Check your internet connection");
     try{
  
     const response = await axios.post(url,body, {headers:{ "Content-Type": "application/json"}})
-console.log(url,body)
+
 if(response.status === 200 || 201){
   twoStepVerificationHandler();
  alert("An Otp has been sent to you")
@@ -87,7 +85,6 @@ if(response.status === 200 || 201){
     alert(`INTERNAL_SERVER_ERROR`)
   }else{
     alert(`ERROR: ${error.message}`)
-   //console.log(error)
   }
   }finally{
     setLoading(false);
@@ -112,14 +109,14 @@ const gettingSmsOrEmailFunctionOtp = async(url, body)=> {
        body ={
        otp :otpVerifyEmailSignup
        }
-     console.log(otpVerifyEmailSignup);
+    
       }else if(viaEmailOrSms === "sms"){
        url = `https://api.aremxyplug.com/api/v1/sms/verify/signup?phone=${phoneNumber ? phoneNumber : Data.UserPhone ? `${Data.UserPhone}` : ""}`
        body ={
        otp :otpVerifySmsSignup
        }
         }
-        console.log(`URL:${url}`,`BODY:${body}`)
+        
         if(!navigator.onLine) return alert("Check your internet connection")
         if(navigator.onLine){
         await VerifyOtpFunction(url, body)
@@ -139,7 +136,6 @@ const VerifyOtpFunction = async(url, body)=>{
   }catch(error){
     if( error.response  && error.response.status === 400){
       setVerificationPinError(true);
-     console.log("The Verification failed");
     } if( error.response  && error.response.status === 404){
       alert(`ERROR: ${error.message}`,)
     }else if(error.response &&error.response.status === 500){
@@ -215,12 +211,7 @@ return () => clearInterval(timer);
   //VERIFY_VIA_SMS CODE ================
 
 
-  //const [verificationSmsCode, setVerificationSmsCode] = useState("");
 
-  
-
-  
-//console.log(Data.UserPhone.slice(3));
  
 
 
@@ -272,7 +263,6 @@ return () => clearInterval(timer);
            <div
               onClick={()=>{
                 setViaEmailOrSms("sms");
-                 console.log(viaEmailOrSms);
               }}
               className={`${viaEmailOrSms === "sms" ? "border-[1px] border-[#d166ff]" :  "border-[1px] border-gray-400" }
                 flex h-auto w-[92px] cursor-pointer rounded-[4.5px] p-[7px]   gap-[5px] 
@@ -300,7 +290,6 @@ return () => clearInterval(timer);
             <div
               onClick={()=>{
                 setViaEmailOrSms("email");
-                console.log(viaEmailOrSms);
               }}
               
               className={` ${viaEmailOrSms === "email" ? "border-[1px] border-[#d166ff]" : "border-[1px] border-gray-400"}

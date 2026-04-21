@@ -68,8 +68,6 @@ export const NecoFailedReceipt = () => {
   const description =
     necoShowDescription?.length > 0 ? necoShowDescription : "";
   const pins_generated = necoPinsGenerated?.length > 0 ? necoPinsGenerated : "";
-  // console.log("pins-gen", pins_generated);
-  // const fullName = necoFullName?.length > 0 ? necoFullName : "";
   const transaction_product =
     necoTransactionProduct?.length > 0 ? necoTransactionProduct : "";
 
@@ -82,10 +80,10 @@ export const NecoFailedReceipt = () => {
           text: "Check out this receipt!",
           url: "https://example.com",
         })
-        .then(() => console.log("Shared successfully"))
-        .catch((error) => console.error("Error sharing:", error));
+        .then(() => {return;})
+        .catch((error) => {return;});
     } else {
-      console.log("Web Share API not supported.");
+      return;
     }
   };
 

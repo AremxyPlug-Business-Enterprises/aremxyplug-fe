@@ -64,7 +64,6 @@ document.querySelector('.SelectRecipientDrop').classList.toggle('DropIt');
   //     FUNCTIONS FOR RECIPIENTS TAB ===========
   function handleElementClick(recipients){
     setEditRecipient(recipients);
-   console.log(`elements with clicked id ${recipients}`)
 }
 function  closePopRecipients(){
   setEditRecipient(null);
@@ -74,7 +73,6 @@ function  closePopRecipients(){
   function handleAccountClick(recipients){
     setDeleteRecipient(false);
     setDeleteRecipientSuccess(recipients);
-    console.log(`elements with clicked id ${recipients}`)
  }
  function  DeleteSelectRecipients(recipients){
   setEditRecipient(null);
@@ -94,7 +92,6 @@ function  closePopRecipients(){
     // FUNCTIONS FOR FAVORITE TAB ===========
     function favoriteHandleElementClick(favorite){
       setFavoriteEdit(favorite);
-      console.log(`elements with clicked id ${favorite}`)
     }
     function  closeFavoritePopRecipients(){
       setEditRecipient(null);
@@ -236,7 +233,6 @@ className='lg:w-[24px] lg:h-[24px] h-[10px] w-[10px] self-center'/>
          <img 
          onClick={(e) => {
           document.querySelector('.focusSearch').focus();
-          console.log(e);
          }}
          src={SearchIcon} alt="" 
          className='absolute md:top-[10px] md:right-[10px] top-[7.997px] right-[7.997px] 

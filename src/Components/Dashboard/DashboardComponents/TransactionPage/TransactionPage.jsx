@@ -57,7 +57,7 @@ const [isActive, setIsActive] = useState(false);
    const [allCategoryValue, setAllCategoryValue] = useState("");
     const [paymentCategoryValue, setPaymentCategoryValue] = useState("")
      const [telecomCategoryValue, setTelecomCategoryValue] = useState("")
-      const [cardIssuingCategoryValue, setCardIssuingCategoryValue] = useState("")
+      const cardIssuingCategoryValue = ""
   const [activeTab, setActiveTab] = useState("");
   const { transactionResponse, setTransactionResponse } =
     useContext(ContextProvider);
@@ -86,7 +86,6 @@ const [isActive, setIsActive] = useState(false);
   //Funcntio to help get the transaction details
   //  which include necessary query parameters for search
   const GetTransactionInformation = async (value) => {
-     console.log(value);
     if (!navigator.onLine){
        setTransactionHistoryError("Network error");
        setNetworkIssue(true)
@@ -211,9 +210,7 @@ const fullQuery = `?flow=${allCategoryValue}&category=${categoryDetermination}&s
     }
      const path =`transactions${pathQueryFunction()}`
     
-    const SuccessHandler = () => {
-      console.log("user transaction details fetched");
-    };
+ 
     const FailedHandler = async (ErrorType) => {
       if (ErrorType === "unauthorised") {
         setSessionModal(true)
@@ -233,7 +230,7 @@ const fullQuery = `?flow=${allCategoryValue}&category=${categoryDetermination}&s
     await GetFunction(
       path,
       setLoading,
-      SuccessHandler,
+      ()=> {},
       FailedHandler,
       setTransactionResponse,
       setNetworkIssue
@@ -337,8 +334,6 @@ await GetTransactionInformation()
     setShowStatus(false);
     window.scrollTo({top : window.innerWidth < 1024 ? 500 : 700, behavior : "smooth"})
   };
-
-//console.log(filteredTransactions?.length/ transactionResponse?.data?.data?.data?.transactions?.length * 100)
 const totalLength = transactionResponse?.data?.data?.data?.total_count;
 const totalValue = transactionResponse?.data?.data?.data?.total_value;
 const transactionStatusMetrics = transactionResponse?.data?.data?.data?.status_metrics;
@@ -495,7 +490,6 @@ const FilterByDateFunc = async()=> {
               "success" : selectedStatus === "Failed" ? "failed" :
                selectedStatus === "Pending" ? "pending" : selectedStatus === "Refunded" ? 
                "refunded" : selectedStatus;
-            //console.log(transaction?.created_at?.slice(0, 10) === dateFiltered);
             if (
               selectedStatus === "" ||
               selectedStatus === "All Transactions"
@@ -1607,8 +1601,7 @@ h-[100px]  rounded-[12px] px-[20px]
                         );
 
                         const orderData = response?.data?.data?.data;
-                        // console.log("resp", response?.data);
-                        // console.log("orderData", orderData);
+                   
 
                         if (response?.data?.status === 200) {
                           navigate(
@@ -1894,8 +1887,7 @@ h-[100px]  rounded-[12px] px-[20px]
                       );
 
                       const orderData = response?.data?.data?.data;
-                      console.log("resp", response?.data);
-                      console.log("orderData", orderData);
+                
                       if (response?.data?.status === 200) {
                         navigate(
                         transaction?.product === "Electricity Bills"

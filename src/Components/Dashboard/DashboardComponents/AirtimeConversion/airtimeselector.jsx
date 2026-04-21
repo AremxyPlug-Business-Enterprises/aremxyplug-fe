@@ -55,13 +55,9 @@ export const AirtimeSelector = ({ onSelectOne, selectedCountryOne }) => {
     setNoRecord(id !== 1);
     if (activeButtonOne[0]) {
       setPersonalAccount(id === 1);
-      // setBusinessAccount(false);
     } else if (activeButtonOne[1]) {
       setBusinessAccount(id === 1);
-      // setPersonalAccount(false);
     }
-
-    console.log(id);
   };
 
   return (

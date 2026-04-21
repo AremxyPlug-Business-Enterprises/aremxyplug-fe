@@ -14,6 +14,8 @@ import { Modal } from "../../Modal/Modal";
 import { RemoveLocalStorage } from "../../../LocalStorage/LocalStorage";
 
 export const SignUp = () => {
+  //params
+ 
   const {
     // hideNavbar,
     setHideNavbar,
@@ -50,7 +52,7 @@ export const SignUp = () => {
 const setNav = () => {
     setHideNavbar(true);
   };
-  // console.log(hideNavbar);
+ 
 
   useEffect(() => {
     setNav();
@@ -122,7 +124,7 @@ const ChangeEventFunctionUsername = (value)=> {
       {<Verification/>}
       <img
         className=" w-[286px] py-[15%] mx-auto md:absolute md:h-[%] md:w-[286.46px] md:top-[26%] md:left-[1%] lg:w-[500px] lg:top-[20%] lg:left-[2%]"
-        src="./Images/signupimages/signUpImg.png"
+        src="./Images/signupimages/signUpImg.avif"
         alt="/"
       />
       {/* =====Hero Image==== */}

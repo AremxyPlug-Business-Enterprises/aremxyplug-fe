@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useContext, useRef } from "react";
 import { ContextProvider } from "../../../../Context";
-import { RiFileCopyFill } from "react-icons/ri";
 import styles from "../../TransferComponent/transfer.module.css";
 import { DashBoardLayout } from "../../../Layout/DashBoardLayout";
 import { Link, useNavigate } from "react-router-dom";
@@ -13,7 +12,6 @@ export const TransferReceipt = () => {
   const navigate = useNavigate();
   const {
     toggleSideBar,
-    textRef,
     isDarkMode,
     // transferResponse,
     orderIdResponse,
@@ -104,8 +102,8 @@ export const TransferReceipt = () => {
             title: "AremxyPlug_Transfer_Receipt",
             files : [file], 
           })
-          .then(() => console.log("Shared successfully"))
-          .catch((error) => console.error("Error sharing:", error));
+          .then(() => {return;})
+          .catch((error) => {return;});
       }else{
       alert("Sharing this pdf isn't supported in your browser.")
       }

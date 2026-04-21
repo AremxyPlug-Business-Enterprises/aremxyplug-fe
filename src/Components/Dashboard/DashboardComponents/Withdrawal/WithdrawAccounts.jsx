@@ -72,10 +72,7 @@ const CountrySelect = ({ onSelect, selectedCountry, countries }) => {
       // setBusinessAccount(false);
     } else if (activeButton[1]) {
       setBusinessAccount(id === 1);
-      // setPersonalAccount(false);
     }
-
-    console.log(id);
   };
 
   return (

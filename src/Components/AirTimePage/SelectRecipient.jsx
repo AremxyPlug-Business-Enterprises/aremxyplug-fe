@@ -91,10 +91,8 @@ const [confirmRecipient, setConfirmRecipient] = useState(false)
       const data = await response.json();
 
       if (response.ok && data.status === 200) {
-        console.log('Recipient updated successfully:', data);
         return true;
       } else {
-        console.error('Error updating recipient:', data.message);
         return false;
       }
     } catch (error) {
@@ -133,8 +131,6 @@ const [confirmRecipient, setConfirmRecipient] = useState(false)
         body: JSON.stringify(requestBody),
         credentials: "include"
       });
-
-     console.log(response?.status);
 
       if (response.ok && response?.status === 200) {
         return true; // Indicate successful deletion
@@ -371,8 +367,7 @@ const [confirmRecipient, setConfirmRecipient] = useState(false)
         //  const [discountObj, setDiscountObj] = useState({});
           
                const getDiscountPercentage = async(network)=> {
-             //   setDiscountObj({});
-              //  console.log(network);
+             // 
                  const successHandler = (response)=> {
                   //  setDiscountObj(response);
                     setDiscount(response?.data?.data?.discount_percent);

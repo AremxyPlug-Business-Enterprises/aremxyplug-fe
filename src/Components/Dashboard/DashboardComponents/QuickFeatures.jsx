@@ -105,7 +105,7 @@ const QuickFeatures = () => {
           <p>Payments</p>
         </Link>
         <Link
-          to="/Cardissuing"
+          to="/CardIssuing"
           className={`${isDarkMode ? " border text-white" : "bg-[#fff] "} ${
             styles.feature
           }`}

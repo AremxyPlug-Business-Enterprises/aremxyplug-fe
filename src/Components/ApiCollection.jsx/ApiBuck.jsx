@@ -54,9 +54,12 @@ export const GetVirtualAccountValue = (
   setAccountNumberState
 ) => {
   const { bank_name, account_name, account_no } = virtualAccCreated;
+  const trimAccountName 
+  = account_name?.includes("AP/") && account_name?.length 
+  ? account_name?.slice(3) : account_name?.length ? account_name : ""
   if (virtualAccCreated) {
     setBankNameState(bank_name);
-    setAccountNameState(account_name?.slice(11));
+    setAccountNameState(trimAccountName);
     setAccountNumberState(account_no);
   }
 };
@@ -206,7 +209,7 @@ export const InternalLoginSession = ()=> {
      }else if(ErrorType === "Server error"){
       alert("Failed to process your request")
      }else if(ErrorType === "User Blocked"){
-      alert("Account Blocked try after one hour");
+      alert("Account Blocked, try after one hour");
      window.location.replace("/Login")
      RemoveLocalStorage()
      }else if(ErrorType === "Network error"){
@@ -231,7 +234,6 @@ const SubmitUserLoginDetails = ()=> {
   functionAtFailed,
   ()=> {}, setNetworkIssue)
   }
-//console.log(requestObjectConfirm)
 
 
   return (
@@ -353,8 +355,8 @@ export const refreshToken = async(setNetworkIssue, setSessionModal)=> {
 
 //============Network issue ============//
 export const NetworkPopUp = ({Page})=> {
-const {setNetworkIssue} = useContext(ContextProvider);
-   const isDarkMode = localStorage.getItem("darkModeEnabled")
+const {setNetworkIssue, isDarkMode} = useContext(ContextProvider);
+
   return (
   <div className="`w-full h-full justify-center items-center
    flex">
@@ -362,20 +364,20 @@ const {setNetworkIssue} = useContext(ContextProvider);
     <div className="w-full flex  justify-center items-center">
      <div className = {`flex flex-col justify-center items-center
              py-[20px] px-[12px] gap-[20px] w-[80%] md:w-[60%] lg:w-[30%] md:h-[300px]  rounded-[10px]
-             lg:rounded-[20px]   ${isDarkMode === "true" ? "bg-black border border-white rounded-[10px]" 
+             lg:rounded-[20px]   ${isDarkMode  ? "bg-black border border-white rounded-[10px]" 
                : "bg-white"}`}>
          <h2 className={`text-[14px] text-center font-[600] leading-[18px]
-               text-black lg:text-[16px] lg:leading-[22px] ${isDarkMode === "true" ? "text-white" : "text-black"}`}>
+               text-black lg:text-[16px] lg:leading-[22px] ${isDarkMode  ? "text-white" : "text-black"}`}>
              No network connection or unstable internet connection
          </h2>
        
          <div className="flex flex-col items-center justify-center gap-2 w-full">
           <p className ={`text-[14px] text-center font-[400] leading-[18px]
-               text-black lg:text-[16px] lg:leading-[22px] ${isDarkMode === "true" ? "text-white" : "text-black"}`}>
+               text-black lg:text-[16px] lg:leading-[22px] ${isDarkMode  ? "text-white" : "text-black"}`}>
                Failed to retrieve <span className="font-bold capitalize">{Page}</span> {" "} 
                information 
               </p>
-                {isDarkMode === "false" ? (
+                {!isDarkMode ? (
               <img src={"./Images/NetworkBlack.svg"} className="w-20 h-20" alt="Network Icon" />
                 ) : (
                   <img src={"./Images/NetworkWhite.svg"} className="w-20 h-20" alt="Network Icon" />
@@ -541,8 +543,7 @@ export const CheckVirtualAcc = async(
       else if(error.status === 401){
          alert("You were timed out, kindly login again to continue")
       } else if (error.status === 404) {
-       //
-        console.log(`ERROR: ${error}`);
+    //
       } else if (error.status === 500) {
         alert("Error:", "SERVER ERROR");
       } else if (error.response === undefined) {
@@ -716,7 +717,6 @@ export const PostFunction = async (
        functionAtFailed("Bad request");
           if(functionAtFailed) {
             setFetchedResponse(error?.response?.data?.data)
-              console.log(error?.response?.data?.data)
            // alert("Invalid request")
          }
         
@@ -724,7 +724,6 @@ export const PostFunction = async (
          functionAtFailed("User error")
            if(functionAtFailed) {
             setFetchedResponse(error?.response?.data?.data)
-              console.log(error?.response?.data?.data)
          }
       }else if(error && error.response.status === 403){
          functionAtFailed("User Blocked")
@@ -774,7 +773,6 @@ export const GetFunction = async(path, setLoading, functionAtSuccess,
         setNetworkIssue(true)
      functionAtFailed("Network error");
       } else if(error && error.response.status === 400){
-        console.log(error.response);
          functionAtFailed("Bad request", error.response)
       } else if(error && error.response.status === 401){
     functionAtFailed("unauthorised");

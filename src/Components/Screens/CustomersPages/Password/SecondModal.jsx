@@ -60,7 +60,6 @@ const dateAsAtAllocation =  Date.now();
         }catch(error){
           if( error.response  && error.response.status === 400 ){
             setForgetPassVerificationPinError(true);
-           console.log("The Verification failed")
           } if( error.response  && error.response.status === 404){
             alert(`ERROR: ${error.message}`,)
           }else if(error.response &&error.response.status === 500){
@@ -72,7 +71,7 @@ const dateAsAtAllocation =  Date.now();
           setLoading(false);
         }
         }
-    //console.log(otpSent);
+    
 
    // TO HANDLE RESEND OF OTP 
  const handleResendOTP = async()=> {

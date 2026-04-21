@@ -19,8 +19,7 @@ import { RemoveLocalStorage } from '../../../LocalStorage/LocalStorage';
 
 const NewPassword = () => {
     const locationObj = useLocation()
-  const pathname = locationObj.pathname;
-  //  console.log(pathname)
+  const pathname = locationObj.pathname
     const [passHide, setPassHide] = useState("password");
     const [password, setPassword] = useState('');
     const [passError, setPassError] = useState('')
@@ -29,9 +28,8 @@ const NewPassword = () => {
     const [submit, setSubmit] = useState(false);
     const [border, setBorder] = useState('');
     const [error, setError] = useState('')
-    const { hideNavbar, setHideNavbar, passwordAuthorisation, inputForgetEmail } = useContext(ContextProvider);
+    const { setHideNavbar, passwordAuthorisation, inputForgetEmail } = useContext(ContextProvider);
     const [loading , setLoading] = useState(false)
-//console.log(passwordAuthorisation);
 
   const HandleValidityPasswordReset =()=> {
     const PasswordResetActiveValidity = localStorage.getItem("PasswordResetActive");
@@ -39,8 +37,7 @@ const NewPassword = () => {
     const getCurrentDate =  Date.now();
   const checkPasswordResetValidity = 
    (getCurrentDate - PasswordResetActiveValidity) > timeAllowedForReset;
-  console.log(checkPasswordResetValidity);
-  console.log(getCurrentDate - PasswordResetActiveValidity)
+  
 if(checkPasswordResetValidity === true){
     window.location.href="/Login";
 }
@@ -90,7 +87,6 @@ const updatePassword = async()=> {
     const setNav = () => {
         setHideNavbar(true);
       };
-      console.log(hideNavbar);
     
 
         let Interval = useRef();

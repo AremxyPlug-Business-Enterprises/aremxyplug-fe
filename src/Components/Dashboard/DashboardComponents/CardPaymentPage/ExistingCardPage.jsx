@@ -5,7 +5,7 @@ import "../DataTopUpPage/DataTopUp.css";
 import { useContext } from "react";
 import { ContextProvider } from "../../../Context";
 import ArrowRight from "./CardPaymentImages/ArrowRight.svg";
-import { Link, useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 import airtimestyles from "../../../AirTimePage/AirtimeVtu.module.css";
 import ArrowDown from "./CardPaymentImages/ArrowDown.svg";
 import Search from "./CardPaymentImages/search.svg";
@@ -22,22 +22,22 @@ import { useLocation } from "react-router-dom";
 
 const ExistingCardPage = () => {
   const { isDarkMode, toggleSideBar } = useContext(ContextProvider);
-  const [showPayment, setShowPayment] = useState("");
-  const { walletName, setWalletName } = useContext(ContextProvider);
+  const showPayment = "";
+  const { walletName } = useContext(ContextProvider);
   // const { cardPaymentSelected, setCardPaymentSelected } = useContext(ContextProvider);
-  const { paymentSelected, setPaymentSelected } = useContext(ContextProvider);
-  const [usd, setUsd] = useState("");
-  const [ngn, setNgn] = useState("");
-  const [noCurrencySelected, setNoCurrencySelected] = useState(true);
+  const { paymentSelected} = useContext(ContextProvider);
+  const usd = "";
+  const ngn ="";
+  const noCurrencySelected = true;
   const [showPopup, setShowPopup] = useState(false);
-  const [activeImage, setActiveImage] = useState(null);
-  const [defaultcard, setDefaultCard] = useState("");
-  const [sucessdefaultCard, setSuccessDefaultCard] = useState("");
+  const activeImage = null;
+  const defaultcard = "";
+  const sucessdefaultCard= "";
   const [deleteCard, setDeleteCard] = useState("");
-  const [confirmDeleteCard, setConfirmDeleteCard] = useState("");
+  const confirmDeleteCard = "";
   const location = useLocation();
   const [localPaymentSelected, setLocalPaymentSelected] = useState(false);
-  const navigate = useNavigate();
+
 
   useEffect(() => {
     if (location.state?.paymentSelected !== undefined) {
@@ -45,48 +45,48 @@ const ExistingCardPage = () => {
     }
   }, [location.state]);
 
-  const handleShowPayment = (code) => {
-    setShowPayment(!showPayment);
+  // const handleShowPayment = (code) => {
+  //   setShowPayment(!showPayment);
 
-    if (!localPaymentSelected) {
-      setWalletName("");
-      setPaymentSelected(false);
-      setNoCurrencySelected(true);
-    } else {
-      setNoCurrencySelected(false);
-      if (localPaymentSelected === "NGN") {
-        setWalletName(code);
-        setPaymentSelected(true);
-        setShowPayment(false);
-        setNgn(code === "NGN");
-        setNgn(true);
-        setNoCurrencySelected(!(code === "NGN"));
-      } else {
-        setWalletName(true);
-        setPaymentSelected(true);
-      }
-    }
-  };
+  //   if (!localPaymentSelected) {
+  //     setWalletName("");
+  //     setPaymentSelected(false);
+  //     setNoCurrencySelected(true);
+  //   } else {
+  //     setNoCurrencySelected(false);
+  //     if (localPaymentSelected === "NGN") {
+  //       setWalletName(code);
+  //       setPaymentSelected(true);
+  //       setShowPayment(false);
+  //       setNgn(code === "NGN");
+  //       setNgn(true);
+  //       setNoCurrencySelected(!(code === "NGN"));
+  //     } else {
+  //       setWalletName(true);
+  //       setPaymentSelected(true);
+  //     }
+  //   }
+  // };
 
-  const handleSelectPayment = (code) => {
-    setWalletName(code);
-    setPaymentSelected(true);
-    setShowPayment(false);
-    setNgn(code === "NGN");
-    setNoCurrencySelected(!(code === "NGN"));
+  // const handleSelectPayment = (code) => {
+  //   setWalletName(code);
+  //   setPaymentSelected(true);
+  //   setShowPayment(false);
+  //   setNgn(code === "NGN");
+  //   setNoCurrencySelected(!(code === "NGN"));
 
-    if (
-      code === "USD" ||
-      code === "GBP" ||
-      code === "EUR" ||
-      code === "AUD" ||
-      code === "KSH"
-    ) {
-      setUsd(true);
-    } else {
-      setUsd(false);
-    }
-  };
+  //   if (
+  //     code === "USD" ||
+  //     code === "GBP" ||
+  //     code === "EUR" ||
+  //     code === "AUD" ||
+  //     code === "KSH"
+  //   ) {
+  //     setUsd(true);
+  //   } else {
+  //     setUsd(false);
+  //   }
+  // };
 
   const countryList = [
     {
@@ -200,47 +200,15 @@ const ExistingCardPage = () => {
     },
   ];
 
-  const [filteredCountryList, setFilteredCountryList] = useState(countryList);
+  const filteredCountryList = countryList;
 
-  const handleSearch = (searchValue) => {
-    const filteredList = countryList.filter((country) =>
-      country.code.toLowerCase().includes(searchValue.toLowerCase())
-    );
-    setFilteredCountryList(filteredList);
-  };
-
-  const handleButtonClick = () => {
-    setUsd(false);
-    setPaymentSelected(false);
-  };
-
-  const handleBank = (index) => {
-    if (activeImage === index) {
-      setActiveImage(null);
-      setShowPopup(false);
-    } else {
-      setActiveImage(index);
-      setShowPopup(true);
-    }
-  };
-
-  const handleDefaultCard = () => {
-    setDefaultCard(true);
-    setShowPopup(false);
-  };
-
-  const handleSuccessDefaultCard = () => {
-    setSuccessDefaultCard(true);
-  };
 
   const handleDeleteCard = () => {
     setDeleteCard(true);
     setShowPopup(false);
   };
 
-  const handleConfirmDeleteCard = () => {
-    setConfirmDeleteCard(true);
-  };
+  
 
   return (
     <DashBoardLayout>
@@ -433,21 +401,6 @@ const ExistingCardPage = () => {
                         to={`/FundWithCard?codeValue=${encodeURIComponent(
                           `${card.code}, ${card.name}, ${card.number}, ${card.flag}`
                         )}`}
-                        // onClick={(e) => {
-                        //   console.log(card.code);
-                        //   console.log(card.flag);
-
-                        //   if (paymentSelected) {
-                        //     navigate("/FundWithCard", {
-                        //       state: {
-                        //         paymentSelected: true,
-                        //         localPaymentSelected: true,
-                        //       },
-                        //     });
-                        //   }
-
-                        //   console.log("paymentSelected:", paymentSelected);
-                        // }}
                         key={index}
                         className=""
                       >
@@ -504,10 +457,6 @@ const ExistingCardPage = () => {
                             to={`/FundWithCard?codeValue=${encodeURIComponent(
                               `${card.code}, ${card.name}, ${card.number}, ${card.flag}`
                             )}`}
-                            // onClick={(e) => {
-                            //   console.log(card.code);
-                            //   console.log(card.flag);
-                            // }}
                             key={index}
                           >
                             <div className="text-[10px] md:text-[12px] lg:text-[14px] text-[#000000] px-[5px] py-[5px] z-[10000]">

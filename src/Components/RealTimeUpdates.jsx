@@ -20,7 +20,7 @@ export const RealTimeUpdates = ({children}) => {
     }
      connectionSocket = new WebSocket(`wss://api.aremxyplug.com/api/v1/ws/events`);
       connectionSocket.onopen =()=> {
-     //   console.log("Socket running")
+   
       }
     
       connectionSocket.onmessage = (event)=>{
@@ -60,7 +60,7 @@ export const RealTimeUpdates = ({children}) => {
       window.addEventListener("online", ()=> {
     if(navigator.onLine && networkIssue === true) setNetworkIssue(false);
       } ) 
-}, 2000)
+}, 1000)
  
 //Functions we dont necessarily have to run every 2 seconds
  

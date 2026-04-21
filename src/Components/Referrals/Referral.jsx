@@ -1,12 +1,12 @@
 import React from "react";
 import "../../App.css";
 import { DashBoardLayout } from "../Dashboard/Layout/DashBoardLayout";
-import Refer1 from "../Referrals/referralImage/Excellent Review.svg";
+import Refer1 from "../Referrals/referralImage/Excellent Review.avif";
 import copyRefer from "../Referrals/referralImage/copy.svg";
-import whatSapp from "../Referrals/referralImage/whatsappRefer.svg";
-import instagram from "../Referrals/referralImage/InstagramRefer.svg";
-import facebook from "../Referrals/referralImage/facebookRefer.svg";
-import twitter from "../Referrals/referralImage/twitterRefer.svg";
+import whatSapp from "../Referrals/referralImage/WhatsApp.png";
+import instagram from "../Referrals/referralImage/Instagram.png";
+import facebook from "../Referrals/referralImage/Facebook.png";
+import twitter from "../Referrals/referralImage/Twitter.png";
 import rightArrow from "../Referrals/referralImage/rightArrowRefer.svg";
 import arrowDown from "../Referrals/referralImage/arrow-down.svg";
 import NoRecordImage from "../Add&SelectRecipient/RecipientImages/NoRecordImage.svg";
@@ -34,14 +34,15 @@ const [referralResponds, setReferralResponds] = useState({});
   const [activeUsers, setActiveUsers] = useState(0);
   const [inactiveUsers, setInactiveUsers] = useState(0);
 
-  const referralLink = localStorage.getItem(
-    "ReferralLink",
-    referralResponds?.data?.data?.referral_link
-  );
 
   const referralCode = localStorage.getItem(
     "ReferralCode",
-    referralResponds?.data?.data?.referral_code
+   );
+//    const actualReferralLink = referralResponds?.data?.data?.referral_link ? 
+// `https://aremxyplug.com/signup?ref=${referralCode}` : ""
+  const referralLink = localStorage.getItem(
+    "ReferralLink",
+    
   );
 
   const handleCopyClick = (ButtonHandler) => {
@@ -221,9 +222,11 @@ const [referralResponds, setReferralResponds] = useState({});
 
               {/* COPY LINK */}
               <div
+              
                 id="copy-btn1"
                 onClick={(e) => {
-                  handleCopyClick("CopyLink");
+                  alert("The Referral Link is not available")
+                //  handleCopyClick("CopyLink");
                 }}
                 className=" copy-btn1 flex justify-center gap-2.5 w-[25%] h-full bg-[#04177F] items-center rounded-e-[10px] lg:rounded-e-[22px] md:rounded-e-[12.607px]"
               >

@@ -99,10 +99,10 @@ export const EkedcReceipt = () => {
           text: "Check out this receipt!",
           url: "https://example.com", // Replace with the actual URL of your receipt
         })
-        .then(() => console.log("Shared successfully"))
-        .catch((error) => console.error("Error sharing:", error));
+        .then(() => {return;})
+        .catch((error) => {return;});
     } else {
-      console.log("Web Share API not supported.");
+    return;
       // Handle sharing fallback for unsupported browsers
     }
   };

@@ -53,7 +53,6 @@ export const NabtebFailedReceipt = () => {
     nabtebShowDescription?.length > 0 ? nabtebShowDescription : "";
   const pins_generated =
     nabtebPinsGenerated?.length > 0 ? nabtebPinsGenerated : "";
-  console.log("pins-gen", pins_generated);
   // const fullName = nabtebFullName?.length > 0 ? nabtebFullName : "";
   const transaction_product =
     nabtebTransactionProduct?.length > 0 ? nabtebTransactionProduct : "";
@@ -85,10 +84,10 @@ export const NabtebFailedReceipt = () => {
           text: "Check out this receipt!",
           url: "https://example.com",
         })
-        .then(() => console.log("Shared successfully"))
-        .catch((error) => console.error("Error sharing:", error));
+        .then(() => {return;})
+        .catch((error) => {return});
     } else {
-      console.log("Web Share API not supported.");
+    return;
     }
   };
 

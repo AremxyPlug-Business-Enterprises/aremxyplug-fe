@@ -1,11 +1,11 @@
 import React from 'react'
 import TelecomsHeader from './TelecomsHeader';
 import TelecomsCard from './TelecomsCard';
-import bgImage from './images/TelecomBg.avif';
+import bgImage from './telecomImages/TelecomBg.avif';
 import { desktopData } from './data/telecomData';
 import { mobileData } from './data/telecomData';
 import { Link } from 'react-router-dom';
-import mobileBg from './images/mobileBg.png'
+import mobileBg from './telecomImages/mobileBg.png'
 
 const Telecoms = () => {
   return (

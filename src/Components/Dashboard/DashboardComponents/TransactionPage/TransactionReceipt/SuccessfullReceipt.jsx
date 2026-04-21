@@ -16,10 +16,10 @@ export const SuccessfullReceipt = () => {
   const { 
     toggleSideBar,
     isDarkMode,
-    date, orderIdResponse } =
+    date, } =
     useContext(ContextProvider);
     
-    console.log("orderIdResponse", orderIdResponse);
+
 
   const contentRef = useRef(null);
   const location = useLocation();
@@ -29,7 +29,7 @@ export const SuccessfullReceipt = () => {
   }
 
   const transaction = location.state.transaction;
-  console.log("transaction", transaction);
+
 
 
 
@@ -56,10 +56,10 @@ export const SuccessfullReceipt = () => {
           text: "Check out this receipt!",
           url: "https://example.com",
         })
-        .then(() => console.log("Shared successfully"))
-        .catch((error) => console.error("Error sharing:", error));
+        .then(() => {return;})
+        .catch((error) => {return;});
     } else {
-      console.log("Web Share API not supported.");
+      return;
     }
   };
 

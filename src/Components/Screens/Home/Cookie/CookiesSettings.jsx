@@ -2,20 +2,15 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 export const CookiesSettings = () => {
-  const [accepted, setAccepted] = useState(
-    localStorage.getItem("cookieAccepted") === "true"
-  );
+  //const [accepted, setAccepted] = useState(
+  //  localStorage.getItem("cookieAccepted") === "true"
+  //);
 
   const acceptCookie = () => {
     localStorage.setItem("cookieAccepted", "true");
-    setAccepted(true);
   };
 
-  console.log(accepted);
-
-  // const { toggleDarkMode } = useContext;
- // const [isMovedRight1, setIsMovedRight1] = useState(false);
- // const [isMovedRight2, setIsMovedRight2] = useState(false);
+ 
   const [isMovedRight3, setIsMovedRight3] = useState(false);
   const [isMovedRight4, setIsMovedRight4] = useState(false);
 

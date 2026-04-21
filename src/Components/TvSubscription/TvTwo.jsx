@@ -175,7 +175,6 @@ const ReceiptButton = ()=> {
     navigate(path);
    };
    const FailedHandler = async(ErrorType)=> {
-    console.log("Error");
     if(ErrorType === "unauthorised"){
      if(!sessionModal) return setSessionModal(true);
      if(sessionModal) return;
@@ -551,7 +550,7 @@ if(ErrorType === "unauthorised"){
   setNetworkIssue)
 }
 }
-//console.log(userVerifiedName)
+
 
  const handleSmartCard = async(e) => {
     const inputValue = e.target.value;
