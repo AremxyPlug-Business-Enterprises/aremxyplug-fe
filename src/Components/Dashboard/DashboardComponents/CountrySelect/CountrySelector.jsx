@@ -75,7 +75,7 @@ export const CountrySelector = ({
       // setPersonalAccount(false);
     }
 
-    console.log(id);
+  
   };
 
   const dynamicClassName = `${w} ${className || ""}`;

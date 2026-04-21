@@ -17,13 +17,11 @@ export const WithdrawToPersonalAccountPage = () => {
     withdrawImage,
     code,
     toggleSideBar,
-    amtToTransfer,
     setWthPopUp,
     setWithdrawlDeletePopUp,
   } = useContext(ContextProvider);
 
-  console.log(amtToTransfer);
-
+  
   return (
     <DashBoardLayout>
       <div

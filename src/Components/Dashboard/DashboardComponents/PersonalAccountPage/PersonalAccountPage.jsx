@@ -17,12 +17,11 @@ export const PersonalAccountPage = () => {
     tfImage,
     code,
     toggleSideBar,
-    amtToTransfer,
     setTfPopUp,
     setDeletePopUp,
   } = useContext(ContextProvider);
 
-  console.log(amtToTransfer);
+  
 
   return (
     <DashBoardLayout>

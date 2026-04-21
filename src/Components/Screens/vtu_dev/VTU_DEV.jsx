@@ -1053,9 +1053,9 @@ function VTU_DEV() {
               </div>
               <div className="flex ml-4 items-center my-4">
                 <img
-                  src="./images/vtu_dev/blueCheck.png"
+                  src="./Images/vtu_dev/blueCheck.png"
                   alt="blue check"
-                  className="w-[25px] "
+                  className="w-[25px]"
                 />
                 <p className="px-4 md:text-lg lg:text-xl" style={{}}>
                   TV Subscription
@@ -1063,7 +1063,7 @@ function VTU_DEV() {
               </div>
               <div className="flex ml-4 items-center my-4">
                 <img
-                  src="./images/vtu_dev/blueCheck.png"
+                  src="./Images/vtu_dev/blueCheck.png"
                   alt="blue check"
                   className="w-[25px] "
                 />

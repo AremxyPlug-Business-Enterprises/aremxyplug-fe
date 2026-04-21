@@ -37,7 +37,7 @@ export const Footer = () => {
 const location = useLocation()
 const pathname = location?.pathname === "/DigitalServices" 
 || location?.pathname === "/VTU_DEV" || location?.pathname === "/businessDev" 
-|| location?.pathname === "/ContactUs" || location?.pathname === "/pricing"
+|| location?.pathname === "/ContactUs" || location?.pathname === "/pricing" ||  location?.pathname ==="/CardIssuing"
   return (
     ((!userStatus) || (userStatus && pathname)) && (
     <>

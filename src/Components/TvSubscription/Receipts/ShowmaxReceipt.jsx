@@ -32,9 +32,6 @@ const Data = GetLocalStorage()
     showMaxMobileNumber,
     setShowMaxMobileNumber,
     showMaxAmount,
-    showMaxTransactionId,
-    showMaxOrderId,
-    showMaxDescription,
     showMaxFlagResult,
      setShowMaxWalletBalance,
    // formatNumberWithCommas,
@@ -91,8 +88,8 @@ const Data = GetLocalStorage()
             title: "AremxyPlug_SHOWMAX_Receipt",
             files : [file], 
           })
-          .then(() => console.log("Shared successfully"))
-          .catch((error) => console.error("Error sharing:", error));
+          .then(() => {})
+          .catch((error) => {});
       }else{
       alert("Sharing this pdf isn't supported in your browser.")
       }

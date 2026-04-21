@@ -200,7 +200,7 @@ const Data = GetLocalStorage();
        // ======The Function to get starTimes Plans=====//
         const RetrieveStarTimesPlans = async()=> {
              const SuccessHandler = ()=> {
-       console.log("Successfully fetched startimes plans");
+       return;
       }
         const failedHandler = async(ErrorType)=> {
           if(ErrorType === "unauthorised"){
@@ -542,7 +542,7 @@ const VerifyPinHandler = async () => {
  }
 }
  
- //console.log(userVerifiedName)
+
  
   const handleSmartCard = async(e) => {
      const inputValue = e.target.value;

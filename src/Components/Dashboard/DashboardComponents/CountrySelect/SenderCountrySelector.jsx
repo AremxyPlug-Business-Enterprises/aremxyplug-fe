@@ -59,8 +59,6 @@ export const SenderCountrySelector = ({ className, w = "w-[110px]" }) => {
     setCode(code);
     setShowList(false);
     setSelected(true);
-
-    console.log(id);
   };
 
   const dynamicClassName = `${w} ${className || ""}`;

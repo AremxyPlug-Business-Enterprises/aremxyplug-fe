@@ -287,7 +287,7 @@ const Data = GetLocalStorage();
       balance:
         newBalance === "" || newBalance === null || newBalance === undefined
           ? `(${
-              updateBalance > 1
+              updateBalance?.length > 1
                 ? updateBalanceToNumber?.toLocaleString("en-NG", {
                     style: "currency",
                     currency: "NGN",
@@ -295,7 +295,7 @@ const Data = GetLocalStorage();
                 : ""
             })`
           : `(${
-              newBalance > 1
+              newBalance?.length > 1
                 ? newBalanceToNumber?.toLocaleString("en-NG", {
                     style: "currency",
                     currency: "NGN",

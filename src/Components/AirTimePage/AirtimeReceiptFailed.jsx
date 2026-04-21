@@ -13,7 +13,7 @@ export const AirtimeReceiptFailed = (Data) => {
   Data = GetLocalStorage()
   const navigate = useNavigate();
   const { networkName,
-     selectedProduct, recipientNumber, amount} = location.state
+     selectedProduct, recipientNumber} = location.state
 
   const { 
     recipientName, 
@@ -83,8 +83,8 @@ transaction_product
                title: "AremxyPlug_Airtime",
                files : [file], 
              })
-             .then(() => console.log("Shared successfully"))
-             .catch((error) => console.error("Error sharing:", error));
+             .then(() => {return;} )
+             .catch((error) => {return;});
          }else{
          alert("Sharing this pdf isn't supported in your browser.")
          }

@@ -67,7 +67,7 @@ export const CountrySelectorCopy = ({
     setSelectedCurr(true);
     setNoRecord(id !== 1);
 
-    console.log(id);
+   
   };
 
   const dynamicClassName = `${w} ${className || ""}`;

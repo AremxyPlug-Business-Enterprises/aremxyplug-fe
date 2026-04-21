@@ -66,13 +66,11 @@ export const CountrySelectorFiat = ({ onSelect, selectedCountry }) => {
     setNoRecord(id !== 1);
     if (activeButton[0]) {
       setPersonalAccount(id === 1);
-      // setBusinessAccount(false);
     } else if (activeButton[1]) {
       setBusinessAccount(id === 1);
-      // setPersonalAccount(false);
+     
     }
 
-    console.log(id);
   };
 
   return (

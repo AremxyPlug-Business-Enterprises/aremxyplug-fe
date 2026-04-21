@@ -93,8 +93,8 @@ export const DstvReceipt= (Data) => {
             title: "AremxyPlug_DSTV_Receipt",
             files : [file], 
           })
-          .then(() => console.log("Shared successfully"))
-          .catch((error) => console.error("Error sharing:", error));
+          .then(() => {})
+          .catch((error) => {});
       }else{
       alert("Sharing this pdf isn't supported in your browser.")
       }
@@ -146,19 +146,7 @@ export const DstvReceipt= (Data) => {
     setDstvSubscriptionResponse({})
     navigate("/DsTv");
   }
- // console.log(dstvCardName)
-  // if(selectedOptionDstv === "" ||
-  //   formatNumberWithCommas ==="" ||
-  //   dstvEmail === "" ||
-  //   dstvMobileNumber === "" ||
-  //   dstvSmartCard === "" ||
-  //   dstvTransactionId === "" ||
-  //   dstvOrderId === "" ||
-  //   dstvDescription === "" ||
-  //   cardName){
-  //      window.location.replace("/DsTv");
-  //      alert("Check your dashborad for your transactions or transaction page for all your transactions.")
-  //   }
+
 
   return (
     <DashBoardLayout>

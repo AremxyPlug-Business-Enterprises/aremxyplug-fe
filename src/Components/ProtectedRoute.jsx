@@ -16,7 +16,7 @@ useEffect(()=> {
  
   refresh.current = setInterval(()=> {
     refreshToken(setNetworkIssue ? setNetworkIssue : ()=> {}, setSessionModal)
-  }, 240000)
+  }, 350000)
 
  return ()=> clearInterval(refresh.current)
  //eslint-disable-next-line

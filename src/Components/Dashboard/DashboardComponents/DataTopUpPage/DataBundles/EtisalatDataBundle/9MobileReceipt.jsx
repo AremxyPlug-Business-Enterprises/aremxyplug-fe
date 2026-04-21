@@ -15,7 +15,6 @@ export const EtisalatReceipt = (Data) => {
   Data = GetLocalStorage();
   const location = useLocation()
   const { 
-    selectedNetworkProduct, 
     selectedOption, 
     // recipientPhoneNumber,
      inputValue, recipientNames, selectedAmount,selectedProduct,
@@ -76,8 +75,8 @@ export const EtisalatReceipt = (Data) => {
             title: "AremxyPlug_9MOBILE_Data_Receipt",
             files : [file], 
           })
-          .then(() => console.log("Shared successfully"))
-          .catch((error) => console.error("Error sharing:", error));
+          .then(() => {return;})
+          .catch((error) => {return;});
       }else{
       alert("Sharing this pdf isn't supported in your browser.")
       }

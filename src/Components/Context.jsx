@@ -3,6 +3,7 @@ import Joi from "joi";
 import axios from "axios";
 import arrowDown from "../../src/Components/EducationPins/imagesEducation/arrow-down.svg";
 import NotVerifiedIcon from "../Components/My Profile & Account Settings/ProfileImages/NotVerifiedIcon.svg";
+//import { useSearchParams } from "react-router-dom";
 // import { BASE_URL } from "../config";
 
 export const ContextProvider = createContext();
@@ -14,6 +15,12 @@ export const Context = ({ children }) => {
     window.location.reload(true);
     // new
   };
+
+  //COOKIES
+const [accepted, setAccepted] = useState(null);
+  
+
+  const [showBanner, setShowBanner] = useState(true);
 
   // Select username or email starts here
   const [webSocketMessage, setWebSocketMessage] = useState({})
@@ -158,9 +165,7 @@ export const Context = ({ children }) => {
   const handleCheckboxChange = (event) => {
     const { checked } = event.target;
     setCheckboxChecked(checked);
-    if (checked) {
-      console.log("true");
-    }
+    
   };
 
   const handleCountryChange = (countryCode) => {
@@ -170,11 +175,16 @@ export const Context = ({ children }) => {
   const handlePhoneNumberChange = (value) => {
     setState({ ...state, phoneNumber: value });
   };
-
+const [referralName, setReferralName] = useState("")
+ 
+  
   function changeHandler(e) {
     const { name, value, type, checked } = e.target;
     const inputValue = type === "checkbox" ? checked : value;
-    setState({ ...state, [name]: inputValue });
+ 
+ setState({ ...state, [name]: inputValue });
+    
+  
   }
 
   const handleFocus = (index) => {
@@ -320,7 +330,7 @@ export const Context = ({ children }) => {
         axios
           .post(url, data, config)
           .then((response) => {
-            console.log(response);
+        
             if (response.status === 201 || response.status === 200) {
               setVerification(true);
               setLocalStorageForInputPin();
@@ -333,13 +343,12 @@ export const Context = ({ children }) => {
               alert("Input already in use: " + error.response.data.data.data);
             } else if (error && error.response.data.status === 404) {
               alert("An error has occured on your end");
-              console.log(error.response.data.data.data);
+            
             } else if (error && error.reponse.status === 500) {
               alert("Server error:, Try some other time");
             } else if (error && error.reponse.status === undefined) {
               alert("Check your internet Connection");
             } else {
-              console.log(error.json());
               alert("Check your internet connection");
             }
           })
@@ -1458,6 +1467,14 @@ const [currentDateInTimeStamps, setCurrentDateInTimeStamps] = useState(0);
       
 
   const hold = {
+    //Referral
+    referralName,
+    setReferralName,
+//COOKIES
+accepted, 
+setAccepted,
+showBanner, 
+setShowBanner,
     //Transfer Data
     selectRecipientDisplay, setSelectRecipientDisplay,
   discount, setDiscount,

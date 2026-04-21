@@ -66,7 +66,6 @@ export default function ToAremxyMain() {
   
 
 const Data = GetLocalStorage();
-//console.log(Data?.UserEmail);
   const updateBalance = passDataBalance?.data?.data?.data !== undefined
     ? passDataBalance?.data?.data?.data?.balance
     : "";
@@ -167,8 +166,6 @@ setErrorMessage("");
   setVerifiedUser(false);
 }}
  const timer = useRef()
-  
-// console.log(timer);
 const HandleIdentifyCredentials = async(value)=> {
 const TestingTransferIdentify = async(transferIdentity)=> {
 if(value?.length < 2){
@@ -209,14 +206,12 @@ testUsername.test(value) === false && value?.endsWith(".com") === true
        setVerifiedUser(false)
        setFetchedResponse({})
   } }
-// console.log(identityMessage);
-//console.log(transferIdentity)
+
 
       GetUserDetails(value, transferIdentity);
     };
     TestingTransferIdentify();
   };
-  //console.log(timer)
   const ProceedTransfer = () => {
     if (
       fetchedResponse?.data?.data?.userDetails?.phone &&
@@ -285,16 +280,8 @@ return holdSplitValueArrayValue.join("");
  }
 }
 }
-
-// console.log(AppendValueWithPlus());
 const standardPhoneNumber = AppendValueWithPlus()
  
-
-
-
-
-
-//console.log(timer)
   useEffect(()=> {
     
     
@@ -367,9 +354,7 @@ const GetBalance = async () => {
   }, 500); // Wait for scroll to finish
 };
 
-//  console.log(amtToTransfer)
-//  const FirstUserIcon = "./Images/UserIcon/FirstUserIcon.png"
-// const UserImage = localStorage.getItem("UserIcon") ?  localStorage.getItem("UserIcon") : FirstUserIcon
+
   return (
    
     <div
@@ -831,8 +816,7 @@ const GetBalance = async () => {
         : "hover:bg-[#EDEAEA]"
     }`} 
               onChange={(e)=> {
-             setErrorTransAmount(false)
-       console.log(e.target.value)
+             setErrorTransAmount(false);
        setTransferAmount(e.target.value);
        if(transferSetTime.current) clearTimeout(transferSetTime.current)
          transferSetTime.current = setTimeout(()=> {

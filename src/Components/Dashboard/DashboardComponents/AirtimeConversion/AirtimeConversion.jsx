@@ -15,7 +15,6 @@ import flow from "../AirtimeConversion/images/Frame (5).png";
 import { Modal } from "../../../Screens/Modal/Modal";
 import flow1 from "../AirtimeConversion/images/convert-card.svg";
 import clock from "../AirtimeConversion/images/clock.svg";
-import Joi from "joi";
 import arrow from "../AirtimeConversion/images/arrow.png";
 import boy from "../AirtimeConversion/images/Digital banking and online currency exchange.png";
 import styles from "../TransferComponent/transfer.module.css";
@@ -69,7 +68,7 @@ const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
     networkImage: '',
   });
 
-  const [proceed, setProceed] = useState(false);
+  const proceed = false;
 
   const networkList = [
     {
@@ -108,12 +107,12 @@ const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
   };
 
 
-  const handleShowList = () => {
-   // setShowList(!showList);
-    setNetworkName("");
-    setNetworkImage("");
-    setSelected(false);
-  };
+  // const handleShowList = () => {
+  //  // setShowList(!showList);
+  //   setNetworkName("");
+  //   setNetworkImage("");
+  //   setSelected(false);
+  // };
 
   const handleShowList2 = () => {
     setShowList2(!showList2);
@@ -190,7 +189,7 @@ const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
     );
   };
 
-  const [errors, setErrors] = useState({});
+  const errors = {};
   const handlePhoneNumber = (e) => {
     const value = e.target.value;
 
@@ -199,39 +198,39 @@ const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
     setRecipientNumberA(numericValue);
   };
 
-  const handleProceed = () => {
-    const { error } = schema.validate({
-      recipientNumberA,
-      inputValue,
-    });
+  // const handleProceed = () => {
+  //   const { error } = schema.validate({
+  //     recipientNumberA,
+  //     inputValue,
+  //   });
 
-    if (error) {
-      setErrors(
-        error.details.reduce((acc, curr) => {
-          acc[curr.path[0]] = curr.message;
-          return acc;
-        }, {})
-      );
-    } else {
-      setProceed(true);
-      setErrors({});
-    }
-  };
+  //   if (error) {
+  //     setErrors(
+  //       error.details.reduce((acc, curr) => {
+  //         acc[curr.path[0]] = curr.message;
+  //         return acc;
+  //       }, {})
+  //     );
+  //   } else {
+  //     setProceed(true);
+  //     setErrors({});
+  //   }
+  // };
 
-  const schema = Joi.object({
-    recipientNumberA: Joi.string()
-      .pattern(new RegExp(/^\d{11,}/))
-      .required()
-      .messages({
-        "string.pattern.base": "Phone number should be 11 digits ",
-      }),
-    inputValue: Joi.string()
-      .pattern(new RegExp(/^\d{3,}/))
-      .required()
-      .messages({
-        "string.pattern.base": "Minimum amount to convert is 1000 ",
-      }),
-  });
+  // const schema = Joi.object({
+  //   recipientNumberA: Joi.string()
+  //     .pattern(new RegExp(/^\d{11,}/))
+  //     .required()
+  //     .messages({
+  //       "string.pattern.base": "Phone number should be 11 digits ",
+  //     }),
+  //   inputValue: Joi.string()
+  //     .pattern(new RegExp(/^\d{3,}/))
+  //     .required()
+  //     .messages({
+  //       "string.pattern.base": "Minimum amount to convert is 1000 ",
+  //     }),
+  // });
 
   const {
     toggleSideBar,
@@ -536,14 +535,6 @@ const AirtimeConversion = ({ onSelectOne, selectedCountryOne }) => {
 
               <div className="flex flex-col justify-center md:items-center">
                 <button
-                  // onClick={() => {
-                  //   handleProceed();
-
-                  //   console.log(
-                  //     selectedNetwork.networkImage,
-                  //     selectedNetwork.networkName
-                  //   );
-                  // }}
                   className={` ${
                     !inputValue.length || resultValue.length < 4
                       ? "bg-[#0008]"

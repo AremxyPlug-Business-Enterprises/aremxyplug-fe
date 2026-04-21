@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import MainImage from './images/telecomsMain.svg'
+import MainImage from "./telecomImages/telecomsMain.svg";
 
 const TelecomsHeader = () => {
   return (

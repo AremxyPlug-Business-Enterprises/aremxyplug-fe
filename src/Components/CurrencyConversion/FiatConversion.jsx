@@ -125,15 +125,12 @@ const FiatConversion = () => {
   const [passDataBalance, setPassDataBalance] = useState({});
 
   const GetBalance = async () => {
-    const SuccessHandler = () => {
-      console.log("successfully retrieved balance");
-    };
     const FailedHandler = async (ErrorType) => {
       if (ErrorType === "unauthorised") {
         await GetFunction(
           `balance`,
           setIsLoading,
-          SuccessHandler,
+          ()=> {},
           (ErrorType) => {
             if (ErrorType === "unauthorised") {
               return setSessionModal(true);
@@ -146,7 +143,7 @@ const FiatConversion = () => {
     await GetFunction(
       "balance",
       setIsLoading,
-      SuccessHandler,
+      ()=> {},
       FailedHandler,
       setPassDataBalance
     );

@@ -1,14 +1,12 @@
 import React from "react";
 import { useContext, useRef } from "react";
 import { ContextProvider } from "../../../../Context";
-import { RiFileCopyFill } from "react-icons/ri";
 import styles from "../../TransferComponent/transfer.module.css";
 import { DashBoardLayout } from "../../../Layout/DashBoardLayout";
 import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
 import { GetLocalStorage } from "../../../../LocalStorage/LocalStorage";
 export const AremxyMainReceipt = () => {
   const Data = GetLocalStorage();
@@ -16,7 +14,6 @@ export const AremxyMainReceipt = () => {
   const navigate = useNavigate()
   const {
     toggleSideBar,
-    textRef,
     isDarkMode,
     date,
     transferAmount,
@@ -62,8 +59,8 @@ export const AremxyMainReceipt = () => {
             title: "AremxyPlug_Transfer_Receipt",
             files : [file], 
           })
-          .then(() => console.log("Shared successfully"))
-          .catch((error) => console.error("Error sharing:", error));
+          .then(() => {return;})
+          .catch((error) => {return;});
       }else{
       alert("Sharing this pdf isn't supported in your browser.")
       }

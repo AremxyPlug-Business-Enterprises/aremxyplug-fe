@@ -202,7 +202,9 @@ const LazyRoutes =  React.lazy(()=> import("./Components/ProtectedRoute"))
   const SessionExpiration = localStorage.getItem("SessionExpiration")
 //const {} = useContext(ContextProvider)
   //eslint-disable-next-line
-
+// const location = useLocation();
+// const pathname = location?.pathname
+//const refAvailable = pathname?.includes("ref") ? "/sign"
   return(
   <Suspense fallback= {
   <Loader/>
@@ -276,7 +278,7 @@ export   const RoutingObjectLimitScope = [
   { id: 52, Routepath: "/Receipt", RouteComponent: <ProtectedRoute><Receipt /></ProtectedRoute> },
   { id: 53, Routepath: "/wallet-summary", RouteComponent: <ProtectedRoute><WalletSummaryPage /></ProtectedRoute> },
   { id: 54, Routepath: "/sales-summary", RouteComponent: <ProtectedRoute><SalesSummaryPage /></ProtectedRoute> },
-  { id: 55, Routepath: "/notifications", RouteComponent: <ProtectedRoute><NotificationsPage2 /></ProtectedRoute> },
+  // { id: 55, Routepath: "/notifications", RouteComponent: <ProtectedRoute><NotificationsPage2 /></ProtectedRoute> },
   { id: 56, Routepath: "/launch-page", RouteComponent: <LaunchPage /> },
   { id: 57, Routepath: "/launch-page2", RouteComponent: <LaunchPage2 /> },
   { id: 58, Routepath: "/launch-page3", RouteComponent: <LaunchPage3 /> },
@@ -408,16 +410,15 @@ export   const RoutingObjectLimitScope = [
   { id: 180, Routepath: "/NecoFailedReceipt", RouteComponent: <ProtectedRoute><NecoFailedReceipt /></ProtectedRoute> },
   { id: 181, Routepath: "/NabtebFailedReceipt", RouteComponent: <ProtectedRoute><NabtebFailedReceipt /></ProtectedRoute> },
   {id : 182, Routepath : "/TestingPhase", RouteComponent : <TestingDesign/>},
-     {id : 183, Routepath : "*", RouteComponent :  <ProtectedRoute><NotFound/></ProtectedRoute>}
+  //    {id : 183, Routepath : "*", RouteComponent :  <ProtectedRoute><NotFound/></ProtectedRoute>},
+  //    { 
+  //   id: 184, 
+  //   Routepath: "/signUp/:refName", 
+  //   RouteComponent: <SignUp /> 
+  // },
   ];
 export const Router = () => {
-
-   const MobileUsers = window.innerWidth ? window.innerWidth < 465 : 0;
-   
-     
-
-   
- return (
+return (
     <div>
       <ThemeHandler />
       <Routes>

@@ -93,13 +93,16 @@ const bgUsername = UserBgFormatting(UserData);
               src={Logo}
               alt="Logo"
             />
+            <div   onClick={() => setToggleSideBar(false)}
+             className={`
+            cursor-pointer w-[30px] h-[30px] md:h-[30.9px] 
+              md:w-[30.9px] lg:h-[52px] lg:w-[52px]`}>
             <img
-              onClick={() => setToggleSideBar(false)}
-              className="cursor-pointer w-[30px] h-[30px] mr-[5%] md:h-[30.9px] 
-              md:w-[30.9px] lg:h-[52px] lg:w-[52px]"
+              className="w-full h-full "
               src="./Images/dashboardImages/menumenu.png"
               alt="Menu"
             />
+            </div>
           </div>
 
           <div className="pl-[5px] pt-[5%] ">
@@ -611,7 +614,7 @@ const bgUsername = UserBgFormatting(UserData);
                   </div>
                 </Link>
 
-                <Link to="/notifications">
+                <div>
                   <div className="flex gap-[3.4px] cursor-pointer lg:gap-[11px]">
                     <img
                       className="w-[8.3px] h-[8.3px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"
@@ -620,7 +623,7 @@ const bgUsername = UserBgFormatting(UserData);
                     />
                     <p>Notifications</p>
                   </div>
-                </Link>
+                </div>
                 <div className="flex gap-[3.4px] cursor-pointer lg:gap-[11px]">
                   <img
                     className="w-[8.3px] h-[8.3px] md:w-[13.75px] md:h-[13.75px] lg:w-[24px] lg:h-[24px]"

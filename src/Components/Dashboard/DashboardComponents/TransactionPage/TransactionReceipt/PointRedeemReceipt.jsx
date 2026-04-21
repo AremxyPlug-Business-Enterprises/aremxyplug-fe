@@ -67,10 +67,10 @@ export const PointRedeemReceipt = () => {
     receiptData?.transaction_description?.length > 0
       ? receiptData?.transaction_description
       : "";
-  const transaction_product =
-    receiptData?.transaction_product?.length > 0
-      ? receiptData?.transaction_product
-      : "";
+  // const transaction_product =
+  //   receiptData?.transaction_product?.length > 0
+  //     ? receiptData?.transaction_product
+  //     : "";
 
        const transaction_amountRedeem =
     receiptData?.amount_redeemed?.length > 1
@@ -116,8 +116,8 @@ export const PointRedeemReceipt = () => {
             title: "AremxyPlug_PointRedeem_Receipt",
             files : [file], 
           })
-          .then(() => console.log("Shared successfully"))
-          .catch((error) => console.error("Error sharing:", error));
+          .then(() =>{return;})
+          .catch((error) => {return;});
       }else{
       alert("Sharing this pdf isn't supported in your browser.")
       }

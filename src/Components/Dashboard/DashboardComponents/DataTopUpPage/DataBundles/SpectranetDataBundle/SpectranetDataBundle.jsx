@@ -85,17 +85,13 @@ const SpectranetDataBundle = () => {
  
    useEffect(() => {
      const GetBalance = async () => {
-       const SuccessHandler = () => {
-         //alert("Successful");
-         console.log("successfully retrieved balance");
-         //alert("Successful")
-       };
+    
        const FailedHandler = async (ErrorType) => {
          if (ErrorType === "unauthoriesed") {
            await GetFunction(
              "balance",
              setLoading,
-             SuccessHandler,
+            ()=> {},
              (ErrorType) => {
                if (ErrorType === "unauthorised") {
                  setSessionModal(true);
@@ -108,7 +104,7 @@ const SpectranetDataBundle = () => {
        await GetFunction(
          "balance",
          setLoading,
-         SuccessHandler,
+         ()=> {},
          FailedHandler,
          setPassDataBalance
        );
@@ -245,11 +241,7 @@ const SpectranetDataBundle = () => {
     setTransactSuccessPopUp(false);
   };
 
-  if (addRecipient) {
-    console.log("recipient added");
-  } else {
-    console.log("did not add recipient");
-  }
+
 
   const productList = [
     {
@@ -358,7 +350,6 @@ const SpectranetDataBundle = () => {
     setTransactSuccessPopUp(false);
   };
 
-  console.log("confirm:", confirm);
 
   return (
     <DashBoardLayout>

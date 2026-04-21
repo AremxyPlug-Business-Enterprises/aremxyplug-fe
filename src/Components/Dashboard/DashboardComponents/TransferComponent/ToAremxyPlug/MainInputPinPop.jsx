@@ -18,8 +18,12 @@ export const MainInputPinPop = ({fetchedResponse}) => {
       isVisible, 
        otherInputPinPopUp,
         setOtherInputPinPopUp,
+        setMessageTransfer,
       transferAmount,
+      setTransferAmount,
        setTransferResponse,
+       setTransferValue,
+       transferResponse,
        messageTransfer,
        isDarkMode,
        authenticationOpen,
@@ -33,8 +37,8 @@ export const MainInputPinPop = ({fetchedResponse}) => {
   const [transactSuccessToOtherBank, setTransactSuccessToOtherBank] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState(false);
-    //const [transferErrorType, setTransferErrorType] = useState("");
-    //const [failedPopup, setFailedPopup] = useState(false);
+    const [transferErrorType, setTransferErrorType] = useState("");
+    const [failedPopup, setFailedPopup] = useState(false);
   
 
      const [isFocused, setIsFocused] = useState(false);
@@ -50,7 +54,20 @@ export const MainInputPinPop = ({fetchedResponse}) => {
           setOtherInputPinPopUp(false);
           window.location.reload()
         }
+const ExitTheDoneButton = ()=> {
+  //Shoukd Include the Fields you would like to clear
+  //This happens either if the response returns a status that does not return a receipt or
+  //The response returns a status either success or failed which returns the fields to check
+  //The receipts, but also include the done button, if the user does not want to bother
+  setTransferAmount(0);//Check if this should be an empty string or number
+  setMessageTransfer("");
+setTransferResponse({});
+setFailedPopup(false);
+setTransferValue("");
 
+
+}
+const ReceiptButton =()=> {}//Only if the transferResponse returns an status "success" | "failed"
 
 
 const amountUsable  = transferAmount === "" || transferAmount?.length > 1? transferAmount?.slice(1)?.replaceAll(",", "") : "";
@@ -108,16 +125,24 @@ const requestData = {
           //but also unrest and panic to the user and the amount for purchase and 
           //been removed twice without a result or successful output.
         //  setTransferErrorType("Failed to process your request, try again some other time")
-     //  setFailedPopup(true);
+     setFailedPopup(true);
        setOtherInputPinPopUp(false);
          setInputPin("")
         }else if(ErrorType === "Network error" || ErrorType === "User error"){
-       //   setTransferErrorType("An internet connection error");
-    //      setFailedPopup(true);
+          setTransferErrorType("An internet connection error");
+      setFailedPopup(true);
+       setOtherInputPinPopUp(false);
+         setInputPin("")
+        }else if(ErrorType === "Bad request"){
+          setTransferErrorType("Bad request Error");
+      setFailedPopup(true);
        setOtherInputPinPopUp(false);
          setInputPin("")
         }else {
-       alert("An unexpected error has occured")
+        setFailedPopup(true);
+          setTransferErrorType("Unexpected error had occured");
+           setOtherInputPinPopUp(false);
+         setInputPin("")
         }
       }
       
@@ -276,6 +301,78 @@ const requestData = {
               </div>
         </Modal>
       )}
+
+       {/* Failed Transaction Popup */}
+            {failedPopup && (
+              <Modal>
+                <div className={`w-[90%] md:w-[50%] lg:w-[35%] mx-auto 
+                 rounded-lg overflow-hidden
+                  ${isDarkMode ? "bg-black border-[1px] rounded-[7px] border-white": "bg-white"}`}>
+                  <div className="flex justify-between items-center p-4">
+                    <img
+                      onClick={() => setFailedPopup(false)}
+                      className={`w-6 h-6  `}
+                      src="/Images/login/arpLogo.png"
+                      alt="Logo"
+                    />
+                    <img
+                      onClick={() => setFailedPopup(false)}
+                      className="w-6 h-6 cursor-pointer"
+                      src="/Images/transferImages/close-circle.png"
+                      alt="Close"
+                    />
+                  </div>
+                  <hr className="h-1 bg-[#04177f] border-none" />
+                  <div className="p-4 text-center">
+                    <h2 className="text-lg md:text-xl font-semibold my-4">
+                      Transaction Failed
+                    </h2>
+                    <img
+                      className={`w-32 h-32 mx-auto my-6 
+                         ${isDarkMode ? "bg-black rounded-full border-[0.1px] border-black": "bg-white"}`}
+                      src="./Images/failed.png"
+                      alt="Failed"
+                    />
+                    <p className="text-sm text-red-500 font-[600] mb-8">
+                      {transferErrorType}
+                    </p>
+                    {transferResponse?.data?.status  ?
+                     (
+                    <div className="flex gap-[10px] justify-between w-full px-[10px]">
+                      <button
+                        onClick={() => ExitTheDoneButton()}
+                        className="bg-[#04177f] w-[50%] max-w-xs mx-auto py-2
+                 text-white rounded-md font-medium"
+                      >
+                        Done
+                      </button>
+                      <button
+                        onClick={() => {
+                          ReceiptButton();
+                        }}
+                        className={`w-[50%]  max-w-xs 
+                        mx-auto py-2 
+                 rounded-md font-medium ${isDarkMode ? "text-blue-900 bg-white border-[0.2px] rounded-[10px]" :  "bg-white border-[0.2px]  rounded-[2px] text-black border-blue-900"}`}
+                      >
+                        Receipt
+                      </button>
+                    </div>
+               
+                      ): (
+                         <button
+                        onClick={() => ExitTheDoneButton()}
+                        className="bg-[#04177f] w-[100%] max-w-xs mx-auto py-2
+                 text-white rounded-md font-medium"
+                      >
+                        Done
+                      </button>
+                       )}
+                       </div>
+                      
+                </div>
+              </Modal>
+            )}
+
        {isLoading && (
         <Modal>
               <Loader/>

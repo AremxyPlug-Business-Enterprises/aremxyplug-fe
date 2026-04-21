@@ -93,7 +93,7 @@ const { idVerificationOpen, setIdVerificationOpen, networkIssue } =
  
       }
     }
-  //console.log(verificationResponse?.data?.data?.address);
+  
     const setLoading=(Value)=> {} 
     await GetFunction(path, 
       setLoading, 

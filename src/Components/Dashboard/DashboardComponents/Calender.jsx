@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext} from "react";
 import Calendar from "react-calendar";
 // import "react-calendar/dist/Calendar.css";
 import "./custom_calendar.css";
@@ -6,7 +6,7 @@ import { ContextProvider } from "../../Context";
 
 
 export const Calender = () => {
-  const {dateEdit, 
+  const {
     isDarkMode, 
     countCalender,
      setCountCalender,
@@ -26,8 +26,8 @@ export const Calender = () => {
 
 
   const onChangeValue = (value)=> {
-  const startDateObject = startDateValueState?.length > 1 ? new Date(startDateValueState) : "";
-  console.log(startDateObject);
+  //const startDateObject = startDateValueState?.length > 1 ? new Date(startDateValueState) : "";
+
   const dateValue = new Date(value);
 
       setCountCalender((prev)=> {

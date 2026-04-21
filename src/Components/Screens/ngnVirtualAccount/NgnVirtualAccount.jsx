@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { DashBoardLayout } from "../../Dashboard/Layout/DashBoardLayout";
 import { ContextProvider } from "../../Context";
 import { Link } from "react-router-dom";
@@ -8,7 +8,8 @@ import axios from "axios";
 import { Loader } from "../../Loader/Loader";
 
 
-function NgnVirtualAccount(Data) {
+function NgnVirtualAccount() {
+  const Data = GetLocalStorage()
   const { isDarkMode,
     bankNameState,
     accountNameState,
@@ -97,7 +98,7 @@ function NgnVirtualAccount(Data) {
       .then(() => {
         alert('Copied to clipboard')
       })
-      .catch((error) => console.log('Unable to copy details', error));
+      .catch((error) =>{});
   }
 
   const handleShareCombineText = () => {
@@ -114,10 +115,10 @@ function NgnVirtualAccount(Data) {
 
     if (navigator.share) {
       navigator.share(combineText)
-        .then(() => console.log("Successfully shared"))
-        .catch(() => console.log('navigator.share is not supported'))
+        .then(() => {})
+        .catch(() => {})
     } else {
-      console.log('navigator.share is not supported')
+     return;
     }
   }
 
@@ -128,16 +129,14 @@ function NgnVirtualAccount(Data) {
       .then(() => {
         alert('Copied to clipboard')
       })
-      .catch((error) => console.log('Unable to copy text', error));
+      .catch((error) => {});
   }
   // To get Data from LocalStorage
-  const VerifyRef = useRef()
-  Data = GetLocalStorage();
-  useEffect(() => {
-    VerifyRef.current = Data;
+  
 
-  }, [Data])
 
+  const storageAccountName = Data?.aremxyAccountName?.length && Data?.aremxyAccountName?.includes("AP/")
+ ?  Data?.aremxyAccountName?.slice(3) :  Data?.aremxyAccountName?.length ? Data?.aremxyAccountName : '';  
   return (
     <DashBoardLayout>
       
@@ -201,7 +200,7 @@ function NgnVirtualAccount(Data) {
                 <p className="md:text-[13px] text-[12px] lg:text-[16px] lg:w-[15%] leading-[18px] lg:leading-[22px]   md:w-[20%] w-[30%]">ACCOUNT NAME</p>
                 <p className="md:text-[13px] text-[12px] lg:text-[16px]  leading-[18px] lg:leading-[22px]  lg:w-[85%] md:w-[20%] w-[70%]" >
                   {accountNameState ? accountNameState : 
-                  Data.aremxyAccountName ? Data.aremxyAccountName.slice(11) :
+                  Data.aremxyAccountName ? storageAccountName :
                    ""}
                   </p>
               </div>

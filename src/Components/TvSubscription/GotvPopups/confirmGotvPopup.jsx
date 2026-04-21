@@ -51,8 +51,7 @@ const ConfirmGotvPopup = ({passDataBalance, userVerifiedName}) => {
       }
       HandleBalanceStatus()
     },[CheckSufficiency])
-      //console.log(balanceStringToNum, GotvNumericAmount)
- // console.log(passDataBalance)
+ 
 
   return (
     <>

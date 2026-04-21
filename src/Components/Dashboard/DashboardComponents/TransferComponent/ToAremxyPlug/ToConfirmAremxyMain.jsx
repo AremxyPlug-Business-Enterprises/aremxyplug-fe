@@ -23,7 +23,6 @@ const updateBalance = newBalance === "" || newBalance === undefined ?
 Number(passDataBalance?.data?.data?.data?.balance) : StringToNumber;
 
 const amountUsable  = transferAmount === "" || transferAmount?.length > 1? Number(transferAmount?.slice(1)?.replaceAll(",", "")) : "";
-console.log(amountUsable)
 let CheckSufficiency = amountUsable > updateBalance;
       useEffect(()=> {
         const HandleBalanceStatus = ()=> {

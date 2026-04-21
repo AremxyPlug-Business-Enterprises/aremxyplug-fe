@@ -78,7 +78,6 @@ export const BusinessAccountForm = () => {
   });
   const [errors, setErrors] = useState({});
 
-  console.log(state);
 
   const handleCheckBox = (event) => {
     const { name, checked } = event.target;

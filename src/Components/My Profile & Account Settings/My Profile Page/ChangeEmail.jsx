@@ -87,7 +87,6 @@ const ChangeEmail = () => {
      }
       }
       const SuccessHandler =()=> {
-       // console.log("Successful")
      setErrorMessage("");
       setEmailInputColor("#2ED173");
       setUpdate(true);
@@ -145,7 +144,6 @@ const ChangeEmail = () => {
                }
              }
         const SuccessHandler =(response)=> {
-         // console.log("Successful")
          setVerificationPinError("");
           setUpdate(false);
        setVerify(true);

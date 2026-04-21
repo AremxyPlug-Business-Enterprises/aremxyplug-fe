@@ -19,8 +19,7 @@ import euroFlag from "../../../DashboardComponents/flagsImages/europeanFlag.png"
 const AremxyAddUser = () => {
   const { toggleSideBar, 
     isDarkMode,
-     newBalance, networkIssue,
-      setNewBalance,
+     networkIssue,
          setSessionModal,
           sessionModal, 
        setNetworkIssue} = useContext(ContextProvider);
@@ -39,11 +38,10 @@ const AremxyAddUser = () => {
  const Data = GetLocalStorage();
 const UserIcon = localStorage.getItem("UserIcon") ?  localStorage.getItem("UserIcon") : ""
 
-  const [passDataBalance, setPassDataBalance] = useState({})
    //   const [currencyBalance,  setCurrencyBalance] = useState("");
-const updateBalance = passDataBalance?.data?.data?.data !== undefined
-    ? passDataBalance?.data?.data?.data?.balance
-    : "";
+// const updateBalance = passDataBalance?.data?.data?.data !== undefined
+//     ? passDataBalance?.data?.data?.data?.balance
+//     : "";
   
   //const updateBalanceToNumber = Number(updateBalance)
   //const newBalanceToNumber = Number(newBalance)
@@ -141,7 +139,7 @@ const updateBalance = passDataBalance?.data?.data?.data !== undefined
     }
     await GetFunction(`search?${transferIdentity}=${value}`,
     ()=> {
-      console.log("loading")
+      
     },
        SuccessHandler,
         FailedHandler,
@@ -152,7 +150,7 @@ const updateBalance = passDataBalance?.data?.data?.data !== undefined
   }}
    const timer = useRef()
     
-  // console.log(timer);
+
   const HandleIdentifyCredentials = async(value)=> {
   
   const TestingTransferIdentify = async(transferIdentity)=> {
@@ -196,8 +194,7 @@ const updateBalance = passDataBalance?.data?.data?.data !== undefined
          setFetchedResponse({})
     }
    }
-  // console.log(identityMessage);
-  //console.log(transferIdentity)
+
   
   GetUserDetails(value, transferIdentity);
   }
@@ -255,44 +252,9 @@ const updateBalance = passDataBalance?.data?.data?.data !== undefined
 //GetBalance Function
   useEffect(()=> {
 if(Data?.ConfirmAcc === "true"){
-const GetBalance = async () => {
-      const SuccessHandler = () => {
-        //alert("Successful");
-        console.log("successfully retrieved balance");
-        //alert("Successful")
-      };
-      const FailedHandler = async (ErrorType) => {
-        if (ErrorType === "unauthorised") {
-         if(sessionModal) return;
-         if(!sessionModal) return setSessionModal(true)
-        }else if (ErrorType === "Server error"){
-          alert("A service downtime error has occured")
-        }else if(ErrorType === "Network error" || ErrorType === "User error"){
-          setNetworkIssue(true)
-        }else{
-          alert("An unexpected error occured in attempt to retrieve balance.")
-        }
-      }
-      await GetFunction(
-        "balance",
-        setLoading,
-        SuccessHandler,
-        FailedHandler,
-        setPassDataBalance,
-        setNetworkIssue
-      );
-    };
-                     // Simulate async data loading
-                    if((newBalance === "" ||
-       newBalance === null ||
-        newBalance === undefined)){
-                        GetBalance();
-                        if(GetBalance){
-                         setNewBalance(passDataBalance?.data?.data?.data !== undefined
-                           ? passDataBalance?.data?.data?.data?.balance : "");
-                        }
-                      }
-                    }else{
+
+                
+                  }else{
                       setRestrictUser(false)
                     }
                       //eslint-disable-next-line
@@ -733,6 +695,9 @@ const GetBalance = async () => {
           )}
           <div className={style.containFlex3}>
             <button
+            disabled={fetchedResponse?.data?.data?.userDetails?.username === undefined
+              || fetchedResponse?.data?.data?.userDetails?.phone === undefined
+            }
               className={`${
                 (fetchedResponse?.data?.data?.userDetails?.username === undefined
                  ||  fetchedResponse?.data?.data?.userDetails?.username === null)

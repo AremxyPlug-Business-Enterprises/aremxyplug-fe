@@ -285,11 +285,7 @@ const Balance = newBalance !== null &&
   //Function to get user's account balance
      const GetBalance = async () => {
     if(!navigator.onLine) return setCheckNetworkError(true)
-      const SuccessHandler = () => {
-        //alert("Successful");
-        console.log("successfully retrieved balance");
-        //alert("Successful")
-      };
+   
       const FailedHandler = async (ErrorType) => {
         if (ErrorType === "unauthorised") {
          setSessionModal(true)
@@ -305,7 +301,7 @@ const Balance = newBalance !== null &&
       await GetFunction(
         "balance",
         setBalanceLoader,
-        SuccessHandler,
+        ()=> {},
         FailedHandler,
         setPassDataBalance,
         setNetworkIssue
@@ -423,7 +419,6 @@ for (let network in networks) {
       setErrors({
         recipientPhoneNumber: `Invalid 9MOBILE number. Please enter a valid 9MOBILE number.`,
       });
-      console.log("its me 2");
     } else {
       setProceed(true);
       setErrors({});
@@ -438,7 +433,6 @@ for (let network in networks) {
     setTransactSuccessPopUp(false);
   };
 
-  // console.log("confirm:", confirm);
 
   const [etisalattransactionID, setEtisalatTransactionID] = useState("");
   const [etisalatorderID, setEtisalatOrderID] = useState("");
@@ -489,10 +483,9 @@ for (let network in networks) {
           setConfirm(false);
           setInputPin("");
           }
-          // Success response
        
         }
-        // console.log(response.data);
+        
       } catch (error) {
         if(error && error.response === undefined){
           setEtisalatPurchaseStatus(true); // Show failure popup

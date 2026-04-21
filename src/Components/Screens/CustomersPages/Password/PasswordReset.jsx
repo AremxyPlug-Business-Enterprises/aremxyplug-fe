@@ -123,7 +123,6 @@ if(response.status === 200 || response.status ===  201){
     alert(`INTERNAL_SERVER_ERROR`)
   }else{
     alert(`ERROR: ${error.message}`)
-   console.log(error)
   }
   }finally{
     setLoading(false);

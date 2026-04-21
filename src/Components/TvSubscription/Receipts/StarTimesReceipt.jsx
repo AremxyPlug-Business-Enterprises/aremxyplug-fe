@@ -91,8 +91,8 @@ export const StarTimesReceipt= (Data) => {
             title: "AremxyPlug_STARTIMES_Receipt",
             files : [file], 
           })
-          .then(() => console.log("Shared successfully"))
-          .catch((error) => console.error("Error sharing:", error));
+          .then(() => {})
+          .catch((error) => {});
       }else{
       alert("Sharing this pdf isn't supported in your browser.")
       }

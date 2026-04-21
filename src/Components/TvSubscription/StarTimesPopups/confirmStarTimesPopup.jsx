@@ -4,7 +4,6 @@ import { useContext, useEffect, useState } from "react";
 import { ContextProvider } from "../../Context";
 import { Modal } from "../../Screens/Modal/Modal";
 import arrowRight from "../../../Components/EducationPins/imagesEducation/educationArrowRight.svg";
-import styles from '../../AirTimePage/AirtimeVtu.module.css'
 
 const ConfirmStarTimesPopup = ({passDataBalance, userVerifiedName}) => {
 
@@ -20,8 +19,6 @@ const ConfirmStarTimesPopup = ({passDataBalance, userVerifiedName}) => {
     selectedOptionStarTimes,
 //cardName,
     methodImage,
-    //starTimesWalletBalance,
-    flagResult,
     starTimesAmount,
     newBalance,
     isDarkMode,
@@ -56,7 +53,7 @@ const ConfirmStarTimesPopup = ({passDataBalance, userVerifiedName}) => {
     }
     HandleBalanceStatus()
   },[CheckSufficiency])
-    console.log(balanceStringToNum, starTimesAmountToNumber)
+    
 
     return (
     <>

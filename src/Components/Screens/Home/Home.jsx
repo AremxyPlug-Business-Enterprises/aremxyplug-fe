@@ -35,6 +35,7 @@ import Affordable from "./Images/Afford.svg";
 import Trust from "./Images/Trusted.svg";
 import Reliable from "./Images/Reliable.svg";
 
+
 // import HeroImage from "./Images/HeroImage.svg"
 // import Hero from "./Images/desktop_phone.png"
 
@@ -243,7 +244,6 @@ export const Home = () => {
   const [telecomIcon, setTelecomIcon] = useState(true);
   const [paymentIcon, setPaymentIcon] = useState(true);
   const [digitalIcon, setDigitalIcon] = useState(true);
-
   function handleClick() {
     setFirstDrop((prev) => !prev);
     setButtonText((prevText) => (prevText === "More" ? "Less" : "More"));
@@ -293,12 +293,15 @@ const cardVariants = {
     },
   }),
 };
+const cookieState =  localStorage.getItem("cookieAccepted")
+console.log(cookieState);
   return (
     <div className="flex flex-col gap-10">
       <div className="fixed top-[25.5%] left-0 right-0 z-50 md:top-[55%] 
       lg:top-[45%]">
-      
-        <CookieBanner />
+       {(cookieState === undefined || !cookieState ) && (
+       <CookieBanner />
+       )}
       </div>
      
      <div className={`${styles.hero}  

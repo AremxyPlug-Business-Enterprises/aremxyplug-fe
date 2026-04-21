@@ -101,8 +101,8 @@ export const GotvReceipt = (Data) => {
           text: "TransactionReceipt",
           files : [file], // Replace with the actual URL of your receipt
         })
-        .then(() => console.log("Shared successfully"))
-        .catch((error) => console.error("Error sharing:", error));
+        .then(() => {})
+        .catch((error) => {});
     }else{
     alert("Sharing this pdf isn't supported in your browser.")
     }
@@ -164,7 +164,7 @@ export const GotvReceipt = (Data) => {
 
 
   
-//console.log(tvSubscriptionResponse);
+
   return (
     <DashBoardLayout>
       <div className="flex flex-col gap-[35px] lg:gap-[85px]">

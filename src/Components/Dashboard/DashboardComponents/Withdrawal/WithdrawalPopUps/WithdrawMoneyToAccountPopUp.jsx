@@ -47,7 +47,6 @@ export const WithdrawMoneyToAccountPopUp = () => {
     } else {
       setWthPopUp(false);
       setConfirmationPopUp(true);
-      // console.log(confirmationPopUp);
       setErrors({});
     }
   };

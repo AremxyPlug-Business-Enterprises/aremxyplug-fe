@@ -45,23 +45,9 @@ export default function SalesSummaryPage ()  {
     setCurrentDateInTimeStamps, setNetworkIssue,
     editCalenderOne,editCalenderTwo,  setCountCalender } =
   useContext(ContextProvider);
-    // const toggleDropdown1 = () => { setIsOpen1(true); };
-// 
-    // const toggleDropdown2 = () => { setIsOpen2(true); setIsOpen3(false); setIsOpen4(false);setIsOpen1(false); }; 
-// 
-    //  const toggleDropdown3 = () => { setIsOpen3(true); setIsOpen2(false); setIsOpen4(false); setIsOpen1(false); };
-// 
-    //   const toggleDropdown4 = () => { setIsOpen4(true);  setIsOpen3(false); setIsOpen2(false);setIsOpen1(false); };
-// console.log(totalOutFlow);
+
 
     const [calender, setCalender] = useState(false);   
-
-// let balance = 0;
-// //console.log(balance)
-// for(let i = 0; i < salesResponse?.length ; i ++){
-//    balance += salesResponse[i]?.tota_amount
-// }
-// console.log(balance);
 
 
       const [selectedProduct, setSelectedProduct] = useState('Filtered Product');
@@ -112,7 +98,6 @@ export default function SalesSummaryPage ()  {
       const SuccessHandler =(response)=>{
           if(product === "airtime"){
             setSalesResponse(response?.data?.data?.data?.data)
-             console.log(response?.data?.data?.data?.data);
              setSelectedProduct("Airtime Top-up")
           }else if(product === "bills"){
             setSalesResponse(response?.data?.data?.data?.data)

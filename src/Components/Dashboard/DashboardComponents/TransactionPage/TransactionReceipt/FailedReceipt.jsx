@@ -1,5 +1,5 @@
 import React from "react";
-import { useContext, useRef } from "react";
+import { useContext} from "react";
 import { ContextProvider } from "../../../../Context";
 import { DashBoardLayout } from "../../../Layout/DashBoardLayout";
 import { Link, useNavigate } from "react-router-dom";
@@ -34,49 +34,7 @@ export const FailedReceipt = () => {
     navigate("/TransactionPage");
   }
 
-  const transaction = location.state.transaction;
 
-  // ===============Copy to Clipboard Function============
-  //   const handleCopyClick = () => {
-  //     const text = textRef.current.innerText;
-  //     navigator.clipboard
-  //       .writeText(text)
-  //       .then(() => {
-  //         alert("Copied to clipboard");
-  //       })
-  //       .catch((err) => {
-  //         console.error("Error copying text: ", err);
-  //       });
-  //   };
-
-  // ==============Share pdf Function=============
-  // const handleShareClick = () => {
-  //   if (navigator.share) {
-  //     navigator
-  //       .share({
-  //         title: "Receipt",
-  //         text: "Check out this receipt!",
-  //         url: "https://example.com",
-  //       })
-  //       .then(() => console.log("Shared successfully"))
-  //       .catch((error) => console.error("Error sharing:", error));
-  //   } else {
-  //     console.log("Web Share API not supported.");
-  //   }
-  // };
-
-  // ==============Save Pdf Function==============
-  // const handleSaveAsPDFClick = () => {
-  //   const content = contentRef.current;
-  //   if (content) {
-  //     const pdf = new jsPDF();
-  //     html2canvas(content).then((canvas) => {
-  //       const imgData = canvas.toDataURL("image/png");
-  //       pdf.addImage(imgData, "PNG", 10, 10, 190, 0);
-  //       pdf.save("page.pdf");
-  //     });
-  //   }
-  // };
   return (
     <DashBoardLayout>
       <Modal>

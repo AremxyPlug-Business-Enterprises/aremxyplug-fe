@@ -191,54 +191,7 @@ function CardIssuing() {
   )}
 />
 
-        {/* <AliceCarousel
-          animationDuration={2000}
-          autoPlayInterval={2000}
-          autoPlay={true}
-          mouseTracking
-          items={items}
-          autoWidth
-          infinite
-          touchTracking
-          touchMoveDefaultEvents={false}
-          disableButtonsControls
-          keyboardNavigation={true}
-          renderDotsItem={(e) => {
-            const { isActive, activeIndex } = e;
-
-            console.log(isActive, activeIndex);
-            return isActive === true ? (
-              <div
-                className="w-[8px] h-[8px] rounded-full mx-[4px] md:mx-[8px]  lg:mx-[10px]"
-                style={{ backgroundColor: primaryColor }}
-              ></div>
-            ) : (
-              <div
-                className="w-[8px] h-[8px] rounded-full mx-[4px] md:mx-[8px]  lg:mx-[10px]"
-                style={{ backgroundColor: "#b1b9c2" }}
-              ></div>
-            );
-          }}
-          // renderDotsItem(e: DotsItem)
-        /> */}
-        {/* 
-        <div className="card_activation_boxshadow w-[280px] h-[320px] rounded sm:rounded-md md:rounded-lg lg:rounded-lg border-[1px] border-[#92ABFE] p-4">
-          <div className="flex pl-2 space-x-4">
-            <img
-              src="./Images/card_issuing_images/cardActivation.png"
-              alt="icon"
-              className="w-[35px] "
-            />
-            <p>Card Activation</p>
-          </div>
-
-          <p className="mt-8 text-justify">
-            Sign up on our platform, navigate the cards feature, provide the
-            appropriate details as a business or individual, get verified,
-            activate your cards, fund your cards, and start spending with your
-            cards globally.
-          </p>
-        </div> */}
+       
 
         <div className="flex justify-center my-14">
           <Bluebutton text="Get Your Card Now" onClick={handleShowPopup} />

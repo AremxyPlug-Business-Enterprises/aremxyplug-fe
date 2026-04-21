@@ -140,12 +140,7 @@ export const  TaskProgressModal =
 //Floating Progress bar
 export const FloatingProgressCircle = ({
   containerRef, onClick, progressNumber})=>  {
-   // const containerRef = useRef(null)
-  //  const windowHeight = window.innerHeight;
-  //  const suitableScale =windowHeight / 2;
-  //  const windowWidth = window.innerWidth;
-  //  const suitableScaleWidth = windowWidth / 2
-  //  console.log("windowScale", suitableScale)
+
   
      return (
     
@@ -205,7 +200,7 @@ const refValue = useRef(null);
   const {progressTaskBarResponse,
      webSocketMessage, openTaskBar, setOpenTaskBar} = useContext(ContextProvider)
  const memoedProgress = useMemo(()=>  progressTaskBarResponse?.data?.data?.tasks, [progressTaskBarResponse])
-console.log(progressTaskBarResponse);
+
    const orderedUpdatedTask = 
   progressTaskBarResponse?.data?.data?.tasks?.length > 1 ? 
    Array.from(memoedProgress)?.sort((a, b)=>{
@@ -214,15 +209,19 @@ return order.indexOf(a.task_code) - order.indexOf(b.task_code);
 
 const filterTaskNotCompleted =  orderedUpdatedTask?.filter((dataBaseRes)=> dataBaseRes?.completed === false);
     const firstNotCompletedTask = Array.isArray(filterTaskNotCompleted) && filterTaskNotCompleted?.length ? 
-     filterTaskNotCompleted?.find((_, index)=>  index === 0 ) : {};
+     filterTaskNotCompleted?.find((item, index)=> index === 0  ) : {};
+  
    const getCompletedTask = orderedUpdatedTask?.filter((task)=> task?.completed === true)
    const progressNumber = Array?.isArray(getCompletedTask) ?  getCompletedTask?.length * 20 : 0;
    //Update the task progress
  const CheckCurrentUpdate = webSocketMessage?.completed === true
- ?   filterTaskNotCompleted?.find((value)=> value?.task_code === webSocketMessage?.meta?.task_code && webSocketMessage?.completed === true ) 
+ ?   filterTaskNotCompleted?.find((value)=> value?.task_code === webSocketMessage?.task) 
  : "Error"
+
+
 const floatingProgressBarUpdate
  = CheckCurrentUpdate === undefined && CheckCurrentUpdate !== "Error" && progressTaskBarResponse?.length < 5
+ 
  ? progressNumber + 20
   : typeof CheckCurrentUpdate === "object" && CheckCurrentUpdate?.completed === true ? progressNumber : progressNumber;
 

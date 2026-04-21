@@ -74,8 +74,6 @@ const CountrySelect = ({ onSelect, selectedCountry, countries }) => {
       setBusinessAccount(id === 1);
       // setPersonalAccount(false);
     }
-
-    console.log(id);
   };
 
   return (

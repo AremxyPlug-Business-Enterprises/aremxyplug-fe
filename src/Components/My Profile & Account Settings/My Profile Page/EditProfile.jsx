@@ -56,16 +56,7 @@ const bgUsername = UserBgFormatting(UserData);
                     alt="profilePic"
                   />
                   </div>
-                  {/* <img
-                    onClick={(e) => {
-                      setOpenImage(true);
-                      console.log(e);
-                    }}
-                    src={changePic}
-                    className="absolute bottom-0 right-0 h-[25px] w-[25px] 
-   md:h-[25.82px] md:w-[25.82px] lg:h-[44px] lg:w-[44px] cursor-pointer"
-                    alt=""
-                  /> */}
+                
                 
                 {/* Profile text */}
                 <div className="flex flex-col justify-center  gap-[3.52px] lg:gap-[12px]">

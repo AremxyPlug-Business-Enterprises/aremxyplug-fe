@@ -4,7 +4,6 @@ import { ContextProvider } from "../../../Context";
 import { useState } from "react";
 import styles from "../TransferComponent/transfer.module.css";
 import style from "../../../AirTimePage/AirtimeVtu.module.css";
-import bulb from "../ElectricitySubscription/Electricity-sub-images/Group 13115.svg";
 import arrow from "../ElectricitySubscription/Electricity-sub-images/arrow-square-right.png";
 import logo from "../ElectricitySubscription/Electricity-sub-images/BEDC-Logo-new-dark-1 1.svg";
 import arrowDown from "../ElectricitySubscription/Electricity-sub-images/arrow-down.png";
@@ -107,15 +106,13 @@ const BEDC = () => {
 
 const GetBalance = async () => {
 
-    const SuccessHandler = () => {
-      console.log("successfully retrieved balance");
-    };
+  
     const FailedHandler = async (ErrorType) => {
       if (ErrorType === "unauthorised") {
         await GetFunction(
           `bills/verify`,
           setBalanceLoader,
-          SuccessHandler,
+          ()=> {},
           (ErrorType) => {
             if (ErrorType === "unauthorised") {
               return setSessionModal(true);
@@ -129,7 +126,7 @@ const GetBalance = async () => {
     await GetFunction(
       "balance",
       setBalanceLoader,
-      SuccessHandler,
+       ()=> {},
       FailedHandler,
       setPassDataBalance,
       setNetworkIssue

@@ -174,7 +174,6 @@ const DataBundleAddRecipient = () => {
 
      
     } catch (error) {
-      console.log(error)
      if(error && error.response === undefined){
       if(networkIssue) return;
       if(!networkIssue) return setNetworkIssue(true)

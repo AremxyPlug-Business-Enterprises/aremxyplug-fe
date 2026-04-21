@@ -12,13 +12,13 @@ const FiatWallet = () => {
   const [showModal, setShowModal] = useState(false);
   const [clicked, setClicked] = useState(false);
   const [currentId, setCurrentId] = useState(null);
-  const [selection, setSelection] = useState("");
+ // const [selection, setSelection] = useState("");
   const [currencyNotAvailable, setCurrencyNotAvailable] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const {
     // isDarkMode,
     newBalance,
-    setNewBalance,
+    setNewBalance, setNetworkIssue
   } = useContext(ContextProvider);
 
   const [loading, setLoading] = useState(false);
@@ -27,32 +27,29 @@ const FiatWallet = () => {
 
   useEffect(() => {
     const GetBalance = async () => {
-      const SuccessHandler = () => {
-        //alert("Successful");
-        console.log("successfully retrieved balance");
-        //alert("Successful")
-      };
+     
       const FailedHandler = async (ErrorType) => {
         if (ErrorType === "unauthoriesed") {
           await GetFunction(
             "balance",
             setLoading,
-            SuccessHandler,
+            ()=> {},
             (ErrorType) => {
               if (ErrorType === "unauthorised") {
                 setSessionModal(true);
               }
             },
-            setPassDataBalance
+            setPassDataBalance, setNetworkIssue
           );
         }
       };
       await GetFunction(
         "balance",
         setLoading,
-        SuccessHandler,
+        ()=> {},
         FailedHandler,
-        setPassDataBalance
+        setPassDataBalance,
+        setNetworkIssue
       );
     };
     // Simulate async data loading
@@ -140,8 +137,8 @@ const FiatWallet = () => {
     },
   ];
 
-  const handleSelection = (value) => {
-    setSelection(value);
+  const handleSelection = () => {
+  //  setSelection(value);
     setShowModal(true);
   };
 

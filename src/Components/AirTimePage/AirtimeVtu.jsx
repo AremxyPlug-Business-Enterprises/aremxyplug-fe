@@ -182,7 +182,6 @@ setRecipientsAirtime(response?.data?.data?.recipients?.recipients);
        
       //The Discount Retrieval Function...
        const getDiscountPercentage = async(network)=> {
-        console.log(network);
          const successHandler = (response)=> {
            // setDiscountObj(response);
             setDiscount(response?.data?.data?.discount_percent);
@@ -326,14 +325,13 @@ const amountToNumber = Number(amount)
            // .min(50)
         
     });
-    //console.log(typeof amount)
-   //console.log(amount);
+    
 
     const canProceed =
   recipientNumber?.length === 11 &&
   amount?.length >= 2 && amountToNumber >= 50 &&
   networkName &&
-  paymentSelected;
+  paymentSelected ;
 
    //validating the prefix of Nigeria network providers with the
     // network name selected
@@ -506,7 +504,6 @@ const handleTransactionSuccessClose = async()=> {
   recipient : recipientName
  }
   const successHandler = (response)=> {
-    console.log(response?.data?.data?.data?.status)
         const result = response?.data?.data?.data;
     if(response?.data?.data?.data?.status === "success" 
         || response?.data?.data?.data?.status === "successful"){
@@ -621,7 +618,7 @@ if(Data?.ConfirmAcc === "true"){
     } 
   })
 }
-
+const discountValue = discount ? discount : ""
 
     return (
         <DashBoardLayout>
@@ -848,7 +845,7 @@ className={`flex justify-left  w-[100%] items-center`}>
          ${isDarkMode ? "text-white" : "text-[#7E7E7E]" }`}>
              {discountLoader === true  ? <BalanceLoading/>
               :  networkName?.length > 0  && discountLoader=== false 
-              ? `${networkName + ' ' + discount}%` : ''}
+              ? `${networkName + ' ' + discountValue}%` : ''}
                        </h2>
                                  
                                    
@@ -973,7 +970,7 @@ className={`flex justify-left  w-[100%] items-center`}>
                                         e.target.value = numericValue;
                                         }}
                                         type='tel' 
-                                        placeholder='Type amount' 
+                                        placeholder='N50 and above' 
                                         required 
                   className={`mt-2  md:mt-0 rounded-[10px] 
              md:rounded-0  md:p-0 text-base
@@ -1819,7 +1816,8 @@ className={`flex justify-left  w-[100%] items-center`}>
                   
                 </div>
                 
-                        <button className={`
+                        <button disabled={newAmount === undefined || discount === undefined}
+                         className={`
                         ${
                         canProceed  ? "bg-[#04177f]" : "bg-[#63616188] cursor-not-allowed"
                     }  md:mt-[30px] lg:mt-[25px] rounded-[6px] mt-[30px]
@@ -1827,7 +1825,7 @@ className={`flex justify-left  w-[100%] items-center`}>
              h-[43px] md:h-[30px] lg:h-[40px] flex items-center 
              font-semibold text-[12px] md:text-[11px] lg:text-[16px] 
              text-[#fff] w-full md:w-[100px] lg:w-[170px] justify-center`}
-                            // disabled={!canProceed}
+                           //  disabled={canProceed}
                             onClick={handleProceed}>
                                 Proceed
                         </button>

@@ -13,7 +13,7 @@ export const AirtimeTransReceipt = () => {
   const navigate = useNavigate();
   const [showReceipt, setShowReceipt] = useState(true);
   const data = GetLocalStorage();
-  const { toggleSideBar, textRef, 
+  const { toggleSideBar, 
      isDarkMode, orderIdResponse, setOrderIdResponse } =
     useContext(ContextProvider);
 
@@ -71,17 +71,7 @@ receiptData?.full_name : ""
   const contentRef = useRef(null);
 
   // ==============Share pdf Function=============
-   const handleCopyClick = () => {
-      const text = textRef.current.innerText;
-      navigator.clipboard
-        .writeText(text)
-        .then(() => {
-          alert("Copied to clipboard");
-        })
-        .catch((err) => {
-          console.error("Error copying text: ", err);
-        });
-    };
+   
   
     // ==============Share pdf Function=============
     const handleShareClick = async() => {
@@ -115,8 +105,8 @@ receiptData?.full_name : ""
             title: "AremxyPlug_Airtime",
             files : [file], 
           })
-          .then(() => console.log("Shared successfully"))
-          .catch((error) => console.error("Error sharing:", error));
+          .then(() => {return;})
+          .catch((error) => {return;});
       }else{
       alert("Sharing this pdf isn't supported in your browser.")
       }
@@ -137,7 +127,6 @@ receiptData?.full_name : ""
           backgroundColor :  `${isDarkMode ? "#000" : "#fff"}`
 
         }).then((canvas) => { 
-          console.log("Successful")
             const bgPdf = pdf.setFillColor(isDarkMode ? 0 : 255, isDarkMode ? 0 : 255, isDarkMode ? 0 : 255 )
         if(bgPdf){
           const imgHeight = pdf.internal.pageSize.getHeight();
@@ -149,7 +138,7 @@ receiptData?.full_name : ""
         } 
       }
       ).catch((error)=> {
-         console.log("ERROR:", error)
+      return;
       })
       
  }

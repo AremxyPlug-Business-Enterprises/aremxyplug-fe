@@ -79,14 +79,7 @@ export const ElectricityReceipt = () => {
       ? receiptData?.transaction_product
       : "";
 
-  // const location = useLocation();
 
-  // if (!location.state || !location.state.orderData) {
-  //   return <div>Error: Transaction data not found</div>;
-  // }
-
-  // const transaction = location.state.transaction;
-  // console.log("transaction", transaction);
 
   const title =
     disco_type === "abuja-electric"
@@ -166,8 +159,8 @@ export const ElectricityReceipt = () => {
             title: `AremxyPlug_${receiptData?.meter_type}_Receipt`,
             files : [file], 
           })
-          .then(() => console.log("Shared successfully"))
-          .catch((error) => console.error("Error sharing:", error));
+          .then(() => {return;})
+          .catch((error) => {return;});
       }else{
       alert("Sharing this pdf isn't supported in your browser.")
       }

@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-
+import { ContextProvider } from "../../../Context";
 const CookieBanner = () => {
-  const [accepted, setAccepted] = useState(
-    localStorage.getItem("cookieAccepted") === "true"
-  );
-
-  const [showBanner, setShowBanner] = useState(true);
+   
+  const {
+    setAccepted,
+    showBanner, 
+    setShowBanner } = useContext(ContextProvider)
 
   useEffect(() => {
     const showBannerTimer = setTimeout(() => setShowBanner(true), 2000); // Show the banner after 5 seconds
@@ -24,13 +24,17 @@ const CookieBanner = () => {
     setAccepted(false);
     setShowBanner(false);
   };
+ 
 
   const closeBanner = () => {
     setShowBanner(!showBanner);
   };
   
-  return showBanner && !accepted ? (
-    <div className="cookie-banner bg-white py-[9%] text-[10px] px-[5%] text-justify w-[95%] md:w-[90%] lg:w-[85%] md:text-[12px] lg:text-[14px] mx-auto border-[3px] border-[#04177f] rounded-[16px] md:py-[5%] lg:py-[2%]">
+  return   showBanner === true ?(
+    <div className="cookie-banner bg-white py-[9%] text-[10px]
+     px-[5%] text-justify w-[95%] md:w-[90%] lg:w-[85%] md:text-[12px]
+      lg:text-[14px] mx-auto border-[3px] border-[#04177f] rounded-[16px]
+       md:py-[5%] lg:py-[2%]">
       <img
         onClick={closeBanner}
         className="absolute top-[2%] right-[4%] w-[30px] h-[30px] md:right-[7%] lg:right-[10%]"
@@ -79,7 +83,7 @@ const CookieBanner = () => {
         </div>
       </Link>
     </div>
-  ) : null;
+  ) : null
 };
 
 export default CookieBanner;

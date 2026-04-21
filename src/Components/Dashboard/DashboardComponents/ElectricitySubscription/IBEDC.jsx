@@ -123,15 +123,13 @@ const IBEDC = () => {
 const [balanceLoader, setBalanceLoader] = useState(false)
 const GetBalance = async () => {
 
-    const SuccessHandler = () => {
-      console.log("successfully retrieved balance");
-    };
+    
     const FailedHandler = async (ErrorType) => {
       if (ErrorType === "unauthorised") {
         await GetFunction(
           `bills/verify`,
           setBalanceLoader,
-          SuccessHandler,
+           ()=>{},
           (ErrorType) => {
             if (ErrorType === "unauthorised") {
               return setSessionModal(true);
@@ -145,7 +143,7 @@ const GetBalance = async () => {
     await GetFunction(
       "balance",
       setBalanceLoader,
-      SuccessHandler,
+      ()=> {},
       FailedHandler,
       setPassDataBalance,
       setNetworkIssue
@@ -386,7 +384,7 @@ const GetBalance = async () => {
           meter_no: meterNumber,
           meter_type: selectedIbedcMeterType.toLowerCase(),
         };
-        console.log(meterNumber);
+       
         const SuccessHandler = () => {
           setIsFailedMeterNumber(false);
           function handleReceivedMeterData() {

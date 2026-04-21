@@ -272,7 +272,7 @@ const GetBalance = async () => {
       balance:
         newBalance === "" || newBalance === null || newBalance === undefined
           ? `(${
-              updateBalance > 1
+              updateBalance?.length > 1
                 ? updateBalanceToNumber?.toLocaleString("en-NG", {
                     style: "currency",
                     currency: "NGN",
@@ -280,7 +280,7 @@ const GetBalance = async () => {
                 : ""
             })`
           : `(${
-              newBalance > 1
+              newBalance?.length > 1
                 ? newBalanceToNumber?.toLocaleString("en-NG", {
                     style: "currency",
                     currency: "NGN",

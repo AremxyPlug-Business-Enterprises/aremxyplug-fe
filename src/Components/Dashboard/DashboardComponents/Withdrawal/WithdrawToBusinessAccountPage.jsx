@@ -17,12 +17,10 @@ export const WithdrawToBusinessAccountPage = () => {
     withdrawImage,
     code,
     toggleSideBar,
-    amtToTransfer,
     setWthPopUp,
     setDeletePopUp,
   } = useContext(ContextProvider);
 
-  console.log(amtToTransfer);
 
   return (
     <DashBoardLayout>

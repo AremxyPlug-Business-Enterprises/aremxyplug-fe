@@ -64,14 +64,7 @@ export default function WalletSummaryPage() {
   const [methodBalance, setMethodBalance] = useState(false);
   const [stateDateEdit, setStateDateEdit] = useState("Filter By Date")
   const navigate = useNavigate();
-  // const toggleDropdown1 = () => { setIsOpen1(true); };
-  //
-  // const toggleDropdown2 = () => { setIsOpen2(true); setIsOpen3(false); setIsOpen4(false);setIsOpen1(false); };
-  //
-  //  const toggleDropdown3 = () => { setIsOpen3(true); setIsOpen2(false); setIsOpen4(false); setIsOpen1(false); };
-  //
-  //   const toggleDropdown4 = () => { setIsOpen4(true);  setIsOpen3(false); setIsOpen2(false);setIsOpen1(false); };
-  // console.log(totalOutFlow);
+
 
   const [calender, setCalender] = useState(false);
    const [selectedStatus, setSelectedStatus] = useState("All Transactions");
@@ -84,7 +77,6 @@ export default function WalletSummaryPage() {
 
   const GetTransactionInformation = async (startDate, endDate , record, collection) => {
     if (!navigator.onLine) return setTransactionHistoryError("Network error");
-    console.log(collection);
       const pathQuery = ()=> {
       const parseRecordValues 
       = record === "Deposits"
@@ -248,7 +240,6 @@ export default function WalletSummaryPage() {
    = endDateValueState?.length && endDateValueState !== ""
     ? endDateValueState : "";
   setCalender(false);
-   console.log(startDateOptions)
   setStateDateEdit(()=> {
     if(editCalenderOne !== "Start Date" && editCalenderTwo === "End Date" ){
      return <p>{startDateValueState}</p>
@@ -458,7 +449,6 @@ export default function WalletSummaryPage() {
    || walletTransactionResponse?.data?.data?.data?.data?.transactions )
    ? walletTransactionResponse?.data?.data?.data?.data?.transactions?.filter((transaction) => {
    
-            //console.log(transaction?.created_at?.slice(0, 10) === dateFiltered);
             if (
               selectedStatus === "" ||
               selectedStatus === "All Transactions"
@@ -472,7 +462,7 @@ export default function WalletSummaryPage() {
         )  : [] ;
     
 
-  //console.log(walletTransactionResponse?.data?.data?.data?.data);
+  
   const productStatus = [
     "All Transactions",
     "Successful",

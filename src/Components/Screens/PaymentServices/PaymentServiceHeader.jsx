@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import paymentMain from './images/PaymentMain.svg'
+import paymentMain from './PaymentImages/PaymentMain.svg'
 
 const PaymentServiceHeader = () => {
   return (
@@ -21,7 +21,8 @@ const PaymentServiceHeader = () => {
        </div>
          <div className='w-[291px] h-[164.37px] mx-auto md:mx-0
        md:w-[269.15px] md:h=[155.8px] lg:w-[464.7px] lg:h-[262.47px]'>
-        <img src={paymentMain} alt="payment_img" className='w-full h-full object-contain'/>
+        <img src={paymentMain} alt="payment_img" 
+        className='w-full h-full object-contain'/>
       </div>
         
       </div>
