@@ -294,7 +294,7 @@ const cardVariants = {
   }),
 };
 const cookieState =  localStorage.getItem("cookieAccepted")
-console.log(cookieState);
+
   return (
     <div className="flex flex-col gap-10">
       <div className="fixed top-[25.5%] left-0 right-0 z-50 md:top-[55%] 
