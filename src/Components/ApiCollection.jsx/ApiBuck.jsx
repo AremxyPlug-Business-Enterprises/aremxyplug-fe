@@ -56,7 +56,7 @@ export const GetVirtualAccountValue = (
   const { bank_name, account_name, account_no } = virtualAccCreated;
   const trimAccountName 
   = account_name?.includes("AP/") && account_name?.length 
-  ? account_name?.slice(3) : account_name?.length ? account_name : ""
+  ? account_name?.slice(3) : account_name?.length && account_name ? account_name : ""
   if (virtualAccCreated) {
     setBankNameState(bank_name);
     setAccountNameState(trimAccountName);

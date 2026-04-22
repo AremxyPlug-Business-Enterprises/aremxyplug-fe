@@ -288,7 +288,9 @@ const ValueRef = useRef();
   }
 })
 const storageAccountName = Data?.aremxyAccountName?.length && Data?.aremxyAccountName?.includes("AP/")
- ?  Data?.aremxyAccountName?.slice(3) :  Data?.aremxyAccountName?.length ? Data?.aremxyAccountName : '';  
+ ?  Data?.aremxyAccountName?.slice(3) :  Data?.aremxyAccountName?.length ? Data?.aremxyAccountName : ''; 
+
+
 return (
     <div className="relative h-[200%] w-[100%]">
  {/* ============SIDE BAR========= */}
@@ -709,7 +711,8 @@ return (
                 >
                   <h2 className="font-semibold w-1/2 text-[11px] leading-[18px]  md:text-[11px] lg:text-[12px]">Account Name</h2>
                   <p className="text-[11px] leading-[16px] font-[400] w-1/2 md:text-[11px] text-right lg:text-[12px] ">
-                  {accountNameState ? accountNameState :Data.aremxyAccountName ? storageAccountName : ""}</p>
+                  {accountNameState ? 
+                  accountNameState :Data.aremxyAccountName ? storageAccountName : ""}</p>
                 </div>
                
                 <div
