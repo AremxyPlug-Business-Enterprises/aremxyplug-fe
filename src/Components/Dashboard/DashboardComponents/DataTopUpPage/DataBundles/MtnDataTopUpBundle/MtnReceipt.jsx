@@ -35,9 +35,13 @@ const navigate = useNavigate()
     setRecipientNamesMtn,
   setWalletNameMtn,
   setRecipientPhoneNumberMtn,
-  
-} =
-    useContext(ContextProvider);
+  mtnSuccessfulResponse, 
+  //setMtnSuccessfulResponse
+  } = useContext(ContextProvider);
+
+  const Fullname = mtnSuccessfulResponse?.full_name?.length ? 
+  mtnSuccessfulResponse?.full_name : ""
+
 
   const contentRef = useRef(null);
 
@@ -83,6 +87,8 @@ const navigate = useNavigate()
      }
        }
      };
+
+     
    
   
   // ==============Save Pdf Function==============
@@ -109,6 +115,8 @@ const navigate = useNavigate()
    // setPaymentSelected(false);
     navigate("/MtnDataTopUpBundle");
   };
+
+
 
   return (
     <DashBoardLayout>
@@ -233,7 +241,7 @@ const navigate = useNavigate()
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p  className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Customer Name</p>
-                  <span  className={` ${isDarkMode ? "text-white" : "text-black"}`}>{Data.aremxyUsername}</span>
+                  <span  className={` ${isDarkMode ? "text-white" : "text-black"}`}>{Fullname}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p  className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Wallet Type</p>

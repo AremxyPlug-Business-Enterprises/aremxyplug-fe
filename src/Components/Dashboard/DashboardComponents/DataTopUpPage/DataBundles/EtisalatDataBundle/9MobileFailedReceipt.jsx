@@ -37,7 +37,8 @@ export const EtisalatFailedReceipt = (Data) => {
   setRecipientPhoneNumberEtisalat,
   selectedOptionEtisalat,
   selectedProductEtisalat,
-  walletNameEtisalat
+  walletNameEtisalat,
+   etisalatSuccessfulResponse
 
     // recipientName,
  
@@ -74,6 +75,9 @@ export const EtisalatFailedReceipt = (Data) => {
       });
     }
   };
+
+  const fullName = etisalatSuccessfulResponse?.full_name?.length 
+  ? etisalatSuccessfulResponse?.full_name : '';
 
   const handleChange = () => {
     setSelectedNetworkProduct(false);
@@ -207,7 +211,7 @@ export const EtisalatFailedReceipt = (Data) => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className={` ${isDarkMode ? "text-white" : "text-[#7E7E7E]"}`}>Customer Name</p>
-                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{Data.aremxyUsername}</span>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{fullName}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className={` ${isDarkMode ? "text-white" : "text-[#7E7E7E]"}`}>Wallet Type</p>

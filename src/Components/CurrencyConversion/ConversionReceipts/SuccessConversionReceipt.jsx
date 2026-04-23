@@ -14,7 +14,7 @@ export const SuccessfulReceipt = (receipt) => {
   const { toggleSideBar, textRef,
     convertedAmount,
     exchangeRate,
-    initialValue,
+    initialValue, setAlertCustom,
       isDarkMode, date } =
     useContext(ContextProvider);
 
@@ -26,10 +26,18 @@ export const SuccessfulReceipt = (receipt) => {
     navigator.clipboard
       .writeText(text)
       .then(() => {
-        alert("Copied to clipboard");
+         setAlertCustom({
+            message : "Copied to ClipBoard",
+            type : "success",
+            show : true
+          })
       })
       .catch((err) => {
-        console.error("Error copying text: ", err);
+        setAlertCustom({
+            message : "Copy Failed",
+            type : "success",
+            show : true
+          })
       });
   };
 

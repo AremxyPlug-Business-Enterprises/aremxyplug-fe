@@ -37,7 +37,7 @@ export const MainDashboard = () => {
     twoStepVerificationSuccess,setTwoStepVerificationSuccess, setDateEdit,
     newBalance, setNewBalance,  setEditCalenderOne, setEditCalenderTwo, 
      setStartDateValueState, setEndDateValueState, setCurrentDateInTimeStamps,
-      setCountCalender, networkIssue, setNetworkIssue, setSessionModal,
+      setCountCalender, networkIssue, setNetworkIssue, setSessionModal, setAlertCustom
   } = useContext(ContextProvider);
   //const {account_no, bank_name, account_name} = virtualAccCreated;
 const navigate = useNavigate()
@@ -124,8 +124,6 @@ if((clickedoption === "NGN")){
     return;
   };
 
-  
-
   //Generating an account in the dashboard
   const GenerateVirtualAccount = async(AuthUsed)=>{
       const usernameToken = localStorage.getItem("xcss{}")
@@ -146,7 +144,7 @@ if((clickedoption === "NGN")){
            await CheckVirtualAcc(AuthUsed, customerDetail, setDashLoading,
              setVirtualAccCreated, setBankNameState, 
              setAccountNameState, setAccountNumberState, 
-           twoStepVerificationSuccess,setTwoStepVerificationSuccess, setNetworkIssue)
+           twoStepVerificationSuccess,setTwoStepVerificationSuccess, setNetworkIssue, setAlertCustom)
            } 
            if(CheckVirtualAcc && Data.ConfirmAcc === "true"){
             setDashLoading(false);
@@ -156,7 +154,11 @@ if((clickedoption === "NGN")){
         if(error && error.response === undefined){
          setNetworkIssue(true)
         } else if( error.response && error.response.status === 400){
-          alert("Virtual Account Creation failed")
+         setAlertCustom({
+          message : "Virtual Account Created Successfully",
+          type : "success",
+          show : true
+         })
           setDashLoading(false);
         }else if(error.response.status === 404){
       if(networkIssue) return;
@@ -165,16 +167,28 @@ if((clickedoption === "NGN")){
         }else if(error.response.status === 401){
       setSessionModal(true)
     }else if(error.response &&error.response.status === 500){
-          alert("SERVER ERROR");
+          setAlertCustom({
+          message : "SERVER_ERROR",
+          type : "error",
+          show : true
+         })
           setDashLoading(false);
         }else if(error && error.response.status === undefined){
            setDashLoading(false);
            setNetworkIssue(true)
-          // alert("Network connection unstable, kindly check your network connection")
-            alert("Virtual Account Creation failed");
+          // alert("Network connection unstable, kindly c  
+         setAlertCustom({
+          message : "Virtual AccountCreation Failed",
+          type : "error",
+          show : true
+         })  
         }else {
             setDashLoading(false);
-            alert("Virtual Account Creation failed");
+           setAlertCustom({
+          message : "Virtual AccountCreation Failed",
+          type : "error",
+          show : true
+         })  
         }
       }}
       }

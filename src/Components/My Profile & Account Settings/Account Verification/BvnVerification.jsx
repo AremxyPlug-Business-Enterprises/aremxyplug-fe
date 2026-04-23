@@ -35,7 +35,7 @@ export default function BvnVerification() {
   const { setBvnButtonState } = useContext(ContextProvider);
   const { toggleSideBar, customerDetail } = useContext(ContextProvider);
   const { idAddress, setIdAddress } = useContext(ContextProvider);
-  const { dropDownGender, setDropDownGender } = useContext(ContextProvider);
+  const { dropDownGender, setDropDownGender, setAlertCustom } = useContext(ContextProvider);
   const { isDarkMode, 
     verificationResponse,
      verificationReason, bvnPhone, setBvnPhone } =
@@ -187,6 +187,14 @@ export default function BvnVerification() {
           setBvnVerifyImage(NotVerifiedImage);
         }else if(error.response.status === 401){
             setSessionModal(true)
+        }else if(error?.response?.status ===409){
+       
+          setAlertCustom({
+           message : "Verification Blocked: This verification is associated with another account, Contact Admin ",
+           type : "error",
+           show : true
+          })
+        
         } else {
            setErrorVerify("An unexpected error has occured upon verification");
             setBvnNumberError("");

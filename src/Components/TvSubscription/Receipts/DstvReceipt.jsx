@@ -23,7 +23,6 @@ export const DstvReceipt= (Data) => {
     dstvTransactionId,
     dstvOrderId,
     dstvDescription,
-   dstvCardName,
     isDarkMode, 
     dstvAmount,
     date,
@@ -47,7 +46,8 @@ export const DstvReceipt= (Data) => {
     useContext(ContextProvider);
 
   const contentRef = useRef(null);
-
+const fullName = dstvSubscriptionResponse?.data 
+? dstvSubscriptionResponse?.data?.full_name : ""
   // ===============Copy to Clipboard Function============
   const handleCopyClick = () => {
     const text = textRef.current.innerText;
@@ -128,7 +128,7 @@ export const DstvReceipt= (Data) => {
    const DstvOrderInfo = (dstvOrderId !== undefined || dstvOrderId?.length > 1) ? dstvOrderId : "";
   const DstvTransactionInfo = (dstvTransactionId?.length > 1 || dstvTransactionId !== undefined )  ? dstvTransactionId : "";
   const DstvDescriptionInfo = (dstvDescription?.length > 1 || dstvDescription !== undefined) ? dstvDescription : "";
-
+   const cardName = dstvSubscriptionResponse?.data?.card_name  ? dstvSubscriptionResponse?.data?.card_name : ""
   const ExitTheReceipt = ()=> {
       setDstvEmail("")
    setDstvMobileNumber("")
@@ -270,7 +270,7 @@ export const DstvReceipt= (Data) => {
                 <div className="flex text-[10px] md:text-[14px] font-[500] w-[90%] 
                 mx-auto justify-between  lg:text-[16px]">
                   <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Card Name</p>
-                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{dstvCardName}</span>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{cardName}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] font-[500] w-[90%] 
                 mx-auto justify-between  lg:text-[16px]">
@@ -308,7 +308,7 @@ export const DstvReceipt= (Data) => {
                 <div className="flex text-[10px] md:text-[14px] w-[90%] 
                 mx-auto justify-between  lg:text-[16px] font-[500]">
                   <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Customer Name</p>
-                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{Data?.aremxyUsername ? Data?.aremxyUsername : ""}</span>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{fullName}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between
                   lg:text-[16px] font-[500]">

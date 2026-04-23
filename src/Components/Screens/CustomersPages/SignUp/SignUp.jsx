@@ -11,13 +11,13 @@ import FirstModal from "../Password/FirstModal";
 import { useState } from "react";
 import { Loader } from "../../../Loader/Loader";
 import { Modal } from "../../Modal/Modal";
-import { RemoveLocalStorage } from "../../../LocalStorage/LocalStorage";
 
 export const SignUp = () => {
   //params
  
   const {
     // hideNavbar,
+   
     setHideNavbar,
     isFocused,
     showPassword,
@@ -36,9 +36,8 @@ export const SignUp = () => {
     errorSpecialCharacterUsername,
     setErrorSpecialCharacterUsername,
     loadSignUp,
-    setVerification
   } = useContext(ContextProvider);
-  const [continueConsentModal, setContinueConsentModal] = useState(false)
+  
   const [countryCode] = useState('ng')
 
    const handlePhoneNumberChange = (value)=> {
@@ -56,17 +55,8 @@ const setNav = () => {
 
   useEffect(() => {
     setNav();
-  
-    const ActiveSignUp = localStorage.getItem("ActiveSignUp")
-    const PhoneData = localStorage.getItem("userPhone");
-  if(ActiveSignUp === "true" && PhoneData ){
-    setContinueConsentModal(true);
-    alert("Accounts created, kindly verify your account")
-  }else if(ActiveSignUp === "true" && !PhoneData){
-    localStorage.removeItem("ActiveSignUp")
-  }
-  if(localStorage.getItem("PasswordResetActive")){
-      localStorage.removeItem("PasswordRestActive")
+ if(localStorage.getItem("PasswordResetActive")){
+      localStorage.removeItem("PasswordResetActive")
   }
   
     return () => {
@@ -94,16 +84,6 @@ const setNav = () => {
   const [showPassModal, setShowPassModal] = useState(false);
 
 
-
-const RefusalToProceed =()=> {
-  localStorage.removeItem("ActiveSignUp");
-  setContinueConsentModal(false);
-}
-
-const ContinueSignUp = ()=> {
-  setVerification(true);
-  setContinueConsentModal(false);
-}
 
 
 
@@ -640,40 +620,7 @@ const ChangeEventFunctionUsername = (value)=> {
           <Loader />
         </Modal>
       )}
-        { continueConsentModal && (
-             <Modal>
-              <div className="w-full flex  justify-center items-center">
-            <div className ="flex flex-col justify-center items-center py-[20px] px-[12px] gap-[20px] w-[80%] md:w-[60%] lg:w-[30%] md:h-[300px] bg-white rounded-[10px]
-             lg:rounded-[20px]">
-              <p className ="text-[14px] font-[400] leading-[18px]
-               text-black lg:text-[16px] lg:leading-[22px] ">
-                We noticed you did not complete your sign up
-                process, would you still like to proceed?</p>
-             
-              <div className="flex gap-[20px] justify-center">
-                <button onClick ={()=> {
-                  ContinueSignUp()
-                }}
-                 className="bg-[#04177f]  cursor-pointer mt-[5%] mx-auto w-[80px] py-[8px] flex justify-center items-center text-[#ffffff] 
-                  text-[10px] font-[500] lg:font-[600] rounded-md md:w-[95px] md:h-[26px]
-                   md:p-[2%] lg:w-[113px] lg:h-[38px] lg:text-[13px]">
-                     Yes
-                </button>
-                <button onClick ={()=> {
-                    RefusalToProceed()
-                    RemoveLocalStorage();
-                }}
-                 className="bg-red-500  cursor-pointer mt-[5%] mx-auto w-[80px] py-[8px] flex justify-center items-center text-[#ffffff] 
-                  text-[10px] font-[500] lg:font-[600] rounded-md md:w-[95px] md:h-[26px]
-                   md:p-[2%] lg:w-[113px] lg:h-[38px] lg:text-[13px]">
-                  No
-                </button>
-              </div>
-              </div>
-              </div>
-             </Modal>
-             )
-          }
+    
     </div>
   );
 };

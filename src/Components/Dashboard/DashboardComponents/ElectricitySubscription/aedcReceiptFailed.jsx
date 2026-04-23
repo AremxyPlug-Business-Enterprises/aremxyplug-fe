@@ -8,11 +8,11 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import logo2 from "../ElectricitySubscription/Electricity-sub-images/AEDC1 1.svg";
 import { useNavigate } from "react-router-dom";
-import { GetLocalStorage } from "../../../LocalStorage/LocalStorage";
+
 
 export const AedcReceiptFailed = () => {
   const navigate = useNavigate();
-  const data = GetLocalStorage();
+
 
   const {
     toggleSideBar,
@@ -42,7 +42,7 @@ export const AedcReceiptFailed = () => {
     setAedcTransactionId,
     aedcShowDescription,
     setAedcShowDescription,
-    // aedcFullName,
+     aedcFullName,
     setAedcFullName,
     aedcTransactionProduct,
     setAedcTransactionProduct,
@@ -58,7 +58,7 @@ export const AedcReceiptFailed = () => {
     selectedAedcMeterType?.length > 0 ? selectedAedcMeterType : "";
   const meterNo = aedcMeterNumber?.length > 0 ? aedcMeterNumber : "";
   const verifiedName = aedcVerifiedName?.length > 0 ? aedcVerifiedName : "";
-  // const fullName = aedcFullName?.length > 0 ? aedcFullName : "";
+   const fullName = aedcFullName?.length > 0 ? aedcFullName : "";
   const phoneNo = aedcPhoneNumber?.length > 0 ? aedcPhoneNumber : "";
   const productEmail = aedcEmail?.length > 0 ? aedcEmail : "";
   const productAmount = aedcAmount?.length > 0 ? aedcAmount : "";
@@ -95,31 +95,57 @@ export const AedcReceiptFailed = () => {
   const contentRef = useRef(null);
 
   // ==============Share pdf Function=============
-  const handleShareClick = () => {
-    if (navigator.share) {
-      navigator
-        .share({
-          title: "Receipt",
-          text: "Check out this receipt!",
-          url: "https://example.com", // Replace with the actual URL of your receipt
-        })
-        .then(() => {return;})
-        .catch((error) => {return;});
-    } else {
-     return;
-      // Handle sharing fallback for unsupported browsers
+  const handleShareClick = async() => {
+      const content = contentRef.current;
+      if(!content) return alert("Receipt not recorded")
+      if(content){
+        try {
+       const pdf = new jsPDF("p", "mm", "a4");
+     //  alert(pdf.internal?.pageSize.getHeight())
+        const canvas = await html2canvas(content,
+           {scale : 2,
+             useCORS : true,
+             backgroundColor : `${isDarkMode ? "#000" : "#fff"}`
+          }
+            )
+           
+        const bgPdf = pdf.setFillColor(isDarkMode ? 0 : 255, isDarkMode ? 0 : 255, isDarkMode ? 0 : 255 )
+        if(bgPdf){
+          const pageHeight = pdf.internal.pageSize.getHeight();
+          const pageWidth = pdf.internal.pageSize.getWidth();
+          const imgWidth = pageWidth;
+          const imgData = canvas.toDataURL("image/jpeg", 1.0);
+          pdf.addImage(imgData, 
+            "jpeg",0, 0, imgWidth, pageHeight, undefined, "FAST");
     }
-  };
-
+       const pdfBlob = pdf.output("blob");
+      const file = new File([pdfBlob], "AremxyPlug_Receipt.pdf", {type : "application/pdf"})
+      if (navigator.canShare && navigator.canShare({files : [file]})) {
+        navigator
+          .share({
+            title: `AremxyPlug_AEDC_Receipt`,
+            files : [file], 
+          })
+          .then(() => {return;})
+          .catch((error) => {return;});
+      }else{
+      alert("Sharing this pdf isn't supported in your browser.")
+      }
+    }catch(error){
+     alert(error)
+    }
+      }
+    };
+  
   // ==============Save Pdf Function==============
-  const handleSaveAsPDFClick = () => {
-    const content = contentRef.current;
-    if (content) {
+  const saveAsPDFClick = () => {
+    const contentWaec = contentRef.current;
+    if (contentWaec) {
       const pdf = new jsPDF();
-      html2canvas(content).then((canvas) => {
-        const imgData = canvas.toDataURL("image/png");
-        pdf.addImage(imgData, "PNG", 10, 10, 190, 0);
-        pdf.save("AEDC-Failed-Receipt.pdf");
+      html2canvas(contentWaec).then((canvas) => {
+        const imgWaecData = canvas.toDataURL("image/png");
+        pdf.addImage(imgWaecData, "PNG", 10, 10, 190, 0);
+        pdf.save(`${description}.pdf`);
       });
     }
   };
@@ -319,7 +345,7 @@ export const AedcReceiptFailed = () => {
                   </p>
                   <span className="font-medium">
                     {/* {verifiedName || fullName} */}
-                    {data?.aremxyUsername ? data?.aremxyUsername : verifiedName}
+                    {fullName}
                   </span>
                 </div>
 
@@ -439,7 +465,7 @@ export const AedcReceiptFailed = () => {
             </button>
             <button
               onClick={() => {
-                handleSaveAsPDFClick();
+               saveAsPDFClick();
               }}
               // className={`border w-[111px] flex justify-center items-center mx-auto cursor-pointer text-xs font-extrabold h-[40px] md:w-[8.5rem] rounded-[6px] md:rounded-[8px] md:text-base lg:w-[163px] lg:h-[38px] lg:my-[2%] ${isDarkMode ? "bg-black border-white" : "bg-[#ffffff] border-[#0003]"}`}
               className={`bg-[#ffffff] border w-[111px] flex justify-center items-center mx-auto cursor-pointer text-xs font-extrabold  ${

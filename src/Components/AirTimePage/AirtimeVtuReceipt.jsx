@@ -13,7 +13,7 @@ export const AirtimeVtuReceipt = (Data) => {
   Data = GetLocalStorage()
   const location = useLocation();
   const navigate = useNavigate();
-  const { networkName, selectedProduct,recipientNumber, amount, 
+  const { networkName, selectedProduct,recipientNumber, setAlertCustom, amount, 
     transactionID, refNumber, orderID, description, discount_amount, discountPercentage } = location.state;
   
   const {
@@ -42,11 +42,10 @@ export const AirtimeVtuReceipt = (Data) => {
   // ==============Share pdf Function=============
   const handleShareClick = async() => {
        const content = contentRef.current;
-       if(!content) return alert("Receipt not recorded")
+       if(!content) ;
        if(content){
          try {
         const pdf = new jsPDF("p", "mm", "a4");
-      //  alert(pdf.internal?.pageSize.getHeight())
          const canvas = await html2canvas(content,
             {scale : 2,
               useCORS : true,
@@ -74,10 +73,18 @@ export const AirtimeVtuReceipt = (Data) => {
            .then(() => {return;})
            .catch((error) => {return;});
        }else{
-       alert("Sharing this pdf isn't supported in your browser.")
+        setAlertCustom({
+            message : "sharing this PDF is not available in your browser",
+            type : "error",
+            show : true
+           })
        }
      }catch(error){
-      alert(error)
+       setAlertCustom({
+            message : "Unable to share PDF",
+            type : "error",
+            show : true
+           })
      }
        }
      };

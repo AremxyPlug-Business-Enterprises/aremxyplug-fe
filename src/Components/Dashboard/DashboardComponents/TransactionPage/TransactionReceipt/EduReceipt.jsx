@@ -8,12 +8,11 @@ import jsPDF from "jspdf";
 import AremxyPlugIcon from "../../../../EducationPins/imagesEducation/AremxyPlug.svg";
 import html2canvas from "html2canvas";
 import { ContextProvider } from "../../../../Context";
-import { GetLocalStorage } from "../../../../LocalStorage/LocalStorage";
 import { formatDate } from "./ElectricityReceipt";
 import { DashBoardLayout } from "../../../Layout/DashBoardLayout";
 
 export default function EduReceipt() {
-  const data = GetLocalStorage();
+
   const [showReceipt, setShowReceipt] = useState(true);
   const navigate = useNavigate();
   const { toggleSideBar, isDarkMode, orderIdResponse, setOrderIdResponse } =
@@ -53,6 +52,8 @@ export default function EduReceipt() {
     receiptData?.transaction_product?.length > 0
       ? receiptData?.transaction_product
       : "";
+      const fullName = receiptData?.full_name?.length
+       ? receiptData?.full_name : "";
 
   // const location = useLocation();
 
@@ -339,8 +340,8 @@ export default function EduReceipt() {
                     <span
                       className={` ${isDarkMode ? "text-white" : "text-black"}`}
                     >
-                      {/* {fullName} */}
-                      {data?.aremxyUsername ? data?.aremxyUsername : ""}
+                      {fullName} 
+                      
                     </span>
                   </div>
                   <div className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between lg:text-base font-medium">

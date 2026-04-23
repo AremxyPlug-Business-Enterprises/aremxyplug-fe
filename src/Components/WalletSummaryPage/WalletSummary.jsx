@@ -56,7 +56,8 @@ export default function WalletSummaryPage() {
     setCurrentDateInTimeStamps, setNetworkIssue,
     editCalenderOne,editCalenderTwo,  setCountCalender,
        setSessionModal,
-          sessionModal
+          sessionModal,
+          setAlertCustom
   } = useContext(ContextProvider);
   const [passDataBalance, setPassDataBalance] = useState({});
   const [selected, setSelected] = useState("NGN");
@@ -172,7 +173,11 @@ export default function WalletSummaryPage() {
       setNetworkIssue
     );
   }else{
-    alert("This feature can only be accessed by users with virtual account.")
+ setAlertCustom({
+  message : "This feature can only be accessed by users with virtual accounts",
+  type : "error",
+  show : true
+ })
   }
   };
 
@@ -403,7 +408,6 @@ export default function WalletSummaryPage() {
       result = response;
     };
     const FailedHandler = async (ErrorType) => {
-      // if (!navigator.online) alert("Kindly check your internet connection");
       if (ErrorType === "unauthorised") {
      if(sessionModal) return;
       if(sessionModal === false) return setSessionModal(true)
@@ -706,7 +710,11 @@ const FormatTime =(DateValue)=> {
                         setCalender(false)
                       }
                     }else{
-                      alert("This feature can only be used by users with virtual account.");
+                     setAlertCustom({
+  message : "This feature can only be accessed by users with virtual accounts",
+  type : "error",
+  show : true
+ })
                     }
                 }}
                className={`${isDarkMode ? "text-white" :"text-[#04177f]"} text-[11px] 
@@ -964,7 +972,11 @@ const FormatTime =(DateValue)=> {
                     setIsOpen1(false);
                   }
                 }else{
-                  alert("This feature can only be used by users with virtual account.")
+                setAlertCustom({
+  message : "This feature can only be accessed by users with virtual accounts",
+  type : "error",
+  show : true
+ })
                 }
                 }}
                  className={`cursor-pointer shadow-[0px_1.3290735483169556px_1.3290735483169556px_0p_rgba(0,0,0,0.25)] ${

@@ -39,7 +39,8 @@ const navigate= useNavigate()
   setRecipientPhoneNumberMtn,
   walletNameMtn, 
    selectedProductMtn,
-  selectedOptionMtn
+  selectedOptionMtn,
+  mtnSuccessfulResponse,
     // recipientName,
 
   } = useContext(ContextProvider);
@@ -87,7 +88,8 @@ const navigate= useNavigate()
       });
     }
   };
-
+const fullName = mtnSuccessfulResponse?.full_name?.length
+? mtnSuccessfulResponse?.full_name : "" 
   const handleChange = () => {
   //  setSelectedNetworkProductMtn(false);
     setSelectedProductMtn("")
@@ -224,7 +226,7 @@ const navigate= useNavigate()
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Customer Name</p>
-                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{Data.aremxyUsername}</span>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{fullName}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Wallet Type</p>

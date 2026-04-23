@@ -74,7 +74,8 @@ const DsTv = () => {
         setFetchedDstvPlans,
         toggleSideBar,
          networkIssue, setNetworkIssue,
-         sessionModal, setSessionModal
+         sessionModal, setSessionModal,
+         dstvCardName
  } = useContext(ContextProvider);
 const Data = GetLocalStorage();
    // const [packageDstv, setPackageDstv] = useState("");
@@ -403,6 +404,7 @@ const VerifyPinHandler = async () => {;
         email: dstvEmail,
         amount: dstvAmount,
         phone: dstvMobileNumber,
+        card_name : dstvCardName
       };
 
       const Path = "bills/tvsub";

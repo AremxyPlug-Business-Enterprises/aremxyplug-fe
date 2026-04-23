@@ -12,10 +12,10 @@ import axios from "axios";
 import { Loader } from "../Loader/Loader";
 import { Modal } from "../Screens/Modal/Modal";
 import { RemoveLocalStorage } from "../LocalStorage/LocalStorage";
-
+import { GetLocalStorage } from "../LocalStorage/LocalStorage";
 
 function LoginForm() {
-  
+  const Data = GetLocalStorage()
 
 
   const { setOpenTranspin,
@@ -27,6 +27,7 @@ function LoginForm() {
       openTranspinSuccessful,
       open2StepOTP,
       openTranspin ,
+      setUnverifiedSignupInfo,
     //  setLoginAuthorisation,
       
       setCustomerDetail,
@@ -38,27 +39,6 @@ function LoginForm() {
   const [loading, setLoading] = useState(false);
  
 
-  // Check if login data exist starts here
-  // function checkUsername() {
-  //   const getUsername = localStorage.getItem("aremxyUsername")
-  //     ? JSON.parse(localStorage.getItem("aremxyUsername"))
-  //     : "";
-  //   return getUsername;
-  // }
-
-  // function checkEmail() {
-  //   const getEmail = localStorage.getItem("aremxyEmail")
-  //     ? JSON.parse(localStorage.getItem("aremxyEmail"))
-  //     : "";
-  //   return getEmail;
-  // }
-
-  // function checkPassword() {
-  //   const getPassword = localStorage.getItem("aremxyPassword")
-  //     ? JSON.parse(localStorage.getItem("aremxyPassword"))
-  //     : "";
-  //   return getPassword;
-  // }
   // Check if login data exist ends here
 
   const [username, setUsername] = useState("");
@@ -118,11 +98,7 @@ function LoginForm() {
   }, []);
 
   useEffect(() => {
-    const ActiveSignUp = localStorage.getItem("ActiveSignUp");
-    const PhoneData = localStorage.getItem("userPhone");
-     if(ActiveSignUp === "true" && !PhoneData){
-   return localStorage.removeItem("ActiveSignUp")
-  }
+  
   
     const handleResize = () => {
       const width = window.innerWidth;
@@ -178,15 +154,21 @@ function LoginForm() {
 
 
 
-
+const {setAlertCustom} = useContext(ContextProvider)
 // ==========Login Handler===========
   const submitHandler = async (e) => {
     e.preventDefault();
-if(!navigator.onLine) return alert("No internet Connection, Check your network connection to proceed ");
-const ActiveSignUp = localStorage.getItem("ActiveSignUp");
-if(ActiveSignUp === "true") return alert("You are not allowed to login, while an active sign up is present, if you don't wish to proceed with the sign up process, click on NO in the Sign up page popup")
+if(!navigator.onLine) {
+  setAlertCustom({
+    message : "Check your internet connection",
+    type : "error",
+    show : true
+  })
+}
+
+
     // ========Login form validation starts here=======
-    if (usernameORemail === "username" && navigator.onLine && !ActiveSignUp) {
+    if (usernameORemail === "username" && navigator.onLine) {
       try {
         const schema = Joi.object({
           username: Joi.string()
@@ -237,17 +219,54 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
                   }} 
             } catch(error){
              if(error && error.response === undefined){
-                alert("Your internet connection is quite unstable.");
-          }else if(error && error.response.status === 500){
-              alert("Server error: try some other time.");
-              }else if (error && error.response.status === 404) {
-                alert("User not found.");
-              } else if (error.response.status === 401 || error.response.status === 400) {
-              alert("Incorrect Password: You are only allowed to try 5 times.");
-              }else if (error &&  error.response.status === 403) {
-              alert("Account Blocked try after one hour.");
+              setAlertCustom({
+                message :  "Your internet connection is quite unstable.",
+                type : "error",
+                show : true
+              })
+              
+          }else if(error && error?.response?.status === 500){
+               setAlertCustom({
+                message :  "Server error",
+                type : "error",
+                show : true
+              })
+              }else if (error && error?.response?.status === 404) {
+                 setAlertCustom({
+                message :  "User not found",
+                type : "error",
+                show : true
+              })
+              } else if (error?.response?.status === 401 || error?.response?.status === 400) {
+                setAlertCustom({
+                message :  "Incorrect Password: You are only allowed to try 5 times",
+                type : "error",
+                show : true
+              })
+              }else if (error &&  error?.response?.status === 403) {
+               
+                 if(error?.response?.data?.data?.data  === 'complete signup verification before continuing'){
+           
+             
+                  setAlertCustom({
+                message :  "SignUp Incomplete, for any help you can reach out to customer support.",
+                type : "error",
+                show : true
+              })
+            
+                   }else {
+           setAlertCustom({
+                message :  "Your Account has been blocked, try again in the next one hour",
+                type : "error",
+                show : true
+              })
+            }
               }else {
-             alert("An unexpected error occured during the login process.")
+               setAlertCustom({
+                message :  "An unexpected error has occured.",
+                type : "error",
+                show : true
+              })
               }
             };
           //if (checkbox === true) {
@@ -261,7 +280,7 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
           }
     }
 
-    if (usernameORemail === "email" && navigator.onLine && !ActiveSignUp) {
+    if (usernameORemail === "email" && navigator.onLine ) {
     
         const schema = Joi.object({
           email: Joi.string()
@@ -295,7 +314,7 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
         if (response.status === 202  && response?.headers?.hasAuthorization) {
            localStorage.setItem("xcss[]", true);
                 setOpenTranspin(true);
-           const customer = response?.data?.customer;
+           const customer = response?.data?.data?.customer;
               if(customer){
                setCustomerDetail(customer);
                   }
@@ -310,20 +329,54 @@ if(ActiveSignUp === "true") return alert("You are not allowed to login, while an
          } 
             }catch(error){
        if(error && error.response === undefined){
-                alert("Your internet connection is quite unstable.");
-          }else if(error.response.status=== 500){
-               alert("Server error: try some other time");
-              }else if(error.response.status === 404){
-                alert("User not found")
+                  setAlertCustom({
+                message :  "Your internet connection is quite unstable.",
+                type : "error",
+                show : true
+              })
+          }else if(error?.response?.status=== 500){
+                  setAlertCustom({
+                message :  "Server error",
+                type : "error",
+                show : true
+              })
+              }else if(error?.response?.status === 404){
+                   setAlertCustom({
+                message :  "User not found",
+                type : "error",
+                show : true
+              })
                    }
-                   else if (error.response.status === 401 || error.response.status === 400) {
-                   alert("Incorrect Password: You are only allowed to try 5 times.");
-                   } else if (error.response.status === 403) {
-                     alert("Account Blocked: Try again after the next one hour.");
+                   else if (error?.response?.status === 401 || error?.response?.status === 400) {
+                  setAlertCustom({
+                message :  "Incorrect Password: You are only allowed to try 5 times",
+                type : "error",
+                show : true
+              })
+                   } else if (error?.response?.status === 403) {
+                     if(error?.response?.data?.data?.data  === 'complete signup verification before continuing'){
+           
+             
+                  setAlertCustom({
+                message :  "SignUp Incomplete, for any help you can reach out to customer support.",
+                type : "error",
+                show : true
+              })
+            
                    }else {
-           alert("An unexpected error occured during the login process")
+           setAlertCustom({
+                message :  "Your Account has been blocked, try again in the next one hour",
+                type : "error",
+                show : true
+              })
             }
-            }finally{
+            }else{
+               setAlertCustom({
+                message :  "An unexpected error has occured.",
+                type : "error",
+                show : true
+              })
+            }}finally{
        setLoading(false);
       }
     }

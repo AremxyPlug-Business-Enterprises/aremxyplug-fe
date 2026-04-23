@@ -292,7 +292,7 @@ const AirtimeVtu = () => {
                         </div>
                     </div>
                     { showList && 
-                        <div className='border rounded-[10px] lg:mt-2 mt-1 border md:border-[0.4px] rounded-[10px]'>
+                        <div className='lg:mt-2 mt-1 border md:border-[0.4px] rounded-[10px]'>
                             {networkList.map((item) => (
                                 <Network key={item.id} image={item.image} name={item.name} onClick={()=>handleSelectNetwork(item.name, item.image, item.discount)}/>
                             ))}
@@ -404,7 +404,8 @@ const AirtimeVtu = () => {
                 <div className='fixed top-0 left-0 w-full h-full bg-black/[0.3] z-[300] flex justify-center items-center'>
                     <div className={` mx-[5%] ${ isDarkMode ? "border bg-[#000]" : "bg-[#fff]"} lg:ml-[25%] lg:mr-[10%] md:mx-[25%] grow pt-[20px] pb-[20px] rounded-[8px] relative md:rounded-[11.5px]`}>
                         <div className='w-full flex justify-end border-b-[6px] border-primary px-[12px]'>
-                            <button onClick={()=> setProceed(false)} className='lg:w-6 lg:h-6 h-[11px] w-[11px] rounded-full border flex items-center justify-center'>
+                            <button onClick={()=> setProceed(false)} className='lg:w-6 lg:h-6 h-[11px] w-[11px]
+                             rounded-full border flex items-center justify-center'>
                                 x
                             </button>
                         </div>
@@ -452,9 +453,11 @@ const AirtimeVtu = () => {
                                     </div>
                                 </div>
                                 <div className='flex items-center justify-between'>
-                                    <h2 className="text-[8px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">Total Amount</h2>
+                                    <h2 className="text-[8px] leading-[12px] capitalize md:text-[9.17px] 
+                                    md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">Total Amount</h2>
                                     <div className='flex gap-1'> 
-                                        <h2 className="text-[8px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">{name + ' ' + newAmount}</h2>
+                                        <h2 className="text-[8px] leading-[12px] capitalize md:text-[9.17px]
+                                         md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">{name + ' ' + newAmount}</h2>
                                     </div>
                                 </div>
                                 <div className='flex items-center justify-between'>
@@ -474,10 +477,13 @@ const AirtimeVtu = () => {
                                 <div className='w-[41px] h-[41px] rounded-full overflow-hidden p-2 bg-white'>
                                     <img src={image} alt="" className='w-full h-full object-cover rounded-full'/>
                                 </div>
-                                <h2 className="text-[8px] leading-[12px] capitalize md:text-[9.17px] md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">Available Balance ( {name+paymentAmount}.00 )</h2>
+                                <h2 className="text-[8px] leading-[12px] capitalize md:text-[9.17px] 
+                                md:leading-[11.92px] lg:text-[16px] lg:leading-[24px]">Available Balance ( {name+paymentAmount}.00 )</h2>
                             </div>
                             <div className='flex items-center justify-center'>
-                                <button className='w-full md:w-fit bg-primary text-white rounded-md px-[28px] text-[10px] leading-[15px] lg:text-[16px] lg:leading-[24px] py-[6px]' onClick={handleConfirm}>Confirm</button> 
+                                <button className='w-full md:w-fit bg-primary text-white
+                                 rounded-md px-[28px] text-[10px] leading-[15px] lg:text-[16px] lg:leading-[24px] py-[6px]' 
+                                onClick={handleConfirm}>Confirm</button> 
                             </div>
                         </div>
                     </div>
@@ -493,12 +499,14 @@ const AirtimeVtu = () => {
                     </div>
             }
             <div className='py-[30px] lg:py-[60px] mt-10'>
-                <button className='w-full md:w-fit bg-primary text-white rounded-md px-[28px] text-[10px] leading-[15px] lg:text-[16px] lg:leading-[24px] py-[6px]' onClick={handleProceed}>Proceed</button>
+                <button className='w-full md:w-fit bg-primary
+                 text-white rounded-md px-[28px] text-[10px] leading-[15px] lg:text-[16px] lg:leading-[24px] py-[6px]' onClick={handleProceed}>Proceed</button>
             </div>
         </div>
         <div className='flex gap-2 justify-center items-center md:mt-40'>
             <h2 className='text-[8px] leading-[12px] lg:text-[12px]'>You need help?</h2>''
-            <Link to={`/ContactUs`} className='text-[8px] leading-[12px] text-white bg-primary px-2 py-1 rounded-full lg:text-[8px]'>Contact Us</Link>
+            <Link to={`/ContactUs`} className='text-[8px] leading-[12px] text-white
+             bg-primary px-2 py-1 rounded-full lg:text-[8px]'>Contact Us</Link>
         </div>
       </div>
     </DashBoardLayout>

@@ -67,6 +67,7 @@ const AirtelDataBundle = () => {
     setRecipientsData,
     toggleVisibility,
     isVisible,
+    airtelSuccessfulResponse, setAirtelSuccessfulResponse
   } = useContext(ContextProvider);
   const [balanceLoader, setBalanceLoader] = useState(false);
   const [dataRecipientsDisplay, setDataRecipientsDisplay] = useState(false)
@@ -95,7 +96,6 @@ const AirtelDataBundle = () => {
   const [airtelReceiptInfo, setAirtelReceiptInfo] = useState("");
   const [restrictUser, setRestrictUser] = useState(false);
   const [checkNetworkError, setCheckNetworkError] = useState(false);
-  const [airtelSuccessfulResponse, setAirtelSuccessfulResponse] = useState({})
   const [loadingRecipient, setLoadingRecipient] = useState(false);
   let balanceStringToNum = Number(newBalance);
 
@@ -119,19 +119,19 @@ const assumedString = selectedAmountAirtel?.toString()
       setLoadingProducts(true);
       try {
         const response = await axiosInstance?.get("/products/telecom/list/4");
-        setProducts(response.data.data.products || []);
+        setProducts(response?.data?.data?.products || []);
       } catch (error) {
-        if (error && error.response === undefined) {
+        if (error && error?.response === undefined) {
          setNetworkIssue(true)
           setCheckNetworkError(true)
-        }else if(error && error.reponse.status === 401){
+        }else if(error && error?.response?.status === 401){
                   if(sessionModal) return;
          if(!sessionModal) return setSessionModal(true)
-        } else if (error && error.response.status === 400) {
+        } else if (error && error?.response?.status === 400) {
           alert(
             "Service for airtel is currently not available, Try again later."
           );
-        } else if (error && error.response.status === 500) {
+        } else if (error && error?.response?.status === 500) {
           alert(
             "Service for airtel is currently not available, Try again later."
           );

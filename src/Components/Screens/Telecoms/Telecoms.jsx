@@ -1,11 +1,10 @@
 import React from 'react'
 import TelecomsHeader from './TelecomsHeader';
 import TelecomsCard from './TelecomsCard';
-import bgImage from './telecomImages/TelecomBg.avif';
 import { desktopData } from './data/telecomData';
 import { mobileData } from './data/telecomData';
 import { Link } from 'react-router-dom';
-import mobileBg from './telecomImages/mobileBg.png'
+//import mobileBg from './telecomImages/mobileBg.png'
 
 const Telecoms = () => {
   return (
@@ -18,7 +17,7 @@ const Telecoms = () => {
             h-auto bg-white md:hidden bg-center  
             bg-no-repeat px-[5%] bg-cover p-[11px]"
              style={{
-                backgroundImage: `url(${mobileBg})`,
+                backgroundImage: `url(${"/Images/telecomImages/mobileBg.png"})`,
                 }}>
                 
                     { mobileData.map((data) => (
@@ -37,7 +36,7 @@ const Telecoms = () => {
         
             {/* formed a sort of table using flex box, it has four rows and each rows contains two column. make sure to check data for more info */}
             <div className="hidden px-[5%] w-full md:flex flex-col lg:gap-[60px] gap-[20px] py-[2%]
-    bg-cover bg-center bg-no-repeat"style={{backgroundImage: `url(${bgImage})`}}>
+    bg-cover bg-center bg-no-repeat"style={{backgroundImage: `url(${"/Images/telecomImages/mobileBg.png"})`}}>
           
                     { desktopData.map((data) => (
                         <div className='flex gap-[198px]' key={data.id}>

@@ -1,10 +1,7 @@
 import React from 'react'
 import PaymentServiceHeader from './PaymentServiceHeader';
-import banking from  './PaymentImages/Banking.svg'
-import onlineBanking from './PaymentImages/OnlineMoney.svg'
 import ImageHolder from './ImageHolder';
 import PaymentCard from './PaymentCard';
-import bgImg from './PaymentImages/PaymentBg.avif';
 import { Link } from 'react-router-dom';
 
 const PaymentServices = () => {
@@ -12,7 +9,7 @@ const PaymentServices = () => {
     <div className='flex  flex-col pt-[15%] lg:pt-[5%] md:pt-[5%] w-full '>
       <PaymentServiceHeader/>
       <div className="w-full py-10 flex flex-col gap-[80px] bg-center
-       bg-cover md:p-[20px] lg:p-[25px] md:gap-[120px] " style={{backgroundImage: `url(${bgImg})`}}>
+       bg-cover md:p-[20px] lg:p-[25px] md:gap-[120px] " style={{backgroundImage: `url( '/Images/PaymentImages/PaymentBg.avif')`}}>
         {/* row 1 start here*/}
         <div className="flex flex-col  gap-[80px] md:flex-row px-[5%] lg:gap-[127px] md:gap-[73.55px] md:text-left">
           <PaymentCard 
@@ -28,7 +25,7 @@ const PaymentServices = () => {
 
         {/* row 2 start here*/}
         <div className="flex justify-center">
-          <ImageHolder image={banking}/>
+          <ImageHolder image={'/Images/PaymentImages/Banking.svg'}/>
         </div>  
         {/* row 2 ends here */}
 
@@ -52,7 +49,7 @@ const PaymentServices = () => {
             title={'International Payment'}
             message={'With our international payment structure, you can send and receive money from anywhere in the world.'}
           />
-          <ImageHolder image={onlineBanking}/>
+          <ImageHolder image={'/Images/PaymentImages/OnlineMoney.svg'}/>
         </div>
         {/* row-4 ends here */}
 

@@ -795,7 +795,7 @@ const cookieState =  localStorage.getItem("cookieAccepted")
           <div className="flex items-center w-full gap-[9%]">
             <img
               className="w-[28%] h-[80px] lg:w-[40%] lg:h-[120px]"
-              src="./Images/telecom.avif"
+              src="/Images/telecom.avif"
               alt="/"
             />
             <div className="flex flex-col gap-[10px]">
@@ -815,7 +815,7 @@ const cookieState =  localStorage.getItem("cookieAccepted")
                 <Link className="bg-[#04177f] text-[14px] md:p-[3%]
                  font-bold py-[16px] md:w-[35%] w-full rounded-md
              text-[#ffffff] text-center lg:text-[14px] lg:leading-[20px]"
-              to="/our-services/telecoms">Learn More</Link>
+              to="/telecoms">Learn More</Link>
               </div>
               </div>
 
@@ -825,7 +825,7 @@ const cookieState =  localStorage.getItem("cookieAccepted")
           <div className="flex items-center w-full gap-[9%]">
             <img
               className="w-[34%] h-[75px] lg:w-[30%] lg:h-[90px]"
-              src="./Images/payment.avif"
+              src="/Images/payment.avif"
               alt="/"
             />
             <div className="flex flex-col gap-[10px]">
@@ -844,7 +844,7 @@ const cookieState =  localStorage.getItem("cookieAccepted")
                 <Link className="bg-[#04177f] text-[14px] md:p-[3%]
                  font-bold py-[16px] md:w-[35%] w-full rounded-md
              text-[#ffffff] text-center lg:text-[14px] lg:leading-[20px]"
-              to="/our-services/payment">Learn More</Link>
+              to="/payment">Learn More</Link>
               
             </div>
           </div>
@@ -858,7 +858,7 @@ const cookieState =  localStorage.getItem("cookieAccepted")
           <div  className="flex items-center w-full gap-[9%]">
             <img
               className="w-[30%] h-[55px] lg:w-[30%] lg:h-[90px]"
-              src="./Images/cardissuing.avif"
+              src="/Images/cardissuing.avif"
               alt="/"
             />
             <div>
@@ -888,7 +888,7 @@ const cookieState =  localStorage.getItem("cookieAccepted")
           <div className="flex items-center w-full gap-[9%]">
             <img
               className="w-[28%] h-[80px] lg:w-[40%] lg:h-[120px]"
-              src="./Images/digital.avif"
+              src="/Images/digital.avif"
               alt="/"
             />
             <div className="flex flex-col gap-[10px]">
@@ -918,7 +918,7 @@ const cookieState =  localStorage.getItem("cookieAccepted")
             <div className="flex items-center w-full gap-[9%]">
             <img
               className="w-[28%] h-[80px] md:h-[60px] lg:w-[30%] lg:h-[90px]"
-              src="./Images/VTU.avif"
+              src="/Images/VTU.avif"
               alt="/"
             />
             <div className="flex flex-col gap-[10px]">
@@ -947,7 +947,7 @@ const cookieState =  localStorage.getItem("cookieAccepted")
           <div className="flex items-center w-full gap-[9%]">
             <img
               className="w-[28%] h-[80px] lg:w-[30%] lg:h-[90px]"
-              src="./Images/Business.avif"
+              src="/Images/Business.avif"
               alt="/"
             />
             <div className="flex flex-col gap-[10px]">
@@ -1117,7 +1117,7 @@ const cookieState =  localStorage.getItem("cookieAccepted")
                 With just a few clicks. Never run out of airtime. Simply top up
                 your phone online from the comfort of your home.
               </div>
-              <Link to="/our-services/telecoms">
+              <Link to="/telecoms">
                 <div className="bg-[#04177f] w-[30%] text-[9px] mt-[10%] text-[#ffffff] p-[3%] text-center rounded-md lg:text-[14px] lg:font-bold lg:w-[50%] lg:p-[4%] lg:rounded-lg">
                   Buy Now
                 </div>
@@ -1133,7 +1133,7 @@ const cookieState =  localStorage.getItem("cookieAccepted")
                 Our Data Bundles service has got you covered with flexible plans
                 to suit your needs and stream like never before!
               </div>
-              <Link to="/our-services/telecoms">
+              <Link to="/telecoms">
                 <div className="bg-[#04177f] w-[30%] text-[9px] mt-[10%] text-[#ffffff] p-[3%] text-center rounded-md lg:text-[14px] lg:font-bold lg:w-[50%] lg:p-[4%] lg:rounded-lg">
                   Buy Now
                 </div>
@@ -1151,7 +1151,7 @@ const cookieState =  localStorage.getItem("cookieAccepted")
                 With our Education Pins service, you can access your exam
                 results in just a few clicks.
               </div>
-              <Link to="/our-services/telecoms">
+              <Link to="/telecoms">
                 <div className="bg-[#04177f] w-[30%] text-[9px] mt-[10%] text-[#ffffff] p-[3%] text-center rounded-md lg:text-[14px] lg:font-bold lg:w-[50%] lg:p-[4%] lg:rounded-lg">
                   Buy Now
                 </div>
@@ -1170,7 +1170,7 @@ const cookieState =  localStorage.getItem("cookieAccepted")
                 Enjoy unlimited streaming on multiple channels. Sign up now and
                 never miss your favorite show again!
               </div>
-              <Link to="/our-services/telecoms">
+              <Link to="/telecoms">
                 <div className="bg-[#04177f] w-[30%] text-[9px] mt-[10%] text-[#ffffff] p-[3%] text-center rounded-md lg:text-[14px] lg:font-bold lg:w-[50%] lg:p-[4%] lg:rounded-lg">
                   Buy Now
                 </div>
@@ -1188,7 +1188,7 @@ const cookieState =  localStorage.getItem("cookieAccepted")
                 Keep track of your bills and make sure you never miss a payment.
                 Try our bills payment service right away to make life easier.
               </div>
-              <Link to="/our-services/telecoms">
+              <Link to="/telecoms">
                 <div className="bg-[#04177f] w-[30%] text-[9px] mt-[10%] text-[#ffffff] p-[3%] text-center rounded-md lg:text-[14px] lg:font-bold lg:w-[50%] lg:p-[4%] lg:rounded-lg">
                   Buy Now
                 </div>
@@ -1206,7 +1206,7 @@ const cookieState =  localStorage.getItem("cookieAccepted")
                 You can quickly convert your bulk airtime to get cash to your
                 wallet or bank account in just few minutes.
               </div>
-              <Link to="/our-services/telecoms">
+              <Link to="/telecoms">
                 <div className="bg-[#04177f] w-[30%] text-[9px] mt-[10%] text-[#ffffff] p-[3%] text-center rounded-md lg:text-[14px] lg:font-bold lg:w-[50%] lg:p-[4%] lg:rounded-lg">
                   Buy Now
                 </div>
@@ -1224,7 +1224,7 @@ const cookieState =  localStorage.getItem("cookieAccepted")
                 Try our bulk SMS service now and take your communication to the
                 next level.
               </div>
-              <Link to="/our-services/telecoms">
+              <Link to="/telecoms">
                 <div className="bg-[#04177f] w-[30%] text-[9px] mt-[10%] text-[#ffffff] p-[3%] text-center rounded-md lg:text-[14px] lg:font-bold lg:w-[50%] lg:p-[4%] lg:rounded-lg">
                   Buy Now
                 </div>
@@ -1242,7 +1242,7 @@ const cookieState =  localStorage.getItem("cookieAccepted")
                 Try our RCP service today, print recharge cards with your
                 business name and make a resell without any hassle.
               </div>
-              <Link to="/our-services/telecoms">
+              <Link to="/telecoms">
                 <div className="bg-[#04177f] w-[30%] text-[9px] mt-[10%] text-[#ffffff] p-[3%] text-center rounded-md lg:text-[14px] lg:font-bold lg:w-[50%] lg:p-[4%] lg:rounded-lg">
                   Buy Now
                 </div>
@@ -1297,7 +1297,7 @@ const cookieState =  localStorage.getItem("cookieAccepted")
                 You can conveniently store, send, and receive money without any
                 hassle by using our user-friendly wallet system.
               </div>
-              <Link to="/our-services/payment">
+              <Link to="/payment">
                 <div className="bg-[#04177f] w-[30%] text-[9px] mt-[10%] text-[#ffffff] p-[3%] text-center rounded-md lg:text-[14px] lg:font-bold lg:w-[50%] lg:p-[4%] lg:rounded-lg">
                   Explore
                 </div>
@@ -1314,7 +1314,7 @@ const cookieState =  localStorage.getItem("cookieAccepted")
                 Try our global virtual accounts services today and experience
                 hassle-free banking at your fingertips.
               </div>
-              <Link to="/our-services/payment">
+              <Link to="/payment">
                 <div className="bg-[#04177f] w-[30%] text-[9px] mt-[10%] text-[#ffffff] p-[3%] text-center rounded-md lg:text-[14px] lg:font-bold lg:w-[50%] lg:p-[4%] lg:rounded-lg">
                   Explore
                 </div>
@@ -1329,7 +1329,7 @@ const cookieState =  localStorage.getItem("cookieAccepted")
                 Whether you're shopping online or in-store, our card payment
                 solutions offer fast and hassle-free transactions.
               </div>
-              <Link to="/our-services/payment">
+              <Link to="/payment">
                 <div className="bg-[#04177f] w-[30%] text-[9px] mt-[10%] text-[#ffffff] p-[3%] text-center rounded-md lg:text-[14px] lg:font-bold lg:w-[50%] lg:p-[4%] lg:rounded-lg">
                   Explore
                 </div>
@@ -1346,7 +1346,7 @@ const cookieState =  localStorage.getItem("cookieAccepted")
                 With our dependable money transfer services, you can send and
                 receive money without any hassle.
               </div>
-              <Link to="/our-services/payment">
+              <Link to="/payment">
                 <div className="bg-[#04177f] w-[30%] text-[9px] mt-[10%] text-[#ffffff] p-[3%] text-center rounded-md lg:text-[14px] lg:font-bold lg:w-[50%] lg:p-[4%] lg:rounded-lg">
                   Explore
                 </div>
@@ -1363,7 +1363,7 @@ const cookieState =  localStorage.getItem("cookieAccepted")
                 With our international payment structure, you can send and
                 receive money from anywhere in the world.
               </div>
-              <Link to="/our-services/payment">
+              <Link to="/payment">
                 <div className="bg-[#04177f] w-[30%] text-[9px] mt-[10%] text-[#ffffff] p-[3%] text-center rounded-md lg:text-[14px] lg:font-bold lg:w-[50%] lg:p-[4%] lg:rounded-lg">
                   Explore
                 </div>

@@ -68,14 +68,14 @@ const pathname = location?.pathname === "/DigitalServices"
           {" "}
           <img
             className="w-[85px] h-[18px]"
-            src="./Images/aremxy2.avif"
+            src="/Images/aremxy2.avif"
             alt="/aremxyplug"
           />
         </Link>
         <img
           onClick={() => setNavOpen((prev) => !prev)}
           className="w-[30px] h-[17px]"
-          src="./Images/aremxyNav.png"
+          src="/Images/aremxyNav.png"
           alt="/aremxyplug"
         />
       </div>

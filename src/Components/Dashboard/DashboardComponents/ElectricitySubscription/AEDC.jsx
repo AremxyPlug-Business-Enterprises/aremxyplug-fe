@@ -133,7 +133,6 @@ const AEDC = () => {
     setAedcWalletBalance,
     aedcPaymentResult,
     setAedcPaymentResult,
-
     newBalance,
     setNewBalance,
     authenticationOpen,

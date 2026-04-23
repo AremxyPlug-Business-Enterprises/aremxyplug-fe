@@ -79,7 +79,8 @@ const Data = GetLocalStorage();
     setPurchaseStarTimesErrorType,
     setNetworkIssue,
     networkIssue,
-    setSessionModal, sessionModal
+    setSessionModal, sessionModal,
+    starTimesCardName
     } = useContext(ContextProvider);
       
 
@@ -408,6 +409,7 @@ const VerifyPinHandler = async () => {
         email: starTimesEmail,
         amount: starTimesAmount,
         phone: starTimesMobileNumber,
+        card_name : starTimesCardName
       };
       const Path = "bills/tvsub";
       const successHandler = (response) =>{

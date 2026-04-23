@@ -23,7 +23,7 @@ import { GetFunction } from "../ApiCollection.jsx/ApiBuck";
 const SelectRecipient = ({loadingRecipient,
    setSelectRecipientDisplay, setDiscountLoader}) => {
 
-  const { networkIssue, setNetworkIssue, setSessionModal,  setDiscount, recipientsAirtime, setRecipientsAirtime,
+  const { networkIssue, setNetworkIssue, setAlertCustom, setSessionModal,  setDiscount, recipientsAirtime, setRecipientsAirtime,
     sessionModal, isDarkMode } = useContext(ContextProvider);
   const { toggleSideBar } = useContext(ContextProvider);
   const { networkName, setNetworkName } = useContext(ContextProvider);
@@ -106,9 +106,17 @@ const [confirmRecipient, setConfirmRecipient] = useState(false)
       }else if (error && error?.response?.status === 404){
      return;
     }else if(error && error?.response?.status ===500){
-      alert("An internal Server error")
+       setAlertCustom({
+            message : "Recipient Update failed due to an error",
+            type : "error",
+            show : true
+           })
     }else {
-      alert("An unexpected error has occured.")
+        setAlertCustom({
+            message : "Failed to save the recipient",
+            type : "error",
+            show : true
+           })
     }
     }finally{
       setConfirmRecipient(false)
@@ -146,9 +154,17 @@ const [confirmRecipient, setConfirmRecipient] = useState(false)
       }else if (error && error?.response?.status === 404){
      return;
     }else if(error && error?.response?.status ===500){
-      alert("An internal Server error")
+        setAlertCustom({
+            message : "Recipient Failed to DELETE due to an error",
+            type : "error",
+            show : true
+           })
     }else {
-      alert("An unexpected error has occured.")
+        setAlertCustom({
+            message : "An Unexpected error has occured",
+            type : "error",
+            show : true
+           })
     }
      
     }finally{

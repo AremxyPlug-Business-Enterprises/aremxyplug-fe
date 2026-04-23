@@ -40,12 +40,13 @@ export const StarTimesReceipt= (Data) => {
   starTimesSubscriptionResponse,
   starTimesFlagResult,
   purchaseStarTimesErrorType,
-  starTimesCardName
  } =
     useContext(ContextProvider);
 
   const contentRef = useRef(null);
-
+const fullName = starTimesSubscriptionResponse?.data 
+? starTimesSubscriptionResponse?.data?.full_name : "";
+ const cardName = starTimesSubscriptionResponse?.data?.card_name  ? starTimesSubscriptionResponse?.data?.card_name : "";
   // ===============Copy to Clipboard Function============
   const handleCopyClick = () => {
     const text = textRef.current.innerText;
@@ -266,7 +267,7 @@ export const StarTimesReceipt= (Data) => {
                  mx-auto justify-between 
                  lg:text-[16px]">
                   <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Card Name</p>
-                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{starTimesCardName}</span>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{cardName}</span>
                 </div>
                 <div className="flex text-[10px] font-[500] md:text-[14px] w-[90%]
                  mx-auto justify-between 
@@ -307,7 +308,7 @@ export const StarTimesReceipt= (Data) => {
                  mx-auto justify-between 
                  lg:text-[16px]">
                   <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Customer Name</p>
-                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{Data?.aremxyUsername ? Data?.aremxyUsername : ""}</span>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{fullName}</span>
                 </div>
                 <div className="flex text-[10px] font-[500] md:text-[14px] w-[90%]
                  mx-auto justify-between 

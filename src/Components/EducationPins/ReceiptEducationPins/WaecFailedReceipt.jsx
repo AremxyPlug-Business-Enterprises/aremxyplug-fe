@@ -7,7 +7,6 @@ import { Link, useNavigate } from "react-router-dom";
 import jsPDF from "jspdf";
 import AremxyPlugIcon from "../imagesEducation/AremxyPlug.svg";
 import html2canvas from "html2canvas";
-import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 export const WaecFailedReceipt = () => {
     const navigate = useNavigate();
   const {
@@ -30,7 +29,7 @@ export const WaecFailedReceipt = () => {
     setWaecTransactionId,
     waecShowDescription,
     setWaecShowDescription,
-    // waecFullName,
+     waecFullName,
     setWaecFullName,
     waecTransactionProduct,
     setWaecTransactionProduct,
@@ -41,7 +40,7 @@ export const WaecFailedReceipt = () => {
   } = useContext(ContextProvider);
 
   const { toggleSideBar, isDarkMode, date } = useContext(ContextProvider);
-  const data = GetLocalStorage()
+
 
   const contentRef = useRef(null);
 
@@ -50,7 +49,7 @@ export const WaecFailedReceipt = () => {
   const description =
     waecShowDescription?.length > 0 ? waecShowDescription : "";
   const pins_generated = waecPinsGenerated?.length > 0 ? waecPinsGenerated : "";
-  // const fullName = waecFullName?.length > 0 ? waecFullName : "";
+   const fullName = waecFullName?.length > 0 ? waecFullName : "";
   const transaction_product =
     waecTransactionProduct?.length > 0 ? waecTransactionProduct : "";
 
@@ -327,8 +326,8 @@ export const WaecFailedReceipt = () => {
                   <span
                     className={` ${isDarkMode ? "text-white" : "text-black "}`}
                   >
-                    {/* {fullName} */}
-                    {data?.aremxyUsername ? data?.aremxyUsername:""}
+                    {fullName} 
+                  
                   </span>
                 </div>
                 <div className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between  lg:text-base font-medium">

@@ -9,7 +9,7 @@ import html2canvas from "html2canvas";
 import { ContextProvider } from "../../../../src/Components/Context";
 
 export const SuccessfulReceipt = (receipt) => {
-  const { toggleSideBar, textRef, amtToTransfer, isDarkMode, date } =
+  const { toggleSideBar, textRef, amtToTransfer, isDarkMode, date, setAlertCustom } =
     useContext(ContextProvider);
 
   const contentRef = useRef(null);
@@ -20,10 +20,18 @@ export const SuccessfulReceipt = (receipt) => {
     navigator.clipboard
       .writeText(text)
       .then(() => {
-        alert("Copied to clipboard");
+        setAlertCustom({
+            message : "Copied to ClipBoard",
+            type : "success",
+            show : true
+          })
       })
       .catch((err) => {
-        console.error("Error copying text: ", err);
+         setAlertCustom({
+            message : "Copy failed",
+            type : "error",
+            show : true
+          })
       });
   };
 

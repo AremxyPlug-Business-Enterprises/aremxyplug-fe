@@ -13,6 +13,7 @@ import { CheckVirtualAcc, PostFunction, refreshToken } from "../ApiCollection.js
 import VerificationSuccess from "../My Profile & Account Settings/ProfileImages/user-tick.svg";
 import NotVerifiedImage from "../My Profile & Account Settings/ProfileImages/NotVerifiedIcon.svg";
 import { SetLocalStorage } from "../LocalStorage/LocalStorage";
+import { UnverifiedSignUp } from "../ApiCollection.jsx/ApiBuck";
 //import { GetLocalStorage } from "../LocalStorage/LocalStorage";
 
 function LoginPopUp() {
@@ -44,7 +45,8 @@ function LoginPopUp() {
     setBvnVerifyImage,
     setIdNumber,
     setBvnNumber,
-    setNetworkIssue
+    setNetworkIssue,
+    unverifiedSignupInfo, setAlertCustom
   } = useContext(ContextProvider);
 
   const { email, phone } = customerDetail;
@@ -69,6 +71,12 @@ function LoginPopUp() {
   //THIS FUNCTION IS TO DERIVE THE OTP FROM THE BACKEND
   const gettingOtpFunction = async (url, body) => {
     setLoading(true);
+    if(!navigator.onLine) return setAlertCustom({
+      message : "Check your internet connection",
+      type : "error",
+      show : true
+    })
+    if(navigator.onLine){
     try {
       const response = await axios.post(url, body);
 
@@ -77,28 +85,51 @@ function LoginPopUp() {
         response.headers.hasAuthorization
       ) {
         twoStepVerificationHandler();
-        alert("An Otp has been sent to you");
-      } else if (!response.status) {
-        alert("Check your network connection");
-      }
+      setAlertCustom({
+        message : "An Otp has been sent to you",
+        type : "success",
+        show : true
+      })
+      } 
     } catch (error) {
-      if (error && error.response === undefined) {
-        alert("Check your internet connection.");
-      } else if (error.response && error.response.status === 401) {
-        alert("You were timed out")
+      if (error && error?.response === undefined) {
+          setAlertCustom({
+        message : "Your internet connection is quite unstable",
+        type : "error",
+        show : true
+      })
+      } else if (error?.response && error?.response?.status === 401) {
+          setAlertCustom({
+        message : "You were timed out.",
+        type : "error",
+        show : true
+      })
          setOpen2StepVerification(false)
       } else if (error.response.status === 404) {
-        alert(`ERROR: Not Found`);
+           setAlertCustom({
+        message : "User error",
+        type : "error",
+        show : true
+      })
       } else if (error.response && error.response.status === 500) {
-        alert(`SERVER ERROR`);
+          setAlertCustom({
+        message : "SERVER_ERROR",
+        type : "error",
+        show : true
+      })
       } else {
-        alert("Check your network connection");
+         setAlertCustom({
+        message : "An Unexpected error has ioccured",
+        type : "error",
+        show : true
+      })
       }
     } finally {
       setLoading(false);
       setCountdown2(60);
       setCountdown(60);
     }
+  }
   };
 
   // Function to help store get the url and send-otp type
@@ -120,8 +151,20 @@ function LoginPopUp() {
       };
       url = "https://api.aremxyplug.com/api/v1/send-otp/signin";
     }
-    if (!navigator.onLine) return alert("Check your internet connection");
-    if(paramSmsOrEmail === undefined) alert("Select medium to receive your otp")
+    if (!navigator.onLine) {
+         setAlertCustom({
+        message : "Check your internet connection",
+        type : "error",
+        show : true
+      })
+    }
+    if(paramSmsOrEmail === undefined) {
+         setAlertCustom({
+        message : "Select Channel to get Otp",
+        type : "error",
+        show : true
+      })
+    }
     if (navigator.onLine && paramSmsOrEmail !== undefined) {
       await gettingOtpFunction(url, body);
     }
@@ -255,14 +298,34 @@ function LoginPopUp() {
             }
           }
         } else if (error && error.response.status === 404) {
-          alert("Network Error:, Please Check your Connection and try again");
+          setAlertCustom({
+        message : "User error",
+        type : "error",
+        show : true
+      })
+        setTimeout(()=> {
+           setOpen2StepOTP(false)
+         }, 5000)
         } else if (error && error.response.status === 401) {
         setTwoStepVerificationSuccess(false);
         } else if (error.response.status === 500) {
-          alert('An error occured while trying to confirm your details');
-         return window.location.href = "/Login";
+             setAlertCustom({
+        message : "An error occured while confirming your details",
+        type : "error",
+        show : true
+      })
+         setTimeout(()=> {
+           setOpen2StepOTP(false)
+         }, 5000)
         } else {
-          alert("Check your internet connection and try logging in again.");
+            setAlertCustom({
+        message : "An  Unexpected error has occured",
+        type : "error",
+        show : true
+      })
+        setTimeout(()=> {
+           setOpen2StepOTP(false)
+         }, 5000)
           //Create a pop up to assist the user into navigating back to the login page.
         }
       } finally {
@@ -340,7 +403,8 @@ return assignImageByUsername
       twoStepVerificationSuccess,
       setTwoStepVerificationSuccess,
       ConfirmVirtualState,
-      setNetworkIssue
+      setNetworkIssue,
+      setAlertCustom
     );
     if (CheckVirtualAcc) {
      SessionTiming();
@@ -353,7 +417,6 @@ return assignImageByUsername
     
     }
   };
-
   // THE FUNCTION FOR DERIVING THE GET OPT METHOD
   const gettingSmsOrEmailFunctionOtp = async (url, body) => {
     if (smsOrEmail === "email") {
@@ -386,7 +449,11 @@ return assignImageByUsername
       }
     } catch (error) {
       if (error && error.response === undefined) {
-        alert("Check your network connection");
+        setAlertCustom({
+          message : "Your internet Connection is quite unstable",
+          type : "error",
+          show : true
+        })
       } else if (error && error.response.status === 400) {
         setVerificationPinError(true);
         setOtp3("");
@@ -399,9 +466,17 @@ return assignImageByUsername
         setOpen2StepOTP(false)
       } else if (error.response && error.response.status === 500) {
         setOtp3("");
-        alert("SERVER ERROR");
+           setAlertCustom({
+        message : "SERVER_ERROR",
+        type : "error",
+        show : true
+      })
       } else {
-        alert("Check your network connection");
+         setAlertCustom({
+        message : "An unexpected error has occured",
+        type : "error",
+        show : true
+      })
       }
     } finally {
       setLoading(false);
@@ -480,7 +555,8 @@ return assignImageByUsername
     setOpenTranspinSuccessful(false);
      UserIconFormatting();
     SessionTiming();
-    if (customerDetail) {
+      const { email, full_name, phone, username, id } = customerDetail;
+    if (email && full_name && phone && username && id) {
       const { email, full_name, phone, username, id } = customerDetail;
       const bank_name = "";
       const account_name = "";
@@ -501,6 +577,12 @@ return assignImageByUsername
         setBvnNumber("");
         setIdNumber("");
       }
+    }else{
+      setAlertCustom({
+        message : "failed to retrieve your details",
+        type : "error",
+        show : true
+      })
     }
   };
 
@@ -519,16 +601,44 @@ return assignImageByUsername
    PinSuccessFlow();
    }, async(ErrorType)=> {
    if(ErrorType === "Bad request"){
-  alert(`Please check your internet connection`);
+  setAlertCustom({
+    message : "An Unexpected error had occured",
+    type : "error",
+    show : true
+  })
    }else if(ErrorType === "Server error"){
-   alert("Server error")
+   setAlertCustom({
+    message : "SERVER_ERROR",
+    type : "error",
+    show : true
+  })
    }else if(ErrorType === "unauthorised"){
-    alert("We lost connection with you over long period deciding your pin.")
+   setAlertCustom({
+    message : "We lost connection with you over long period of deciding your transaction pin",
+    type : "error",
+    show : true
+  })
       setOpenTranspin(false);
-   }else if(ErrorType === "User error" || ErrorType === "Network error"){
-    alert("Kindly check your internet connection.")
+   }else if(ErrorType === "Network error"){
+    setAlertCustom({
+    message : "Your internet connection is quite unstable",
+    type : "error",
+    show : true
+  })
+   }else if(ErrorType === "User error"){
+    setAlertCustom({
+    message : "User error",
+    type : "error",
+    show : true
+  })
    }else{
-    alert("Unexpected error has occured")
+    
+    setAlertCustom({
+    message : "An unexpected error has occured",
+    type : "error",
+    show : true
+  })
+  
    }
    }, ()=> {}, setNetworkIssue)
   };
@@ -660,7 +770,8 @@ return assignImageByUsername
             <p className="lg:text-[16px] text-[12.167px] font-[600] text-[#000] mb-[30px] text-center">
               Create your transaction pin to continue operations!
             </p>
-            <p className="lg:text-[16px] font-[600] text-[9.167px] text-[#000] my-4 text-center">
+            <p className="lg:text-[16px] font-bold 
+            text-[14.167px] leading-[30px]  text-[#000] my-4 text-center">
               Input pin
             </p>
 
@@ -716,7 +827,8 @@ return assignImageByUsername
             </div>
             {/* TRANSACTION CONFIRM PIN ENDS HERE */}
             {transpinError.length > 0 ? (
-              <p className="text-center text-red-500 lg:text-[16px] text-[9.167px] mt-[3px] mb-[-10px] lg:mb-[-15px] lg:mt-[15px]">
+              <p className="text-center font-bold leading-[16px] lg:leading-[22px] text-red-500 lg:text-[16px] 
+              text-[12.167px] mt-[3px] mb-[-10px] lg:mb-[-15px] lg:mt-[15px]">
                 {transpinError}
               </p>
             ) : (
@@ -1133,6 +1245,10 @@ text-[10px] font-bold leading-[11.31px] w-full md:w-[300px] px-[25px] py-5 round
         <Modal>
           <Loader />
         </Modal>
+      )}
+
+      {unverifiedSignupInfo && (
+       <UnverifiedSignUp/>
       )}
     </div>
   );

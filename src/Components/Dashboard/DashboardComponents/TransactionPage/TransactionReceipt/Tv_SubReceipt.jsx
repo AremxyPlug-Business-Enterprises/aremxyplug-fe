@@ -6,14 +6,13 @@ import styles from "../../../DashboardComponents/TransferComponent/transfer.modu
 import { Link, useNavigate } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-import { GetLocalStorage } from "../../../../LocalStorage/LocalStorage";
 import { ContextProvider } from "../../../../Context";
 import { DashBoardLayout } from "../../../Layout/DashBoardLayout";
 import { formatDate } from "./ElectricityReceipt";
 
 export const TvSubReceipt = () => {
   const navigate = useNavigate();
-  const data = GetLocalStorage();
+  
   const {
     toggleSideBar,
     textRef,
@@ -45,8 +44,9 @@ export const TvSubReceipt = () => {
       : "";
   const transaction_id =
     receiptData?.transaction_id?.length > 0 ? receiptData?.transaction_id : "";
-  const full_name =
+  const fullName =
     receiptData?.full_name?.length > 0 ? receiptData?.full_name : "";
+    const CardName = receiptData?.card_name?.length ? receiptData?.card_name : "";
   // ===============Copy to Clipboard Function============
   const handleCopyClick = () => {
     const text = textRef.current.innerText;
@@ -340,7 +340,7 @@ export const TvSubReceipt = () => {
                     <span
                       className={` ${isDarkMode ? "text-white" : "text-black"}`}
                     >
-                      {full_name}
+                      {CardName}
                     </span>
                   </div>
                   <div
@@ -431,7 +431,7 @@ export const TvSubReceipt = () => {
                     <span
                       className={` ${isDarkMode ? "text-white" : "text-black"}`}
                     >
-                      {data?.aremxyUsername ? data.aremxyUsername : ""}
+                      {fullName}
                     </span>
                   </div>
                   <div className="flex text-[10px] font-medium md:text-sm w-[90%] mx-auto justify-between lg:text-base">

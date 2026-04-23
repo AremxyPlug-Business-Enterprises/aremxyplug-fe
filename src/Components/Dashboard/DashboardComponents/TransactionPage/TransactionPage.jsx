@@ -36,8 +36,7 @@ const TransactionPage = () => {
     setCurrentDateInTimeStamps,
     editCalenderOne,editCalenderTwo, setCountCalender,
     setNetworkIssue,
-    networkIssue
-    
+    networkIssue,
    
   } = useContext(ContextProvider);
 

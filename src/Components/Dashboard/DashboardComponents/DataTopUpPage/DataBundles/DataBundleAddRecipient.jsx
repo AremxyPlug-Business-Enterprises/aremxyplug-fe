@@ -13,7 +13,7 @@ import styles from "../../DataTopUpPage/DataTopUp.css";
 import { BalanceLoading } from "../../../../Loader/Loader";
 //import { DataBundleSelectRecipient } from "./DataBundleSelectRecipient";
 const DataBundleAddRecipient = () => {
-  const { networkName, setNetworkName, networkIssue, setNetworkIssue, 
+  const { networkName, setNetworkName, networkIssue, setAlertCustom, setNetworkIssue, 
     setSessionModal, sessionModal,  setDataRecipientDisplay } = useContext(ContextProvider);
   const { recipientName, setRecipientName } = useContext(ContextProvider);
   const { recipientNumber, setRecipientNumber } = useContext(ContextProvider);
@@ -183,12 +183,15 @@ const DataBundleAddRecipient = () => {
   }else if(error && error.status === 500){
   
 if(error?.response?.data?.phone){
-      alert(`${error.response?.data?.phone}`)
-}
-alert("Internal server error")
+      setAlertCustom({
+     message : `Failed to add recipient Phone Number: ${error.response?.data?.phone}`,
+     type : "error",
+     show : true
+      })
+
   }
       setErrors({ network: "Network error, please try again later." });
-    } finally {
+    } }finally {
       setIsLoading(false);
     }
   };

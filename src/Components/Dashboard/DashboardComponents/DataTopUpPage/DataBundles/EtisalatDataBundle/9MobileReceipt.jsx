@@ -7,12 +7,12 @@ import styles from '../../../../../AirTimePage/AirtimeVtu.module.css'
 import { ContextProvider } from "../../../../../Context";
 import { useLocation } from 'react-router-dom';
 import { DashBoardLayout } from "../../../../Layout/DashBoardLayout";
-import { GetLocalStorage } from "../../../../../LocalStorage/LocalStorage";
-
-
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const EtisalatReceipt = (Data) => {
-  Data = GetLocalStorage();
+  const navigate = useNavigate()
+  
   const location = useLocation()
   const { 
     selectedOption, 
@@ -33,15 +33,24 @@ export const EtisalatReceipt = (Data) => {
     setRecipientNamesEtisalat,
   setWalletNameEtisalat,
   setRecipientPhoneNumberEtisalat,
-  etisalatReceiptInfo
+  etisalatReceiptInfo,
+  etisalatSuccessfulResponse,
+  setAlertCustom
     // recipientNames,
    
    } =
     useContext(ContextProvider);
 
   const contentRef = useRef(null);
-
+  const fullName = etisalatSuccessfulResponse?.full_name?.length ?
+  etisalatSuccessfulResponse?.full_name : ""
  
+
+  useEffect(()=> {
+    if(!etisalatSuccessfulResponse?.full_name){
+      navigate(-1)
+    }
+  })
 
   // ==============Share pdf Function=============
   const handleShareClick = async() => {
@@ -78,10 +87,18 @@ export const EtisalatReceipt = (Data) => {
           .then(() => {return;})
           .catch((error) => {return;});
       }else{
-      alert("Sharing this pdf isn't supported in your browser.")
+       setAlertCustom({
+        message : "Sharing this recipient isnot supported in yur browser",
+        type : "error",
+        show : true
+      })
       }
     }catch(error){
-     alert(error)
+      setAlertCustom({
+        message : "Error sharing this PDF",
+        type : "error",
+        show : true
+      })
     }
       }
     };
@@ -220,7 +237,7 @@ export const EtisalatReceipt = (Data) => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Customer Name</p>
-                  <span>{Data.aremxyUsername}</span>
+                  <span>{fullName}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Wallet Type</p>

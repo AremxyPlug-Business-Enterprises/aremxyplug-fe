@@ -1,5 +1,5 @@
 import React from "react";
-import { useContext, useRef } from "react";
+import { useContext, useRef, useEffect } from "react";
 import { ContextProvider } from '../../../../../Context';
 import { DashBoardLayout } from '../../../../Layout/DashBoardLayout';
 import { Link } from "react-router-dom";
@@ -8,7 +8,7 @@ import styles from "../../../TransferComponent/transfer.module.css";
 import html2canvas from "html2canvas";
 import { useLocation } from 'react-router-dom';
 import { GetLocalStorage } from "../../../../../LocalStorage/LocalStorage";
-
+import {useNavigate} from "react-router-dom"
 
 export const AirtelReceipt = (Data) => { 
 Data = GetLocalStorage()
@@ -42,7 +42,18 @@ Data = GetLocalStorage()
     setSelectedAmountAirtel,
     setRecipientNamesAirtel,
   setWalletNameAirtel,
-  setRecipientPhoneNumberAirtel } =  useContext(ContextProvider);  
+  setRecipientPhoneNumberAirtel,
+airtelSuccessfulResponse, setAlertCustom } =  useContext(ContextProvider);  
+
+const fullName = airtelSuccessfulResponse?.full_name?.length ? 
+airtelSuccessfulResponse?.full_name : ""
+
+const navigate = useNavigate()
+useEffect(()=> {
+  if(!airtelSuccessfulResponse?.full_name){
+    navigate(-1)
+  }
+})
 
   const contentRef = useRef(null);
 
@@ -96,10 +107,18 @@ Data = GetLocalStorage()
           .then(() => {return;})
           .catch((error) => {return;});
       }else{
-      alert("Sharing this pdf isn't supported in your browser.")
+      setAlertCustom({
+        message : "Sharing this recipient isnot supported in yur browser",
+        type : "error",
+        show : true
+      })
       }
     }catch(error){
-     alert(error)
+      setAlertCustom({
+        message : "Error Sharing this PDF",
+        type : "error",
+        show : true
+      })
     }
       }
     };
@@ -234,7 +253,7 @@ Data = GetLocalStorage()
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Customer Name</p>
-                  <span>{Data.aremxyUsername}</span>
+                  <span>{fullName}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Wallet Type</p>
