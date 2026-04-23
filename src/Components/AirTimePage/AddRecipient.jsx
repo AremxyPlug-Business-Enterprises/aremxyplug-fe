@@ -15,7 +15,7 @@ import { BalanceLoading } from '../Loader/Loader';
 
 const AddRecipient = () => {
 
-    const { networkName, setNetworkName,  setSelectRecipientDisplay  } = useContext(ContextProvider);
+    const { networkName, setNetworkName, setAlertCustom, setSelectRecipientDisplay  } = useContext(ContextProvider);
     const { recipientName, setRecipientName } = useContext(ContextProvider);
     const { recipientNumber, setRecipientNumber } = useContext(ContextProvider);
     const { networkImage, setNetworkImage, setSessionModal, sessionModal, networkIssue, setNetworkIssue } = useContext(ContextProvider);
@@ -179,7 +179,11 @@ const setFetchedResponse = ()=> {
        await PostFunction("airtime/recipient",
        setLoadingRecipient, 
         body, ()=> {
-        alert("Saved Recipients Successfully.");
+       setAlertCustom({
+        message : "recipient saved successfully",
+        type : "error",
+        show : true
+       });
         setSave(false);
         setConfirm(true);
         setSelected("");
@@ -194,10 +198,18 @@ const setFetchedResponse = ()=> {
            if(networkIssue) return;
            if(!networkIssue) return setNetworkIssue(true)
           }else if(ErrorType === "Server error"){
-          alert("Unable to save recipients try again later.");
+          setAlertCustom({
+            message : "Unable to save recipient try again later",
+            type : "error",
+            show : true
+          })
           setSave(false)
           }else {
-            alert("Unable to save recipients try again later.")
+            setAlertCustom({
+            message : "An Unexpected error has occured",
+            type : "error",
+            show : true
+          })
           }
        }, setFetchedResponse, setNetworkIssue)
     };

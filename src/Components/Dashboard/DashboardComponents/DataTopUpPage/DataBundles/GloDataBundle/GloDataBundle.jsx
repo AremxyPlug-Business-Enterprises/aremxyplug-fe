@@ -64,7 +64,8 @@ const GloDataBundle = () => {
      setGloPurchaseErrorType,
      sessionModal,
      setSessionModal,
-      setRecipientsData, recipientsData
+      setRecipientsData, recipientsData,
+      gloSuccessfulResponse, setGloSuccessfulResponse
   } = useContext(ContextProvider);
 
   const [showProductList, setShowProductList] = useState(false);
@@ -77,7 +78,7 @@ const GloDataBundle = () => {
   const [image, setImage] = useState("");
   const [paymentAmount, setPaymentAmount] = useState("");
   const [codes, setCodes] = useState(false);
-  const [plan, setPlan] = useState("");
+ // const [plan, setPlan] = useState("");
   const [loading, setLoading] = useState(false);
   const [glotransactionID, setGloTransactionID] = useState("");
   const [gloorderID, setGloOrderID] = useState("");
@@ -97,7 +98,6 @@ const GloDataBundle = () => {
   const [checkNetworkError, setCheckNetworkError] = useState(false);
   const [restrictUser, setRestrictUser] = useState(false)
   const [balanceLoader, setBalanceLoader] = useState(false)
-const [gloSuccessfulResponse, setGloSuccessfulResponse] = useState({})
 const [loadingRecipient, setLoadingRecipient] = useState(false);
 const [isLoading, setIsLoading] = useState(false);
  const [dataRecipientDisplay, setDataRecipientDisplay] = useState(false)
@@ -189,13 +189,13 @@ const Balance = newBalance !== null &&
       }
     } catch (error) {
       console.error("Error fetching plans:", error);
-      if (error && error.response === undefined) {
+      if (error && error?.response === undefined) {
         if(!networkIssue) return setNetworkIssue(true)    
-      } else if (error && error.response.status === 400) {
+      } else if (error && error?.response?.status === 400) {
         setSelectProductWarn(true);
-      } else if (error && error.response.status === 500) {
+      } else if (error && error?.response?.status === 500) {
         setSelectProductWarn(true);
-      }else if(error && error.reponse.status === 401) {
+      }else if(error && error?.response?.status === 401) {
                 if(sessionModal) return;
          if(!sessionModal) return setSessionModal(true)
       } else {
@@ -216,9 +216,9 @@ const Balance = newBalance !== null &&
     }
     if (navigator.onLine) {
      
-      setSelectedProductGlo(`${product.Plan_Type}`);
+      setSelectedProductGlo(`${product?.Plan_Type}`);
       setShowProductList(false);
-      fetchPlans(product.Product_ID);
+      fetchPlans(product?.Product_ID);
       setShowOptionList(true); // Show options after selecting a product
     }
   };
@@ -540,7 +540,7 @@ try {
         setLoading(true);
         const response = await axiosInstance.post(path, data);
        const resData = response?.data?.data?.data; // Accessing the nested `data` object
-      setPlan(resData?.plan_name);
+  //    setPlan(resData?.plan_name);
        setGloTransactionID(resData?.transaction_id);
         setGloRefNumber(resData?.reference_number);
        setGloOrderID(resData?.order_id);
@@ -570,7 +570,7 @@ try {
           setInputPin("");
         }
            const resData = response?.data?.data?.data; // Accessing the nested `data` object
-      setPlan(resData?.plan_name);
+   //   setPlan(resData?.plan_name);
        setGloTransactionID(resData?.transaction_id);
         setGloRefNumber(resData?.reference_number);
        setGloOrderID(resData?.order_id);

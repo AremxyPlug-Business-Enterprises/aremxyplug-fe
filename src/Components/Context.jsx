@@ -182,10 +182,7 @@ const [referralName, setReferralName] = useState("")
     const { name, value, type, checked } = e.target;
     const inputValue = type === "checkbox" ? checked : value;
  
- setState({ ...state, [name]: inputValue });
-    
-  
-  }
+ setState({ ...state, [name]: inputValue });}
 
   const handleFocus = (index) => {
     if (!isFocused.includes(index)) {
@@ -252,17 +249,17 @@ const [referralName, setReferralName] = useState("")
   // ======end of form valdiation=====
 
   // ======on submit function=======
-  const setLocalStorageForInputPin = () => {
-    localStorage.setItem("userEmail", JSON.stringify(state.email));
-    localStorage.setItem("userFullName", JSON.stringify(state.fullName));
-    localStorage.setItem("userPhone", JSON.stringify(state.phoneNumber));
-    localStorage.setItem("aremxyUserName", JSON.stringify(state.userName));
-    localStorage.setItem("userBankName", JSON.stringify(""));
-    localStorage.setItem("aremxyAccountName", JSON.stringify(""));
-    localStorage.setItem("aremxyAccountNumber", JSON.stringify(""));
-    localStorage.setItem("aremxyUserId", JSON.stringify("NO USER ID"));
-    localStorage.setItem("ActiveSignUp", true);
-  };
+  // const setLocalStorageForInputPin = () => {
+  //   localStorage.setItem("userEmail", JSON.stringify(state.email));
+  //   localStorage.setItem("userFullName", JSON.stringify(state.fullName));
+  //   localStorage.setItem("userPhone", JSON.stringify(state.phoneNumber));
+  //   localStorage.setItem("aremxyUserName", JSON.stringify(state.userName));
+  //   localStorage.setItem("userBankName", JSON.stringify(""));
+  //   localStorage.setItem("aremxyAccountName", JSON.stringify(""));
+  //   localStorage.setItem("aremxyAccountNumber", JSON.stringify(""));
+  //   localStorage.setItem("aremxyUserId", JSON.stringify("NO USER ID"));
+    
+  // };
 
 
    const [errorSpecialCharacterUsername, setErrorSpecialCharacterUsername] = useState(false)
@@ -310,7 +307,11 @@ const [referralName, setReferralName] = useState("")
         }, {})
       );
     } else {
-      if (!navigator.onLine) return alert("Check your internet connection");
+      if (!navigator.onLine) return  setAlertCustom({
+        type : "error",
+        message : "Check your internet connection",
+        show : true
+      })
       if (navigator.onLine) {
         setErrors({});
         setLoadSignUp(true);
@@ -331,25 +332,68 @@ const [referralName, setReferralName] = useState("")
           .post(url, data, config)
           .then((response) => {
         
-            if (response.status === 201 || response.status === 200) {
+            if (response?.status === 201 || response?.status === 200) {
               setVerification(true);
-              setLocalStorageForInputPin();
+              setAlertCustom({
+                message : "Do not Refresh the Page",
+                type : "info",
+                show : true
+              })
+          //    setLocalStorageForInputPin();
+              // setTimeout(()=> {
+              //   setTimeout(()=> {
+              //     setState({})
+              //   },3000)
+              // })
             }
           })
           .catch((error) => {
-            if(error && error.response === undefined){
-              alert("Kindly Check your internet connection and try again")
-            }else if (error && error.response.data.status === 409) {
-              alert("Input already in use: " + error.response.data.data.data);
-            } else if (error && error.response.data.status === 404) {
-              alert("An error has occured on your end");
+            if(error && error?.response === undefined){
+             setAlertCustom({
+        type : "error",
+        message : "Your internet connection is quite unstable.",
+        show : true
+      })
+            }else if (error && error?.response?.data?.status === 409) {
+              setAlertCustom({
+        type : "error",
+        message :  error?.response?.data ? 
+        "Input already in use: " + error?.response?.data?.data?.data : "ERROR",
+        show : true
+      })
+             
+            } else if (error && error?.response?.data?.status === 403) {
+             setAlertCustom({
+        type : "error",
+        message : "Email is not allowed to SignUp",
+        show : true
+      })
             
-            } else if (error && error.reponse.status === 500) {
-              alert("Server error:, Try some other time");
-            } else if (error && error.reponse.status === undefined) {
-              alert("Check your internet Connection");
+            }else if (error && error?.response?.data?.status === 404) {
+              setAlertCustom({
+        type : "error",
+        message : "User error",
+        show : true
+      })
+            
+            } else if (error && error?.response?.status === 500) {
+               setAlertCustom({
+        type : "error",
+        message : "SERVER_ERROR",
+        show : true
+      })
+            } else if (error && error?.response?.status === undefined) {
+               setAlertCustom({
+        type : "error",
+        message : "Your internet connection is quite unstable.",
+        show : true
+      })
             } else {
-              alert("Check your internet connection");
+              setAlertCustom({
+        type : "error",
+        message : "An unexpected error has occured.",
+        show : true
+      })
             }
           })
           .finally(() => {
@@ -362,7 +406,7 @@ const [referralName, setReferralName] = useState("")
   // ========End for SignUp.jsx======
 
   // ============Start For Verification.jsx ==========
-
+  const [unverifiedSignupInfo, setUnverifiedSignupInfo] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [inputForgetEmail, setInputForgetEmail] = useState("");
   const [viaEmailOrSms, setViaEmailOrSms] = useState("");
@@ -863,6 +907,7 @@ const [referralName, setReferralName] = useState("")
   const [accountId, setAccountId] = useState("");
   const [numberPins, setNumberPins] = useState("");
   const [emailId, setEmailId] = useState("");
+   const [mtnSuccessfulResponse, setMtnSuccessfulResponse] = useState({});
 
   //==================GLO DataBundle ===============
   const [gloPurchaseErrorType, setGloPurchaseErrorType] = useState("")
@@ -874,8 +919,11 @@ const [referralName, setReferralName] = useState("")
   const [selectedAmountGlo, setSelectedAmountGlo] = useState("");
   const [recipientNamesGlo, setRecipientNamesGlo] = useState("");
   const [walletNameGlo, setWalletNameGlo] = useState("initialWalletName");
+  const [gloSuccessfulResponse, setGloSuccessfulResponse] = useState({})
 
   //================Etisalat =====================
+  const [etisalatSuccessfulResponse,
+   setEtisalatSuccessfulResponse] = useState(false);
   const [ setEtisaltPurchaseErrorType,
     etisalatPurchaseErrorType] = useState("");
   const [selectedOptionEtisalat, setSelectedOptionEtisalat] = useState("");
@@ -892,6 +940,7 @@ const [referralName, setReferralName] = useState("")
   // ================ Airtel ================
   const   [airtelPurchaseErrorType,
     setAirtelPurchaseErrorType] = useState("");
+     const [airtelSuccessfulResponse, setAirtelSuccessfulResponse] = useState({})
   const [selectedOptionAirtel, setSelectedOptionAirtel] = useState("");
   const [selectedNetworkProductAirtel, setSelectedNetworkProductAirtel] =
     useState("");
@@ -1461,12 +1510,14 @@ const [currentDateInTimeStamps, setCurrentDateInTimeStamps] = useState(0);
       }
 
       //Return the Websocket Value 
-   
+   const [alertCustom, setAlertCustom] = useState({ show: false, message: '', type: '' });
 
 
       
 
   const hold = {
+    //Alert Messages
+    alertCustom, setAlertCustom,
     //Referral
     referralName,
     setReferralName,
@@ -1678,6 +1729,7 @@ setShowBanner,
     setLoadSignUp,
     getCountry,
     setGetCountry,
+    unverifiedSignupInfo, setUnverifiedSignupInfo,
 
     // ============Dashboard=============
     toggleSideBar,
@@ -1856,6 +1908,8 @@ setShowBanner,
     setProductId,
 
     // ==============MTN DataBundle===============
+    mtnSuccessfulResponse,
+     setMtnSuccessfulResponse,
     dataRecipientDisplay,
      setDataRecipientDisplay,
     purchaseMtnErrorType,
@@ -1882,6 +1936,8 @@ setShowBanner,
     setEmailId,
 
     //================GLO ============
+    gloSuccessfulResponse,
+     setGloSuccessfulResponse,
     selectedOptionGlo,
     setSelectedOptionGlo,
     recipientPhoneNumberGlo,
@@ -1900,6 +1956,8 @@ setShowBanner,
     setGloPurchaseErrorType,
 
     // =============== Etisalat ==========
+    etisalatSuccessfulResponse,
+   setEtisalatSuccessfulResponse, 
     setEtisaltPurchaseErrorType,
     etisalatPurchaseErrorType,
     selectedOptionEtisalat,
@@ -1920,6 +1978,8 @@ setShowBanner,
     //============ Airtel ==============
       airtelPurchaseErrorType,
     setAirtelPurchaseErrorType,
+     airtelSuccessfulResponse,
+      setAirtelSuccessfulResponse,
     selectedOptionAirtel,
     setSelectedOptionAirtel,
     selectedNetworkProductAirtel,

@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 // import logo2 from "../../ElectricitySubscription/Electricity-sub-images/AEDC1 1.svg";
-import { GetLocalStorage } from "../../../../LocalStorage/LocalStorage";
 import { ContextProvider } from "../../../../Context";
 import { DashBoardLayout } from "../../../Layout/DashBoardLayout";
 
@@ -33,7 +32,7 @@ export function formatDate(isoString) {
 export const ElectricityReceipt = () => {
   const navigate = useNavigate();
   const [showReceipt, setShowReceipt] = useState(true);
-  const data = GetLocalStorage();
+
 
   const { toggleSideBar, isDarkMode, orderIdResponse, setOrderIdResponse } =
     useContext(ContextProvider);
@@ -73,7 +72,7 @@ export const ElectricityReceipt = () => {
       : "";
   const bill_generated =
     receiptData?.bill_generated?.length > 0 ? receiptData?.bill_generated : "";
-  // const fullName = aedcFullName?.length > 0 ? aedcFullName : "";
+   const fullName = receiptData?.full_name?.length > 0 ? receiptData?.full_name : "";
   const transaction_product =
     receiptData?.transaction_product?.length > 0
       ? receiptData?.transaction_product
@@ -424,9 +423,7 @@ export const ElectricityReceipt = () => {
                       Customer Name
                     </p>
                     <span className="font-medium">
-                      {data?.aremxyUsername
-                        ? data?.aremxyUsername
-                        : verifiedName}
+                      {fullName}
                     </span>
                   </div>
 

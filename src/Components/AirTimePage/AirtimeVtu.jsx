@@ -36,7 +36,7 @@ const AirtimeVtu = () => {
     const tFee = 0;
     const points = '+2.00';
       
-    const { networkName, setNetworkName, newBalance, setNewBalance, discount, setDiscount,
+    const { networkName, setAlertCustom, setNetworkName, newBalance, setNewBalance, discount, setDiscount,
             setSessionModal, selectRecipientDisplay, setSelectRecipientDisplay,
           sessionModal, airtimeResponse, setAirtimeResponse } = useContext(ContextProvider);
     const { selectedProduct, setSelectedProduct, recipientsAirtime, setRecipientsAirtime } = useContext(ContextProvider);
@@ -90,7 +90,11 @@ setRecipientsAirtime(response?.data?.data?.recipients?.recipients);
             failedHandler
             ,setRecipientsAirtime, setNetworkIssue)
         }else if(errorType === "Server error"){
-    alert("Unable to fetch your recipient List try again later.")
+    setAlertCustom({
+            message : "Unable to fetch your recipient List",
+            type : "error",
+            show : true
+           })
         }
       }
    await GetFunction("airtime/recipient", 
@@ -135,12 +139,20 @@ setRecipientsAirtime(response?.data?.data?.recipients?.recipients);
                              if(sessionModal) return;
                              if(!sessionModal) return setSessionModal(true);
                          }else if(ErrorType === "Server error"){
-                         alert("Failed to retrieve balance")
+                            setAlertCustom({
+            message : "Failed to retrieve balance",
+            type : "error",
+            show : true
+           })
                          }else if (ErrorType === "Network error" || ErrorType === "User error"){
                                  if(!networkIssue) return  setNetworkIssue(true)
                         if(networkIssue) return;
                          }else{
-                            alert("An unexpected has occured")
+                             setAlertCustom({
+            message : "An Unexpected error has occured while retrieving your balance",
+            type : "error",
+            show : true
+           })
                          }
                         }
                          await GetFunction("balance",
@@ -417,12 +429,20 @@ const [airtimeReceiptDiscountValue, setAirtimeReceiptDiscountValue] = useState({
 
       const successHandler = (response)=> {
        GetRecipientList()
-            alert("Recipients saved successfully");
+              setAlertCustom({
+            message : "Recipient saved successfully",
+            type : "success",
+            show : true
+           })
             setFetchedResponse(response)
         }
   const failedHandler = async(ErrorType)=> {
  if(ErrorType === "Server error"){
-  alert("Unable to save recipients at the moment")
+    setAlertCustom({
+            message : "Unable to save recipient",
+            type : "error",
+            show : true
+           })
  }else if(ErrorType === "unauthorised"){
  await PostFunction("airtime/recipient",
      setIsLoading, 
@@ -434,7 +454,11 @@ const [airtimeReceiptDiscountValue, setAirtimeReceiptDiscountValue] = useState({
               setAirtimeTransactionNetwork(true)
               setNetworkIssue(true)
             }else {
-              alert("Unable to save recipients at the moment.")
+               setAlertCustom({
+            message : "Failed to save recipients",
+            type : "error",
+            show : true
+           })
             }
         }
         const setFetchedResponse = ()=> {
@@ -549,7 +573,6 @@ if(ErrorType === "Network error" || ErrorType === "User error"){
  if(sessionModal) return;
  if(sessionModal === false) return setSessionModal(true)
 }else{
-  //alert("Purchase Failed")
     setAirtimePurchaseError("an unxpected error has occured");
     setTransactFailedPopUp(true);
     setConfirm(false);
@@ -1214,7 +1237,11 @@ className={`flex justify-left  w-[100%] items-center`}>
                            &&   !errors?.recipientNumber) {
                                handleAddRecipient();
                             }else if(recipientNumber?.length < 11 && recipientName?.length < 1) {
-                                alert("Input the recipient Number and the recipient Name");
+                                 setAlertCustom({
+            message : "Input your recipient name and  recipient Number",
+            type : "info",
+            show : true
+           })
                             }
                          }}
                             className={`w-[16px] h-[8.4px] md:w-[30px] md:h-[12px]

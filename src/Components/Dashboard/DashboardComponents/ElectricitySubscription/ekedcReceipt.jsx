@@ -7,11 +7,11 @@ import { Link, useNavigate } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import logo2 from "../ElectricitySubscription/Electricity-sub-images/1584714918161-ekedc-logo 1.svg";
-import { GetLocalStorage } from "../../../LocalStorage/LocalStorage";
+
 
 export const EkedcReceipt = () => {
   const navigate = useNavigate();
-  const data = GetLocalStorage();
+  
 
   const {
     toggleSideBar,
@@ -42,7 +42,7 @@ export const EkedcReceipt = () => {
     setEkedcTransactionId,
     ekedcShowDescription,
     setEkedcShowDescription,
-    // ekedcFullName,
+    ekedcFullName,
     setEkedcFullName,
     ekedcTransactionProduct,
     setEkedcTransactionProduct,
@@ -65,7 +65,7 @@ export const EkedcReceipt = () => {
   const description =
     ekedcShowDescription?.length > 0 ? ekedcShowDescription : "";
   const bill_generated = ekedcBillGenerate?.length > 0 ? ekedcBillGenerate : "";
-  // const fullName = ekedcFullName?.length > 0 ? ekedcFullName : "";
+   const fullName = ekedcFullName?.length > 0 ? ekedcFullName : "";
   const transaction_product = ekedcTransactionProduct?.length > 0 ? ekedcTransactionProduct : "";
 
   function handleClick() {
@@ -91,31 +91,57 @@ export const EkedcReceipt = () => {
   const contentRef = useRef(null);
 
   // ==============Share pdf Function=============
-  const handleShareClick = () => {
-    if (navigator.share) {
-      navigator
-        .share({
-          title: "Receipt",
-          text: "Check out this receipt!",
-          url: "https://example.com", // Replace with the actual URL of your receipt
-        })
-        .then(() => {return;})
-        .catch((error) => {return;});
-    } else {
-    return;
-      // Handle sharing fallback for unsupported browsers
+  const handleShareClick = async() => {
+      const content = contentRef.current;
+      if(!content) return alert("Receipt not recorded")
+      if(content){
+        try {
+       const pdf = new jsPDF("p", "mm", "a4");
+     //  alert(pdf.internal?.pageSize.getHeight())
+        const canvas = await html2canvas(content,
+           {scale : 2,
+             useCORS : true,
+             backgroundColor : `${isDarkMode ? "#000" : "#fff"}`
+          }
+            )
+           
+        const bgPdf = pdf.setFillColor(isDarkMode ? 0 : 255, isDarkMode ? 0 : 255, isDarkMode ? 0 : 255 )
+        if(bgPdf){
+          const pageHeight = pdf.internal.pageSize.getHeight();
+          const pageWidth = pdf.internal.pageSize.getWidth();
+          const imgWidth = pageWidth;
+          const imgData = canvas.toDataURL("image/jpeg", 1.0);
+          pdf.addImage(imgData, 
+            "jpeg",0, 0, imgWidth, pageHeight, undefined, "FAST");
     }
-  };
-
+       const pdfBlob = pdf.output("blob");
+      const file = new File([pdfBlob], "AremxyPlug_Receipt.pdf", {type : "application/pdf"})
+      if (navigator.canShare && navigator.canShare({files : [file]})) {
+        navigator
+          .share({
+            title: `AremxyPlug_EKEDC_Receipt`,
+            files : [file], 
+          })
+          .then(() => {return;})
+          .catch((error) => {return;});
+      }else{
+      alert("Sharing this pdf isn't supported in your browser.")
+      }
+    }catch(error){
+     alert(error)
+    }
+      }
+    };
+  
   // ==============Save Pdf Function==============
-  const handleSaveAsPDFClick = () => {
-    const content = contentRef.current;
-    if (content) {
+  const saveAsPDFClick = () => {
+    const contentWaec = contentRef.current;
+    if (contentWaec) {
       const pdf = new jsPDF();
-      html2canvas(content).then((canvas) => {
-        const imgData = canvas.toDataURL("image/png");
-        pdf.addImage(imgData, "PNG", 10, 10, 190, 0);
-        pdf.save("EKEDC-Success-Receipt.pdf");
+      html2canvas(contentWaec).then((canvas) => {
+        const imgWaecData = canvas.toDataURL("image/png");
+        pdf.addImage(imgWaecData, "PNG", 10, 10, 190, 0);
+        pdf.save(`${description}.pdf`);
       });
     }
   };
@@ -295,7 +321,7 @@ export const EkedcReceipt = () => {
                     Customer Name
                   </p>
                   <span className="font-medium">
-                    {data?.aremxyUsername ? data?.aremxyUsername : verifiedName}
+                    {fullName}
                   </span>
                 </div>
 
@@ -403,7 +429,7 @@ export const EkedcReceipt = () => {
             </button>
             <button
               onClick={() => {
-                handleSaveAsPDFClick();
+            saveAsPDFClick();
               }}
               className={`bg-[#ffffff] border w-[111px] flex justify-center items-center mx-auto cursor-pointer text-xs font-extrabold  ${
                 isDarkMode

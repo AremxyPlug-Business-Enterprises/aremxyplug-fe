@@ -65,7 +65,10 @@ const EtisalatDataBundle = () => {
     isVisible,
     setSelectedProductEtisalat,
     etisalatPurchaseErrorType,
-    setEtisalatPurchaseErrorType
+    setEtisalatPurchaseErrorType,
+    etisalatSuccessfulResponse,
+   setEtisalatSuccessfulResponse,
+   setAlertCustom
   } = useContext(ContextProvider);
   const [showProductList, setShowProductList] = useState(false);
   const [showOptionList, setShowOptionList] = useState(false);
@@ -94,8 +97,8 @@ const EtisalatDataBundle = () => {
   const [restrictUser, setRestrictUser] = useState(false);
   const [checkNetworkError, setCheckNetworkError] = useState(false)
 const [balanceLoader, setBalanceLoader] = useState(false)
-const [etisalatSuccessfulResponse,
-   setEtisalatSuccessfulResponse] = useState({})
+// const [etisalatSuccessfulResponse,
+//    setEtisalatSuccessfulResponse] = useState({})
 const assumedString = selectedAmountEtisalat?.toString()
   let etisalatDataAmount = Number(selectedAmountEtisalat?.toString()
   ?.slice(0, assumedString?.length - 3)
@@ -185,7 +188,11 @@ const Balance = newBalance !== null &&
       } else if (error && error.response.status === 500) {
         setSelectProductWarn(true);
       } else {
-        alert("An unexpected error has occured.");
+         setAlertCustom({
+        message : "an Unexpected error has occured while Fetching plans",
+        type : "error",
+        show : true
+      })
       }
     } finally {
       setLoadingPlans(false);
@@ -290,12 +297,20 @@ const Balance = newBalance !== null &&
         if (ErrorType === "unauthorised") {
          setSessionModal(true)
     }else if(ErrorType ==="Server error"){
-    alert("An Unexpected error has occured")
+       setAlertCustom({
+        message : "Balance Retrieval Failed",
+        type : "error",
+        show : true
+      })
     } else if(ErrorType === "Network error" || ErrorType === "User error"){
             setCheckNetworkError(true);
         }else{
            
-          alert("An unexpected error occured in attempt to retrieve balance.")
+              setAlertCustom({
+        message : "Balance Retrieval Failed",
+        type : "error",
+        show : true
+      })
         }
       }
       await GetFunction(

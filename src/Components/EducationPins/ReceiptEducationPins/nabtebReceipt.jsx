@@ -7,10 +7,8 @@ import { Link, useNavigate } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import AremxyPlugIcon from "../imagesEducation/AremxyPlug.svg";
-import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 
 export default function NabtebReceipt() {
-  const data = GetLocalStorage();
   const navigate = useNavigate();
   const {
     nabtebExamType,
@@ -32,7 +30,7 @@ export default function NabtebReceipt() {
     setNabtebTransactionId,
     nabtebShowDescription,
     setNabtebShowDescription,
-    // nabtebFullName,
+    nabtebFullName,
     setNabtebFullName,
     nabtebTransactionProduct,
     setNabtebTransactionProduct,
@@ -51,7 +49,7 @@ export default function NabtebReceipt() {
     nabtebShowDescription?.length > 0 ? nabtebShowDescription : "";
   const pins_generated =
     nabtebPinsGenerated?.length > 0 ? nabtebPinsGenerated : "";
-  // const fullName = nabtebFullName?.length > 0 ? nabtebFullName : "";
+   const fullName = nabtebFullName?.length > 0 ? nabtebFullName : "";
   const transaction_product =
     nabtebTransactionProduct?.length > 0 ? nabtebTransactionProduct : "";
 
@@ -323,8 +321,8 @@ export default function NabtebReceipt() {
                   <span
                     className={` ${isDarkMode ? "text-white" : "text-black "}`}
                   >
-                    {/* {fullName} */}
-                    {data?.aremxyUsername ? data?.aremxyUsername : ""}
+                     {fullName} 
+                    
                   </span>
                 </div>
                 <div

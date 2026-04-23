@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { BalanceLoading } from "../Loader/Loader";
 import { useState, useEffect, useRef, useContext} from "react";
 import { ContextProvider } from "../Context";
+import { X } from 'lucide-react';
 
 
 
@@ -87,7 +88,7 @@ export const InActionVirtualAccountState = (
       setAccountNameState,
       setAccountNumberState
     );
-    // alert("IN ACTION IS RUNNING");
+
     SetLocalStorage(
       email,
       full_name,
@@ -104,6 +105,89 @@ export const InActionVirtualAccountState = (
 //ws Socket
 
 
+//Modal For Application
+
+ // Or any icon library you use
+
+export const CustomAlert = ({ message, type , onClose }) => {
+  // Auto-close after 4 seconds
+  useEffect(() => {
+    const timer = setTimeout(onClose, 4000);
+    return () => clearTimeout(timer);
+  }, [onClose]);
+
+  // Dynamic colors based on message type
+  const statusStyles = {
+    success: "bg-green-50 border-green-500 text-green-800",
+    error: "bg-red-50 border-red-500 text-red-800",
+  info: "bg-blue-50 border-blue-500 text-blue-800"
+  };
+
+  return (
+    <div className={`fixed top-5 right-5 z-[9999] flex items-center justify-between 
+      w-[320px] p-4 rounded-lg border-l-4 shadow-lg animate-in fade-in slide-in-from-right-4
+      ${statusStyles[type]}`}>
+      
+      <p className="text-sm font-medium">{message}</p>
+      
+      <button onClick={onClose} className="ml-4 hover:opacity-70 transition-opacity">
+        <X size={18} />
+      </button>
+    </div>
+  );
+};
+
+//Unverified SignUp
+export const UnverifiedSignUp = ()=> {
+  const { setUnverifiedSignupInfo, setVerification} = useContext(ContextProvider);
+  const navigate = useNavigate()
+  const RefusalToProceed =()=> {
+  setUnverifiedSignupInfo(false);
+}
+
+
+
+const ContinueSignUp = ()=> {
+  navigate("/signUp")
+   setUnverifiedSignupInfo(false);
+  setVerification(true)
+}
+
+
+  return (
+      <Modal>
+                  <div className="w-full flex  justify-center items-center">
+                <div className ="flex flex-col justify-center items-center py-[20px] px-[12px] gap-[20px] w-[80%] md:w-[60%] lg:w-[30%] md:h-[300px] bg-white rounded-[10px]
+                 lg:rounded-[20px]">
+                  <p className ="text-[14px] font-[400] leading-[18px]
+                   text-black lg:text-[16px] lg:leading-[22px] ">
+                    We noticed you did not complete your sign up
+                    process, would you still like to proceed?</p>
+                 
+                  <div className="flex gap-[20px] justify-center">
+                    <button onClick ={()=> {
+                      ContinueSignUp()
+                    }}
+                     className="bg-[#04177f]  cursor-pointer mt-[5%] mx-auto w-[80px] py-[8px] flex justify-center items-center text-[#ffffff] 
+                      text-[10px] font-[500] lg:font-[600] rounded-md md:w-[95px] md:h-[26px]
+                       md:p-[2%] lg:w-[113px] lg:h-[38px] lg:text-[13px]">
+                         Yes
+                    </button>
+                    <button onClick ={()=> {
+                        RefusalToProceed()
+                        RemoveLocalStorage();
+                    }}
+                     className="bg-red-500  cursor-pointer mt-[5%] mx-auto w-[80px] py-[8px] flex justify-center items-center text-[#ffffff] 
+                      text-[10px] font-[500] lg:font-[600] rounded-md md:w-[95px] md:h-[26px]
+                       md:p-[2%] lg:w-[113px] lg:h-[38px] lg:text-[13px]">
+                      No
+                    </button>
+                  </div>
+                  </div>
+                  </div>
+                 </Modal>
+  )
+}
   
 
 
@@ -184,7 +268,7 @@ return localStorage.setItem("SessionExpiration", resetExpiration);
 ///Login Session =======//
 export const InternalLoginSession = ()=> {
   const [password, setPassword] = useState();
-  const {setNetworkIssue, networkIssue, setSessionModal, isDarkMode} = useContext(ContextProvider)
+  const {setNetworkIssue, networkIssue, setSessionModal, isDarkMode, setAlertCustom} = useContext(ContextProvider)
   const [loading, setLoading] = useState(false)
 
    const getUsername = JSON.parse(localStorage.getItem("aremxyUserName"));
@@ -197,26 +281,46 @@ export const InternalLoginSession = ()=> {
    }
 
  const functionAtSuccess = async(response)=> {
-   alert("Successful");
+     setAlertCustom({
+            message : "Session Renewed Successfully",
+            type : "success",
+            show : true
+           })
   setSessionModal(false);
-     
-    // await RequestReRun();
-      
-}
+     setTimeout(()=> {
+      window.location.reload();
+     },3000)
+      }
     const  functionAtFailed =(ErrorType)=> {
      if(ErrorType === "unauthorised" ){
-      alert("Incorrect Password: You are only allowed to try 5 times.");
+       setAlertCustom({
+            message : "Password Incorrect: You are only allowed to attempt 5 times",
+            type : "error",
+            show : true
+           })
      }else if(ErrorType === "Server error"){
-      alert("Failed to process your request")
+        setAlertCustom({
+            message : "Failed to Process your request",
+            type : "error",
+            show : true
+           })
      }else if(ErrorType === "User Blocked"){
-      alert("Account Blocked, try after one hour");
+        setAlertCustom({
+            message : "User Blocked: Try again in the next one hour",
+            type : "error",
+            show : true
+           })
      window.location.replace("/Login")
      RemoveLocalStorage()
      }else if(ErrorType === "Network error"){
       setSessionModal(false);
       if(!networkIssue)  setNetworkIssue(true);
      }else {
-      alert("An unexpected error has occured.")
+       setAlertCustom({
+            message : "An Unexpected error has occured",
+            type : "error",
+            show : true
+           })
    }
    }
   
@@ -506,7 +610,8 @@ export const CheckVirtualAcc = async(
      TwoStep,
      setTwoStepVerificationSuccess,
     confirmVirtualState,
-  setNetworkIssue) => {
+  setNetworkIssue,
+setAlertCustom) => {
      if(!navigator.onLine ) setNetworkIssue(true)
   if (authToken  && navigator.onLine) {
     const url = 'https://api.aremxyplug.com/api/v1/virtualacc';
@@ -529,8 +634,7 @@ export const CheckVirtualAcc = async(
                 }}else{
             InActionVirtualAccountState(virtualAccCreated,setBankNameState, 
                setAccountNameState, setAccountNumberState);
-             //  alert("Action running")
-            //alert("InAction Virtual is running")
+           
                
             
          }
@@ -538,18 +642,38 @@ export const CheckVirtualAcc = async(
          }
         }catch(error){
          if(error.status === 400){
-        alert("We had an error trying to get your details, click okay to repeat the login process");
+      setAlertCustom({
+        message : "An error occured while trying to get your details",
+        type :  "error",
+        status : true
+      })
          }
       else if(error.status === 401){
-         alert("You were timed out, kindly login again to continue")
+         setAlertCustom({
+        message : "You were timed out while trying to login, kindly restart the login process",
+        type :  "error",
+        status : true
+      })
       } else if (error.status === 404) {
-    //
+        setAlertCustom({
+        message : "User error",
+        type :  "error",
+        status : true
+      })
       } else if (error.status === 500) {
-        alert("Error:", "SERVER ERROR");
+        setAlertCustom({
+        message : "SERVER_ERROR",
+        type :  "error",
+        status : true
+      })
       } else if (error.response === undefined) {
         setNetworkIssue(true)
       } else {
-        alert("An unexpected error has occured");
+         setAlertCustom({
+        message : "An Unexpected error has occured",
+        type :  "error",
+        status : true
+      })
       }
     } finally {
       if (confirmVirtualState) {
@@ -651,7 +775,7 @@ export const VerifyTransPin = async (
      setFailed("Network error");
       } else if(error && error.response.status === 400){
          setFailed("Bad request");
-         alert("You are allowed to attempt 5 times, kindly ensure your pin is correct.")
+    
          setErrorMessage(true);
       }else if(error && error.response.status === 401){
         setFailed("unauthorised")
@@ -661,12 +785,12 @@ export const VerifyTransPin = async (
    setErrorMessage(true);
       }else if(error && error.response.status === 404){
    setFailed("User error");
-   // alert("Kindly check your internet connection")
+    alert("Kindly check your internet connection")
    setErrorMessage(true);
       }else if(error && error.response.status === 403){
    setFailed("User Blocked");
    alert("Purchase blocked due to many retries")
-  // setErrorMessage(true);
+   setErrorMessage(true);
       }else {
    alert("Check your internet connection and try again")
       }
@@ -781,12 +905,13 @@ export const GetFunction = async(path, setLoading, functionAtSuccess,
         alert("Check your internet connection");
       } else if (error && error.response.status === 500) {
         functionAtFailed("Server error");
+
        // alert("Server error: Try some other time");
       } else if (error && error.response.status === undefined) {
       setNetworkIssue(true)
       } else {
         
-        alert("An unexpected error has occured")
+        // alert("An unexpected error has occured")
       }
     } finally {
       setLoading(false);
@@ -825,19 +950,19 @@ export const PutFunction = async (
           functionAtFailed("Network error")
       }else if(error && error.response.status === 400){
          functionAtFailed("Bad request");
-       alert("Invalid request");
+     
       }else if(error && error.response.status === 401){
     functionAtFailed("unauthorised");
   }else if(error && error.response.status === 404){
          functionAtFailed("User error")
-         alert("User error")
+       
       }else if(error && error.response.status === 500){
         functionAtFailed("Server error")
-   alert("Server error: Try some other time")
+  
       }else if(error && error.response === undefined){
                setNetworkIssue(true)
           }else {
-         alert("Check your internet connection")
+       return;
 
       }
     } finally {

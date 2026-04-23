@@ -1,10 +1,9 @@
 import React from "react";
 import "../../CurrencyConversion/currencyConversion.css";
 import copy from "../Images/copy.svg"
-import { useState, Link } from "react";
+import { useState, Link, useContext } from "react";
 import { Modal } from "../../Screens/Modal/Modal";
-// import { useContext } from "react";
-// import { ContextProvider } from "../../Context";
+import { ContextProvider } from "../../Context";
 
 
 const SuccessfulConversion = () => {
@@ -16,7 +15,7 @@ const SuccessfulConversion = () => {
   // } = useContext(ContextProvider)
 
   const [conversionSuccessful, setConversionSuccessful] = useState(true)
-
+const {setAlertCustom} = useContext(ContextProvider)
     const amtToConvert = (`${10},000`);
     const amtToReceive = 10;
     // const availableBalance = (`${50},000`);
@@ -26,11 +25,19 @@ const CopyButton = ({ textToCopy }) => {
       navigator.clipboard.writeText(textToCopy)
         .then(() => {
           // Handle successful copy, e.g., show a success message
-          alert('Copied to clipboard');
+           setAlertCustom({
+            message : "Copied to ClipBoard",
+            type : "success",
+            show : true
+          })
         })
         .catch((error) => {
           // Handle error, e.g., show an error message
-          console.error('Copy failed: ' + error);
+            setAlertCustom({
+            message : "Copy failed",
+            type : "error",
+            show : true
+          })
         });
     };
   

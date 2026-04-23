@@ -61,6 +61,7 @@ const MtnDataTopUpBundle = () => {
     toggleVisibility,
     isVisible,
     networkIssue,
+    mtnSuccessfulResponse, setMtnSuccessfulResponse,
   dataRecipientDisplay, setDataRecipientDisplay} = useContext(ContextProvider);
 
   const [showProductList, setShowProductList] = useState(false);
@@ -89,7 +90,7 @@ const MtnDataTopUpBundle = () => {
   const [passDataBalance, setPassDataBalance] = useState({});
   const [mtnReceiptInfo, setMtnReceiptInfo] = useState("");
   const [checkNetworkError, setCheckNetworkError] = useState(false)
-   const [mtnSuccessfulResponse, setMtnSuccessfulResponse] = useState({});
+   //const [mtnSuccessfulResponse, setMtnSuccessfulResponse] = useState({});
    const [balanceLoader, setBalanceLoader] = useState(false)
   //  const [dataRecipientDisplay, setDataRecipientDisplay] = useState(false);
     const [loadingRecipient, setLoadingRecipient] = useState(false)
@@ -532,7 +533,7 @@ alert("Recipients Saved Successfully")
 }
 const RecipientExistCheck = CheckRecipientInfoInList(recipientPhoneNumberMtn);
 
-
+//const [receiptFullName, setReceiptFullName] = useState(false)
   const handleReceipt = () => {
     setTransactSuccessPopUp(false);
     // sendDataToBackend(1, recipientPhoneNumber, plan, recipientNames);

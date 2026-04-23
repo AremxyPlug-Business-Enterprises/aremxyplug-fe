@@ -59,7 +59,7 @@ export default function IdVerification() {
   const [idCustomerQuery, setIdCustomerQuery] = useState(false);
   const {idDateOfBirth, setIdDateOfBirth}= useContext(ContextProvider);
   const [loading, setLoading] = useState(false);
-  const { toggleSideBar, customerDetail } = useContext(ContextProvider);
+  const { toggleSideBar, customerDetail, setAlertCustom } = useContext(ContextProvider);
   const { full_name } = customerDetail;
 //const [phoneNumberMismatch, setPhoneNumberMismatch] = useState("");
 const [idNumberError, setIdNumberError] = useState("")
@@ -219,6 +219,12 @@ const [idNumberError, setIdNumberError] = useState("")
           setVerifyImage(NotVerifiedIcon);
         }else if( error.response.status === 401){
         return  setSessionModal(true)
+        }else if(error?.response?.status === 409){
+          setAlertCustom({
+           message : "Verification Blocked: This verification is associated with another account, Contact Admin ",
+           type : "error",
+           show : true
+          })
         }else {
           setErrorSubmit("An unexpected error has occured upon verification")
         }

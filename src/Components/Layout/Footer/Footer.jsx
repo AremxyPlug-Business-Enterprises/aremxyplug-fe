@@ -92,10 +92,10 @@ const pathname = location?.pathname === "/DigitalServices"
               Product
             </div>
             <div className="w-[40px] h-[13px] text-[9px]">
-              <Link to="/our-services/telecoms">Telecom</Link>
+              <Link to="/telecoms">Telecom</Link>
             </div>
             <div className="w-[40px] h-[13px] text-[9px]">
-              <Link to="/our-services/payment">Payment</Link>
+              <Link to="/payment">Payment</Link>
             </div>
             <Link to="/CardIssuing">
               <div className="w-[80px] h-[13px] text-[9px] cursor-pointer">
@@ -108,7 +108,7 @@ const pathname = location?.pathname === "/DigitalServices"
               </div>
             </Link>
             <div className="w-[80px] h-[13px] text-[9px]">
-              <Link to="/our-services/payment">Virtual Account</Link>
+              <Link to="/payment">Virtual Account</Link>
             </div>
             {secondDrop && (
               <div className="flex flex-col gap-[20px]">
@@ -119,7 +119,7 @@ const pathname = location?.pathname === "/DigitalServices"
                   <p>Multi-Currency Wallet</p>
                 </div>
                 <div className="w-[96px] h-[13px] text-[9px]">
-                  <Link to="/our-services/payment">International Payment</Link>
+                  <Link to="/payment">International Payment</Link>
                 </div>
                 <div className="w-[94px] h-[13px] text-[9px]">
                   <Link to="/VTU_DEV">VTU development</Link>
@@ -404,10 +404,10 @@ const pathname = location?.pathname === "/DigitalServices"
               Product
             </div>
             <div className="w-[40px] h-[13px] text-[9px] lg:w-[71px] lg:text-[16px]">
-              <Link to="/our-services/telecoms">Telecom</Link>
+              <Link to="/telecoms">Telecom</Link>
             </div>
             <div className="w-[40px] h-[13px] text-[9px] lg:w-[71px] lg:text-[16px]">
-              <Link to="/our-services/payment">Payment</Link>
+              <Link to="/payment">Payment</Link>
             </div>
             <div className="w-[80px] h-[13px] text-[9px] lg:w-[166px] lg:text-[16px]">
               <Link to="/CardIssuing">Card issuing</Link>
@@ -416,7 +416,7 @@ const pathname = location?.pathname === "/DigitalServices"
               <Link to="/DigitalServices">Digital Service</Link>
             </div>
             <div className="w-[80px] h-[13px] text-[9px] lg:w-[166px] lg:text-[16px]">
-              <Link to="/our-services/payment">Virtual Account</Link>
+              <Link to="/payment">Virtual Account</Link>
             </div>
             <div className="flex flex-col gap-[20px]">
               <div className="w-[96px] h-[13px] text-[9px] lg:w-[166px] lg:text-[16px]">

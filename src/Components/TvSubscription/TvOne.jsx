@@ -83,7 +83,8 @@ const GoTv = () => {
      setPurchaseGotvErrorType,
     toggleSideBar,
     setNetworkIssue,
-    sessionModal, setSessionModal
+    sessionModal, setSessionModal,
+    cardName
   } = useContext(ContextProvider)
   //const [successConfig, setSuccessConfig] = useState(false);
   const [passDataBalance, setPassDataBalance] = useState({});
@@ -443,6 +444,7 @@ const Data = GetLocalStorage();
         email: tvEmail,
         amount: tvAmount,
         phone: mobileNumber,
+        card_name : cardName
       };
       const DataJson = JSON.stringify(requestData);
 

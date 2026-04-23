@@ -40,6 +40,7 @@ export const GloFailedReceipt = (Data) => {
   setRecipientPhoneNumberGlo,
     // recipientName,
     setSelectedNetworkProduct,
+    gloSuccessfulResponse,
     
   } = useContext(ContextProvider);
 
@@ -57,6 +58,9 @@ export const GloFailedReceipt = (Data) => {
   //       console.error("Error copying text: ", err);
   //     });
   // };
+
+  const fullName = gloSuccessfulResponse?.full_name?.length ?
+ gloSuccessfulResponse?.full_name : ""
 
   // ==============Share pdf Function=============
   const handleShareClick = () => {
@@ -215,7 +219,7 @@ export const GloFailedReceipt = (Data) => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Customer Name</p>
-                  <span>{Data.aremxyUsername}</span>
+                  <span>{fullName}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Wallet Type</p>

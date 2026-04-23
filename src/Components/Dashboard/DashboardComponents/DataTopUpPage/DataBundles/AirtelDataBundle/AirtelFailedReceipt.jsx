@@ -42,12 +42,14 @@ export const AirtelFailedReceipt = (Data) => {
   selectedOptionAirtel,
   selectedProductAirtel,
   walletNameAirtel,
+  airtelSuccessfulResponse,
     // recipientName,
     //setSelectedNetworkProductAirtel,
   } = useContext(ContextProvider);
 
   const contentRef = useRef(null);
-
+  const fullName = airtelSuccessfulResponse?.full_name?.length ?
+  airtelSuccessfulResponse?.full_name : ""
   // ===============Copy to Clipboard Function============
   // const handleCopyClick = () => {
   //   const text = textRef.current.innerText;
@@ -222,7 +224,7 @@ return;
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Customer Name</p>
-                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{Data.aremxyUsername}</span>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{fullName}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Wallet Type</p>

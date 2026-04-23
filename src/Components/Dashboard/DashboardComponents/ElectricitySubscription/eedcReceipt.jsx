@@ -7,11 +7,10 @@ import { Link, useNavigate } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import logo2 from "../ElectricitySubscription/Electricity-sub-images/eedclogo 1.svg";
-import { GetLocalStorage } from "../../../LocalStorage/LocalStorage";
+
 
 export const EedcReceipt = () => {
   const navigate = useNavigate();
-  const data = GetLocalStorage();
 
   const {
     toggleSideBar,
@@ -42,7 +41,7 @@ export const EedcReceipt = () => {
     setEedcTransactionId,
     eedcShowDescription,
     setEedcShowDescription,
-    // eedcFullName,
+     eedcFullName,
     setEedcFullName,
     eedcTransactionProduct,
     setEedcTransactionProduct,
@@ -54,7 +53,7 @@ export const EedcReceipt = () => {
     selectedEedcMeterType?.length > 0 ? selectedEedcMeterType : "";
   const meterNo = eedcMeterNumber?.length > 0 ? eedcMeterNumber : "";
   const verifiedName = eedcVerifiedName?.length > 0 ? eedcVerifiedName : "";
-  // const fullName = eedcFullName?.length > 0 ? eedcFullName : "";
+   const fullName = eedcFullName?.length > 0 ? eedcFullName : "";
   const phoneNo = eedcPhoneNumber?.length > 0 ? eedcPhoneNumber : "";
   const productEmail = eedcEmail?.length > 0 ? eedcEmail : "";
   const productAmount = eedcAmount?.length > 0 ? eedcAmount : "";
@@ -90,34 +89,60 @@ export const EedcReceipt = () => {
   const contentRef = useRef(null);
 
   // ==============Share pdf Function=============
-  const handleShareClick = () => {
-    if (navigator.share) {
-      navigator
-        .share({
-          title: "Receipt",
-          text: "Check out this receipt!",
-          url: "https://example.com", // Replace with the actual URL of your receipt
-        })
-        .then(() =>{return;})
-        .catch((error) => {return;});
-    } else {
-  return;
-      // Handle sharing fallback for unsupported browsers
-    }
-  };
-
-  // ==============Save Pdf Function==============
-  const handleSaveAsPDFClick = () => {
-    const content = contentRef.current;
-    if (content) {
-      const pdf = new jsPDF();
-      html2canvas(content).then((canvas) => {
-        const imgData = canvas.toDataURL("image/png");
-        pdf.addImage(imgData, "PNG", 10, 10, 190, 0);
-        pdf.save("EEDC-Success-Receipt.pdf");
-      });
-    }
-  };
+  const handleShareClick = async() => {
+       const content = contentRef.current;
+       if(!content) return alert("Receipt not recorded")
+       if(content){
+         try {
+        const pdf = new jsPDF("p", "mm", "a4");
+      //  alert(pdf.internal?.pageSize.getHeight())
+         const canvas = await html2canvas(content,
+            {scale : 2,
+              useCORS : true,
+              backgroundColor : `${isDarkMode ? "#000" : "#fff"}`
+           }
+             )
+            
+         const bgPdf = pdf.setFillColor(isDarkMode ? 0 : 255, isDarkMode ? 0 : 255, isDarkMode ? 0 : 255 )
+         if(bgPdf){
+           const pageHeight = pdf.internal.pageSize.getHeight();
+           const pageWidth = pdf.internal.pageSize.getWidth();
+           const imgWidth = pageWidth;
+           const imgData = canvas.toDataURL("image/jpeg", 1.0);
+           pdf.addImage(imgData, 
+             "jpeg",0, 0, imgWidth, pageHeight, undefined, "FAST");
+     }
+        const pdfBlob = pdf.output("blob");
+       const file = new File([pdfBlob], "AremxyPlug_Receipt.pdf", {type : "application/pdf"})
+       if (navigator.canShare && navigator.canShare({files : [file]})) {
+         navigator
+           .share({
+             title: `AremxyPlug_EEDC_Receipt`,
+             files : [file], 
+           })
+           .then(() => {return;})
+           .catch((error) => {return;});
+       }else{
+       alert("Sharing this pdf isn't supported in your browser.")
+       }
+     }catch(error){
+      alert(error)
+     }
+       }
+     };
+   
+   // ==============Save Pdf Function==============
+   const saveAsPDFClick = () => {
+     const contentWaec = contentRef.current;
+     if (contentWaec) {
+       const pdf = new jsPDF();
+       html2canvas(contentWaec).then((canvas) => {
+         const imgWaecData = canvas.toDataURL("image/png");
+         pdf.addImage(imgWaecData, "PNG", 10, 10, 190, 0);
+         pdf.save(`${description}.pdf`);
+       });
+     }
+   };
   return (
     <DashBoardLayout>
       <div className="flex flex-col gap-[35px] lg:gap-[85px]">
@@ -294,7 +319,7 @@ export const EedcReceipt = () => {
                     Customer Name
                   </p>
                   <span className="font-medium">
-                    {data?.aremxyUsername ? data?.aremxyUsername : verifiedName}
+                    {fullName}
                   </span>
                 </div>
 
@@ -402,7 +427,7 @@ export const EedcReceipt = () => {
             </button>
             <button
               onClick={() => {
-                handleSaveAsPDFClick();
+                saveAsPDFClick();
               }}
               className={`bg-[#ffffff] border w-[111px] flex justify-center items-center mx-auto cursor-pointer text-xs font-extrabold  ${
                 isDarkMode

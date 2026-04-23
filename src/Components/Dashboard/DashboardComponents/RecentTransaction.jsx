@@ -13,7 +13,8 @@ export const RecentTransaction = ({transactionResponse, transactionHistoryError,
   const { toggleSideBar, isDarkMode ,setEditCalenderOne,
      editCalenderOne,editCalenderTwo, startDateValueState,
      setCountCalender,endDateValueState,
-      setEditCalenderTwo, setCurrentDateInTimeStamps, setStartDateValueState, setEndDateValueState} = useContext(ContextProvider);
+      setEditCalenderTwo, setCurrentDateInTimeStamps, setStartDateValueState, setAlertCustom,
+       setEndDateValueState} = useContext(ContextProvider);
   const [calender, setCalender] = useState(false);
  const [stateDateEdit, setStateDateEdit] = useState("Filter By Date");
  
@@ -93,7 +94,11 @@ export const RecentTransaction = ({transactionResponse, transactionHistoryError,
                   setCalender(false)
                 }
               }else{
-                alert("This feature can only be accessed by users with virtual account.")
+                 setAlertCustom({
+            message : "This Feature can only be accessed by Users with Virtual account",
+            type : "info",
+            show : true
+          })
               }
               }}
   className={` md:text-[9.16px] text-center py-[2px]

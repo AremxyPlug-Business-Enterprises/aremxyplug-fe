@@ -59,8 +59,9 @@ receiptData?.full_name : ""
       ? Number(receiptData?.discount_amount)
       : "";
       const percentage = receiptData?.discount_percentage ? 
-      receiptData?.discount_percentage : ""
+      receiptData?.discount_percentage : "";
 
+      
   function handleClick() {
     setOrderIdResponse({});
     setShowReceipt(false);

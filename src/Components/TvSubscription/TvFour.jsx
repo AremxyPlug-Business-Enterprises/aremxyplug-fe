@@ -719,8 +719,7 @@ const Decoders  = [
               placeholder="XXXXXXXXXX"
             
               onInput={(e =>{
-                
-                     const numericValue = e.target.value.replace(/\D/g, '');
+                 const numericValue = e.target.value.replace(/\D/g, '');
                     e.target.value = numericValue
                 })}
                 onChange={(e)=> {

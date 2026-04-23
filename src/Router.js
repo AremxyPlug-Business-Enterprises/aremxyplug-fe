@@ -161,7 +161,7 @@ import SEOMarketing from "./Components/Screens/SEOMarketing/SEOMarketing";
 import EmailMarketing from "./Components/Screens/emailMarketing/EmailMarketing";
 import ProductDesign from "./Components/Screens/productDesign/ProductDesign";
 import GraphicDesign from "./Components/Screens/graphicDesign/GraphicDesign";
-import NotificationsPage2 from "./Components/NotificationsPage/Notifications2";
+// import NotificationsPage2 from "./Components/NotificationsPage/Notifications2";
 import { WaecFailedReceipt } from "./Components/EducationPins/ReceiptEducationPins/WaecFailedReceipt";
 import { NecoFailedReceipt } from "./Components/EducationPins/ReceiptEducationPins/NecoFailedReceipt";
 import { NabtebFailedReceipt } from "./Components/EducationPins/ReceiptEducationPins/NabtebFailedReceipt";
@@ -226,8 +226,8 @@ export   const RoutingObjectLimitScope = [
   { id: 4, Routepath: "/our-services", RouteComponent: <OurServices /> },
   { id: 5, Routepath: "/VTU_DEV", RouteComponent: <VTU_DEV /> },
   { id: 6, Routepath: "/CardIssuing", RouteComponent: <CardIssuing /> },
-  { id: 7, Routepath: "/our-services/payment", RouteComponent: <PaymentServices /> },
-  { id: 8, Routepath: "/our-services/telecoms", RouteComponent: <Telecoms /> },
+  { id: 7, Routepath: "/payment", RouteComponent: <PaymentServices /> },
+  { id: 8, Routepath: "/telecoms", RouteComponent: <Telecoms /> },
   { id: 9, Routepath: "/social-media-marketing", RouteComponent: <SocialMediaMarketing /> },
   { id: 10, Routepath: "/content-marketing", RouteComponent: <ContentMarketing /> },
   { id: 11, Routepath: "/seo-marketing", RouteComponent: <SEOMarketing /> },
@@ -410,7 +410,7 @@ export   const RoutingObjectLimitScope = [
   { id: 180, Routepath: "/NecoFailedReceipt", RouteComponent: <ProtectedRoute><NecoFailedReceipt /></ProtectedRoute> },
   { id: 181, Routepath: "/NabtebFailedReceipt", RouteComponent: <ProtectedRoute><NabtebFailedReceipt /></ProtectedRoute> },
   {id : 182, Routepath : "/TestingPhase", RouteComponent : <TestingDesign/>},
-  //    {id : 183, Routepath : "*", RouteComponent :  <ProtectedRoute><NotFound/></ProtectedRoute>},
+     {id : 183, Routepath : "*", RouteComponent :  <ProtectedRoute><NotFound/></ProtectedRoute>},
   //    { 
   //   id: 184, 
   //   Routepath: "/signUp/:refName", 

@@ -23,7 +23,7 @@ import { ContextProvider } from "../Context";
 // import { set } from "core-js/core/dict";
 
 export default function Referral() {
-  const {networkIssue, setNetworkIssue,    setSessionModal,
+  const {networkIssue, setNetworkIssue,  setAlertCustom,  setSessionModal,
           sessionModal} = React?.useContext(ContextProvider)
   //  const [copyTextOne, setCopyTextOne] = useState('');
   //  const [copyTextTwo, setCopyTextTwo] = useState('');
@@ -50,7 +50,11 @@ const [referralResponds, setReferralResponds] = useState({});
       navigator.clipboard
         .writeText(referralLink)
         .then(() => {
-          alert("Copied link to clipboard");
+         setAlertCustom({
+                message : "Copied to Clipboard",
+                type : "success",
+                show : true
+              })
         })
         .catch((err) => {
           console.error("Error copying text: ", err);
@@ -58,8 +62,11 @@ const [referralResponds, setReferralResponds] = useState({});
     } else if (ButtonHandler === "CopyCode") {
       navigator.clipboard
         .writeText(referralCode)
-        .then(() => {
-          alert("Copied code to clipboard");
+        .then(() => {   setAlertCustom({
+                message : "Copied to Clipboard",
+                type : "success",
+                show : true
+              })
         })
         .catch((err) => {
           console.error("Error copying text: ", err);
@@ -83,7 +90,11 @@ const [referralResponds, setReferralResponds] = useState({});
             if(networkIssue) return;
              if(!networkIssue) return setNetworkIssue(true)
       }else  if (ErrorType === "Server error") {
-              alert("Failed to fetch referred users");
+              setAlertCustom({
+                message : "Failed to fetch referred users",
+                type : "error",
+                show : true
+              })
              }
          };
 
@@ -225,7 +236,11 @@ const [referralResponds, setReferralResponds] = useState({});
               
                 id="copy-btn1"
                 onClick={(e) => {
-                  alert("The Referral Link is not available")
+                 setAlertCustom({
+                  message : "Referral Link is not available",
+                  type : "error",
+                  show : true
+                 })
                 //  handleCopyClick("CopyLink");
                 }}
                 className=" copy-btn1 flex justify-center gap-2.5 w-[25%] h-full bg-[#04177F] items-center rounded-e-[10px] lg:rounded-e-[22px] md:rounded-e-[12.607px]"

@@ -34,12 +34,13 @@ export const GloReceipt = (Data) => {
   setWalletNameGlo,
   setRecipientPhoneNumberGlo,
     setSelectedNetworkProduct,
-   
+   gloSuccessfulResponse,
    } =
     useContext(ContextProvider);
 
   const contentRef = useRef(null);
-
+const fullName = gloSuccessfulResponse?.full_name?.length ?
+ gloSuccessfulResponse?.full_name : ""
   // ===============Copy to Clipboard Function============
   // const handleCopyClick = () => {
   //   const text = textRef.current.innerText;
@@ -237,7 +238,7 @@ export const GloReceipt = (Data) => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Customer Name</p>
-                  <span>{Data.aremxyUsername}</span>
+                  <span>{fullName}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Wallet Type</p>

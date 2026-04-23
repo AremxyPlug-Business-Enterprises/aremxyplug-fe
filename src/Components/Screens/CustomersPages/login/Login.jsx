@@ -13,11 +13,6 @@ function Login() {
     setNav();
     return () => {
       setHideNavbar(false);
-      const ActiveSignUp = localStorage.getItem("ActiveSignUp");
-      const phoneData = localStorage.getItem("userPhone");
-      if(ActiveSignUp && !phoneData){
-     localStorage.removeItem("ActiveSignUp");
-      }
     };
     // eslint-disable-next-line
   }, []);

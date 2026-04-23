@@ -32,7 +32,6 @@ export const GotvReceipt = (Data) => {
     tvAmount,
     mobileNumber,
     smartCard,
-    cardName,
     isDarkMode, date,
      gotvOrderId,
     gotvTransactionId,
@@ -48,7 +47,8 @@ export const GotvReceipt = (Data) => {
     useContext(ContextProvider);
 
   const contentRef = useRef(null);
-
+const fullName = tvSubscriptionResponse?.data 
+? tvSubscriptionResponse?.data?.full_name : "";
   // ===============Copy to Clipboard Function============
   const handleCopyClick = () => {
     const text = textRef.current.innerText;
@@ -144,7 +144,8 @@ export const GotvReceipt = (Data) => {
   const GotvOrderInfo = (gotvOrderId !== undefined || gotvOrderId?.length > 1) ? gotvOrderId : "";
   const GotvTransactionInfo = (gotvTransactionId?.length > 1 || gotvTransactionId !== undefined )  ? gotvTransactionId : "";
   const GotvDescriptionInfo = (gotvDescription?.length > 1 || gotvDescription !== undefined) ? gotvDescription : "";
-
+  const cardName = tvSubscriptionResponse?.data?.card_name  ? tvSubscriptionResponse?.data?.card_name : ""
+  
   const ExitTheReceipt = ()=> {
       setTvEmail("")
    setMobileNumber("")
@@ -330,7 +331,7 @@ export const GotvReceipt = (Data) => {
                  mx-auto justify-between 
                  lg:text-[16px]">
                   <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Customer Name</p>
-                  <span  className={` ${isDarkMode ? "text-white": "text-black"}`}>{Data?.aremxyUsername ? Data.aremxyUsername : ""}</span>
+                  <span  className={` ${isDarkMode ? "text-white": "text-black"}`}>{fullName}</span>
                 </div>
                 <div className="flex text-[10px] font-[500] md:text-[14px] w-[90%]
                  mx-auto justify-between 

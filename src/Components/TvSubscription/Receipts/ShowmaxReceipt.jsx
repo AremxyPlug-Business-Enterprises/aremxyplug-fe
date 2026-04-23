@@ -8,12 +8,10 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { ContextProvider } from "../../Context";
 import { useNavigate } from "react-router-dom";
-import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 
 
 
 export const ShowmaxReceipt= () => {
-const Data = GetLocalStorage()
   const navigate = useNavigate();
   const { toggleSideBar, textRef,
     setShowMaxFlagResult,
@@ -42,7 +40,9 @@ const Data = GetLocalStorage()
     useContext(ContextProvider);
 
   const contentRef = useRef(null);
-
+const fullName = showMaxSubscriptionResponse?.data 
+? showMaxSubscriptionResponse?.data?.full_name : "";
+ const cardName = showMaxSubscriptionResponse?.data?.card_name  ? showMaxSubscriptionResponse?.data?.card_name : ""
   // ===============Copy to Clipboard Function============
   const handleCopyClick = () => {
     const text = textRef.current.innerText;
@@ -257,10 +257,10 @@ const Data = GetLocalStorage()
                   <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Smartcard / IUC Number</p>
                   <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{showMaxSmartCard}</span>
                 </div>
-                {/* <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
+                <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Card Name</p>
                   <span>{cardName}</span>
-                </div> */}
+                </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Phone</p>
                   <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{showMaxMobileNumber}</span>
@@ -293,7 +293,7 @@ const Data = GetLocalStorage()
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Customer Name</p>
-                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{Data?.aremxyUsername ? Data?.aremxyUsername : ""}</span>
+                  <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{fullName}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Wallet Type</p>

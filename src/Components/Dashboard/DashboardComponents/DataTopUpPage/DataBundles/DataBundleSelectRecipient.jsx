@@ -19,7 +19,7 @@ export const DataBundleSelectRecipient = ({loadingRecipient, setDataRecipientsDi
 const locationObject = useLocation();
 const pathname = locationObject?.pathname
   const { isDarkMode,  recipientsData, 
-    setRecipientsData,
+    setRecipientsData, setAlertCustom
    } = useContext(ContextProvider);
   const { toggleSideBar } = useContext(ContextProvider);
   const { networkName, setNetworkName } = useContext(ContextProvider);
@@ -76,14 +76,27 @@ const [confirmRecipient, setConfirmRecipient] = useState(false)
       const data = await response.json();
 
       if (response.ok && data.status === 200) {
-        alert("Recipient updated successfully:");
+        setAlertCustom({
+          message : "Recipient Updated Successfully",
+          type : "success",
+          show : true
+        })
         return true;
       } else {
-        alert("Error updating recipient");
+         setAlertCustom({
+          message : "Error Updating Recipient",
+          type : "error",
+          show : true
+        })
+           setConfirmRecipient(false);
         return false;
       }
     } catch (error) {
-     alert("Error updating recipient:");
+     setAlertCustom({
+          message : "Error Updating Recipient",
+          type : "error",
+          show : true
+        })
      setConfirmRecipient(false);
       return false;
     }

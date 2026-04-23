@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import MainImage from "./telecomImages/telecomsMain.svg";
 
 const TelecomsHeader = () => {
   return (
@@ -20,7 +19,7 @@ const TelecomsHeader = () => {
              service has got you covered.</p>
  </div>
           <div className='flex w-full justify-center md:w-1/2 md:justify-end'>
-            <img src={MainImage} alt="telecoms_img" className='w-[180.19px] h-[172.78px] md:w-[197.94px]
+            <img src={"/Images/telecomImages/telecomsMain.svg"} alt="telecoms_img" className='w-[180.19px] h-[172.78px] md:w-[197.94px]
          md:h-[189.79px] lg:w-[311.78px] lg:h-[298.85px] lg:object-contain'/>
         </div>    
         </div>

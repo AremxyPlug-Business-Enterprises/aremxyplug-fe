@@ -16,6 +16,7 @@ import { Loader } from "../Loader/Loader";
 
 const FiatConversion = () => {
   const [exchangeRate, setExchangeRate] = useState(null);
+  const {setAlertCustom} = useContext(ContextProvider)
   useEffect(() => {
     // Replace 'YOUR_API_KEY' with your actual API key or use a different exchange rate API.
     const apiUrl = `https://api.exchangerate-api.com/v4/latest/USD`;
@@ -48,11 +49,19 @@ const FiatConversion = () => {
         .writeText(textToCopy)
         .then(() => {
           // Handle successful copy, e.g., show a success message
-          alert("Copied to clipboard");
+          setAlertCustom({
+            message : "Copied to ClipBoard",
+            type : "success",
+            show : true
+          })
         })
         .catch((error) => {
           // Handle error, e.g., show an error message
-          console.error("Copy failed: " + error);
+           setAlertCustom({
+            message : "Copy failed",
+            type : "error",
+            show : true
+          })
         });
     };
     return (

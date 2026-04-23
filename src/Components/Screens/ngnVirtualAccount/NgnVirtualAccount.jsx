@@ -16,7 +16,7 @@ function NgnVirtualAccount() {
     accountNumberState ,
   customerDetail,setVirtualAccCreated, setBankNameState, setAccountNumberState, setAccountNameState,
            twoStepVerificationSuccess,setTwoStepVerificationSuccess, sessionModal, networkIssue, 
-           setNetworkIssue, setSessionModal} = useContext(ContextProvider)
+           setNetworkIssue, setSessionModal, setAlertCustom} = useContext(ContextProvider)
 
   //const accNoRef = useRef(null);
  // const accNameRef = useRef(null);
@@ -46,7 +46,7 @@ function NgnVirtualAccount() {
            AuthUsed = usernameToken || emailToken;
            await CheckVirtualAcc(AuthUsed, customerDetail, setLoading, setVirtualAccCreated, 
             setBankNameState, setAccountNameState, setAccountNumberState, 
-           twoStepVerificationSuccess,setTwoStepVerificationSuccess, setNetworkIssue)
+           twoStepVerificationSuccess,setTwoStepVerificationSuccess, setNetworkIssue, setAlertCustom)
            } 
             if(CheckVirtualAcc  && Data.ConfirmAcc === "true"){
         setLoading(false);
@@ -58,7 +58,13 @@ function NgnVirtualAccount() {
       if(!networkIssue) return setNetworkIssue(true)
         }
        else  if( error.response && error.response.status === 400){
-          alert("Virtual Account Creation failed")
+    
+    setAlertCustom({
+    message : "Virtual Account Creation Failed",
+    type : "error",
+    show : true
+  })
+   
           setLoading(false)
         }else if(error.response &&error.response.status === 401){
           if(sessionModal) return ;
@@ -67,10 +73,18 @@ function NgnVirtualAccount() {
  setLoading(false)
        return;
         }else if(error.response &&error.response.status === 500){
-          alert("SERVER ERROR");
+          setAlertCustom({
+    message : "SERVER_ERROR: Virtual Account Creation Failed",
+    type : "error",
+    show : true
+  })
           setLoading(false)
         }else {
-         alert("An unexpected error had occured")
+         setAlertCustom({
+    message : "Virtual Account Creation Failed",
+    type : "error",
+    show : true
+  })
             setLoading(false);
         }
       }

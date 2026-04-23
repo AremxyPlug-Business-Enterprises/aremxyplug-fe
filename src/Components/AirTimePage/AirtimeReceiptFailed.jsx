@@ -20,7 +20,8 @@ export const AirtimeReceiptFailed = (Data) => {
     setSelectedProduct,
     setAmount,
     setRecipientName,
-    airtimeResponse
+    airtimeResponse,
+    setAlertCustom
   } = useContext(ContextProvider);
 const {discount_amount, 
   reference_number,
@@ -54,11 +55,10 @@ transaction_product
   // ==============Share pdf Function=============
    const handleShareClick = async() => {
          const content = contentRef.current;
-         if(!content) return alert("Receipt not recorded")
+         if(!content) return;
          if(content){
            try {
           const pdf = new jsPDF("p", "mm", "a4");
-        //  alert(pdf.internal?.pageSize.getHeight())
            const canvas = await html2canvas(content,
               {scale : 2,
                 useCORS : true,
@@ -86,10 +86,18 @@ transaction_product
              .then(() => {return;} )
              .catch((error) => {return;});
          }else{
-         alert("Sharing this pdf isn't supported in your browser.")
+           setAlertCustom({
+            message : "Sharing this PDF is not supported in your browser",
+            type : "error",
+            show : true
+           })
          }
        }catch(error){
-        alert(error)
+           setAlertCustom({
+            message : "An Unexpected error has occured",
+            type : "error",
+            show : true
+           })
        }
          }
        };

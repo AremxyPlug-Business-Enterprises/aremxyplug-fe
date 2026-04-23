@@ -3,7 +3,7 @@ export const ourServiceDetails = [
         id:1,
         title: 'Telecom',
         message: 'Our Telecom services offers fast and secure connectivity for all your telecommunication needs. Whether you need to make calls, send messages, or access the internet, our telecom products and service has got you covered.',
-        link: 'our-services/telecoms',
+        link: 'telecoms',
         image: require('./../images/telecom.png'),
         image_name: 'telecom_img'
     },
@@ -11,7 +11,7 @@ export const ourServiceDetails = [
         id:2,
         title: 'Payment',
         message: 'We offer quick and secure payment processing to make sure your transactions go off without a hitch, using our user-friendly interface to receive money both locally and internationally. ',
-        link: 'our-services/payment', //link for payment services
+        link: 'payment', //link for payment services
         image: require('./../images/payment.png'),
         image_name: 'payment_img'
     },

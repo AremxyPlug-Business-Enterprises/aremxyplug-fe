@@ -217,11 +217,6 @@ const  successHandler = (response) => {
 
 
 
-
-// const handleRedeemPoints = async (e) => {
-//   e.preventDefault();
-// ...existing code...
-
 const VerifyPinHandler = async () => {
   const RedeemPointsHandler = async () => {
     const Path = "extra/point";
@@ -884,9 +879,7 @@ setPointRateRedeemed("");
                   // className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[8%]"
                   className="flex flex-col items-center lg:gap-[0px] gap-[5px] font-extrabold"
                 >
-                  <div
-                    // className=" flex justify-center  ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]"
-                    className="flex  w-full justify-center items-center gap-2.5">
+ <div className="flex  w-full justify-center items-center gap-2.5">
         <OtpInput
   value={inputPin}
   inputType={"tel"}

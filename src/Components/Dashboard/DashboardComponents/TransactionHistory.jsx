@@ -19,7 +19,7 @@ const TransactionHistory = ({
     setOrderIdResponse,
     setElectricityTransErrorType,
     setNetworkIssue,
-    sessionModal, setSessionModal
+    sessionModal, setSessionModal, setAlertCustom
     } = useContext(ContextProvider);
 
   const navigate = useNavigate();
@@ -83,7 +83,11 @@ const TransactionHistory = ({
            setSessionModal(true);
          }
        } else if (ErrorType === "Server error") {
-              alert("Failed to process your request");
+               setAlertCustom({
+            message : "Failed to process your request",
+            type : "error",
+            show : true
+          })
               setElectricityTransErrorType(
                 "Failed to process your request, try again some other time"
               );

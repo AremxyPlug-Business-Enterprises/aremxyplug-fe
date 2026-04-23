@@ -7,11 +7,9 @@ import html2canvas from "html2canvas";
 import { ContextProvider } from "../../../../Context";
 import { DashBoardLayout } from "../../../Layout/DashBoardLayout";
 import { formatDate } from "./ElectricityReceipt";
-import { GetLocalStorage } from "../../../../LocalStorage/LocalStorage";
 
 export const DataTransReceipt = () => {
   const navigate = useNavigate();
-  const data = GetLocalStorage();
   const [showReceipt, setShowReceipt] = useState(true);
   const { toggleSideBar, isDarkMode, orderIdResponse, setOrderIdResponse } =
     useContext(ContextProvider);
@@ -51,6 +49,10 @@ export const DataTransReceipt = () => {
       : "";
   const validity =
     receiptData?.validity?.length > 0 ? receiptData?.validity : "";
+
+
+    const fullName = receiptData?.full_name?.length
+     ? receiptData?.full_name  : "";
 
   function handleClick() {
     setOrderIdResponse({});
@@ -360,7 +362,7 @@ export const DataTransReceipt = () => {
                     <span
                       className={` ${isDarkMode ? "text-white" : "text-black"}`}
                     >
-                      {data?.aremxyUsername ? data.aremxyUsername : ""}
+                      {fullName}
                     </span>
                   </div>
                   <div className="flex text-[10px] font-medium md:text-sm w-[90%] mx-auto justify-between lg:text-base">

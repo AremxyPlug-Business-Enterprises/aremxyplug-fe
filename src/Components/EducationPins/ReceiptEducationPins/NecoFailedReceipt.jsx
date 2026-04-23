@@ -7,9 +7,9 @@ import styles from "../../Dashboard/DashboardComponents/TransferComponent/transf
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import AremxyPlugIcon from "../imagesEducation/AremxyPlug.svg";
-import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
+
 export const NecoFailedReceipt = () => {
-  const data = GetLocalStorage();
+
   const navigate = useNavigate();
   const {
     necoQuantityResult,
@@ -31,7 +31,7 @@ export const NecoFailedReceipt = () => {
     setNecoTransactionId,
     necoShowDescription,
     setNecoShowDescription,
-    // necoFullName,
+    necoFullName,
     setNecoFullName,
     necoTransactionProduct,
     setNecoTransactionProduct,
@@ -70,7 +70,7 @@ export const NecoFailedReceipt = () => {
   const pins_generated = necoPinsGenerated?.length > 0 ? necoPinsGenerated : "";
   const transaction_product =
     necoTransactionProduct?.length > 0 ? necoTransactionProduct : "";
-
+const fullName = necoFullName?.length ? necoFullName : ""
   //   Share function
   const shareFailedReceipt = () => {
     if (navigator.share) {
@@ -266,8 +266,8 @@ export const NecoFailedReceipt = () => {
                   <span
                     className={` ${isDarkMode ? "text-white" : "text-black "}`}
                   >
-                    {/* {fullName} */}
-                    {data?.aremxyUsername ? data?.aremxyUsername : ""}
+                   {fullName} 
+                
                   </span>
                 </div>
                 <div className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between lg:text-base font-medium">

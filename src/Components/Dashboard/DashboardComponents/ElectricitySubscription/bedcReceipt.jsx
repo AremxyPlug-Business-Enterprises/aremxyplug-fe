@@ -7,11 +7,10 @@ import { Link, useNavigate } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import logo2 from "../ElectricitySubscription/Electricity-sub-images/BEDC-Logo-new-dark-1 1.svg";
-// import { useLocation, useNavigate } from 'react-router-dom';
-import { GetLocalStorage } from "../../../LocalStorage/LocalStorage";
+
 
 export const BedcReceipt = () => {
-  const data = GetLocalStorage();
+
 
   const {
     toggleSideBar,
@@ -42,7 +41,7 @@ export const BedcReceipt = () => {
     setBedcTransactionId,
     bedcShowDescription,
     setBedcShowDescription,
-    // bedcFullName,
+     bedcFullName,
     setBedcFullName,
     bedcTransactionProduct,
     setBedcTransactionProduct,
@@ -58,7 +57,7 @@ export const BedcReceipt = () => {
     selectedBedcMeterType?.length > 0 ? selectedBedcMeterType : "";
   const meterNo = bedcMeterNumber?.length > 0 ? bedcMeterNumber : "";
   const verifiedName = bedcVerifiedName?.length > 0 ? bedcVerifiedName : "";
-  // const fullName = bedcFullName?.length > 0 ? bedcFullName : "";
+  const fullName = bedcFullName?.length > 0 ? bedcFullName : "";
   const phoneNo = bedcPhoneNumber?.length > 0 ? bedcPhoneNumber : "";
   const productEmail = bedcEmail?.length > 0 ? bedcEmail : "";
   const productAmount = bedcAmount?.length > 0 ? bedcAmount : "";
@@ -94,33 +93,60 @@ export const BedcReceipt = () => {
   const contentRef = useRef(null);
 
   // ==============Share pdf Function=============
-  const handleShareClick = () => {
-    if (navigator.share) {
-      navigator
-        .share({
-          title: "Receipt",
-          text: "Check out this receipt!",
-          url: "https://example.com", // Replace with the actual URL of your receipt
-        })
-        .then(() =>{return;})
-        .catch((error) => {return;});
-    } else {
-      return;
-    }
-  };
-
-  // ==============Save Pdf Function==============
-  const handleSaveAsPDFClick = () => {
-    const content = contentRef.current;
-    if (content) {
-      const pdf = new jsPDF();
-      html2canvas(content).then((canvas) => {
-        const imgData = canvas.toDataURL("image/png");
-        pdf.addImage(imgData, "PNG", 10, 10, 190, 0);
-        pdf.save("BEDC-Success-Receipt.pdf");
-      });
-    }
-  };
+  const handleShareClick = async() => {
+       const content = contentRef.current;
+       if(!content) return alert("Receipt not recorded")
+       if(content){
+         try {
+        const pdf = new jsPDF("p", "mm", "a4");
+      //  alert(pdf.internal?.pageSize.getHeight())
+         const canvas = await html2canvas(content,
+            {scale : 2,
+              useCORS : true,
+              backgroundColor : `${isDarkMode ? "#000" : "#fff"}`
+           }
+             )
+            
+         const bgPdf = pdf.setFillColor(isDarkMode ? 0 : 255, isDarkMode ? 0 : 255, isDarkMode ? 0 : 255 )
+         if(bgPdf){
+           const pageHeight = pdf.internal.pageSize.getHeight();
+           const pageWidth = pdf.internal.pageSize.getWidth();
+           const imgWidth = pageWidth;
+           const imgData = canvas.toDataURL("image/jpeg", 1.0);
+           pdf.addImage(imgData, 
+             "jpeg",0, 0, imgWidth, pageHeight, undefined, "FAST");
+     }
+        const pdfBlob = pdf.output("blob");
+       const file = new File([pdfBlob], "AremxyPlug_Receipt.pdf", {type : "application/pdf"})
+       if (navigator.canShare && navigator.canShare({files : [file]})) {
+         navigator
+           .share({
+             title: `AremxyPlug_BEDC_Receipt`,
+             files : [file], 
+           })
+           .then(() => {return;})
+           .catch((error) => {return;});
+       }else{
+       alert("Sharing this pdf isn't supported in your browser.")
+       }
+     }catch(error){
+      alert(error)
+     }
+       }
+     };
+   
+   // ==============Save Pdf Function==============
+   const saveAsPDFClick = () => {
+     const contentWaec = contentRef.current;
+     if (contentWaec) {
+       const pdf = new jsPDF();
+       html2canvas(contentWaec).then((canvas) => {
+         const imgWaecData = canvas.toDataURL("image/png");
+         pdf.addImage(imgWaecData, "PNG", 10, 10, 190, 0);
+         pdf.save(`${description}.pdf`);
+       });
+     }
+   };
   return (
     <DashBoardLayout>
       <div className="flex flex-col gap-[35px] lg:gap-[85px]">
@@ -298,7 +324,7 @@ export const BedcReceipt = () => {
                     Customer Name
                   </p>
                   <span className="font-medium">
-                    {data?.aremxyUsername ? data?.aremxyUsername : verifiedName}
+                    {fullName}
                   </span>
                 </div>
 
@@ -406,7 +432,7 @@ export const BedcReceipt = () => {
             </button>
             <button
               onClick={() => {
-                handleSaveAsPDFClick();
+                saveAsPDFClick();
               }}
               className={`bg-[#ffffff] border w-[111px] flex justify-center items-center mx-auto cursor-pointer text-xs font-extrabold  ${
                 isDarkMode
