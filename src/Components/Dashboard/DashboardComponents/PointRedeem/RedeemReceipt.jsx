@@ -60,6 +60,12 @@ export const RedeemReceipt = () => {
       });
     }
   };
+
+  const NairaConvertAmountRedeem = typeof transaction_amountRedeem === "string"?
+ Number(pointAmountRedeemed)?.toLocaleString("en-NG", {
+  style : "currency",
+  currency : "NGN",
+ }) : ""
   return (
     <DashBoardLayout>
       <div className="flex flex-col gap-[35px] lg:gap-[85px]">
@@ -125,11 +131,11 @@ export const RedeemReceipt = () => {
               `}>
               You have successfully redeemed{" "}
               <span className={` font-extrabold text-[10px] md:text-[12px] lg:text-[14px]`}>
-                   {isLoading ? "Loading..." : pointAmountRedeemed}.00
+                   {isLoading ? "Loading..." : pointAmountRedeemed}
               </span>{" "}
               Points to{" "}
              <span className={`  font-extrabold text-[10px] md:text-[16px] lg:text-[14px]`}>
-                   &#8358;{isLoading ? "Loading..." : pointAmountRedeemed}.00
+                   &#8358;{isLoading ? "Loading..." : NairaConvertAmountRedeem}
               </span>{" "}
               from your PTS balance{" "} to
             </p>
@@ -152,7 +158,7 @@ export const RedeemReceipt = () => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Amount Redeemed</p>
-                    <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{isLoading ? "Loading..." : pointAmountRedeemed}.00 PTS</span>
+                    <span className={` ${isDarkMode ? "text-white" : "text-black"}`}>{isLoading ? "Loading..." : pointAmountRedeemed} PTS</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className={` ${isDarkMode ? "text-white" : "text-[#7C7C7C]"}`}>Account Received</p>
