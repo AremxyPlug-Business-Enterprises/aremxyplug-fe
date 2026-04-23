@@ -127,7 +127,11 @@ export const PointRedeemReceipt = () => {
       }
     };
   
-
+const NairaConvertAmountRedeem = typeof transaction_amountRedeem === "string"?
+ Number(transaction_amountRedeem)?.toLocaleString("en-NG", {
+  style : "currency",
+  currency : "NGN",
+ }) : ""
   // ==============Save Pdf Function==============
   const handleSaveAsPDFClick = () => {
     const content = contentRef.current;
@@ -234,7 +238,8 @@ export const PointRedeemReceipt = () => {
                   ? <p>
                     You have successfully redeemed  <b className="font-[700px] text-[12px] leading-[14px] lg:text-[17px] lg:leading-[22px]">
                        {receiptData?.points_redeemed} </b>  Points to
-                         <b className="font-[700px] text-[12px] leading-[14px] lg:text-[17px] lg:leading-[20px]"> {" "}{transaction_amountRedeem} {" "}</b>
+                         <b className="font-[700px] text-[12px] leading-[14px] lg:text-[17px] lg:leading-[20px]"> {" "}
+                          {NairaConvertAmountRedeem} {" "}</b>
                           from your PTS Balance to 
                     </p>
                   : receiptData?.status === "pending"
@@ -303,7 +308,7 @@ export const PointRedeemReceipt = () => {
                      Amount Redeemed
                     </p>
                     <span className="">
-                       {transaction_amountRedeem}
+                       {transaction_amountRedeem}PTS
                         </span>
                   </div>
                   <div className="flex text-[10px] md:text-sm w-[90%] mx-auto justify-between font-medium lg:text-base">
