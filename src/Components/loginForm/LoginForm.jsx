@@ -9,6 +9,7 @@ import { Tooltip as ReactTooltip } from "react-tooltip";
 import LoginPopUp from "./LoginPopUp";
 import Joi from "joi";
 import axios from "axios";
+import { BASE_URL } from "../../config";
 import { Loader } from "../Loader/Loader";
 import { Modal } from "../Screens/Modal/Modal";
 import { RemoveLocalStorage } from "../LocalStorage/LocalStorage";
@@ -197,11 +198,7 @@ if(!navigator.onLine) {
             withCredentials : true
           };
         const response =   await axios
-            .post(
-              "https://api.aremxyplug.com/api/v1/login",
-              loginData,
-              config
-            )
+            .post(`${BASE_URL}/login`, loginData, config)
               if (response.status === 202 && response.headers.hasAuthorization) {
                  localStorage.setItem("xcss{}", true);
                 setOpenTranspin(true);
@@ -306,11 +303,7 @@ if(!navigator.onLine) {
           };
           try {
         const response =   await axios
-            .post(
-              "https://api.aremxyplug.com/api/v1/login",
-              loginData,
-              config
-            )
+            .post(`${BASE_URL}/login`, loginData, config)
         if (response.status === 202  && response?.headers?.hasAuthorization) {
            localStorage.setItem("xcss[]", true);
                 setOpenTranspin(true);

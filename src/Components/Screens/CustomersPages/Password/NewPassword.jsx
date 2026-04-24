@@ -12,6 +12,7 @@ import showIcon from './eyeIcon1.png'
 import RedirectModal from './RedirectModal';
 import { Loader } from '../../../Loader/Loader';
 import axios from 'axios';
+import { BASE_URL } from '../../../../config';
 import { Modal } from '../../Modal/Modal';
 import { useLocation } from 'react-router-dom';
 import { RemoveLocalStorage } from '../../../LocalStorage/LocalStorage';
@@ -53,7 +54,7 @@ const updatePassword = async()=> {
     password : password
    }
    try{
-    const url = `https://api.aremxyplug.com/api/v1/reset-password?email=${inputForgetEmail}`
+    const url = `${BASE_URL}/reset-password?email=${inputForgetEmail}`
     const response = await axios.patch(url, body, {headers : {"Authorization" : passwordAuthorisation}})
     if(response.status === 201 || response.status === 200){
         setBorder('');

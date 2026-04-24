@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { ContextProvider } from './Context';
 import { GetFunction , NetworkPopUp, InternalLoginSession} from './ApiCollection.jsx/ApiBuck';
 import { TaskProgressController } from './Motion';
+import { WS_BASE_URL } from '../config';
 
 
 export const RealTimeUpdates = ({children}) => {
@@ -18,7 +19,7 @@ export const RealTimeUpdates = ({children}) => {
       || connectionSocket.readyState === WebSocket.CONNECTING){
       return;
     }
-     connectionSocket = new WebSocket(`wss://api.aremxyplug.com/api/v1/ws/events`);
+     connectionSocket = new WebSocket(`${WS_BASE_URL}/ws/events`);
       connectionSocket.onopen =()=> {
    
       }

@@ -2,6 +2,21 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## API Environments (Test vs Live)
+
+This app reads API endpoints from Create React App environment variables:
+- `REACT_APP_API_BASE_URL` (example: `https://test-api.aremxyplug.com/api/v1`)
+- `REACT_APP_WS_BASE_URL` (example: `wss://test-api.aremxyplug.com/api/v1`)
+- `REACT_APP_SIGNUP_ENABLED` (`true` or `false`)
+
+Defaults in this repo:
+- Development (`npm start`) uses `.env.development` → Test API (`https://test-api.aremxyplug.com`)
+- Production build (`npm run build`) uses `.env.production` → Live API (`https://api.aremxyplug.com`)
+
+Optional:
+- `npm run build:test` creates a production build that targets the Test API.
+  - This build also disables signup (`REACT_APP_SIGNUP_ENABLED=false`), so visiting `/signUp` redirects to `/Login`.
+
 ## Available Scripts
 
 In the project directory, you can run:

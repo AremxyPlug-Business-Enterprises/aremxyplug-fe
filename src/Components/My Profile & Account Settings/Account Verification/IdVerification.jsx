@@ -20,6 +20,7 @@ import { Loader } from "../../Loader/Loader";
 import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 import idSuccess from "../ProfileImages/user-tick.svg";
 import countryImage from "../../EducationPins/imagesEducation/Nigeriaflag.svg";
+import { BASE_URL } from "../../../config";
 
 
 export default function IdVerification() {
@@ -116,7 +117,7 @@ const [idNumberError, setIdNumberError] = useState("")
       setErrorSubmit("A Network connection error")
      } 
     if (idButtonState === "Verify" && navigator.onLine) {
-      url = "https://api.aremxyplug.com/api/v1/verify";
+      url = `${BASE_URL}/verify`;
       buttonStateSuccess = "Verified";
       PendingImageFxn = () => setVerifyImage(Pending);
       PendingText = () => setIdStatus("Pending");

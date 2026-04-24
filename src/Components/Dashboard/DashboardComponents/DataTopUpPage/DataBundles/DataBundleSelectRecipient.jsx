@@ -14,6 +14,7 @@ import { Loader } from "../../../../Loader/Loader";
 import { useLocation } from "react-router-dom";
 import { BalanceLoading } from "../../../../Loader/Loader";
 import NoRecordImage from "../../../../Add&SelectRecipient/RecipientImages/NoRecordImage.svg";
+import { BASE_URL } from "../../../../../config";
 export const DataBundleSelectRecipient = ({loadingRecipient, setDataRecipientsDisplay, setDataRecipient,
    setRecipientPhoneNumber}) => {
 const locationObject = useLocation();
@@ -62,7 +63,7 @@ const [confirmRecipient, setConfirmRecipient] = useState(false)
 
     try {
       const response = await fetch(
-        `https://api.aremxyplug.com/api/v1/data/recipient`,
+        `${BASE_URL}/data/recipient`,
         {
           method: "PUT",
           headers: {
@@ -109,7 +110,7 @@ const [confirmRecipient, setConfirmRecipient] = useState(false)
       };
 
       const response = await fetch(
-        `https://api.aremxyplug.com/api/v1/data/recipient`,
+        `${BASE_URL}/data/recipient`,
         {
           method: "DELETE",
           headers: {

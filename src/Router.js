@@ -1,5 +1,5 @@
 import React  from "react";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { Home } from "./Components/Screens/Home/Home";
 import OurServices from "./Components/Screens/OurServices/OurServices";
 import PaymentServices from "./Components/Screens/PaymentServices/PaymentServices";
@@ -95,6 +95,7 @@ import { SpectranetReceipt } from "./Components/Dashboard/DashboardComponents/Da
 import AddRecipient from "./Components/AirTimePage/AddRecipient";
 //import DataBundleSelectRecipient from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundleSelectRecipient";
 import DataBundleAddRecipient from "./Components/Dashboard/DashboardComponents/DataTopUpPage/DataBundles/DataBundleAddRecipient";
+import { SIGNUP_ENABLED } from "./config";
 import ElectricitySubscription from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/ElectricitySubscription";
 import IKEDC from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/IKEDC";
 import { IkedcReceipt } from "./Components/Dashboard/DashboardComponents/ElectricitySubscription/IkedcReceipt";
@@ -244,7 +245,7 @@ export   const RoutingObjectLimitScope = [
   { id: 22, Routepath: "/privacy-policy", RouteComponent: <PrivacyPolicy /> },
   { id: 23, Routepath: "/Login", RouteComponent:  <Login /> },
   { id: 24, Routepath: "/team", RouteComponent: <Team /> },
-  { id: 25, Routepath: "/signUp", RouteComponent: <SignUp /> },
+  { id: 25, Routepath: "/signUp", RouteComponent: SIGNUP_ENABLED ? <SignUp /> : <Navigate to="/Login" replace /> },
   { id: 26, Routepath: "/Verification", RouteComponent: <Verification /> },
   { id: 27, Routepath: "/passwordReset", RouteComponent: <PasswordReset /> },
   { id: 28, Routepath: "/newPassword", RouteComponent: <NewPassword /> },

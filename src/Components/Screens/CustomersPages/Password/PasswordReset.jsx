@@ -7,6 +7,7 @@ import { useContext } from 'react';
 import { ContextProvider } from "../../../Context";
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { BASE_URL } from '../../../../config';
 import { Loader } from '../../../Loader/Loader';
 import SecondModal from './SecondModal';
 import { Modal } from '../../Modal/Modal';
@@ -83,10 +84,10 @@ const PasswordReset = () => {
 const userForgetPasswordSystem = async(url, alertMessage)=>{
 if(selectionType ==="otp"){
   setForgetPassCountdown(60);
-  url = "https://api.aremxyplug.com/api/v1/send-otp/resetpassword"
+  url = `${BASE_URL}/send-otp/resetpassword`
   alertMessage = "An otp has been sent to your email"
 }else if(selectionType === "link"){
-url = "https://api.aremxyplug.com/api/v1/forgot-password"
+url = `${BASE_URL}/forgot-password`
 alertMessage = "A link has been sent to your email"
 }
 resetPasswordOtp(url, alertMessage)

@@ -19,6 +19,7 @@ import NotVerifiedImage from "../ProfileImages/NotVerifiedIcon.svg";
 import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 import { Loader } from "../../Loader/Loader";
 import countryImage from "../../EducationPins/imagesEducation/Nigeriaflag.svg";
+import { BASE_URL } from "../../../config";
 export default function BvnVerification() {
   const dateInputRef = useRef(null);
   const { bvnVerificationOpen, networkIssue, setNetworkIssue, setVerificationResponse,
@@ -85,7 +86,7 @@ export default function BvnVerification() {
       && genderResult
       && bvnPhone?.length === 11
     ) {
-      url = "https://api.aremxyplug.com/api/v1/verify";
+      url = `${BASE_URL}/verify`;
       buttonStateSuccess = "Verified";
       PendingImageFxn = () => setBvnVerifyImage(PendingImage);
       PendingText = () => setBvnStatus("Pending");

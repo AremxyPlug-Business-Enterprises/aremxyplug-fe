@@ -5,6 +5,7 @@ import { Modal } from "../Screens/Modal/Modal";
 import OtpInput from "react-otp-input";
 import { primaryColor } from "../Screens/cardIssuing/cardIssuing";
 import axios from "axios";
+import { BASE_URL } from "../../config";
 import CloseIcon from "../EducationPins/imagesEducation/close-circle.svg";
 import { Loader } from "../Loader/Loader";
 import { useNavigate } from "react-router-dom";
@@ -144,12 +145,12 @@ function LoginPopUp() {
        body = {
         phone_number: phone,
       };
-      url = "https://api.aremxyplug.com/api/v1/sms/send";
+      url = `${BASE_URL}/sms/send`;
     } else if ( paramSmsOrEmail === "email") {
       body = {
         email: email,
       };
-      url = "https://api.aremxyplug.com/api/v1/send-otp/signin";
+      url = `${BASE_URL}/send-otp/signin`;
     }
     if (!navigator.onLine) {
          setAlertCustom({
@@ -194,7 +195,7 @@ function LoginPopUp() {
   // Function to help check the verification status of a user
   //Verification with Bvn or NiN and if the user has created an account
   const ConfirmVirtualState = async () => {
-    const url = "https://api.aremxyplug.com/api/v1/check-verification";
+    const url = `${BASE_URL}/check-verification`;
       //
       try {
         setLoading(true);
@@ -420,12 +421,12 @@ return assignImageByUsername
   // THE FUNCTION FOR DERIVING THE GET OPT METHOD
   const gettingSmsOrEmailFunctionOtp = async (url, body) => {
     if (smsOrEmail === "email") {
-      url = `https://api.aremxyplug.com/api/v1/verify-otp/signin?email=${email}`;
+      url = `${BASE_URL}/verify-otp/signin?email=${email}`;
       body = {
         otp: otp3,
       };
     } else if(smsOrEmail === "sms") {
-      url = `https://api.aremxyplug.com/api/v1/sms/verify/signin?phone=${phone}`;
+      url = `${BASE_URL}/sms/verify/signin?phone=${phone}`;
       body = {
         otp: otp3,
       };

@@ -23,6 +23,7 @@ import { CheckVirtualAcc} from "../../ApiCollection.jsx/ApiBuck";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { GetFunction} from "../../../Components/ApiCollection.jsx/ApiBuck";
+import { BASE_URL } from "../../../config";
 
 //import { useImageHook } from "../../useImageHook";
 
@@ -133,7 +134,7 @@ if((clickedoption === "NGN")){
       try{
       setDashLoading(true);
       const body =""
-      const url = "https://api.aremxyplug.com/api/v1/virtualacc";
+      const url = `${BASE_URL}/virtualacc`;
        const response = await axios.post(url,body,{ headers : {"Content-Type" : "application/json",
        },  withCredentials : true
       })
@@ -204,7 +205,7 @@ if((clickedoption === "NGN")){
         if((usernameToken || emailToken) && navigator.onLine){
         try{
           setBalanceLoading(true);
-         const url = "https://api.aremxyplug.com/api/v1/balance";
+         const url = `${BASE_URL}/balance`;
          const response = await axios.get(url,{ headers : {"Content-Type" : "application/json",
            },withCredentials :true
         })
