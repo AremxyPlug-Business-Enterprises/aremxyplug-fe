@@ -1,8 +1,9 @@
 // apiClient.js
 import axios from 'axios';
+import { BASE_URL } from '../../config';
 
 const axiosInstance = axios.create({
-  baseURL: 'https://api.aremxyplug.com/api/v1',
+  baseURL: BASE_URL,
   withCredentials: true,
 });
 

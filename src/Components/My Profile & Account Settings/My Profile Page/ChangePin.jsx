@@ -14,6 +14,7 @@ import Cancel from "../ProfileImages/Cancel.svg";
 import ChangePassword from "./ChangePassword";
 import Success from "../ProfileImages/success.gif";
 import axios from "axios";
+import { BASE_URL } from "../../../config";
 import { Loader } from "../../Loader/Loader";
 import { GetLocalStorage, } from "../../LocalStorage/LocalStorage";
 import { PostFunction } from "../../ApiCollection.jsx/ApiBuck";
@@ -89,7 +90,7 @@ const ChangeUserPin = async()=> {
     "new_pin" : newPin
    }
    const dataJson = JSON.stringify(data);
-   const url = "https://api.aremxyplug.com/api/v1/pin";
+   const url = `${BASE_URL}/pin`;
    const response = await axios.patch(url,dataJson,
     {headers : {"Content-Type":"application/json" }, 
     withCredentials : true

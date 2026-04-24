@@ -4,7 +4,7 @@ import axios from "axios";
 import arrowDown from "../../src/Components/EducationPins/imagesEducation/arrow-down.svg";
 import NotVerifiedIcon from "../Components/My Profile & Account Settings/ProfileImages/NotVerifiedIcon.svg";
 //import { useSearchParams } from "react-router-dom";
-// import { BASE_URL } from "../config";
+import { BASE_URL } from "../config";
 
 export const ContextProvider = createContext();
 
@@ -327,7 +327,7 @@ const [referralName, setReferralName] = useState("")
         const config = {
           headers: { "Content-Type": "application/json" },
         };
-        const url = "https://api.aremxyplug.com/api/v1/signup";
+        const url = `${BASE_URL}/signup`;
         axios
           .post(url, data, config)
           .then((response) => {

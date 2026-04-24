@@ -1,6 +1,7 @@
 import { GetLocalStorage, SetLocalStorage } from "../LocalStorage/LocalStorage";
 import { RemoveLocalStorage } from "../LocalStorage/LocalStorage";
 import axios from "axios";
+import { BASE_URL } from "../../config";
 import { Modal } from "../Screens/Modal/Modal";
 import { useNavigate } from "react-router-dom";
 import { BalanceLoading } from "../Loader/Loader";
@@ -614,7 +615,7 @@ export const CheckVirtualAcc = async(
 setAlertCustom) => {
      if(!navigator.onLine ) setNetworkIssue(true)
   if (authToken  && navigator.onLine) {
-    const url = 'https://api.aremxyplug.com/api/v1/virtualacc';
+    const url = `${BASE_URL}/virtualacc`;
      try{
     setLoading(true);
           const response = await axios.get(url, {headers : {"Content-Type" : "application/json",
@@ -760,7 +761,7 @@ export const VerifyTransPin = async (
       const body = {
          pin : otp
       }
-      const url = "https://api.aremxyplug.com/api/v1/pin/verify"
+      const url = `${BASE_URL}/pin/verify`
       const response = await axios.post(url, body, {headers: {"Content-Type" :"application/json",
       },withCredentials : true
    })
@@ -817,7 +818,7 @@ export const PostFunction = async (
   if ((usernameToken || emailToken ) && navigator.onLine){
     try {
       setLoading(true);
-      const url = `https://api.aremxyplug.com/api/v1/${path}`;
+      const url = `${BASE_URL}/${path}`;
       const response = await axios.post(url, body, {
         headers: {
           "Content-Type": "application/json",
@@ -882,7 +883,7 @@ export const GetFunction = async(path, setLoading, functionAtSuccess,
    if((usernameToken || emailToken) && navigator.onLine){
       try{
          setLoading(true);
-    const url = `https://api.aremxyplug.com/api/v1/${path}`
+    const url = `${BASE_URL}/${path}`
       const response = await axios.get(url, {headers: {"Content-Type" :"application/json",
          }, withCredentials : true})
     if(response.status === 201 || response.status ===  200){
@@ -933,7 +934,7 @@ export const PutFunction = async (
   if ((usernameToken || emailToken) && navigator.onLine) {
     try {
       setLoading(true);
-      const url = `https://api.aremxyplug.com/api/v1/${path}`;
+      const url = `${BASE_URL}/${path}`;
       const response = await axios.put(url, body, {
         headers: {
           "Content-Type": "application/json",

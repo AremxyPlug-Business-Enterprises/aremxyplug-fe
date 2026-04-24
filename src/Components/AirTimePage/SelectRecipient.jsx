@@ -17,6 +17,7 @@ import NoRecordImage  from "../Add&SelectRecipient/RecipientImages/NoRecordImage
 import { BalanceLoading } from "../Loader/Loader";
 import { useLocation  } from "react-router-dom";
 import { GetFunction } from "../ApiCollection.jsx/ApiBuck";
+import { BASE_URL } from "../../config";
 // import { Oval } from 'react-loader-spinner';
 
 
@@ -79,7 +80,7 @@ const [confirmRecipient, setConfirmRecipient] = useState(false)
     };
 
     try {
-      const response = await fetch(`https://api.aremxyplug.com/api/v1/airtime/recipient`, {
+      const response = await fetch(`${BASE_URL}/airtime/recipient`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -130,7 +131,7 @@ const [confirmRecipient, setConfirmRecipient] = useState(false)
         id: recipientId,
       };
 
-      const response = await fetch(`https://api.aremxyplug.com/api/v1/airtime/recipient`, {
+      const response = await fetch(`${BASE_URL}/airtime/recipient`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json'

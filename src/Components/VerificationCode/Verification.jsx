@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import OtpInput from "react-otp-input";
 import CloseIcon from '../EducationPins/imagesEducation/close-circle.svg';
 import axios from "axios";
+import { BASE_URL } from "../../config";
 import { Loader } from "../Loader/Loader";
 import { GetLocalStorage } from "../LocalStorage/LocalStorage";
 
@@ -57,14 +58,14 @@ const getOtpSmsorEmail = async(channel)=> {
       phone_number : parsedPhone
     }
     
-     url ="https://api.aremxyplug.com/api/v1/sms/send";
+     url =`${BASE_URL}/sms/send`;
 
   }else if(channel === "email" ){
    const parsedEmail =   email  ? email?.toLowerCase() : "";
     body = {
     email : parsedEmail
    }
-   url = "https://api.aremxyplug.com/api/v1/send-otp/signup"
+   url = `${BASE_URL}/send-otp/signup`
 }
 if(!navigator.onLine) {
   setAlertCustom({
@@ -160,13 +161,13 @@ function twoStepVerificationHandler(url) {
 
 const gettingSmsOrEmailFunctionOtp = async(url, body)=> {
   if( viaEmailOrSms === "email"){
-     url = `https://api.aremxyplug.com/api/v1/verify-otp/signup?email=${email ? email?.toLowerCase() :  ""}`
+     url = `${BASE_URL}/verify-otp/signup?email=${email ? email?.toLowerCase() :  ""}`
        body ={
        otp :otpVerifyEmailSignup
        }
     
       }else if(viaEmailOrSms === "sms"){
-       url = `https://api.aremxyplug.com/api/v1/sms/verify/signup?phone=${phoneNumber ? phoneNumber :  ""}`
+       url = `${BASE_URL}/sms/verify/signup?phone=${phoneNumber ? phoneNumber :  ""}`
        body ={
        otp :otpVerifySmsSignup
        }
