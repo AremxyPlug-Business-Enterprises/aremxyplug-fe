@@ -11,6 +11,7 @@ import { Modal } from "../../../../Screens/Modal/Modal";
 import DataBundle from "../DataBundles/DataBundles-Images/DataBundles.svg";
 import styles from "../../DataTopUpPage/DataTopUp.css";
 import { BalanceLoading } from "../../../../Loader/Loader";
+import { BASE_URL } from "../../../../../config";
 //import { DataBundleSelectRecipient } from "./DataBundleSelectRecipient";
 const DataBundleAddRecipient = () => {
   const { networkName, setNetworkName, networkIssue, setAlertCustom, setNetworkIssue, 
@@ -150,7 +151,7 @@ const DataBundleAddRecipient = () => {
         phone: recipientNumber, // Changed from recipientNumber
       };
   const response = await fetch(
-        "https://api.aremxyplug.com/api/v1/data/recipient",
+        `${BASE_URL}/data/recipient`,
         {
           method: "POST",
           headers: {

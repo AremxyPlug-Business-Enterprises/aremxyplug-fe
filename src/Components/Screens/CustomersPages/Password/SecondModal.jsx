@@ -5,6 +5,7 @@ import tickGif from './tick.gif'
 import { useContext } from 'react';
 import { ContextProvider } from "../../../Context";
 import axios from 'axios';
+import { BASE_URL } from '../../../../config';
 import { Modal } from '../../Modal/Modal';
 import { Loader } from '../../../Loader/Loader';
 
@@ -46,7 +47,7 @@ const dateAsAtAllocation =  Date.now();
             otp : otpSent
         }
         try{
-            const url =  `https://api.aremxyplug.com/api/v1/verify-otp/resetpassword?email=${inputForgetEmail}`
+            const url =  `${BASE_URL}/verify-otp/resetpassword?email=${inputForgetEmail}`
        const response = await axios.post(url,body,{ headers : {"Content-Type" : "application/json"}})
       
           if((response.status === 200 || response.status === 201)  && response.headers.hasAuthorization){

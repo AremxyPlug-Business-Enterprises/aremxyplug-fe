@@ -8,6 +8,7 @@ import { Modal } from "../../Screens/Modal/Modal";
 import styles from "../../../Components/Dashboard/DashboardComponents/TransferComponent/transfer.module.css";
 import Success from "../ProfileImages/success.gif";
 import axios from "axios";
+import { BASE_URL } from "../../../config";
 import { Loader } from "../../Loader/Loader";
 const ChangePassword = () => {
   const { toggleSideBar, isDarkMode, sessionModal, networkIssue, setNetworkIssue, setSessionModal } = useContext(ContextProvider);
@@ -36,7 +37,7 @@ const [loading, setLoading] = useState(false);
       old_password : oldPassword,
       new_password : newPassword
      }
-     const url = "https://api.aremxyplug.com/api/v1/update-password";
+     const url = `${BASE_URL}/update-password`;
      const response = await axios.patch(url,data,{headers : {"Content-Type":"application/json",
      }, withCredentials : true})
      if(response.status === 200 || response.status === 201){

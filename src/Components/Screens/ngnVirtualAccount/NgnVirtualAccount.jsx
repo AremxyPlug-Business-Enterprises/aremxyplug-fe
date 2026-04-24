@@ -6,6 +6,7 @@ import { GetLocalStorage } from "../../LocalStorage/LocalStorage";
 import { CheckVirtualAcc } from "../../ApiCollection.jsx/ApiBuck";
 import axios from "axios";
 import { Loader } from "../../Loader/Loader";
+import { BASE_URL } from "../../../config";
 
 
 function NgnVirtualAccount() {
@@ -35,7 +36,7 @@ function NgnVirtualAccount() {
       try{
       setLoading(true)
       const body =""
-      const url = "https://api.aremxyplug.com/api/v1/virtualacc"
+      const url = `${BASE_URL}/virtualacc`
        const response = await axios.post(url,body,
         { headers : {"Content-Type" : "application/json"},
         withCredentials : true
