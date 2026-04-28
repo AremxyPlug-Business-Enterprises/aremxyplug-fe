@@ -52,7 +52,7 @@ export default function Referral() {
               })
         })
         .catch((err) => {
-          console.error("Error copying text: ", err);
+          setAlertCustom({message :"Error copying text: ", err, type : "error", show : true});
         });
     } else if (ButtonHandler === "CopyCode") {
       navigator.clipboard
@@ -64,7 +64,7 @@ export default function Referral() {
               })
         })
         .catch((err) => {
-          console.error("Error copying text: ", err);
+         setAlertCustom({message :"Error copying text: ", err, type : "error", show : true});
         });
     }
   };

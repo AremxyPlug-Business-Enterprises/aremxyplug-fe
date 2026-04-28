@@ -2,8 +2,9 @@ import React from "react";
 import { primaryColor } from "../cardIssuing/cardIssuing";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 function DigitalServices() {
-
+const navigate = useNavigate();
   // Digital Services
   const marketingServices = [
   {
@@ -49,6 +50,7 @@ function DigitalServices() {
     side: "right"
   }
 ];
+const userStatus = localStorage.getItem("cxccxfd");
   return (
     <div>
       {/* digitalServicesBG1 */}
@@ -58,7 +60,18 @@ function DigitalServices() {
         <div
           className="absolute w-full mt-[250px] md:mt-[180px] lg:mt-[230px] grid lg:grid-cols-2 
           lg:gap-x-4 gap-x-15 md:grid-cols-2 md:gap-x-4 grid-cols-1 gap-y-4 lg:px-[8%] px-[5%]">
+            
           <div className=" py-4 sm:py-6 w-full flex flex-col gap-10 lg:py-8 md:py-6">
+              {userStatus && (
+     <div className="my-2 flex ">
+      <img src="/Images/ArrowBack.svg" alt ="ArrowBack"/>
+      <p onClick={()=> {
+        navigate(-1)
+      }} className="text-base text-black font-semibold">
+        Go Back
+      </p>
+      </div>
+  )}
             <h1 className="text-[30px] leading-[40px]   font-bold md:text-left text-center 
     md:text-[26px] lg:text-[50px]  lg:leading-[60px] 
            text-[#04177F]"
