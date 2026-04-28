@@ -2,7 +2,7 @@ import React from "react";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { Link } from "react-router-dom";
-import { useContext, useRef } from "react";
+import { useContext, useRef, useEffect } from "react";
 import styles from "../../../TransferComponent/transfer.module.css";
 import { ContextProvider } from "../../../../../Context";
 import { useLocation } from 'react-router-dom';
@@ -36,9 +36,17 @@ const navigate = useNavigate()
   setWalletNameMtn,
   setRecipientPhoneNumberMtn,
   mtnSuccessfulResponse, 
+  setAlertCustom
   //setMtnSuccessfulResponse
   } = useContext(ContextProvider);
 
+
+
+  useEffect(()=> {
+    if(!mtnSuccessfulResponse?.full_name){
+      navigate(-1)
+    }
+  })
   const Fullname = mtnSuccessfulResponse?.full_name?.length ? 
   mtnSuccessfulResponse?.full_name : ""
 
@@ -80,10 +88,18 @@ const navigate = useNavigate()
            .then(() => {return;})
            .catch((error) => {return;});
        }else{
-       alert("Sharing this pdf isn't supported in your browser.")
+        setAlertCustom({
+            message : "Sharing this PDF is not supported in your browser",
+            type : "error",
+            show : true
+          })
        }
      }catch(error){
-      alert(error)
+       setAlertCustom({
+            message : "Unable to share PDF",
+            type : "error",
+            show : true
+          })
      }
        }
      };

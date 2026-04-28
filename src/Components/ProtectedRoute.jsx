@@ -15,19 +15,20 @@ const {
 useEffect(()=> {
  
   refresh.current = setInterval(()=> {
-    refreshToken(setNetworkIssue ? setNetworkIssue : ()=> {}, setSessionModal)
-  }, 350000)
+    refreshToken(setNetworkIssue ? setNetworkIssue : ()=> {}, 
+    setSessionModal ? setSessionModal : ()=> {})
+  }, 240000)
 
  return ()=> clearInterval(refresh.current)
  //eslint-disable-next-line
  },[])
 
-
+ const SessionExpiration = localStorage.getItem("SessionExpiration")
 const authToken = localStorage.getItem("xcss{}")//On Username Login
  const emailToken = localStorage.getItem("xcss[]");// on Email Login
 const UserStatus = localStorage.getItem("cxccxfd");//Tracking The UserStatus from the frontend
- if(((!authToken && !emailToken) || !UserStatus) 
-  || ((!authToken && !emailToken) && !UserStatus)){
+ if(((!authToken && !emailToken  ) || !UserStatus || !SessionExpiration) 
+  || (((!authToken && !emailToken) && !UserStatus) || !SessionExpiration)){
  //RemoveLocalStorage();
  return <Navigate to ="/Login" replace/>
 }
@@ -38,9 +39,6 @@ return(
         {children}
         </RealTimeUpdates>
  </ActivityWrapper>
-)
-
-
-}
+)}
 export default ProtectedRoutes;
 

@@ -13,10 +13,8 @@ import { BASE_URL } from "../../config";
 import { Loader } from "../Loader/Loader";
 import { Modal } from "../Screens/Modal/Modal";
 import { RemoveLocalStorage } from "../LocalStorage/LocalStorage";
-import { GetLocalStorage } from "../LocalStorage/LocalStorage";
-
+import Verification from "../VerificationCode/Verification";
 function LoginForm() {
-  const Data = GetLocalStorage()
 
 
   const { setOpenTranspin,
@@ -28,7 +26,8 @@ function LoginForm() {
       openTranspinSuccessful,
       open2StepOTP,
       openTranspin ,
-      setUnverifiedSignupInfo,
+      setPendingLoginToken,
+      setVerification,
     //  setLoginAuthorisation,
       
       setCustomerDetail,
@@ -64,7 +63,7 @@ function LoginForm() {
       twoStepVerificationSuccess === false &&
       openTranspinSuccessful === false &&
       open2StepOTP === false &&
-      openTranspin === false && localStorage.getItem("cxccxfd") ){
+      openTranspin === false  ){
          RemoveLocalStorage();
       }
 
@@ -151,8 +150,7 @@ function LoginForm() {
       setIsFocused(isFocused.filter((item) => item !== index));
     }
   };
-
-
+//Necessary value Needed for Login
 
 
 const {setAlertCustom} = useContext(ContextProvider)
@@ -200,20 +198,46 @@ if(!navigator.onLine) {
         const response =   await axios
             .post(`${BASE_URL}/login`, loginData, config)
               if (response.status === 202 && response.headers.hasAuthorization) {
-                 localStorage.setItem("xcss{}", true);
+                // IRRESPECTIVE OF TYE STATE RETURNED WE HAVE TO SET THESE FIELDS.
+                    localStorage.setItem("xcss{}", true);//Add it when the User is Verified not here
+                  setPendingLoginToken(response?.data?.data?.pending_login_token);
+                setCustomerDetail(response?.data?.data?.customer) 
+                   
+
+              //CASE1 : THE USER IS NOT VERIFIED, HENCE NEXT STEP WILL BE "verify_signup_otp"
+              //HANDLING THE CONDITION GOES AS THUS.
+              if(response?.data?.data?.customer && response?.data?.data?.pending_login_token
+                && response?.data?.data?.is_verified === false && response?.data?.data?.next_step === "verify_signup_otp"
+              ){
+                setAlertCustom({
+                  message : "User Details Restored to Verify User Account From Previous SignUp",
+                  type : "info",
+                  show : true
+                })
+             setVerification(true)
+              }
+              //CASE2: THE USER IS FINALLY VERIFIED BUT THE PIN HAS NOT PIN CREATED, 
+              //ACCORDING TO THE BACKEND WE ARE TO CALL THE  pin/first-login for pin setting
+              else if(response?.data?.data?.customer &&
+                 response?.data?.data?.pending_login_token
+                  && response?.data?.data?.has_pin === false
+                && response?.data?.data?.is_verified === true
+              && response?.data?.data?.next_step === "create_pin"){
+              
                 setOpenTranspin(true);
-              const customer  =  response?.data?.data?.customer;
              
-             if(customer){
-                   setCustomerDetail(customer);
-               } 
-     } else if(response.status === 200 ){
-                  setOpen2StepVerification(true);
-                   localStorage.setItem("xcss{}", true);
-                  const customer  =  response?.data?.data?.customer;
-            if(customer){
-               setCustomerDetail(customer);
-                  }} 
+              }else if(response?.data?.data?.customer
+                 && response?.data?.data?.has_pin === true
+                && response?.data?.data?.is_verified === true
+                 && response?.data?.data?.pending_login_token
+                && response?.data?.data?.next_step === "verify_signin_otp"){
+           setOpen2StepVerification(true);
+                
+          }
+
+     }
+
+
             } catch(error){
              if(error && error.response === undefined){
               setAlertCustom({
@@ -253,7 +277,7 @@ if(!navigator.onLine) {
             
                    }else {
            setAlertCustom({
-                message :  "Your Account has been blocked, try again in the next one hour",
+                message :  "Email Not Allowed",
                 type : "error",
                 show : true
               })
@@ -305,21 +329,40 @@ if(!navigator.onLine) {
         const response =   await axios
             .post(`${BASE_URL}/login`, loginData, config)
         if (response.status === 202  && response?.headers?.hasAuthorization) {
-           localStorage.setItem("xcss[]", true);
-                setOpenTranspin(true);
-           const customer = response?.data?.data?.customer;
-              if(customer){
-               setCustomerDetail(customer);
-                  }
-              }  else if(response.status === 200){
-                 localStorage.setItem("xcss[]", true);
-                setOpen2StepVerification(true);
-             const customer  =  response?.data?.data?.customer;
-             if(customer){
-              setCustomerDetail(customer);
-             
+          // IRRESPECTIVE OF TYE STATE RETURNED WE HAVE TO SET THESE FIELDS.
+                    localStorage.setItem("xcss[]", true);//Add it when the User is Verified not here
+                  setPendingLoginToken(response?.data?.data?.pending_login_token);
+                setCustomerDetail(response?.data?.data?.customer) 
+                   
+
+              //CASE1 : THE USER IS NOT VERIFIED, HENCE NEXT STEP WILL BE "verify_signup_otp"
+              //HANDLING THE CONDITION GOES AS THUS.
+              if(response?.data?.data?.customer && response?.data?.data?.pending_login_token
+                && response?.data?.data?.is_verified === false  && response?.data?.data?.next_step === "verify_signup_otp"
+              ){
+             setVerification(true)
               }
-         } 
+              //CASE2: THE USER IS FINALLY VERIFIED BUT THE PIN HAS NOT PIN CREATED, 
+              //ACCORDING TO THE BACKEND WE ARE TO CALL THE  pin/first-login for pin setting
+              else if(response?.data?.data?.customer &&
+                 response?.data?.data?.pending_login_token
+                  && response?.data?.data?.has_pin === false
+                && response?.data?.data?.is_verified === true
+              && response?.data?.data?.next_step === "create_pin"){
+              
+                setOpenTranspin(true);
+             //CASE3: THE USER HAS CREATED THEIR PIN, THIS MARKS THEIR FIRST LOGIN AFTER
+             //AS A FULLY VETRIFIED USER
+              }else if(response?.data?.data?.customer
+                 && response?.data?.data?.has_pin === true
+                && response?.data?.data?.is_verified === true && response?.data?.data?.next_step === "verify_signin_otp"
+                && response?.data?.data?.next_step ==="verify_signin_otp"
+                 && response?.data?.data?.pending_login_token){
+           setOpen2StepVerification(true);
+                
+      }
+        }
+            
             }catch(error){
        if(error && error.response === undefined){
                   setAlertCustom({
@@ -358,7 +401,7 @@ if(!navigator.onLine) {
             
                    }else {
            setAlertCustom({
-                message :  "Your Account has been blocked, try again in the next one hour",
+                message :  "Email Not Allowed",
                 type : "error",
                 show : true
               })
@@ -376,10 +419,7 @@ if(!navigator.onLine) {
   
       }}
 
-
-
-  
-  return (
+return (
     <div
       className="relative overflow-hidden lg:top-[10%]  w-[100%] mb-[50%] xl:w-[85%] md:mx-[unset]  
        loginForm p-[25px] rounded-lg md:rounded-xl xl:rounded-3xl"
@@ -672,6 +712,7 @@ if(!navigator.onLine) {
           <Loader />
         </Modal>
       )}
+      <Verification/>
     </div>
   );
 }

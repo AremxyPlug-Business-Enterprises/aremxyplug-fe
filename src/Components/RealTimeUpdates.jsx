@@ -81,7 +81,7 @@ return ()=> clearInterval(realTimeUpdate.current)
            </div>
            )} 
            {networkIssue === true && <NetworkPopUp Page ={Page}  />}
-           {sessionModal  && <InternalLoginSession/>}
+      {sessionModal  && <InternalLoginSession/>} 
         </div>
   )
 }

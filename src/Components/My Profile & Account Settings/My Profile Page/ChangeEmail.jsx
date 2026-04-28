@@ -20,7 +20,7 @@ import { PostFunction } from "../../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../../Loader/Loader";
 const ChangeEmail = () => {
   const { isDarkMode } = useContext(ContextProvider);
-  const { emailId, setEmailId,  networkIssue,  setSessionModal, setNetworkIssue } = useContext(ContextProvider);
+  const { emailId, setEmailId, setAlertCustom,  networkIssue,  setSessionModal, setNetworkIssue } = useContext(ContextProvider);
   const [verificationPinError, setVerificationPinError] = useState(false)
   
   const {
@@ -78,12 +78,20 @@ const ChangeEmail = () => {
        },
          ()=> {}, setNetworkIssue)
      }else if(ErrorType === "Server error"){
-        alert("Failed to process your request. Please try again later.")
+          setAlertCustom({
+                  message : "Failed to process your request, please try again later.",
+                  type : "error",
+                  show : true
+                 })
      }else if(ErrorType === "Network error" || ErrorType === "User error"){
      if(networkIssue) return;
      if(!networkIssue) setNetworkIssue(true)
      }else{
-      alert("An Unexpected error occured, please try again later.")
+         setAlertCustom({
+                  message : "An unexpected error has occured",
+                  type : "error",
+                  show : true
+                 })
      }
       }
       const SuccessHandler =()=> {
@@ -123,7 +131,9 @@ const ChangeEmail = () => {
           const FailedHandler= async(Error)=> {
                  if(Error === "Server error" ){
               setVerificationPinError(true);
-                 }else if(Error  === "Network error" || Error === "user error"){
+                 }else if(Error === "Bad request"){
+                   setVerificationPinError(true);
+                  }else if(Error  === "Network error" || Error === "User error"){
              if(networkIssue) return;
              if(!networkIssue) return setNetworkIssue(true)
                }else if(Error === "unauthorised"){
@@ -135,12 +145,16 @@ const ChangeEmail = () => {
                  setSessionModal(true)
                },
                 ()=> {}, setNetworkIssue)  
-               }else if(Error === undefined){
+               }else if(Error === "Network error"){
               if(networkIssue) return;
               if(!networkIssue) return setNetworkIssue(true)
                }
                  else{
-                 alert("An unexpected error occured, please try again later.")
+                 setAlertCustom({
+                  message : "An unexpected error has occured",
+                  type : "error",
+                  show : true
+                 })
                }
              }
         const SuccessHandler =(response)=> {
@@ -291,9 +305,9 @@ const ChangeEmail = () => {
                 Verification code has been sent to your email - {emailChange}
               </p>
               <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[5%] md:mb-[7%]">
-                <div className=" flex justify-center items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
+                <div className=" flex justify-center w-full items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
                   {" "}
-                  {isVisible ? (
+                  
                     <OtpInput
                       value={otp}
                       inputType="tel"
@@ -310,23 +324,29 @@ const ChangeEmail = () => {
                           ? "1px solid white"
                           : "1px solid #ccc",
                       }}
-                      renderInput={(props) => (
-                        <input {...props} className="inputOTP text-base mx-[3px]" />
-                      )}
-                    />
-                  ) : (
-                    <div className="text-[24px] md:text-[24px] ">
-                      * * * * * *{" "}
-                    </div>
-                  )}
-                  <div
-                    className={` text-xl md:text-3xl ${
-                      isDarkMode ? "text-white" : "text-[#0003]"
-                    } cursor-pointer`}
-                    onClick={toggleVisibility}
-                  >
-                    {isVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
-                  </div>
+                     renderInput={(props) => (
+                                            <input {...props} className={`inputOTP text-base mx-[2px] 
+                                                 ${isVisible ? 'otp-visible' : 'otp-hidden'}`}
+                                                  
+                                                             
+                                                          
+                                                        
+                                                style={{
+                                                  ...props.style,
+                                                  // Extra safety: force the color to stay consistent
+                                                  color: isDarkMode ? "#ffffff" : "#000000",
+                                                }}
+                                              />
+                                            )}
+                                          />
+                                        
+                                          <div className="cursor-pointer" onClick={()=>  toggleVisibility()}>
+                                            {isVisible ? (
+                                              <AiFillEye className={isDarkMode ? "text-white" : "text-black"} />
+                                            ) : (
+                                              <AiFillEyeInvisible className={isDarkMode ? "text-white" : "text-black"} />
+                                            )}
+                                          </div>
                 </div>
                 <p
                   className={`flex justify-between w-[67%] md:w-[55%] lg:w-[45%] text-[12px] text-[#04177f] ${

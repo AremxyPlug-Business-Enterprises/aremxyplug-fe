@@ -17,7 +17,6 @@ import { Modal } from '../../Modal/Modal';
 import { useLocation } from 'react-router-dom';
 import { RemoveLocalStorage } from '../../../LocalStorage/LocalStorage';
 
-
 const NewPassword = () => {
     const locationObj = useLocation()
   const pathname = locationObj.pathname
@@ -29,8 +28,9 @@ const NewPassword = () => {
     const [submit, setSubmit] = useState(false);
     const [border, setBorder] = useState('');
     const [error, setError] = useState('')
-    const { setHideNavbar, passwordAuthorisation, inputForgetEmail } = useContext(ContextProvider);
+    const { setHideNavbar, setAlertCustom, passwordAuthorisation, inputForgetEmail } = useContext(ContextProvider);
     const [loading , setLoading] = useState(false)
+
 
   const HandleValidityPasswordReset =()=> {
     const PasswordResetActiveValidity = localStorage.getItem("PasswordResetActive");
@@ -55,22 +55,47 @@ const updatePassword = async()=> {
    }
    try{
     const url = `${BASE_URL}/reset-password?email=${inputForgetEmail}`
-    const response = await axios.patch(url, body, {headers : {"Authorization" : passwordAuthorisation}})
+    const response = await axios.post(url, body, {headers : {"Authorization" : passwordAuthorisation}})
     if(response.status === 201 || response.status === 200){
         setBorder('');
         setSubmit(true);
     }
    }catch(error){
-    if(error && error.response === undefined ){
-        alert("Your internet connection is quite unstable.")
-    }else if(error.response === 500 && error ){
-        alert("INTERNAL_SERVER_ERROR")
-     }else if(error.response === 404 && error){
-        alert("ERROR","An error has occurred on your end")
-     }else if(error.response === 403 && error){
-        alert("Not Allowed")
+    if(error && error?.response === undefined ){
+        setAlertCustom(
+            {message :"Your internet connection is quite unstable.",
+                type : "error",
+                show : true
+            }
+        )
+    }else if(error?.response === 500 && error ){
+        setAlertCustom(
+            {message :"Failed to process your request",
+                type : "error",
+                show : true
+            }
+        )
+     }else if(error?.response === 404 && error){
+         setAlertCustom(
+            {message :"An Error occured",
+                type : "error",
+                show : true
+            }
+        )
+     }else if(error?.response === 403 && error){
+         setAlertCustom(
+            {message :"You are currently not allowed to update password",
+                type : "error",
+                show : true
+            }
+        )
      }else{
-        alert("An unexpected error has occured.")
+         setAlertCustom(
+            {message :"An unexpected error has occured",
+                type : "error",
+                show : true
+            }
+        )
      }
    }finally{
     setLoading(false)
@@ -119,7 +144,11 @@ const updatePassword = async()=> {
          } else{
             setError('');
             setPassError('')
-            if(!navigator.onLine) return alert("Kindy check your internet connection.")
+            if(!navigator.onLine) return setAlertCustom({
+                message : "Check your internet connection",
+                type : "error",
+                show : true
+            })
             if(navigator.onLine && localStorage.getItem("PasswordResetActive"))
             await updatePassword();
          }
@@ -162,8 +191,8 @@ if(pathname === "/newPassword" && !localStorage.getItem("PasswordResetActive")){
                                     (
                                         <img src={showIcon} alt="icon" className="absolute right-2 w-[13.75px] lg:w-[24px] cursor-pointer" onClick={() => setPassHide("password")}/>
                                     )}
-                                    <input className={`${border} border w-full h-full text-[11.93px] font-[400]
-                                     md:text-[11.58px] lg:text-[16px] pl-[7.5px] leading-[15px] lg:leading-[24px]
+                                    <input className={`${border} border w-full h-full text-base font-[400]
+                                     md:text-[11.58px] lg:text-[16px] pl-[7.5px]  lg:leading-[24px]
                                      md:pl-[10px] pr-[40px] md:pr-[50px] rounded text-[#403f3f] outline-none py-1 lg:py-2`}
                                       type={passHide} value={password}
                                        onChange={(event) => setPassword(event.target.value)} placeholder='enter new password'/>
@@ -180,8 +209,8 @@ if(pathname === "/newPassword" && !localStorage.getItem("PasswordResetActive")){
                                     (
                                         <img src={showIcon} alt="icon" className="absolute right-2 w-[13.75px] lg:w-[24px] cursor-pointer" onClick={() => setCpassHide("password")}/>
                                     )}
-                                    <input className={`${border} border w-full font-[400] h-full text-[11.93px]
-                                     md:text-[11.58px] lg:text-[16px] pl-[7.5px] leading-[14px] lg:leading-[24px]
+                                    <input className={`${border} border w-full font-[400] h-full text-base
+                                     md:text-[11.58px] lg:text-[16px] pl-[7.5px] lg:leading-[24px]
                                      md:pl-[10px] pr-[40px] md:pr-[50px] rounded text-[#403f3f] outline-none py-1 lg:py-2`}  
                                      type={passHide} value={cpassword} onChange={(event) => setCpassword(event.target.value)} placeholder='confirm password'/>
                                 </div>

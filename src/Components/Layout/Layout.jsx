@@ -11,15 +11,17 @@ import { CustomAlert } from "../ApiCollection.jsx/ApiBuck";
 export const Layout = () => {
 const locationObject = useLocation();
 const pathname = locationObject.pathname;
-
+//const userStatus = localStorage.getItem("cxccxfd")
 
   const { handleClickOutside, hideNavbar, alertCustom, setAlertCustom} = useContext(ContextProvider);
   if(!pathname) return;
 
  
   return (
-    <div className={`flex flex-col ${pathname === "/TestingPhase" ? "gap-[40px] md:gap-[50px]" 
-      : pathname !== "/TestingPhase" && hideNavbar === false?  "md:pt-[160px] pt-[100px]" : ""} `} 
+    <div className={`flex flex-col ${pathname === "/TestingPhase"
+       ? "gap-[40px] md:gap-[50px]" 
+      : pathname !== "/TestingPhase" && hideNavbar === false 
+     ?  "md:pt-[160px] pt-[100px]" : "" } `} 
     onClick={handleClickOutside}>
       <NavBar />
       <ScrollToTop />

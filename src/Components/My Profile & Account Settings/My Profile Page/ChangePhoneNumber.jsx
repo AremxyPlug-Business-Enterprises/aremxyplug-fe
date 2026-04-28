@@ -21,7 +21,8 @@ import Success from "../ProfileImages/success.gif";
 import { PostFunction } from "../../ApiCollection.jsx/ApiBuck";
 import { Loader } from "../../Loader/Loader";
 const ChangePhoneNumber = () => {
-  const { isDarkMode,  networkIssue, setNetworkIssue, setSessionModal } = useContext(ContextProvider);
+  const { isDarkMode, 
+      networkIssue, setNetworkIssue, setSessionModal, setAlertCustom } = useContext(ContextProvider);
   // const { recipientPhoneNumber, setRecipientPhoneNumber } =
   //   useContext(ContextProvider);
     const [loading, setLoading] = useState(false);
@@ -88,22 +89,21 @@ const VerifyPopUpHandler =async()=> {
         if(Error === "Server error" ){
      setVerificationPinError(true);
         }else if(Error  === "Network error" || Error === "User error"){
-        alert("Kindly check your internet connection.")
+  if(!networkIssue) return setNetworkIssue(true)
       }else if(Error === "unauthorised"){
-      await PostFunction("change-phone/update",
-     setLoading, 
-     body, 
-     SuccessHandler,
-      ()=> {
-        setSessionModal(true)
-      },
-       ()=> {},setNetworkIssue)  
+     setSessionModal(true) 
+      }else if(Error === "Bad request"){
+        verificationPinError(true);
       }else if(Error === undefined){
        if(networkIssue) return;
       if(!networkIssue) return setNetworkIssue(true)
       }
         else{
-        alert("An unexpected error occured, please try again later.")
+setAlertCustom({
+  message : "An Unexpected error has occured",
+  type : "error",
+  show : true
+})
       }
     }
 
@@ -138,25 +138,32 @@ const VerifyPopUpHandler =async()=> {
     const FailedHandler=async(ErrorType)=> {
       if(ErrorType === "Server error" ){
    //  setVerificationPinError(true)
-   alert("Failed to process your request, please try again later.")
-      }else if(ErrorType  === "Network error" || ErrorType === "User error"){
-        alert("Kindly check your internet connection.")
+           setAlertCustom({
+                  message : "Failed to process your request",
+                  type : "error",
+                  show : true
+                 })
+      }
+      else if(ErrorType  === "Network error" || ErrorType === "User error"){
+       if(!networkIssue) setNetworkIssue(true)
       }else if(ErrorType === "unauthorised"){
-     await PostFunction("change-phone",
-     setLoading, 
-     body, 
-     SuccessHandler,
-     ()=> {
-      setSessionModal(true);
-     },
-       ()=> {},setNetworkIssue)
-      }else if(ErrorType === undefined){
+       setSessionModal(true)
+      }else if(ErrorType === "Network error"){
       if(networkIssue) return;
       if(!networkIssue) return setNetworkIssue(true)
       }else if(ErrorType=== "Bad request"){
-        alert("The phone number you entered is already in use. Please try another phone number.")
+    setAlertCustom({
+      message : "The phone number you entered is already in use. Kindly try another phone number.",
+      type : "error",
+      show : true
+    })
+       
       }else{
-        alert("An unexpected error occured, please try again later.")
+         setAlertCustom({
+      message : "An Unexpected error occured trying to update your phone Number",
+      type : "error",
+      show : true
+    })
       }
     }
     const SuccessHandler =(response)=> {
@@ -329,9 +336,9 @@ const VerifyPopUpHandler =async()=> {
                 Verification code has been sent to your phone number - {inputValue}
               </p>
               <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[5%] md:mb-[7%]">
-                <div className=" flex justify-center items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
+                <div className=" flex justify-center items-center  w-full ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]">
                   {" "}
-                  {isVisible ? (
+                  
                     <OtpInput
                       value={otp}
                       inputType="tel"
@@ -348,23 +355,29 @@ const VerifyPopUpHandler =async()=> {
                           ? "1px solid white"
                           : "1px solid #ccc",
                       }}
-                      renderInput={(props) => (
-                        <input {...props} className="inputOTP text-base mx-[3px]" />
-                      )}
-                    />
-                  ) : (
-                    <div className="text-[24px] md:text-[24px] ">
-                      * * * * * *
-                    </div>
-                  )}
-                  <div
-                    className={` text-xl md:text-3xl ${
-                      isDarkMode ? "text-white" : "text-[#0003]"
-                    } cursor-pointer`}
-                    onClick={toggleVisibility}
-                  >
-                    {isVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
-                  </div>
+                       renderInput={(props) => (
+                        <input {...props} className={`inputOTP text-base mx-[2px] 
+                             ${isVisible ? 'otp-visible' : 'otp-hidden'}`}
+                              
+                                         
+                                      
+                                    
+                            style={{
+                              ...props.style,
+                              // Extra safety: force the color to stay consistent
+                              color: isDarkMode ? "#ffffff" : "#000000",
+                            }}
+                          />
+                        )}
+                      />
+                    
+                      <div className="cursor-pointer" onClick={()=>  toggleVisibility()}>
+                        {isVisible ? (
+                          <AiFillEye className={isDarkMode ? "text-white" : "text-black"} />
+                        ) : (
+                          <AiFillEyeInvisible className={isDarkMode ? "text-white" : "text-black"} />
+                        )}
+                      </div>
                 </div>
                 <p
                   className={`flex justify-between w-[67%] md:w-[55%] lg:w-[45%] text-[12px] text-[#04177f] ${
