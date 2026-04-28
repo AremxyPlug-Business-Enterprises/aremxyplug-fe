@@ -9,8 +9,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { DashBoardLayout } from '../Dashboard/Layout/DashBoardLayout';
 import { GetLocalStorage } from "../LocalStorage/LocalStorage";
 
-export const AirtimeVtuReceipt = (Data) => {
-  Data = GetLocalStorage()
+export const AirtimeVtuReceipt = () => {
+ const Data = GetLocalStorage()
   const location = useLocation();
   const navigate = useNavigate();
   const { networkName, selectedProduct,recipientNumber, setAlertCustom, amount, 
@@ -24,7 +24,7 @@ export const AirtimeVtuReceipt = (Data) => {
     setSelectedProduct,
     setInputValues,
     setAmount,
-    setRecipientName } =
+    setRecipientName, airtimeResponse } =
     useContext(ContextProvider);
 
     function handleClick() {
@@ -89,7 +89,8 @@ export const AirtimeVtuReceipt = (Data) => {
        }
      };
    
-
+const fullName = airtimeResponse?.full_name?.length
+ ? airtimeResponse?.full_name : ""
   // ==============Save Pdf Function==============
   const handleSaveAsPDFClick = () => {
     const content = contentRef.current;
@@ -100,6 +101,10 @@ export const AirtimeVtuReceipt = (Data) => {
         pdf.addImage(imgData, "PNG", 10, 10, 190, 0);
         pdf.save("AremxyPlugAirtimeReceipt.pdf");
       });
+    }
+
+    if(airtimeResponse?.full_name){
+    navigate(-1)
     }
   };
   return (
@@ -219,7 +224,7 @@ export const AirtimeVtuReceipt = (Data) => {
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Customer Name</p>
-                  <span>{Data.aremxyUsername}</span>
+                  <span>{fullName || Data?.aremxyUsername}</span>
                 </div>
                 <div className="flex text-[10px] md:text-[14px] w-[90%] mx-auto justify-between  lg:text-[16px]">
                   <p className="text-[#0008]">Wallet Type</p>

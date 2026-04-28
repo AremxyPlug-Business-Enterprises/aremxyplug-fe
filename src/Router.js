@@ -192,30 +192,23 @@ import { VirtualAccountReceipt } from "./Components/Dashboard/DashboardComponent
 import { ThemeHandler } from "./Components/ApiCollection.jsx/ApiBuck";
 import { PointRedeemReceipt } from "./Components/Dashboard/DashboardComponents/TransactionPage/TransactionReceipt/PointRedeemReceipt";
 import { TestingDesign } from "./Components/TestingPhase/TestingDesign";
-import { Loader } from "./Components/Loader/Loader";
-import { Suspense } from "react";
 import NotFound from "./Components/NotFound";
 import ProtectedRoutes from "./Components/ProtectedRoute"
 
 const ProtectedRoute = ({children})=> {
  //const pathname = typeof location.pathname  === "string" ? location?.pathname?.slice(1) : ""
-const LazyRoutes =  React.lazy(()=> import("./Components/ProtectedRoute"))
-  const SessionExpiration = localStorage.getItem("SessionExpiration")
+//const LazyRoutes =  React.lazy(()=> import("./Components/ProtectedRoute"))
+ 
 //const {} = useContext(ContextProvider)
   //eslint-disable-next-line
 // const location = useLocation();
 // const pathname = location?.pathname
 //const refAvailable = pathname?.includes("ref") ? "/sign"
   return(
-  <Suspense fallback= {
-  <Loader/>
-}>
-  {!SessionExpiration  ? (
-    <LazyRoutes>{children}</LazyRoutes>
-) : (
+
     <ProtectedRoutes>{children}</ProtectedRoutes>
-  )}
-  </Suspense>
+
+
   )
 }
 
@@ -292,7 +285,7 @@ export   const RoutingObjectLimitScope = [
   { id: 65, Routepath: "/withdraw-to-personalaccount", RouteComponent: <ProtectedRoute><WithdrawToPersonalAccountPage /></ProtectedRoute> },
   { id: 66, Routepath: "/withdraw-to-businessaccount", RouteComponent: <ProtectedRoute><WithdrawToBusinessAccountPage /></ProtectedRoute> },
   { id: 67, Routepath: "/withdrawal-receipt", RouteComponent: <ProtectedRoute><WithdrawalReceipt /></ProtectedRoute> },
-   { id: 68, Routepath: "/redeem-receipt", RouteComponent: <RedeemReceipt /> },
+   { id: 68, Routepath: "/redeem-receipt", RouteComponent :<ProtectedRoutes> <RedeemReceipt /> </ProtectedRoutes> },
   { id: 69, Routepath: "/ikedc-receipt", RouteComponent: <ProtectedRoute><IkedcReceipt /></ProtectedRoute> },
   { id: 70, Routepath: "/ikedc-receipt-failed", RouteComponent: <ProtectedRoute><IkedcReceiptFailed /></ProtectedRoute> },
   { id: 71, Routepath: "/aedc-receipt", RouteComponent: <ProtectedRoute><AedcReceipt /></ProtectedRoute> },
@@ -411,7 +404,7 @@ export   const RoutingObjectLimitScope = [
   { id: 180, Routepath: "/NecoFailedReceipt", RouteComponent: <ProtectedRoute><NecoFailedReceipt /></ProtectedRoute> },
   { id: 181, Routepath: "/NabtebFailedReceipt", RouteComponent: <ProtectedRoute><NabtebFailedReceipt /></ProtectedRoute> },
   {id : 182, Routepath : "/TestingPhase", RouteComponent : <TestingDesign/>},
-     {id : 183, Routepath : "*", RouteComponent :  <ProtectedRoute><NotFound/></ProtectedRoute>},
+     {id : 183, Routepath : "*", RouteComponent :  <NotFound/>},
   //    { 
   //   id: 184, 
   //   Routepath: "/signUp/:refName", 
@@ -423,14 +416,23 @@ return (
     <div>
       <ThemeHandler />
       <Routes>
-        {RoutingObjectLimitScope.map(({ id, Routepath, RouteComponent }) => (
+        {RoutingObjectLimitScope.map(({ id, Routepath, RouteComponent }) =>(
+     
           <Route key={id} path={Routepath} element={
            RouteComponent}
           />
-        ))}
+       
+          )
+        )}
 
         {/* Protected Routes */}
+  <Route path="signUp">
+  {/* This is the 'index' - matches exactly /signUp */}
+  <Route index element={SIGNUP_ENABLED ? <SignUp /> : <Navigate to="/Login" replace /> } /> 
   
+  {/* This matches /signUp/Oladimeji */}
+  <Route path=":refName" element={SIGNUP_ENABLED ? <SignUp /> : <Navigate to="/Login" replace /> } />
+</Route>
      </Routes>
     </div>
   );

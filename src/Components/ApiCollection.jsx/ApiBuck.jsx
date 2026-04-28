@@ -4,8 +4,7 @@ import axios from "axios";
 import { BASE_URL } from "../../config";
 import { Modal } from "../Screens/Modal/Modal";
 import { useNavigate } from "react-router-dom";
-import { BalanceLoading } from "../Loader/Loader";
-import { useState, useEffect, useRef, useContext} from "react";
+import { useEffect, useRef, useContext} from "react";
 import { ContextProvider } from "../Context";
 import { X } from 'lucide-react';
 
@@ -268,177 +267,144 @@ return localStorage.setItem("SessionExpiration", resetExpiration);
 
 ///Login Session =======//
 export const InternalLoginSession = ()=> {
-  const [password, setPassword] = useState();
-  const {setNetworkIssue, networkIssue, setSessionModal, isDarkMode, setAlertCustom} = useContext(ContextProvider)
-  const [loading, setLoading] = useState(false)
-
-   const getUsername = JSON.parse(localStorage.getItem("aremxyUserName"));
-   const UserEmail = JSON.parse(localStorage.getItem("userEmail"))
-   const emailToken = localStorage.getItem("xcss[]");
-   const usernameToken = localStorage.getItem("xcss{}");
-   const HoldValue = usernameToken && !emailToken ? getUsername : UserEmail;
-   if(networkIssue === true){
-    setNetworkIssue(false)
-   }
-
- const functionAtSuccess = async(response)=> {
-     setAlertCustom({
-            message : "Session Renewed Successfully",
-            type : "success",
-            show : true
-           })
+  const navigate = useNavigate()
+const {setSessionModal} = useContext(ContextProvider)
+  useEffect(()=> {
+   setTimeout(()=> {
   setSessionModal(false);
-     setTimeout(()=> {
-      window.location.reload();
-     },3000)
-      }
-    const  functionAtFailed =(ErrorType)=> {
-     if(ErrorType === "unauthorised" ){
-       setAlertCustom({
-            message : "Password Incorrect: You are only allowed to attempt 5 times",
-            type : "error",
-            show : true
-           })
-     }else if(ErrorType === "Server error"){
-        setAlertCustom({
-            message : "Failed to Process your request",
-            type : "error",
-            show : true
-           })
-     }else if(ErrorType === "User Blocked"){
-        setAlertCustom({
-            message : "User Blocked: Try again in the next one hour",
-            type : "error",
-            show : true
-           })
-     window.location.replace("/Login")
-     RemoveLocalStorage()
-     }else if(ErrorType === "Network error"){
-      setSessionModal(false);
-      if(!networkIssue)  setNetworkIssue(true);
-     }else {
-       setAlertCustom({
-            message : "An Unexpected error has occured",
-            type : "error",
-            show : true
-           })
-   }
-   }
+   return navigate("/Login");
+   },30000)
+  },[])
   
 
 
-const SubmitUserLoginDetails = ()=> {
-     const body = {
-    username : getUsername,
-    password : password
-  }
-    PostFunction("login",
-  setLoading,
-  body,
-  functionAtSuccess,
-  functionAtFailed,
-  ()=> {}, setNetworkIssue)
-  }
+// const SubmitUserLoginDetails = ()=> {
+//      const body = {
+//     username : getUsername,
+//     password : password
+//   }
+//     PostFunction("login",
+//   setLoading,
+//   body,
+//   functionAtSuccess,
+//   functionAtFailed,
+//   ()=> {}, setNetworkIssue)
+//   }
 
 
   return (
-   
-   <div className={`w-full h-full justify-center items-center
-   flex`}>
-    <Modal>
-              <div className={`w-full flex px-[17px] lg:px-[20px] justify-center items-center 
-             `}>
-            <div className = {`flex flex-col justify-left items-center
-             py-[20px] px-[10px] gap-[20px] w-[100%] md:w-[60%] md:h-auto lg:w-[30%]  rounded-[10px]
-             lg:rounded-[20px]   ${isDarkMode  ? "bg-black border border-white rounded-[10px]" 
-               : "bg-white"}`}>
-               <div className ="flex flex-col  gap-[20px]">
-               <h2 className={`text-[14px] text-center font-[600] leading-[18px]
-               text-black lg:text-[16px] lg:leading-[22px] ${isDarkMode ? "text-white" : "text-black"}`}>
-                  Your Session has expired.
-                  </h2>
-              <p className ={`text-[14px] text-center font-[600] leading-[18px] text-[#04177f]
-               lg:text-[16px] lg:leading-[22px] ${isDarkMode  ? "text-white" : "text-[#04177f]"}`}>
-           Login to renew your session to continue transactions 
-            and operations.
-               </p>
-               </div>
-               <div className="flex flex-col gap-[20px]
-                w-[100%] md:w-[50%] lg:w-[100%]">
-                {/* Username */}
-               <div className="flex flex-col gap-[5px] lg:gap-[10px] ">
-               <p className={`text-[14px] text-start font-[600] leading-[18px]
-               text-black lg:text-[16px] lg:leading-[22px] ${isDarkMode  ? "text-white" : "text-black"}`}>
-                {usernameToken && !emailToken ? "Username" : "Email"}
-               </p>
-             
-               <input
-             className={`mt-2 md:mt-0 rounded-[10px] 
-        md:rounded-0  md:p-0 text-base
-        sm:p-3  flex gap-2 py-[8.803px]
-         pr-[13px] pl-[10.876px] font-[400] 
-         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
-    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px]
-     lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px]
-      lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px]
-       border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
-      isDarkMode
-        ? "bg-black text-white border border-white"
-        : "hover:bg-[#EDEAEA]"
-    }`}
-  readOnly
-  value={HoldValue}
-   type="text" />
-            </div>
-                {/* Password */}
-               <div className="flex flex-col gap-[5px] lg:gap-[10px] ">
-              <p className={`text-[14px] text-start font-[600] leading-[18px]
-               text-black lg:text-[16px] lg:leading-[22px] ${isDarkMode  ? "text-white" : "text-black"}`}>
-                Password
-               </p>
-             
-               <input
-                className={`mt-2 md:mt-0 rounded-[10px] 
-        md:rounded-0  md:p-0 text-base
-        sm:p-3  flex gap-2 py-[8.803px]
-         pr-[13px] pl-[10.876px] font-[400] 
-         leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
-    lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
-    md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px]
-     lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px]
-      lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px]
-       border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
-      isDarkMode
-        ? "bg-black text-white border border-white"
-        : "hover:bg-[#EDEAEA]"
-    }`}
-  placeholder="Your Current Password"
-
-  value={password}
-  onChange={(e)=> setPassword(e.target.value)}
-                type="password"
-               />
-
-               </div>
-               </div>
-             
-              <button onClick ={(e)=> {
-                SubmitUserLoginDetails()
-                
-                }}
-         disabled={loading === true}
-                 className="bg-[#04177f]  cursor-pointer mt-[5%] mx-auto w-full py-[18px] flex justify-center items-center text-[#ffffff] 
-               text-[14px] font-[600] rounded-md md:w-[95px] md:h-[26px]
-                   md:p-[2%] lg:w-[113px] lg:h-[38px] lg:text-[13px]"
-            >
-             {loading === true ? <BalanceLoading/> : "Continue"}
-            </button>
-          </div>
+  <div className="fixed inset-0 z-[10000] flex items-center justify-center bg-black/50 backdrop-blur-sm">
+      <div className="bg-white p-6 rounded-xl shadow-2xl w-[90%] max-w-[400px] text-center border-t-4 border-red-500">
+        <div className="mb-4 text-red-500">
+          <svg className="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
         </div>
-      
-      </Modal>
+        <h2 className="text-xl font-bold text-gray-800 mb-2">Session Expiring</h2>
+        <p className="text-gray-600 mb-6">
+          For your security, you are being logged out of your AremxyPlug account.
+        </p>
+        <div className="animate-pulse text-sm font-semibold text-red-600">
+          Logging out now...
+        </div>
+      </div>
     </div>
+  //  <div className={`w-full h-full justify-center items-center
+  //  flex`}>
+  //   <Modal>
+  //             <div className={`w-full flex px-[17px] lg:px-[20px] justify-center items-center 
+  //            `}>
+  //           <div className = {`flex flex-col justify-left items-center
+  //            py-[20px] px-[10px] gap-[20px] w-[100%] md:w-[60%] md:h-auto lg:w-[30%]  rounded-[10px]
+  //            lg:rounded-[20px]   ${isDarkMode  ? "bg-black border border-white rounded-[10px]" 
+  //              : "bg-white"}`}>
+  //              <div className ="flex flex-col  gap-[20px]">
+  //              <h2 className={`text-[14px] text-center font-[600] leading-[18px]
+  //              text-black lg:text-[16px] lg:leading-[22px] ${isDarkMode ? "text-white" : "text-black"}`}>
+  //                 Your Session has expired.
+  //                 </h2>
+  //             <p className ={`text-[14px] text-center font-[600] leading-[18px] text-[#04177f]
+  //              lg:text-[16px] lg:leading-[22px] ${isDarkMode  ? "text-white" : "text-[#04177f]"}`}>
+  //          Login to renew your session to continue transactions 
+  //           and operations.
+  //              </p>
+  //              </div>
+  //              <div className="flex flex-col gap-[20px]
+  //               w-[100%] md:w-[50%] lg:w-[100%]">
+  //               {/* Username */}
+  //              <div className="flex flex-col gap-[5px] lg:gap-[10px] ">
+  //              <p className={`text-[14px] text-start font-[600] leading-[18px]
+  //              text-black lg:text-[16px] lg:leading-[22px] ${isDarkMode  ? "text-white" : "text-black"}`}>
+  //               {usernameToken && !emailToken ? "Username" : "Email"}
+  //              </p>
+             
+  //              <input
+  //            className={`mt-2 md:mt-0 rounded-[10px] 
+  //       md:rounded-0  md:p-0 text-base
+  //       sm:p-3  flex gap-2 py-[8.803px]
+  //        pr-[13px] pl-[10.876px] font-[400] 
+  //        leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+  //   lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+  //   md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px]
+  //    lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px]
+  //     lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px]
+  //      border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+  //     isDarkMode
+  //       ? "bg-black text-white border border-white"
+  //       : "hover:bg-[#EDEAEA]"
+  //   }`}
+  // readOnly
+  // value={HoldValue}
+  //  type="text" />
+  //           </div>
+  //               {/* Password */}
+  //              <div className="flex flex-col gap-[5px] lg:gap-[10px] ">
+  //             <p className={`text-[14px] text-start font-[600] leading-[18px]
+  //              text-black lg:text-[16px] lg:leading-[22px] ${isDarkMode  ? "text-white" : "text-black"}`}>
+  //               Password
+  //              </p>
+             
+  //              <input
+  //               className={`mt-2 md:mt-0 rounded-[10px] 
+  //       md:rounded-0  md:p-0 text-base
+  //       sm:p-3  flex gap-2 py-[8.803px]
+  //        pr-[13px] pl-[10.876px] font-[400] 
+  //        leading-[10.4px] md:text-[11px] md:leading-[12.206px] 
+  //   lg:text-[16px] lg:leading-[20.8px] md:pt-[8.802px] md:pb-[7.042px] 
+  //   md:pr-[5.282px] md:pl-[5.867px] lg:pt-[15px] lg:pb-[12px] lg:pr-[9px]
+  //    lg:pl-[10px]  items-center cursor-pointer outline-0 border-[0.24px]
+  //     lg:border-[0.4px] w-full h-[45.927px] md:h-[35px] lg:h-[50px]
+  //      border-[#9C9C9C] px-[11px] md:px-[6px] lg:px-[10px] text-[#7C7C7C] self-center  ${
+  //     isDarkMode
+  //       ? "bg-black text-white border border-white"
+  //       : "hover:bg-[#EDEAEA]"
+  //   }`}
+  // placeholder="Your Current Password"
+
+  // value={password}
+  // onChange={(e)=> setPassword(e.target.value)}
+  //               type="password"
+  //              />
+
+  //              </div>
+  //              </div>
+             
+  //             <button onClick ={(e)=> {
+  //               setSessionModal(false);
+                
+  //               }}
+  //        disabled={loading === true}
+  //                className="bg-[#04177f]  cursor-pointer mt-[5%] mx-auto w-full py-[18px] flex justify-center items-center text-[#ffffff] 
+  //              text-[14px] font-[600] rounded-md md:w-[95px] md:h-[26px]
+  //                  md:p-[2%] lg:w-[113px] lg:h-[38px] lg:text-[13px]"
+  //           >
+  //            {loading === true ? <BalanceLoading/> : "Continue"}
+  //           </button>
+  //         </div>
+  //       </div>
+      
+  //     </Modal>
+  //   </div>
   );
 };
 
@@ -461,7 +427,6 @@ export const refreshToken = async(setNetworkIssue, setSessionModal)=> {
 //============Network issue ============//
 export const NetworkPopUp = ({Page})=> {
 const {setNetworkIssue, isDarkMode} = useContext(ContextProvider);
-
   return (
   <div className="`w-full h-full justify-center items-center
    flex">
@@ -525,8 +490,7 @@ const {setNetworkIssue, isDarkMode} = useContext(ContextProvider);
       setAuthenticationOpen(false)
      navigate("/ProfileSettingMain")
      }
-          //id Verification
-  // const isDarkMode = localStorage.getItem("darkModeEnabled")
+
   return (
   <div className={`w-full h-full justify-center items-center
    flex`}>
@@ -636,11 +600,8 @@ setAlertCustom) => {
             InActionVirtualAccountState(virtualAccCreated,setBankNameState, 
                setAccountNameState, setAccountNumberState);
            
-               
-            
-         }
-          
-         }
+          }
+      }
         }catch(error){
          if(error.status === 400){
       setAlertCustom({

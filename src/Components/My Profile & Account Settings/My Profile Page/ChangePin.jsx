@@ -684,7 +684,7 @@ await PutFunction(path, setLoading, body, SuccessHandler, FailedHandler, setNetw
                   <div className="flex flex-col gap-[10px] justify-center items-center font-extrabold mb-[7%]">
                     <div className={`flex justify-center items-center
                        ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px] ${!isVisible ? "flex gap-[1px] ml-[0px] " : "flex justify-center items-center ml-[5%] gap-[10px] md:ml-[5%] md:gap-[30px]"}`}>
-                      {isVisible ? (
+                   
                         <OtpInput
                           value={inputPin}
                           inputType="tel"
@@ -701,21 +701,25 @@ await PutFunction(path, setLoading, body, SuccessHandler, FailedHandler, setNetw
                             ? "1px solid white"
                             : "1px solid #ccc",
                           }}
-                          renderInput={(props) => (
-                            <input {...props} className="inputOTP mx-[3px] text-base" />
-                          )}
-                        />
-                      ) : (
-                        <div className="text-[24px] md:text-[24px] mt-1">
-                          * * * * * *
-                        </div>
-                      )}
-                      <div
-                        className="text-[#0003] text-xl md:text-3xl"
-                        onClick={toggleVisibility}
-                      >
-                        {isVisible ? <AiFillEye className={`${isDarkMode ? "text-white" : ""}`} /> : <AiFillEyeInvisible className={`${isDarkMode ? "text-white" : ""}`} />}
-                      </div>
+                         renderInput={(props) => (
+                                                <input {...props} className={`inputOTP text-base mx-[2px] 
+                                                     ${isVisible ? 'otp-visible' : 'otp-hidden'}`}
+                                                    style={{
+                                                      ...props.style,
+                                                      // Extra safety: force the color to stay consistent
+                                                      color: isDarkMode ? "#ffffff" : "#000000",
+                                                    }}
+                                                  />
+                                                )}
+                                              />
+                                            
+                                              <div className="cursor-pointer" onClick={()=>  toggleVisibility()}>
+                                                {isVisible ? (
+                                                  <AiFillEye className={isDarkMode ? "text-white" : "text-black"} />
+                                                ) : (
+                                                  <AiFillEyeInvisible className={isDarkMode ? "text-white" : "text-black"} />
+                                                )}
+                                              </div>
                     </div>
                     <div className={`flex justify-between w-full `}>
                       <p className={` text-[12px] md:text-[12px] text-[#04177f] ${isDarkMode ? "text-white" : ""}`}>{countdown > 0 ? `${countdown}sec` : "0sec"}</p>

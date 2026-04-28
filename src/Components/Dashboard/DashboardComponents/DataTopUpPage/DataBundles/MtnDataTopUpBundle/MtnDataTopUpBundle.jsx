@@ -62,7 +62,7 @@ const MtnDataTopUpBundle = () => {
     isVisible,
     networkIssue,
     mtnSuccessfulResponse, setMtnSuccessfulResponse,
-  dataRecipientDisplay, setDataRecipientDisplay} = useContext(ContextProvider);
+  dataRecipientDisplay, setDataRecipientDisplay, setAlertCustom} = useContext(ContextProvider);
 
   const [showProductList, setShowProductList] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -125,9 +125,18 @@ let CheckSufficiency = mtnDataAmount > Balance;
           //alert("Check your internet Connection, then reload the page.");
           setNetworkIssue(true)
         } else if (error && error.response.status === 400) {
-          alert("Service for mtn is currently not available, Try again later.");
+
+          setAlertCustom({
+            message : "Service for MTN is currently not available, Try again later.",
+            type : "info",
+            show : true
+          })
         }  else if (error && error?.response?.status === 500) {
-          alert("Service for mtn is currently not available, Try again later.");
+             setAlertCustom({
+            message : "Service for MTN is currently not available, Try again later.",
+            type : "info",
+            show : true
+          })
         }else if(error && error.response?.status ===401){
           if(sessionModal)return;
           if(!sessionModal) return setSessionModal(true)
@@ -279,7 +288,11 @@ let CheckSufficiency = mtnDataAmount > Balance;
             else if(ErrorType === "Network error" || ErrorType === "User error"){
                setCheckNetworkError(true);
            }else{
-               alert("An unexpected error occured in attempt to retrieve balance.")
+                 setAlertCustom({
+            message : "Balance Retrieval Failed",
+            type : "error",
+            show : true
+          })
            }
          }
          await GetFunction(
@@ -477,7 +490,11 @@ setRecipientsData(response?.data?.data?.recipients?.recipients);
         if(sessionModal) return;
         if(!sessionModal) return setSessionModal(true)
         }else if(errorType === "Server error"){
-    alert("Unable to fetch your recipient List try again later.")
+      setAlertCustom({
+            message : "Unable to Fetch Recipient List",
+            type : "error",
+            show : true
+          })
         }
       }
    await GetFunction("data/recipient", 
@@ -489,7 +506,11 @@ setRecipientsData(response?.data?.data?.recipients?.recipients);
  const AddRecipientToList = async()=> {
       const successHandler = async(response)=> {
      await GetRecipientList();
-alert("Recipients Saved Successfully")
+    setAlertCustom({
+            message : "Recipient Saved Successfully",
+            type : "success",
+            show : true
+          })
      
       }
       const requestBody = {
@@ -506,12 +527,23 @@ alert("Recipients Saved Successfully")
         if(sessionModal) return;
         if(!sessionModal) return setSessionModal(true)
         }else if(errorType === "Server error"){
-    alert("Unable to fetch your recipient List try again later.")
-       
+    setAlertCustom({
+            message : "Unable to fetch your recipient List try again later.",
+            type : "error",
+            show : true
+          })
       } else if(errorType === "Bad request"){
-         alert("An unexpected error has occured");
+           setAlertCustom({
+            message : "Unable to fetch your recipient List try again later.",
+            type : "error",
+            show : true
+          })
       }else{
-          alert("An unexpected error has occured");
+           setAlertCustom({
+            message : "Unable to fetch your recipient List try again later.",
+            type : "error",
+            show : true
+          })
         }
       }
    await PostFunction("data/recipient",

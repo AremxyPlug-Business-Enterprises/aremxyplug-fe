@@ -181,9 +181,10 @@ const [referralName, setReferralName] = useState("")
   function changeHandler(e) {
     const { name, value, type, checked } = e.target;
     const inputValue = type === "checkbox" ? checked : value;
- 
- setState({ ...state, [name]: inputValue });}
-
+   
+ setState({ ...state, [name]: inputValue });
+   
+  }
   const handleFocus = (index) => {
     if (!isFocused.includes(index)) {
       setIsFocused([...isFocused, index]);
@@ -485,7 +486,7 @@ const [referralName, setReferralName] = useState("")
   const [otherInputPinPopUp, setOtherInputPinPopUp] = useState(false);
   const [transferResponse, setTransferResponse] = useState({});
 
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
 
   const toggleVisibility = () => {
     setIsVisible(!isVisible);
@@ -1437,6 +1438,9 @@ const [nabtebPinsGenerated, setNabtebPinsGenerated] = useState([]);
 
   //============= LOGIN FORM ==========
   const [loginAuthorisation, setLoginAuthorisation] = useState(false);
+  const [pendingLoginToken, setPendingLoginToken]
+   = useState("")
+  
   const [twoStepVerificationSuccess, setTwoStepVerificationSuccess] =
     useState(false);
   const [customerDetail, setCustomerDetail] = useState({});
@@ -1521,6 +1525,9 @@ const [currentDateInTimeStamps, setCurrentDateInTimeStamps] = useState(0);
     //Referral
     referralName,
     setReferralName,
+    //Related To Login
+    pendingLoginToken,
+     setPendingLoginToken,
 //COOKIES
 accepted, 
 setAccepted,

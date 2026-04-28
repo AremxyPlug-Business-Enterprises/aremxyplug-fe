@@ -11,10 +11,10 @@ import FirstModal from "../Password/FirstModal";
 import { useState } from "react";
 import { Loader } from "../../../Loader/Loader";
 import { Modal } from "../../Modal/Modal";
-
+import { useParams } from "react-router-dom";
 export const SignUp = () => {
   //params
- 
+ const {refName} = useParams()
   const {
     // hideNavbar,
    
@@ -80,13 +80,7 @@ const setNav = () => {
   const checkInput = country?.length > 1 && email?.length > 1 && phoneNumber?.length > 1 && userName?.length > 1
   && password?.length > 1 && fullName?.length > 1 && checkbox === true && errorSpecialCharacterUsername === false;
 
-
-  const [showPassModal, setShowPassModal] = useState(false);
-
-
-
-
-
+const [showPassModal, setShowPassModal] = useState(false);
 
 const ChangeEventFunctionUsername = (value)=> {
        if(value?.length > 0 && value?.includes("@")  ){
@@ -379,6 +373,7 @@ const ChangeEventFunctionUsername = (value)=> {
               onBlur={() => handleBlur(5)}
             >
               <input
+            readOnly={refName?.length}
                className={`mt-2  md:mt-0 rounded-[10px] 
              md:rounded-0  md:p-0 text-base
          sm:p-3  flex justify-between py-[8.803px]
@@ -390,7 +385,7 @@ const ChangeEventFunctionUsername = (value)=> {
        w-full h-[50.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C]
         px-[11px] md:px-[6px] lg:px-[10px] text-black self-center `} 
                 type="text"
-                value={IVcode}
+                value={refName?.length ? refName : IVcode}
                 name="IVcode"
                 onChange={changeHandler}
               />
