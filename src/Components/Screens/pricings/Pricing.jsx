@@ -1,8 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import style from "../pricings/pricing.module.css";
-
+import { useNavigate } from "react-router-dom";
 export const Pricing = () => {
+  const navigate = useNavigate()
+  const userStatus = localStorage.getItem("cxccxfd");
   return (
     <>
       <div className="mx-[5%] lg:mx-[8%]">
@@ -12,6 +14,16 @@ export const Pricing = () => {
           {/* ====================== HEADING ================= */}
           <div className="flex flex-col gap-[8px] pt-[30%] pb-[10%] text-center">
             <div className="text-[20px] font-semibold md:text-[23px] lg:text-[45px]">
+                {userStatus && (
+     <div className="my-2 flex ">
+      <img src="/Images/ArrowBack.svg" alt ="ArrowBack"/>
+      <p onClick={()=> {
+        navigate(-1)
+      }} className="text-base text-black font-semibold">
+        Go Back
+      </p>
+      </div>
+  )}
               Pricing
             </div>
             <div className="text-[12px] md:text-[18px] md:mb-[5%] lg:text-[32px]">

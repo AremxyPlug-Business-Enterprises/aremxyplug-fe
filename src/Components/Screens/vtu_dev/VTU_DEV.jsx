@@ -6,8 +6,9 @@ import { VTU_PAY } from "../../svgs/svg1";
 import { RxDotFilled } from "react-icons/rx";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 function VTU_DEV() {
+  const navigate = useNavigate();
   const DifferenceHead = [
     { text: "Product" },
     { text: "Starter" },
@@ -658,6 +659,9 @@ function VTU_DEV() {
     },
   ];
 
+
+  const userStatus = localStorage.getItem("cxccxfd");
+
   return (
     <div className="h-full w-full lg:mt-[-10%] mt-[-10%]">
       {/* HEADER */}
@@ -665,6 +669,16 @@ function VTU_DEV() {
       gap-10 justify-center  lg:gap-15 ">
          <div className="flex md:flex-row flex-col">
           <div className="flex flex-col lg:gap-10 gap-5 md:w-1/2 w-full">
+  {userStatus && (
+     <div className="my-2 flex ">
+      <img src="/Images/ArrowBack.svg" alt ="ArrowBack"/>
+      <p onClick={()=> {
+        navigate(-1)
+      }} className="text-base text-black font-semibold">
+        Go Back
+      </p>
+      </div>
+  )}
             <h2 className="text-[30px] leading-[40px] font-bold md:text-left text-center 
     md:text-[26px] lg:text-[50px]  lg:leading-[60px] 
            text-[#04177F]" style={{
