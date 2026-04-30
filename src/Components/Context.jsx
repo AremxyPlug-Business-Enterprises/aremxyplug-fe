@@ -208,11 +208,20 @@ const [referralName, setReferralName] = useState("")
     country: Joi.string().required(),
 
     fullName: Joi.string()
-      .pattern(new RegExp(/^[A-Za-z]+(?:\s[A-Za-z]+)+$/))
-      .required()
-      .messages({
-        "string.pattern.base": "Please enter your First name and last name",
-      }),
+    .trim()
+    .min(3)
+    .max(100)
+    // Regex breakdown:
+    // ^[a-zA-Z]+ : Starts with letters
+    // (?: [a-zA-Z]+)+ : Followed by one or more groups of (space + letters)
+    .regex(/^[a-zA-Z]+(?: [a-zA-Z]+)+$/)
+    .required()
+    .messages({
+      'string.empty': 'Full Name is required',
+      'string.min': 'Full Name must be at least 3 characters long',
+      'string.pattern.base': 'Please provide at least a first and last name (e.g., John Doe)',
+      'any.required': 'Full Name is a required field'
+    }),
 
     userName: Joi.string()
       .pattern(new RegExp(/^[a-zA-Z0-9]+$/))

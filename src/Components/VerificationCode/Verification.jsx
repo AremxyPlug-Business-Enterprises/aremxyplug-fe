@@ -447,7 +447,20 @@ return () => clearInterval(timer);
             >
               <div className="w-full flex justify-end ">
                 <img
-                  onClick={() => setVerification(false)}
+                  onClick={() =>{
+                   setVerification(false)
+       setState({
+      country: "",
+      fullName: "",
+      userName: "",
+      email: "",
+      phoneNumber: "",
+      password: "",
+      confirmPassword: "",
+      checkbox : false
+    });
+    window.location.reload()
+                  }}
                   src={CloseIcon}
                   className="w-[18px] h-[18px]  md:w-[25px] cursor-pointer
                md:h-[25px] "
@@ -674,11 +687,21 @@ return () => clearInterval(timer);
             <div className="flex flex-col gap-[3px] mb-[25px] lg:mb-[30px]">
               <div className="absolute top-4 right-4 ">
                 <img
-                  onClick={() => {
+               onClick={() => {
                     setViaEmail(false);
-                    
-                    setVerificationPinError(false);
+                     setVerificationPinError(false);
                     setOtpVerifyEmailSignup("")
+                     setState({
+      country: "",
+      fullName: "",
+      userName: "",
+      email: "",
+      phoneNumber: "",
+      password: "",
+      confirmPassword: "",
+      checkbox : false
+    });
+    window.location.reload()
                     }}
                   src={CloseIcon}
                   className="w-[18px] h-[18px]  md:w-[25px] cursor-pointer
@@ -930,7 +953,18 @@ return () => clearInterval(timer);
                   onClick={() => {
                     setViaSms(false);
                     setVerificationPinError(false);
-                    setOtpVerifySmsSignup("")
+                    setOtpVerifySmsSignup("");
+                     setState({
+              country: "",
+            fullName: "",
+            userName: "",
+               email: "",
+              phoneNumber: "",
+            password: "",
+           confirmPassword: "",
+            checkbox : false
+    });
+    window.location.reload()
                   //  RemoveLocalStorage()
                     }}
                   src={CloseIcon}
