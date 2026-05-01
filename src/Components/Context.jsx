@@ -208,7 +208,7 @@ const [referralName, setReferralName] = useState("")
     country: Joi.string().required(),
 
     fullName: Joi.string()
-    .trim()
+    .trim(true)
     .min(3)
     .max(100)
     // Regex breakdown:
@@ -224,11 +224,13 @@ const [referralName, setReferralName] = useState("")
     }),
 
     userName: Joi.string()
+      .trim(true)
       .pattern(new RegExp(/^[a-zA-Z0-9]+$/))
       .required()
       .messages({ "string.pattern.base": "Invalid Username" }),
 
     email: Joi.string()
+      .trim(true)
       .pattern(new RegExp(/^[^\s@]+@[^\s@]+\.[^\s@]+$/))
       .required()
       .messages({ "string.pattern.base": "Invalid email " }),
@@ -236,6 +238,7 @@ const [referralName, setReferralName] = useState("")
     phoneNumber: Joi.string().required(),
 
     password: Joi.string()
+       .trim(true)
       .pattern(new RegExp(/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[^a-zA-Z\d\s]).{8,}$/))
       .required()
       .messages({
@@ -244,6 +247,7 @@ const [referralName, setReferralName] = useState("")
       }),
 
     confirmPassword: Joi.string()
+      .trim(true)
       .pattern(new RegExp(/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[^a-zA-Z\d\s]).{8,}$/))
       .required()
       .messages({
@@ -279,7 +283,7 @@ const [referralName, setReferralName] = useState("")
     event.preventDefault();
 
     const {
-      country,
+      country ,
       fullName,
       userName,
       email,
@@ -326,13 +330,13 @@ const [referralName, setReferralName] = useState("")
         setErrors({});
         setLoadSignUp(true);
         const data = {
-          fullname: fullName,
-          username: userName,
-          phone_number: phoneNumber,
-          invitation_code: IVcode,
-          email: email,
-          password: password,
-          country: country,
+          fullname: fullName?.length ? fullName?.trim() : "",
+          username: userName?.length ? userName?.trim() : "",
+          phone_number: phoneNumber?.length ? phoneNumber?.trim() : "",
+          invitation_code: IVcode?.length ? IVcode?.trim() : "",
+          email: email?.length ? email?.trim() : "",
+          password: password?.length ? password?.trim() : "",
+          country: country?.length ? country?.trim() : "",
         };
         const config = {
           headers: { "Content-Type": "application/json" },
