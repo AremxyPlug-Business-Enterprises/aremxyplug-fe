@@ -273,7 +273,7 @@ const {setSessionModal} = useContext(ContextProvider)
    setTimeout(()=> {
   setSessionModal(false);
    return navigate("/Login");
-   },30000)
+   },4000)
   },[])
   
 
