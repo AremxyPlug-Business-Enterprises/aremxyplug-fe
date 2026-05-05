@@ -43,7 +43,7 @@ const pathname = location?.pathname === "/DigitalServices"
          <Link to="/TestingPhase" className = "fixed bg-[#FFF8B0] w-full top-[0px] z-[55]">
        <div  className=" text-[12px] lg:text-[14px] py-[20px]
      text-center font-[500] leading-[18px] lg:leading-[20px] px-[20px]">
-       🔔 AremxyPlug Testing Phase: <span className="font-[800]">Live from 22 April – 06 May {" "}</span>
+       🔔 AremxyPlug Testing Phase: <span className="font-[800]">Live from 22 April – 18 May {" "}</span>
          Click to view details, eligibility, terms & rewards. 
        </div>
             </Link>
