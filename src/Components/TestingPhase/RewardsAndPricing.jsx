@@ -1,35 +1,97 @@
 //UPDATED DESIGN
  // RewardsAndPricing.jsx (UPDATED → Reward Structure)
 
+
+ // RewardStructure.jsx (Improved Hierarchy)
+
 import { motion } from "framer-motion";
 import { Gift, Video, Users } from "lucide-react";
 
 export const RewardsAndPricing = () => {
-  const items = [
+  const tracks = [
     {
+       id : 1,
       icon: Gift,
       title: "1. Testing Phase Rewards — ₦200,000",
-      desc: `For users who complete 100% of tasks and earn the Beta Badge.
-Rewards are shared among all eligible testers.`,
-      color: "from-[#4C7BFF] to-[#86A8FF]",
+      sections: [
+        {
+          type: "list",
+          items: [
+            "For users who complete 100% of tasks",
+            "Must earn the Beta Badge",
+            "Rewards are shared among all eligible testers",
+          ],
+        },
+      ],
     },
     {
+      id : 2,
       icon: Video,
       title: "2. Video Creator Contest — ₦100,000",
-      desc: `Create and share a short video about joining or your experience using AremxyPlug.
-Post on social platforms, tag AremxyPlug, and use required hashtags.
-
-Top 10 creators share ₦100,000 equally.`,
-      color: "from-[#3E90FF] to-[#75BAFF]",
+      sections: [
+        {
+          heading: "How to Join",
+          type: "list",
+          items: [
+            "Sign up and complete KYC",
+            "Complete testing tasks",
+            "Create a short video (How to join OR your experience)",
+            "Post on X, Instagram, Facebook, TikTok, or YouTube",
+            "Follow AremxyPlug across all socials",
+            "Tag AremxyPlug official accounts",
+            "Use hashtags: #AremxyPlug #TestingPhase #VideoContest",
+            "Submit your entry via the official form",
+          ],
+        },
+        {
+          heading: "Reward",
+          type: "list",
+          items: [
+            "Top 10 creators",
+            "₦100,000 shared equally",
+          ],
+        },
+      ],
     },
     {
+      id : 3,
       icon: Users,
       title: "3. Referral Contest — 100,000 Points",
-      desc: `Invite users using your referral link. Only verified and active referrals count.
+      sections: [
+        {
+          heading: "How It Works",
+          type: "list",
+          items: [
+            "Share your referral link/code",
+            "Invite users to sign up and participate",
+            "Only verified and active referrals will count",
+          ],
+        },
+        {
+          heading: "Reward",
+          type: "list",
+          items: [
+            "Total: 100,000 Points",
+            "Distributed among top referrers",
+            "Earn 50 points per verified referral",
+            "Higher veified referrals = higher reward share",
+          ],
+        },
+        {
+          heading: "Extra Reward",
+          type: "list",
+          items: [
+            "Earn 50 points when you successfully sign up",
+            "Earn 50 points when you complete your account verification (KYC)",
+            "All reward points can be converted to real quick cash."
 
-Earn 50 points per referral + bonus points for signup and KYC.
-Points convert to real cash and future platform benefits.`,
-      color: "from-[#4CC7C9] to-[#7AE7E8]",
+          ],
+        },
+        {
+          type: "note",
+          text: "Points earned from referrals are separate from Testing Phase rewards and can be redeemed based on future platform benefits."
+        },
+      ],
     },
   ];
 
@@ -41,66 +103,105 @@ Points convert to real cash and future platform benefits.`,
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
           className="text-center mb-14"
         >
           <h2 className="text-4xl font-bold text-[#1A1D21]">
             Reward Structure
           </h2>
           <p className="text-[#4A4A4A] mt-3 text-lg">
-            3 separate ways to earn during the testing phase.
+            3 ways to earn during the testing phase.
           </p>
         </motion.div>
 
-        {/* Cards (UNCHANGED STRUCTURE) */}
-        <div className="grid md:grid-cols-3 gap-8">
-          {items.map((item, idx) => {
-            const Icon = item.icon;
+        {/* Cards */}
+        <div className="space-y-8">
+          {tracks.map((track, idx) => {
+            const Icon = track.icon;
 
             return (
               <motion.div
                 key={idx}
-                initial={{ opacity: 0, scale: 0.96 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.45, delay: idx * 0.08 }}
-                className="bg-white rounded-2xl border border-[#D3E0FF] shadow-lg overflow-hidden flex flex-col"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                className="bg-white border border-[#D3E0FF] rounded-2xl shadow-lg overflow-hidden"
               >
                 {/* Gradient Strip */}
-                <div className={`h-2 w-full bg-gradient-to-r ${item.color}`}></div>
+                <div className="h-2 w-full bg-gradient-to-r from-[#4C7BFF] to-[#86A8FF]" />
 
                 {/* Content */}
-                <div className="p-6 flex flex-col gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-[#F0F6FF] flex items-center justify-center shadow-inner">
-                    <Icon className="w-6 h-6 text-[#356DFF]" />
+                <div className="p-8 flex flex-col md:flex-row gap-6">
+
+                  {/* Icon */}
+                  <div className="w-14 h-14 rounded-xl bg-[#F0F6FF] flex items-center justify-center shadow-inner shrink-0">
+                    <Icon className="w-7 h-7 text-[#356DFF]" />
                   </div>
 
-                  <h3 className="text-lg font-semibold text-[#1A1D21] leading-snug">
-                    {item.title}
-                  </h3>
+                  {/* Text */}
+                  <div className="flex-1 space-y-6">
+                    <h3 className="text-xl font-semibold text-[#1A1D21]">
+                      {track.title}
+                    </h3>
 
-                  <p className="text-[#4A4A4A] text-[14px] leading-relaxed whitespace-pre-line">
-                    {item.desc}
-                  </p>
+                    {/* Sections */}
+            
+{track.sections.map((section, i) => (
+  <div key={i} className="space-y-3">
+
+    {/* Subheading (IMPROVED VISIBILITY) */}
+    {section.heading && (
+      <div className="flex items-center gap-3 mt-4">
+        <div className="w-1.5 h-5 bg-[#356DFF] rounded-full"></div>
+        <p className="text-base font-semibold text-[#1A1D21]">
+          {section.heading}
+        </p>
+      </div>
+    )}
+
+    {/* List */}
+    {section.type === "list" && (
+      <ul className="space-y-2 text-[#4A4A4A] text-[15px] pl-4">
+        {section.items.map((item, j) => (
+          <li key={j} className="flex flex-col md:flex-row gap-2 ">
+            <span className="text-[#1A1D21] mt-[2px]">• {item}  {" "} </span>
+          
+              {item === "Submit your entry via the official form" && (
+              <a href={" https://forms.gle/AUAq9sjGvJzoSrVy5"}
+                className="text-blue-400 ">
+                https://forms.gle/AUAq9sjGvJzoSrVy5
+             </a>
+              )}
+          </li>
+        ))}
+      </ul>
+    )}
+
+    {/* Note */}
+    {section.type === "note" && (
+      <div className="bg-[#F0F6FF] border border-[#D3E0FF] px-4 py-3 rounded-lg">
+        <p className="text-sm text-[#1A1D21] leading-relaxed">
+          {section.text}
+        </p>
+      </div>
+    )}
+  </div>
+))}
+
+                  </div>
                 </div>
               </motion.div>
             );
           })}
         </div>
 
-        {/* Updated Conclusion */}
+        {/* Conclusion */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mt-16 bg-white border border-[#C7D7FF] rounded-2xl shadow-md p-8 text-center"
+          className="mt-16 text-center"
         >
-          <p className="text-[#1A1D21] text-lg font-medium leading-relaxed">
-            <span className="block mb-2">
-              Participate in one — or all three tracks.
-            </span>
-            <span className="block">
-              The more you engage, the more you earn.
-            </span>
+          <p className="text-lg text-[#1A1D21] font-medium">
+            You can participate in all three tracks — the more you engage, the more you earn.
           </p>
         </motion.div>
 
@@ -108,101 +209,3 @@ Points convert to real cash and future platform benefits.`,
     </section>
   );
 };
-// OLD DESIGN
-// import { motion } from "framer-motion";
-// import { Gift, Users, Star } from "lucide-react";
-
-// export const  RewardsAndPricing=()=> {
-//   const items = [
-//     {
-//       icon: Gift,
-//       title: "Total Reward Pool",
-//       desc: "₦200,000 total cash rewards allocated for testers.",
-//       color: "from-[#4C7BFF] to-[#86A8FF]",
-//     },
-//     {
-//       icon: Users,
-//       title: "Distribution",
-//       desc: "Rewards are shared among all testers who complete the required steps — not winner-takes-all.",
-//       color: "from-[#3E90FF] to-[#75BAFF]",
-//     },
-//     {
-//       icon: Star,
-//       title: "AremxyPlug Reward Points",
-//       desc: "Earn exclusive points redeemable for future bonuses, discounts, perks, and early feature unlocks.",
-//       color: "from-[#4CC7C9] to-[#7AE7E8]",
-//     },
-//   ];
-
-//   return (
-//     <section className="w-full px-6 py-20 bg-[#F4F8FF]">
-//       <div className="max-w-5xl mx-auto">
-
-//         {/* Section Header */}
-//         <motion.div
-//           initial={{ opacity: 0, y: 20 }}
-//           whileInView={{ opacity: 1, y: 0 }}
-//           transition={{ duration: 0.5 }}
-//           className="text-center mb-14"
-//         >
-//           <h2 className="text-4xl font-bold text-[#1A1D21]">
-//             Rewards & Prize Pool
-//           </h2>
-//           <p className="text-[#4A4A4A] mt-3 text-lg">
-//             Here’s what you stand to gain for completing the testing program.
-//           </p>
-//         </motion.div>
-
-//         {/* Cards */}
-//         <div className="grid md:grid-cols-3 gap-8">
-//           {items.map((item, idx) => {
-//             const Icon = item.icon;
-
-//             return (
-//               <motion.div
-//                 key={idx}
-//                 initial={{ opacity: 0, scale: 0.96 }}
-//                 whileInView={{ opacity: 1, scale: 1 }}
-//                 transition={{ duration: 0.45, delay: idx * 0.08 }}
-//                 className="bg-white rounded-2xl border border-[#D3E0FF] shadow-lg overflow-hidden flex flex-col"
-//               >
-//                 {/* Gradient Top Strip */}
-//                 <div className={`h-2 w-full bg-gradient-to-r ${item.color}`}></div>
-
-//                 {/* Content */}
-//                 <div className="p-6 flex flex-col gap-4">
-//                   <div className="w-12 h-12 rounded-xl bg-[#F0F6FF] flex items-center justify-center shadow-inner">
-//                     <Icon className="w-6 h-6 text-[#356DFF]" />
-//                   </div>
-
-//                   <h3 className="text-xl font-semibold text-[#1A1D21] leading-tight">
-//                     {item.title}
-//                   </h3>
-
-//                   <p className="text-[#4A4A4A] text-[15px] leading-relaxed">
-//                     {item.desc}
-//                   </p>
-//                 </div>
-//               </motion.div>
-//             );
-//           })}
-//         </div>
-
-//         {/* Conclusion Section */}
-//         <motion.div
-//           initial={{ opacity: 0, y: 20 }}
-//           whileInView={{ opacity: 1, y: 0 }}
-//           transition={{ duration: 0.6 }}
-//           className="mt-16 bg-white border border-[#C7D7FF] rounded-2xl shadow-md p-8 text-center"
-//         >
-//           <p className="text-[#1A1D21] text-lg font-medium leading-relaxed">
-//             <span className="block mb-2">No leaderboard. No competition.</span>
-//             <span className="block">
-//               If you complete the testing steps — <span className="font-semibold text-[#356DFF]">you earn rewards</span>.
-//             </span>
-//           </p>
-//         </motion.div>
-//       </div>
-//     </section>
-//   );
-// }
