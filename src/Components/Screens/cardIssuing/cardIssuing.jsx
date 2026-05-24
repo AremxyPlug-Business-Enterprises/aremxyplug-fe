@@ -6,7 +6,7 @@ import Bluebutton from "../../bluebutton/Bluebutton";
 import { Link } from "react-router-dom";
 import CurrencyConversionModal from "../../CurrencyConversion/CurrencyConversionModal";
 import {motion} from "framer-motion";
-
+import { useNavigate } from "react-router-dom";
 
 export const primaryColor = "#04177F";
 
@@ -91,11 +91,13 @@ const items = carouselData.map((item, index) => (
 ));
 function CardIssuing() {
   // const [activeSlide, setActiveSlide] = useState(null);
+  const navigate = useNavigate()
+
   const [showPopup, setShowPopup] = useState(false)
   const handleShowPopup = () => {
     setShowPopup(!showPopup)
   }
-
+const userStatus = localStorage.getItem("cxccxfd");
   return (
     <>
       <div className="page_overall_root_background_gradient mt-[-100px] md:mt-[-170px] lg:mt-[-200px] pt-[180px]  md:pt-[280px]  lg:pt-[300px] md:pb-[15%] pb-[25%]  w-full lg:px-[8%] px-[5%] ">
@@ -104,8 +106,19 @@ function CardIssuing() {
        grid-cols-1 gap-y-4 
         "
         >
+            {userStatus && (
+     <div className="my-2 flex ">
+      <img src="/Images/ArrowBack.svg" alt ="ArrowBack"/>
+      <p onClick={()=> {
+        navigate(-1)
+      }} className="text-base text-black font-semibold">
+        Go Back
+      </p>
+      </div>
+  )}
           <div className=" flex flex-col gap-6  rounded xl:h-[350px] sm:rounded-md p-6  
           lg:rounded-lg bg-[#f2f5ff] lg:p-8 md:p-6">
+            
             <h1
               className="text-[30px] leading-[40px]   font-bold md:text-left text-center 
     md:text-[26px] lg:text-[50px]  lg:leading-[60px] 

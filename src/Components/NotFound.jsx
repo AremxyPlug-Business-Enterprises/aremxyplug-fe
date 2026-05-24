@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
  const NotFound = () => {
  const userStatus = localStorage.getItem("cxccxfd")
  return (
-  <div className = {` w-full flex flex-col justify-center items-center h-[700px] mb-[-100px] bg-blue-600 `}>
+  <div className = {` w-full flex flex-col justify-center mt-[-100px] lg:mt-0 items-center h-[700px]   bg-blue-600 `}>
   <h2 className = "text-[18px] text-white leading-[24px] lg:text-[20px] lg:leading-[26px] font-[800]">
   OOPs, This page does not exist...
   </h2>

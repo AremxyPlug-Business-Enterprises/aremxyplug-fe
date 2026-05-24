@@ -63,6 +63,28 @@ export default function RewardDistributionMinimal() {
             );
           })}
         </div>
+        
+        {/* Updated Conclusion */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="mt-16 bg-white border border-[#C7D7FF] rounded-2xl shadow-md p-8 text-center"
+        >
+          <p className="text-[#1A1D21] text-lg font-medium leading-relaxed">
+            <span className="block mb-2 font-semibold text-lg">
+              ⚠️ Reward Distribution Disclaimer 
+            </span>
+            <span className="block">
+              All rewards are subject to verification. AremxyPlug reserves the right to review,
+               validate, and disqualify any participant that does not meet 
+               the stated requirements. Only eligible and verified
+                activities will be rewarded. Final decisions on reward 
+                distribution remain at AremxyPlug’s discretion.
+
+            </span>
+          </p>
+        </motion.div>
       </div>
     </section>
   );

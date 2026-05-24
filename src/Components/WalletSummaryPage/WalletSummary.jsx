@@ -397,6 +397,7 @@ export default function WalletSummaryPage() {
         : product === "Electricity Bills"
         ? "electric-sub"
         : product === "Internal Deposit" || product === "Virtual Account"
+        || product === "System Debit" || product === "System Top-Up"
         ? "deposit"
         : product === "Internal Transfer"
         ? "transfer" : product === "Point Redeem" ?
@@ -1249,6 +1250,7 @@ const FormatTime =(DateValue)=> {
                               : transaction?.product === "Internal Transfer"
                               ? "/TransferReceipt"
                               : transaction?.product === "Internal Deposit" || transaction?.product === "Virtual Account"
+                              || transaction?.product === "System Debit" || transaction?.product === "System Top-Up"
                               ? "/VirtualAccountReceipt" 
                               : transaction?.product === "Point Redeem" ?
                              "/PointRedeemReceipt" : "/SuccessfullReceipt",
@@ -1509,6 +1511,7 @@ const FormatTime =(DateValue)=> {
                           : transaction?.product === "Internal Transfer"
                           ? "/TransferReceipt"
                           : transaction?.product === "Internal Deposit" || transaction?.product === "Virtual Account"
+                          || transaction?.product === "System Debit" || transaction?.product === "System Top-Up"
                           ? "/VirtualAccountReceipt"
                            : transaction?.product === "Point Redeem" ? "/PointRedeemReceipt"
                           : "/SuccessfullReceipt",

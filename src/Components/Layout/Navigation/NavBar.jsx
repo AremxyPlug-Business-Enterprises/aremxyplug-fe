@@ -33,6 +33,9 @@ const userStatus= localStorage.getItem("cxccxfd");
 const pathname = location?.pathname === "/DigitalServices" 
 || location?.pathname === "/VTU_DEV" || location?.pathname === "/businessDev" || location?.pathname ==="/CardIssuing"
 || location?.pathname === "/ContactUs" || location?.pathname === "/pricing";
+
+  
+
   return (
    
 ((!userStatus) || (userStatus && pathname)) && (
@@ -43,8 +46,9 @@ const pathname = location?.pathname === "/DigitalServices"
          <Link to="/TestingPhase" className = "fixed bg-[#FFF8B0] w-full top-[0px] z-[55]">
        <div  className=" text-[12px] lg:text-[14px] py-[20px]
      text-center font-[500] leading-[18px] lg:leading-[20px] px-[20px]">
-       🔔 AremxyPlug Testing Phase: <span className="font-[800]">Live from 22 April – 06 May {" "}</span>
-         Click to view details, eligibility, terms & rewards. 
+       🔔 AremxyPlug Testing Phase Extended to {" "} <span className="font-[800]">
+        May 18th — Now with ₦200K + ₦100K + ₦100K Rewards.{" "}</span>
+          Click for full details, eligibility & how to earn.
        </div>
             </Link>
         )}

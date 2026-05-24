@@ -5,11 +5,11 @@ import { Player } from "@lottiefiles/react-lottie-player";
 import styles from "../BusinessDev/busdev.module.css";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-
+import { useNavigate } from "react-router-dom";
 export const BusinessDev = () => {
   const [firstDrop, setFirstDrop] = useState(false);
   const [buttonText, setButtonText] = useState("More");
-
+  const navigate = useNavigate()
   function handleClick() {
     setFirstDrop((prev) => !prev);
     setButtonText((prevText) => (prevText === "More" ? "Less" : "More"));
@@ -54,7 +54,7 @@ export const BusinessDev = () => {
     lottie: "https://assets9.lottiefiles.com/packages/lf20_uf2ng6jq.json",
   }
 ];
-
+const userStatus = localStorage.getItem("cxccxfd")
   return (
     <div className="">
       {/* SECTION ONE */}
@@ -62,6 +62,16 @@ export const BusinessDev = () => {
       gap-10 justify-center  lg:gap-15 px-[5%]">
           <div className="flex md:flex-row flex-col gap-5 items-center">
           <div className="flex flex-col lg:gap-10 gap-5 md:w-1/2 w-full">
+           {userStatus && (
+     <div className="my-2 flex ">
+      <img src="/Images/ArrowBack.svg" alt ="ArrowBack"/>
+      <p onClick={()=> {
+        navigate(-1)
+      }} className="text-base text-black font-semibold">
+        Go Back
+      </p>
+      </div>
+  )}
           <h1 className="text-[30px] leading-[40px]   font-bold md:text-left text-center 
     md:text-[26px] lg:text-[50px]  lg:leading-[60px] 
            text-[#04177F]">

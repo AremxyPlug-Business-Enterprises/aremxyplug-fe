@@ -22,7 +22,8 @@ const SecondModal = ({value, userForgetPasswordSystem}) => {
        setForgetPassCanResend,
        submission, setSubmission,
       // passwordAuthorisation,
-       setPasswordAuthorisation
+       setPasswordAuthorisation,
+       setAlertCustom
     } = useContext(ContextProvider);
      const [loading, setLoading] = useState(false);
     const {checked, setChecked} = useContext(ContextProvider);
@@ -53,7 +54,16 @@ const dateAsAtAllocation =  Date.now();
           if((response.status === 200 || response.status === 201)  && response.headers.hasAuthorization){
             const getAuthorisation = response.headers.get("Authorization");
  localStorage.setItem("PasswordResetActive", dateAsAtAllocation)
- alert("You are being redirected to a page where you reset your password, and have a limited time of 5 minutes, kindly make use of the allocated time or you will be redirected to the login.")
+ setAlertCustom(
+  {
+    message : "Reset your password: You are given limited time in this page",
+    type : "info",
+    show : true
+
+  },
+
+
+ )
               setPasswordAuthorisation(getAuthorisation);
           successVerifyPassword();
           setOtpSent('');
@@ -62,9 +72,9 @@ const dateAsAtAllocation =  Date.now();
           if( error.response  && error.response.status === 400 ){
             setForgetPassVerificationPinError(true);
           } if( error.response  && error.response.status === 404){
-            alert(`ERROR: ${error.message}`,)
+            setAlertCustom({message : `ERROR: ${error.message}`, type : "error", show : true});
           }else if(error.response &&error.response.status === 500){
-            alert("INTERNAL_SERVER_ERROR");
+           setAlertCustom({message : `Failed to process your request`, type : "error", show : true})
           }else{
             return ()=> <Navigate to ={`/newPassword`}/>
           }

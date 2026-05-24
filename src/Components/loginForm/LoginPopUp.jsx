@@ -15,6 +15,7 @@ import VerificationSuccess from "../My Profile & Account Settings/ProfileImages/
 import NotVerifiedImage from "../My Profile & Account Settings/ProfileImages/NotVerifiedIcon.svg";
 import { SetLocalStorage } from "../LocalStorage/LocalStorage";
 import { UnverifiedSignUp } from "../ApiCollection.jsx/ApiBuck";
+
 //import { GetLocalStorage } from "../LocalStorage/LocalStorage";
 
 function LoginPopUp() {
@@ -47,15 +48,15 @@ function LoginPopUp() {
     setIdNumber,
     setBvnNumber,
     setNetworkIssue,
-    unverifiedSignupInfo, setAlertCustom
+    unverifiedSignupInfo, setAlertCustom, pendingLoginToken
   } = useContext(ContextProvider);
 
   const { email, phone } = customerDetail;
   const [loading, setLoading] = useState(false);
   const [countdown, setCountdown] = useState(60);
-  const [countdown2, setCountdown2] = useState(60);
+
   const [canResend, setCanResend] = useState(false);
-  const [canResend2, setCanResend2] = useState(false);
+
 
   const [otp, setOtp] = useState("");
   const [otp2, setOtp2] = useState("");
@@ -127,11 +128,13 @@ function LoginPopUp() {
       }
     } finally {
       setLoading(false);
-      setCountdown2(60);
       setCountdown(60);
+      setCanResend(false)
     }
   }
   };
+
+ 
 
   // Function to help store get the url and send-otp type
   const getOtpSmsorEmail = async (paramSmsOrEmail) => {
@@ -144,13 +147,21 @@ function LoginPopUp() {
     if ( paramSmsOrEmail === "sms") {
        body = {
         phone_number: phone,
+        pending_login_token : pendingLoginToken
       };
       url = `${BASE_URL}/sms/send`;
     } else if ( paramSmsOrEmail === "email") {
       body = {
         email: email,
+        pending_login_token : pendingLoginToken
       };
       url = `${BASE_URL}/send-otp/signin`;
+    }else if(paramSmsOrEmail === "whatsapp"){
+  body = {
+      phone_number: phone,
+      pending_login_token : pendingLoginToken
+      };
+      url = `${BASE_URL}/whatsapp/send`;
     }
     if (!navigator.onLine) {
          setAlertCustom({
@@ -239,10 +250,18 @@ function LoginPopUp() {
         }
       } catch (error) {
         if (error && error.response === undefined) {
-          alert("Check your network connection");
+         setAlertCustom({
+          message : "Your internet connection is quite unstable",
+          type : "error",
+          show : true
+         })
         } else if (error.response.status === 400) {
-      
-        
+       setAlertCustom({
+          message : "Error",
+          type : "error",
+          show : true
+         })
+        //May need to be silent
           if (error && error?.response?.data?.message === "unverified") {
             setBvnNumber("");
             setIdNumber("");
@@ -407,15 +426,27 @@ return assignImageByUsername
       setNetworkIssue,
       setAlertCustom
     );
-    if (CheckVirtualAcc) {
+    if (CheckVirtualAcc && localStorage.getItem("cxccxfd") ) {
      SessionTiming();
      UserIconFormatting();
-      refreshToken();
+    
       setOpenTaskBar(true);
      if(UserIconFormatting && SessionTiming){
       navigate("/dashboard");
+      setTimeout(()=> {
+      refreshToken()
+      },2000)
      }
     
+    }else{
+       setAlertCustom({
+        message : "Failed to retrieve your details",
+        type : "error",
+        show : true
+      })
+      setTimeout(()=> {
+      window.location.reload()
+      },3000)
     }
   };
   // THE FUNCTION FOR DERIVING THE GET OPT METHOD
@@ -424,14 +455,26 @@ return assignImageByUsername
       url = `${BASE_URL}/verify-otp/signin?email=${email}`;
       body = {
         otp: otp3,
+        pending_login_token : pendingLoginToken
       };
     } else if(smsOrEmail === "sms") {
       url = `${BASE_URL}/sms/verify/signin?phone=${phone}`;
       body = {
         otp: otp3,
+        pending_login_token : pendingLoginToken
+      };
+    }else if(smsOrEmail === "whatsapp"){
+          url = `${BASE_URL}/whatsapp/verify/signin?phone=${phone}`;
+      body = {
+        otp: otp3,
+        pending_login_token : pendingLoginToken
       };
     }
-    if (!navigator.onLine) return alert("Check your internet connection");
+    if (!navigator.onLine) setAlertCustom({
+      message : "Check your internet connection",
+      type : "error",
+      show : true
+    });
     if (navigator.onLine) {
       await VerifyOtpFunction(url, body);
     }
@@ -449,23 +492,31 @@ return assignImageByUsername
       handleVerificationOTP();
       }
     } catch (error) {
-      if (error && error.response === undefined) {
+      if (error && error?.response === undefined) {
         setAlertCustom({
           message : "Your internet Connection is quite unstable",
           type : "error",
           show : true
         })
-      } else if (error && error.response.status === 400) {
+      } else if (error && error?.response?.status === 400) {
         setVerificationPinError(true);
         setOtp3("");
-      } else if (error.response.status === 404) {
+      } else if (error?.response?.status === 404) {
         setVerificationPinError(true);
-        alert("OOPs, an error has occured");
+       setAlertCustom({
+        message : "OOps an error has occured",
+        type : "error",
+        show : true
+       })
         setOtp3("");
-      } else if (error && error.response.status === 401) {
-        alert("You have been timed out")
+      } else if (error && error?.response?.status === 401) {
+          setAlertCustom({
+        message : "You have been timed out.",
+        type : "error",
+        show : true
+       })
         setOpen2StepOTP(false)
-      } else if (error.response && error.response.status === 500) {
+      } else if (error?.response && error?.response?.status === 500) {
         setOtp3("");
            setAlertCustom({
         message : "SERVER_ERROR",
@@ -485,7 +536,7 @@ return assignImageByUsername
   };
 
   useEffect(() => {
-    if (open2StepOTP === true && smsOrEmail === "sms") {
+    if (open2StepOTP === true && (smsOrEmail === "sms" || smsOrEmail === "email" || smsOrEmail === "whatsapp")) {
       let timer;
       if (countdown > 0) {
         timer = setInterval(() => {
@@ -499,40 +550,30 @@ return assignImageByUsername
   }, [countdown, open2StepOTP, smsOrEmail]);
 
   //SetTimer for Email
-  useEffect(() => {
-    if (open2StepOTP === true && smsOrEmail === "email") {
-      let timer;
-      if (countdown2 > 0) {
-        timer = setInterval(() => {
-          setCountdown2((prevCountdown2) => prevCountdown2 - 1);
-        }, 1000);
-      } else {
-        setCanResend2(true);
-      }
-      return () => clearInterval(timer);
-    }
-  }, [countdown2, open2StepOTP, smsOrEmail]);
+
 
   const handleResendOTP = () => {
-    if (!navigator.onLine) return alert("Check your internet connection.");
+    if (!navigator.onLine) setAlertCustom({
+      message : "Check your internet connection",
+      type  : "error",
+      show : true
+    });
     if (navigator.onLine) {
-      getOtpSmsorEmail("sms");
+     
+      getOtpSmsorEmail(smsOrEmail);
       setCanResend(false);
       setVerificationPinError("");
     }
   };
 
-  const handleResendOTP2 = () => {
-    if (!navigator.onLine) return alert("Check your internet connection.");
-    if (navigator.onLine) {
-      getOtpSmsorEmail("email");
-      setCanResend2(false);
-      setVerificationPinError("");
-    }
-  };
+
 
   function HandleTranspin() {
-    if (!navigator.onLine) return alert("Check your internet connection.");
+    if (!navigator.onLine) setAlertCustom({
+      message : "Check your internet connection",
+      type  : "error",
+      show : true
+    });
     if (otp === otp2 && navigator.onLine) {
       SendTransactPin();
       setTranspinErrors("");
@@ -572,7 +613,7 @@ return assignImageByUsername
         account_no,
         id
       );
-      if (SetLocalStorage) {
+      if (SetLocalStorage && localStorage.getItem('cxccxfd')) {
         navigate("/dashboard")
         setLoading(false);
         setBvnNumber("");
@@ -580,25 +621,31 @@ return assignImageByUsername
       }
     }else{
       setAlertCustom({
-        message : "failed to retrieve your details",
+        message : "Failed to retrieve your details",
         type : "error",
         show : true
       })
+      setTimeout(()=> {
+      window.location.reload()
+      },3000)
     }
   };
 
   const PinSuccessFlow = ()=> {
       localStorage.setItem("cxccxfd", true)
-     refreshToken()
-    setOpenTranspin(false);
-    setOpenTranspinSuccessful(true)
+     setOpenTranspin(false);
+    setOpenTranspinSuccessful(true);
+    setTimeout(async()=> {
+     await refreshToken();
+    })
   }
 
    const SendTransactPin = async () => {
     const body = {
-      pin : otp
+      pin : otp,
+      pending_login_token : pendingLoginToken
     }
-   await PostFunction("pin", setLoading, body, ()=> {
+   await PostFunction("pin/first-login", setLoading, body, ()=> {
    PinSuccessFlow();
    }, async(ErrorType)=> {
    if(ErrorType === "Bad request"){
@@ -673,8 +720,68 @@ return assignImageByUsername
                   it’s really you.
                 </p>
               </div>
-              <div className="flex flex-col items-center">
-                {/* VIA SMS STARTS HERE*/}
+              <div className="flex flex-col gap-5 items-center overflow-y-scroll py-5">
+               
+                {/* VIA Email STARTS HERE*/}
+                <div
+                  className=" flex items-center  w-full px-[10px] cursor-pointer rounded-[7.5px] 
+               min-h-[60px] p-[7px] gap-[5px] md:w-[161px] lg:h-[60px] lg:rounded-[8px] "
+                  onClick={() => {
+                    setSmsOrEmail("email");
+                  }}
+                  style={{
+                    borderWidth: 1,
+                    borderColor: smsOrEmail === "email" ? "#d166ff" : "#b3b3b3",
+                  }}
+                >
+                  <img
+                    className="w-[30px] h-[30px] lg:w-[25px] lg:h-[25px]"
+                    src="./Images/signupimages/email.png"
+                    alt=""
+                  />
+                  <div className="flex flex-col">
+                    <p className="text-[11px] leading-[14px] lg:text-[14px] font-[400] lg:font-[600]">
+                      {" "}
+                      Via Email
+                    </p>
+                    <p className="text-[9px] leading-[13px] lg:text-[12px]  text-gray-500 font-[400] lg:font-[600]">
+                      {email !== undefined && email?.length ? `${email.slice(
+                      0,
+                      3
+                    )}****** ${email.slice(email?.length-9, email?.length)}` : ""}</p>
+                  </div>
+                </div>
+                {/* VIA Email ENDS HERE*/}
+                {/* WHATSAPP STARTS HERE */}
+
+                <div
+                  className="flex items-center  min-h-[60px] w-full px-[10px] cursor-pointer rounded-[7.5px] p-[7px]   gap-[5px] 
+                lg:rounded-[8px] md:w-[161px] lg:h-[60px]"
+                  onClick={() => {
+                    setSmsOrEmail("whatsapp")
+                    
+                  }}
+                  style={{
+                    borderWidth: 1,
+                    borderColor: smsOrEmail === "whatsapp" ? "#d166ff" : "#b3b3b3",
+                  }}
+                >
+                  <img
+                    className="w-[30px] h-[30px] lg:w-[25px] lg:h-[25px]"
+                    src={"/Images/dashboardImages/whatsapp.png"}
+                    alt=""
+                  />
+                  <div className="flex flex-col">
+                    <p className="text-[11px] leading-[14px] lg:text-[14px] font-[400] lg:font-[600]">
+                      Via WhatsApp
+                    </p>
+                    <p className="text-[9px] leading-[13px] lg:text-[12px] text-gray-500 font-[400] lg:font-[600]">
+                   { phone !== undefined && phone?.length  ?   `+${phone.slice(0, 3)}******${phone.slice(10)}` : ""}
+                    </p>
+                  </div>
+                </div>
+                {/* VIA WHATSAPP ENDS HERE*/}
+                 {/* VIA SMS STARTS HERE*/}
                 <div
                   className="flex items-center  min-h-[60px] w-full px-[10px] cursor-pointer rounded-[7.5px] p-[7px]   gap-[5px] 
                 lg:rounded-[8px] md:w-[161px] lg:h-[60px]"
@@ -702,41 +809,11 @@ return assignImageByUsername
                   </div>
                 </div>
                 {/* VIA SMS ENDS HERE*/}
-                {/* VIA Email STARTS HERE*/}
-                <div
-                  className=" flex items-center mt-[17px]  w-full px-[10px] cursor-pointer rounded-[7.5px] 
-               min-h-[60px] p-[7px] gap-[5px] md:w-[161px] lg:h-[60px] lg:rounded-[8px] "
-                  onClick={() => {
-                    setSmsOrEmail("email");
-                  }}
-                  style={{
-                    borderWidth: 1,
-                    borderColor: smsOrEmail === "email" ? "#d166ff" : "#b3b3b3",
-                  }}
-                >
-                  <img
-                    className="w-[30px] h-[30px] lg:w-[25px] lg:h-[25px]"
-                    src="./Images/signupimages/email.png"
-                    alt=""
-                  />
-                  <div className="flex flex-col">
-                    <p className="text-[11px] leading-[14px] lg:text-[14px] font-[400] lg:font-[600]">
-                      {" "}
-                      Via Email
-                    </p>
-                    <p className="text-[9px] leading-[13px] lg:text-[12px]  text-gray-500 font-[400] lg:font-[600]">
-                      {email !== undefined && email?.length ? `${email.slice(
-                      0,
-                      3
-                    )}****** ${email.slice(15)}` : ""}</p>
-                  </div>
-                </div>
-                {/* VIA Email ENDS HERE*/}
 
                 <div className="w-full flex justify-center mt-[30px] md:mt-[35px] lg:mt-[50px]">
                   <button
                     onClick={()=>{
-                      getOtpSmsorEmail(smsOrEmail === "sms" ? "sms" : "email")
+                      getOtpSmsorEmail(smsOrEmail)
                     }}
                     type="submit"
                     disabled={smsOrEmail === "" ? true : false}
@@ -858,7 +935,7 @@ text-[10px] font-bold leading-[11.31px] w-full md:w-[300px] px-[25px] py-5 round
 
       {/* FORM OVERLAY AND 2 STEP OTP VERIFICATION STARTS HERE*/}
 
-      {open2StepOTP === true && smsOrEmail === "sms" && (
+      {open2StepOTP === true && (smsOrEmail === "sms" || smsOrEmail === "whatsapp") && (
         <Modal>
           <div
             className="lg:ml-[38.5%] md:ml-[45%] lg:w-[30%] md:w-[45%] md:-mt-[20%] lg:-mb-[30%] w-full 
@@ -879,21 +956,55 @@ text-[10px] font-bold leading-[11.31px] w-full md:w-[300px] px-[25px] py-5 round
                 />
               </div>
               <p className=" lg:text-[16px] font-[500] lg:font-[700] text-[14px] leading-[18px] lg:leading-[20px]">
-                Verification code has been sent to your phone
+                Verification code has been sent to your {smsOrEmail === "sms" ? "Phone" : "WhatsApp"}
               </p>
               <p className=" lg:text-[16px] font-[500] lg:font-[700] text-[12px] mb-[7] lg:mb-[10px]">
                 {`${phone.slice(3, 6)}********`}
-              </p>
-              <p
-                className="text-[#737373] font-[400] lg:font-[600] lg:text-[14px] text-[12px] cursor-pointer"
+              </p> 
+              <div className="flex gap-10 items-center">
+             <p
+                className="text-[#737373] font-semibold
+                 lg:font-[600] p-2 bg-pink-300 rounded-lg
+                lg:text-[14px] text-[12px] cursor-pointer"
                 onClick={(e) => {
-                  setCountdown2(60);
+                 if(canResend === true){
                   setSmsOrEmail("email");
                   getOtpSmsorEmail("email");
+                 }else{
+                  setAlertCustom({
+                    message : "Retry when the timer elapses",
+                    type : "info",
+                    show : true
+                  })
+                 }
                 }}
               >
-                Use email address instead
+                Use email address 
               </p>
+              <p className={` ${smsOrEmail === "sms" ? "bg-green-300" : "bg-blue-300"}     p-2 rounded-lg font-semibold  text-[#737373]  lg:font-[600] 
+                lg:text-[14px] text-[12px] cursor-pointer`}
+                onClick={()=> {
+                  if(smsOrEmail === "whatsapp" && canResend === true){
+                  setCountdown(60);
+                  setSmsOrEmail("sms");
+                  setSmsOrEmail("sms");
+                  getOtpSmsorEmail("sms")
+                  }else if(smsOrEmail === "sms" && canResend === true){
+                      setCountdown(60);
+                  setSmsOrEmail("whatsapp");
+                  setSmsOrEmail("whatsapp")
+                  getOtpSmsorEmail("whatsapp")
+                  }else{
+                     setAlertCustom({
+                    message : "Retry when the timer elapses",
+                    type : "info",
+                    show : true
+                  })
+                  }
+                }}>
+              {smsOrEmail === "sms" ? "Use WhatsApp" : "Use SMS"} 
+              </p>
+              </div>
             </div>
             <div>
               <div className="flex justify-center gap-[35px] lg:gap-[15px] flex-col w-full">
@@ -1002,23 +1113,58 @@ text-[10px] font-bold leading-[11.31px] w-full md:w-[300px] px-[25px] py-5 round
                   alt=""
                 />
               </div>
+
+              <div className="flex flex-col gap-3 mb-4">
               <p className="  lg:text-[16px] text-[14px] leading-[16px] lg:leading-[20px] font-[500] lg:font-[700]">
-                Verification code has been sent to
+                Verification code has been sent to your email
               </p>
-              <p className=" lg:text-[16px] text-[12px] leading-[16px] lg:leading-[20px] font-[500] lg:font-[700] mb-[7] lg:mb-[10px]">
-                your email {`${email.slice(0, 3)}********`}
+              <p className=" lg:text-[16px] text-[16px] font-bold leading-[16px] lg:leading-[20px]
+               lg:font-[700] mb-[7] lg:mb-[10px]">
+                 {`${email.slice(0, 3)}******** ${email.slice(email?.length -9, email.length)}`}
               </p>
+              </div>
+         <div className="flex gap-5 items-center">
               <p
-                className="text-[#737373] lg:text-[14px] font-[400] lg:font-[600]
+                className="text-[#737373] p-2 rounded-lg font-semibold bg-blue-300 lg:text-[14px]  lg:font-[600]
                  text-[12px] leading-[16px] lg:leading-[18px] cursor-pointer"
                 onClick={() => {
+                  if(canResend === true){
                   setCountdown(60);
                   setSmsOrEmail("sms");
                   getOtpSmsorEmail("sms");
+                  }else{
+                     setAlertCustom({
+                    message : "Retry when the timer elapses",
+                    type : "info",
+                    show : true
+                  })
+                  }
                 }}
               >
-                Use phone number instead
+             Use SMS 
               </p>
+
+              {/* WHATSAPP */}
+                  <p
+                className="text-[#737373] rounded-lg p-2 font-semibold bg-green-300 lg:text-[14px] lg:font-[600]
+                 text-[12px] leading-[16px] lg:leading-[18px] cursor-pointer"
+                onClick={() => {
+                  if(canResend === true){
+                  setCountdown(60);
+                  setSmsOrEmail("whatsapp");
+                  getOtpSmsorEmail("whatsapp");
+                  }else{
+                     setAlertCustom({
+                    message : "Retry when the timer elapses",
+                    type : "info",
+                    show : true
+                  })
+                  }
+                }}
+              >
+             Use WhatsApp 
+              </p>
+              </div>
             </div>
             <div>
               <div className="flex flex-col justify-center gap-[20px] w-full">
@@ -1061,13 +1207,13 @@ text-[10px] font-bold leading-[11.31px] w-full md:w-[300px] px-[25px] py-5 round
 
                 <div className="w-full flex justify-between">
                   <p className="text-[#04177F] font-[400] lg:font-[600] text-[12.729px] lg:text-[16px]">
-                    {countdown2}
+                    {countdown}
                     <span>sec</span>
                   </p>
-                  {canResend2 ? (
+                  {canResend? (
                     <p
                       className="text-[#04177F] font-[400] lg:font-[600] text-[12.729px] lg:text-[16px] cursor-pointer"
-                      onClick={handleResendOTP2}
+                      onClick={handleResendOTP}
                     >
                       Resend OTP
                     </p>

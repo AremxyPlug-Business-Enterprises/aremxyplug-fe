@@ -2,7 +2,7 @@ import React from "react";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { Link } from "react-router-dom";
-import { useContext, useRef } from "react";
+import { useContext, useRef, useEffect } from "react";
 import styles from "../../../TransferComponent/transfer.module.css";
 import { ContextProvider } from "../../../../../Context";
 import { useLocation } from "react-router-dom";
@@ -41,10 +41,15 @@ const navigate= useNavigate()
    selectedProductMtn,
   selectedOptionMtn,
   mtnSuccessfulResponse,
+  setAlertCustom
     // recipientName,
 
   } = useContext(ContextProvider);
-
+useEffect(()=> {
+  if(mtnSuccessfulResponse?.full_name){
+    navigate(-1)
+  }
+})
   const contentRef = useRef(null);
 
   // ===============Copy to Clipboard Function============
@@ -61,21 +66,59 @@ const navigate= useNavigate()
   // };
 
   // ==============Share pdf Function=============
-  const handleShareClick = () => {
-    if (navigator.share) {
-      navigator
-        .share({
-          title: "Receipt",
-          text: "Check out this receipt!",
-          url: "https://example.com", // Replace with the actual URL of your receipt
-        })
-        .then(() => {return;})
-        .catch((error) =>{return;});
-    } else {
-      return;
-    }
-  };
+   const handleShareClick = async() => {
+       const content = contentRef.current;
+       if(!content) return alert("Receipt not recorded")
+       if(content){
+         try {
+        const pdf = new jsPDF("p", "mm", "a4");
+      //  alert(pdf.internal?.pageSize.getHeight())
+         const canvas = await html2canvas(content,
+            {scale : 2,
+              useCORS : true,
+              backgroundColor : `${isDarkMode ? "#000" : "#fff"}`
+           }
+             )
+            
+         const bgPdf = pdf.setFillColor(isDarkMode ? 0 : 255, isDarkMode ? 0 : 255, isDarkMode ? 0 : 255 )
+         if(bgPdf){
+           const pageHeight = pdf.internal.pageSize.getHeight();
+           const pageWidth = pdf.internal.pageSize.getWidth();
+           const imgWidth = pageWidth;
+           const imgData = canvas.toDataURL("image/jpeg", 1.0);
+           pdf.addImage(imgData, 
+             "jpeg",0, 0, imgWidth, pageHeight, undefined, "FAST");
+     }
+        const pdfBlob = pdf.output("blob");
+       const file = new File([pdfBlob], "AremxyPlug_Receipt.pdf", {type : "application/pdf"})
+       if (navigator.canShare && navigator.canShare({files : [file]})) {
+         navigator
+           .share({
+             title: "AremxyPlug_MTN_Data_ReceiptLoginF",
+             files : [file], 
+           })
+           .then(() => {return;})
+           .catch((error) => {return;});
+       }else{
+        setAlertCustom({
+            message : "Sharing this PDF is not supported in your browser",
+            type : "error",
+            show : true
+          })
+       }
+     }catch(error){
+       setAlertCustom({
+            message : "Unable to share PDF",
+            type : "error",
+            show : true
+          })
+     }
+       }
+     };
 
+     
+   
+  
   // ==============Save Pdf Function==============
   const handleSaveAsPDFClick = () => {
     const content = contentRef.current;

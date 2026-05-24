@@ -19,7 +19,8 @@ const PasswordReset = () => {
         forgetPassCountdown,
          setForgetPassCountdown,
            setForgetPassCanResend,
-           submission, setSubmission
+           submission, setSubmission,
+           setAlertCustom
         } = useContext(ContextProvider);
   
 
@@ -89,6 +90,9 @@ if(selectionType ==="otp"){
 }else if(selectionType === "link"){
 url = `${BASE_URL}/forgot-password`
 alertMessage = "A link has been sent to your email"
+}else if(selectionType === "whatsapp"){
+  url = `${BASE_URL}/whatsapp/send`
+  alertMessage = "An Otp has been sent to you on your WhatsApp number"
 }
 resetPasswordOtp(url, alertMessage)
 }
@@ -113,17 +117,37 @@ const resetPasswordOtp = async(url, alertMessage)=> {
     const response = await axios.post(url, body)
 if(response.status === 200 || response.status ===  201){
  handleSubmit();
- alert(alertMessage)
+ setAlertCustom({
+ message :alertMessage,
+ type : "success",
+ show : true
+ })
 } 
  }catch(error){
  if(error && error.response === undefined ){
-        alert("Your internet connection is quite unstable.")
+       setAlertCustom({
+ message :"Your internet connection is quite unstable",
+ type : "success",
+ show : true
+ })
     }else if(error.response && error.response.status === 404){
-  alert("User Account not found");
+ setAlertCustom({
+ message :"User Account not found",
+ type : "success",
+ show : true
+ })
   } else if(error.response && error.response.status === 500){
-    alert(`INTERNAL_SERVER_ERROR`)
+   setAlertCustom({
+ message : "Failed to process your request",
+ type : "success",
+ show : true
+ })
   }else{
-    alert(`ERROR: ${error.message}`)
+   setAlertCustom({
+ message : "An unexpected error has occured",
+ type : "success",
+ show : true
+ })
   }
   }finally{
     setLoading(false);
@@ -169,7 +193,11 @@ if(inputForgetEmail?.length < 1){
                     <h2 className='text-[9.16px] font-bold leading-normal'>Select how you want to reset your password ?</h2>
                     <div className='flex flex-col gap-[14.32px]'>
                         <button  onClick ={()=> {
-                              alert("The reset Password via link to your email is disabled for now")
+                              setAlertCustom({
+                                message : "The reset Password via link to your email is disabled for now",
+                                type : "info",
+                                show : true
+                              })
                             }}
                          className={selectionType === 'link' ? `text-[9.16px] py-[9.17px] px-[5px] rounded border-[#d166ff] border` : `text-[9.16px] py-[9.17px] px-[5px] rounded`}  style={{boxShadow: `0px 0px 11.5px 0px rgba(0, 0, 0, 0.25)`}} >Send a verification link to my email- {inputForgetEmail}</button>
                         <button className={selectionType === 'otp' ? `text-[9.16px] py-[9.17px] px-[5px] rounded border-[#d166ff] border` : `text-[9.16px] py-[9.17px] px-[5px] rounded`} style={{boxShadow: `0px 0px 11.5px 0px rgba(0, 0, 0, 0.25)`}} onClick={handleSubmitNumber}>Send a verification code to email- {inputForgetEmail}</button>
@@ -218,7 +246,11 @@ if(inputForgetEmail?.length < 1){
                         <div className='flex flex-col gap-[14.32px]'>
                             <button
                             onClick ={()=> {
-                              alert("The reset Password via link to your email is disabled for now")
+                              setAlertCustom({
+                                message : "The reset Password via link to your email is disabled for now",
+                                type : "info",
+                                show : true
+                              })
                             }}
 
                   className={selectionType === 'link' ? `text-[9.16px] py-[9.17px] lg:text-[16px] px-[5px] rounded border-[#d166ff] border` : `text-[9.16px] py-[9.17px] lg:text-[16px] px-[5px] rounded`}  style={{boxShadow: `0px 0px 11.5px 0px rgba(0, 0, 0, 0.25)`}} >

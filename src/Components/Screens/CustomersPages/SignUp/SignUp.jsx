@@ -11,10 +11,10 @@ import FirstModal from "../Password/FirstModal";
 import { useState } from "react";
 import { Loader } from "../../../Loader/Loader";
 import { Modal } from "../../Modal/Modal";
-
+import { useParams } from "react-router-dom";
 export const SignUp = () => {
   //params
- 
+ const {refName} = useParams()
   const {
     // hideNavbar,
    
@@ -58,7 +58,14 @@ const setNav = () => {
  if(localStorage.getItem("PasswordResetActive")){
       localStorage.removeItem("PasswordResetActive")
   }
-  
+//Every time they leave the page with changes saved the, The check Box to agree
+//That they have read the terms and condition, still holds true,
+//There are probabilities and possibilities that the user could change information
+//So from our code base we need to have enough proof to back that irrespective,
+// of the flow mixup, we make on every new request to signup
+//They have clicked the checkbox, not exclusing cases of the multiple users
+// on a single computer...
+  setState((value)=> ({...value, checkbox : false}))
     return () => {
       setHideNavbar(false);
     };
@@ -80,13 +87,7 @@ const setNav = () => {
   const checkInput = country?.length > 1 && email?.length > 1 && phoneNumber?.length > 1 && userName?.length > 1
   && password?.length > 1 && fullName?.length > 1 && checkbox === true && errorSpecialCharacterUsername === false;
 
-
-  const [showPassModal, setShowPassModal] = useState(false);
-
-
-
-
-
+const [showPassModal, setShowPassModal] = useState(false);
 
 const ChangeEventFunctionUsername = (value)=> {
        if(value?.length > 0 && value?.includes("@")  ){
@@ -379,6 +380,7 @@ const ChangeEventFunctionUsername = (value)=> {
               onBlur={() => handleBlur(5)}
             >
               <input
+            readOnly={refName?.length}
                className={`mt-2  md:mt-0 rounded-[10px] 
              md:rounded-0  md:p-0 text-base
          sm:p-3  flex justify-between py-[8.803px]
@@ -390,7 +392,7 @@ const ChangeEventFunctionUsername = (value)=> {
        w-full h-[50.927px] md:h-[35px] lg:h-[50px] border-[#9C9C9C]
         px-[11px] md:px-[6px] lg:px-[10px] text-black self-center `} 
                 type="text"
-                value={IVcode}
+                value={refName?.length ? refName : IVcode}
                 name="IVcode"
                 onChange={changeHandler}
               />

@@ -181,9 +181,10 @@ const [referralName, setReferralName] = useState("")
   function changeHandler(e) {
     const { name, value, type, checked } = e.target;
     const inputValue = type === "checkbox" ? checked : value;
- 
- setState({ ...state, [name]: inputValue });}
-
+   
+ setState({ ...state, [name]: inputValue });
+   
+  }
   const handleFocus = (index) => {
     if (!isFocused.includes(index)) {
       setIsFocused([...isFocused, index]);
@@ -207,18 +208,29 @@ const [referralName, setReferralName] = useState("")
     country: Joi.string().required(),
 
     fullName: Joi.string()
-      .pattern(new RegExp(/^[A-Za-z]+(?:\s[A-Za-z]+)+$/))
-      .required()
-      .messages({
-        "string.pattern.base": "Please enter your First name and last name",
-      }),
+    .trim(true)
+    .min(3)
+    .max(100)
+    // Regex breakdown:
+    // ^[a-zA-Z]+ : Starts with letters
+    // (?: [a-zA-Z]+)+ : Followed by one or more groups of (space + letters)
+    .regex(/^[a-zA-Z]+(?: [a-zA-Z]+)+$/)
+    .required()
+    .messages({
+      'string.empty': 'Full Name is required',
+      'string.min': 'Full Name must be at least 3 characters long',
+      'string.pattern.base': 'Please provide at least a first and last name (e.g., John Doe)',
+      'any.required': 'Full Name is a required field'
+    }),
 
     userName: Joi.string()
+      .trim(true)
       .pattern(new RegExp(/^[a-zA-Z0-9]+$/))
       .required()
       .messages({ "string.pattern.base": "Invalid Username" }),
 
     email: Joi.string()
+      .trim(true)
       .pattern(new RegExp(/^[^\s@]+@[^\s@]+\.[^\s@]+$/))
       .required()
       .messages({ "string.pattern.base": "Invalid email " }),
@@ -226,6 +238,7 @@ const [referralName, setReferralName] = useState("")
     phoneNumber: Joi.string().required(),
 
     password: Joi.string()
+       .trim(true)
       .pattern(new RegExp(/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[^a-zA-Z\d\s]).{8,}$/))
       .required()
       .messages({
@@ -234,6 +247,7 @@ const [referralName, setReferralName] = useState("")
       }),
 
     confirmPassword: Joi.string()
+      .trim(true)
       .pattern(new RegExp(/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[^a-zA-Z\d\s]).{8,}$/))
       .required()
       .messages({
@@ -269,7 +283,7 @@ const [referralName, setReferralName] = useState("")
     event.preventDefault();
 
     const {
-      country,
+      country ,
       fullName,
       userName,
       email,
@@ -316,13 +330,13 @@ const [referralName, setReferralName] = useState("")
         setErrors({});
         setLoadSignUp(true);
         const data = {
-          fullname: fullName,
-          username: userName,
-          phone_number: phoneNumber,
-          invitation_code: IVcode,
-          email: email,
-          password: password,
-          country: country,
+          fullname: fullName?.length ? fullName?.trim() : "",
+          username: userName?.length ? userName?.trim() : "",
+          phone_number: phoneNumber?.length ? phoneNumber?.trim() : "",
+          invitation_code: IVcode?.length ? IVcode?.trim() : "",
+          email: email?.length ? email?.trim() : "",
+          password: password?.length ? password?.trim() : "",
+          country: country?.length ? country?.trim() : "",
         };
         const config = {
           headers: { "Content-Type": "application/json" },
@@ -485,7 +499,7 @@ const [referralName, setReferralName] = useState("")
   const [otherInputPinPopUp, setOtherInputPinPopUp] = useState(false);
   const [transferResponse, setTransferResponse] = useState({});
 
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
 
   const toggleVisibility = () => {
     setIsVisible(!isVisible);
@@ -1437,6 +1451,9 @@ const [nabtebPinsGenerated, setNabtebPinsGenerated] = useState([]);
 
   //============= LOGIN FORM ==========
   const [loginAuthorisation, setLoginAuthorisation] = useState(false);
+  const [pendingLoginToken, setPendingLoginToken]
+   = useState("")
+  
   const [twoStepVerificationSuccess, setTwoStepVerificationSuccess] =
     useState(false);
   const [customerDetail, setCustomerDetail] = useState({});
@@ -1521,6 +1538,9 @@ const [currentDateInTimeStamps, setCurrentDateInTimeStamps] = useState(0);
     //Referral
     referralName,
     setReferralName,
+    //Related To Login
+    pendingLoginToken,
+     setPendingLoginToken,
 //COOKIES
 accepted, 
 setAccepted,

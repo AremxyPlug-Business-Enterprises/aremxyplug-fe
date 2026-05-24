@@ -14,9 +14,7 @@ import { Link } from "react-router-dom/dist/react-router-dom.development";
 import { useState, useEffect } from "react";
 import "../../App.css";
 import {
-  GetFunction,
- 
-} from "../../Components/ApiCollection.jsx/ApiBuck";
+  GetFunction,} from "../../Components/ApiCollection.jsx/ApiBuck";
 import { Loader } from "../Loader/Loader";
 import { Modal } from "../Screens/Modal/Modal";
 import { ContextProvider } from "../Context";
@@ -28,18 +26,15 @@ export default function Referral() {
   //  const [copyTextOne, setCopyTextOne] = useState('');
   //  const [copyTextTwo, setCopyTextTwo] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-const [referralResponds, setReferralResponds] = useState({});
+//const [referralResponds, setReferralResponds] = useState({});
   const [referredUsersResponse, setReferredUsersResponse] = useState({});
   const [totalUsers, setTotalUsers] = useState(0);
   const [activeUsers, setActiveUsers] = useState(0);
   const [inactiveUsers, setInactiveUsers] = useState(0);
-
-
   const referralCode = localStorage.getItem(
     "ReferralCode",
    );
-//    const actualReferralLink = referralResponds?.data?.data?.referral_link ? 
-// `https://aremxyplug.com/signup?ref=${referralCode}` : ""
+
   const referralLink = localStorage.getItem(
     "ReferralLink",
     
@@ -57,7 +52,7 @@ const [referralResponds, setReferralResponds] = useState({});
               })
         })
         .catch((err) => {
-          console.error("Error copying text: ", err);
+          setAlertCustom({message :"Error copying text: ", err, type : "error", show : true});
         });
     } else if (ButtonHandler === "CopyCode") {
       navigator.clipboard
@@ -69,7 +64,7 @@ const [referralResponds, setReferralResponds] = useState({});
               })
         })
         .catch((err) => {
-          console.error("Error copying text: ", err);
+         setAlertCustom({message :"Error copying text: ", err, type : "error", show : true});
         });
     }
   };
@@ -77,7 +72,8 @@ const [referralResponds, setReferralResponds] = useState({});
   const handleReferralGenerate = async () => {
     const Path = "extra/referral";
     const successHandler = (response) => {
-      localStorage.setItem("ReferralLink", response?.data?.data?.referral_link);
+      localStorage.setItem("ReferralLink", response?.data?.data?.referral_link ?  `https://aremxyplug.com/signUp/${response?.data?.data?.referral_code}`
+        : "");
 
       localStorage.setItem("ReferralCode", response?.data?.data?.referral_code);
     };
@@ -103,7 +99,7 @@ const [referralResponds, setReferralResponds] = useState({});
       setIsLoading,
       successHandler,
       FailedHandler,
-      setReferralResponds,
+     ()=> {},
       setNetworkIssue
     );
   };
@@ -150,9 +146,13 @@ const [referralResponds, setReferralResponds] = useState({});
     const FailedHandler = async (ErrorType) => {
             if(ErrorType === "unauthorised"){
            if(sessionModal) return;
-           if(sessionModal === false)setSessionModal(true)
+           if(sessionModal === false) setSessionModal(true)
             }else if (ErrorType === "Server error") {
-              alert("Failed to fetch referred users");
+            setAlertCustom({
+              message : "Failed to fetch referred users",
+              type : "error",
+              show : true
+            });
               setTotalUsers("");
               setActiveUsers("");
               setInactiveUsers("");
@@ -236,12 +236,12 @@ const [referralResponds, setReferralResponds] = useState({});
               
                 id="copy-btn1"
                 onClick={(e) => {
-                 setAlertCustom({
-                  message : "Referral Link is not available",
-                  type : "error",
-                  show : true
-                 })
-                //  handleCopyClick("CopyLink");
+                //  setAlertCustom({
+                //   message : "Referral Link is not available",
+                //   type : "error",
+                //   show : true
+                //  })
+                 handleCopyClick("CopyLink");
                 }}
                 className=" copy-btn1 flex justify-center gap-2.5 w-[25%] h-full bg-[#04177F] items-center rounded-e-[10px] lg:rounded-e-[22px] md:rounded-e-[12.607px]"
               >

@@ -37,6 +37,7 @@ export default function WaecReceipt() {
     setWaecTransactionProduct,
     waecPinsGenerated,
     setWaecPinsGenerated,
+    setAlertCustom
   } = useContext(ContextProvider);
 
   const { toggleSideBar, isDarkMode, date } = useContext(ContextProvider);
@@ -72,43 +73,45 @@ export default function WaecReceipt() {
   //   Share function
   const handleShareClick = async() => {
       const content = contentRef.current;
-      if(!content) return alert("Receipt not recorded")
+      if(!content) {
+        setAlertCustom && setAlertCustom({ message: "Receipt not recorded", type: "error", show: true });
+        return;
+      }
       if(content){
         try {
-       const pdf = new jsPDF("p", "mm", "a4");
-     //  alert(pdf.internal?.pageSize.getHeight())
-        const canvas = await html2canvas(content,
-           {scale : 2,
-             useCORS : true,
-             backgroundColor : `${isDarkMode ? "#000" : "#fff"}`
+          const pdf = new jsPDF("p", "mm", "a4");
+          //  alert(pdf.internal?.pageSize.getHeight())
+          const canvas = await html2canvas(content,
+            {scale : 2,
+              useCORS : true,
+              backgroundColor : `${isDarkMode ? "#000" : "#fff"}`
+            }
+          )
+          const bgPdf = pdf.setFillColor(isDarkMode ? 0 : 255, isDarkMode ? 0 : 255, isDarkMode ? 0 : 255 )
+          if(bgPdf){
+            const pageHeight = pdf.internal.pageSize.getHeight();
+            const pageWidth = pdf.internal.pageSize.getWidth();
+            const imgWidth = pageWidth;
+            const imgData = canvas.toDataURL("image/jpeg", 1.0);
+            pdf.addImage(imgData, 
+              "jpeg",0, 0, imgWidth, pageHeight, undefined, "FAST");
           }
-            )
-           
-        const bgPdf = pdf.setFillColor(isDarkMode ? 0 : 255, isDarkMode ? 0 : 255, isDarkMode ? 0 : 255 )
-        if(bgPdf){
-          const pageHeight = pdf.internal.pageSize.getHeight();
-          const pageWidth = pdf.internal.pageSize.getWidth();
-          const imgWidth = pageWidth;
-          const imgData = canvas.toDataURL("image/jpeg", 1.0);
-          pdf.addImage(imgData, 
-            "jpeg",0, 0, imgWidth, pageHeight, undefined, "FAST");
-    }
-       const pdfBlob = pdf.output("blob");
-      const file = new File([pdfBlob], "AremxyPlug_Receipt.pdf", {type : "application/pdf"})
-      if (navigator.canShare && navigator.canShare({files : [file]})) {
-        navigator
-          .share({
-            title: "AremxyPlug_WAEC_Receipt",
-            files : [file], 
-          })
-          .then(() => {})
-          .catch((error) => {});
-      }else{
-      alert("Sharing this pdf isn't supported in your browser.")
-      }
-    }catch(error){
-     alert(error)
-    }
+          const pdfBlob = pdf.output("blob");
+          const file = new File([pdfBlob], "AremxyPlug_Receipt.pdf", {type : "application/pdf"})
+          if (navigator.canShare && navigator.canShare({files : [file]})) {
+            navigator
+              .share({
+                title: "AremxyPlug_WAEC_Receipt",
+                files : [file], 
+              })
+              .then(() => {})
+              .catch((error) => {});
+          }else{
+            setAlertCustom && setAlertCustom({ message: "Sharing this pdf isn't supported in your browser.", type: "info", show: true });
+          }
+        }catch(error){
+          setAlertCustom && setAlertCustom({ message: error?.toString() || "An error occurred", type: "error", show: true });
+        }
       }
     };
   

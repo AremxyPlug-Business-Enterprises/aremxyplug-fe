@@ -523,32 +523,7 @@ chartResponse?.data?.data?.data?.totalInflowCount + chartResponse?.data?.data?.d
         
         <div className="w-full flex justify-between items-center my-5">
           <div className="flex flex-col gap-5">
-        <div
-          className={`flex justify-start gap-2 items-center mt-[7%]  
-        ${ toggleSideBar ? "lg:ml-[80%]" : ""
-          } `}
-        >
-          <p className="text-[12px] leading-[16px] font-400 lg:text-[14px] lg:leading-[18px]
-          ">Volume</p>
-          <div
-            onClick={() => {
-              volumeValueToggle();
-            }}
-            className={` w-[15px] h-[10.4px] md:w-[30px] md:h-[12px]
-               lg:w-[50px] lg:h-[22px] lg:rounded-full rounded ${
-              isValue ? "bg-[#58DA8F]" : "bg-[#b1b0b0]"
-            }`}
-          >
-            <div
-              className={`rounded-full w-[7.5px] h-[10.4px] md:w-[14px] md:h-[12px] lg:h-[22px] lg:w-[21px] lg:drop-shadow-md bg-[#fff] ${
-                isValue ? "float-right" : "float-left"
-              }`}
-            ></div>
-          </div>
-          <p className="text-[12px] leading-[16px] font-400 lg:text-[14px] lg:leading-[18px]">
-            Value</p>
-        </div>
-
+       
       
         {/* ====================Inflow & Outflow indication================ */}
         <div className="flex justify-start mt-[1%] md:mt-[3%] lg:mt-[1%]">

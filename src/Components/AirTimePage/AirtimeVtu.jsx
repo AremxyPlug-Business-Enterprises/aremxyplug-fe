@@ -36,8 +36,8 @@ const AirtimeVtu = () => {
     const tFee = 0;
     const points = '+2.00';
       
-    const { networkName, setAlertCustom, setNetworkName, newBalance, setNewBalance, discount, setDiscount,
-            setSessionModal, selectRecipientDisplay, setSelectRecipientDisplay,
+        const { networkName, setAlertCustom, setNetworkName, newBalance, setNewBalance, discount, setDiscount,
+          setSessionModal, selectRecipientDisplay, setSelectRecipientDisplay,
           sessionModal, airtimeResponse, setAirtimeResponse } = useContext(ContextProvider);
     const { selectedProduct, setSelectedProduct, recipientsAirtime, setRecipientsAirtime } = useContext(ContextProvider);
     const { recipientName, setRecipientName, networkIssue } = useContext(ContextProvider);
@@ -541,7 +541,7 @@ const handleTransactionSuccessClose = async()=> {
            setInputPin("");
            setTransactSuccessPopUp(true); 
            setConfirm(false);
-           setAirtimeResponse(response)
+           setAirtimeResponse(response?.data?.data?.data)
            return response;
     }else if(response?.data?.data?.data?.status === "failed"|| response?.data?.data?.data?.status === "Failed"){
         setAirtimePurchaseError("Internal Server error")
@@ -617,7 +617,7 @@ if(ErrorType === "Network error" || ErrorType === "User error"){
    if(sessionModal) return;
    if(!sessionModal) return setSessionModal(true)
       }else if(ErrorType === "Server error"){
-            alert("Pin Verification Failed")
+        setAlertCustom && setAlertCustom({ message: "Pin Verification Failed", type: "error", show: true });
       }else if(ErrorType === "Network error" || ErrorType === "User error"){
         setNetworkIssue(true)
         setAirtimeTransactionNetwork(true);

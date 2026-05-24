@@ -7,11 +7,9 @@ import CloseIcon from '../EducationPins/imagesEducation/close-circle.svg';
 import axios from "axios";
 import { BASE_URL } from "../../config";
 import { Loader } from "../Loader/Loader";
-import { GetLocalStorage } from "../LocalStorage/LocalStorage";
-
+import { useLocation } from "react-router-dom";
 
 function Verification() {
-  const Data = GetLocalStorage()
     const {
     viaEmail,
     viaSms,
@@ -30,30 +28,56 @@ function Verification() {
     state,
     setState,
     setAlertCustom,
+    customerDetail,
+    pendingLoginToken,
+      setOpenTranspin,
     
   } = useContext(ContextProvider);
 const { phoneNumber, email} = state;
-
+const location = useLocation();
+const pathname = location?.pathname;
 
 
 
 //VerifyViaEmail Authentication ==============
 const [loading, setLoading] = useState(false);
 const [countdown, setCountdown] = useState(60);
-  const [countdown2, setCountdown2] = useState(60);
+
   const [canResend, setCanResend] = useState(false);
   //const [verificationPinError, setVerificationPinError] = useState(false);
   const [verificationPinError, setVerificationPinError] = useState(false);
-  const [canResend2, setCanResend2] = useState(false);
+
 
  
+
+
+
+  const {email : Email, phone} = customerDetail;
+
+const emailBasedOnState = pathname?.includes("/signUp") ?
+ email?.toLowerCase() || "" : 
+pathname === "/Login" ? Email?.toLowerCase() || "" : "";
+
+// PHONE BASED ON STATE
+ const phoneBasedOnState = pathname?.includes("/signUp") ?
+ phoneNumber?.toLowerCase() || "" : 
+pathname === "/Login" ? phone?.toLowerCase() || "" : "";
 // PASSING THE SEND OTP FUNCTION
 const getOtpSmsorEmail = async(channel)=> {
-  // const [sendSmsOrEmail, setSendSmsOrEmail] = useState("")
+  if(!navigator.onLine) {
+ return setAlertCustom({
+    message : "Check your internet connection",
+    type : "error",
+    show : true
+
+  })
+}
+// const [sendSmsOrEmail, setSendSmsOrEmail] = useState("")
   const holdSignUpDetails = async(body, url)=> {
+    if(pathname?.includes("/signUp")){
   if(channel === "sms"){
     const parsedPhone = phoneNumber  ?
-   phoneNumber : Data.UserPhone ? Data.UserPhone : "";
+   phoneNumber : "";
     body = {
       phone_number : parsedPhone
     }
@@ -66,16 +90,46 @@ const getOtpSmsorEmail = async(channel)=> {
     email : parsedEmail
    }
    url = `${BASE_URL}/send-otp/signup`
+}else if(channel === "whatsapp"){
+  const parsedPhone = phoneNumber  ?
+   phoneNumber :  "";
+    body = {
+      phone_number : parsedPhone
+    }
+    
+     url =`${BASE_URL}/whatsapp/send`;
 }
-if(!navigator.onLine) {
-  setAlertCustom({
-    message : "Check your internet connection",
-    type : "error",
-    show : true
+    }else if(pathname === "/Login"){
+      if(channel === "sms"){
+    const parsedPhone = phone  ?
+   phone :"";
+    body = {
+      phone_number : parsedPhone,
+      pending_login_token : pendingLoginToken
+    }
+    
+     url =`${BASE_URL}/sms/send`;
 
-  })
+  }else if(channel === "email" ){
+   const parsedEmail =   Email  ? Email?.toLowerCase() : "";
+    body = {
+    email : parsedEmail,
+    pending_login_token : pendingLoginToken
+   }
+   url = `${BASE_URL}/send-otp/signup`
+}else if(channel === "whatsapp"){
+  const parsedPhone = phone  ?
+   phone: "";
+    body = {
+      phone_number : parsedPhone,
+      pending_login_token  : pendingLoginToken
+    }
+    
+     url =`${BASE_URL}/whatsapp/send`;
 }
- if(navigator.onLine){
+    }
+
+ if(navigator.onLine ){
   await gettingOtpFunction(body,url)
  }
   }
@@ -103,8 +157,7 @@ if(response.status === 200 || response.status === 201){
     message : "An Otp has been sent to you",
     type : "success",
     show : true
-
-  })
+ })
 } 
  }catch(error){
   if(error && error?.response === undefined){
@@ -121,6 +174,9 @@ if(response.status === 200 || response.status === 201){
     show : true
 
   })
+  setTimeout(()=> {
+    window.location.reload()
+  },3500)
   } else if(error.response && error.response.status === 500){
     setAlertCustom({
     message : "SERVER_ERROR",
@@ -138,8 +194,8 @@ if(response.status === 200 || response.status === 201){
   }
   }finally{
     setLoading(false);
-    setCountdown2(60);
-    setCountdown(60)
+    setCountdown(60);
+    setCanResend(false)
   }
 }
 }
@@ -152,7 +208,11 @@ function twoStepVerificationHandler(url) {
       setViaSms(true)
       setViaEmail(false)
       setViaEmailOrSms("sms")
-    }else{
+    }else if(url?.includes("whatsapp")){
+      setViaSms(true)
+        setViaEmail(false)
+       setViaEmailOrSms("whatsapp")
+      }  else{
       setViaEmail(true);
       setViaSms(false)
       setViaEmailOrSms("email")
@@ -160,6 +220,15 @@ function twoStepVerificationHandler(url) {
 }
 
 const gettingSmsOrEmailFunctionOtp = async(url, body)=> {
+// WHEN THE INTERNET IS UNSTABLE OR IS NOT AVAILABLE
+  if(!navigator.onLine) {
+      setAlertCustom({
+        message : "Check your internet connection",
+        type : "error",
+        show : true
+      })
+  } 
+  if(pathname?.includes("/signUp")){
   if( viaEmailOrSms === "email"){
      url = `${BASE_URL}/verify-otp/signup?email=${email ? email?.toLowerCase() :  ""}`
        body ={
@@ -171,10 +240,36 @@ const gettingSmsOrEmailFunctionOtp = async(url, body)=> {
        body ={
        otp :otpVerifySmsSignup
        }
+        }else if(viaEmailOrSms === "whatsapp"){
+         url = `${BASE_URL}/whatsapp/verify/signup?phone=${phoneNumber ? phoneNumber :  ""}`
+       body ={
+       otp :otpVerifySmsSignup
+       }
         }
+      }else if(pathname === "/Login"){
+ if( viaEmailOrSms === "email"){
+     url = `${BASE_URL}/verify-otp/signup?email=${email ? email?.toLowerCase() :  ""}`
+       body ={
+       otp :otpVerifyEmailSignup,
+       pending_login_token : pendingLoginToken
+       }
+    
+      }else if(viaEmailOrSms === "sms"){
+       url = `${BASE_URL}/sms/verify/signup?phone=${phoneNumber ? phoneNumber :  ""}`
+       body ={
+       otp :otpVerifySmsSignup,
+       pending_login_token : pendingLoginToken
+       }
+        }else if(viaEmailOrSms === "whatsapp"){
+         url = `${BASE_URL}/whatsapp/verify/signup?phone=${phoneNumber ? phoneNumber :  ""}`
+       body ={
+       otp :otpVerifySmsSignup,
+       pending_login_token : pendingLoginToken
+       }
+        }
+      }
         
-        if(!navigator.onLine) return alert("Check your internet connection")
-        if(navigator.onLine){
+   if(navigator.onLine){
         await VerifyOtpFunction(url, body)
 }}
 
@@ -203,19 +298,17 @@ const VerifyOtpFunction = async(url, body)=>{
      })
     }else if( error.response  && error.response.status === 400){
       setVerificationPinError(true);
-  //       setAlertCustom({
-  //   message : "An unexpected error has occured.",
-  //   type : "error",
-  //   show : true
-
-  // })
+ 
     } if( error.response  && error.response.status === 404){
      setAlertCustom({
-    message : "User error",
+    message : "User not found",
     type : "error",
     show : true
 
   })
+  setTimeout(()=> {
+   window.location.reload();
+  },3500)
     }else if(error.response &&error.response.status === 500){
       setAlertCustom({
     message : "SERVER_ERROR",
@@ -240,7 +333,7 @@ const VerifyOtpFunction = async(url, body)=>{
 
 
   useEffect(() => {
-    if (viaSms === true &&  viaEmailOrSms=== "sms") {
+if (viaSms === true || viaEmail === true) {
       let timer;
       if (countdown > 0) {
         timer = setInterval(() => {
@@ -251,49 +344,61 @@ const VerifyOtpFunction = async(url, body)=>{
       }
 return () => clearInterval(timer);
     }
-  }, [countdown,viaSms, viaEmailOrSms ]);
+  }, [countdown,viaSms, viaEmail, viaEmailOrSms ]);
 
 //SetTimer for Email
   
-useEffect(() => {
+// useEffect(() => {
 
-  if (viaEmail === true && viaEmailOrSms === "email") {
-    let timer;
-    if (countdown2 > 0) {
-      timer = setInterval(() => {
-        setCountdown2((prevCountdown2) => prevCountdown2 - 1);
-      }, 1000);
-    } else {
-      setCanResend2(true);
+//   if (viaEmail === true && viaEmailOrSms === "email") {
+//     let timer;
+//     if (countdown > 0) {
+//       timer = setInterval(() => {
+//         setCountdown2((prevCountdown2) => prevCountdown2 - 1);
+//       }, 1000);
+//     } else {
+//       setCanResend(true);
     
-    }
-return () => clearInterval(timer);
-  }
+//     }
+// return () => clearInterval(timer);
+//   }
  
 
-}, [countdown2,viaEmail, viaEmailOrSms]);
+// }, [countdown2,viaEmail, viaEmailOrSms]);
   // Resend OTP
   const handleResendOTP = () => {
-    getOtpSmsorEmail("sms")
+    if((viaEmailOrSms === "sms" || viaEmailOrSms === "whatsapp") && canResend === true){
+    getOtpSmsorEmail(viaEmailOrSms)
     setCanResend(false);
     setVerificationPinError(false);
     setOtpVerifySmsSignup("");
-  };
-  const handleResendOTP2 = () => {
-    getOtpSmsorEmail("email");
-    setCanResend2(false);
+    }else if(viaEmailOrSms === "email" && canResend === true){
+   getOtpSmsorEmail("email");
+    setCanResend(false);
     setVerificationPinError(false);
     setOtpVerifyEmailSignup("")
-    };
+    } 
+   };
+  // const handleResendOTP2 = () => {
+  //   getOtpSmsorEmail("email");
+  //   setCanResend2(false);
+  //   setVerificationPinError(false);
+  //   setOtpVerifyEmailSignup("")
+  //   };
   
 
   const submitVerify = () => {
-    setSuccess(true);
+  
       setViaSms(false);
       setViaEmail(false);
       setVerification(false);
       setOtpVerifyEmailSignup('');
-      setOtpVerifySmsSignup("")
+      setOtpVerifySmsSignup("");
+      if(pathname?.includes("/signUp")){
+        setSuccess(true)
+      }else if(pathname === "/Login"){
+         setOpenTranspin(true)
+      }
   };
 
   //VERIFY_VIA_SMS CODE ================
@@ -323,8 +428,9 @@ return () => clearInterval(timer);
       phoneNumber: "",
       password: "",
       confirmPassword: "",
+      checkbox : false
     });
-  
+    window.location.reload()
   };
 
  
@@ -341,7 +447,20 @@ return () => clearInterval(timer);
             >
               <div className="w-full flex justify-end ">
                 <img
-                  onClick={() => setVerification(false)}
+                  onClick={() =>{
+                   setVerification(false)
+       setState({
+      country: "",
+      fullName: "",
+      userName: "",
+      email: "",
+      phoneNumber: "",
+      password: "",
+      confirmPassword: "",
+      checkbox : false
+    });
+    window.location.reload()
+                  }}
                   src={CloseIcon}
                   className="w-[18px] h-[18px]  md:w-[25px] cursor-pointer
                md:h-[25px] "
@@ -357,7 +476,70 @@ return () => clearInterval(timer);
                   it’s really you.
                 </p>
               </div>
-              <div className="flex flex-col items-center">
+              <div className="flex flex-col gap-5 items-center">
+                
+                {/* VIA Email STARTS HERE*/}
+                <div
+                  className=" flex items-center  w-full px-[10px] cursor-pointer rounded-[7.5px] 
+               min-h-[60px] p-[7px] gap-[5px] md:w-[161px] lg:h-[60px] lg:rounded-[8px] "
+                  onClick={() => {
+                    setViaEmailOrSms("email");
+                  }}
+                  style={{
+                    borderWidth: 1,
+                    borderColor: viaEmailOrSms === "email" ? "#d166ff" : "#b3b3b3",
+                  }}
+                >
+                  <img
+                    className="w-[30px] h-[30px] lg:w-[25px] lg:h-[25px]"
+                    src="./Images/signupimages/email.png"
+                    alt=""
+                  />
+                  <div className="flex flex-col">
+                    <p className="text-[11px] leading-[14px] lg:text-[14px] font-[400] lg:font-[600]">
+                      {" "}
+                      Via Email
+                    </p>
+                    <p className="text-[9px] leading-[13px] lg:text-[12px]  text-gray-500 font-[400] lg:font-[600]">
+                      { `${emailBasedOnState?.slice(
+                      0,
+                      3
+                    )}****** ${email?.slice(15)}` }</p>
+                  </div>
+                </div>
+                {/* VIA Email ENDS HERE*/}
+   {/* WHATSAPP STARTS HERE */}
+
+                <div
+                  className="flex items-center  min-h-[60px] w-full px-[10px] cursor-pointer rounded-[7.5px] p-[7px]   gap-[5px] 
+                lg:rounded-[8px] md:w-[161px] lg:h-[60px]"
+                  onClick={() => {
+                    setViaEmailOrSms("whatsapp")
+                    
+                  }}
+                  style={{
+                    borderWidth: 1,
+                    borderColor: viaEmailOrSms === "whatsapp" ? "#d166ff" : "#b3b3b3",
+                  }}
+                >
+                  <img
+                    className="w-[30px] h-[30px] lg:w-[25px] lg:h-[25px]"
+                    src={"/Images/dashboardImages/whatsapp.png"}
+                    alt=""
+                  />
+                  <div className="flex flex-col">
+                    <p className="text-[11px] leading-[14px] lg:text-[14px] font-[400] lg:font-[600]">
+                      Via WhatsApp
+                    </p>
+                    <p className="text-[9px] leading-[13px] lg:text-[12px] text-gray-500 font-[400] lg:font-[600]">
+                   {`+${phoneBasedOnState.slice(0, 3)}******${phoneBasedOnState.slice(10)}`}
+                    </p>
+                  </div>
+                </div>
+                {/* VIA WHATSAPP ENDS HERE*/}
+
+
+
                 {/* VIA SMS STARTS HERE*/}
                 <div
                   className="flex items-center  min-h-[60px] w-full px-[10px] cursor-pointer rounded-[7.5px] p-[7px]   gap-[5px] 
@@ -380,46 +562,16 @@ return () => clearInterval(timer);
                       Via SMS
                     </p>
                     <p className="text-[9px] leading-[13px] lg:text-[12px] text-gray-500 font-[400] lg:font-[600]">
-                   { phoneNumber !== undefined && phoneNumber?.length  ?   `+${phoneNumber?.slice(0, 3)}******${phoneNumber.slice(10)}` : ""}
+                   {   `+${phoneBasedOnState?.slice(0, 3)}******${phoneBasedOnState?.slice(10)}`}
                     </p>
                   </div>
                 </div>
                 {/* VIA SMS ENDS HERE*/}
-                {/* VIA Email STARTS HERE*/}
-                <div
-                  className=" flex items-center mt-[17px]  w-full px-[10px] cursor-pointer rounded-[7.5px] 
-               min-h-[60px] p-[7px] gap-[5px] md:w-[161px] lg:h-[60px] lg:rounded-[8px] "
-                  onClick={() => {
-                    setViaEmailOrSms("email");
-                  }}
-                  style={{
-                    borderWidth: 1,
-                    borderColor: viaEmailOrSms === "email" ? "#d166ff" : "#b3b3b3",
-                  }}
-                >
-                  <img
-                    className="w-[30px] h-[30px] lg:w-[25px] lg:h-[25px]"
-                    src="./Images/signupimages/email.png"
-                    alt=""
-                  />
-                  <div className="flex flex-col">
-                    <p className="text-[11px] leading-[14px] lg:text-[14px] font-[400] lg:font-[600]">
-                      {" "}
-                      Via Email
-                    </p>
-                    <p className="text-[9px] leading-[13px] lg:text-[12px]  text-gray-500 font-[400] lg:font-[600]">
-                      {email !== undefined && email?.length ? `${email?.slice(
-                      0,
-                      3
-                    )}****** ${email?.slice(15)}` : "" }</p>
-                  </div>
-                </div>
-                {/* VIA Email ENDS HERE*/}
 
                 <div className="w-full flex justify-center mt-[30px] md:mt-[35px] lg:mt-[50px]">
                   <button
                     onClick={()=>{
-                      getOtpSmsorEmail(viaEmailOrSms === "sms" ? "sms" : "email")
+                      getOtpSmsorEmail(viaEmailOrSms)
                     }}
                     type="submit"
                     disabled={viaEmailOrSms === "" ? true : false}
@@ -535,11 +687,21 @@ return () => clearInterval(timer);
             <div className="flex flex-col gap-[3px] mb-[25px] lg:mb-[30px]">
               <div className="absolute top-4 right-4 ">
                 <img
-                  onClick={() => {
+               onClick={() => {
                     setViaEmail(false);
-                    
-                    setVerificationPinError(false);
+                     setVerificationPinError(false);
                     setOtpVerifyEmailSignup("")
+                     setState({
+      country: "",
+      fullName: "",
+      userName: "",
+      email: "",
+      phoneNumber: "",
+      password: "",
+      confirmPassword: "",
+      checkbox : false
+    });
+    window.location.reload()
                     }}
                   src={CloseIcon}
                   className="w-[18px] h-[18px]  md:w-[25px] cursor-pointer
@@ -547,26 +709,61 @@ return () => clearInterval(timer);
                   alt=""
                 />
               </div>
+            <div className="flex flex-col gap-2 mb-3">
               <p className="  lg:text-[16px] text-[14px] leading-[16px] lg:leading-[20px] font-[500] lg:font-[700]">
-                Verification code has been sent to
+                Verification code has been sent to your email
               </p>
-              <p className=" lg:text-[16px] text-[14px] leading-[16px] lg:leading-[20px] font-[500] lg:font-[700] mb-[7] lg:mb-[10px]">
-                your email {`${email ? email.slice(0, 4) : ""}********`}
+              <p className=" lg:text-[16px] text-[16px] leading-[16px] lg:leading-[20px] font-bold lg:font-[700] mb-[7] lg:mb-[10px]">
+               {`${emailBasedOnState.slice(0, 4) }******** ${emailBasedOnState.slice(emailBasedOnState?.length - 9, emailBasedOnState?.length) }`}
               </p>
+              </div>
+              <div className="flex items-center gap-5">
               <p
-                className="text-[#737373] lg:text-[14px] font-[400] lg:font-[600]
+                className="text-[#737373] p-2 bg-blue-300 rounded-lg
+                lg:text-[14px] font-semibold lg:font-[600]
                  text-[12px] leading-[16px] lg:leading-[18px] cursor-pointer"
                 onClick={() => {
-                  setCountdown(60);
+                  if(canResend === true ){
+                setCountdown(60);
                   setViaEmailOrSms("sms");
                   getOtpSmsorEmail("sms");
-                
-                  setVerificationPinError(false);
+                    setVerificationPinError(false);
                   setCanResend(false)
+                  }else{
+                    setAlertCustom({
+                      message : "Retry when the timer elapses",
+                      type : "info",
+                      show : true
+                    })
+                  }
                 }}
               >
-                Use phone number instead
+                Use SMS
               </p>
+
+                <p
+                className="text-[#737373] p-2 bg-green-300 rounded-lg lg:text-[14px] 
+                font-medium lg:font-[600]
+                 text-[12px] leading-[16px] lg:leading-[18px] cursor-pointer"
+                onClick={() => {
+                if(canResend === true){
+                  setCountdown(60);
+                  setViaEmailOrSms("whatsapp");
+                  getOtpSmsorEmail("whatsapp");
+                  setVerificationPinError(false);
+                  setCanResend(false)
+                }else{
+                   setAlertCustom({
+                      message : "Retry when the timer elapses",
+                      type : "info",
+                      show : true
+                    })
+                }
+                }}
+              >
+                Use WhatsApp
+              </p>
+              </div>
             </div>
             <div>
               <div className="flex flex-col justify-center gap-[20px] w-full">
@@ -609,13 +806,13 @@ return () => clearInterval(timer);
 
                 <div className="w-full flex justify-between">
                   <p className="text-[#04177F] font-[400] lg:font-[600] text-[12.729px] lg:text-[16px]">
-                    {countdown2}
+                    {countdown}
                     <span>sec</span>
                   </p>
-                  {canResend2 ? (
+                  {canResend ? (
                     <p
                       className="text-[#04177F] font-[400] lg:font-[600] text-[12.729px] lg:text-[16px] cursor-pointer"
-                      onClick={handleResendOTP2}
+                      onClick={handleResendOTP}
                     >
                       Resend OTP
                     </p>
@@ -756,7 +953,18 @@ return () => clearInterval(timer);
                   onClick={() => {
                     setViaSms(false);
                     setVerificationPinError(false);
-                    setOtpVerifySmsSignup("")
+                    setOtpVerifySmsSignup("");
+                     setState({
+              country: "",
+            fullName: "",
+            userName: "",
+               email: "",
+              phoneNumber: "",
+            password: "",
+           confirmPassword: "",
+            checkbox : false
+    });
+    window.location.reload()
                   //  RemoveLocalStorage()
                     }}
                   src={CloseIcon}
@@ -767,25 +975,70 @@ return () => clearInterval(timer);
               </div>
               <h2 className=" lg:text-[16px] font-[500] lg:font-[700] 
               text-[14px] leading-[18px] lg:leading-[20px]">
-                Verification code has been sent to your phone
+                Verification code has been sent to your {viaEmailOrSms === "sms" ? "Phone" : "WhatsApp"}
               </h2>
               <p className=" lg:text-[16px]  font-[500] lg:font-[700] text-[14px] mb-[7] lg:mb-[10px]">
-                {`${phoneNumber ? phoneNumber?.slice(3, 6) : ""}********`}
+                {`${ phoneBasedOnState?.slice(3, 6)}********`}
               </p>
+            <div className ="flex gap-5 items-center">
               <p
-                className="text-[#737373] font-[400] lg:font-[600] lg:text-[14px] text-[12px] cursor-pointer"
+                className="text-[#737373]   p-2 rounded-lg font-semibold
+                 bg-pink-300  lg:font-[600]  lg:text-[14px] text-[12px] cursor-pointer"
                 onClick={(e) => {
-                  setCountdown2(60);
+                  if(canResend === true){
+                  setCountdown(60);
                   setViaEmailOrSms("email");
                   getOtpSmsorEmail("email");
                   setViaEmail(true);
                   setViaSms(false);
                   setVerificationPinError(false)
-                  setCanResend2(false)
+                  setCanResend(false)
+                  }else{
+                        setAlertCustom({
+                      message : "Retry when the timer elapses",
+                      type : "info",
+                      show : true
+                    })
+                  }
                 }}
               >
-                Use email address instead
+                Use email address
               </p>
+
+              {/* WHATSAPP OR SMS */}
+               <p
+                className={`text-[#737373]  p-2 rounded-lg font-semibold
+                  lg:font-[600] ${viaEmailOrSms === "sms" ? "bg-blue-300" : "bg-green-300"}
+                 lg:text-[14px] text-[12px] cursor-pointer`}
+                onClick={(e) => {
+                  if(viaEmailOrSms === "whatsapp" && canResend === true){
+                  setCountdown(60);
+                  setViaEmailOrSms("whatsapp");
+                  getOtpSmsorEmail("whatsapp");
+                  setViaEmail(false);
+                  setViaSms(true);
+                  setVerificationPinError(false)
+                  setCanResend(false);
+                  }else if(viaEmailOrSms === "sms" && canResend === true){
+                  setCountdown(60);
+                  setViaEmailOrSms("sms");
+                  getOtpSmsorEmail("sms");
+                  setViaEmail(false);
+                  setViaSms(true);
+                  setVerificationPinError(false)
+                  setCanResend(false);
+                  }else{
+                       setAlertCustom({
+                      message : "Retry when the timer elapses",
+                      type : "info",
+                      show : true
+                    })
+                  }
+                }}
+              >
+               {viaEmailOrSms === "sms" ? "Use Sms" : "Use WhatsApp" }
+              </p>
+              </div>
             </div>
             <div>
               <div className="flex justify-center gap-[35px] lg:gap-[15px] flex-col w-full">
